@@ -1,0 +1,6 @@
+psql:pg_tests/compatible/zero.sql:87: ERROR:  syntax error at or near "INSERT"
+LINE 3: INSERT INTO i VALUES
+        ^
+psql:pg_tests/compatible/zero.sql:112: ERROR:  syntax error at or near "INSERT"
+LINE 3: INSERT INTO didx VALUES
+        ^
