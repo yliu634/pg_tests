@@ -1,7 +1,2 @@
-compatible/window.sql
-compatible/with.sql
-compatible/workload_indexrecs.sql
-compatible/zero.sql
-compatible/zigzag_join.sql
-compatible/zone_config.sql
-compatible/zone_config_system_tenant.sql
+pg_tests/compatible/zone_config.sql
+pg_tests/compatible/zone_config_system_tenant.sql
