@@ -1,0 +1,15 @@
+SET
+DROP TABLE
+DROP TABLE
+RESET
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+COMMENT
+COMMENT
+COMMENT
+                     result                     
+------------------------------------------------
+ create_statements tests completed successfully
+(1 row)
+

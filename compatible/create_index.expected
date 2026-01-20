@@ -1,0 +1,22 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP VIEW
+RESET
+CREATE TABLE
+INSERT 0 1
+CREATE INDEX
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+CREATE INDEX
+CREATE INDEX
+CREATE VIEW
+CREATE TABLE
+CREATE INDEX
+                  result                   
+-------------------------------------------
+ create_index tests completed successfully
+(1 row)
+

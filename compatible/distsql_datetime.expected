@@ -1,0 +1,11 @@
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+INSERT 0 2
+       ?column?       
+----------------------
+ 737424 days 01:00:00
+ 737424 days 02:00:00
+(2 rows)
+

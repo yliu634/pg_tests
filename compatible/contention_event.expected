@@ -1,0 +1,18 @@
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+ k | v 
+---+---
+(0 rows)
+
+BEGIN
+INSERT 0 1
+COMMIT
+BEGIN
+ k | v 
+---+---
+ k | v
+(1 row)
+
+ROLLBACK

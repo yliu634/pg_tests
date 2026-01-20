@@ -1,0 +1,26 @@
+SET
+DROP DATABASE
+DROP TABLE
+DROP MATERIALIZED VIEW
+DROP FUNCTION
+DROP SCHEMA
+RESET
+CREATE DATABASE
+You are now connected to database "db" as user "pan".
+CREATE SCHEMA
+CREATE TYPE
+CREATE TABLE
+ALTER TABLE
+SELECT 0
+CREATE INDEX
+You are now connected to database "pg_tests" as user "pan".
+COMMENT
+You are now connected to database "db" as user "pan".
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+You are now connected to database "pg_tests" as user "pan".
+CREATE FUNCTION
