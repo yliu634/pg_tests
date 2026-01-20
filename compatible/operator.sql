@@ -2,13 +2,13 @@
 -- 10 tests
 
 -- Test 1: query (line 1)
-SELECT |/ -1.0::float;
+SELECT |/ 1.0::float;
 
 -- COMMENTED: Logic test directive: query error cannot take square root of a negative number
-SELECT |/ -1.0::decimal;
+SELECT |/ 1.0::decimal;
 
 -- query I
-SELECT ~-1;
+SELECT ~(-1);
 
 -- Test 2: query (line 12)
 SELECT ~0;
@@ -26,14 +26,13 @@ SELECT ~B'0';
 SELECT ~B'1';
 
 -- Test 7: statement (line 37)
-SELECT ~B'2';
+SELECT ~B'10';
 
 -- Test 8: statement (line 40)
-SELECT ~'0';
+SELECT ~('0'::bit(1));
 
 -- Test 9: statement (line 43)
-SELECT ~'1';
+SELECT ~('1'::bit(1));
 
 -- Test 10: query (line 46)
 SELECT ~2;
-

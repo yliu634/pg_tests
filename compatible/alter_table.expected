@@ -1,0 +1,60 @@
+SET
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+ a |  b  
+---+-----
+ 1 | one
+ 2 | two
+(2 rows)
+
+ALTER TABLE
+ a |  b  | c  
+---+-----+----
+ 1 | one | 10
+ 2 | two | 10
+(2 rows)
+
+ALTER TABLE
+ column_name | data_type 
+-------------+-----------
+ a           | integer
+ b2          | text
+ c           | integer
+(3 rows)
+
+ALTER TABLE
+ column_name | data_type 
+-------------+-----------
+ a           | integer
+ b2          | text
+ c           | bigint
+(3 rows)
+
+ALTER TABLE
+ column_name | data_type 
+-------------+-----------
+ a           | integer
+ b2          | text
+(2 rows)
+
+ALTER TABLE
+   conname    |       def       
+--------------+-----------------
+ t_a_positive | CHECK ((a > 0))
+(1 row)
+
+ALTER TABLE
+ conname | def 
+---------+-----
+(0 rows)
+
+ALTER TABLE
+ table_name 
+------------
+ t_renamed
+(1 row)
+
+DROP TABLE
+RESET

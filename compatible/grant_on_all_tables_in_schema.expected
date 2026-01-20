@@ -1,103 +1,86 @@
-DO
-DROP TABLE
-DROP TABLE
-DROP TABLE
-DROP DATABASE
+SET
 DROP SCHEMA
 DROP SCHEMA
+DROP SCHEMA
+DROP TABLE
 DROP ROLE
+DROP ROLE
+CREATE ROLE
 CREATE ROLE
 CREATE SCHEMA
 CREATE SCHEMA
-GRANT
- grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
----------+---------+---------------+--------------+------------+----------------+--------------+----------------
-(0 rows)
-
 CREATE TABLE
 CREATE TABLE
-GRANT
- grantor  | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
-----------+----------+---------------+--------------+------------+----------------+--------------+----------------
- postgres | testuser | pg_tests      | s            | t          | SELECT         | NO           | YES
-(1 row)
+    check    | has_priv 
+-------------+----------
+ s.t SELECT  | f
+ s2.t SELECT | f
+(2 rows)
 
 GRANT
- grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
-----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
- postgres | testuser  | pg_tests      | s            | t          | SELECT         | NO           | YES
- postgres | testuser  | pg_tests      | s2           | t          | SELECT         | NO           | YES
- postgres | testuser2 | pg_tests      | s            | t          | SELECT         | NO           | YES
- postgres | testuser2 | pg_tests      | s2           | t          | SELECT         | NO           | YES
+    check    | has_priv 
+-------------+----------
+ s.t SELECT  | t
+ s2.t SELECT | f
+(2 rows)
+
+GRANT
+  grantee  | schema_name | table_name | has_select 
+-----------+-------------+------------+------------
+ testuser  | s           | t          | t
+ testuser  | s2          | t          | t
+ testuser2 | s           | t          | t
+ testuser2 | s2          | t          | t
 (4 rows)
 
 GRANT
- grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
-----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
- postgres | testuser  | pg_tests      | s            | t          | TRIGGER        | NO           | NO
- postgres | testuser  | pg_tests      | s            | t          | REFERENCES     | NO           | NO
- postgres | testuser  | pg_tests      | s            | t          | TRUNCATE       | NO           | NO
- postgres | testuser  | pg_tests      | s            | t          | DELETE         | NO           | NO
- postgres | testuser  | pg_tests      | s            | t          | UPDATE         | NO           | NO
- postgres | testuser  | pg_tests      | s            | t          | SELECT         | NO           | YES
- postgres | testuser  | pg_tests      | s            | t          | INSERT         | NO           | NO
- postgres | testuser  | pg_tests      | s2           | t          | INSERT         | NO           | NO
- postgres | testuser  | pg_tests      | s2           | t          | SELECT         | NO           | YES
- postgres | testuser  | pg_tests      | s2           | t          | UPDATE         | NO           | NO
- postgres | testuser  | pg_tests      | s2           | t          | DELETE         | NO           | NO
- postgres | testuser  | pg_tests      | s2           | t          | TRUNCATE       | NO           | NO
- postgres | testuser  | pg_tests      | s2           | t          | REFERENCES     | NO           | NO
- postgres | testuser  | pg_tests      | s2           | t          | TRIGGER        | NO           | NO
- postgres | testuser2 | pg_tests      | s            | t          | TRIGGER        | NO           | NO
- postgres | testuser2 | pg_tests      | s            | t          | INSERT         | NO           | NO
- postgres | testuser2 | pg_tests      | s            | t          | SELECT         | NO           | YES
- postgres | testuser2 | pg_tests      | s            | t          | UPDATE         | NO           | NO
- postgres | testuser2 | pg_tests      | s            | t          | DELETE         | NO           | NO
- postgres | testuser2 | pg_tests      | s            | t          | TRUNCATE       | NO           | NO
- postgres | testuser2 | pg_tests      | s            | t          | REFERENCES     | NO           | NO
- postgres | testuser2 | pg_tests      | s2           | t          | TRIGGER        | NO           | NO
- postgres | testuser2 | pg_tests      | s2           | t          | REFERENCES     | NO           | NO
- postgres | testuser2 | pg_tests      | s2           | t          | TRUNCATE       | NO           | NO
- postgres | testuser2 | pg_tests      | s2           | t          | DELETE         | NO           | NO
- postgres | testuser2 | pg_tests      | s2           | t          | UPDATE         | NO           | NO
- postgres | testuser2 | pg_tests      | s2           | t          | SELECT         | NO           | YES
- postgres | testuser2 | pg_tests      | s2           | t          | INSERT         | NO           | NO
-(28 rows)
+  grantee  | schema_name | table_name | has_select | has_insert | has_update | has_delete 
+-----------+-------------+------------+------------+------------+------------+------------
+ testuser  | s           | t          | t          | t          | t          | t
+ testuser  | s2          | t          | t          | t          | t          | t
+ testuser2 | s           | t          | t          | t          | t          | t
+ testuser2 | s2          | t          | t          | t          | t          | t
+(4 rows)
 
 REVOKE
- grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
-----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
- postgres | testuser  | pg_tests      | s            | t          | TRIGGER        | NO           | NO
- postgres | testuser  | pg_tests      | s            | t          | REFERENCES     | NO           | NO
- postgres | testuser  | pg_tests      | s            | t          | TRUNCATE       | NO           | NO
- postgres | testuser  | pg_tests      | s            | t          | DELETE         | NO           | NO
- postgres | testuser  | pg_tests      | s            | t          | UPDATE         | NO           | NO
- postgres | testuser  | pg_tests      | s            | t          | INSERT         | NO           | NO
- postgres | testuser  | pg_tests      | s2           | t          | INSERT         | NO           | NO
- postgres | testuser  | pg_tests      | s2           | t          | UPDATE         | NO           | NO
- postgres | testuser  | pg_tests      | s2           | t          | DELETE         | NO           | NO
- postgres | testuser  | pg_tests      | s2           | t          | TRUNCATE       | NO           | NO
- postgres | testuser  | pg_tests      | s2           | t          | REFERENCES     | NO           | NO
- postgres | testuser  | pg_tests      | s2           | t          | TRIGGER        | NO           | NO
- postgres | testuser2 | pg_tests      | s            | t          | TRIGGER        | NO           | NO
- postgres | testuser2 | pg_tests      | s            | t          | INSERT         | NO           | NO
- postgres | testuser2 | pg_tests      | s            | t          | UPDATE         | NO           | NO
- postgres | testuser2 | pg_tests      | s            | t          | DELETE         | NO           | NO
- postgres | testuser2 | pg_tests      | s            | t          | TRUNCATE       | NO           | NO
- postgres | testuser2 | pg_tests      | s            | t          | REFERENCES     | NO           | NO
- postgres | testuser2 | pg_tests      | s2           | t          | TRIGGER        | NO           | NO
- postgres | testuser2 | pg_tests      | s2           | t          | REFERENCES     | NO           | NO
- postgres | testuser2 | pg_tests      | s2           | t          | TRUNCATE       | NO           | NO
- postgres | testuser2 | pg_tests      | s2           | t          | DELETE         | NO           | NO
- postgres | testuser2 | pg_tests      | s2           | t          | UPDATE         | NO           | NO
- postgres | testuser2 | pg_tests      | s2           | t          | INSERT         | NO           | NO
-(24 rows)
+  grantee  | schema_name | table_name | has_select 
+-----------+-------------+------------+------------
+ testuser  | s           | t          | f
+ testuser  | s2          | t          | f
+ testuser2 | s           | t          | f
+ testuser2 | s2          | t          | f
+(4 rows)
 
 REVOKE
- grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
----------+---------+---------------+--------------+------------+----------------+--------------+----------------
-(0 rows)
+  grantee  | schema_name | table_name | has_select | has_insert | has_update | has_delete 
+-----------+-------------+------------+------------+------------+------------+------------
+ testuser  | s           | t          | f          | f          | f          | f
+ testuser  | s2          | t          | f          | f          | f          | f
+ testuser2 | s           | t          | f          | f          | f          | f
+ testuser2 | s2          | t          | f          | f          | f          | f
+(4 rows)
 
-CREATE DATABASE
+CREATE SCHEMA
 CREATE TABLE
 GRANT
+ other_schema_select 
+---------------------
+ t
+(1 row)
+
+CREATE TABLE
+GRANT
+REVOKE
+ t131157_has_insert 
+--------------------
+ f
+(1 row)
+
+DROP TABLE
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP OWNED
+DROP ROLE
+DROP ROLE
+RESET

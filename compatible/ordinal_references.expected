@@ -1,50 +1,66 @@
 SET
-psql:pg_tests/compatible/ordinal_references.sql:7: ERROR:  unrecognized configuration parameter "allow_ordinal_column_references"
-psql:pg_tests/compatible/ordinal_references.sql:10: ERROR:  "foo" is not a table
-HINT:  Use DROP INDEX to remove an index.
-psql:pg_tests/compatible/ordinal_references.sql:11: ERROR:  relation "foo" already exists
-psql:pg_tests/compatible/ordinal_references.sql:14: ERROR:  cannot open relation "foo"
-LINE 1: INSERT INTO foo(a, b) VALUES (1,'c'), (2,'b'), (3,'a') RETUR...
-                    ^
-DETAIL:  This operation is not supported for indexes.
-psql:pg_tests/compatible/ordinal_references.sql:17: ERROR:  cannot open relation "foo"
-LINE 1: SELECT @0 FROM foo;
-                       ^
-DETAIL:  This operation is not supported for indexes.
-psql:pg_tests/compatible/ordinal_references.sql:20: ERROR:  cannot open relation "foo"
-LINE 1: SELECT @42 FROM foo;
-                        ^
-DETAIL:  This operation is not supported for indexes.
-psql:pg_tests/compatible/ordinal_references.sql:23: ERROR:  cannot open relation "foo"
-LINE 1: SELECT @2, @1 FROM foo;
-                           ^
-DETAIL:  This operation is not supported for indexes.
-psql:pg_tests/compatible/ordinal_references.sql:26: ERROR:  cannot open relation "foo"
-LINE 1: SELECT b, a FROM foo ORDER BY 1;
-                         ^
-DETAIL:  This operation is not supported for indexes.
-psql:pg_tests/compatible/ordinal_references.sql:29: ERROR:  cannot open relation "foo"
-LINE 1: SELECT b, a FROM foo ORDER BY @1;
-                         ^
-DETAIL:  This operation is not supported for indexes.
-psql:pg_tests/compatible/ordinal_references.sql:32: ERROR:  cannot open relation "foo"
-LINE 1: SELECT b, a FROM foo ORDER BY @1 % 2, a;
-                         ^
-DETAIL:  This operation is not supported for indexes.
-psql:pg_tests/compatible/ordinal_references.sql:35: ERROR:  cannot open relation "foo"
-LINE 1: INSERT INTO foo(a, b) VALUES (4, 'c'), (5, 'c'), (6, 'c');
-                    ^
-DETAIL:  This operation is not supported for indexes.
-psql:pg_tests/compatible/ordinal_references.sql:38: ERROR:  cannot open relation "foo"
-LINE 1: SELECT sum(a) AS s FROM foo GROUP BY @1 ORDER BY s;
-                                ^
-DETAIL:  This operation is not supported for indexes.
-psql:pg_tests/compatible/ordinal_references.sql:41: ERROR:  cannot open relation "foo"
-LINE 1: SELECT sum(a) AS s FROM foo GROUP BY @2 ORDER BY s;
-                                ^
-DETAIL:  This operation is not supported for indexes.
-psql:pg_tests/compatible/ordinal_references.sql:44: ERROR:  cannot open relation "foo"
-LINE 1: INSERT INTO foo(a, b) VALUES (@1, @2);
-                    ^
-DETAIL:  This operation is not supported for indexes.
+DROP TABLE
+CREATE TABLE
+ a 
+---
+ 1
+ 2
+ 3
+(3 rows)
+
+INSERT 0 3
+ a 
+---
+ 1
+ 2
+ 3
+(3 rows)
+
+ b | a 
+---+---
+ a | 3
+ b | 2
+ c | 1
+(3 rows)
+
+ b | a 
+---+---
+ a | 3
+ b | 2
+ c | 1
+(3 rows)
+
+ b | a 
+---+---
+ c | 1
+ b | 2
+ a | 3
+(3 rows)
+
+ b | a 
+---+---
+ b | 2
+ c | 1
+ a | 3
+(3 rows)
+
+INSERT 0 3
+ s 
+---
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+(6 rows)
+
+ s  
+----
+  2
+  3
+ 16
+(3 rows)
+
+INSERT 0 1
 RESET

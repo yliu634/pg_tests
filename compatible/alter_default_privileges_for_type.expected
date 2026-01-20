@@ -1,0 +1,97 @@
+SET
+DROP TYPE
+DROP TYPE
+DROP TYPE
+DROP DATABASE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE DATABASE
+GRANT
+You are now connected to database "d" as user "postgres".
+SET
+GRANT
+CREATE TYPE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | PUBLIC   | USAGE          | f
+ postgres | postgres | USAGE          | f
+(2 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE TYPE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | USAGE          | f
+(1 row)
+
+You are now connected to database "pg_tests" as user "postgres".
+SET
+DROP ROLE
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+CREATE TYPE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ postgres | postgres  | USAGE          | f
+ postgres | testuser  | USAGE          | f
+ postgres | testuser2 | USAGE          | f
+(3 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TYPE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | USAGE          | f
+(1 row)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TYPE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | USAGE          | f
+(1 row)
+
+GRANT
+You are now connected to database "d" as user "postgres".
+SET
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE TYPE
+ grantor  | grantee | privilege_type | is_grantable 
+----------+---------+----------------+--------------
+ testuser | PUBLIC  | USAGE          | f
+(1 row)
+
+You are now connected to database "d" as user "postgres".
+SET
+SET
+ALTER DEFAULT PRIVILEGES
+You are now connected to database "d" as user "postgres".
+SET
+SET
+CREATE TYPE
+ grantor  | grantee | privilege_type | is_grantable 
+----------+---------+----------------+--------------
+ testuser | PUBLIC  | USAGE          | f
+(1 row)
+
+You are now connected to database "pg_tests" as user "postgres".
+SET
+RESET
+ALTER DEFAULT PRIVILEGES
+DROP TYPE
+DROP TYPE
+DROP TYPE
+DROP OWNED
+DROP OWNED
+You are now connected to database "postgres" as user "postgres".
+SET
+DROP DATABASE
+DROP ROLE
+DROP ROLE
+RESET

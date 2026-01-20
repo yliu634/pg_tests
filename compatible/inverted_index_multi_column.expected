@@ -1,1 +1,27 @@
--- Test skipped: Requires PostGIS or CockroachDB-specific features
+SET
+CREATE EXTENSION
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 3
+ i |  s  
+---+-----
+ 1 | foo
+(1 row)
+
+UPDATE 1
+ i |  s  
+---+-----
+ 1 | foo
+(1 row)
+
+DELETE 1
+INSERT 0 1
+ i |  s  
+---+-----
+ 2 | bar
+ 3 | bar
+(2 rows)
+
+DROP TABLE
+RESET

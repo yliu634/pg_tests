@@ -1,0 +1,115 @@
+SET
+SET
+ sql.log.slow_query.latency_threshold 
+--------------------------------------
+ 1ms
+(1 row)
+
+SET
+ sql.log.slow_query.latency_threshold 
+--------------------------------------
+ -1ms
+(1 row)
+
+SET
+ sql.conn.max_read_buffer_message_size 
+---------------------------------------
+ 1b
+(1 row)
+
+SET
+ sql.conn.max_read_buffer_message_size 
+---------------------------------------
+ 64MB
+(1 row)
+
+RESET
+ sql.conn.max_read_buffer_message_size 
+---------------------------------------
+ 
+(1 row)
+
+SET
+ sql.defaults.default_int_size 
+-------------------------------
+ 4
+(1 row)
+
+SET
+ crdb.version 
+--------------
+ 22.2
+(1 row)
+
+           variable            | value 
+-------------------------------+-------
+ sql.defaults.default_int_size | 4
+(1 row)
+
+               variable                | value 
+---------------------------------------+-------
+ sql.conn.max_read_buffer_message_size | 
+(1 row)
+
+   variable   | value 
+--------------+-------
+ crdb.version | 22.2
+(1 row)
+
+SET
+ sql.index_recommendation.drop_unused_duration 
+-----------------------------------------------
+ 10s
+(1 row)
+
+ sql.defaults.distsql 
+----------------------
+ 
+(1 row)
+
+ sql.notices.enabled 
+---------------------
+ 
+(1 row)
+
+ sql.trace.log_statement_execute 
+---------------------------------
+ 
+(1 row)
+
+RESET
+SET
+ sql.ttl.default_delete_rate_limit 
+-----------------------------------
+ 90
+(1 row)
+
+SET
+ sql.ttl.default_delete_rate_limit 
+-----------------------------------
+ 100
+(1 row)
+
+SET
+ sql.ttl.default_select_rate_limit 
+-----------------------------------
+ 100
+(1 row)
+
+SET
+ sql.ttl.default_select_rate_limit 
+-----------------------------------
+ 0
+(1 row)
+
+ encoded_default 
+-----------------
+ 
+(1 row)
+
+ decoded_value 
+---------------
+ 
+(1 row)
+
+RESET

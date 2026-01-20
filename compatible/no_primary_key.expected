@@ -1,47 +1,54 @@
 SET
 DROP TABLE
 DROP TABLE
-psql:pg_tests/compatible/no_primary_key.sql:12: ERROR:  syntax error at or near ";"
-LINE 1: CREATE TABLE t (;
-                        ^
-psql:pg_tests/compatible/no_primary_key.sql:15: ERROR:  relation "t" does not exist
-LINE 1: INSERT INTO t VALUES (1, 2);
-                    ^
-psql:pg_tests/compatible/no_primary_key.sql:18: ERROR:  relation "t" does not exist
-LINE 1: INSERT INTO t VALUES (1, 2);
-                    ^
-psql:pg_tests/compatible/no_primary_key.sql:21: ERROR:  relation "t" does not exist
-LINE 1: INSERT INTO t VALUES (3, 4);
-                    ^
-psql:pg_tests/compatible/no_primary_key.sql:24: ERROR:  relation "t" does not exist
-LINE 1: SELECT a, b FROM t;
-                         ^
-psql:pg_tests/compatible/no_primary_key.sql:27: ERROR:  relation "t" does not exist
-LINE 1: SELECT count(rowid) FROM t;
-                                 ^
-psql:pg_tests/compatible/no_primary_key.sql:30: ERROR:  relation "t" does not exist
-LINE 1: INSERT INTO t VALUES (5, 6, '7');
-                    ^
-psql:pg_tests/compatible/no_primary_key.sql:33: ERROR:  relation "t" does not exist
-LINE 1: select * from t;
-                      ^
-psql:pg_tests/compatible/no_primary_key.sql:36: ERROR:  relation "t" does not exist
-LINE 1: SELECT a, b, c, rowid FROM t;
-                                   ^
-psql:pg_tests/compatible/no_primary_key.sql:39: ERROR:  relation "t" does not exist
-LINE 1: INSERT INTO t (a, rowid) VALUES (10, 11);
-                    ^
-psql:pg_tests/compatible/no_primary_key.sql:42: ERROR:  relation "t" does not exist
-LINE 1: SELECT rowid FROM t WHERE a = 10;
-                          ^
-psql:pg_tests/compatible/no_primary_key.sql:45: ERROR:  syntax error at or near "["
-LINE 1: SELECT * FROM [SHOW COLUMNS FROM t] ORDER BY 1;
-                      ^
-psql:pg_tests/compatible/no_primary_key.sql:48: ERROR:  relation "t" does not exist
-psql:pg_tests/compatible/no_primary_key.sql:51: ERROR:  relation "t" does not exist
-LINE 1: INSERT INTO t DEFAULT VALUES;
-                    ^
-psql:pg_tests/compatible/no_primary_key.sql:54: ERROR:  syntax error at or near "DEFAULT"
-LINE 1: INSERT INTO t (a, b) DEFAULT VALUES;
-                             ^
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+ a | b 
+---+---
+ 1 | 2
+ 1 | 2
+ 3 | 4
+(3 rows)
+
+ count 
+-------
+     3
+(1 row)
+
+INSERT 0 1
+ rowid | a | b | c 
+-------+---+---+---
+     1 | 1 | 2 | 
+     2 | 1 | 2 | 
+     3 | 3 | 4 | 
+     4 | 5 | 6 | 7
+(4 rows)
+
+ a | b | c | rowid 
+---+---+---+-------
+ 1 | 2 |   |     1
+ 1 | 2 |   |     2
+ 3 | 4 |   |     3
+ 5 | 6 | 7 |     4
+(4 rows)
+
+INSERT 0 1
+ rowid 
+-------
+    11
+(1 row)
+
+ column_name | data_type | is_nullable 
+-------------+-----------+-------------
+ rowid       | bigint    | NO
+ a           | integer   | YES
+ b           | integer   | YES
+ c           | text      | YES
+(4 rows)
+
+CREATE INDEX
+INSERT 0 1
+INSERT 0 1
 RESET

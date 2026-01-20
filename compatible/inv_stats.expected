@@ -1,1 +1,24 @@
--- Test skipped: Requires PostGIS or CockroachDB-specific features
+SET
+CREATE EXTENSION
+DROP STATISTICS
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+CREATE INDEX
+CREATE INDEX
+CREATE STATISTICS
+ANALYZE
+   stxname   | stxkind 
+-------------+---------
+ inv_stats_s | {d,e}
+(1 row)
+
+     indexname      |                               indexdef                               
+--------------------+----------------------------------------------------------------------
+ inv_stats_t_g_gist | CREATE INDEX inv_stats_t_g_gist ON public.inv_stats_t USING gist (g)
+ inv_stats_t_j_gin  | CREATE INDEX inv_stats_t_j_gin ON public.inv_stats_t USING gin (j)
+(2 rows)
+
+DROP STATISTICS
+DROP TABLE
+RESET

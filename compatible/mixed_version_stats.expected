@@ -3,21 +3,13 @@ DROP TABLE
 DROP TABLE
 CREATE TABLE
 INSERT 0 100000
-psql:pg_tests/compatible/mixed_version_stats.sql:15: ERROR:  syntax error at or near "["
-LINE 1: SELECT * FROM [EXPLAIN (DISTSQL) CREATE STATISTICS s FROM t]...
-                      ^
-psql:pg_tests/compatible/mixed_version_stats.sql:18: ERROR:  syntax error at or near "FROM"
-LINE 1: CREATE STATISTICS s FROM t;
-                            ^
+DROP STATISTICS
+CREATE STATISTICS
  count  
 --------
  100000
 (1 row)
 
-psql:pg_tests/compatible/mixed_version_stats.sql:24: ERROR:  syntax error at or near "["
-LINE 1: SELECT * FROM [EXPLAIN (DISTSQL) CREATE STATISTICS s FROM t]...
-                      ^
-psql:pg_tests/compatible/mixed_version_stats.sql:27: ERROR:  syntax error at or near "FROM"
-LINE 1: CREATE STATISTICS s FROM t;
-                            ^
+DROP STATISTICS
+CREATE STATISTICS
 RESET

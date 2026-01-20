@@ -1,72 +1,54 @@
-DO
+SET
 DROP SEQUENCE
 DROP SEQUENCE
-psql:/tmp/grant_sequence_test.sql:15: NOTICE:  sequence "to_drop_seq" does not exist, skipping
-DROP SEQUENCE
-DROP SEQUENCE
-DROP TABLE
-psql:/tmp/grant_sequence_test.sql:18: NOTICE:  role "user1" does not exist, skipping
-psql:/tmp/grant_sequence_test.sql:18: NOTICE:  role "user2" does not exist, skipping
 DROP ROLE
-CREATE SEQUENCE
 CREATE ROLE
-GRANT
-GRANT
- grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
----------+---------+---------------+--------------+------------+----------------+--------------+----------------
-(0 rows)
-
-REVOKE
- grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
----------+---------+---------------+--------------+------------+----------------+--------------+----------------
-(0 rows)
-
-GRANT
-GRANT
- grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
----------+---------+---------------+--------------+------------+----------------+--------------+----------------
-(0 rows)
-
-REVOKE
- grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
----------+---------+---------------+--------------+------------+----------------+--------------+----------------
-(0 rows)
-
 CREATE SEQUENCE
 GRANT
- grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
----------+---------+---------------+--------------+------------+----------------+--------------+----------------
-(0 rows)
+    grantee     | privilege_type | is_grantable 
+----------------+----------------+--------------
+ gseq_readwrite | SELECT         | YES
+ gseq_readwrite | UPDATE         | YES
+ gseq_readwrite | USAGE          | YES
+(3 rows)
 
-REVOKE
- grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
----------+---------+---------------+--------------+------------+----------------+--------------+----------------
-(0 rows)
-
-CREATE SEQUENCE
-CREATE TABLE
-CREATE ROLE
-GRANT
- grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
----------+---------+---------------+--------------+------------+----------------+--------------+----------------
-(0 rows)
-
- has_sequence_privilege 
-------------------------
- t
+SET
+ nextval 
+---------
+       1
 (1 row)
 
-GRANT
-GRANT
-GRANT
- grantor  | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
-----------+---------+---------------+--------------+------------+----------------+--------------+----------------
- postgres | mix_u   | pg_tests      | public       | mix_tab    | SELECT         | YES          | YES
- postgres | mix_u   | pg_tests      | public       | mix_tab    | UPDATE         | YES          | NO
+ currval 
+---------
+       1
+(1 row)
+
+RESET
+REVOKE
+    grantee     | privilege_type | is_grantable 
+----------------+----------------+--------------
+ gseq_readwrite | SELECT         | YES
+ gseq_readwrite | USAGE          | YES
 (2 rows)
 
- has_sequence_privilege | has_sequence_privilege | has_sequence_privilege 
-------------------------+------------------------+------------------------
- t                      | t                      | t
-(1 row)
+GRANT
+    grantee     | privilege_type | is_grantable 
+----------------+----------------+--------------
+ gseq_readwrite | SELECT         | YES
+ gseq_readwrite | UPDATE         | NO
+ gseq_readwrite | USAGE          | YES
+(3 rows)
 
+CREATE SEQUENCE
+GRANT
+ seq_name | has_usage 
+----------+-----------
+ gseq_a   | t
+ gseq_b   | t
+(2 rows)
+
+DROP SEQUENCE
+DROP SEQUENCE
+DROP OWNED
+DROP ROLE
+RESET

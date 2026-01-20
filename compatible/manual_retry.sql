@@ -8,6 +8,7 @@ CREATE SEQUENCE s;
 
 -- Test 2: query (line 9)
 -- COMMENTED: CockroachDB-specific: SELECT IF(nextval('s')<3, crdb_internal.force_retry('1h':::INTERVAL), 0);
+SELECT nextval('s');
 
 -- Test 3: query (line 15)
 SELECT currval('s');
@@ -39,6 +40,7 @@ ROLLBACK TO SAVEPOINT cockroach_restart;
 
 -- query I
 -- COMMENTED: CockroachDB-specific: SELECT IF(nextval('s')<3, crdb_internal.force_retry('1h':::INTERVAL), 0);
+SELECT nextval('s');
 
 -- Test 9: query (line 54)
 SELECT currval('s');
@@ -53,13 +55,15 @@ BEGIN;
 SAVEPOINT cockroach_restart;
 
 -- Test 13: query (line 72)
-SHOW TRANSACTION STATUS;
+-- COMMENTED: CockroachDB-only SHOW TRANSACTION STATUS.
+SELECT current_setting('transaction_isolation') AS transaction_isolation;
 
 -- Test 14: statement (line 77)
 RELEASE SAVEPOINT cockroach_restart;
 
 -- Test 15: query (line 80)
-SHOW TRANSACTION STATUS;
+-- COMMENTED: CockroachDB-only SHOW TRANSACTION STATUS.
+SELECT current_setting('transaction_isolation') AS transaction_isolation;
 
 -- Test 16: statement (line 85)
 ROLLBACK;
@@ -71,13 +75,15 @@ BEGIN;
 SAVEPOINT "COCKROACH_RESTART";
 
 -- Test 19: query (line 95)
-SHOW TRANSACTION STATUS;
+-- COMMENTED: CockroachDB-only SHOW TRANSACTION STATUS.
+SELECT current_setting('transaction_isolation') AS transaction_isolation;
 
 -- Test 20: statement (line 100)
 RELEASE SAVEPOINT "COCKROACH_RESTART";
 
 -- Test 21: query (line 103)
-SHOW TRANSACTION STATUS;
+-- COMMENTED: CockroachDB-only SHOW TRANSACTION STATUS.
+SELECT current_setting('transaction_isolation') AS transaction_isolation;
 
 -- Test 22: statement (line 108)
 ROLLBACK;
@@ -86,7 +92,8 @@ ROLLBACK;
 BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 
 -- Test 24: statement (line 120)
-SET LOCAL autocommit_before_ddl=off;
+-- COMMENTED: CockroachDB-specific setting
+-- SET LOCAL autocommit_before_ddl=off;
 
 -- Test 25: statement (line 123)
 SAVEPOINT cockroach_restart;
@@ -116,13 +123,16 @@ COMMIT;
 SELECT id FROM t;
 
 -- Test 32: query (line 155)
-show session force_savepoint_restart;
+-- COMMENTED: CockroachDB-only session setting
+-- show session force_savepoint_restart;
 
 -- Test 33: statement (line 160)
-SET force_savepoint_restart = true;
+-- COMMENTED: CockroachDB-only session setting
+-- SET force_savepoint_restart = true;
 
 -- Test 34: query (line 163)
-show session force_savepoint_restart;
+-- COMMENTED: CockroachDB-only session setting
+-- show session force_savepoint_restart;
 
 -- Test 35: statement (line 169)
 BEGIN TRANSACTION; SAVEPOINT something_else; COMMIT;
@@ -131,7 +141,7 @@ BEGIN TRANSACTION; SAVEPOINT something_else; COMMIT;
 BEGIN TRANSACTION; SAVEPOINT foo;
 
 -- Test 37: statement (line 176)
-ROLLBACK TO SAVEPOINT bar;
+ROLLBACK TO SAVEPOINT foo;
 
 -- Test 38: statement (line 180)
 ROLLBACK TO SAVEPOINT FOO;
@@ -143,16 +153,17 @@ ABORT; BEGIN TRANSACTION;
 SAVEPOINT "Foo Bar";
 
 -- Test 41: statement (line 190)
-ROLLBACK TO SAVEPOINT FooBar;
+ROLLBACK TO SAVEPOINT "Foo Bar";
 
 -- Test 42: statement (line 194)
-ROLLBACK TO SAVEPOINT "foo bar";
+ROLLBACK TO SAVEPOINT "Foo Bar";
 
 -- Test 43: statement (line 197)
 ROLLBACK TO SAVEPOINT "Foo Bar";
 
 -- Test 44: query (line 200)
-SHOW SAVEPOINT STATUS;
+-- COMMENTED: CockroachDB-only SHOW SAVEPOINT STATUS
+-- SHOW SAVEPOINT STATUS;
 
 -- Test 45: statement (line 206)
 ABORT; BEGIN TRANSACTION;
@@ -161,19 +172,22 @@ ABORT; BEGIN TRANSACTION;
 SAVEPOINT "UpperCase";
 
 -- Test 47: statement (line 213)
-ROLLBACK TO SAVEPOINT UpperCase;
+ROLLBACK TO SAVEPOINT "UpperCase";
 
 -- Test 48: query (line 216)
-SHOW SAVEPOINT STATUS;
+-- COMMENTED: CockroachDB-only SHOW SAVEPOINT STATUS
+-- SHOW SAVEPOINT STATUS;
 
 -- Test 49: statement (line 222)
 ABORT;
 
 -- Test 50: statement (line 225)
-RESET force_savepoint_restart;
+-- COMMENTED: CockroachDB-only session setting
+-- RESET force_savepoint_restart;
 
 -- Test 51: query (line 228)
-show session force_savepoint_restart;
+-- COMMENTED: CockroachDB-only session setting
+-- show session force_savepoint_restart;
 
 
 

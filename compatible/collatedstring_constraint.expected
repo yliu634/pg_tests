@@ -1,0 +1,58 @@
+SET
+CREATE COLLATION
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+ a 
+---
+ A
+ a
+ b
+(3 rows)
+
+ a 
+---
+ A
+ b
+ p
+(3 rows)
+
+   b    
+--------
+ apple
+ banana
+ pear
+(3 rows)
+
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+ a 
+---
+ A
+ a
+ b
+(3 rows)
+
+ a 
+---
+ A
+ b
+ p
+(3 rows)
+
+   b    
+--------
+ apple
+ banana
+ pear
+(3 rows)
+
+RESET

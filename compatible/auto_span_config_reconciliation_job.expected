@@ -1,0 +1,16 @@
+SET
+SET
+ count | job_type | status 
+-------+----------+--------
+(0 rows)
+
+                 notice                 
+----------------------------------------
+ CANCEL JOB not supported in PostgreSQL
+(1 row)
+
+ status 
+--------
+(0 rows)
+
+RESET

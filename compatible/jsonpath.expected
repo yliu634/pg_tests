@@ -13,7 +13,8 @@ DROP TABLE
 CREATE TABLE
 DROP TABLE
 CREATE TABLE
-psql:pg_tests/compatible/jsonpath.sql:21: ERROR:  type "typ" already exists
+DROP TYPE
+CREATE TYPE
  jsonpath 
 ----------
  $
@@ -54,14 +55,16 @@ psql:pg_tests/compatible/jsonpath.sql:21: ERROR:  type "typ" already exists
  t
 (1 row)
 
-psql:pg_tests/compatible/jsonpath.sql:48: ERROR:  operator does not exist: jsonpath = jsonpath
-LINE 1: SELECT '$'::JSONPATH IS NOT DISTINCT FROM '$'::JSONPATH;
-                             ^
-HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/jsonpath.sql:51: ERROR:  operator does not exist: jsonpath = jsonpath
-LINE 1: SELECT '$'::JSONPATH IS DISTINCT FROM '$'::JSONPATH;
-                             ^
-HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
  ?column? 
 ----------
  f
@@ -72,22 +75,49 @@ HINT:  No operator matches the given name and argument types. You might need to 
  t
 (1 row)
 
-psql:pg_tests/compatible/jsonpath.sql:72: ERROR:  syntax error at or near "'$.1a[*]'"
-LINE 3: SELECT '$.1a[*]'::JSONPATH
-               ^
-psql:pg_tests/compatible/jsonpath.sql:75: ERROR:  could not identify an ordering operator for type jsonpath
-LINE 1: SELECT '$'::JSONPATH ORDER BY 1 ASC;
-                                      ^
-HINT:  Use an explicit ordering operator or modify the query.
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
+         jsonpath          
+---------------------------
+ $."abc"[*]."DEF"."ghi"[*]
+(1 row)
+
+         jsonpath          
+---------------------------
+ $."ABC"[*]."DEF"."GHI"[*]
+(1 row)
+
+ col 
+-----
+ $
+(1 row)
+
+ col 
+-----
+ $
+(1 row)
+
 DROP TABLE
 CREATE TABLE
 INSERT 0 1
-psql:pg_tests/compatible/jsonpath.sql:85: ERROR:  syntax error at or near ":"
-LINE 1: SELECT bpchar('$."a1"[*]':::JSONPATH::JSONPATH)::BPCHAR FROM...
-                                   ^
-psql:pg_tests/compatible/jsonpath.sql:88: ERROR:  syntax error at or near ":"
-LINE 1: SELECT bpchar('$.   abc    [*]':::JSONPATH::JSONPATH)::BPCHA...
-                                         ^
+  bpchar   
+-----------
+ $."a1"[*]
+(1 row)
+
+   bpchar   
+------------
+ $."abc"[*]
+(1 row)
+
               jsonpath               
 -------------------------------------
  $."a"[*]?(@."b" == 1 && @."c" != 1)
@@ -138,57 +168,104 @@ LINE 1: SELECT bpchar('$.   abc    [*]':::JSONPATH::JSONPATH)::BPCHA...
  $."a"?(@."b" == 1)."c"?(@."d" == 2)
 (1 row)
 
-psql:pg_tests/compatible/jsonpath.sql:130: ERROR:  syntax error at or near "'last'"
-LINE 3: SELECT 'last'::JSONPATH
-               ^
-psql:pg_tests/compatible/jsonpath.sql:133: ERROR:  syntax error at or near "(" of jsonpath input
-LINE 1: SELECT '$.bigint()'::JSONPATH;
-               ^
-psql:pg_tests/compatible/jsonpath.sql:136: ERROR:  syntax error at or near "(" of jsonpath input
-LINE 1: SELECT '$.boolean()'::JSONPATH;
-               ^
-psql:pg_tests/compatible/jsonpath.sql:139: ERROR:  syntax error at or near "(" of jsonpath input
-LINE 1: SELECT '$.date()'::JSONPATH;
-               ^
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
+   jsonpath   
+--------------
+ $.keyvalue()
+(1 row)
+
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
   jsonpath  
 ------------
  $.double()
 (1 row)
 
-psql:pg_tests/compatible/jsonpath.sql:145: ERROR:  syntax error at or near "(" of jsonpath input
-LINE 1: SELECT '$.integer()'::JSONPATH;
-               ^
-psql:pg_tests/compatible/jsonpath.sql:148: ERROR:  syntax error at or near "(" of jsonpath input
-LINE 1: SELECT '$.number()'::JSONPATH;
-               ^
-psql:pg_tests/compatible/jsonpath.sql:151: ERROR:  syntax error at or near "(" of jsonpath input
-LINE 1: SELECT '$.string()'::JSONPATH;
-               ^
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
  jsonpath 
 ----------
  $.**
 (1 row)
 
-psql:pg_tests/compatible/jsonpath.sql:157: ERROR:  syntax error at or near "(" of jsonpath input
-LINE 1: SELECT '$.decimal()'::JSONPATH;
-               ^
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
    jsonpath   
 --------------
  $.datetime()
 (1 row)
 
-psql:pg_tests/compatible/jsonpath.sql:163: ERROR:  syntax error at or near "(" of jsonpath input
-LINE 1: SELECT '$.time()'::JSONPATH;
-               ^
-psql:pg_tests/compatible/jsonpath.sql:166: ERROR:  syntax error at or near "(" of jsonpath input
-LINE 1: SELECT '$.time_tz()'::JSONPATH;
-               ^
-psql:pg_tests/compatible/jsonpath.sql:169: ERROR:  syntax error at or near "(" of jsonpath input
-LINE 1: SELECT '$.timestamp()'::JSONPATH;
-               ^
-psql:pg_tests/compatible/jsonpath.sql:172: ERROR:  syntax error at or near "(" of jsonpath input
-LINE 1: SELECT '$.timestamp_tz()'::JSONPATH;
-               ^
-psql:pg_tests/compatible/jsonpath.sql:182: ERROR:  syntax error at or near "'strIct $.STRIcT'"
-LINE 3: SELECT 'strIct $.STRIcT'::JSONPATH
-               ^
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
+ jsonpath 
+----------
+ $.*
+(1 row)
+
+     jsonpath      
+-------------------
+ strict $."STRIcT"
+(1 row)
+
+RESET

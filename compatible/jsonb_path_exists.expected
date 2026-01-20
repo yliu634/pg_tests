@@ -8,7 +8,11 @@
  f
 (1 row)
 
-psql:/tmp/jsonb_path_exists.sql:11: ERROR:  JSON object does not contain key "a"
+ jsonb_path_exists 
+-------------------
+ t
+(1 row)
+
  jsonb_path_exists 
 -------------------
  t

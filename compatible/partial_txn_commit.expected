@@ -1,21 +1,23 @@
 SET
-psql:pg_tests/compatible/partial_txn_commit.sql:7: ERROR:  unrecognized configuration parameter "create_table_with_schema_locked"
 DROP TABLE
 CREATE TABLE
 INSERT 0 1
 BEGIN
 ALTER TABLE
 INSERT 0 1
-psql:pg_tests/compatible/partial_txn_commit.sql:29: ERROR:  syntax error at or near "AS"
-LINE 1: ALTER TABLE t ADD COLUMN y FLOAT AS (1::FLOAT / x::FLOAT) ST...
-                                         ^
-ROLLBACK
- x 
----
- 0
-(1 row)
+ALTER TABLE
+COMMIT
+ x |  z  | y 
+---+-----+---
+ 0 | 123 |  
+ 1 | 123 | 1
+(2 rows)
 
-psql:pg_tests/compatible/partial_txn_commit.sql:38: ERROR:  syntax error at or near "CREATE"
-LINE 1: SHOW CREATE t;
-             ^
+ column_name |    data_type     | is_nullable 
+-------------+------------------+-------------
+ x           | integer          | YES
+ z           | integer          | YES
+ y           | double precision | YES
+(3 rows)
+
 RESET

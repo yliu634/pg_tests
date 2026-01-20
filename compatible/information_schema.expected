@@ -1,21 +1,58 @@
 SET
-DROP DATABASE
-DROP DATABASE
+DROP VIEW
+DROP TABLE
+DROP SEQUENCE
+DROP TYPE
+DROP DOMAIN
+DROP FUNCTION
+CREATE TABLE
+CREATE VIEW
+CREATE SEQUENCE
+CREATE TYPE
+CREATE DOMAIN
+CREATE FUNCTION
+ table_name | table_type 
+------------+------------
+ is_table   | BASE TABLE
+ is_view    | VIEW
+(2 rows)
+
+ column_name |        data_type         
+-------------+--------------------------
+ id          | integer
+ name        | text
+ created_at  | timestamp with time zone
+(3 rows)
+
+ routine_name | routine_type | data_type 
+--------------+--------------+-----------
+ is_fn        | FUNCTION     | integer
+(1 row)
+
+ constraint_name | constraint_type 
+-----------------+-----------------
+ is_table_pkey   | PRIMARY KEY
+(1 row)
+
+ sequence_name | data_type 
+---------------+-----------
+ is_seq        | bigint
+(1 row)
+
+ domain_name | data_type 
+-------------+-----------
+ is_domain   | text
+(1 row)
+
+ type_name 
+-----------
+ is_enum
+(1 row)
+
+DROP VIEW
+DROP TABLE
+DROP SEQUENCE
+DROP TYPE
+DROP DOMAIN
+DROP FUNCTION
 RESET
-CREATE DATABASE
- ?column? 
-----------
- t
-(1 row)
-
- ?column? 
-----------
- t
-(1 row)
-
- ?column? 
-----------
- t
-(1 row)
-
-DROP DATABASE

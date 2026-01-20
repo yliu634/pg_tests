@@ -1,261 +1,223 @@
---
+ overlaps 
+----------
+ t
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:10: ERROR:  syntax error at or near "TIMESTAMP"
-LINE 1: (TIMESTAMP '2000-01-01 00:00:00',
-         ^
---
+ overlaps 
+----------
+ t
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:18: ERROR:  syntax error at or near "TIMESTAMP"
-LINE 1: (TIMESTAMP '2000-01-01 01:00:00',
-         ^
---
+ overlaps 
+----------
+ f
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:26: ERROR:  syntax error at or near "TIMESTAMP"
-LINE 1: (TIMESTAMP '2000-01-01 00:00:00',
-         ^
---
+ overlaps 
+----------
+ f
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:34: ERROR:  syntax error at or near "TIMESTAMP"
-LINE 1: (TIMESTAMP '2000-01-01 00:00:00',
-         ^
---
+ overlaps 
+----------
+ t
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:42: ERROR:  syntax error at or near "TIMESTAMP"
-LINE 1: (TIMESTAMP '2000-01-01 00:30:00',
-         ^
---
+ overlaps 
+----------
+ t
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:50: ERROR:  syntax error at or near "TIMESTAMPTZ"
-LINE 1: (TIMESTAMPTZ '2000-01-01 00:00:00',
-         ^
---
+ overlaps 
+----------
+ t
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:58: ERROR:  syntax error at or near "TIMESTAMPTZ"
-LINE 1: (TIMESTAMPTZ '2000-01-01 01:00:00',
-         ^
---
+ overlaps 
+----------
+ f
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:66: ERROR:  syntax error at or near "TIMESTAMPTZ"
-LINE 1: (TIMESTAMPTZ '2000-01-01 00:00:00',
-         ^
---
+ overlaps 
+----------
+ f
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:74: ERROR:  syntax error at or near "TIMESTAMPTZ"
-LINE 1: (TIMESTAMPTZ '2000-01-01 00:00:00',
-         ^
---
+ overlaps 
+----------
+ t
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:82: ERROR:  syntax error at or near "TIMESTAMPTZ"
-LINE 1: (TIMESTAMPTZ '2000-01-01 00:30:00',
-         ^
---
+ overlaps 
+----------
+ t
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:90: ERROR:  syntax error at or near "TIME"
-LINE 1: (TIME '2000-01-01 00:00:00',
-         ^
---
+ overlaps 
+----------
+ t
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:98: ERROR:  syntax error at or near "TIME"
-LINE 1: (TIME '2000-01-01 01:00:00',
-         ^
---
+ overlaps 
+----------
+ f
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:106: ERROR:  syntax error at or near "TIME"
-LINE 1: (TIME '2000-01-01 00:00:00',
-         ^
---
+ overlaps 
+----------
+ f
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:114: ERROR:  syntax error at or near "TIME"
-LINE 1: (TIME '2000-01-01 00:00:00',
-         ^
---
+ overlaps 
+----------
+ t
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:122: ERROR:  syntax error at or near "TIME"
-LINE 1: (TIME '2000-01-01 00:30:00',
-         ^
---
+ overlaps 
+----------
+ t
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:130: ERROR:  syntax error at or near "TIMETZ"
-LINE 1: (TIMETZ '2000-01-01 00:00:00',
-         ^
---
+ overlaps 
+----------
+ t
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:138: ERROR:  syntax error at or near "TIMETZ"
-LINE 1: (TIMETZ '2000-01-01 01:00:00',
-         ^
---
+ overlaps 
+----------
+ f
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:146: ERROR:  syntax error at or near "TIMETZ"
-LINE 1: (TIMETZ '2000-01-01 00:00:00',
-         ^
---
+ overlaps 
+----------
+ f
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:154: ERROR:  syntax error at or near "TIMETZ"
-LINE 1: (TIMETZ '2000-01-01 00:00:00',
-         ^
---
+ overlaps 
+----------
+ t
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:162: ERROR:  syntax error at or near "TIMETZ"
-LINE 1: (TIMETZ '2000-01-01 00:30:00',
-         ^
---
+ overlaps 
+----------
+ t
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:170: ERROR:  syntax error at or near "DATE"
-LINE 1: (DATE '2000-01-01',
-         ^
---
+ overlaps 
+----------
+ t
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:178: ERROR:  syntax error at or near "DATE"
-LINE 1: (DATE '2000-01-03',
-         ^
---
+ overlaps 
+----------
+ f
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:186: ERROR:  syntax error at or near "DATE"
-LINE 1: (DATE '2000-01-01',
-         ^
---
+ overlaps 
+----------
+ f
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:194: ERROR:  syntax error at or near "DATE"
-LINE 1: (DATE '2000-01-01',
-         ^
---
+ overlaps 
+----------
+ t
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:202: ERROR:  syntax error at or near "DATE"
-LINE 1: (DATE '2000-01-03',
-         ^
---
+ overlaps 
+----------
+ t
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:210: ERROR:  syntax error at or near "TIMESTAMP"
-LINE 1: (TIMESTAMP '2000-01-01 00:00:00',
-         ^
---
+ overlaps 
+----------
+ f
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:218: ERROR:  syntax error at or near "TIMESTAMP"
-LINE 1: (TIMESTAMP '2000-01-01 00:00:00',
-         ^
---
+ overlaps 
+----------
+ f
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:226: ERROR:  syntax error at or near "TIMESTAMP"
-LINE 1: (TIMESTAMP '2000-01-01 00:00:00',
-         ^
---
+ overlaps 
+----------
+ t
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:234: ERROR:  syntax error at or near "TIMESTAMPTZ"
-LINE 1: (TIMESTAMPTZ '2000-01-01 00:00:00',
-         ^
---
+ overlaps 
+----------
+ f
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:242: ERROR:  syntax error at or near "TIMESTAMPTZ"
-LINE 1: (TIMESTAMPTZ '2000-01-01 00:00:00',
-         ^
---
+ overlaps 
+----------
+ f
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:250: ERROR:  syntax error at or near "TIMESTAMPTZ"
-LINE 1: (TIMESTAMPTZ '2000-01-01 00:00:00',
-         ^
---
+ overlaps 
+----------
+ f
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:258: ERROR:  syntax error at or near "TIME"
-LINE 1: (TIME '2000-01-01 00:00:00',
-         ^
---
+ overlaps 
+----------
+ f
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:266: ERROR:  syntax error at or near "TIME"
-LINE 1: (TIME '2000-01-01 00:00:00',
-         ^
---
+ overlaps 
+----------
+ f
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:274: ERROR:  syntax error at or near "TIME"
-LINE 1: (TIME '2000-01-01 00:00:00',
-         ^
---
+ overlaps 
+----------
+ t
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:282: ERROR:  syntax error at or near "TIMETZ"
-LINE 1: (TIMETZ '00:00:00',
-         ^
---
+ overlaps 
+----------
+ f
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:290: ERROR:  syntax error at or near "TIMETZ"
-LINE 1: (TIMETZ '00:00:00',
-         ^
---
+ overlaps 
+----------
+ f
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:298: ERROR:  syntax error at or near "TIMETZ"
-LINE 1: (TIMETZ '00:00:00',
-         ^
---
+ overlaps 
+----------
+ f
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:306: ERROR:  syntax error at or near "DATE"
-LINE 1: (DATE '2000-01-01',
-         ^
---
+ overlaps 
+----------
+ t
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:314: ERROR:  syntax error at or near "DATE"
-LINE 1: (DATE '2000-01-01',
-         ^
---
+ overlaps 
+----------
+ f
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:322: ERROR:  syntax error at or near "DATE"
-LINE 1: (DATE '2000-01-01',
-         ^
---
+ overlaps 
+----------
+ t
 (1 row)
 
-psql:pg_tests/compatible/overlaps.sql:330: ERROR:  syntax error at or near "TIMESTAMP"
-LINE 1: (TIMESTAMP '2000-01-01 00:00:00',
-         ^
-psql:pg_tests/compatible/overlaps.sql:333: ERROR:  function pg_catalog.overlaps(unknown, unknown, unknown, unknown) is not unique
-LINE 1: SELECT (NULL, NULL) overlaps (NULL, NULL);
-                            ^
-HINT:  Could not choose a best candidate function. You might need to add explicit type casts.
-psql:pg_tests/compatible/overlaps.sql:336: ERROR:  function pg_catalog.overlaps(unknown, interval, unknown, unknown) is not unique
-LINE 1: SELECT (NULL, INTERVAL '1 day') overlaps (NULL, NULL);
-                                        ^
-HINT:  Could not choose a best candidate function. You might need to add explicit type casts.
-psql:pg_tests/compatible/overlaps.sql:339: ERROR:  function pg_catalog.overlaps(date, interval, unknown, unknown) is not unique
-LINE 1: SELECT (DATE '2000-01-01', INTERVAL '1 day') overlaps (NULL,...
-                                                     ^
-HINT:  Could not choose a best candidate function. You might need to add explicit type casts.
+ overlaps 
+----------
+ 
+(1 row)
+
+ overlaps 
+----------
+ 
+(1 row)
+
+ overlaps 
+----------
+ 
+(1 row)
+
  overlaps 
 ----------
  

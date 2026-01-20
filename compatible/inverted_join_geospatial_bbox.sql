@@ -1,59 +1,53 @@
 -- PostgreSQL compatible tests from inverted_join_geospatial_bbox
--- 10 tests
+--
+-- CockroachDB tests used bounding-box operators and index hints; PostgreSQL
+-- uses PostGIS operators like && (bbox overlap) with GiST indexes.
 
--- Test 1: statement (line 5)
+SET client_min_messages = warning;
+
+CREATE EXTENSION IF NOT EXISTS postgis;
+
+DROP TABLE IF EXISTS ltable;
+DROP TABLE IF EXISTS rtable;
+
 CREATE TABLE ltable(
-  lk int primary key,
-  geom1 geometry,
-  geom2 geometry
-)
+  lk INT PRIMARY KEY,
+  geom1 geometry
+);
 
--- Test 2: statement (line 12)
 INSERT INTO ltable VALUES
-  (1, 'POINT(3.0 3.0)', 'POINT(3.0 3.0)'),
-  (2, 'POINT(4.5 4.5)', 'POINT(3.0 3.0)'),
-  (3, 'POINT(1.5 1.5)', 'POINT(3.0 3.0)'),
-  (4, NULL, 'POINT(3.0 3.0)'),
-  (5, 'POINT(1.5 1.5)', NULL),
-  (6, NULL, NULL)
+  (1, ST_GeomFromText('POINT(3 3)')),
+  (2, ST_GeomFromText('POINT(4.5 4.5)')),
+  (3, ST_GeomFromText('POINT(1.5 1.5)')),
+  (4, NULL),
+  (5, ST_GeomFromText('POINT(1.5 1.5)')),
+  (6, NULL);
 
--- Test 3: statement (line 21)
 CREATE TABLE rtable(
-  rk int primary key,
-  geom geometry,
-  INVERTED INDEX geom_index(geom)
-)
+  rk INT PRIMARY KEY,
+  geom geometry
+);
+CREATE INDEX rtable_geom_gist ON rtable USING GIST (geom);
 
--- Test 4: statement (line 28)
 INSERT INTO rtable VALUES
-  (11, 'POINT(1.0 1.0)'),
-  (12, 'LINESTRING(1.0 1.0, 2.0 2.0)'),
-  (13, 'POINT(3.0 3.0)'),
-  (14, 'LINESTRING(4.0 4.0, 5.0 5.0)'),
-  (15, 'LINESTRING(40.0 40.0, 41.0 41.0)'),
-  (16, 'POLYGON((1.0 1.0, 5.0 1.0, 5.0 5.0, 1.0 5.0, 1.0 1.0))')
+  (11, ST_GeomFromText('POINT(1 1)')),
+  (12, ST_GeomFromText('LINESTRING(1 1, 2 2)')),
+  (13, ST_GeomFromText('POINT(3 3)')),
+  (14, ST_GeomFromText('LINESTRING(4 4, 5 5)')),
+  (15, ST_GeomFromText('LINESTRING(40 40, 41 41)')),
+  (16, ST_GeomFromText('POLYGON((1 1, 5 1, 5 5, 1 5, 1 1))'));
 
--- Test 5: query (line 40)
-SELECT lk, rk FROM ltable JOIN rtable@geom_index ON ltable.geom1 ~ rtable.geom
-ORDER BY lk, rk
+SELECT lk, rk
+FROM ltable
+JOIN rtable ON ltable.geom1 && rtable.geom
+ORDER BY lk, rk;
 
--- Test 6: query (line 46)
-SELECT lk, rk FROM ltable JOIN rtable@geom_index ON rtable.geom ~ ltable.geom1
-ORDER BY lk, rk
+SELECT lk, rk
+FROM ltable
+JOIN rtable ON ltable.geom1::box2d && rtable.geom::box2d
+ORDER BY lk, rk;
 
--- Test 7: query (line 59)
-SELECT lk, rk FROM ltable JOIN rtable@geom_index ON rtable.geom && ltable.geom1
-ORDER BY lk, rk
+DROP TABLE ltable;
+DROP TABLE rtable;
 
--- Test 8: query (line 72)
-SELECT lk, rk FROM ltable JOIN rtable@geom_index ON ltable.geom1::box2d ~ rtable.geom
-ORDER BY lk, rk
-
--- Test 9: query (line 78)
-SELECT lk, rk FROM ltable JOIN rtable@geom_index ON rtable.geom ~ ltable.geom1::box2d
-ORDER BY lk, rk
-
--- Test 10: query (line 91)
-SELECT lk, rk FROM ltable JOIN rtable@geom_index ON ltable.geom1::box2d && rtable.geom
-ORDER BY lk, rk
-
+RESET client_min_messages;

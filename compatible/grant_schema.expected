@@ -1,75 +1,66 @@
-psql:/tmp/grant_schema_test.sql:4: NOTICE:  schema "derp" does not exist, skipping
+SET
 DROP SCHEMA
 DROP SCHEMA
-psql:/tmp/grant_schema_test.sql:6: NOTICE:  schema "owner_grant_option" does not exist, skipping
 DROP SCHEMA
-psql:/tmp/grant_schema_test.sql:7: NOTICE:  schema "sc102962" does not exist, skipping
 DROP SCHEMA
-psql:/tmp/grant_schema_test.sql:8: NOTICE:  schema "roachhouse" does not exist, skipping
 DROP SCHEMA
-psql:/tmp/grant_schema_test.sql:9: NOTICE:  schema "roachlayer" does not exist, skipping
-DROP SCHEMA
-psql:/tmp/grant_schema_test.sql:10: NOTICE:  schema "roachstation" does not exist, skipping
-DROP SCHEMA
-psql:/tmp/grant_schema_test.sql:11: NOTICE:  schema "roachema" does not exist, skipping
-DROP SCHEMA
-psql:/tmp/grant_schema_test.sql:12: NOTICE:  role "owner_grant_option_child" does not exist, skipping
-psql:/tmp/grant_schema_test.sql:12: NOTICE:  role "other_owner" does not exist, skipping
-psql:/tmp/grant_schema_test.sql:12: NOTICE:  role "r102962" does not exist, skipping
 DROP ROLE
-GRANT
+DROP ROLE
+DROP ROLE
+DROP ROLE
 CREATE ROLE
-CREATE SCHEMA
- grantor  | grantee  | table_catalog | table_schema |  table_name  | privilege_type | is_grantable | with_hierarchy 
-----------+----------+---------------+--------------+--------------+----------------+--------------+----------------
- postgres | postgres | pg_tests      | pg_catalog   | pg_statistic | INSERT         | YES          | NO
- postgres | postgres | pg_tests      | pg_catalog   | pg_statistic | SELECT         | YES          | YES
- postgres | postgres | pg_tests      | pg_catalog   | pg_statistic | UPDATE         | YES          | NO
- postgres | postgres | pg_tests      | pg_catalog   | pg_statistic | DELETE         | YES          | NO
- postgres | postgres | pg_tests      | pg_catalog   | pg_statistic | TRUNCATE       | YES          | NO
-(5 rows)
-
- grantor  | grantee  | table_catalog |    table_schema    | table_name | privilege_type | is_grantable | with_hierarchy 
-----------+----------+---------------+--------------------+------------+----------------+--------------+----------------
- postgres | postgres | pg_tests      | information_schema | collations | INSERT         | YES          | NO
- postgres | postgres | pg_tests      | information_schema | collations | SELECT         | YES          | YES
- postgres | postgres | pg_tests      | information_schema | collations | UPDATE         | YES          | NO
- postgres | postgres | pg_tests      | information_schema | collations | DELETE         | YES          | NO
- postgres | postgres | pg_tests      | information_schema | collations | TRUNCATE       | YES          | NO
-(5 rows)
-
- grantor  | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
-----------+----------+---------------+--------------+------------+----------------+--------------+----------------
- postgres | postgres | pg_tests      | public       | tbl        | INSERT         | YES          | NO
- postgres | postgres | pg_tests      | public       | tbl        | SELECT         | YES          | YES
- postgres | postgres | pg_tests      | public       | tbl        | UPDATE         | YES          | NO
- postgres | postgres | pg_tests      | public       | tbl        | DELETE         | YES          | NO
- postgres | postgres | pg_tests      | public       | tbl        | TRUNCATE       | YES          | NO
-(5 rows)
-
-CREATE SCHEMA
-GRANT
- grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
----------+---------+---------------+--------------+------------+----------------+--------------+----------------
-(0 rows)
-
 CREATE ROLE
-CREATE SCHEMA
-CREATE SCHEMA
-CREATE SCHEMA
-BEGIN
+CREATE ROLE
+CREATE ROLE
 GRANT
-GRANT
-GRANT
-COMMIT
- grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
----------+---------+---------------+--------------+------------+----------------+--------------+----------------
-(0 rows)
-
-CREATE SCHEMA
-GRANT
- has_schema_privilege 
-----------------------
+ db_has_create 
+---------------
  t
 (1 row)
 
+CREATE SCHEMA
+CREATE SCHEMA
+GRANT
+ gs_s_has_create | gs_s_has_usage 
+-----------------+----------------
+ t               | f
+(1 row)
+
+CREATE SCHEMA
+GRANT
+ gs_owner_has_usage_before 
+---------------------------
+ t
+(1 row)
+
+ALTER SCHEMA
+ gs_owner_has_usage_after 
+--------------------------
+ t
+(1 row)
+
+CREATE SCHEMA
+GRANT
+ gs_sc102962_has_usage 
+-----------------------
+ t
+(1 row)
+
+CREATE SCHEMA
+GRANT
+ public_usage_for_gs_testuser 
+------------------------------
+ t
+(1 row)
+
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP OWNED
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET

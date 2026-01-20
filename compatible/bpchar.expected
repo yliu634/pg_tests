@@ -1,0 +1,28 @@
+SET
+ bpchar 
+--------
+ foo
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 4
+     c     
+-----------
+ ba
+ c
+ foo
+ foobarbaz
+(4 rows)
+
+ column_name | data_type | udt_name | character_maximum_length 
+-------------+-----------+----------+--------------------------
+ c           | character | bpchar   |                         
+(1 row)
+
+ column_name | data_type | udt_name | character_maximum_length 
+-------------+-----------+----------+--------------------------
+ c           | character | bpchar   |                         
+(1 row)
+
+RESET

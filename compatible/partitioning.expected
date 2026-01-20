@@ -1,9 +1,13 @@
 SET
 DROP TABLE
-psql:pg_tests/compatible/partitioning.sql:12: ERROR:  syntax error at or near "PARTITION"
-LINE 1: PARTITION p1 VALUES IN (1),
-        ^
-DROP TABLE
-psql:pg_tests/compatible/partitioning.sql:25: ERROR:  syntax error at or near ";"
-LINE 1: CREATE TABLE t (;
-                        ^
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+ a | b  |  c  
+---+----+-----
+ 1 | 10 | 100
+ 2 | 20 | 200
+(2 rows)
+
+RESET

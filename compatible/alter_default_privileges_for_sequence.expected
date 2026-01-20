@@ -1,0 +1,131 @@
+SET
+DROP TABLE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP DATABASE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE DATABASE
+GRANT
+You are now connected to database "d" as user "postgres".
+SET
+GRANT
+CREATE SEQUENCE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | SELECT         | f
+ postgres | postgres | UPDATE         | f
+ postgres | postgres | USAGE          | f
+(3 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE SEQUENCE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | SELECT         | f
+ postgres | postgres | UPDATE         | f
+ postgres | postgres | USAGE          | f
+(3 rows)
+
+You are now connected to database "pg_tests" as user "postgres".
+SET
+DROP ROLE
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+CREATE SEQUENCE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ postgres | postgres  | SELECT         | f
+ postgres | postgres  | UPDATE         | f
+ postgres | postgres  | USAGE          | f
+ postgres | testuser  | SELECT         | f
+ postgres | testuser  | UPDATE         | f
+ postgres | testuser  | USAGE          | f
+ postgres | testuser2 | SELECT         | f
+ postgres | testuser2 | UPDATE         | f
+ postgres | testuser2 | USAGE          | f
+(9 rows)
+
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+(7 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE SEQUENCE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ postgres | postgres  | SELECT         | f
+ postgres | postgres  | UPDATE         | f
+ postgres | postgres  | USAGE          | f
+ postgres | testuser  | UPDATE         | f
+ postgres | testuser  | USAGE          | f
+ postgres | testuser2 | UPDATE         | f
+ postgres | testuser2 | USAGE          | f
+(7 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE SEQUENCE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | SELECT         | f
+ postgres | postgres | UPDATE         | f
+ postgres | postgres | USAGE          | f
+(3 rows)
+
+GRANT
+You are now connected to database "d" as user "postgres".
+SET
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE SEQUENCE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ testuser | testuser | SELECT         | f
+ testuser | testuser | UPDATE         | f
+ testuser | testuser | USAGE          | f
+(3 rows)
+
+You are now connected to database "d" as user "postgres".
+SET
+SET
+ALTER DEFAULT PRIVILEGES
+You are now connected to database "d" as user "postgres".
+SET
+SET
+CREATE SEQUENCE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ testuser | testuser | SELECT         | f
+ testuser | testuser | UPDATE         | f
+ testuser | testuser | USAGE          | f
+(3 rows)
+
+You are now connected to database "pg_tests" as user "postgres".
+SET
+ALTER DEFAULT PRIVILEGES
+DROP TABLE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+You are now connected to database "postgres" as user "postgres".
+SET
+DROP DATABASE
+DROP ROLE
+DROP ROLE
+RESET

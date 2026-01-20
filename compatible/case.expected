@@ -1,0 +1,104 @@
+SET
+DROP TYPE
+CREATE TYPE
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+ case 
+------
+  200
+(1 row)
+
+ case 
+------
+  200
+(1 row)
+
+ case 
+------
+     
+(1 row)
+
+ ?column? 
+----------
+      100
+(1 row)
+
+ ?column? 
+----------
+         
+(1 row)
+
+ ?column? 
+----------
+        2
+(1 row)
+
+ ?column? 
+----------
+         
+(1 row)
+
+ case 
+------
+ foo
+(1 row)
+
+ coalesce 
+----------
+ ba
+(1 row)
+
+ case 
+------
+ ba
+(1 row)
+
+ case 
+------
+ foo
+(1 row)
+
+ bpchar 
+--------
+ f
+(1 row)
+
+ bpchar 
+--------
+ foo
+(1 row)
+
+  case  
+--------
+ 1.2345
+(1 row)
+
+  case  
+--------
+ 1.2345
+(1 row)
+
+ foo 
+-----
+   1
+   3
+(2 rows)
+
+        to_jsonb        
+------------------------
+ {"bar": "a", "foo": 1}
+ {"bar": "b", "foo": 3}
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+ to_jsonb 
+----------
+(0 rows)
+
+DROP TYPE
+RESET

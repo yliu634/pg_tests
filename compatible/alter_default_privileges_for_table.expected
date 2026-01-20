@@ -1,0 +1,337 @@
+SET
+DROP VIEW
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP DATABASE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE DATABASE
+GRANT
+You are now connected to database "d" as user "postgres".
+SET
+GRANT
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+(7 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+(7 rows)
+
+You are now connected to database "pg_tests" as user "postgres".
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+ postgres | testuser | SELECT         | f
+ postgres | who      | SELECT         | f
+(9 rows)
+
+CREATE SEQUENCE
+CREATE VIEW
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | SELECT         | f
+ postgres | postgres | UPDATE         | f
+ postgres | postgres | USAGE          | f
+(3 rows)
+
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+ postgres | testuser | SELECT         | f
+ postgres | who      | SELECT         | f
+(9 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+ postgres | who      | SELECT         | f
+(8 rows)
+
+CREATE SEQUENCE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | SELECT         | f
+ postgres | postgres | UPDATE         | f
+ postgres | postgres | USAGE          | f
+(3 rows)
+
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ postgres | postgres  | DELETE         | f
+ postgres | postgres  | INSERT         | f
+ postgres | postgres  | REFERENCES     | f
+ postgres | postgres  | SELECT         | f
+ postgres | postgres  | TRIGGER        | f
+ postgres | postgres  | TRUNCATE       | f
+ postgres | postgres  | UPDATE         | f
+ postgres | testuser  | SELECT         | f
+ postgres | testuser2 | SELECT         | f
+ postgres | who       | SELECT         | f
+(10 rows)
+
+CREATE SEQUENCE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | SELECT         | f
+ postgres | postgres | UPDATE         | f
+ postgres | postgres | USAGE          | f
+(3 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+ postgres | who      | SELECT         | f
+(8 rows)
+
+CREATE SEQUENCE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | SELECT         | f
+ postgres | postgres | UPDATE         | f
+ postgres | postgres | USAGE          | f
+(3 rows)
+
+You are now connected to database "d" as user "postgres".
+SET
+GRANT
+ALTER DEFAULT PRIVILEGES
+You are now connected to database "d" as user "postgres".
+SET
+SET
+CREATE TABLE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ testuser | testuser  | DELETE         | f
+ testuser | testuser  | INSERT         | f
+ testuser | testuser  | REFERENCES     | f
+ testuser | testuser  | SELECT         | f
+ testuser | testuser  | TRIGGER        | f
+ testuser | testuser  | TRUNCATE       | f
+ testuser | testuser  | UPDATE         | f
+ testuser | testuser2 | SELECT         | f
+(8 rows)
+
+You are now connected to database "d" as user "postgres".
+SET
+SET
+ALTER DEFAULT PRIVILEGES
+You are now connected to database "d" as user "postgres".
+SET
+SET
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ testuser | testuser | DELETE         | f
+ testuser | testuser | INSERT         | f
+ testuser | testuser | REFERENCES     | f
+ testuser | testuser | TRIGGER        | f
+ testuser | testuser | TRUNCATE       | f
+ testuser | testuser | UPDATE         | f
+(6 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ testuser | testuser  | DELETE         | f
+ testuser | testuser  | INSERT         | f
+ testuser | testuser  | REFERENCES     | f
+ testuser | testuser  | SELECT         | f
+ testuser | testuser  | TRIGGER        | f
+ testuser | testuser  | TRUNCATE       | f
+ testuser | testuser  | UPDATE         | f
+ testuser | testuser2 | DELETE         | f
+ testuser | testuser2 | INSERT         | f
+ testuser | testuser2 | REFERENCES     | f
+ testuser | testuser2 | SELECT         | f
+ testuser | testuser2 | TRIGGER        | f
+ testuser | testuser2 | TRUNCATE       | f
+ testuser | testuser2 | UPDATE         | f
+(14 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ testuser | testuser  | DELETE         | f
+ testuser | testuser  | INSERT         | f
+ testuser | testuser  | REFERENCES     | f
+ testuser | testuser  | TRIGGER        | f
+ testuser | testuser  | TRUNCATE       | f
+ testuser | testuser  | UPDATE         | f
+ testuser | testuser2 | DELETE         | f
+ testuser | testuser2 | INSERT         | f
+ testuser | testuser2 | REFERENCES     | f
+ testuser | testuser2 | TRIGGER        | f
+ testuser | testuser2 | TRUNCATE       | f
+ testuser | testuser2 | UPDATE         | f
+(12 rows)
+
+You are now connected to database "d" as user "postgres".
+SET
+RESET
+ALTER DEFAULT PRIVILEGES
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ postgres | postgres  | DELETE         | f
+ postgres | postgres  | INSERT         | f
+ postgres | postgres  | REFERENCES     | f
+ postgres | postgres  | SELECT         | f
+ postgres | postgres  | TRIGGER        | f
+ postgres | postgres  | TRUNCATE       | f
+ postgres | postgres  | UPDATE         | f
+ postgres | testuser2 | SELECT         | f
+ postgres | testuser3 | SELECT         | f
+(9 rows)
+
+CREATE TABLE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ postgres | postgres  | DELETE         | f
+ postgres | postgres  | INSERT         | f
+ postgres | postgres  | REFERENCES     | f
+ postgres | postgres  | SELECT         | f
+ postgres | postgres  | TRIGGER        | f
+ postgres | postgres  | TRUNCATE       | f
+ postgres | postgres  | UPDATE         | f
+ postgres | testuser2 | SELECT         | f
+ postgres | testuser3 | SELECT         | f
+(9 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+(7 rows)
+
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+(7 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ role | inheriting_member | member_is_explicit 
+------+-------------------+--------------------
+(0 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+You are now connected to database "pg_tests" as user "postgres".
+SET
+RESET
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+DROP OWNED
+DROP OWNED
+DROP OWNED
+DROP OWNED
+DROP VIEW
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+You are now connected to database "postgres" as user "postgres".
+SET
+DROP DATABASE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET

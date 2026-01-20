@@ -1,0 +1,16 @@
+SET
+CREATE COLLATION
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+ a 
+---
+(0 rows)
+
+DELETE 1
+INSERT 0 1
+ a 
+---
+(0 rows)
+
+RESET

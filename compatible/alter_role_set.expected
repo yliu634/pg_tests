@@ -1,0 +1,37 @@
+SET
+DROP DATABASE
+DROP ROLE
+CREATE ROLE
+CREATE DATABASE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+  database   |     role      |                  setconfig                   
+-------------+---------------+----------------------------------------------
+ ALL         | ALL           | {application_name=d}
+ ALL         | test_set_role | {application_name=a,custom_option.setting=e}
+ test_set_db | ALL           | {application_name=c}
+ test_set_db | test_set_role | {application_name=b}
+(4 rows)
+
+ALTER ROLE
+ALTER ROLE
+  database   |     role      |      setconfig       
+-------------+---------------+----------------------
+ ALL         | ALL           | {application_name=d}
+ test_set_db | ALL           | {application_name=c}
+ test_set_db | test_set_role | {application_name=b}
+(3 rows)
+
+ALTER ROLE
+  database   |     role      |      setconfig       
+-------------+---------------+----------------------
+ test_set_db | ALL           | {application_name=c}
+ test_set_db | test_set_role | {application_name=b}
+(2 rows)
+
+DROP DATABASE
+DROP ROLE
+RESET

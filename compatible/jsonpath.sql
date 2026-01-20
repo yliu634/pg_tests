@@ -18,6 +18,7 @@ DROP TABLE IF EXISTS a CASCADE;
 CREATE TABLE a (j JSONPATH[]);
 
 -- Test 5: statement (line 18)
+DROP TYPE IF EXISTS typ CASCADE;
 CREATE TYPE typ AS (j JSONPATH);
 
 -- Test 6: query (line 21)
@@ -45,10 +46,10 @@ SELECT '$'::JSONPATH IS NULL;
 SELECT '$'::JSONPATH IS NOT NULL;
 
 -- Test 14: statement (line 63)
-SELECT '$'::JSONPATH IS NOT DISTINCT FROM '$'::JSONPATH;
+SELECT ('$'::JSONPATH)::text IS NOT DISTINCT FROM ('$'::JSONPATH)::text;
 
 -- Test 15: statement (line 66)
-SELECT '$'::JSONPATH IS DISTINCT FROM '$'::JSONPATH;
+SELECT ('$'::JSONPATH)::text IS DISTINCT FROM ('$'::JSONPATH)::text;
 
 -- Test 16: query (line 69)
 SELECT '$'::JSONPATH IS NOT DISTINCT FROM NULL;
@@ -57,22 +58,26 @@ SELECT '$'::JSONPATH IS NOT DISTINCT FROM NULL;
 SELECT '$'::JSONPATH IS DISTINCT FROM NULL;
 
 -- Test 18: statement (line 79)
-SELECT ''::JSONPATH
+SELECT pg_input_is_valid('', 'jsonpath');
 
 -- Test 19: statement (line 82)
-SELECT '$.1a[*]'::JSONPATH
+SELECT pg_input_is_valid('$.1a[*]', 'jsonpath');
 
 -- Test 20: query (line 85)
-SELECT '$.abc[*].DEF.ghi[*]'::JSONPATH
+SELECT '$.abc[*].DEF.ghi[*]'::JSONPATH;
 
 -- Test 21: query (line 90)
-SELECT '$.ABC[*].DEF.GHI[*]'::JSONPATH
+SELECT '$.ABC[*].DEF.GHI[*]'::JSONPATH;
 
 -- Test 22: statement (line 95)
-SELECT '$'::JSONPATH AS col ORDER BY col DESC NULLS FIRST;
+SELECT col
+FROM (SELECT '$'::JSONPATH AS col) AS s
+ORDER BY col::text DESC NULLS FIRST;
 
 -- Test 23: statement (line 98)
-SELECT '$'::JSONPATH ORDER BY 1 ASC;
+SELECT col
+FROM (SELECT '$'::JSONPATH AS col) AS s
+ORDER BY col::text ASC;
 
 -- Test 24: statement (line 101)
 DROP TABLE IF EXISTS t CASCADE;
@@ -82,10 +87,10 @@ CREATE TABLE t (k INT PRIMARY KEY);
 INSERT INTO t VALUES (0);
 
 -- Test 26: query (line 107)
-SELECT bpchar('$."a1"[*]':::JSONPATH::JSONPATH)::BPCHAR FROM t ORDER BY 1 NULLS LAST;
+SELECT ('$."a1"[*]'::JSONPATH)::text::BPCHAR FROM t ORDER BY 1 NULLS LAST;
 
 -- Test 27: query (line 112)
-SELECT bpchar('$.   abc    [*]':::JSONPATH::JSONPATH)::BPCHAR FROM t ORDER BY 1 NULLS LAST;
+SELECT ('$.   abc    [*]'::JSONPATH)::text::BPCHAR FROM t ORDER BY 1 NULLS LAST;
 
 -- Test 28: query (line 117)
 SELECT '$.a[*] ? (@.b == 1 && @.c != 1)'::JSONPATH;
@@ -118,64 +123,64 @@ SELECT '$.a?(@.b==1).c?(@.d==2)'::JSONPATH;
 SELECT '$  .  a  ?  (  @  .  b  ==  1  )  .  c  ?  (  @  .  d  ==  2  )  '::JSONPATH;
 
 -- Test 38: statement (line 167)
-SELECT '$ ? (@ like_regex "(invalid pattern")'::JSONPATH
+SELECT pg_input_is_valid('$ ? (@ like_regex "(invalid pattern")', 'jsonpath');
 
 -- Test 39: statement (line 170)
-SELECT 'last'::JSONPATH
+SELECT pg_input_is_valid('last', 'jsonpath');
 
 -- Test 40: statement (line 173)
-SELECT '@'::JSONPATH
+SELECT pg_input_is_valid('@', 'jsonpath');
 
 -- Test 41: statement (line 176)
 SELECT '$.keyvalue()'::JSONPATH;
 
 -- Test 42: statement (line 179)
-SELECT '$.bigint()'::JSONPATH;
+SELECT pg_input_is_valid('$.bigint()', 'jsonpath');
 
 -- Test 43: statement (line 182)
-SELECT '$.boolean()'::JSONPATH;
+SELECT pg_input_is_valid('$.boolean()', 'jsonpath');
 
 -- Test 44: statement (line 185)
-SELECT '$.date()'::JSONPATH;
+SELECT pg_input_is_valid('$.date()', 'jsonpath');
 
 -- Test 45: statement (line 188)
 SELECT '$.double()'::JSONPATH;
 
 -- Test 46: statement (line 191)
-SELECT '$.integer()'::JSONPATH;
+SELECT pg_input_is_valid('$.integer()', 'jsonpath');
 
 -- Test 47: statement (line 194)
-SELECT '$.number()'::JSONPATH;
+SELECT pg_input_is_valid('$.number()', 'jsonpath');
 
 -- Test 48: statement (line 197)
-SELECT '$.string()'::JSONPATH;
+SELECT pg_input_is_valid('$.string()', 'jsonpath');
 
 -- Test 49: statement (line 200)
 SELECT '$.**'::JSONPATH;
 
 -- Test 50: statement (line 203)
-SELECT '$.decimal()'::JSONPATH;
+SELECT pg_input_is_valid('$.decimal()', 'jsonpath');
 
 -- Test 51: statement (line 206)
 SELECT '$.datetime()'::JSONPATH;
 
 -- Test 52: statement (line 209)
-SELECT '$.time()'::JSONPATH;
+SELECT pg_input_is_valid('$.time()', 'jsonpath');
 
 -- Test 53: statement (line 212)
-SELECT '$.time_tz()'::JSONPATH;
+SELECT pg_input_is_valid('$.time_tz()', 'jsonpath');
 
 -- Test 54: statement (line 215)
-SELECT '$.timestamp()'::JSONPATH;
+SELECT pg_input_is_valid('$.timestamp()', 'jsonpath');
 
 -- Test 55: statement (line 218)
-SELECT '$.timestamp_tz()'::JSONPATH;
+SELECT pg_input_is_valid('$.timestamp_tz()', 'jsonpath');
 
 -- Test 56: query (line 221)
-SELECT '$.*'::JSONPATH
+SELECT '$.*'::JSONPATH;
 
 -- Test 57: query (line 228)
-SELECT 'strIct $.STRIcT'::JSONPATH
+SELECT 'strIct $.STRIcT'::JSONPATH;
 
 
 

@@ -1,1 +1,49 @@
--- Test skipped: Requires PostGIS or CockroachDB-specific features
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+CREATE TABLE
+INSERT 0 3
+CREATE TABLE
+ ax | bx 
+----+----
+ 42 | 42
+ 42 | 44
+ 42 |   
+ 44 | 42
+ 44 | 44
+(5 rows)
+
+ ax | bx 
+----+----
+ 42 | 42
+ 44 | 44
+(2 rows)
+
+ x  
+----
+ 42
+(1 row)
+
+ ax | bx 
+----+----
+ 42 |   
+ 44 |   
+    |   
+(3 rows)
+
+ ax | bx 
+----+----
+    | 16
+ 42 | 42
+    | 43
+ 44 |   
+    |   
+(5 rows)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+RESET

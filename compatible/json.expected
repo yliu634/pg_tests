@@ -1,44 +1,40 @@
-psql:/tmp/json.sql:139: ERROR:  syntax error at or near "pg_typeof"
-LINE 3: SELECT pg_typeof(JSON '1')
-               ^
-psql:/tmp/json.sql:418: ERROR:  syntax error at or near "CREATE"
-LINE 3: CREATE TABLE multiple (a JSON, b JSON)
-        ^
-  ?column?  
-------------
- {"b": 456}
+SET
+DROP TABLE
+ jsonb | json 
+-------+------
+ 1     | 2
 (1 row)
 
- ?column? 
-----------
- {}
+ pg_typeof 
+-----------
+ json
 (1 row)
 
- ?column? 
-----------
- {}
+ pg_typeof 
+-----------
+ jsonb
 (1 row)
 
-          ?column?          
-----------------------------
- {"b": [], "c": {"a": "b"}}
+CREATE TABLE
+INSERT 0 3
+CREATE INDEX
+ id | a 
+----+---
+  1 | b
+  2 | x
+  3 | 
+(3 rows)
+
+ id 
+----
+  1
+  2
+(2 rows)
+
+ id 
+----
+  1
 (1 row)
 
-psql:/tmp/json.sql:454: ERROR:  syntax error at or near "'{"a": {"b": ["foo"]}}'"
-LINE 3: SELECT '{"a": {"b": ["foo"]}}'::JSONB #- ARRAY['a', 'b', 'fo...
-               ^
-psql:/tmp/json.sql:466: ERROR:  relation "t49143" does not exist
-LINE 1: INSERT INTO t49143 VALUES
-                    ^
-psql:/tmp/json.sql:508: ERROR:  syntax error at or near "SELECT"
-LINE 3: SELECT j FROM t49143 WHERE NOT (j->'b' = '1') ORDER BY k
-        ^
-psql:/tmp/json.sql:539: ERROR:  syntax error at or near "SELECT"
-LINE 3: SELECT j, j ? 'a', j-1, (j-1) ? 'a' FROM t81647
-        ^
-psql:/tmp/json.sql:555: ERROR:  syntax error at or near "SELECT"
-LINE 6: SELECT j, extract_field, extract_int_field, j['field'], j[ex...
-        ^
-psql:/tmp/json.sql:580: ERROR:  syntax error at or near "SELECT"
-LINE 3: SELECT * FROM test_49144 WHERE ("test_49144"."value" -> 'c')...
-        ^
+DROP TABLE
+RESET

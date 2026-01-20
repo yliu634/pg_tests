@@ -1,30 +1,42 @@
 -- PostgreSQL compatible tests from citext
 -- 51 tests
 
+SET client_min_messages = warning;
+CREATE EXTENSION IF NOT EXISTS citext;
+CREATE COLLATION IF NOT EXISTS "en" (provider = icu, locale = 'en');
+
+-- Ensure clean re-runs.
+DROP TABLE IF EXISTS t, r, s, composite_citext_tbl, citext_with_width_tbl CASCADE;
+DROP TYPE IF EXISTS ctype;
+
 -- Test 1: query (line 3)
-SELECT pg_typeof(CITEXT 'Foo')
+SELECT pg_typeof(CITEXT 'Foo');
 
 -- Test 2: query (line 8)
-SELECT pg_typeof('Foo'::CITEXT)
+SELECT pg_typeof('Foo'::CITEXT);
 
 -- Test 3: query (line 13)
-SELECT pg_typeof('Foo'::CITEXT::TEXT::CITEXT)
+SELECT pg_typeof('Foo'::CITEXT::TEXT::CITEXT);
 
 -- Test 4: query (line 18)
-SELECT 'Foo'::CITEXT
+SELECT 'Foo'::CITEXT;
 
 -- Test 5: statement (line 23)
+DROP TABLE IF EXISTS t;
 CREATE TABLE t (
   c CITEXT
-)
+);
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 6: query (line 29)
-SHOW CREATE TABLE t
+SELECT column_name, data_type, udt_name
+FROM information_schema.columns
+WHERE table_name = 't'
+ORDER BY ordinal_position;
 
 -- Test 7: statement (line 39)
-INSERT INTO t VALUES ('test')
+INSERT INTO t VALUES ('test');
 
 -- Test 8: query (line 42)
 SELECT pg_typeof(c) FROM t LIMIT 1;
@@ -33,25 +45,29 @@ SELECT pg_typeof(c) FROM t LIMIT 1;
 SELECT c FROM t WHERE c = 'tEsT';
 
 -- Test 10: statement (line 52)
+DROP TABLE IF EXISTS r;
 CREATE TABLE r (
   c CITEXT[]
-)
+);
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 11: query (line 58)
-SHOW CREATE TABLE r
+SELECT column_name, data_type, udt_name
+FROM information_schema.columns
+WHERE table_name = 'r'
+ORDER BY ordinal_position;
 
 -- Test 12: statement (line 68)
-INSERT INTO r VALUES (ARRAY['test', 'TESTER'])
+INSERT INTO r VALUES (ARRAY['test', 'TESTER']);
 
 -- Test 13: query (line 71)
 SELECT pg_typeof(c) FROM r LIMIT 1;
 
 -- Test 14: query (line 76)
-SELECT c FROM r WHERE c = ARRAY['test', 'TESTER'];
+SELECT c FROM r WHERE c = ARRAY['test', 'TESTER']::CITEXT[];
 
-query T
+-- query T
 SELECT c FROM r WHERE c = ARRAY['tEsT', 'tEsTeR']::CITEXT[];
 
 -- Test 15: statement (line 86)
@@ -61,17 +77,19 @@ DROP TABLE IF EXISTS t;
 CREATE TABLE t (
   k INT PRIMARY KEY,
   c CITEXT,
-  FAMILY (k),
-  FAMILY (c)
-)
+  CHECK (k IS NOT NULL)
+);
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 17: query (line 98)
-SHOW CREATE TABLE t
+SELECT column_name, data_type, udt_name
+FROM information_schema.columns
+WHERE table_name = 't'
+ORDER BY ordinal_position;
 
 -- Test 18: statement (line 110)
-INSERT INTO t VALUES (1, 'test')
+INSERT INTO t VALUES (1, 'test');
 
 -- Test 19: query (line 113)
 SELECT pg_typeof(c) FROM t LIMIT 1;
@@ -86,17 +104,19 @@ DROP TABLE IF EXISTS r;
 CREATE TABLE r (
   k INT PRIMARY KEY,
   c CITEXT[],
-  FAMILY (k),
-  FAMILY (c)
-)
+  CHECK (k IS NOT NULL)
+);
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 23: query (line 135)
-SHOW CREATE TABLE r
+SELECT column_name, data_type, udt_name
+FROM information_schema.columns
+WHERE table_name = 'r'
+ORDER BY ordinal_position;
 
 -- Test 24: statement (line 147)
-INSERT INTO r VALUES (1, ARRAY['test', 'TESTER'])
+INSERT INTO r VALUES (1, ARRAY['test', 'TESTER']);
 
 -- Test 25: query (line 150)
 SELECT pg_typeof(c) FROM r LIMIT 1;
@@ -105,9 +125,10 @@ SELECT pg_typeof(c) FROM r LIMIT 1;
 SELECT c FROM r WHERE c = ARRAY['tEsT', 'tEsTeR']::CITEXT[];
 
 -- Test 27: query (line 162)
-CREATE TABLE s (c CITEXT COLLATE "en_US");
+DROP TABLE IF EXISTS s;
+CREATE TABLE s (c CITEXT COLLATE "en");
 
-query B
+-- query B
 SELECT 'test'::CITEXT = 'TEST'::CITEXT;
 
 -- Test 28: query (line 170)
@@ -144,7 +165,7 @@ SELECT 'I'::CITEXT = 'ı'::CITEXT;
 SELECT 'ß'::CITEXT = 'SS'::CITEXT;
 
 -- Test 39: query (line 234)
-SELECT NULL::CITEXT = NULL::CITEXT IS NULL
+SELECT NULL::CITEXT = NULL::CITEXT IS NULL;
 
 -- Test 40: query (line 239)
 SELECT 'A'::CITEXT < 'a'::CITEXT;
@@ -155,10 +176,10 @@ SELECT 'a'::CITEXT < 'A'::CITEXT;
 -- Test 42: query (line 249)
 SELECT 'test'::CITEXT LIKE 'TEST';
 
-query error unsupported comparison operator: <citext> ILIKE <citext>
+-- query error unsupported comparison operator: <citext> ILIKE <citext>
 SELECT 'test'::CITEXT ILIKE 'TEST'::CITEXT;
 
-query B
+-- query B
 SELECT ARRAY['test', 'TESTER']::CITEXT[] = ARRAY['tEsT', 'tEsTeR']::CITEXT[];
 
 -- Test 43: query (line 260)
@@ -168,7 +189,7 @@ SELECT ARRAY['test', 'TESTER']::CITEXT[] = ARRAY['TESTING', 'TESTER']::CITEXT[];
 SELECT ARRAY[]::CITEXT[] = ARRAY['TESTING', 'TESTER']::CITEXT[];
 
 -- Test 45: statement (line 270)
-CREATE TYPE IF NOT EXISTS ctype AS (id INT, c CITEXT);
+CREATE TYPE ctype AS (id INT, c CITEXT);
 
 -- Test 46: statement (line 273)
 CREATE TABLE composite_citext_tbl (k INT PRIMARY KEY, a ctype);
@@ -183,11 +204,13 @@ SELECT (a).c FROM composite_citext_tbl WHERE (a).c = 'test' ORDER BY (a).id;
 SELECT pg_typeof((a).c) FROM composite_citext_tbl LIMIT 1;
 
 -- Test 50: query (line 290)
-CREATE TABLE citext_with_width_tbl (a CITEXT(10));
+CREATE TABLE citext_with_width_tbl (
+  a CITEXT,
+  CHECK (char_length(a) <= 10)
+);
 
-query T
+-- query T
 SELECT cast('test'::TEXT AS CITEXT);
 
 -- Test 51: query (line 298)
 SELECT pg_collation_for('foo'::CITEXT);
-
