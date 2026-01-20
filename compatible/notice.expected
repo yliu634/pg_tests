@@ -1,0 +1,16 @@
+SET
+psql:pg_tests/compatible/notice.sql:17: ERROR:  database "d" already exists
+psql:pg_tests/compatible/notice.sql:18: ERROR:  schema "d" does not exist
+LINE 1: CREATE TABLE d.t (x int);
+                     ^
+psql:pg_tests/compatible/notice.sql:21: ERROR:  syntax error at or near "."
+LINE 1: ALTER TABLE d.t RENAME TO d.t2;
+                                   ^
+psql:pg_tests/compatible/notice.sql:24: ERROR:  type "color" already exists
+psql:pg_tests/compatible/notice.sql:27: ERROR:  enum label "black" already exists
+psql:pg_tests/compatible/notice.sql:30: NOTICE:  enum label "black" already exists, skipping
+ALTER TYPE
+psql:pg_tests/compatible/notice.sql:33: ERROR:  relation "v" already exists
+psql:pg_tests/compatible/notice.sql:36: ERROR:  cannot refresh materialized view "public.v" concurrently
+HINT:  Create a unique index with no WHERE clause on one or more columns of the materialized view.
+UNLISTEN

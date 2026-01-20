@@ -1,0 +1,151 @@
+SET
+psql:pg_tests/compatible/owner.sql:7: ERROR:  role "testuser" does not exist
+psql:pg_tests/compatible/owner.sql:10: ERROR:  role "new_role" already exists
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/owner.sql:19: ERROR:  role "testuser" does not exist
+psql:pg_tests/compatible/owner.sql:22: ERROR:  relation "t2" already exists
+psql:pg_tests/compatible/owner.sql:25: ERROR:  relation "t" already exists
+psql:pg_tests/compatible/owner.sql:28: ERROR:  role "testuser" does not exist
+GRANT
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/owner.sql:36: ERROR:  relation "v" already exists
+psql:pg_tests/compatible/owner.sql:39: ERROR:  role "testuser" does not exist
+psql:pg_tests/compatible/owner.sql:42: ERROR:  "v" is not a view
+psql:pg_tests/compatible/owner.sql:45: ERROR:  relation "v2" does not exist
+GRANT
+psql:pg_tests/compatible/owner.sql:51: ERROR:  "v" is not a view
+HINT:  Use DROP MATERIALIZED VIEW to remove a materialized view.
+DROP TABLE
+psql:pg_tests/compatible/owner.sql:57: ERROR:  relation "s" already exists
+psql:pg_tests/compatible/owner.sql:60: ERROR:  role "testuser" does not exist
+ALTER SEQUENCE
+ALTER SEQUENCE
+GRANT
+DROP SEQUENCE
+psql:pg_tests/compatible/owner.sql:75: ERROR:  role "testuser" does not exist
+psql:pg_tests/compatible/owner.sql:80: ERROR:  database "d" already exists
+DROP TABLE
+psql:pg_tests/compatible/owner.sql:86: ERROR:  schema "d" does not exist
+LINE 1: CREATE TABLE d.t();
+                     ^
+psql:pg_tests/compatible/owner.sql:89: ERROR:  syntax error at or near "."
+LINE 1: ALTER TABLE d.t RENAME TO d.t2;
+                                   ^
+psql:pg_tests/compatible/owner.sql:92: ERROR:  syntax error at or near "."
+LINE 1: ALTER TABLE d.t2 RENAME TO d.t;
+                                    ^
+GRANT
+psql:pg_tests/compatible/owner.sql:98: ERROR:  schema "d" does not exist
+ALTER DATABASE
+DROP DATABASE
+psql:pg_tests/compatible/owner.sql:107: ERROR:  role "testuser2" already exists
+psql:pg_tests/compatible/owner.sql:110: ERROR:  role "testuser" does not exist
+CREATE DATABASE
+psql:pg_tests/compatible/owner.sql:120: ERROR:  role "testuser" does not exist
+GRANT
+REVOKE
+GRANT
+psql:pg_tests/compatible/owner.sql:134: ERROR:  role "testuser" does not exist
+REVOKE
+DROP TABLE
+psql:pg_tests/compatible/owner.sql:141: ERROR:  schema "d" does not exist
+LINE 1: CREATE TABLE d.t();
+                     ^
+GRANT
+psql:pg_tests/compatible/owner.sql:147: ERROR:  schema "d" does not exist
+ALTER DATABASE
+ALTER ROLE
+psql:pg_tests/compatible/owner.sql:160: ERROR:  database "d" does not exist
+DROP DATABASE
+psql:pg_tests/compatible/owner.sql:166: ERROR:  role "testuser" does not exist
+CREATE DATABASE
+DROP TABLE
+psql:pg_tests/compatible/owner.sql:175: ERROR:  schema "d" does not exist
+LINE 1: CREATE TABLE d.t();
+                     ^
+psql:pg_tests/compatible/owner.sql:180: ERROR:  role "testuser" does not exist
+psql:pg_tests/compatible/owner.sql:181: ERROR:  schema "d" does not exist
+psql:pg_tests/compatible/owner.sql:184: ERROR:  role "testuser" does not exist
+DROP TABLE
+CREATE TABLE
+REVOKE
+psql:pg_tests/compatible/owner.sql:194: ERROR:  role "testuser" does not exist
+psql:pg_tests/compatible/owner.sql:200: ERROR:  syntax error at or near "USE"
+LINE 1: USE d
+        ^
+CREATE TYPE
+DROP TABLE
+psql:pg_tests/compatible/owner.sql:207: ERROR:  schema "s" does not exist
+LINE 1: CREATE TABLE s.t();
+                     ^
+psql:pg_tests/compatible/owner.sql:212: ERROR:  role "testuser" does not exist
+psql:pg_tests/compatible/owner.sql:213: ERROR:  syntax error at or near "."
+LINE 1: REVOKE ALL ON SCHEMA d.s FROM testuser;
+                              ^
+psql:pg_tests/compatible/owner.sql:214: ERROR:  schema "d" does not exist
+psql:pg_tests/compatible/owner.sql:215: ERROR:  cross-database references are not implemented: "d.s.t"
+psql:pg_tests/compatible/owner.sql:220: ERROR:  role "testuser" does not exist
+psql:pg_tests/compatible/owner.sql:225: ERROR:  relation "system.jobs" does not exist
+LINE 1: SELECT id FROM system.jobs WHERE owner = 'testuser' LIMIT 1;
+                       ^
+psql:pg_tests/compatible/owner.sql:228: ERROR:  relation "system.jobs" does not exist
+LINE 1: SELECT id FROM system.jobs WHERE owner = 'testuser2' LIMIT 1...
+                       ^
+psql:pg_tests/compatible/owner.sql:231: ERROR:  relation "system.jobs" does not exist
+LINE 1: SELECT id FROM system.jobs WHERE owner = 'node' LIMIT 1;
+                       ^
+psql:pg_tests/compatible/owner.sql:234: ERROR:  syntax error at or near "JOB"
+LINE 1: ALTER JOB $testuser_job_id OWNER TO testuser2;
+              ^
+psql:pg_tests/compatible/owner.sql:237: ERROR:  syntax error at or near "$"
+LINE 1: SELECT owner FROM system.jobs WHERE id = $testuser_job_id;
+                                                 ^
+psql:pg_tests/compatible/owner.sql:240: ERROR:  syntax error at or near "JOB"
+LINE 1: ALTER JOB $testuser_job_id OWNER TO testuser;
+              ^
+psql:pg_tests/compatible/owner.sql:243: ERROR:  syntax error at or near "$"
+LINE 1: SELECT owner FROM system.jobs WHERE id = $testuser_job_id;
+                                                 ^
+psql:pg_tests/compatible/owner.sql:246: ERROR:  syntax error at or near "JOB"
+LINE 1: ALTER JOB $node_job_id OWNER TO testuser;
+              ^
+psql:pg_tests/compatible/owner.sql:249: ERROR:  syntax error at or near "JOB"
+LINE 1: ALTER JOB $testuser_job_id OWNER TO node;
+              ^
+psql:pg_tests/compatible/owner.sql:252: ERROR:  role "testrole" already exists
+psql:pg_tests/compatible/owner.sql:255: ERROR:  role "otherrole" already exists
+psql:pg_tests/compatible/owner.sql:258: ERROR:  role "testuser3" already exists
+GRANT ROLE
+psql:pg_tests/compatible/owner.sql:264: ERROR:  syntax error at or near "JOB"
+LINE 1: ALTER JOB $testuser_job_id OWNER TO testrole;
+              ^
+psql:pg_tests/compatible/owner.sql:267: ERROR:  syntax error at or near "$"
+LINE 1: SELECT owner FROM system.jobs WHERE id = $testuser_job_id;
+                                                 ^
+psql:pg_tests/compatible/owner.sql:270: ERROR:  syntax error at or near "JOB"
+LINE 1: ALTER JOB $testuser_job_id OWNER TO testuser2;
+              ^
+psql:pg_tests/compatible/owner.sql:273: ERROR:  syntax error at or near "$"
+LINE 1: SELECT owner FROM system.jobs WHERE id = $testuser_job_id;
+                                                 ^
+psql:pg_tests/compatible/owner.sql:276: ERROR:  syntax error at or near "JOB"
+LINE 1: ALTER JOB $testuser_job_id OWNER TO testuser;
+              ^
+psql:pg_tests/compatible/owner.sql:279: ERROR:  syntax error at or near "$"
+LINE 1: SELECT owner FROM system.jobs WHERE id = $testuser_job_id;
+                                                 ^
+psql:pg_tests/compatible/owner.sql:282: ERROR:  syntax error at or near "JOB"
+LINE 1: ALTER JOB $testuser_job_id OWNER TO testuser3;
+              ^
+psql:pg_tests/compatible/owner.sql:285: ERROR:  syntax error at or near "JOB"
+LINE 1: ALTER JOB $testuser_job_id OWNER TO testrole;
+              ^
+psql:pg_tests/compatible/owner.sql:290: ERROR:  syntax error at or near "JOB"
+LINE 1: ALTER JOB $testuser_job_id OWNER TO testuser3;
+              ^
+psql:pg_tests/compatible/owner.sql:293: ERROR:  syntax error at or near "JOB"
+LINE 1: ALTER JOB $testuser_job_id OWNER TO otherrole;
+              ^
+RESET

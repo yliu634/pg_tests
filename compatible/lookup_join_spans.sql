@@ -1,18 +1,28 @@
+SET client_min_messages = warning;
+
 -- PostgreSQL compatible tests from lookup_join_spans
 -- 37 tests
 
 -- Test 1: statement (line 10)
-insert into metrics (id,nullable,name) values (1,NULL,'cpu'), (2,1,'cpu'), (3,NULL,'mem'), (4,2,'disk')
+
+DROP TABLE IF EXISTS metrics CASCADE;
+CREATE TABLE metrics (
+  id INT PRIMARY KEY,
+  nullable INT,
+  name TEXT
+);
+
+insert into metrics (id,nullable,name) values (1,NULL,'cpu'), (2,1,'cpu'), (3,NULL,'mem'), (4,2,'disk');
 
 -- Test 2: statement (line 13)
+DROP TABLE IF EXISTS metric_values CASCADE;
 CREATE TABLE metric_values (
   metric_id INT8,
   time      TIMESTAMPTZ,
   nullable  INT,
   value     INT8,
-  PRIMARY KEY (metric_id, time),
-  INDEX secondary (metric_id, nullable, time)
-)
+  PRIMARY KEY (metric_id, time));
+CREATE INDEX secondary ON metric_values (metric_id, nullable, time);
 
 -- Test 3: statement (line 23)
 insert into metric_values (metric_id, time, nullable, value) values
@@ -23,9 +33,10 @@ insert into metric_values (metric_id, time, nullable, value) values
  (2,'2020-01-01 00:01:01+00:00',-11,4),
  (2,'2020-01-01 00:01:02+00:00',-10,5),
  (3,'2020-01-01 00:01:00+00:00',NULL,6),
- (3,'2020-01-01 00:01:01+00:00',3,7)
+ (3,'2020-01-01 00:01:01+00:00',3,7);
 
 -- Test 4: statement (line 35)
+DROP TABLE IF EXISTS metric_values_desc CASCADE;
 CREATE TABLE metric_values_desc (
   metric_id INT8,
   time      TIMESTAMPTZ,
@@ -33,7 +44,7 @@ CREATE TABLE metric_values_desc (
   value     INT8,
   PRIMARY KEY (metric_id, time DESC),
   INDEX secondary (metric_id, nullable DESC, time DESC)
-)
+);
 
 -- Test 5: statement (line 45)
 insert into metric_values_desc select * from metric_values
@@ -362,6 +373,7 @@ WHERE
 ORDER BY value
 
 -- Test 35: statement (line 488)
+DROP TABLE IF EXISTS order_line CASCADE;
 CREATE TABLE order_line (ol_o_id INT8, ol_i_id INT8);
 INSERT
 INTO
@@ -370,13 +382,13 @@ VALUES
   (19, 6463), (20, 6463), (100, 6463), (101, 6463);
 CREATE INDEX ol_io ON order_line (ol_i_id, ol_o_id);
 CREATE TABLE stock (s_i_id INT8);
-INSERT INTO stock (s_i_id) VALUES (6463)
+INSERT INTO stock (s_i_id) VALUES (6463);
 
 -- Test 36: query (line 499)
 SELECT
   s_i_id, ol_o_id
 FROM
-  stock INNER LOOKUP JOIN order_line ON s_i_id = ol_i_id
+-- COMMENTED: CockroachDB-specific LOOKUP JOIN:   stock INNER LOOKUP JOIN order_line ON s_i_id = ol_i_id
 WHERE
   ol_o_id BETWEEN 20 AND 100
 
@@ -384,7 +396,10 @@ WHERE
 SELECT
   s_i_id, ol_o_id
 FROM
-  stock INNER LOOKUP JOIN order_line ON s_i_id = ol_i_id
+-- COMMENTED: CockroachDB-specific LOOKUP JOIN:   stock INNER LOOKUP JOIN order_line ON s_i_id = ol_i_id
 WHERE
   ol_o_id IN (19, 20, 21) AND ol_o_id >= 20
 
+
+
+RESET client_min_messages;

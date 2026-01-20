@@ -1,0 +1,165 @@
+SET
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:13: ERROR:  relation "v" already exists
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:16: ERROR:  syntax error at or near "["
+LINE 1: SELECT table_name FROM [SHOW TABLES] WHERE type = 'materiali...
+                               ^
+ x 
+---
+(0 rows)
+
+INSERT 0 1
+ x 
+---
+(0 rows)
+
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:28: ERROR:  "v" is not a table or materialized view
+ x 
+---
+(0 rows)
+
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:37: ERROR:  cannot create index on relation "v"
+DETAIL:  This operation is not supported for views.
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:40: ERROR:  column "y" does not exist
+LINE 1: SELECT y FROM v WHERE y > 4;
+               ^
+INSERT 0 1
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:46: ERROR:  "v" is not a table or materialized view
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:49: ERROR:  column "y" does not exist
+LINE 1: SELECT y FROM v WHERE y > 4;
+               ^
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:52: ERROR:  "v" is not an index
+HINT:  Use DROP VIEW to remove a view.
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:55: ERROR:  column "y" does not exist
+LINE 1: SELECT y FROM v WHERE y > 4;
+               ^
+BEGIN
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:61: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:64: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:70: ERROR:  INSERT has more expressions than target columns
+LINE 1: INSERT INTO v VALUES (1, 2);
+                                 ^
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:73: ERROR:  column "y" does not exist
+LINE 1: UPDATE v SET x = 1 WHERE y = 1;
+                                 ^
+DELETE 0
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:79: ERROR:  "v" is not a table
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+SELECT 0
+CREATE INDEX
+INSERT 0 2
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:96: ERROR:  could not create unique index "i"
+DETAIL:  Key (x)=(1) is duplicated.
+CREATE VIEW
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:100: ERROR:  relation "materialized_view" already exists
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:103: ERROR:  "materialized_view" is not a view
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:106: ERROR:  "normal_view" is not a materialized view
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:109: ERROR:  "materialized_view" is not a view
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:112: ERROR:  "normal_view" is not a materialized view
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:115: ERROR:  "materialized_view" is not a view
+HINT:  Use DROP MATERIALIZED VIEW to remove a materialized view.
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:118: ERROR:  "normal_view" is not a materialized view
+HINT:  Use DROP VIEW to remove a view.
+SELECT 1
+REFRESH MATERIALIZED VIEW
+ ?column? 
+----------
+        1
+(1 row)
+
+REFRESH MATERIALIZED VIEW
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:133: ERROR:  materialized view "with_options" has not been populated
+HINT:  Use the REFRESH MATERIALIZED VIEW command.
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:137: ERROR:  syntax error at or near "#"
+LINE 1: # Regression test for null data in materialized views.
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:138: ERROR:  relation "t57108" already exists
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:139: ERROR:  duplicate key value violates unique constraint "t57108_pkey"
+DETAIL:  Key (id)=(1) already exists.
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:140: ERROR:  relation "t57108_v" already exists
+ a 
+---
+ 1
+  
+(2 rows)
+
+REFRESH MATERIALIZED VIEW
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:151: ERROR:  role "testuser" does not exist
+REFRESH MATERIALIZED VIEW
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:159: ERROR:  role "testuser" does not exist
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:164: ERROR:  database "test" does not exist
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:167: ERROR:  role "testuser" does not exist
+REFRESH MATERIALIZED VIEW
+REFRESH MATERIALIZED VIEW
+CREATE SEQUENCE
+SELECT 1
+ nextval 
+---------
+       1
+(1 row)
+
+BEGIN
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:190: ERROR:  relation "system.descriptor" does not exist
+LINE 1: SELECT * FROM system.descriptor;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:195: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:196: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+              now              
+-------------------------------
+ 2026-01-19 23:57:24.470247+00
+(1 row)
+
+ALTER TABLE
+              now              
+-------------------------------
+ 2026-01-19 23:57:24.531011+00
+(1 row)
+
+INSERT 0 1
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:218: ERROR:  relation "mat_view_as_of" does not exist
+LINE 1: SELECT a FROM mat_view_as_of ORDER BY a;
+                      ^
+INSERT 0 1
+INSERT 0 1
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:227: ERROR:  relation "mat_view_as_of" does not exist
+LINE 1: SELECT a FROM mat_view_as_of ORDER BY a;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:230: ERROR:  relation "mat_view_as_of" does not exist
+LINE 1: SELECT a FROM mat_view_as_of ORDER BY a;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:233: ERROR:  relation "mat_view_as_of" does not exist
+LINE 1: SELECT a FROM mat_view_as_of ORDER BY a;
+                      ^
+ALTER TABLE
+              now              
+-------------------------------
+ 2026-01-19 23:57:24.625724+00
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:242: ERROR:  relation "mat_view_as_of" does not exist
+LINE 1: SELECT a FROM mat_view_as_of ORDER BY a;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:245: ERROR:  relation "mat_view_as_of_no_data" does not exist
+LINE 1: SELECT a FROM mat_view_as_of_no_data ORDER BY a;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:248: ERROR:  relation "mat_view_as_of_no_data" does not exist
+LINE 1: SELECT a FROM mat_view_as_of_no_data ORDER BY a;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:251: ERROR:  relation "mat_view_as_of_no_data" does not exist
+LINE 1: SELECT a FROM mat_view_as_of_no_data ORDER BY a;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/materialized_view.sql:254: ERROR:  relation "mat_view_as_of_no_data" does not exist
+LINE 1: SELECT a FROM mat_view_as_of_no_data ORDER BY a;
+                      ^
+RESET

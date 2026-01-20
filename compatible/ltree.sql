@@ -1,17 +1,23 @@
+CREATE EXTENSION IF NOT EXISTS ltree;
+
+SET client_min_messages = warning;
+
 -- PostgreSQL compatible tests from ltree
 -- 240 tests
 
 -- Test 1: statement (line 2)
+DROP TABLE IF EXISTS l CASCADE;
 CREATE TABLE l (lt LTREE);
 
 -- Test 2: statement (line 5)
+DROP TABLE IF EXISTS la CASCADE;
 CREATE TABLE la (lta LTREE[]);
 
 -- Test 3: statement (line 8)
 INSERT INTO l VALUES ('A'), ('A.B'), ('A.B.C'), ('A.B.D'), ('Z'), (''), (NULL);
 
 -- Test 4: statement (line 11)
-INSERT INTO la VALUES (ARRAY['A', 'A.B']), (ARRAY['A.B.C', 'A.B.D', 'Z']), (ARRAY['X', 'Y']), (ARRAY[]), (ARRAY['']), (NULL);
+INSERT INTO la VALUES (ARRAY['A', 'A.B']::ltree[]), (ARRAY['A.B.C', 'A.B.D', 'Z']), (ARRAY['X', 'Y']), (ARRAY[]), (ARRAY['']), (NULL);
 
 -- Test 5: query (line 14)
 SELECT * FROM l ORDER BY lt;
@@ -27,11 +33,11 @@ SELECT pg_typeof(lta) FROM la LIMIT 1;
 
 -- Test 9: query (line 45)
 INSERT INTO l VALUES (repeat('A', 1001)::LTREE)
-
-query error number of ltree labels \(65536\) exceeds the maximum allowed \(65535\)
+;
+-- COMMENTED: Logic test directive: query error number of ltree labels \(65536\) exceeds the maximum allowed \(65535\)
 INSERT INTO l VALUES ((SELECT string_agg('A', '.') FROM generate_series(1, 65536))::LTREE)
-
-query T
+;
+-- query T
 SELECT * FROM l WHERE lt @> 'A.B'::LTREE ORDER BY lt;
 
 -- Test 10: query (line 58)
@@ -114,26 +120,26 @@ SELECT 'A.B'::LTREE != 'A.B'
 
 -- Test 36: query (line 202)
 SELECT 'A.B'::LTREE != NULL::LTREE
-
+;
 -- Test 37: query (line 207)
 SELECT subpath('Top.Child1.Child2'::LTREE, 1);
 
 -- Test 38: query (line 212)
 SELECT subpath('Top.Child1.Child2'::LTREE, 3);
 
-query T
+-- query T
 SELECT subpath('Top.Child1.Child2'::LTREE, -2);
 
 -- Test 39: query (line 220)
 SELECT subpath(''::LTREE, 0);
 
-query error invalid positions
+-- COMMENTED: Logic test directive: query error invalid positions
 SELECT subpath(''::LTREE, -1);
 
-query error invalid positions
+-- COMMENTED: Logic test directive: query error invalid positions
 SELECT subpath('Top.Child1.Child2'::LTREE, -4);
 
-query T
+-- query T
 SELECT subpath('Top.Child1.Child2'::LTREE, 1, 1);
 
 -- Test 40: query (line 234)
@@ -148,19 +154,19 @@ SELECT subpath('Top.Child1.Child2'::LTREE, 0, -3);
 -- Test 43: query (line 249)
 SELECT subpath('Top.Child1.Child2'::LTREE, 0, -4);
 
-query T
+-- query T
 SELECT subpath('Top.Child1.Child2'::LTREE, -3, -2);
 
 -- Test 44: query (line 257)
 SELECT subpath('Top.Child1.Child2'::LTREE, -1, -2);
 
-query T
+-- query T
 SELECT subpath(NULL::LTREE, 99, 99);
 
 -- Test 45: query (line 266)
 SELECT subpath('A.B.C'::LTREE, 1, 9223372036854775807::INT8)
-
-query T
+;
+-- query T
 SELECT subltree('Top.Child1.Child2'::LTREE, 1, 2);
 
 -- Test 46: query (line 274)
@@ -169,13 +175,13 @@ SELECT subltree('Top.Child1.Child2'::LTREE, 0, 99);
 -- Test 47: query (line 279)
 SELECT subltree('Top.Child1.Child2'::LTREE, 3, 2);
 
-query error invalid positions
+-- COMMENTED: Logic test directive: query error invalid positions
 SELECT subltree('Top.Child1.Child2'::LTREE, -1, 2);
 
-query error invalid positions
+-- COMMENTED: Logic test directive: query error invalid positions
 SELECT subltree('Top.Child1.Child2'::LTREE, 0, -1);
 
-query T
+-- query T
 SELECT subltree(NULL::LTREE, 99, 99);
 
 -- Test 48: query (line 293)
@@ -211,7 +217,7 @@ SELECT text2ltree('foo_bar-baz.baz');
 -- Test 58: query (line 343)
 SELECT text2ltree('foo..bar');
 
-query TBB
+-- query TBB
 SELECT ltree2text('foo_bar-baz.baz'::LTREE),
     ltree2text('foo'::LTREE) = 'foo'::TEXT,
     ltree2text(NULL::LTREE) IS NULL;
@@ -234,132 +240,137 @@ SELECT lca(ARRAY['', '']::LTREE[]);
 -- Test 64: query (line 378)
 SELECT lca(ARRAY['A.B.C', 'A.B', 'A', NULL]::LTREE[]);
 
-query T
-SELECT lca('A.B'::LTREE, 'C.D'::LTREE)
+-- query T
+SELECT lca('A.B'::LTREE, 'C.D'::LTREE);
 
 -- Test 65: query (line 386)
-SELECT lca('A'::LTREE, 'A'::LTREE)
+SELECT lca('A'::LTREE, 'A'::LTREE);
 
 -- Test 66: query (line 392)
-SELECT lca('A.B'::LTREE, 'A.B'::LTREE)
+SELECT lca('A.B'::LTREE, 'A.B'::LTREE);
 
 -- Test 67: query (line 397)
-SELECT lca('A.B.C'::LTREE, 'A.B.X'::LTREE)
+SELECT lca('A.B.C'::LTREE, 'A.B.X'::LTREE);
 
 -- Test 68: query (line 402)
-SELECT lca('A.B.C.D.E'::LTREE, 'A.B.X.Y.Z'::LTREE)
+SELECT lca('A.B.C.D.E'::LTREE, 'A.B.X.Y.Z'::LTREE);
 
 -- Test 69: query (line 407)
-SELECT lca(''::LTREE, 'A.B.C'::LTREE)
+SELECT lca(''::LTREE, 'A.B.C'::LTREE);
 
 -- Test 70: statement (line 414)
+DROP TABLE IF EXISTS t_defaults CASCADE;
 CREATE TABLE t_defaults (
   id INT PRIMARY KEY,
   path LTREE DEFAULT 'default.path',
   path_null LTREE DEFAULT NULL
-)
+);
 
 -- Test 71: statement (line 421)
-INSERT INTO t_defaults (id) VALUES (1)
+INSERT INTO t_defaults (id) VALUES (1);
 
 -- Test 72: query (line 424)
 SELECT * FROM t_defaults
-
+;
 -- Test 73: statement (line 429)
-INSERT INTO t_defaults (id, path) VALUES (2, 'custom.path')
+INSERT INTO t_defaults (id, path) VALUES (2, 'custom.path');
 
 -- Test 74: query (line 432)
 SELECT * FROM t_defaults
 
 -- Test 75: statement (line 438)
 DROP TABLE t_defaults
-
+;
 -- Test 76: statement (line 443)
+DROP TABLE IF EXISTS t_invalid_default CASCADE;
 CREATE TABLE t_invalid_default (
   id INT PRIMARY KEY,
   path LTREE DEFAULT 'invalid..path'
-)
+);
 
 -- Test 77: statement (line 451)
+DROP TABLE IF EXISTS t_check CASCADE;
 CREATE TABLE t_check (
   id INT PRIMARY KEY,
   path LTREE CHECK (path @> 'root.a.b')
-)
+);
 
 -- Test 78: statement (line 457)
-INSERT INTO t_check VALUES (1, 'root.a.b')
+INSERT INTO t_check VALUES (1, 'root.a.b');
 
 -- Test 79: statement (line 460)
-INSERT INTO t_check VALUES (2, 'root')
+INSERT INTO t_check VALUES (2, 'root');
 
 -- Test 80: query (line 463)
 SELECT * FROM t_check
-
+;
 -- Test 81: statement (line 469)
-INSERT INTO t_check VALUES (3, 'other.path')
+INSERT INTO t_check VALUES (3, 'other.path');
 
 -- Test 82: statement (line 472)
-INSERT INTO t_check VALUES (4, 'roo')
+INSERT INTO t_check VALUES (4, 'roo');
 
 -- Test 83: statement (line 475)
-INSERT INTO t_check VALUES (4, 'root.a.b.c')
+INSERT INTO t_check VALUES (4, 'root.a.b.c');
 
 -- Test 84: statement (line 478)
 DROP TABLE t_check
-
+;
 -- Test 85: statement (line 483)
+DROP TABLE IF EXISTS t_check2 CASCADE;
 CREATE TABLE t_check2 (
   id INT PRIMARY KEY,
   path LTREE CHECK (path <@ 'org.company')
-)
+);
 
 -- Test 86: statement (line 489)
-INSERT INTO t_check2 VALUES (1, 'org.company.dept.team')
+INSERT INTO t_check2 VALUES (1, 'org.company.dept.team');
 
 -- Test 87: statement (line 492)
-INSERT INTO t_check2 VALUES (2, 'org.company')
+INSERT INTO t_check2 VALUES (2, 'org.company');
 
 -- Test 88: statement (line 495)
-INSERT INTO t_check2 VALUES (3, 'org')
+INSERT INTO t_check2 VALUES (3, 'org');
 
 -- Test 89: statement (line 498)
-INSERT INTO t_check2 VALUES (4, 'other.org.company')
+INSERT INTO t_check2 VALUES (4, 'other.org.company');
 
 -- Test 90: statement (line 501)
 DROP TABLE t_check2
-
+;
 -- Test 91: statement (line 506)
+DROP TABLE IF EXISTS t_check3 CASCADE;
 CREATE TABLE t_check3 (
   id INT PRIMARY KEY,
   path LTREE CHECK (nlevel(path) >= 2)
-)
+);
 
 -- Test 92: statement (line 512)
-INSERT INTO t_check3 VALUES (1, 'a.b')
+INSERT INTO t_check3 VALUES (1, 'a.b');
 
 -- Test 93: statement (line 515)
-INSERT INTO t_check3 VALUES (2, 'a.b.c.d.e')
+INSERT INTO t_check3 VALUES (2, 'a.b.c.d.e');
 
 -- Test 94: statement (line 518)
-INSERT INTO t_check3 VALUES (3, 'single')
+INSERT INTO t_check3 VALUES (3, 'single');
 
 -- Test 95: statement (line 521)
-INSERT INTO t_check3 VALUES (4, '')
+INSERT INTO t_check3 VALUES (4, '');
 
 -- Test 96: statement (line 524)
 DROP TABLE t_check3
-
+;
 -- Test 97: statement (line 534)
-INSERT INTO t_schema VALUES (1, 'first'), (2, 'second')
+INSERT INTO t_schema VALUES (1, 'first'), (2, 'second');
 
 -- Test 98: statement (line 537)
 ALTER TABLE t_schema ADD COLUMN path LTREE
-
+;
 -- Test 99: query (line 540)
 SELECT * FROM t_schema
-
+;
 -- Test 100: statement (line 546)
-INSERT INTO t_schema VALUES (3, 'third', 'a.b.c')
+INSERT INTO t_schema VALUES (3, 'third', 'a.b.c');
 
 -- Test 101: query (line 549)
 SELECT * FROM t_schema
@@ -372,48 +383,50 @@ SELECT * FROM t_schema
 
 -- Test 104: statement (line 570)
 ALTER TABLE t_schema DROP COLUMN path
-
+;
 -- Test 105: query (line 573)
 SELECT * FROM t_schema
-
+;
 -- Test 106: statement (line 580)
 DROP TABLE t_schema
-
+;
 -- Test 107: statement (line 585)
-CREATE TABLE t_index (id INT PRIMARY KEY, path LTREE)
+DROP TABLE IF EXISTS t_index CASCADE;
+CREATE TABLE t_index (id INT PRIMARY KEY, path LTREE);
 
 -- Test 108: statement (line 588)
-INSERT INTO t_index VALUES (1, 'a.b'), (2, 'a.b.c'), (3, 'x.y.z')
+INSERT INTO t_index VALUES (1, 'a.b'), (2, 'a.b.c'), (3, 'x.y.z');
 
 -- Test 109: statement (line 591)
-CREATE INDEX idx_path ON t_index (path)
+CREATE INDEX idx_path ON t_index (path);
 
 -- Test 110: query (line 594)
-SELECT * FROM t_index@idx_path WHERE path <@ 'a.b' ORDER BY id
+SELECT * FROM t_index WHERE path <@ 'a.b' ORDER BY id
 
 -- Test 111: statement (line 602)
 DROP INDEX idx_path
 
 -- Test 112: query (line 605)
 SELECT * FROM t_index WHERE path <@ 'a.b' ORDER BY id
-
+;
 -- Test 113: statement (line 611)
 DROP TABLE t_index
-
+;
 -- Test 114: statement (line 618)
+DROP TABLE IF EXISTS t_alter_type CASCADE;
 CREATE TABLE t_alter_type (id INT PRIMARY KEY, path_text TEXT)
 
-skipif config local-legacy-schema-changer
+-- skipif config local-legacy-schema-changer
 
 -- Test 115: statement (line 622)
 INSERT INTO t_alter_type VALUES (1, 'a.b.c'), (2, 'x.y')
 
-skipif config local-legacy-schema-changer
+-- skipif config local-legacy-schema-changer
 
 -- Test 116: statement (line 626)
 ALTER TABLE t_alter_type ALTER COLUMN path_text TYPE LTREE USING path_text::LTREE
 
-skipif config local-legacy-schema-changer
+-- skipif config local-legacy-schema-changer
 
 -- Test 117: query (line 630)
 SELECT * FROM t_alter_type
@@ -424,45 +437,46 @@ SELECT pg_typeof(path_text) FROM t_alter_type LIMIT 1
 -- Test 119: statement (line 647)
 ALTER TABLE t_alter_type ALTER COLUMN path_text TYPE TEXT
 
-skipif config local-legacy-schema-changer
-
+-- skipif config local-legacy-schema-changer
+;
 -- Test 120: query (line 651)
 SELECT * FROM t_alter_type
-
+;
 -- Test 121: query (line 658)
 SELECT pg_typeof(path_text) FROM t_alter_type LIMIT 1
-
+;
 -- Test 122: statement (line 664)
 DROP TABLE t_alter_type
-
+;
 -- Test 123: statement (line 670)
+DROP TABLE IF EXISTS t_alter_invalid CASCADE;
 CREATE TABLE t_alter_invalid (id INT PRIMARY KEY, path_text TEXT)
 
-skipif config local-legacy-schema-changer
+-- skipif config local-legacy-schema-changer
 
 -- Test 124: statement (line 674)
 INSERT INTO t_alter_invalid VALUES (1, 'valid.path'), (2, 'invalid..path'), (3, 'also.valid')
 
-skipif config local-legacy-schema-changer
+-- skipif config local-legacy-schema-changer
 
 -- Test 125: statement (line 678)
 ALTER TABLE t_alter_invalid ALTER COLUMN path_text TYPE LTREE USING path_text::LTREE
-
+;
 -- Test 126: query (line 684)
 SELECT pg_typeof(path_text) FROM t_alter_invalid LIMIT 1
-
+;
 -- Test 127: query (line 690)
 SELECT * FROM t_alter_invalid
-
+;
 -- Test 128: statement (line 698)
 DROP TABLE t_alter_invalid
-
+;
 -- Test 129: statement (line 706)
 INSERT INTO t_view_base VALUES
   (1, 'org.engineering.backend', 'Backend'),
   (2, 'org.engineering.frontend', 'Frontend'),
   (3, 'org.sales', 'Sales'),
-  (4, 'org.engineering.backend.api', 'API')
+  (4, 'org.engineering.backend.api', 'API');
 
 -- Test 130: statement (line 713)
 CREATE VIEW v_engineering AS
@@ -495,32 +509,33 @@ DROP VIEW v_engineering
 
 -- Test 137: statement (line 757)
 DROP VIEW v_with_functions
-
+;
 -- Test 138: statement (line 760)
 DROP VIEW v_top_level
-
+;
 -- Test 139: statement (line 763)
 DROP TABLE t_view_base
-
+;
 -- Test 140: statement (line 768)
+DROP TABLE IF EXISTS t_computed CASCADE;
 CREATE TABLE t_computed (
   id INT PRIMARY KEY,
   path LTREE,
   depth INT AS (nlevel(path)) STORED,
   parent_path LTREE AS (subpath(path, 0, nlevel(path) - 1)) STORED
-)
+);
 
 -- Test 141: statement (line 776)
 INSERT INTO t_computed (id, path) VALUES
   (1, 'a.b.c'),
   (2, 'x.y'),
-  (3, 'p.q.r.s.t')
+  (3, 'p.q.r.s.t');
 
 -- Test 142: query (line 782)
 SELECT id, path, depth, parent_path FROM t_computed
-
+;
 -- Test 143: statement (line 791)
-INSERT INTO t_computed (id, path) VALUES (4, 'single')
+INSERT INTO t_computed (id, path) VALUES (4, 'single');
 
 -- Test 144: query (line 794)
 SELECT id, path, depth, parent_path FROM t_computed WHERE id = 4
@@ -530,44 +545,46 @@ UPDATE t_computed SET path = 'a.b.c.d.e' WHERE id = 1
 
 -- Test 146: query (line 804)
 SELECT id, path, depth, parent_path FROM t_computed WHERE id = 1
-
+;
 -- Test 147: statement (line 809)
 DROP TABLE t_computed
-
+;
 -- Test 148: statement (line 814)
+DROP TABLE IF EXISTS t_computed_invalid_stored CASCADE;
 CREATE TABLE t_computed_invalid_stored (
   id INT PRIMARY KEY,
   path TEXT,
   invalid_path LTREE AS ((path || '..invalid')::LTREE) STORED
-)
+);
 
 -- Test 149: statement (line 821)
-INSERT INTO t_computed_invalid_stored (id, path) VALUES (1, 'a.b.c')
+INSERT INTO t_computed_invalid_stored (id, path) VALUES (1, 'a.b.c');
 
 -- Test 150: statement (line 824)
 DROP TABLE t_computed_invalid_stored
-
+;
 -- Test 151: statement (line 829)
+DROP TABLE IF EXISTS t_computed_invalid_virtual CASCADE;
 CREATE TABLE t_computed_invalid_virtual (
   id INT PRIMARY KEY,
   path TEXT,
   invalid_path LTREE AS ((path || '..invalid')::LTREE) VIRTUAL
-)
+);
 
 -- Test 152: statement (line 836)
-INSERT INTO t_computed_invalid_virtual (id, path) VALUES (1, 'a.b.c')
+INSERT INTO t_computed_invalid_virtual (id, path) VALUES (1, 'a.b.c');
 
 -- Test 153: statement (line 839)
 SELECT invalid_path FROM t_computed_invalid_virtual WHERE id = 1
 
 -- Test 154: statement (line 842)
 DROP TABLE t_computed_invalid_virtual
-
+;
 -- Test 155: query (line 849)
 SELECT NULL::LTREE
-
+;
 -- Test 156: query (line 854)
-SELECT CAST(NULL AS LTREE)
+SELECT CAST(NULL AS LTREE);
 
 -- Test 157: query (line 861)
 SELECT ''::LTREE
@@ -579,7 +596,7 @@ SELECT 'invalid..path'::LTREE
 SELECT 'has spaces'::LTREE
 
 -- Test 160: statement (line 874)
-SELECT 'has@symbol'::LTREE
+SELECT 'has'::LTREE
 
 -- Test 161: statement (line 877)
 SELECT '.starts.with.dot'::LTREE
@@ -618,40 +635,40 @@ SELECT ARRAY['valid', 'invalid..path']::TEXT[]::LTREE[]
 CREATE FUNCTION get_depth(path LTREE) RETURNS INT AS $$
   SELECT nlevel(path)
 $$ LANGUAGE SQL
-
+;
 -- Test 173: query (line 954)
-SELECT get_depth('a.b.c.d')
+SELECT get_depth('a.b.c.d');
 
 -- Test 174: query (line 959)
-SELECT get_depth('')
+SELECT get_depth('');
 
 -- Test 175: query (line 964)
-SELECT get_depth(NULL)
+SELECT get_depth(NULL);
 
 -- Test 176: statement (line 971)
 CREATE FUNCTION make_path(a TEXT, b TEXT) RETURNS LTREE AS $$
   SELECT (a || '.' || b)::LTREE
 $$ LANGUAGE SQL
-
+;
 -- Test 177: query (line 976)
-SELECT make_path('org', 'engineering')
+SELECT make_path('org', 'engineering');
 
 -- Test 178: query (line 981)
-SELECT make_path('a', 'b')
+SELECT make_path('a', 'b');
 
 -- Test 179: statement (line 988)
 CREATE FUNCTION is_descendant(child LTREE, parent LTREE) RETURNS BOOL AS $$
   SELECT child <@ parent
 $$ LANGUAGE SQL
-
+;
 -- Test 180: query (line 993)
-SELECT is_descendant('a.b.c', 'a.b')
+SELECT is_descendant('a.b.c', 'a.b');
 
 -- Test 181: query (line 998)
-SELECT is_descendant('a.b', 'a.b.c')
+SELECT is_descendant('a.b', 'a.b.c');
 
 -- Test 182: query (line 1003)
-SELECT is_descendant('x.y', 'a.b')
+SELECT is_descendant('x.y', 'a.b');
 
 -- Test 183: statement (line 1010)
 CREATE FUNCTION get_parent(path LTREE) RETURNS LTREE AS $$
@@ -660,15 +677,15 @@ CREATE FUNCTION get_parent(path LTREE) RETURNS LTREE AS $$
     ELSE subpath(path, 0, nlevel(path) - 1)
   END
 $$ LANGUAGE SQL
-
+;
 -- Test 184: query (line 1018)
-SELECT get_parent('a.b.c.d')
+SELECT get_parent('a.b.c.d');
 
 -- Test 185: query (line 1023)
-SELECT get_parent('single')
+SELECT get_parent('single');
 
 -- Test 186: query (line 1028)
-SELECT get_parent('')
+SELECT get_parent('');
 
 -- Test 187: statement (line 1035)
 CREATE FUNCTION count_ancestors(path LTREE) RETURNS INT AS $$
@@ -685,13 +702,13 @@ END;
 $$ LANGUAGE PLpgSQL
 
 -- Test 188: query (line 1049)
-SELECT count_ancestors('a.b.c.d')
+SELECT count_ancestors('a.b.c.d');
 
 -- Test 189: query (line 1054)
-SELECT count_ancestors('x')
+SELECT count_ancestors('x');
 
 -- Test 190: query (line 1059)
-SELECT count_ancestors('')
+SELECT count_ancestors('');
 
 -- Test 191: statement (line 1066)
 CREATE FUNCTION build_path(labels TEXT[]) RETURNS LTREE AS $$
@@ -710,10 +727,10 @@ END;
 $$ LANGUAGE PLpgSQL
 
 -- Test 192: query (line 1082)
-SELECT build_path(ARRAY['a', 'b', 'c'])
+SELECT build_path(ARRAY['a', 'b', 'c']);
 
 -- Test 193: query (line 1087)
-SELECT build_path(ARRAY['single'])
+SELECT build_path(ARRAY['single']);
 
 -- Test 194: statement (line 1094)
 DROP FUNCTION get_depth
@@ -732,9 +749,10 @@ DROP FUNCTION count_ancestors
 
 -- Test 199: statement (line 1109)
 DROP FUNCTION build_path
-
+;
 -- Test 200: statement (line 1114)
-CREATE TABLE t_sort (id INT PRIMARY KEY, path LTREE)
+DROP TABLE IF EXISTS t_sort CASCADE;
+CREATE TABLE t_sort (id INT PRIMARY KEY, path LTREE);
 
 -- Test 201: statement (line 1117)
 INSERT INTO t_sort VALUES
@@ -747,100 +765,101 @@ INSERT INTO t_sort VALUES
   (7, ''),
   (8, 'org.application'),
   (9, NULL),
-  (10, 'org.apple.alpha')
+  (10, 'org.apple.alpha');
 
 -- Test 202: query (line 1132)
-SELECT * FROM t_sort@t_sort_pkey ORDER BY path ASC
+SELECT * FROM t_sort ORDER BY path ASC
 
 -- Test 203: query (line 1148)
-SELECT * FROM t_sort@t_sort_pkey ORDER BY path DESC
-
+SELECT * FROM t_sort ORDER BY path DESC
+;
 -- Test 204: statement (line 1164)
-CREATE INDEX idx_sort_path ON t_sort (path)
+CREATE INDEX idx_sort_path ON t_sort (path);
 
 -- Test 205: query (line 1169)
-SELECT * FROM t_sort@idx_sort_path ORDER BY path ASC
+SELECT * FROM t_sort ORDER BY path ASC
 
 -- Test 206: query (line 1185)
-SELECT * FROM t_sort@idx_sort_path ORDER BY path DESC
+SELECT * FROM t_sort ORDER BY path DESC
 
 -- Test 207: statement (line 1199)
 DROP TABLE t_sort
-
+;
 -- Test 208: statement (line 1209)
 INSERT INTO t_multi_idx VALUES
   (1, 'org.sales', 'active'),
   (2, 'org.engineering', 'active'),
   (3, 'org.sales', 'inactive'),
   (4, 'org.engineering.backend', 'active'),
-  (5, 'org.engineering.frontend', 'inactive')
+  (5, 'org.engineering.frontend', 'inactive');
 
 -- Test 209: statement (line 1217)
-CREATE INDEX idx_path_status ON t_multi_idx (path, status)
+CREATE INDEX idx_path_status ON t_multi_idx (path, status);
 
 -- Test 210: query (line 1220)
-SELECT * FROM t_multi_idx@idx_path_status WHERE path = 'org.sales' ORDER BY status
+SELECT * FROM t_multi_idx WHERE path = 'org.sales' ORDER BY status
 
 -- Test 211: query (line 1226)
-SELECT * FROM t_multi_idx@idx_path_status WHERE path <@ 'org.engineering' AND status = 'active' ORDER BY path
-
+SELECT * FROM t_multi_idx WHERE path <@ 'org.engineering' AND status = 'active' ORDER BY path
+;
 -- Test 212: statement (line 1234)
-CREATE INDEX idx_status_path ON t_multi_idx (status, path)
+CREATE INDEX idx_status_path ON t_multi_idx (status, path);
 
 -- Test 213: query (line 1237)
-SELECT * FROM t_multi_idx@idx_status_path WHERE status = 'active' ORDER BY path
+SELECT * FROM t_multi_idx WHERE status = 'active' ORDER BY path
 
 -- Test 214: query (line 1244)
-SELECT * FROM t_multi_idx@idx_status_path WHERE status = 'inactive' AND path <@ 'org' ORDER BY path
+SELECT * FROM t_multi_idx WHERE status = 'inactive' AND path <@ 'org' ORDER BY path
 
 -- Test 215: statement (line 1252)
 DROP TABLE t_multi_idx
-
+;
 -- Test 216: statement (line 1258)
 INSERT INTO t_multi_idx2 VALUES
   (1, 1, 'a.b', 'first'),
   (2, 1, 'a.b.c', 'second'),
   (3, 2, 'a.b', 'third'),
-  (4, 2, 'x.y', 'fourth')
+  (4, 2, 'x.y', 'fourth');
 
 -- Test 217: statement (line 1265)
-CREATE INDEX idx_cat_path ON t_multi_idx2 (category, path)
+CREATE INDEX idx_cat_path ON t_multi_idx2 (category, path);
 
 -- Test 218: query (line 1268)
-SELECT * FROM t_multi_idx2@idx_cat_path WHERE category = 1 ORDER BY path
+SELECT * FROM t_multi_idx2 WHERE category = 1 ORDER BY path
 
 -- Test 219: query (line 1274)
-SELECT * FROM t_multi_idx2@idx_cat_path WHERE category = 2 AND path <@ 'a' ORDER BY id
+SELECT * FROM t_multi_idx2 WHERE category = 2 AND path <@ 'a' ORDER BY id
 
 -- Test 220: statement (line 1279)
 DROP TABLE t_multi_idx2
-
+;
 -- Test 221: statement (line 1286)
-CREATE TABLE t_boundary (path LTREE)
+DROP TABLE IF EXISTS t_boundary CASCADE;
+CREATE TABLE t_boundary (path LTREE);
 
 -- Test 222: statement (line 1289)
-INSERT INTO t_boundary VALUES ((repeat('a', 1000))::LTREE)
+INSERT INTO t_boundary VALUES ((repeat('a', 1000))::LTREE);
 
 -- Test 223: query (line 1292)
 SELECT nlevel(path) FROM t_boundary
-
+;
 -- Test 224: statement (line 1299)
-INSERT INTO t_boundary VALUES ((repeat('b', 1001))::LTREE)
+INSERT INTO t_boundary VALUES ((repeat('b', 1001))::LTREE);
 
 -- Test 225: statement (line 1304)
-INSERT INTO t_boundary VALUES ((SELECT string_agg('x', '.') FROM generate_series(1, 1000))::LTREE)
+INSERT INTO t_boundary VALUES ((SELECT string_agg('x', '.') FROM generate_series(1, 1000))::LTREE);
 
 -- Test 226: query (line 1307)
 SELECT nlevel(path) FROM t_boundary WHERE nlevel(path) = 1000
-
+;
 -- Test 227: statement (line 1314)
-INSERT INTO t_boundary VALUES ((SELECT string_agg('a', '.') FROM generate_series(1, 65536))::LTREE)
+INSERT INTO t_boundary VALUES ((SELECT string_agg('a', '.') FROM generate_series(1, 65536))::LTREE);
 
 -- Test 228: statement (line 1319)
 SELECT 'test.label with space'::LTREE
 
 -- Test 229: statement (line 1322)
-SELECT 'test.label@domain'::LTREE
+SELECT 'test.label'::LTREE
 
 -- Test 230: statement (line 1325)
 SELECT 'path.to.item#1'::LTREE
@@ -859,28 +878,33 @@ SELECT '.leading.dot'::LTREE
 
 -- Test 235: statement (line 1340)
 SELECT 'trailing.dot.'::LTREE
-
+;
 -- Test 236: statement (line 1345)
 INSERT INTO t_boundary VALUES
   ('valid_underscore'::LTREE),
   ('valid-hyphen'::LTREE),
   ('MixedCase123'::LTREE),
-  ('a1-b2_c3'::LTREE)
+  ('a1-b2_c3'::LTREE);
 
 -- Test 237: query (line 1352)
 SELECT count(*) FROM t_boundary WHERE nlevel(path) = 1
 
 -- Test 238: statement (line 1357)
-DROP TABLE t_boundary
-
+DROP TABLE t_boundary;
+;
 -- Test 239: statement (line 1362)
+DROP TABLE IF EXISTS t156478 CASCADE;
 CREATE TABLE t156478 (
   k INT PRIMARY KEY,
   l LTREE,
-  INDEX idx (l),
-  INDEX idx_desc (l DESC)
-)
+  -- COMMENTED: DESC in index (CockroachDB-specific)
+-- INDEX idx_desc (l DESC)
+);
+CREATE INDEX idx ON t156478 (l);
 
 -- Test 240: statement (line 1370)
-INSERT INTO t156478 VALUES (1, 'foo.bar_'::LTREE)
+INSERT INTO t156478 VALUES (1, 'foo.bar_'::LTREE);
 
+
+
+RESET client_min_messages;

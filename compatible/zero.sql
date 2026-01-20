@@ -84,7 +84,8 @@ INSERT INTO d VALUES
 select * FROM d ORDER BY i
 
 -- Test 13: statement (line 130)
-CREATE TABLE didx (i INT, v DECIMAL, INDEX vidx (v))
+CREATE TABLE didx (i INT, v DECIMAL);
+CREATE INDEX vidx ON didx (v)
 
 -- Test 14: statement (line 133)
 INSERT INTO didx VALUES
@@ -101,7 +102,7 @@ INSERT INTO didx VALUES
   (11, -0)
 
 -- Test 15: query (line 147)
-SELECT v FROM didx ORDER BY INDEX didx@vidx
+SELECT v FROM didx ORDER BY v
 
 -- Test 16: query (line 162)
 SELECT - -0.00::decimal, - - -0.00::decimal, - - -0.00, - -0.00

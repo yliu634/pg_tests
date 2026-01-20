@@ -1,0 +1,670 @@
+SET
+ aclexplode 
+------------
+(0 rows)
+
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:22: ERROR:  type "typ" already exists
+ format_type 
+-------------
+ typ(0)
+(1 row)
+
+ format_type 
+-------------
+ ???
+(1 row)
+
+ pg_column_size 
+----------------
+              8
+(1 row)
+
+ pg_column_size 
+----------------
+              4
+(1 row)
+
+ pg_column_size 
+----------------
+             32
+(1 row)
+
+ pg_column_size 
+----------------
+              6
+(1 row)
+
+ pg_column_size 
+----------------
+              1
+(1 row)
+
+ pg_column_size 
+----------------
+              2
+(1 row)
+
+ pg_column_size 
+----------------
+             30
+(1 row)
+
+ pg_column_size 
+----------------
+              1
+(1 row)
+
+ pg_column_size 
+----------------
+               
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:60: ERROR:  type "visible_type" already exists
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:61: ERROR:  function "visible_func" already exists with same argument types
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:62: ERROR:  schema "other" already exists
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:63: ERROR:  relation "not_visible" already exists
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:64: ERROR:  type "not_visible_type" already exists
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:65: ERROR:  function "not_visible_func" already exists with same argument types
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:66: ERROR:  database "db2" already exists
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:67: ERROR:  unrecognized configuration parameter "database"
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:68: ERROR:  relation "table_in_db2" already exists
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:69: ERROR:  type "type_in_db2" already exists
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:70: ERROR:  function "func_in_db2" already exists with same argument types
+  oid  
+-------
+ 16762
+(1 row)
+
+  oid  
+-------
+ 16768
+(1 row)
+
+  oid  
+-------
+ 16771
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:82: ERROR:  unrecognized configuration parameter "database"
+     relname      | pg_table_is_visible 
+------------------+---------------------
+ not_visible      | f
+ not_visible_pkey | f
+ is_visible       | t
+ is_visible_pkey  | t
+(4 rows)
+
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:90: ERROR:  syntax error at or near "$"
+LINE 1: SELECT pg_table_is_visible($table_in_db2_id);
+                                   ^
+ pg_table_is_visible 
+---------------------
+ 
+(1 row)
+
+ pg_table_is_visible 
+---------------------
+ 
+(1 row)
+
+     typname      | pg_type_is_visible 
+------------------+--------------------
+ int8             | t
+ _date            | t
+ visible_type     | t
+ not_visible_type | f
+(4 rows)
+
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:104: ERROR:  syntax error at or near "$"
+LINE 1: SELECT pg_type_is_visible($type_in_db2_id);
+                                  ^
+ pg_type_is_visible 
+--------------------
+ 
+(1 row)
+
+ pg_type_is_visible 
+--------------------
+ 
+(1 row)
+
+     proname      | pg_function_is_visible 
+------------------+------------------------
+ array_length     | t
+ visible_func     | t
+ not_visible_func | f
+(3 rows)
+
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:118: ERROR:  syntax error at or near "$"
+LINE 1: SELECT pg_function_is_visible($func_in_db2_id);
+                                      ^
+ pg_function_is_visible 
+------------------------
+ 
+(1 row)
+
+ pg_function_is_visible 
+------------------------
+ 
+(1 row)
+
+ pg_get_partkeydef | pg_get_partkeydef 
+-------------------+-------------------
+                   | 
+(1 row)
+
+DROP TABLE
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:131: ERROR:  syntax error at or near "AS"
+LINE 1: ...ABLE is_updatable(a INT PRIMARY KEY, b INT, c INT AS (b * 10...
+                                                             ^
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:132: ERROR:  relation "is_updatable" does not exist
+LINE 1: CREATE VIEW is_updatable_view AS SELECT a, b FROM is_updatab...
+                                                          ^
+--
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:147: ERROR:  syntax error at or near "c"
+LINE 1: c.relname,
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:159: ERROR:  syntax error at or near ";"
+LINE 1: SELECT * FROM (VALUES;
+                             ^
+ current_setting 
+-----------------
+ 0
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:165: ERROR:  function ifnull(text, unknown) does not exist
+LINE 1: SELECT IFNULL(current_setting('woo', true), 'OK');
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ current_setting 
+-----------------
+ 
+(1 row)
+
+ current_setting | current_setting 
+-----------------+-----------------
+ 0               | "$user", public
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:174: ERROR:  unrecognized configuration parameter "woo"
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:178: ERROR:  syntax error at or near "#"
+LINE 1: # Check that current_setting handles custom settings correct...
+        ^
+PREPARE
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:187: ERROR:  syntax error at or near "BEGIN"
+LINE 3: BEGIN;
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:188: WARNING:  SET LOCAL can only be used in transaction blocks
+SET
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:194: ERROR:  syntax error at or near "COMMIT"
+LINE 3: COMMIT;
+        ^
+ current_setting 
+-----------------
+ 0
+(1 row)
+
+ application_name 
+------------------
+ psql
+(1 row)
+
+ set_config 
+------------
+ woo
+(1 row)
+
+ application_name 
+------------------
+ woo
+(1 row)
+
+--
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:212: ERROR:  syntax error at or near "set_config"
+LINE 1: set_config('application_name', 'foo', false),
+        ^
+ set_config 
+------------
+ woo
+(1 row)
+
+ current_setting 
+-----------------
+ woo
+(1 row)
+
+BEGIN
+ set_config 
+------------
+ woo
+(1 row)
+
+ current_setting | current_setting 
+-----------------+-----------------
+ woo             | 0
+(1 row)
+
+COMMIT
+ current_setting 
+-----------------
+ woo
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:236: ERROR:  unrecognized configuration parameter "woo"
+ set_config 
+------------
+ 0
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:243: ERROR:  syntax error at or near "#"
+LINE 1: # Regression test for #117316. Setting an empty search_path ...
+        ^
+   search_path   
+-----------------
+ "$user", public
+(1 row)
+
+RESET
+ pg_my_temp_schema 
+-------------------
+                 0
+(1 row)
+
+CREATE TABLE
+ ?column? 
+----------
+ f
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:261: ERROR:  unrecognized configuration parameter "database"
+ pg_my_temp_schema 
+-------------------
+             16772
+(1 row)
+
+CREATE TABLE
+ ?column? 
+----------
+ f
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:273: ERROR:  unrecognized configuration parameter "database"
+ pg_is_other_temp_schema 
+-------------------------
+ f
+(1 row)
+
+ pg_is_other_temp_schema 
+-------------------------
+ f
+(1 row)
+
+ user | pg_is_other_temp_schema 
+------+-------------------------
+ pan  | f
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:285: ERROR:  role "testuser" does not exist
+ user | pg_is_other_temp_schema 
+------+-------------------------
+ pan  | f
+(1 row)
+
+DROP TABLE
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:302: ERROR:  syntax error at or near ";"
+LINE 1: CREATE TABLE types (;
+                            ^
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:334: ERROR:  syntax error at or near "SELECT"
+LINE 10: SELECT typname, information_schema._pg_char_max_length(a.att...
+         ^
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:342: ERROR:  syntax error at or near ";"
+LINE 1: CREATE TABLE indexed (;
+                              ^
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:345: ERROR:  syntax error at or near ";"
+LINE 1: CREATE TEMPORARY VIEW indexes AS;
+                                        ^
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:354: ERROR:  syntax error at or near "SELECT"
+LINE 8: SELECT relname, indkey FROM indexes ORDER BY relname DESC;
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:365: ERROR:  syntax error at or near "DROP"
+LINE 8: DROP TABLE IF EXISTS numeric CASCADE;
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:377: ERROR:  syntax error at or near ";"
+LINE 1: CREATE TABLE numeric (;
+                              ^
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:392: ERROR:  syntax error at or near "SELECT"
+LINE 12: SELECT * FROM pg_options_to_table(array['b', NULL, 'a']::tex...
+         ^
+ option_name | option_value 
+-------------+--------------
+(0 rows)
+
+ option_name | option_value 
+-------------+--------------
+ a           | 
+ b           | c
+             | d
+ e           | f=g
+(4 rows)
+
+ option_name | option_value 
+-------------+--------------
+(0 rows)
+
+ option_name | option_value 
+-------------+--------------
+ a           | 
+ b           | c
+             | d
+ e           | f=g
+(4 rows)
+
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:407: ERROR:  type "test_type" already exists
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:410: ERROR:  role "test_role" already exists
+DROP TABLE
+CREATE TABLE
+ to_regclass 
+-------------
+ pg_roles
+(1 row)
+
+ to_regclass 
+-------------
+ 4294967230
+(1 row)
+
+ to_regclass 
+-------------
+ 
+(1 row)
+
+ to_regclass 
+-------------
+ 
+(1 row)
+
+ to_regclass 
+-------------
+ pg_policy
+(1 row)
+
+ to_regclass 
+-------------
+ t1
+(1 row)
+
+ to_regnamespace 
+-----------------
+ public
+(1 row)
+
+ to_regnamespace 
+-----------------
+ 1330834471
+(1 row)
+
+ to_regnamespace 
+-----------------
+ 
+(1 row)
+
+ to_regnamespace 
+-----------------
+ 
+(1 row)
+
+ to_regnamespace 
+-----------------
+ 
+(1 row)
+
+ to_regproc 
+------------
+ 
+(1 row)
+
+ to_regproc 
+------------
+ version
+(1 row)
+
+ to_regproc 
+------------
+ bit_in
+(1 row)
+
+ to_regprocedure 
+-----------------
+ 
+(1 row)
+
+ to_regprocedure 
+-----------------
+ 
+(1 row)
+
+ to_regprocedure 
+-----------------
+ 
+(1 row)
+
+ to_regprocedure 
+-----------------
+ version()
+(1 row)
+
+ to_regprocedure 
+-----------------
+ 961893967
+(1 row)
+
+ to_regprocedure 
+-----------------
+ -
+(1 row)
+
+ to_regprocedure 
+-----------------
+ 
+(1 row)
+
+ to_regrole 
+------------
+ 
+(1 row)
+
+ to_regrole 
+------------
+ test_role
+(1 row)
+
+ to_regrole 
+------------
+ 
+(1 row)
+
+ to_regrole 
+------------
+ 1546506610
+(1 row)
+
+ to_regrole 
+------------
+ -
+(1 row)
+
+ to_regrole 
+------------
+ 
+(1 row)
+
+ to_regtype 
+------------
+ interval
+(1 row)
+
+ to_regtype 
+------------
+ integer
+(1 row)
+
+ to_regtype 
+------------
+ 
+(1 row)
+
+ to_regtype 
+------------
+ interval
+(1 row)
+
+ to_regtype 
+------------
+ -
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:516: ERROR:  syntax error at or near "-"
+LINE 1: SELECT to_regtype('-3');
+        ^
+CONTEXT:  invalid type name "-3"
+ to_regtype 
+------------
+ test_type
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:522: ERROR:  relation "expr_idx_tbl" does not exist
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:525: ERROR:  relation "expr_idx" does not exist
+LINE 1: SELECT pg_get_indexdef('expr_idx'::regclass::oid);
+                               ^
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:528: ERROR:  relation "expr_idx" does not exist
+LINE 1: SELECT k, pg_get_indexdef('expr_idx'::regclass::oid, k, true...
+                                  ^
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:531: ERROR:  "pg_indexes" is not a table
+HINT:  Use DROP VIEW to remove a view.
+CREATE TABLE
+CREATE TABLE
+SET
+ i | pg_get_indexdef 
+---+-----------------
+(0 rows)
+
+DROP TABLE
+DROP TABLE
+RESET
+CREATE SCHEMA
+CREATE TABLE
+ col_description 
+-----------------
+ 
+(1 row)
+
+DROP TABLE
+DROP SCHEMA
+ nameconcatoid 
+---------------
+ cat_2
+(1 row)
+
+                          nameconcatoid                          
+-----------------------------------------------------------------
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab_200
+(1 row)
+
+                          nameconcatoid                          
+-----------------------------------------------------------------
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbb_2
+(1 row)
+
+                          nameconcatoid                          | length 
+-----------------------------------------------------------------+--------
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa_2 |     63
+(1 row)
+
+ _pg_char_octet_length 
+-----------------------
+            1073741824
+(1 row)
+
+ _pg_char_octet_length 
+-----------------------
+                      
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:576: ERROR:  type "u" already exists
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:589: ERROR:  syntax error at or near "DROP"
+LINE 10: DROP TYPE u;
+         ^
+ pg_encoding_max_length 
+------------------------
+                      4
+(1 row)
+
+ pg_encoding_max_length 
+------------------------
+                      3
+(1 row)
+
+ _pg_datetime_precision 
+------------------------
+                      0
+(1 row)
+
+ _pg_datetime_precision 
+------------------------
+                      6
+(1 row)
+
+ _pg_datetime_precision 
+------------------------
+                      5
+(1 row)
+
+ _pg_datetime_precision 
+------------------------
+                      6
+(1 row)
+
+ _pg_datetime_precision 
+------------------------
+                      5
+(1 row)
+
+ _pg_datetime_precision 
+------------------------
+                       
+(1 row)
+
+ _pg_datetime_precision 
+------------------------
+                       
+(1 row)
+
+ _pg_interval_type 
+-------------------
+ 
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:622: ERROR:  type "u" already exists
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:635: ERROR:  syntax error at or near "DROP"
+LINE 10: DROP TABLE IF EXISTS t144384 CASCADE;
+         ^
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:636: ERROR:  relation "t144384" already exists
+psql:/home/pan/workspace/pg_tests/compatible/pg_builtins.sql:639: ERROR:  relation "i144384" already exists
+INSERT 0 1
+ to_regclass 
+-------------
+ i144384
+ i144384
+ i144384
+ i144384
+ i144384
+ i144384
+(6 rows)
+
+RESET
