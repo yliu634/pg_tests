@@ -1,18 +1,61 @@
+SET
 DROP ROLE
-psql:/tmp/grant_role_test.sql:6: NOTICE:  role "parent1" does not exist, skipping
-psql:/tmp/grant_role_test.sql:6: NOTICE:  role "child1" does not exist, skipping
-psql:/tmp/grant_role_test.sql:6: NOTICE:  role "child2" does not exist, skipping
-psql:/tmp/grant_role_test.sql:6: NOTICE:  role "parent2" does not exist, skipping
-psql:/tmp/grant_role_test.sql:6: NOTICE:  role "parent3" does not exist, skipping
-psql:/tmp/grant_role_test.sql:6: NOTICE:  role "child3" does not exist, skipping
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
 DROP ROLE
 CREATE ROLE
 CREATE ROLE
 GRANT ROLE
-psql:/tmp/grant_role_test.sql:18: NOTICE:  role "roach" has already been granted membership in role "developer" by role "postgres"
-GRANT ROLE
-GRANT ROLE
-psql:/tmp/grant_role_test.sql:24: NOTICE:  role "roach" has already been granted membership in role "developer" by role "postgres"
 GRANT ROLE
 CREATE ROLE
 CREATE ROLE
+GRANT ROLE
+REVOKE ROLE
+CREATE ROLE
+CREATE ROLE
+GRANT ROLE
+CREATE ROLE
+GRANT ROLE
+CREATE ROLE
+CREATE ROLE
+GRANT ROLE
+CREATE ROLE
+CREATE ROLE
+GRANT ROLE
+CREATE ROLE
+CREATE ROLE
+GRANT ROLE
+         member          |        role_name        | admin_option 
+-------------------------+-------------------------+--------------
+ gr_role_child1          | gr_role_parent1         | NO
+ gr_role_child2          | gr_role_parent2         | YES
+ gr_role_child3          | gr_role_parent3         | NO
+ gr_role_grantor         | gr_role_transitiveadmin | NO
+ gr_role_roach           | gr_role_developer       | YES
+ gr_role_transitiveadmin | gr_role_admin           | NO
+(6 rows)
+
+DROP OWNED
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET

@@ -270,4 +270,7 @@ SELECT a, b FROM anykey_json_tab WHERE jsonb_path_exists(b, '$.a.*.b') ORDER BY 
 -- Test 77: statement (line 627)
 SELECT a, b FROM anykey_json_tab WHERE jsonb_path_exists(b, '$.a.b.*.*') ORDER BY a;
 
+DROP TABLE IF EXISTS anykey_json_tab CASCADE;
+DROP TABLE IF EXISTS json_tab CASCADE;
+
 RESET client_min_messages;

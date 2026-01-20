@@ -1,34 +1,43 @@
 -- PostgreSQL compatible tests from inv_stats
--- 6 tests
+--
+-- CockroachDB uses INVERTED INDEX and SHOW HISTOGRAM. PostgreSQL uses GIN/GiST
+-- indexes and catalog views for statistics.
 
--- Test 1: statement (line 4)
-SET CLUSTER SETTING jobs.registry.interval.adopt = '10ms'
+SET client_min_messages = warning;
 
--- Test 2: statement (line 10)
-CREATE TABLE t (j JSON, g GEOMETRY);
-CREATE INVERTED INDEX ON t (j);
-CREATE INVERTED INDEX ON t (g);
-INSERT
-INTO
-  t
-VALUES
-  (
-    '{"test": "some", "other": {"nested": true, "foo": 3}}',
-    '0103000000010000000500000000000000000000000000000000000000000000000000F03F0000000000000000000000000000F03F000000000000F03F0000000000000000000000000000F03F00000000000000000000000000000000'
-  );
+CREATE EXTENSION IF NOT EXISTS postgis;
 
--- Test 3: statement (line 23)
-CREATE STATISTICS s FROM t
+DROP STATISTICS IF EXISTS inv_stats_s;
+DROP TABLE IF EXISTS inv_stats_t;
 
--- Test 4: query (line 45)
-SHOW HISTOGRAM $hist_id_1
+CREATE TABLE inv_stats_t (
+  j JSONB,
+  g geometry
+);
 
--- Test 5: query (line 56)
-SHOW HISTOGRAM $hist_id_1
+INSERT INTO inv_stats_t(j, g) VALUES
+  ('{"test": "some", "other": {"nested": true, "foo": 3}}'::jsonb,
+   ST_GeomFromText('POLYGON((0 0,0 1,1 1,1 0,0 0))', 4326)),
+  ('{"test": "other"}'::jsonb,
+   ST_GeomFromText('POINT(1 1)', 4326));
 
--- Test 6: statement (line 63)
-CREATE TABLE t50596 (_jsonb JSONB, INVERTED INDEX (_jsonb));
-INSERT INTO t50596 VALUES ('{}');
-CREATE STATISTICS foo FROM t50596;
-SELECT NULL FROM t50596 WHERE '1' != _jsonb;
+CREATE INDEX inv_stats_t_j_gin ON inv_stats_t USING GIN (j);
+CREATE INDEX inv_stats_t_g_gist ON inv_stats_t USING GIST (g);
 
+CREATE STATISTICS inv_stats_s (ndistinct) ON (j->>'test'), (j->>'other') FROM inv_stats_t;
+ANALYZE inv_stats_t;
+
+SELECT stxname, stxkind
+FROM pg_statistic_ext
+WHERE stxname = 'inv_stats_s';
+
+SELECT indexname, indexdef
+FROM pg_indexes
+WHERE schemaname = 'public' AND tablename = 'inv_stats_t'
+ORDER BY indexname;
+
+-- Cleanup.
+DROP STATISTICS inv_stats_s;
+DROP TABLE inv_stats_t;
+
+RESET client_min_messages;

@@ -1,3 +1,5 @@
+SET client_min_messages = warning;
+
 DROP TABLE IF EXISTS json_tab CASCADE;
 DROP TABLE IF EXISTS array_tab CASCADE;
 
@@ -134,3 +136,7 @@ SELECT * FROM array_tab WHERE b @> '{1}' OR a = 1 ORDER BY a;
 -- Test 25: query (line 249)
 SELECT * FROM array_tab WHERE (b @> '{2}' AND a = 3) OR b[0] = a ORDER BY a;
 
+DROP TABLE array_tab;
+DROP TABLE json_tab;
+
+RESET client_min_messages;

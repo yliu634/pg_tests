@@ -1,79 +1,102 @@
 -- PostgreSQL compatible tests from grant_on_all_sequences_in_schema
--- 23 tests
+-- CockroachDB logic tests used SHOW GRANTS; PostgreSQL uses catalog helpers.
 
--- Test 1: statement (line 1)
-CREATE USER testuser2
+SET client_min_messages = warning;
 
--- Test 2: statement (line 4)
+DROP SCHEMA IF EXISTS s CASCADE;
+DROP SCHEMA IF EXISTS s2 CASCADE;
+DROP SCHEMA IF EXISTS s3 CASCADE;
+DROP SCHEMA IF EXISTS s4 CASCADE;
+DROP ROLE IF EXISTS testuser;
+DROP ROLE IF EXISTS testuser2;
+DROP ROLE IF EXISTS testuser3;
+
+CREATE ROLE testuser;
+CREATE ROLE testuser2;
+CREATE ROLE testuser3;
+
 CREATE SCHEMA s;
 CREATE SCHEMA s2;
 
--- Test 3: statement (line 9)
-GRANT SELECT ON ALL SEQUENCES IN SCHEMA s TO testuser
-
--- Test 4: query (line 12)
-SHOW GRANTS FOR testuser
-
--- Test 5: statement (line 19)
 CREATE SEQUENCE s.q;
 CREATE SEQUENCE s2.q;
-CREATE TABLE s.t();
-CREATE TABLE s2.t();
+CREATE TABLE s2.t (id INT);
 
--- Test 6: statement (line 25)
-SET ROLE testuser
+-- Before grants.
+SELECT 's.q SELECT' AS check, has_sequence_privilege('testuser', 's.q', 'SELECT') AS has_priv
+UNION ALL
+SELECT 's2.q SELECT', has_sequence_privilege('testuser', 's2.q', 'SELECT')
+ORDER BY 1;
 
--- Test 7: statement (line 28)
-SELECT * FROM s.q;
+GRANT SELECT ON ALL SEQUENCES IN SCHEMA s TO testuser;
+SELECT 's.q SELECT' AS check, has_sequence_privilege('testuser', 's.q', 'SELECT') AS has_priv
+UNION ALL
+SELECT 's2.q SELECT', has_sequence_privilege('testuser', 's2.q', 'SELECT')
+ORDER BY 1;
 
--- Test 8: statement (line 31)
-SET ROLE root
+GRANT USAGE ON ALL SEQUENCES IN SCHEMA s TO testuser;
+SELECT 's.q USAGE' AS check, has_sequence_privilege('testuser', 's.q', 'USAGE') AS has_priv
+UNION ALL
+SELECT 's2.q USAGE', has_sequence_privilege('testuser', 's2.q', 'USAGE')
+ORDER BY 1;
 
--- Test 9: statement (line 34)
-GRANT SELECT ON ALL SEQUENCES IN SCHEMA s TO testuser
+GRANT SELECT ON ALL SEQUENCES IN SCHEMA s, s2 TO testuser, testuser2;
+SELECT
+  r.rolname AS grantee,
+  n.nspname AS schema_name,
+  c.relname AS seq_name,
+  has_sequence_privilege(r.rolname, format('%I.%I', n.nspname, c.relname), 'SELECT') AS has_select
+FROM pg_class c
+JOIN pg_namespace n ON n.oid = c.relnamespace
+JOIN pg_roles r ON r.rolname IN ('testuser', 'testuser2')
+WHERE c.relkind = 'S' AND n.nspname IN ('s', 's2')
+ORDER BY 1, 2, 3;
 
--- Test 10: query (line 55)
-SHOW GRANTS FOR testuser
+GRANT ALL ON ALL SEQUENCES IN SCHEMA s, s2 TO testuser, testuser2;
+SELECT
+  r.rolname AS grantee,
+  n.nspname AS schema_name,
+  c.relname AS seq_name,
+  has_sequence_privilege(r.rolname, format('%I.%I', n.nspname, c.relname), 'USAGE') AS has_usage,
+  has_sequence_privilege(r.rolname, format('%I.%I', n.nspname, c.relname), 'SELECT') AS has_select,
+  has_sequence_privilege(r.rolname, format('%I.%I', n.nspname, c.relname), 'UPDATE') AS has_update
+FROM pg_class c
+JOIN pg_namespace n ON n.oid = c.relnamespace
+JOIN pg_roles r ON r.rolname IN ('testuser', 'testuser2')
+WHERE c.relkind = 'S' AND n.nspname IN ('s', 's2')
+ORDER BY 1, 2, 3;
 
--- Test 11: statement (line 64)
-GRANT USAGE ON ALL SEQUENCES IN SCHEMA s TO testuser
+GRANT ALL ON ALL TABLES IN SCHEMA s2 TO testuser3;
+SELECT
+  p AS privilege,
+  has_table_privilege('testuser3', 's2.t', p) AS has_priv
+FROM (VALUES ('SELECT'), ('INSERT'), ('UPDATE'), ('DELETE')) AS v(p)
+ORDER BY 1;
 
--- Test 12: query (line 67)
-SHOW GRANTS FOR testuser
-
--- Test 13: statement (line 77)
-GRANT SELECT ON ALL SEQUENCES IN SCHEMA s, s2 TO testuser, testuser2
-
--- Test 14: query (line 80)
-SHOW GRANTS FOR testuser, testuser2
-
--- Test 15: statement (line 93)
-GRANT ALL ON ALL SEQUENCES IN SCHEMA s, s2 TO testuser, testuser2
-
--- Test 16: query (line 96)
-SHOW GRANTS FOR testuser, testuser2
-
--- Test 17: statement (line 108)
-CREATE USER testuser3
-
--- Test 18: statement (line 112)
-GRANT ALL ON ALL TABLES IN SCHEMA s2 TO testuser3
-
--- Test 19: query (line 115)
-SHOW GRANTS FOR testuser3
-
--- Test 20: statement (line 124)
-ALTER DEFAULT PRIVILEGES FOR ALL ROLES GRANT USAGE ON SEQUENCES TO testuser3;
-
--- Test 21: statement (line 127)
+-- Default privileges in PG are per role + optional schema (no "FOR ALL ROLES").
 CREATE SCHEMA s3;
 CREATE SCHEMA s4;
+ALTER DEFAULT PRIVILEGES IN SCHEMA s3 GRANT USAGE ON SEQUENCES TO testuser3;
+ALTER DEFAULT PRIVILEGES IN SCHEMA s4 GRANT USAGE ON SEQUENCES TO testuser3;
 CREATE SEQUENCE s3.q;
 CREATE SEQUENCE s4.q;
+SELECT
+  's3.q USAGE' AS check,
+  has_sequence_privilege('testuser3', 's3.q', 'USAGE') AS has_priv
+UNION ALL
+SELECT
+  's4.q USAGE',
+  has_sequence_privilege('testuser3', 's4.q', 'USAGE')
+ORDER BY 1;
 
--- Test 22: query (line 133)
-SHOW GRANTS FOR testuser, testuser2
+-- Cleanup.
+DROP SCHEMA s CASCADE;
+DROP SCHEMA s2 CASCADE;
+DROP SCHEMA s3 CASCADE;
+DROP SCHEMA s4 CASCADE;
+DROP OWNED BY testuser, testuser2, testuser3;
+DROP ROLE testuser;
+DROP ROLE testuser2;
+DROP ROLE testuser3;
 
--- Test 23: query (line 147)
-SHOW GRANTS FOR testuser3
-
+RESET client_min_messages;

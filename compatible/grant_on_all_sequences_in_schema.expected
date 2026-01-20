@@ -1,77 +1,84 @@
-DO
-DROP SEQUENCE
-DROP SEQUENCE
-DROP SEQUENCE
-DROP SEQUENCE
-DROP TABLE
-DROP TABLE
+SET
 DROP SCHEMA
 DROP SCHEMA
 DROP SCHEMA
 DROP SCHEMA
 DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
 CREATE ROLE
 CREATE SCHEMA
 CREATE SCHEMA
-GRANT
- grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
----------+---------+---------------+--------------+------------+----------------+--------------+----------------
-(0 rows)
-
 CREATE SEQUENCE
 CREATE SEQUENCE
 CREATE TABLE
-CREATE TABLE
-GRANT
- grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
----------+---------+---------------+--------------+------------+----------------+--------------+----------------
-(0 rows)
+    check    | has_priv 
+-------------+----------
+ s.q SELECT  | f
+ s2.q SELECT | f
+(2 rows)
 
 GRANT
- grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
----------+---------+---------------+--------------+------------+----------------+--------------+----------------
-(0 rows)
+    check    | has_priv 
+-------------+----------
+ s.q SELECT  | t
+ s2.q SELECT | f
+(2 rows)
 
 GRANT
- grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
----------+---------+---------------+--------------+------------+----------------+--------------+----------------
-(0 rows)
+   check    | has_priv 
+------------+----------
+ s.q USAGE  | t
+ s2.q USAGE | f
+(2 rows)
 
 GRANT
- grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
----------+---------+---------------+--------------+------------+----------------+--------------+----------------
-(0 rows)
+  grantee  | schema_name | seq_name | has_select 
+-----------+-------------+----------+------------
+ testuser  | s           | q        | t
+ testuser  | s2          | q        | t
+ testuser2 | s           | q        | t
+ testuser2 | s2          | q        | t
+(4 rows)
 
-CREATE ROLE
 GRANT
- grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
-----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
- postgres | testuser3 | pg_tests      | s2           | t          | DELETE         | NO           | NO
- postgres | testuser3 | pg_tests      | s2           | t          | INSERT         | NO           | NO
- postgres | testuser3 | pg_tests      | s2           | t          | REFERENCES     | NO           | NO
- postgres | testuser3 | pg_tests      | s2           | t          | SELECT         | NO           | YES
- postgres | testuser3 | pg_tests      | s2           | t          | TRIGGER        | NO           | NO
- postgres | testuser3 | pg_tests      | s2           | t          | TRUNCATE       | NO           | NO
- postgres | testuser3 | pg_tests      | s2           | t          | UPDATE         | NO           | NO
-(7 rows)
+  grantee  | schema_name | seq_name | has_usage | has_select | has_update 
+-----------+-------------+----------+-----------+------------+------------
+ testuser  | s           | q        | t         | t          | t
+ testuser  | s2          | q        | t         | t          | t
+ testuser2 | s           | q        | t         | t          | t
+ testuser2 | s2          | q        | t         | t          | t
+(4 rows)
 
+GRANT
+ privilege | has_priv 
+-----------+----------
+ DELETE    | t
+ INSERT    | t
+ SELECT    | t
+ UPDATE    | t
+(4 rows)
+
+CREATE SCHEMA
+CREATE SCHEMA
 ALTER DEFAULT PRIVILEGES
-CREATE SCHEMA
-CREATE SCHEMA
+ALTER DEFAULT PRIVILEGES
 CREATE SEQUENCE
 CREATE SEQUENCE
- grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
----------+---------+---------------+--------------+------------+----------------+--------------+----------------
-(0 rows)
+   check    | has_priv 
+------------+----------
+ s3.q USAGE | t
+ s4.q USAGE | t
+(2 rows)
 
- grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
-----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
- postgres | testuser3 | pg_tests      | s2           | t          | DELETE         | NO           | NO
- postgres | testuser3 | pg_tests      | s2           | t          | INSERT         | NO           | NO
- postgres | testuser3 | pg_tests      | s2           | t          | REFERENCES     | NO           | NO
- postgres | testuser3 | pg_tests      | s2           | t          | SELECT         | NO           | YES
- postgres | testuser3 | pg_tests      | s2           | t          | TRIGGER        | NO           | NO
- postgres | testuser3 | pg_tests      | s2           | t          | TRUNCATE       | NO           | NO
- postgres | testuser3 | pg_tests      | s2           | t          | UPDATE         | NO           | NO
-(7 rows)
-
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP OWNED
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET

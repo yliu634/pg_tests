@@ -1,79 +1,72 @@
 SET
 DROP TABLE
-RESET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
 CREATE TABLE
 CREATE TABLE
 INSERT 0 1
 INSERT 0 1
-INSERT 0 1
-INSERT 0 1
-      create_statement       
------------------------------
- CREATE TABLE t (x integer);
-(1 row)
-
  ?column? |  x  
 ----------+-----
        42 | 123
-       42 | 456
-(2 rows)
+(1 row)
 
  ?column? |  k  |  v  
 ----------+-----+-----
        42 | 123 | 456
-       42 | 111 | 222
-(2 rows)
-
- ?column? |  x  
-----------+-----
-       42 | 123
-       42 | 456
-(2 rows)
+(1 row)
 
 ALTER TABLE
-  x  
------
- 123
- 456
-(2 rows)
-
 CREATE INDEX
 ALTER TABLE
+ column_name 
+-------------
+ k
+(1 row)
+
 CREATE TABLE
 CREATE TABLE
 CREATE TABLE
- conname | contype 
----------+---------
- t2_pkey | p
+ constraint_name | constraint_type 
+-----------------+-----------------
+ hc_t2_pkey      | PRIMARY KEY
 (1 row)
 
 ALTER TABLE
-  conname  | contype 
------------+---------
- t2_b_fkey | f
- t2_pkey   | p
+ constraint_name | constraint_type 
+-----------------+-----------------
+ hc_t2_b_fkey    | FOREIGN KEY
+ hc_t2_pkey      | PRIMARY KEY
 (2 rows)
 
 CREATE TABLE
 CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+ constraint_name | constraint_type 
+-----------------+-----------------
+ hc_t3_pkey      | PRIMARY KEY
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+ constraint_name | constraint_type 
+-----------------+-----------------
+ hc_t4_pkey      | PRIMARY KEY
+(1 row)
+
 CREATE TABLE
-psql:/tmp/hidden_columns.sql:103: NOTICE:  drop cascades to constraint t6_c_fkey on table t6
-ALTER TABLE
-ALTER TABLE
- conname | contype 
----------+---------
- t3_pkey | p
-(1 row)
-
- conname | contype 
----------+---------
- t4_pkey | p
-(1 row)
-
-ALTER TABLE
-ALTER TABLE
- conname | contype 
----------+---------
- t4_pkey | p
-(1 row)
-
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+RESET

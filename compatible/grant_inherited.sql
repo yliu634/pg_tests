@@ -1,132 +1,129 @@
 -- PostgreSQL compatible tests from grant_inherited
--- 41 tests
+-- CockroachDB has SHOW GRANTS and "system" privileges; PostgreSQL uses catalog
+-- tables and has_*_privilege() helpers instead.
 
--- Test 1: statement (line 3)
-CREATE USER alice
+SET client_min_messages = warning;
 
--- Test 2: statement (line 6)
-CREATE USER bob
+DROP FUNCTION IF EXISTS fn(int);
+DROP TABLE IF EXISTS tbl;
+DROP SEQUENCE IF EXISTS sq;
+DROP TYPE IF EXISTS typ;
+DROP SCHEMA IF EXISTS sc CASCADE;
+DROP SCHEMA IF EXISTS test_schema CASCADE;
 
--- Test 3: statement (line 9)
-CREATE USER chuck
+DROP ROLE IF EXISTS alice;
+DROP ROLE IF EXISTS bob;
+DROP ROLE IF EXISTS chuck;
+DROP ROLE IF EXISTS dave;
+DROP ROLE IF EXISTS meeter;
+DROP ROLE IF EXISTS greeter;
+DROP ROLE IF EXISTS granter;
+DROP ROLE IF EXISTS parent;
+DROP ROLE IF EXISTS child;
 
--- Test 4: statement (line 12)
-CREATE USER dave
+CREATE ROLE alice LOGIN;
+CREATE ROLE bob LOGIN;
+CREATE ROLE chuck LOGIN;
+CREATE ROLE dave LOGIN;
+CREATE ROLE meeter;
+CREATE ROLE greeter;
+CREATE ROLE granter;
 
--- Test 5: statement (line 15)
-CREATE ROLE meeter
+GRANT granter TO alice, bob, chuck, dave;
+GRANT meeter TO granter;
+GRANT greeter TO alice WITH ADMIN OPTION;
 
--- Test 6: statement (line 18)
-CREATE ROLE greeter
+-- Role membership (including admin option).
+SELECT
+  mbr.rolname AS grantee,
+  rol.rolname AS role_name,
+  CASE am.admin_option WHEN true THEN 'YES' ELSE 'NO' END AS is_grantable
+FROM pg_auth_members am
+JOIN pg_roles rol ON rol.oid = am.roleid
+JOIN pg_roles mbr ON mbr.oid = am.member
+WHERE mbr.rolname IN ('alice', 'bob', 'chuck', 'dave', 'granter')
+  OR rol.rolname IN ('meeter', 'greeter', 'granter')
+ORDER BY 1, 2, 3;
 
--- Test 7: statement (line 21)
-CREATE ROLE granter
+-- Database privileges are checked via has_database_privilege() (includes inherited).
+GRANT ALL PRIVILEGES ON DATABASE pg_tests TO meeter WITH GRANT OPTION;
+SELECT
+  p AS privilege,
+  has_database_privilege('alice', 'pg_tests', p) AS has_priv
+FROM (VALUES ('CONNECT'), ('CREATE'), ('TEMPORARY')) AS v(p)
+ORDER BY 1;
 
--- Test 8: statement (line 24)
-GRANT granter TO alice,bob,chuck,dave
+CREATE SCHEMA sc;
+GRANT ALL ON SCHEMA sc TO meeter WITH GRANT OPTION;
+SELECT
+  p AS privilege,
+  has_schema_privilege('alice', 'sc', p) AS has_priv
+FROM (VALUES ('USAGE'), ('CREATE')) AS v(p)
+ORDER BY 1;
 
--- Test 9: statement (line 27)
-GRANT meeter TO granter
+CREATE SEQUENCE sq;
+GRANT ALL ON SEQUENCE sq TO meeter WITH GRANT OPTION;
+SELECT
+  p AS privilege,
+  has_sequence_privilege('alice', 'sq', p) AS has_priv
+FROM (VALUES ('USAGE'), ('SELECT'), ('UPDATE')) AS v(p)
+ORDER BY 1;
 
--- Test 10: statement (line 30)
-GRANT greeter TO alice WITH ADMIN OPTION
-
--- Test 11: query (line 33)
-SELECT * FROM "".crdb_internal.kv_inherited_role_members
-
--- Test 12: query (line 49)
-SHOW GRANTS ON ROLE
-
--- Test 13: statement (line 61)
-GRANT ALL ON DATABASE defaultdb TO meeter WITH GRANT OPTION
-
--- Test 14: query (line 64)
-SHOW GRANTS ON DATABASE defaultdb FOR alice
-
--- Test 15: statement (line 71)
-CREATE SCHEMA sc
-
--- Test 16: statement (line 74)
-GRANT ALL ON SCHEMA sc TO meeter WITH GRANT OPTION
-
--- Test 17: query (line 77)
-SHOW GRANTS ON SCHEMA sc FOR alice
-
--- Test 18: statement (line 83)
-CREATE SEQUENCE sq
-
--- Test 19: statement (line 86)
-GRANT ALL ON SEQUENCE sq TO meeter WITH GRANT OPTION
-
--- Test 20: query (line 89)
-SHOW GRANTS ON SEQUENCE sq FOR alice
-
--- Test 21: statement (line 95)
 CREATE TABLE tbl (i INT PRIMARY KEY);
+GRANT ALL ON TABLE tbl TO meeter WITH GRANT OPTION;
+SELECT
+  p AS privilege,
+  has_table_privilege('alice', 'tbl', p) AS has_priv
+FROM (VALUES ('SELECT'), ('INSERT'), ('UPDATE'), ('DELETE')) AS v(p)
+ORDER BY 1;
 
--- Test 22: statement (line 98)
-GRANT ALL ON TABLE tbl TO meeter WITH GRANT OPTION
+CREATE TYPE typ AS ENUM ('a', 'b');
+GRANT USAGE ON TYPE typ TO meeter WITH GRANT OPTION;
+SELECT has_type_privilege('alice', 'typ', 'USAGE') AS has_usage;
 
--- Test 23: query (line 101)
-SHOW GRANTS ON TABLE tbl FOR alice
-
--- Test 24: statement (line 107)
-CREATE TYPE typ AS ENUM ('a', 'b')
-
--- Test 25: statement (line 110)
-GRANT ALL ON TYPE typ TO meeter WITH GRANT OPTION
-
--- Test 26: query (line 113)
-SHOW GRANTS ON TYPE typ FOR alice
-
--- Test 27: statement (line 120)
 CREATE FUNCTION fn(IN x INT)
-	RETURNS INT
-	STABLE
-	LANGUAGE SQL
-	AS $$
-SELECT x + 1;
-$$
+RETURNS INT
+STABLE
+LANGUAGE SQL
+AS $$
+  SELECT x + 1;
+$$;
+GRANT EXECUTE ON FUNCTION fn(int) TO meeter WITH GRANT OPTION;
+SELECT has_function_privilege('alice', 'fn(int)'::regprocedure, 'EXECUTE') AS has_execute;
 
--- Test 28: statement (line 129)
-GRANT EXECUTE ON FUNCTION fn TO meeter WITH GRANT OPTION
+CREATE ROLE parent;
+CREATE ROLE child;
+GRANT parent TO child;
+CREATE SCHEMA test_schema;
+GRANT USAGE ON SCHEMA test_schema TO PUBLIC;
+GRANT CREATE ON SCHEMA test_schema TO parent;
 
--- Test 29: query (line 132)
-SHOW GRANTS ON FUNCTION fn FOR alice
+SELECT
+  mbr.rolname AS grantee,
+  rol.rolname AS role_name,
+  CASE am.admin_option WHEN true THEN 'YES' ELSE 'NO' END AS is_grantable
+FROM pg_auth_members am
+JOIN pg_roles rol ON rol.oid = am.roleid
+JOIN pg_roles mbr ON mbr.oid = am.member
+WHERE mbr.rolname IN ('child')
+ORDER BY 1, 2, 3;
 
--- Test 30: statement (line 139)
-CREATE EXTERNAL CONNECTION conn AS 'nodelocal://1/foo';
+-- Cleanup to keep the database reusable across files.
+DROP FUNCTION fn(int);
+DROP TABLE tbl;
+DROP SEQUENCE sq;
+DROP TYPE typ;
+DROP SCHEMA sc CASCADE;
+DROP SCHEMA test_schema CASCADE;
+DROP OWNED BY alice, bob, chuck, dave, meeter, greeter, granter, parent, child;
+DROP ROLE alice;
+DROP ROLE bob;
+DROP ROLE chuck;
+DROP ROLE dave;
+DROP ROLE meeter;
+DROP ROLE greeter;
+DROP ROLE granter;
+DROP ROLE parent;
+DROP ROLE child;
 
--- Test 31: statement (line 142)
-GRANT ALL ON EXTERNAL CONNECTION conn TO meeter WITH GRANT OPTION
-
--- Test 32: query (line 145)
-SHOW GRANTS ON EXTERNAL CONNECTION conn FOR alice
-
--- Test 33: statement (line 151)
-GRANT SYSTEM ALL TO meeter WITH GRANT OPTION
-
--- Test 34: query (line 154)
-SHOW SYSTEM GRANTS FOR alice
-
--- Test 35: statement (line 163)
-CREATE ROLE parent
-
--- Test 36: statement (line 166)
-CREATE ROLE child
-
--- Test 37: statement (line 169)
-GRANT parent TO child
-
--- Test 38: statement (line 172)
-CREATE SCHEMA test_schema
-
--- Test 39: statement (line 175)
-GRANT USAGE ON SCHEMA test_schema TO public
-
--- Test 40: statement (line 178)
-GRANT CREATE ON SCHEMA test_schema TO parent
-
--- Test 41: query (line 181)
-SHOW GRANTS FOR child
-
+RESET client_min_messages;

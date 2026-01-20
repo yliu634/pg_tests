@@ -659,4 +659,6 @@ INSERT 0 7
  3 | {"a": {"b": [{"c": {"d": "e"}}]}}
 (2 rows)
 
+DROP TABLE
+DROP TABLE
 RESET

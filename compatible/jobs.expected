@@ -1,1 +1,12 @@
--- Test skipped: Requires PostGIS or CockroachDB-specific features
+SET
+ has_pg_stat_activity 
+----------------------
+ t
+(1 row)
+
+ has_self 
+----------
+ t
+(1 row)
+
+RESET

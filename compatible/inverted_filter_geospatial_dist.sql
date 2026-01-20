@@ -1,49 +1,54 @@
 -- PostgreSQL compatible tests from inverted_filter_geospatial_dist
--- 13 tests
+--
+-- CockroachDB uses inverted geospatial indexes and @index hints; PostgreSQL uses
+-- PostGIS + GiST indexes.
 
--- Test 1: statement (line 11)
-INSERT INTO geo_table VALUES
-  (1, 'foo', 'POINT(1 1)'),
-  (2, 'foo', 'LINESTRING(1 1, 2 2)'),
-  (3, 'foo', 'POINT(3 3)'),
-  (4, 'bar', 'LINESTRING(4 4, 5 5)'),
-  (5, 'bar', 'LINESTRING(40 40, 41 41)'),
-  (6, 'bar', 'POLYGON((1 1, 5 1, 5 5, 1 5, 1 1))'),
-  (7, 'foo', 'LINESTRING(1 1, 3 3)')
+SET client_min_messages = warning;
 
--- Test 2: query (line 22)
-SELECT k FROM geo_table@geom_index WHERE ST_Intersects('MULTIPOINT((2.2 2.2), (3.0 3.0))'::geometry, geom) ORDER BY k
+CREATE EXTENSION IF NOT EXISTS postgis;
 
--- Test 3: query (line 29)
-SELECT k FROM geo_table@geom_index WHERE ST_CoveredBy('MULTIPOINT((2.2 2.2), (3.0 3.0))'::geometry, geom) ORDER BY k
+DROP TABLE IF EXISTS geo_table_dist;
 
--- Test 4: query (line 71)
-SELECT k FROM geo_table@geom_index WHERE ST_Intersects('MULTIPOINT((2.2 2.2), (3.0 3.0))'::geometry, geom) ORDER BY k
+CREATE TABLE geo_table_dist (
+  k INT PRIMARY KEY,
+  s TEXT,
+  geom geometry
+);
 
--- Test 5: query (line 79)
-SELECT k FROM geo_table@geom_index WHERE ST_CoveredBy('MULTIPOINT((2.2 2.2), (3.0 3.0))'::geometry, geom) ORDER BY k
+CREATE INDEX geo_table_dist_geom_gist ON geo_table_dist USING GIST (geom);
+CREATE INDEX geo_table_dist_s_idx ON geo_table_dist (s);
 
--- Test 6: query (line 100)
-SELECT k FROM geo_table@geom_index WHERE ST_Intersects('MULTIPOINT((2.2 2.2), (3.0 3.0))'::geometry, geom) ORDER BY k
+INSERT INTO geo_table_dist VALUES
+  (1, 'foo', ST_GeomFromText('POINT(1 1)')),
+  (2, 'foo', ST_GeomFromText('LINESTRING(1 1, 2 2)')),
+  (3, 'foo', ST_GeomFromText('POINT(3 3)')),
+  (4, 'bar', ST_GeomFromText('LINESTRING(4 4, 5 5)')),
+  (5, 'bar', ST_GeomFromText('LINESTRING(40 40, 41 41)')),
+  (6, 'bar', ST_GeomFromText('POLYGON((1 1, 5 1, 5 5, 1 5, 1 1))')),
+  (7, 'foo', ST_GeomFromText('LINESTRING(1 1, 3 3)'));
 
--- Test 7: query (line 108)
-SELECT k FROM geo_table@geom_index WHERE ST_CoveredBy('MULTIPOINT((2.2 2.2), (3.0 3.0))'::geometry, geom) ORDER BY k
+SELECT k
+FROM geo_table_dist
+WHERE ST_Intersects(ST_GeomFromText('MULTIPOINT((2.2 2.2), (3.0 3.0))'), geom)
+ORDER BY k;
 
--- Test 8: statement (line 114)
-DROP INDEX geom_index;
+SELECT k
+FROM geo_table_dist
+WHERE ST_CoveredBy(ST_GeomFromText('MULTIPOINT((2.2 2.2), (3.0 3.0))'), geom)
+ORDER BY k;
 
--- Test 9: statement (line 118)
-CREATE INVERTED INDEX geom_index2 ON geo_table(s, geom)
+SELECT k
+FROM geo_table_dist
+WHERE s = 'foo'
+  AND ST_Intersects(ST_GeomFromText('MULTIPOINT((2.2 2.2), (3.0 3.0))'), geom)
+ORDER BY k;
 
--- Test 10: query (line 128)
-SELECT k FROM geo_table@geom_index2 WHERE s = 'foo' AND ST_Intersects('MULTIPOINT((2.2 2.2), (3.0 3.0))'::geometry, geom) ORDER BY k
+SELECT k
+FROM geo_table_dist
+WHERE s = 'foo'
+  AND ST_CoveredBy(ST_GeomFromText('MULTIPOINT((2.2 2.2), (3.0 3.0))'), geom)
+ORDER BY k;
 
--- Test 11: query (line 134)
-SELECT k FROM geo_table@geom_index2 WHERE s = 'foo' AND ST_CoveredBy('MULTIPOINT((2.2 2.2), (3.0 3.0))'::geometry, geom) ORDER BY k
+DROP TABLE geo_table_dist;
 
--- Test 12: query (line 161)
-SELECT k FROM geo_table@geom_index2 WHERE s = 'foo' AND ST_Intersects('MULTIPOINT((2.2 2.2), (3.0 3.0))'::geometry, geom) ORDER BY k
-
--- Test 13: query (line 168)
-SELECT k FROM geo_table@geom_index2 WHERE s = 'foo' AND ST_CoveredBy('MULTIPOINT((2.2 2.2), (3.0 3.0))'::geometry, geom) ORDER BY k
-
+RESET client_min_messages;

@@ -1,16 +1,21 @@
 SET
-DROP TABLE
 DROP VIEW
-DROP OWNED
-DROP ROLE
-RESET
-CREATE ROLE
-GRANT
+DROP TABLE
 CREATE TABLE
- k | v 
----+---
-(0 rows)
-
+CREATE VIEW
 BEGIN
 INSERT 0 1
+ ?column? 
+----------
+ t
+(1 row)
+
 COMMIT
+ ?column? 
+----------
+ t
+(1 row)
+
+DROP VIEW
+DROP TABLE
+RESET

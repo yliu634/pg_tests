@@ -1,71 +1,119 @@
 -- PostgreSQL compatible tests from grant_on_all_tables_in_schema
--- 22 tests
+-- CockroachDB logic tests used SHOW GRANTS and cross-database references; for
+-- PostgreSQL we validate privileges via has_table_privilege() and keep the test
+-- in-database by using schemas.
 
--- Test 1: statement (line 1)
-CREATE USER testuser2
+SET client_min_messages = warning;
 
--- Test 2: statement (line 4)
+DROP SCHEMA IF EXISTS s CASCADE;
+DROP SCHEMA IF EXISTS s2 CASCADE;
+DROP SCHEMA IF EXISTS otherdb_public CASCADE;
+DROP TABLE IF EXISTS t131157;
+DROP ROLE IF EXISTS testuser;
+DROP ROLE IF EXISTS testuser2;
+
+CREATE ROLE testuser;
+CREATE ROLE testuser2;
+
 CREATE SCHEMA s;
 CREATE SCHEMA s2;
 
--- Test 3: statement (line 9)
-GRANT SELECT ON ALL TABLES IN SCHEMA s TO testuser
+CREATE TABLE s.t (a INT);
+CREATE TABLE s2.t (a INT);
 
--- Test 4: query (line 12)
-SHOW GRANTS FOR testuser
+-- Before grants.
+SELECT
+  's.t SELECT' AS check,
+  has_table_privilege('testuser', 's.t', 'SELECT') AS has_priv
+UNION ALL
+SELECT
+  's2.t SELECT',
+  has_table_privilege('testuser', 's2.t', 'SELECT')
+ORDER BY 1;
 
--- Test 5: statement (line 19)
-CREATE TABLE s.t();
-CREATE TABLE s2.t();
+GRANT SELECT ON ALL TABLES IN SCHEMA s TO testuser;
+SELECT
+  's.t SELECT' AS check,
+  has_table_privilege('testuser', 's.t', 'SELECT') AS has_priv
+UNION ALL
+SELECT
+  's2.t SELECT',
+  has_table_privilege('testuser', 's2.t', 'SELECT')
+ORDER BY 1;
 
--- Test 6: statement (line 23)
-GRANT SELECT ON ALL TABLES IN SCHEMA s TO testuser
+GRANT SELECT ON ALL TABLES IN SCHEMA s, s2 TO testuser, testuser2;
+SELECT
+  r.rolname AS grantee,
+  n.nspname AS schema_name,
+  c.relname AS table_name,
+  has_table_privilege(r.rolname, format('%I.%I', n.nspname, c.relname), 'SELECT') AS has_select
+FROM pg_class c
+JOIN pg_namespace n ON n.oid = c.relnamespace
+JOIN pg_roles r ON r.rolname IN ('testuser', 'testuser2')
+WHERE c.relkind = 'r' AND n.nspname IN ('s', 's2')
+ORDER BY 1, 2, 3;
 
--- Test 7: query (line 26)
-SHOW GRANTS FOR testuser
+GRANT ALL ON ALL TABLES IN SCHEMA s, s2 TO testuser, testuser2;
+SELECT
+  r.rolname AS grantee,
+  n.nspname AS schema_name,
+  c.relname AS table_name,
+  has_table_privilege(r.rolname, format('%I.%I', n.nspname, c.relname), 'SELECT') AS has_select,
+  has_table_privilege(r.rolname, format('%I.%I', n.nspname, c.relname), 'INSERT') AS has_insert,
+  has_table_privilege(r.rolname, format('%I.%I', n.nspname, c.relname), 'UPDATE') AS has_update,
+  has_table_privilege(r.rolname, format('%I.%I', n.nspname, c.relname), 'DELETE') AS has_delete
+FROM pg_class c
+JOIN pg_namespace n ON n.oid = c.relnamespace
+JOIN pg_roles r ON r.rolname IN ('testuser', 'testuser2')
+WHERE c.relkind = 'r' AND n.nspname IN ('s', 's2')
+ORDER BY 1, 2, 3;
 
--- Test 8: statement (line 34)
-GRANT SELECT ON ALL TABLES IN SCHEMA s, s2 TO testuser, testuser2
+REVOKE SELECT ON ALL TABLES IN SCHEMA s, s2 FROM testuser, testuser2;
+SELECT
+  r.rolname AS grantee,
+  n.nspname AS schema_name,
+  c.relname AS table_name,
+  has_table_privilege(r.rolname, format('%I.%I', n.nspname, c.relname), 'SELECT') AS has_select
+FROM pg_class c
+JOIN pg_namespace n ON n.oid = c.relnamespace
+JOIN pg_roles r ON r.rolname IN ('testuser', 'testuser2')
+WHERE c.relkind = 'r' AND n.nspname IN ('s', 's2')
+ORDER BY 1, 2, 3;
 
--- Test 9: query (line 37)
-SHOW GRANTS FOR testuser, testuser2
+REVOKE ALL ON ALL TABLES IN SCHEMA s, s2 FROM testuser, testuser2;
+SELECT
+  r.rolname AS grantee,
+  n.nspname AS schema_name,
+  c.relname AS table_name,
+  has_table_privilege(r.rolname, format('%I.%I', n.nspname, c.relname), 'SELECT') AS has_select,
+  has_table_privilege(r.rolname, format('%I.%I', n.nspname, c.relname), 'INSERT') AS has_insert,
+  has_table_privilege(r.rolname, format('%I.%I', n.nspname, c.relname), 'UPDATE') AS has_update,
+  has_table_privilege(r.rolname, format('%I.%I', n.nspname, c.relname), 'DELETE') AS has_delete
+FROM pg_class c
+JOIN pg_namespace n ON n.oid = c.relnamespace
+JOIN pg_roles r ON r.rolname IN ('testuser', 'testuser2')
+WHERE c.relkind = 'r' AND n.nspname IN ('s', 's2')
+ORDER BY 1, 2, 3;
 
--- Test 10: statement (line 48)
-GRANT ALL ON ALL TABLES IN SCHEMA s, s2 TO testuser, testuser2
+-- Cross-database qualifiers aren't supported in PG; use a schema-scoped grant.
+CREATE SCHEMA otherdb_public;
+CREATE TABLE otherdb_public.tbl (a INT);
+GRANT SELECT ON ALL TABLES IN SCHEMA otherdb_public TO testuser;
+SELECT has_table_privilege('testuser', 'otherdb_public.tbl', 'SELECT') AS other_schema_select;
 
--- Test 11: query (line 51)
-SHOW GRANTS FOR testuser, testuser2
+-- Regression-style sanity check: grant then revoke a valid privilege.
+CREATE TABLE t131157 (c1 INT);
+GRANT ALL ON TABLE t131157 TO testuser;
+REVOKE INSERT ON TABLE t131157 FROM testuser;
+SELECT has_table_privilege('testuser', 't131157', 'INSERT') AS t131157_has_insert;
 
--- Test 12: statement (line 62)
-REVOKE SELECT ON ALL TABLES IN SCHEMA s, s2 FROM testuser, testuser2
+-- Cleanup.
+DROP TABLE t131157;
+DROP SCHEMA s CASCADE;
+DROP SCHEMA s2 CASCADE;
+DROP SCHEMA otherdb_public CASCADE;
+DROP OWNED BY testuser, testuser2;
+DROP ROLE testuser;
+DROP ROLE testuser2;
 
--- Test 13: query (line 65)
-SHOW GRANTS FOR testuser, testuser2
-
--- Test 14: statement (line 116)
-REVOKE ALL ON ALL TABLES IN SCHEMA s, s2 FROM testuser, testuser2
-
--- Test 15: query (line 119)
-SHOW GRANTS FOR testuser, testuser2
-
--- Test 16: statement (line 127)
-CREATE DATABASE otherdb
-
--- Test 17: statement (line 130)
-CREATE TABLE otherdb.public.tbl (a int)
-
--- Test 18: statement (line 133)
-GRANT SELECT ON ALL TABLES IN SCHEMA otherdb.public TO testuser
-
--- Test 19: query (line 136)
-SHOW GRANTS ON TABLE otherdb.public.tbl
-
--- Test 20: statement (line 144)
-CREATE TABLE t131157 (c1 INT)
-
--- Test 21: statement (line 147)
-GRANT ALL ON t131157 TO testuser
-
--- Test 22: statement (line 150)
-REVOKE CREATE ON SEQUENCE t131157 FROM testuser
-
+RESET client_min_messages;

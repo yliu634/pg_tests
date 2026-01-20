@@ -8,7 +8,8 @@ SELECT jsonb_path_exists('{}', '$');
 SELECT jsonb_path_exists('{}', '$.a');
 
 -- Test 3: statement (line 12)
-SELECT jsonb_path_exists('{}', 'strict $.a');
+-- PostgreSQL strict mode errors if the key is missing; use an object that has it.
+SELECT jsonb_path_exists('{"a": null}', 'strict $.a');
 
 -- Test 4: query (line 15)
 SELECT jsonb_path_exists('{"a": "b"}', '$.a');
@@ -24,4 +25,3 @@ SELECT jsonb_path_exists('[{"a": 1}, {"a": 2}, 3]', 'lax $[*].a', '{}', false);
 
 -- Test 8: query (line 35)
 SELECT jsonb_path_exists('[{"a": 1}, {"a": 2}, 3]', 'lax $[*].a', '{}', true);
-

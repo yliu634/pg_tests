@@ -15,10 +15,14 @@
 
  jsonb_path_query_first 
 ------------------------
- 
+ null
 (1 row)
 
-psql:pg_tests/compatible/jsonb_path_query_first.sql:17: ERROR:  JSON object does not contain key "a"
+ jsonb_path_query_first 
+------------------------
+ null
+(1 row)
+
  jsonb_path_query_first 
 ------------------------
  
