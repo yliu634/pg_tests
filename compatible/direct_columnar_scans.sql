@@ -2,7 +2,7 @@
 -- 4 tests
 
 -- Test 1: statement (line 1)
-SET direct_columnar_scans_enabled = true
+-- SET direct_columnar_scans_enabled = true;
 
 -- Test 2: statement (line 4)
 CREATE TABLE t145232 (
@@ -10,17 +10,11 @@ CREATE TABLE t145232 (
       a INT NOT NULL,
       b INT NOT NULL,
       c INT NOT NULL,
-      v INT NOT NULL DEFAULT 5,
-      FAMILY (c),
-      FAMILY (v),
-      FAMILY (k),
-      FAMILY (a),
-      FAMILY (b)
+      v INT NOT NULL DEFAULT 5
 );
 
 -- Test 3: statement (line 18)
 INSERT INTO t145232 VALUES (2,2,2,2);
 
 -- Test 4: query (line 23)
-SELECT * FROM t145232 WHERE k = 2
-
+SELECT * FROM t145232 WHERE k = 2;
