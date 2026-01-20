@@ -1,7 +1,7 @@
 ---
 name: crdb-to-pg-adaptation
 description: >
-  Convert CockroachDB SQL tests in this workspace to PostgreSQL-compatible SQL without DO wrappers or commenting out real test statements; use when fixing compatible/*.sql to run cleanly on PG and regenerating .expected outputs.
+  Convert CockroachDB SQL tests in this workspace to PostgreSQL-compatible SQL **WITHOUT** changing the semantic meaning of sql tests. Fix compatible/*.sql based on the error information of pg_tests output and then regenerating .expected outputs.
 ---
 
 # CRDB SQL -> PG SQL (No DO Wrap / No Commenting Core Tests)
