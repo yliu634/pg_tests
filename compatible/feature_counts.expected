@@ -1,0 +1,64 @@
+CREATE SCHEMA
+CREATE TABLE
+CREATE FUNCTION
+psql:pg_tests/compatible/feature_counts.sql:26: ERROR:  syntax error at or near ";"
+LINE 1: SELECT 1+;
+                 ^
+ bump_feature 
+--------------
+ 
+(1 row)
+
+     feature_name     
+----------------------
+ sql.errorcodes.42601
+(1 row)
+
+CREATE TABLE
+CREATE FUNCTION
+ set_cluster_setting 
+---------------------
+ 
+(1 row)
+
+ bump_feature 
+--------------
+ 
+(1 row)
+
+ set_cluster_setting 
+---------------------
+ 
+(1 row)
+
+ bump_feature 
+--------------
+ 
+(1 row)
+
+ set_cluster_setting 
+---------------------
+ 
+(1 row)
+
+ bump_feature 
+--------------
+ 
+(1 row)
+
+ set_cluster_setting 
+---------------------
+ 
+(1 row)
+
+ bump_feature 
+--------------
+ 
+(1 row)
+
+ usage_count |   feature_name    
+-------------+-------------------
+           2 | auditing.disabled
+           2 | auditing.enabled
+(2 rows)
+
