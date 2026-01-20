@@ -1,0 +1,75 @@
+SET
+DROP SCHEMA
+DROP DATABASE
+psql:/tmp/grant_type.sql:7: ERROR:  role "user1" cannot be dropped because some objects depend on it
+DETAIL:  privileges for type enum_a
+privileges for type "enum_a+b"
+DROP TYPE
+DROP TYPE
+DROP TYPE
+RESET
+CREATE SCHEMA
+psql:/tmp/grant_type.sql:17: ERROR:  role "user1" already exists
+CREATE TYPE
+GRANT
+CREATE TYPE
+GRANT
+CREATE TYPE
+GRANT
+ grantee | privilege_type 
+---------+----------------
+(0 rows)
+
+ grantee | privilege_type | object_name 
+---------+----------------+-------------
+(0 rows)
+
+ table_schema | table_name | privilege_type 
+--------------+------------+----------------
+(0 rows)
+
+CREATE DATABASE
+You are now connected to database "other" as user "postgres".
+psql:/tmp/grant_type.sql:68: ERROR:  schema "other" does not exist
+psql:/tmp/grant_type.sql:69: ERROR:  schema "other" does not exist
+ grantee | privilege_type 
+---------+----------------
+(0 rows)
+
+ grantee | privilege_type 
+---------+----------------
+(0 rows)
+
+You are now connected to database "pg_tests" as user "postgres".
+psql:/tmp/grant_type.sql:93: ERROR:  role "owner_grant_option_child" already exists
+psql:/tmp/grant_type.sql:96: NOTICE:  role "owner_grant_option_child" has already been granted membership in role "testuser" by role "postgres"
+GRANT ROLE
+GRANT
+psql:/tmp/grant_type.sql:106: ERROR:  role "other_owner" already exists
+psql:/tmp/grant_type.sql:109: ERROR:  role "roach" already exists
+CREATE TYPE
+CREATE TYPE
+CREATE TYPE
+BEGIN
+GRANT
+GRANT
+GRANT
+COMMIT
+ table_schema | table_name | privilege_type 
+--------------+------------+----------------
+ public       | table1     | DELETE
+ public       | table1     | INSERT
+ public       | table1     | REFERENCES
+ public       | table1     | SELECT
+ public       | table1     | TRIGGER
+ public       | table1     | TRUNCATE
+ public       | table1     | UPDATE
+ public       | table2     | DELETE
+ public       | table2     | INSERT
+ public       | table2     | REFERENCES
+ public       | table2     | SELECT
+ public       | table2     | TRIGGER
+ public       | table2     | TRUNCATE
+ public       | table2     | UPDATE
+(14 rows)
+

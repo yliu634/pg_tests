@@ -1,0 +1,8 @@
+psql:/tmp/internal_executor.sql:8: NOTICE:  table "t" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+ has_table_privilege 
+---------------------
+ f
+(1 row)
+

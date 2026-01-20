@@ -17,137 +17,137 @@ INSERT INTO interval_duration_type (id, regular, regular_precision, second, seco
   (1, '12:34:56.123456', '12:34:56.123456', '12:34:56.123456', '12:34:56.123456', '12:34:56.123456', '12:34:56.123456'),
   (2, '12:56.123456', '12:56.123456', '12:56.123456', '12:56.123456', '12:56.123456', '12:56.123456'),
   (3, '366 12:34:56.123456', '366 12:34:56.123456', '366 12:34:56.123456', '366 12:34:56.123456', '366 12:34:56.123456', '366 12:34:56.123456'),
-  (4, '1-2 3.1', '1-2 3.1', '1-2 3.1', '1-2 3.1', '1-2 3.1', '1-2 3.1')
+  (4, '1-2 3.1', '1-2 3.1', '1-2 3.1', '1-2 3.1', '1-2 3.1', '1-2 3.1');
 
 -- Test 3: query (line 23)
-select * from interval_duration_type order by id asc
+select * from interval_duration_type order by id asc;
 
 -- Test 4: query (line 33)
-SELECT extract('second', interval '10:55:01.456')
+SELECT extract('second', interval '10:55:01.456');
 
 -- Test 5: query (line 38)
-SELECT extract(minute from interval '10:55:01.456')
+SELECT extract(minute from interval '10:55:01.456');
 
 -- Test 6: query (line 43)
-SELECT date_part('minute', interval '10:55:01.456')
+SELECT date_part('minute', interval '10:55:01.456');
 
 -- Test 7: query (line 53)
-SELECT interval '999' second
+SELECT interval '999' second;
 
 -- Test 8: query (line 58)
-SELECT interval '999' minute
+SELECT interval '999' minute;
 
 -- Test 9: query (line 63)
-SELECT interval '999' hour
+SELECT interval '999' hour;
 
 -- Test 10: query (line 68)
-SELECT interval '999' day
+SELECT interval '999' day;
 
 -- Test 11: query (line 73)
-SELECT interval '999' month
+SELECT interval '999' month;
 
 -- Test 12: query (line 80)
-SELECT interval '1' year
+SELECT interval '1' year;
 
 -- Test 13: query (line 85)
-SELECT interval '2' month
+SELECT interval '2' month;
 
 -- Test 14: query (line 90)
-SELECT interval '3' day
+SELECT interval '3' day;
 
 -- Test 15: query (line 95)
-SELECT interval '4' hour
+SELECT interval '4' hour;
 
 -- Test 16: query (line 100)
-SELECT interval '5' minute
+SELECT interval '5' minute;
 
 -- Test 17: query (line 105)
-SELECT interval '6' second
+SELECT interval '6' second;
 
 -- Test 18: query (line 110)
-SELECT interval '1' year to month
+SELECT interval '1' year to month;
 
 -- Test 19: query (line 115)
-SELECT interval '1-2' year to month
+SELECT interval '1-2' year to month;
 
 -- Test 20: query (line 120)
-SELECT interval '1 2' day to hour
+SELECT interval '1 2' day to hour;
 
 -- Test 21: query (line 125)
-SELECT interval '1 2:03' day to hour
+SELECT interval '1 2:03' day to hour;
 
 -- Test 22: query (line 130)
-SELECT interval '1 2:03:04' day to hour
+SELECT interval '1 2:03:04' day to hour;
 
 -- Test 23: query (line 135)
-SELECT interval '1 2' day to minute
+SELECT interval '1 2' day to minute;
 
 query T
-SELECT interval '1 2:03' day to minute
+SELECT interval '1 2:03' day to minute;
 
 -- Test 24: query (line 143)
-SELECT interval '1 2:03:04' day to minute
+SELECT interval '1 2:03:04' day to minute;
 
 -- Test 25: query (line 148)
-SELECT interval '1 2' day to second
+SELECT interval '1 2' day to second;
 
 query T
-SELECT interval '1 2:03' day to second
+SELECT interval '1 2:03' day to second;
 
 -- Test 26: query (line 156)
-SELECT interval '1 2:03:04' day to second
+SELECT interval '1 2:03:04' day to second;
 
 -- Test 27: query (line 161)
-SELECT interval '1 2' hour to minute
+SELECT interval '1 2' hour to minute;
 
 query T
-SELECT interval '1 2:03' hour to minute
+SELECT interval '1 2:03' hour to minute;
 
 -- Test 28: query (line 169)
-SELECT interval '1 2:03:04' hour to minute
+SELECT interval '1 2:03:04' hour to minute;
 
 -- Test 29: query (line 174)
-SELECT interval '1 2' hour to second
+SELECT interval '1 2' hour to second;
 
 query T
-SELECT interval '1 2:03' hour to second
+SELECT interval '1 2:03' hour to second;
 
 -- Test 30: query (line 182)
-SELECT interval '1 2:03:04' hour to second
+SELECT interval '1 2:03:04' hour to second;
 
 -- Test 31: query (line 187)
-SELECT interval '1 2' minute to second
+SELECT interval '1 2' minute to second;
 
 query T
-SELECT interval '1 2:03' minute to second
+SELECT interval '1 2:03' minute to second;
 
 -- Test 32: query (line 195)
-SELECT interval '1 2:03:04' minute to second
+SELECT interval '1 2:03:04' minute to second;
 
 -- Test 33: query (line 200)
-SELECT interval '1 +2:03' minute to second
+SELECT interval '1 +2:03' minute to second;
 
 -- Test 34: query (line 205)
-SELECT interval '1 +2:03:04' minute to second
+SELECT interval '1 +2:03:04' minute to second;
 
 -- Test 35: query (line 210)
-SELECT interval '1 -2:03' minute to second
+SELECT interval '1 -2:03' minute to second;
 
 -- Test 36: query (line 215)
-SELECT interval '1 -2:03:04' minute to second
+SELECT interval '1 -2:03:04' minute to second;
 
 -- Test 37: query (line 220)
-SELECT interval '123 11' day to hour
+SELECT interval '123 11' day to hour;
 
 -- Test 38: query (line 225)
-SELECT interval '123 11' day
+SELECT interval '123 11' day;
 
 query error could not parse "123 11" as type interval
-SELECT interval '123 11'
+SELECT interval '123 11';
 
 # not ok, redundant hh:mm fields
 query error could not parse "123 2:03 -2:04" as type interval
-SELECT interval '123 2:03 -2:04'
+SELECT interval '123 2:03 -2:04';
 
 # test syntaxes for restricted precision
 query T
@@ -160,7 +160,7 @@ SELECT interval(2) '1 day 01:23:45.6789'
 SELECT interval '12:34.5678' minute to second(2)
 
 -- Test 41: query (line 251)
-SELECT interval '1.234' second
+SELECT interval '1.234' second;
 
 -- Test 42: query (line 256)
 SELECT interval '1.234' second(2)
@@ -196,22 +196,22 @@ SELECT interval '1 2:03.5678' minute to second(2)
 SELECT interval '1 2:03:04.5678' minute to second(2)
 
 -- Test 50: query (line 308)
-SELECT interval '1:02.123456'
+SELECT interval '1:02.123456';
 
 -- Test 51: query (line 313)
-SELECT interval '-1:02.123456'
+SELECT interval '-1:02.123456';
 
 -- Test 52: query (line 320)
-SELECT interval '1-2 3' year
+SELECT interval '1-2 3' year;
 
 -- Test 53: query (line 325)
-SELECT interval '1-2 3' day
+SELECT interval '1-2 3' day;
 
 -- Test 54: query (line 330)
-SELECT interval '2.1 00:'
+SELECT interval '2.1 00:';
 
 -- Test 55: query (line 335)
-SELECT interval ' 5  ' year
+SELECT interval ' 5  ' year;
 
 -- Test 56: statement (line 343)
 CREATE TABLE regression_44774 (
@@ -222,7 +222,7 @@ CREATE TABLE regression_44774 (
 INSERT INTO regression_44774 VALUES (default), ('4:5:6.123456')
 
 -- Test 58: query (line 351)
-SELECT a FROM regression_44774 ORDER BY a
+SELECT a FROM regression_44774 ORDER BY a;
 
 -- Test 59: statement (line 357)
 UPDATE regression_44774
@@ -230,13 +230,13 @@ SET a = '13:14:15.123456'::interval + '1 sec'::interval
 WHERE 1 = 1
 
 -- Test 60: query (line 362)
-SELECT a FROM regression_44774 ORDER BY a
+SELECT a FROM regression_44774 ORDER BY a;
 
 -- Test 61: statement (line 368)
-DROP TABLE regression_44774
+DROP TABLE regression_44774;
 
 -- Test 62: query (line 374)
-SELECT INTERVAL '10000000000000000000000000000000000 year'
+SELECT INTERVAL '10000000000000000000000000000000000 year';
 
 query T nosort
 SELECT i / 2 FROM ( VALUES
@@ -250,41 +250,41 @@ SELECT i / 2 FROM ( VALUES
   (INTERVAL '0.000007'::interval),
   (INTERVAL '0.000008'::interval),
   (INTERVAL '0.000009'::interval)
-) regression_66118(i)
+) regression_66118(i);
 
 -- Test 63: statement (line 404)
-SET intervalstyle = 'iso_8601'
+SET intervalstyle = 'iso_8601';
 
 -- Test 64: statement (line 407)
-SET intervalstyle = 'sql_standard'
+SET intervalstyle = 'sql_standard';
 
 -- Test 65: statement (line 410)
-SET intervalstyle = DEFAULT
+SET intervalstyle = DEFAULT;
 
 -- Test 66: statement (line 423)
-create table intervals ( pk INT PRIMARY KEY, i INTERVAL )
+create table intervals ( pk INT PRIMARY KEY, i INTERVAL );
 
 -- Test 67: statement (line 426)
 INSERT INTO intervals VALUES
   (1, '-2 years -11 mons 1 days 04:05:06.123'),
   (2, '1 day 04:06:08.123'),
-  (3, '2 years 11 mons -2 days +03:25:45.678')
+  (3, '2 years 11 mons -2 days +03:25:45.678');
 
 -- Test 68: query (line 432)
-SELECT '-2 years 11 months 1 day 01:02:03'::interval
+SELECT '-2 years 11 months 1 day 01:02:03'::interval;
 
 -- Test 69: statement (line 437)
-create table interval_parsing ( pk INT PRIMARY KEY, i TEXT )
+create table interval_parsing ( pk INT PRIMARY KEY, i TEXT );
 
 -- Test 70: statement (line 440)
 INSERT INTO interval_parsing VALUES
   (1, '-10 years 22 months 1 day 01:02:03'),
   (2, '-10 years -22 months 1 day 01:02:03'),
   (3, '-10 years 22 months -1 day 01:02:03'),
-  (4, '-10 years 22 months -1 day -01:02:03')
+  (4, '-10 years 22 months -1 day -01:02:03');
 
 -- Test 71: query (line 447)
-SELECT i FROM intervals ORDER BY pk
+SELECT i FROM intervals ORDER BY pk;
 
 -- Test 72: query (line 454)
 WITH tbl(pk, i, pg, iso, sql_std, default_style) AS (
@@ -319,16 +319,16 @@ SELECT (i,) FROM intervals ORDER BY pk
 SELECT row_to_json(intervals) FROM intervals ORDER BY pk
 
 -- Test 76: query (line 512)
-SELECT i, i::INTERVAL FROM interval_parsing ORDER BY pk
+SELECT i, i::INTERVAL FROM interval_parsing ORDER BY pk;
 
 -- Test 77: statement (line 520)
-SET intervalstyle = 'iso_8601'
+SET intervalstyle = 'iso_8601';
 
 -- Test 78: query (line 523)
-SELECT '-2 years 11 months 1 day 01:02:03'::interval
+SELECT '-2 years 11 months 1 day 01:02:03'::interval;
 
 -- Test 79: query (line 528)
-SELECT i FROM intervals ORDER BY pk
+SELECT i FROM intervals ORDER BY pk;
 
 -- Test 80: query (line 535)
 SELECT array_to_string(array_agg(i ORDER BY pk), ' ') FROM intervals
@@ -340,16 +340,16 @@ SELECT (i,) FROM intervals ORDER BY pk
 SELECT row_to_json(intervals) FROM intervals ORDER BY pk
 
 -- Test 83: query (line 566)
-SELECT i, i::INTERVAL FROM interval_parsing ORDER BY pk
+SELECT i, i::INTERVAL FROM interval_parsing ORDER BY pk;
 
 -- Test 84: statement (line 574)
-SET intervalstyle = 'sql_standard'
+SET intervalstyle = 'sql_standard';
 
 -- Test 85: query (line 577)
-SELECT '-2 years 11 months 1 day 01:02:03'::interval
+SELECT '-2 years 11 months 1 day 01:02:03'::interval;
 
 -- Test 86: query (line 582)
-SELECT i FROM intervals ORDER BY pk
+SELECT i FROM intervals ORDER BY pk;
 
 -- Test 87: query (line 589)
 SELECT array_to_string(array_agg(i ORDER BY pk), ' ') FROM intervals
@@ -361,13 +361,13 @@ SELECT (i,) FROM intervals ORDER BY pk
 SELECT row_to_json(intervals) FROM intervals ORDER BY pk
 
 -- Test 90: query (line 620)
-SELECT i, i::INTERVAL FROM interval_parsing ORDER BY pk
+SELECT i, i::INTERVAL FROM interval_parsing ORDER BY pk;
 
 -- Test 91: statement (line 629)
 CREATE TABLE intvl_tbl (id SERIAL, d1 INTERVAL);
 INSERT INTO intvl_tbl (d1) VALUES
   ('355 months 40 days 123:45:12'),
-  ('-400 months -30 days -100:12:13')
+  ('-400 months -30 days -100:12:13');
 
 -- Test 92: query (line 635)
 SELECT to_char(d1, 'Y,YYY YYYY YYY YY Y CC Q MM WW DDD DD J')
@@ -406,7 +406,7 @@ WHERE tablename = 'intervalstyle_in_index'
 AND indexname = 'idx'
 
 -- Test 100: statement (line 693)
-SET intervalstyle = 'iso_8601'
+SET intervalstyle = 'iso_8601';
 
 -- Test 101: query (line 696)
 SELECT indexname, indexdef
@@ -415,7 +415,7 @@ WHERE tablename = 'intervalstyle_in_index'
 AND indexname = 'idx'
 
 -- Test 102: statement (line 705)
-SET intervalstyle = 'postgres'
+SET intervalstyle = 'postgres';
 
 -- Test 103: statement (line 708)
 SELECT date_trunc('invalid', interval '1 month')

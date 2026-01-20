@@ -1,0 +1,292 @@
+DROP TABLE
+psql:/tmp/inverted_index.sql:2: NOTICE:  table "c" does not exist, skipping
+DROP TABLE
+psql:/tmp/inverted_index.sql:3: NOTICE:  table "users" does not exist, skipping
+DROP TABLE
+psql:/tmp/inverted_index.sql:89: ERROR:  syntax error at or near ")"
+LINE 5:     )
+            ^
+psql:/tmp/inverted_index.sql:92: ERROR:  syntax error at or near "STORING"
+LINE 1: CREATE INDEX c on t1 USING GIN (id2) STORING (id1,id3);
+                                             ^
+psql:/tmp/inverted_index.sql:95: ERROR:  syntax error at or near "STORING"
+LINE 1: CREATE INDEX c on t1 (id2) STORING (id1,id3);
+                                   ^
+psql:/tmp/inverted_index.sql:176: ERROR:  syntax error at or near "CREATE"
+LINE 3: CREATE TABLE d (
+        ^
+psql:/tmp/inverted_index.sql:179: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> (NULL::JSONB) ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:182: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @>'{"a": "b"}' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:185: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> '{"a": {"b": [1]}}' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:188: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> '{"a": {"b": [[2]]}}' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:191: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> '{"a": {"b": true}}' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:194: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> '{"a": {"b": [[2]]}}' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:197: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @>'[1]' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:200: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @>'[{"a": {"b": [1]}}]' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:203: ERROR:  column "a" does not exist
+LINE 1: DELETE FROM d WHERE a=1;
+                            ^
+psql:/tmp/inverted_index.sql:206: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @>'{"a": "b"}' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:212: ERROR:  syntax error at or near "DELETE"
+LINE 3: DELETE FROM d WHERE a=6;
+        ^
+psql:/tmp/inverted_index.sql:215: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> '{"a": {"b": [[2]]}}' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:218: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> '"a"' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:221: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> 'null' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:224: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> 'true' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:227: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> 'false' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:230: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> '1' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:233: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> '1.23' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:236: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> '{}' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:239: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> '[]' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:245: ERROR:  syntax error at or near "SELECT"
+LINE 3: SELECT * FROM d WHERE b @> '["a"]' ORDER BY a;
+        ^
+psql:/tmp/inverted_index.sql:251: ERROR:  syntax error at or near "SELECT"
+LINE 3: SELECT * FROM d WHERE b @> '[{"a": "a"}]' ORDER BY a;
+        ^
+psql:/tmp/inverted_index.sql:257: ERROR:  syntax error at or near "SELECT"
+LINE 3: SELECT * FROM d WHERE b @> '[[[["a"]]]]' ORDER BY a;
+        ^
+psql:/tmp/inverted_index.sql:263: ERROR:  syntax error at or near "SELECT"
+LINE 3: SELECT * FROM d WHERE b @> '[[[["a"]]]]' ORDER BY a;
+        ^
+psql:/tmp/inverted_index.sql:275: ERROR:  syntax error at or near "INSERT"
+LINE 3: INSERT INTO d VALUES (23,  '{"a": 123.123}')
+        ^
+psql:/tmp/inverted_index.sql:278: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> '{"a": 123.123000}' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:287: ERROR:  syntax error at or near "INSERT"
+LINE 3: INSERT INTO d VALUES (26,  '[[], {}]')
+        ^
+psql:/tmp/inverted_index.sql:290: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> '{"a": []}' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:293: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> '[{}]' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:296: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> '[[]]' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:302: ERROR:  syntax error at or near "SELECT"
+LINE 3: SELECT * FROM d WHERE b @> 'true' ORDER BY a;
+        ^
+psql:/tmp/inverted_index.sql:305: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> 'false' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:308: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> '1.23' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:311: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> '"a"' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:314: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b IS NULL;
+                              ^
+psql:/tmp/inverted_index.sql:317: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b = NULL;
+                              ^
+psql:/tmp/inverted_index.sql:320: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> NULL;
+                              ^
+psql:/tmp/inverted_index.sql:323: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> 'null' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:326: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> '{"a": {}}' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:329: ERROR:  column "b" does not exist
+LINE 1: SELECT * FROM d WHERE b @> '{"a": []}' ORDER BY a;
+                              ^
+psql:/tmp/inverted_index.sql:365: ERROR:  syntax error at or near "SELECT"
+LINE 3: SELECT * FROM d WHERE b @> '{"a": {"b": "c", "d": "e"}, "f":...
+        ^
+psql:/tmp/inverted_index.sql:376: ERROR:  syntax error at or near "SELECT"
+LINE 3: SELECT * FROM d WHERE b @> '[[1, 2]]' ORDER BY a
+        ^
+psql:/tmp/inverted_index.sql:380: ERROR:  relation "users" does not exist
+LINE 1: INSERT INTO users (user_profile) VALUES  ('{"first_name": "L...
+                    ^
+psql:/tmp/inverted_index.sql:383: ERROR:  relation "users" does not exist
+psql:/tmp/inverted_index.sql:389: ERROR:  syntax error at or near "@"
+LINE 1: SELECT count(*) FROM users@dogs
+                                  ^
+psql:/tmp/inverted_index.sql:392: ERROR:  relation "users" does not exist
+LINE 1: SELECT user_profile FROM users WHERE user_profile @> '{"firs...
+                                 ^
+psql:/tmp/inverted_index.sql:395: ERROR:  type "index" does not exist
+LINE 1: ...update_test (i INT PRIMARY KEY, j JSONB, INVERTED INDEX(j));
+                                                             ^
+psql:/tmp/inverted_index.sql:398: ERROR:  relation "update_test" does not exist
+LINE 1: INSERT INTO update_test VALUES (1, '0');
+                    ^
+psql:/tmp/inverted_index.sql:401: ERROR:  relation "update_test" does not exist
+LINE 1: SELECT * FROM update_test WHERE j @> '0';
+                      ^
+psql:/tmp/inverted_index.sql:404: ERROR:  relation "update_test" does not exist
+LINE 1: UPDATE update_test SET j = '{"a":"b", "c":"d"}' WHERE i = 1;
+               ^
+psql:/tmp/inverted_index.sql:407: ERROR:  relation "update_test" does not exist
+LINE 1: SELECT * FROM update_test WHERE j @> '0';
+                      ^
+psql:/tmp/inverted_index.sql:410: ERROR:  relation "update_test" does not exist
+LINE 1: SELECT * FROM update_test WHERE j @> '{"a":"b"}';
+                      ^
+psql:/tmp/inverted_index.sql:413: ERROR:  relation "update_test" does not exist
+LINE 1: INSERT INTO update_test VALUES (2, '{"longKey1":"longValue1"...
+                    ^
+psql:/tmp/inverted_index.sql:416: ERROR:  relation "update_test" does not exist
+LINE 1: UPDATE update_test SET j = ('"shortValue"') WHERE i = 2;
+               ^
+psql:/tmp/inverted_index.sql:419: ERROR:  relation "update_test" does not exist
+LINE 1: SELECT * FROM update_test WHERE j @> '"shortValue"';
+                      ^
+psql:/tmp/inverted_index.sql:422: ERROR:  relation "update_test" does not exist
+LINE 1: SELECT * FROM update_test WHERE j @> '{"longKey1":"longValue...
+                      ^
+psql:/tmp/inverted_index.sql:425: ERROR:  relation "update_test" does not exist
+LINE 1: SELECT * FROM update_test WHERE j @> '{"longKey2":"longValue...
+                      ^
+psql:/tmp/inverted_index.sql:428: ERROR:  relation "update_test" does not exist
+LINE 1: UPDATE update_test SET (i, j) = (10, '{"longKey1":"longValue...
+               ^
+psql:/tmp/inverted_index.sql:431: ERROR:  relation "update_test" does not exist
+LINE 1: UPDATE update_test SET j = '{"a":"b", "a":"b"}' WHERE i = 1;
+               ^
+psql:/tmp/inverted_index.sql:434: ERROR:  relation "update_test" does not exist
+LINE 1: UPDATE update_test SET (i, j) = (2, '["a", "a"]') WHERE i = ...
+               ^
+psql:/tmp/inverted_index.sql:437: ERROR:  relation "update_test" does not exist
+LINE 1: INSERT INTO update_test VALUES (3, '["a", "b", "c"]');
+                    ^
+psql:/tmp/inverted_index.sql:440: ERROR:  relation "update_test" does not exist
+LINE 1: SELECT * FROM update_test WHERE j @> '["a"]' ORDER BY i;
+                      ^
+psql:/tmp/inverted_index.sql:443: ERROR:  relation "update_test" does not exist
+LINE 1: UPDATE update_test SET j = '["b", "c", "e"]' WHERE i = 3;
+               ^
+psql:/tmp/inverted_index.sql:446: ERROR:  relation "update_test" does not exist
+LINE 1: SELECT * FROM update_test WHERE j @> '["a"]' ORDER BY i;
+                      ^
+psql:/tmp/inverted_index.sql:449: ERROR:  relation "update_test" does not exist
+LINE 1: SELECT * FROM update_test WHERE j @> '["b"]' ORDER BY i;
+                      ^
+psql:/tmp/inverted_index.sql:452: ERROR:  relation "update_test" does not exist
+LINE 1: INSERT INTO update_test VALUES (4, '["a", "b"]');
+                    ^
+psql:/tmp/inverted_index.sql:455: ERROR:  relation "update_test" does not exist
+LINE 1: UPDATE update_test SET j = '["b", "a"]' WHERE i = 4;
+               ^
+psql:/tmp/inverted_index.sql:458: ERROR:  relation "update_test" does not exist
+LINE 1: SELECT * FROM update_test WHERE j @> '["a"]' ORDER BY i;
+                      ^
+psql:/tmp/inverted_index.sql:461: ERROR:  relation "update_test" does not exist
+LINE 1: SELECT * FROM update_test WHERE j @> '["b"]' ORDER BY i;
+                      ^
+psql:/tmp/inverted_index.sql:464: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO update_test VALUES (4, '["a", "b"]');
+        ^
+psql:/tmp/inverted_index.sql:467: ERROR:  relation "update_test" does not exist
+LINE 1: SELECT * FROM update_test WHERE j @> '["a"]' ORDER BY i;
+                      ^
+psql:/tmp/inverted_index.sql:470: ERROR:  relation "update_test" does not exist
+LINE 1: SELECT * FROM update_test WHERE j @> '["b"]' ORDER BY i;
+                      ^
+psql:/tmp/inverted_index.sql:473: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO update_test VALUES (3, '["c", "e", "f"]');
+        ^
+psql:/tmp/inverted_index.sql:476: ERROR:  relation "update_test" does not exist
+LINE 1: SELECT * FROM update_test WHERE j @> '["c"]' ORDER BY i;
+                      ^
+psql:/tmp/inverted_index.sql:483: ERROR:  type "index" does not exist
+LINE 4:  ,INVERTED INDEX(j)
+                   ^
+psql:/tmp/inverted_index.sql:490: ERROR:  type "index" does not exist
+LINE 4:  ,INVERTED INDEX(j)
+                   ^
+psql:/tmp/inverted_index.sql:496: ERROR:  syntax error at or near "SELECT"
+LINE 3: SELECT * FROM del_cascade_test ORDER BY delete_cascade;
+        ^
+psql:/tmp/inverted_index.sql:502: ERROR:  syntax error at or near "SELECT"
+LINE 3: SELECT * FROM del_cascade_test ORDER BY delete_cascade;
+        ^
+psql:/tmp/inverted_index.sql:505: ERROR:  relation "del_cascade_test" does not exist
+LINE 1: SELECT * FROM del_cascade_test ORDER BY delete_cascade;
+                      ^
+psql:/tmp/inverted_index.sql:508: ERROR:  relation "update_test" does not exist
+LINE 1: INSERT INTO update_test VALUES (3, '["a", "b", "c"]');
+                    ^
+psql:/tmp/inverted_index.sql:514: ERROR:  syntax error at or near "SELECT"
+LINE 3: SELECT * FROM update_cascade_test ORDER BY update_cascade;
+        ^
+psql:/tmp/inverted_index.sql:517: ERROR:  relation "update_test" does not exist
+LINE 1: UPDATE update_test SET (i,j)  = (5, '{"a":"b", "a":"b"}') WH...
+               ^
+psql:/tmp/inverted_index.sql:523: ERROR:  syntax error at or near "UPDATE"
+LINE 3: UPDATE update_test SET (i,j)  = (5, '{"a":"b", "a":"b"}') WH...
+        ^
+psql:/tmp/inverted_index.sql:526: ERROR:  relation "update_cascade_test" does not exist
+LINE 1: SELECT * FROM update_cascade_test ORDER BY update_cascade;
+                      ^
+psql:/tmp/inverted_index.sql:1177: ERROR:  syntax error at or near "INSERT"
+LINE 3: INSERT INTO table_with_nulls VALUES (NULL)
+        ^
+psql:/tmp/inverted_index.sql:1228: ERROR:  syntax error at or near "INSERT"
+LINE 3: INSERT INTO cb VALUES
+        ^
+psql:/tmp/inverted_index.sql:1232: ERROR:  syntax error at or near "CREATE"
+LINE 3: CREATE TABLE t117979 (id INT PRIMARY KEY, links text[], INVE...
+        ^
+psql:/tmp/inverted_index.sql:1233: ERROR:  relation "t117979" does not exist
+LINE 1: INSERT INTO t117979 (id, links) VALUES (1, '{str2,str3}');
+                    ^
+psql:/tmp/inverted_index.sql:1244: ERROR:  syntax error at or near "CREATE"
+LINE 4: CREATE TABLE t151995 (
+        ^
+psql:/tmp/inverted_index.sql:1250: ERROR:  syntax error at or near ":"
+LINE 3: ...4ED667271F45EEC180F702131A41A7C138EDC3641D46F041':::GEOMETRY
+                                                              ^
+psql:/tmp/inverted_index.sql:1253: ERROR:  relation "t151995" does not exist
+psql:/tmp/inverted_index.sql:1256: ERROR:  schema "crdb_internal" does not exist
+LINE 1: SELECT crdb_internal.clear_table_stats_cache();
+               ^
+psql:/tmp/inverted_index.sql:1261: ERROR:  relation "t151995" does not exist
+LINE 2:   FROM t151995 AS t1
+               ^
