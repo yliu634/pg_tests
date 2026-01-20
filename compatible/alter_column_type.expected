@@ -1,35 +1,21 @@
 SET
 SET
-psql:compatible/alter_column_type.sql:9: ERROR:  relation "t" already exists
-              x               | y  
-------------------------------+----
- {"foo": "bar"}               |  5
- {"foo": "bar"}               | 10
- [1, 2]                       |  5
- [1, 2]                       | 20
- {"bar": "baz", "foo": "bar"} |  5
- {"bar": "baz", "foo": "bar"} | 30
- {"foo": {"bar": "baz"}}      |  5
- {"foo": {"bar": "baz"}}      | 40
-(8 rows)
+CREATE TABLE
+ s | sl | t | ts 
+---+----+---+----
+(0 rows)
 
- column_name | data_type 
--------------+-----------
- x           | jsonb
- y           | integer
-(2 rows)
+ column_name |          data_type          
+-------------+-----------------------------
+ s           | text
+ sl          | character varying
+ t           | time without time zone
+ ts          | timestamp without time zone
+(4 rows)
 
-              x               | y  
-------------------------------+----
- {"foo": "bar"}               |  5
- {"foo": "bar"}               | 10
- [1, 2]                       |  5
- [1, 2]                       | 20
- {"bar": "baz", "foo": "bar"} |  5
- {"bar": "baz", "foo": "bar"} | 30
- {"foo": {"bar": "baz"}}      |  5
- {"foo": {"bar": "baz"}}      | 40
-(8 rows)
+ s | sl | t | ts 
+---+----+---+----
+(0 rows)
 
 DROP TABLE
 CREATE TABLE
@@ -90,14 +76,12 @@ CREATE TABLE
 INSERT 0 1
 ALTER TABLE
 ALTER TABLE
-psql:compatible/alter_column_type.sql:130: ERROR:  relation "t2" already exists
+CREATE TABLE
 INSERT 0 4
  column_name | data_type 
 -------------+-----------
- a           | integer
- b           | integer
- c           | integer
-(3 rows)
+ id          | integer
+(1 row)
 
 INSERT 0 1
 CREATE TABLE
