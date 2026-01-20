@@ -1,0 +1,564 @@
+SET
+DROP TABLE
+DROP SCHEMA
+DROP SCHEMA
+DROP SEQUENCE
+DROP TYPE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+SET
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+GRANT
+CREATE ROLE
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root     | pg_tests      | public       | t1         | DELETE         | YES          | NO
+ root    | root     | pg_tests      | public       | t1         | INSERT         | YES          | NO
+ root    | root     | pg_tests      | public       | t1         | REFERENCES     | YES          | NO
+ root    | root     | pg_tests      | public       | t1         | SELECT         | YES          | YES
+ root    | root     | pg_tests      | public       | t1         | TRIGGER        | YES          | NO
+ root    | root     | pg_tests      | public       | t1         | TRUNCATE       | YES          | NO
+ root    | root     | pg_tests      | public       | t1         | UPDATE         | YES          | NO
+ root    | testuser | pg_tests      | public       | t1         | SELECT         | YES          | YES
+ root    | who      | pg_tests      | public       | t1         | SELECT         | YES          | YES
+(9 rows)
+
+--
+(0 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root     | pg_tests      | public       | t1         | DELETE         | YES          | NO
+ root    | root     | pg_tests      | public       | t1         | INSERT         | YES          | NO
+ root    | root     | pg_tests      | public       | t1         | REFERENCES     | YES          | NO
+ root    | root     | pg_tests      | public       | t1         | SELECT         | YES          | YES
+ root    | root     | pg_tests      | public       | t1         | TRIGGER        | YES          | NO
+ root    | root     | pg_tests      | public       | t1         | TRUNCATE       | YES          | NO
+ root    | root     | pg_tests      | public       | t1         | UPDATE         | YES          | NO
+ root    | target   | pg_tests      | public       | t1         | SELECT         | YES          | YES
+ root    | testuser | pg_tests      | public       | t1         | SELECT         | YES          | YES
+ root    | who      | pg_tests      | public       | t1         | SELECT         | YES          | YES
+(10 rows)
+
+ grantor | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root     | pg_tests      | public       | t2         | DELETE         | YES          | NO
+ root    | root     | pg_tests      | public       | t2         | INSERT         | YES          | NO
+ root    | root     | pg_tests      | public       | t2         | REFERENCES     | YES          | NO
+ root    | root     | pg_tests      | public       | t2         | SELECT         | YES          | YES
+ root    | root     | pg_tests      | public       | t2         | TRIGGER        | YES          | NO
+ root    | root     | pg_tests      | public       | t2         | TRUNCATE       | YES          | NO
+ root    | root     | pg_tests      | public       | t2         | UPDATE         | YES          | NO
+ root    | testuser | pg_tests      | public       | t2         | INSERT         | YES          | NO
+ root    | testuser | pg_tests      | public       | t2         | SELECT         | YES          | YES
+ root    | who      | pg_tests      | public       | t2         | SELECT         | YES          | YES
+(10 rows)
+
+GRANT
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root     | pg_tests      | public       | t3         | DELETE         | YES          | NO
+ root    | root     | pg_tests      | public       | t3         | INSERT         | YES          | NO
+ root    | root     | pg_tests      | public       | t3         | REFERENCES     | YES          | NO
+ root    | root     | pg_tests      | public       | t3         | SELECT         | YES          | YES
+ root    | root     | pg_tests      | public       | t3         | TRIGGER        | YES          | NO
+ root    | root     | pg_tests      | public       | t3         | TRUNCATE       | YES          | NO
+ root    | root     | pg_tests      | public       | t3         | UPDATE         | YES          | NO
+ root    | testuser | pg_tests      | public       | t3         | DELETE         | YES          | NO
+ root    | testuser | pg_tests      | public       | t3         | INSERT         | YES          | NO
+ root    | testuser | pg_tests      | public       | t3         | REFERENCES     | YES          | NO
+ root    | testuser | pg_tests      | public       | t3         | SELECT         | YES          | YES
+ root    | testuser | pg_tests      | public       | t3         | TRIGGER        | YES          | NO
+ root    | testuser | pg_tests      | public       | t3         | TRUNCATE       | YES          | NO
+ root    | testuser | pg_tests      | public       | t3         | UPDATE         | YES          | NO
+ root    | who      | pg_tests      | public       | t3         | SELECT         | YES          | YES
+(15 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root     | pg_tests      | public       | t4         | DELETE         | YES          | NO
+ root    | root     | pg_tests      | public       | t4         | INSERT         | YES          | NO
+ root    | root     | pg_tests      | public       | t4         | REFERENCES     | YES          | NO
+ root    | root     | pg_tests      | public       | t4         | SELECT         | YES          | YES
+ root    | root     | pg_tests      | public       | t4         | TRIGGER        | YES          | NO
+ root    | root     | pg_tests      | public       | t4         | TRUNCATE       | YES          | NO
+ root    | root     | pg_tests      | public       | t4         | UPDATE         | YES          | NO
+ root    | testuser | pg_tests      | public       | t4         | DELETE         | NO           | NO
+ root    | testuser | pg_tests      | public       | t4         | INSERT         | NO           | NO
+ root    | testuser | pg_tests      | public       | t4         | REFERENCES     | YES          | NO
+ root    | testuser | pg_tests      | public       | t4         | SELECT         | YES          | YES
+ root    | testuser | pg_tests      | public       | t4         | TRIGGER        | YES          | NO
+ root    | testuser | pg_tests      | public       | t4         | TRUNCATE       | YES          | NO
+ root    | testuser | pg_tests      | public       | t4         | UPDATE         | YES          | NO
+ root    | who      | pg_tests      | public       | t4         | SELECT         | YES          | YES
+(15 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root     | pg_tests      | public       | t5         | DELETE         | YES          | NO
+ root    | root     | pg_tests      | public       | t5         | INSERT         | YES          | NO
+ root    | root     | pg_tests      | public       | t5         | REFERENCES     | YES          | NO
+ root    | root     | pg_tests      | public       | t5         | SELECT         | YES          | YES
+ root    | root     | pg_tests      | public       | t5         | TRIGGER        | YES          | NO
+ root    | root     | pg_tests      | public       | t5         | TRUNCATE       | YES          | NO
+ root    | root     | pg_tests      | public       | t5         | UPDATE         | YES          | NO
+ root    | testuser | pg_tests      | public       | t5         | DELETE         | NO           | NO
+ root    | testuser | pg_tests      | public       | t5         | INSERT         | NO           | NO
+ root    | testuser | pg_tests      | public       | t5         | REFERENCES     | NO           | NO
+ root    | testuser | pg_tests      | public       | t5         | SELECT         | NO           | YES
+ root    | testuser | pg_tests      | public       | t5         | TRIGGER        | NO           | NO
+ root    | testuser | pg_tests      | public       | t5         | TRUNCATE       | NO           | NO
+ root    | testuser | pg_tests      | public       | t5         | UPDATE         | NO           | NO
+ root    | who      | pg_tests      | public       | t5         | SELECT         | YES          | YES
+(15 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+---------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root    | pg_tests      | public       | t6         | DELETE         | YES          | NO
+ root    | root    | pg_tests      | public       | t6         | INSERT         | YES          | NO
+ root    | root    | pg_tests      | public       | t6         | REFERENCES     | YES          | NO
+ root    | root    | pg_tests      | public       | t6         | SELECT         | YES          | YES
+ root    | root    | pg_tests      | public       | t6         | TRIGGER        | YES          | NO
+ root    | root    | pg_tests      | public       | t6         | TRUNCATE       | YES          | NO
+ root    | root    | pg_tests      | public       | t6         | UPDATE         | YES          | NO
+ root    | who     | pg_tests      | public       | t6         | SELECT         | YES          | YES
+(8 rows)
+
+CREATE TABLE
+ grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+---------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root    | pg_tests      | public       | t7         | DELETE         | YES          | NO
+ root    | root    | pg_tests      | public       | t7         | INSERT         | YES          | NO
+ root    | root    | pg_tests      | public       | t7         | REFERENCES     | YES          | NO
+ root    | root    | pg_tests      | public       | t7         | SELECT         | YES          | YES
+ root    | root    | pg_tests      | public       | t7         | TRIGGER        | YES          | NO
+ root    | root    | pg_tests      | public       | t7         | TRUNCATE       | YES          | NO
+ root    | root    | pg_tests      | public       | t7         | UPDATE         | YES          | NO
+ root    | who     | pg_tests      | public       | t7         | SELECT         | YES          | YES
+(8 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root     | pg_tests      | public       | t8         | DELETE         | YES          | NO
+ root    | root     | pg_tests      | public       | t8         | INSERT         | YES          | NO
+ root    | root     | pg_tests      | public       | t8         | REFERENCES     | YES          | NO
+ root    | root     | pg_tests      | public       | t8         | SELECT         | YES          | YES
+ root    | root     | pg_tests      | public       | t8         | TRIGGER        | YES          | NO
+ root    | root     | pg_tests      | public       | t8         | TRUNCATE       | YES          | NO
+ root    | root     | pg_tests      | public       | t8         | UPDATE         | YES          | NO
+ root    | testuser | pg_tests      | public       | t8         | DELETE         | YES          | NO
+ root    | testuser | pg_tests      | public       | t8         | INSERT         | YES          | NO
+ root    | testuser | pg_tests      | public       | t8         | REFERENCES     | YES          | NO
+ root    | testuser | pg_tests      | public       | t8         | SELECT         | YES          | YES
+ root    | testuser | pg_tests      | public       | t8         | TRIGGER        | YES          | NO
+ root    | testuser | pg_tests      | public       | t8         | TRUNCATE       | YES          | NO
+ root    | testuser | pg_tests      | public       | t8         | UPDATE         | YES          | NO
+ root    | who      | pg_tests      | public       | t8         | SELECT         | YES          | YES
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root     | pg_tests      | public       | t9         | DELETE         | YES          | NO
+ root    | root     | pg_tests      | public       | t9         | INSERT         | YES          | NO
+ root    | root     | pg_tests      | public       | t9         | REFERENCES     | YES          | NO
+ root    | root     | pg_tests      | public       | t9         | SELECT         | YES          | YES
+ root    | root     | pg_tests      | public       | t9         | TRIGGER        | YES          | NO
+ root    | root     | pg_tests      | public       | t9         | TRUNCATE       | YES          | NO
+ root    | root     | pg_tests      | public       | t9         | UPDATE         | YES          | NO
+ root    | testuser | pg_tests      | public       | t9         | DELETE         | YES          | NO
+ root    | testuser | pg_tests      | public       | t9         | INSERT         | YES          | NO
+ root    | testuser | pg_tests      | public       | t9         | REFERENCES     | YES          | NO
+ root    | testuser | pg_tests      | public       | t9         | SELECT         | YES          | YES
+ root    | testuser | pg_tests      | public       | t9         | TRIGGER        | YES          | NO
+ root    | testuser | pg_tests      | public       | t9         | TRUNCATE       | YES          | NO
+ root    | testuser | pg_tests      | public       | t9         | UPDATE         | YES          | NO
+ root    | who      | pg_tests      | public       | t9         | SELECT         | YES          | YES
+(15 rows)
+
+GRANT
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+GRANT
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root     | pg_tests      | public       | t12        | DELETE         | YES          | NO
+ root    | root     | pg_tests      | public       | t12        | INSERT         | YES          | NO
+ root    | root     | pg_tests      | public       | t12        | REFERENCES     | YES          | NO
+ root    | root     | pg_tests      | public       | t12        | SELECT         | YES          | YES
+ root    | root     | pg_tests      | public       | t12        | TRIGGER        | YES          | NO
+ root    | root     | pg_tests      | public       | t12        | TRUNCATE       | YES          | NO
+ root    | root     | pg_tests      | public       | t12        | UPDATE         | YES          | NO
+ root    | testuser | pg_tests      | public       | t12        | DELETE         | NO           | NO
+ root    | testuser | pg_tests      | public       | t12        | INSERT         | NO           | NO
+ root    | testuser | pg_tests      | public       | t12        | REFERENCES     | NO           | NO
+ root    | testuser | pg_tests      | public       | t12        | SELECT         | NO           | YES
+ root    | testuser | pg_tests      | public       | t12        | TRIGGER        | NO           | NO
+ root    | testuser | pg_tests      | public       | t12        | TRUNCATE       | NO           | NO
+ root    | testuser | pg_tests      | public       | t12        | UPDATE         | NO           | NO
+ root    | who      | pg_tests      | public       | t12        | SELECT         | YES          | YES
+(15 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+---------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root    | pg_tests      | public       | t13        | DELETE         | YES          | NO
+ root    | root    | pg_tests      | public       | t13        | INSERT         | YES          | NO
+ root    | root    | pg_tests      | public       | t13        | REFERENCES     | YES          | NO
+ root    | root    | pg_tests      | public       | t13        | SELECT         | YES          | YES
+ root    | root    | pg_tests      | public       | t13        | TRIGGER        | YES          | NO
+ root    | root    | pg_tests      | public       | t13        | TRUNCATE       | YES          | NO
+ root    | root    | pg_tests      | public       | t13        | UPDATE         | YES          | NO
+ root    | who     | pg_tests      | public       | t13        | SELECT         | YES          | YES
+(8 rows)
+
+GRANT
+ grantor | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root     | pg_tests      | public       | t13        | DELETE         | YES          | NO
+ root    | root     | pg_tests      | public       | t13        | INSERT         | YES          | NO
+ root    | root     | pg_tests      | public       | t13        | REFERENCES     | YES          | NO
+ root    | root     | pg_tests      | public       | t13        | SELECT         | YES          | YES
+ root    | root     | pg_tests      | public       | t13        | TRIGGER        | YES          | NO
+ root    | root     | pg_tests      | public       | t13        | TRUNCATE       | YES          | NO
+ root    | root     | pg_tests      | public       | t13        | UPDATE         | YES          | NO
+ root    | testuser | pg_tests      | public       | t13        | DELETE         | NO           | NO
+ root    | testuser | pg_tests      | public       | t13        | INSERT         | NO           | NO
+ root    | testuser | pg_tests      | public       | t13        | REFERENCES     | NO           | NO
+ root    | testuser | pg_tests      | public       | t13        | SELECT         | NO           | YES
+ root    | testuser | pg_tests      | public       | t13        | TRIGGER        | NO           | NO
+ root    | testuser | pg_tests      | public       | t13        | TRUNCATE       | NO           | NO
+ root    | testuser | pg_tests      | public       | t13        | UPDATE         | NO           | NO
+ root    | who      | pg_tests      | public       | t13        | SELECT         | YES          | YES
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root      | pg_tests      | public       | t14        | DELETE         | YES          | NO
+ root    | root      | pg_tests      | public       | t14        | INSERT         | YES          | NO
+ root    | root      | pg_tests      | public       | t14        | REFERENCES     | YES          | NO
+ root    | root      | pg_tests      | public       | t14        | SELECT         | YES          | YES
+ root    | root      | pg_tests      | public       | t14        | TRIGGER        | YES          | NO
+ root    | root      | pg_tests      | public       | t14        | TRUNCATE       | YES          | NO
+ root    | root      | pg_tests      | public       | t14        | UPDATE         | YES          | NO
+ root    | testuser  | pg_tests      | public       | t14        | DELETE         | YES          | NO
+ root    | testuser  | pg_tests      | public       | t14        | INSERT         | YES          | NO
+ root    | testuser  | pg_tests      | public       | t14        | REFERENCES     | YES          | NO
+ root    | testuser  | pg_tests      | public       | t14        | SELECT         | YES          | YES
+ root    | testuser  | pg_tests      | public       | t14        | TRIGGER        | YES          | NO
+ root    | testuser  | pg_tests      | public       | t14        | TRUNCATE       | YES          | NO
+ root    | testuser  | pg_tests      | public       | t14        | UPDATE         | YES          | NO
+ root    | testuser2 | pg_tests      | public       | t14        | INSERT         | YES          | NO
+ root    | testuser2 | pg_tests      | public       | t14        | SELECT         | NO           | YES
+ root    | who       | pg_tests      | public       | t14        | SELECT         | YES          | YES
+(17 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root      | pg_tests      | public       | t15        | DELETE         | YES          | NO
+ root    | root      | pg_tests      | public       | t15        | INSERT         | YES          | NO
+ root    | root      | pg_tests      | public       | t15        | REFERENCES     | YES          | NO
+ root    | root      | pg_tests      | public       | t15        | SELECT         | YES          | YES
+ root    | root      | pg_tests      | public       | t15        | TRIGGER        | YES          | NO
+ root    | root      | pg_tests      | public       | t15        | TRUNCATE       | YES          | NO
+ root    | root      | pg_tests      | public       | t15        | UPDATE         | YES          | NO
+ root    | testuser  | pg_tests      | public       | t15        | DELETE         | YES          | NO
+ root    | testuser  | pg_tests      | public       | t15        | INSERT         | YES          | NO
+ root    | testuser  | pg_tests      | public       | t15        | REFERENCES     | YES          | NO
+ root    | testuser  | pg_tests      | public       | t15        | SELECT         | YES          | YES
+ root    | testuser  | pg_tests      | public       | t15        | TRIGGER        | YES          | NO
+ root    | testuser  | pg_tests      | public       | t15        | TRUNCATE       | YES          | NO
+ root    | testuser  | pg_tests      | public       | t15        | UPDATE         | YES          | NO
+ root    | testuser2 | pg_tests      | public       | t15        | INSERT         | YES          | NO
+ root    | testuser2 | pg_tests      | public       | t15        | SELECT         | YES          | YES
+ root    | who       | pg_tests      | public       | t15        | SELECT         | YES          | YES
+(17 rows)
+
+GRANT
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root      | pg_tests      | public       | t16        | DELETE         | YES          | NO
+ root    | root      | pg_tests      | public       | t16        | INSERT         | YES          | NO
+ root    | root      | pg_tests      | public       | t16        | REFERENCES     | YES          | NO
+ root    | root      | pg_tests      | public       | t16        | SELECT         | YES          | YES
+ root    | root      | pg_tests      | public       | t16        | TRIGGER        | YES          | NO
+ root    | root      | pg_tests      | public       | t16        | TRUNCATE       | YES          | NO
+ root    | root      | pg_tests      | public       | t16        | UPDATE         | YES          | NO
+ root    | testuser  | pg_tests      | public       | t16        | DELETE         | YES          | NO
+ root    | testuser  | pg_tests      | public       | t16        | INSERT         | YES          | NO
+ root    | testuser  | pg_tests      | public       | t16        | REFERENCES     | YES          | NO
+ root    | testuser  | pg_tests      | public       | t16        | SELECT         | YES          | YES
+ root    | testuser  | pg_tests      | public       | t16        | TRIGGER        | YES          | NO
+ root    | testuser  | pg_tests      | public       | t16        | TRUNCATE       | YES          | NO
+ root    | testuser  | pg_tests      | public       | t16        | UPDATE         | YES          | NO
+ root    | testuser2 | pg_tests      | public       | t16        | DELETE         | YES          | NO
+ root    | testuser2 | pg_tests      | public       | t16        | INSERT         | YES          | NO
+ root    | testuser2 | pg_tests      | public       | t16        | REFERENCES     | YES          | NO
+ root    | testuser2 | pg_tests      | public       | t16        | SELECT         | YES          | YES
+ root    | testuser2 | pg_tests      | public       | t16        | TRIGGER        | YES          | NO
+ root    | testuser2 | pg_tests      | public       | t16        | TRUNCATE       | YES          | NO
+ root    | testuser2 | pg_tests      | public       | t16        | UPDATE         | YES          | NO
+ root    | who       | pg_tests      | public       | t16        | SELECT         | YES          | YES
+(22 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root      | pg_tests      | public       | t17        | DELETE         | YES          | NO
+ root    | root      | pg_tests      | public       | t17        | INSERT         | YES          | NO
+ root    | root      | pg_tests      | public       | t17        | REFERENCES     | YES          | NO
+ root    | root      | pg_tests      | public       | t17        | SELECT         | YES          | YES
+ root    | root      | pg_tests      | public       | t17        | TRIGGER        | YES          | NO
+ root    | root      | pg_tests      | public       | t17        | TRUNCATE       | YES          | NO
+ root    | root      | pg_tests      | public       | t17        | UPDATE         | YES          | NO
+ root    | testuser  | pg_tests      | public       | t17        | DELETE         | YES          | NO
+ root    | testuser  | pg_tests      | public       | t17        | INSERT         | YES          | NO
+ root    | testuser  | pg_tests      | public       | t17        | REFERENCES     | YES          | NO
+ root    | testuser  | pg_tests      | public       | t17        | SELECT         | YES          | YES
+ root    | testuser  | pg_tests      | public       | t17        | TRIGGER        | YES          | NO
+ root    | testuser  | pg_tests      | public       | t17        | TRUNCATE       | YES          | NO
+ root    | testuser  | pg_tests      | public       | t17        | UPDATE         | YES          | NO
+ root    | testuser2 | pg_tests      | public       | t17        | DELETE         | YES          | NO
+ root    | testuser2 | pg_tests      | public       | t17        | INSERT         | NO           | NO
+ root    | testuser2 | pg_tests      | public       | t17        | REFERENCES     | YES          | NO
+ root    | testuser2 | pg_tests      | public       | t17        | SELECT         | NO           | YES
+ root    | testuser2 | pg_tests      | public       | t17        | TRIGGER        | YES          | NO
+ root    | testuser2 | pg_tests      | public       | t17        | TRUNCATE       | YES          | NO
+ root    | testuser2 | pg_tests      | public       | t17        | UPDATE         | YES          | NO
+ root    | who       | pg_tests      | public       | t17        | SELECT         | YES          | YES
+(22 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root      | pg_tests      | public       | t18        | DELETE         | YES          | NO
+ root    | root      | pg_tests      | public       | t18        | INSERT         | YES          | NO
+ root    | root      | pg_tests      | public       | t18        | REFERENCES     | YES          | NO
+ root    | root      | pg_tests      | public       | t18        | SELECT         | YES          | YES
+ root    | root      | pg_tests      | public       | t18        | TRIGGER        | YES          | NO
+ root    | root      | pg_tests      | public       | t18        | TRUNCATE       | YES          | NO
+ root    | root      | pg_tests      | public       | t18        | UPDATE         | YES          | NO
+ root    | testuser  | pg_tests      | public       | t18        | DELETE         | YES          | NO
+ root    | testuser  | pg_tests      | public       | t18        | INSERT         | YES          | NO
+ root    | testuser  | pg_tests      | public       | t18        | REFERENCES     | YES          | NO
+ root    | testuser  | pg_tests      | public       | t18        | SELECT         | YES          | YES
+ root    | testuser  | pg_tests      | public       | t18        | TRIGGER        | YES          | NO
+ root    | testuser  | pg_tests      | public       | t18        | TRUNCATE       | YES          | NO
+ root    | testuser  | pg_tests      | public       | t18        | UPDATE         | YES          | NO
+ root    | testuser2 | pg_tests      | public       | t18        | DELETE         | NO           | NO
+ root    | testuser2 | pg_tests      | public       | t18        | INSERT         | NO           | NO
+ root    | testuser2 | pg_tests      | public       | t18        | REFERENCES     | NO           | NO
+ root    | testuser2 | pg_tests      | public       | t18        | SELECT         | NO           | YES
+ root    | testuser2 | pg_tests      | public       | t18        | TRIGGER        | NO           | NO
+ root    | testuser2 | pg_tests      | public       | t18        | TRUNCATE       | NO           | NO
+ root    | testuser2 | pg_tests      | public       | t18        | UPDATE         | NO           | NO
+ root    | who       | pg_tests      | public       | t18        | SELECT         | YES          | YES
+(22 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root     | pg_tests      | public       | t19        | DELETE         | YES          | NO
+ root    | root     | pg_tests      | public       | t19        | INSERT         | YES          | NO
+ root    | root     | pg_tests      | public       | t19        | REFERENCES     | YES          | NO
+ root    | root     | pg_tests      | public       | t19        | SELECT         | YES          | YES
+ root    | root     | pg_tests      | public       | t19        | TRIGGER        | YES          | NO
+ root    | root     | pg_tests      | public       | t19        | TRUNCATE       | YES          | NO
+ root    | root     | pg_tests      | public       | t19        | UPDATE         | YES          | NO
+ root    | testuser | pg_tests      | public       | t19        | DELETE         | YES          | NO
+ root    | testuser | pg_tests      | public       | t19        | INSERT         | YES          | NO
+ root    | testuser | pg_tests      | public       | t19        | REFERENCES     | YES          | NO
+ root    | testuser | pg_tests      | public       | t19        | SELECT         | YES          | YES
+ root    | testuser | pg_tests      | public       | t19        | TRIGGER        | YES          | NO
+ root    | testuser | pg_tests      | public       | t19        | TRUNCATE       | YES          | NO
+ root    | testuser | pg_tests      | public       | t19        | UPDATE         | YES          | NO
+ root    | who      | pg_tests      | public       | t19        | SELECT         | YES          | YES
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE SCHEMA
+ grantor |  grantee  | schema_catalog | schema_name | privilege_type | is_grantable 
+---------+-----------+----------------+-------------+----------------+--------------
+ root    | root      | pg_tests       | s1          | CREATE         | f
+ root    | root      | pg_tests       | s1          | USAGE          | f
+ root    | testuser  | pg_tests       | s1          | CREATE         | t
+ root    | testuser  | pg_tests       | s1          | USAGE          | t
+ root    | testuser2 | pg_tests       | s1          | CREATE         | t
+ root    | testuser2 | pg_tests       | s1          | USAGE          | t
+(6 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE SCHEMA
+ grantor |  grantee  | schema_catalog | schema_name | privilege_type | is_grantable 
+---------+-----------+----------------+-------------+----------------+--------------
+ root    | root      | pg_tests       | s2          | CREATE         | f
+ root    | root      | pg_tests       | s2          | USAGE          | f
+ root    | testuser  | pg_tests       | s2          | CREATE         | f
+ root    | testuser  | pg_tests       | s2          | USAGE          | f
+ root    | testuser2 | pg_tests       | s2          | CREATE         | f
+ root    | testuser2 | pg_tests       | s2          | USAGE          | f
+(6 rows)
+
+GRANT
+GRANT
+GRANT
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root     | pg_tests      | s1           | t1         | DELETE         | YES          | NO
+ root    | root     | pg_tests      | s1           | t1         | INSERT         | YES          | NO
+ root    | root     | pg_tests      | s1           | t1         | REFERENCES     | YES          | NO
+ root    | root     | pg_tests      | s1           | t1         | SELECT         | YES          | YES
+ root    | root     | pg_tests      | s1           | t1         | TRIGGER        | YES          | NO
+ root    | root     | pg_tests      | s1           | t1         | TRUNCATE       | YES          | NO
+ root    | root     | pg_tests      | s1           | t1         | UPDATE         | YES          | NO
+ root    | testuser | pg_tests      | s1           | t1         | DELETE         | YES          | NO
+ root    | testuser | pg_tests      | s1           | t1         | INSERT         | YES          | NO
+ root    | testuser | pg_tests      | s1           | t1         | REFERENCES     | YES          | NO
+ root    | testuser | pg_tests      | s1           | t1         | SELECT         | YES          | YES
+ root    | testuser | pg_tests      | s1           | t1         | TRIGGER        | YES          | NO
+ root    | testuser | pg_tests      | s1           | t1         | TRUNCATE       | YES          | NO
+ root    | testuser | pg_tests      | s1           | t1         | UPDATE         | YES          | NO
+ root    | who      | pg_tests      | s1           | t1         | SELECT         | YES          | YES
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+GRANT
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE SEQUENCE
+ grantor |  grantee  | schema_name | sequence_name | privilege_type | is_grantable 
+---------+-----------+-------------+---------------+----------------+--------------
+ root    | root      | public      | seq1          | SELECT         | f
+ root    | root      | public      | seq1          | UPDATE         | f
+ root    | root      | public      | seq1          | USAGE          | f
+ root    | testuser2 | public      | seq1          | SELECT         | t
+ root    | testuser2 | public      | seq1          | UPDATE         | t
+ root    | testuser2 | public      | seq1          | USAGE          | t
+(6 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE TYPE
+ grantor |     grantee     | schema_name | type_name | privilege_type | is_grantable 
+---------+-----------------+-------------+-----------+----------------+--------------
+ root    | root            | public      | type1     | USAGE          | f
+ root    | testuser2       | public      | type1     | USAGE          | t
+ root    | unknown (OID=0) | public      | type1     | USAGE          | f
+(3 rows)
+
+GRANT
+GRANT
+GRANT
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+GRANT ROLE
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+---------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root    | pg_tests      | public       | t20        | DELETE         | YES          | NO
+ root    | root    | pg_tests      | public       | t20        | INSERT         | YES          | NO
+ root    | root    | pg_tests      | public       | t20        | REFERENCES     | YES          | NO
+ root    | root    | pg_tests      | public       | t20        | SELECT         | YES          | YES
+ root    | root    | pg_tests      | public       | t20        | TRIGGER        | YES          | NO
+ root    | root    | pg_tests      | public       | t20        | TRUNCATE       | YES          | NO
+ root    | root    | pg_tests      | public       | t20        | UPDATE         | YES          | NO
+ root    | who     | pg_tests      | public       | t20        | SELECT         | YES          | YES
+(8 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+---------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root    | pg_tests      | public       | t21        | DELETE         | YES          | NO
+ root    | root    | pg_tests      | public       | t21        | INSERT         | YES          | NO
+ root    | root    | pg_tests      | public       | t21        | REFERENCES     | YES          | NO
+ root    | root    | pg_tests      | public       | t21        | SELECT         | YES          | YES
+ root    | root    | pg_tests      | public       | t21        | TRIGGER        | YES          | NO
+ root    | root    | pg_tests      | public       | t21        | TRUNCATE       | YES          | NO
+ root    | root    | pg_tests      | public       | t21        | UPDATE         | YES          | NO
+ root    | who     | pg_tests      | public       | t21        | SELECT         | YES          | YES
+(8 rows)
+
+GRANT
+GRANT
+RESET
+DROP TABLE
+DROP SCHEMA
+DROP SCHEMA
+DROP SEQUENCE
+DROP TYPE
+DROP OWNED
+DROP OWNED
+DROP OWNED
+DROP OWNED
+DROP OWNED
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET
