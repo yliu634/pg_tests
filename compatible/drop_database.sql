@@ -1,256 +1,257 @@
 -- PostgreSQL compatible tests from drop_database
 -- 68 tests
 
--- Test 1: statement (line 2)
-SET CLUSTER SETTING sql.cross_db_views.enabled = TRUE
+SET client_min_messages = warning;
 
--- Test 2: statement (line 5)
-SET CLUSTER SETTING sql.cross_db_sequence_references.enabled = TRUE
+-- CockroachDB-only cluster settings (no-op on PostgreSQL).
+-- SET CLUSTER SETTING sql.cross_db_views.enabled = TRUE;
+-- SET CLUSTER SETTING sql.cross_db_sequence_references.enabled = TRUE;
+
+DROP ROLE IF EXISTS testuser;
+DROP ROLE IF EXISTS db_owner;
+CREATE ROLE testuser LOGIN;
+CREATE ROLE db_owner LOGIN CREATEDB;
 
 -- Test 3: statement (line 8)
-CREATE DATABASE "foo-bar"
+DROP SCHEMA IF EXISTS "foo-bar" CASCADE;
+CREATE SCHEMA "foo-bar";
 
 -- Test 4: query (line 11)
-SHOW DATABASES
+SELECT nspname AS database_name
+FROM pg_namespace
+WHERE nspname NOT LIKE 'pg_%'
+  AND nspname <> 'information_schema'
+  AND nspname <> 'public'
+ORDER BY database_name;
 
 -- Test 5: statement (line 20)
-CREATE TABLE "foo-bar".t(x INT)
+CREATE TABLE "foo-bar".t(x INT);
 
 -- Test 6: statement (line 23)
-DROP DATABASE "foo-bar" RESTRICT
+-- Expected ERROR (cannot drop non-empty schema with RESTRICT):
+\set ON_ERROR_STOP 0
+DROP SCHEMA "foo-bar" RESTRICT;
+\set ON_ERROR_STOP 1
 
 -- Test 7: statement (line 26)
-DROP DATABASE "foo-bar" CASCADE
+DROP SCHEMA "foo-bar" CASCADE;
 
 -- Test 8: query (line 29)
-SELECT name, database_name, state FROM crdb_internal.tables WHERE name = 't'
+SELECT c.relname AS name, n.nspname AS schema_name
+FROM pg_class AS c
+JOIN pg_namespace AS n ON n.oid = c.relnamespace
+WHERE c.relkind = 'r'
+  AND c.relname = 't'
+ORDER BY schema_name;
 
 -- Test 9: query (line 34)
-SHOW DATABASES
+SELECT nspname AS database_name
+FROM pg_namespace
+WHERE nspname NOT LIKE 'pg_%'
+  AND nspname <> 'information_schema'
+  AND nspname <> 'public'
+ORDER BY database_name;
 
 -- Test 10: statement (line 52)
-CREATE DATABASE "foo bar"
+DROP SCHEMA IF EXISTS "foo bar" CASCADE;
+CREATE SCHEMA "foo bar";
 
 -- Test 11: query (line 55)
-SELECT * FROM [SHOW DATABASES] ORDER BY database_name
+SELECT nspname AS database_name
+FROM pg_namespace
+WHERE nspname NOT LIKE 'pg_%'
+  AND nspname <> 'information_schema'
+  AND nspname <> 'public'
+ORDER BY database_name;
 
 -- Test 12: statement (line 64)
-DROP DATABASE "foo bar" CASCADE
+DROP SCHEMA "foo bar" CASCADE;
 
 -- Test 13: query (line 67)
-SHOW DATABASES
+SELECT nspname AS database_name
+FROM pg_namespace
+WHERE nspname NOT LIKE 'pg_%'
+  AND nspname <> 'information_schema'
+  AND nspname <> 'public'
+ORDER BY database_name;
 
--- Test 14: statement (line 75)
-CREATE DATABASE d1
+-- Test 14/15: setup cross-"database" references using schemas.
+DROP SCHEMA IF EXISTS d1 CASCADE;
+DROP SCHEMA IF EXISTS d2 CASCADE;
+CREATE SCHEMA d1;
+CREATE SCHEMA d2;
 
--- Test 15: statement (line 78)
-CREATE DATABASE d2
+CREATE TABLE d1.t1(k INT, v INT);
+CREATE TABLE d2.t1(k INT, v INT);
 
--- Test 16: statement (line 87)
-CREATE VIEW d1.v1 AS SELECT k,v FROM d1.t1
+INSERT INTO d1.t1 VALUES (1, 10), (2, 20);
+INSERT INTO d2.t1 VALUES (1, 100), (3, 300);
 
--- Test 17: statement (line 90)
-CREATE VIEW d1.v2 AS SELECT k,v FROM d1.v1
+-- Test 16-21: views spanning schemas.
+CREATE VIEW d1.v1 AS SELECT k, v FROM d1.t1;
+CREATE VIEW d1.v2 AS SELECT k, v FROM d1.v1;
+CREATE VIEW d2.v1 AS SELECT k, v FROM d2.t1;
+CREATE VIEW d2.v2 AS SELECT k, v FROM d1.t1;
+CREATE VIEW d2.v3 AS SELECT k, v FROM d1.v2;
+CREATE VIEW d2.v4 AS
+  SELECT count(*) FROM d1.t1 AS x JOIN d2.t1 AS y ON x.k = y.k;
 
--- Test 18: statement (line 93)
-CREATE VIEW d2.v1 AS SELECT k,v FROM d2.t1
+-- Test 22-27: grant privileges to a non-owner user.
+GRANT ALL ON SCHEMA d1 TO testuser;
+GRANT ALL ON d1.t1 TO testuser;
+GRANT ALL ON d1.v1 TO testuser;
+GRANT ALL ON d1.v2 TO testuser;
+GRANT ALL ON d2.v2 TO testuser;
+GRANT ALL ON d2.v3 TO testuser;
 
--- Test 19: statement (line 96)
-CREATE VIEW d2.v2 AS SELECT k,v FROM d1.t1
+-- Test 28: attempt drop as non-owner (expected ERROR in PG).
+SET ROLE testuser;
+\set ON_ERROR_STOP 0
+DROP SCHEMA d1 CASCADE;
+\set ON_ERROR_STOP 1
+RESET ROLE;
 
--- Test 20: statement (line 99)
-CREATE VIEW d2.v3 AS SELECT k,v FROM d1.v2
-
--- Test 21: statement (line 102)
-CREATE VIEW d2.v4 AS SELECT count(*) FROM d1.t1 as x JOIN d2.t1 as y ON x.k = y.k
-
--- Test 22: statement (line 105)
-GRANT ALL ON DATABASE d1 TO testuser
-
--- Test 23: statement (line 108)
-GRANT ALL ON d1.t1 TO testuser
-
--- Test 24: statement (line 111)
-GRANT ALL ON d1.v1 TO testuser
-
--- Test 25: statement (line 114)
-GRANT ALL ON d1.v2 TO testuser
-
--- Test 26: statement (line 117)
-GRANT ALL ON d2.v2 TO testuser
-
--- Test 27: statement (line 120)
-GRANT ALL ON d2.v3 TO testuser
-
-user testuser
-
--- Test 28: statement (line 125)
-DROP DATABASE d1 CASCADE
-
-user root
-
--- Test 29: query (line 130)
-SELECT * FROM d1.v2
-
--- Test 30: query (line 134)
-SELECT * FROM d2.v1
-
--- Test 31: query (line 138)
-SELECT * FROM d2.v2
-
--- Test 32: query (line 142)
-SELECT * FROM d2.v3
-
--- Test 33: query (line 146)
-SELECT * FROM d2.v4
+-- Test 29-33: objects still exist.
+SELECT * FROM d1.v2 ORDER BY k;
+SELECT * FROM d2.v1 ORDER BY k;
+SELECT * FROM d2.v2 ORDER BY k;
+SELECT * FROM d2.v3 ORDER BY k;
+SELECT * FROM d2.v4;
 
 -- Test 34: query (line 151)
-SHOW DATABASES
+SELECT nspname AS database_name
+FROM pg_namespace
+WHERE nspname NOT LIKE 'pg_%'
+  AND nspname <> 'information_schema'
+  AND nspname <> 'public'
+ORDER BY database_name;
 
 -- Test 35: statement (line 161)
-DROP DATABASE d1 CASCADE
+DROP SCHEMA d1 CASCADE;
 
 -- Test 36: query (line 164)
-SHOW DATABASES
+SELECT nspname AS database_name
+FROM pg_namespace
+WHERE nspname NOT LIKE 'pg_%'
+  AND nspname <> 'information_schema'
+  AND nspname <> 'public'
+ORDER BY database_name;
 
--- Test 37: query (line 173)
-SELECT * FROM d1.v2
-
-query error pgcode 42P01 relation "d2.v2" does not exist
-SELECT * FROM d2.v2
-
-query error pgcode 42P01 relation "d2.v3" does not exist
-SELECT * FROM d2.v3
-
-query error pgcode 42P01 relation "d2.v4" does not exist
-SELECT * FROM d2.v4
-
-query TT
-SELECT * FROM d2.v1
+-- Test 37: queries after dropping d1.
+\set ON_ERROR_STOP 0
+SELECT * FROM d1.v2;
+SELECT * FROM d2.v2;
+SELECT * FROM d2.v3;
+SELECT * FROM d2.v4;
+\set ON_ERROR_STOP 1
+SELECT * FROM d2.v1 ORDER BY k;
 
 -- Test 38: statement (line 189)
-DROP DATABASE d2 CASCADE
+DROP SCHEMA d2 CASCADE;
 
 -- Test 39: query (line 192)
-SHOW DATABASES
+SELECT nspname AS database_name
+FROM pg_namespace
+WHERE nspname NOT LIKE 'pg_%'
+  AND nspname <> 'information_schema'
+  AND nspname <> 'public'
+ORDER BY database_name;
 
 -- Test 40: query (line 200)
-SELECT * FROM d2.v1
+\set ON_ERROR_STOP 0
+SELECT * FROM d2.v1;
+\set ON_ERROR_STOP 1
 
-## drop a database containing tables with foreign key constraints, e.g. #8497
+-- drop a database containing tables with foreign key constraints, e.g. #8497
+DROP SCHEMA IF EXISTS constraint_db CASCADE;
+CREATE SCHEMA constraint_db;
 
-statement ok
-CREATE DATABASE constraint_db
-
-statement ok
 CREATE TABLE constraint_db.t1 (
   p FLOAT PRIMARY KEY,
   a INT UNIQUE CHECK (a > 4),
   CONSTRAINT c2 CHECK (a < 99)
-)
+);
 
-statement ok
 CREATE TABLE constraint_db.t2 (
-    t1_ID INT,
-    CONSTRAINT fk FOREIGN KEY (t1_ID) REFERENCES constraint_db.t1(a),
-    INDEX (t1_ID)
-)
+  t1_id INT,
+  CONSTRAINT fk FOREIGN KEY (t1_id) REFERENCES constraint_db.t1(a)
+);
+CREATE INDEX ON constraint_db.t2 (t1_id);
 
-statement ok
-DROP DATABASE constraint_db CASCADE
+DROP SCHEMA constraint_db CASCADE;
 
-skipif config local-legacy-schema-changer
-query TT
-WITH cte AS (
-  SELECT job_type, description
-  FROM crdb_internal.jobs
-  WHERE (job_type = 'NEW SCHEMA CHANGE' OR job_type = 'SCHEMA CHANGE GC')
-  AND (status = 'succeeded' OR status = 'running')
-  AND (description LIKE '%DROP%')
-  ORDER BY created DESC
-) SELECT * FROM cte ORDER BY job_type, description
+-- CockroachDB jobs table is not available in PostgreSQL.
+-- skipif config local-legacy-schema-changer
+-- WITH cte AS (...) SELECT * FROM cte ORDER BY job_type, description
 
 -- Test 41: query (line 246)
-SHOW DATABASES
+SELECT nspname AS database_name
+FROM pg_namespace
+WHERE nspname NOT LIKE 'pg_%'
+  AND nspname <> 'information_schema'
+  AND nspname <> 'public'
+ORDER BY database_name;
 
--- Test 42: statement (line 308)
-CREATE DATABASE db50997
+-- Test 42-54: sequences inside vs outside the dropped schema.
+DROP SCHEMA IF EXISTS db50997 CASCADE;
+CREATE SCHEMA db50997;
 
--- Test 43: statement (line 311)
-CREATE SEQUENCE db50997.seq50997
+CREATE SEQUENCE db50997.seq50997;
+CREATE SEQUENCE db50997.useq50997;
 
--- Test 44: statement (line 314)
-CREATE SEQUENCE db50997.useq50997
+CREATE TABLE db50997.t50997(a INT DEFAULT nextval('db50997.seq50997'));
+CREATE TABLE db50997.t250997(a INT DEFAULT nextval('db50997.seq50997'));
 
--- Test 45: statement (line 317)
-CREATE TABLE db50997.t50997(a INT DEFAULT nextval('db50997.seq50997'))
+DROP SCHEMA db50997 CASCADE;
 
--- Test 46: statement (line 320)
-CREATE TABLE db50997.t250997(a INT DEFAULT nextval('db50997.seq50997'))
+SELECT count(*) FROM pg_class WHERE relkind = 'S' AND relname = 'seq50997';
+SELECT count(*) FROM pg_class WHERE relkind = 'S' AND relname = 'useq50997';
 
--- Test 47: statement (line 323)
-DROP DATABASE db50997 CASCADE
+DROP SCHEMA IF EXISTS db50997 CASCADE;
+CREATE SCHEMA db50997;
 
--- Test 48: query (line 326)
-SELECT count(*) FROM system.namespace WHERE name = 'seq50997'
+CREATE SEQUENCE seq50997;
 
--- Test 49: query (line 331)
-SELECT count(*) FROM system.namespace WHERE name = 'useq50997'
+CREATE TABLE db50997.t50997(a INT DEFAULT nextval('seq50997'));
 
--- Test 50: statement (line 340)
-CREATE DATABASE db50997
+DROP SCHEMA db50997 CASCADE;
 
--- Test 51: statement (line 343)
-CREATE SEQUENCE seq50997
+SELECT count(*) FROM pg_class WHERE relkind = 'S' AND relname LIKE 'seq50997';
 
--- Test 52: statement (line 346)
-CREATE TABLE db50997.t50997(a INT DEFAULT nextval('seq50997'))
+-- Test 55-57: drop empty schema with RESTRICT.
+DROP SCHEMA IF EXISTS db_73323 CASCADE;
+CREATE SCHEMA db_73323;
+DROP SCHEMA db_73323 RESTRICT;
 
--- Test 53: statement (line 349)
-DROP DATABASE db50997 CASCADE
+-- Test 58-63: drop schema with dependent views.
+DROP SCHEMA IF EXISTS db_51782 CASCADE;
+CREATE SCHEMA db_51782;
 
--- Test 54: query (line 352)
-SELECT count(*) FROM system.namespace WHERE name LIKE 'seq50997'
-
--- Test 55: statement (line 359)
-CREATE DATABASE db_73323
-
--- Test 56: statement (line 362)
-DROP DATABASE db_73323 RESTRICT
-
--- Test 57: statement (line 367)
-CREATE DATABASE db_51782
-
--- Test 58: statement (line 370)
 CREATE TABLE db_51782.t_51782(a int, b int);
+CREATE VIEW db_51782.v_51782 AS SELECT a, b FROM db_51782.t_51782;
+CREATE VIEW db_51782.w_51782 AS SELECT a FROM db_51782.v_51782;
 
--- Test 59: statement (line 373)
-CREATE VIEW db_51782.v_51782 AS SELECT a, b FROM db_51782.t_51782
+DROP SCHEMA db_51782 CASCADE;
 
--- Test 60: statement (line 376)
-CREATE VIEW db_51782.w_51782 AS SELECT a FROM db_51782.v_51782
+SELECT count(*) FROM pg_class WHERE relkind = 'v' AND relname LIKE 'v_51782';
+SELECT count(*) FROM pg_class WHERE relkind = 'v' AND relname LIKE 'w_51782';
 
--- Test 61: statement (line 379)
-DROP DATABASE db_51782 CASCADE
+-- Test 64-68: role creating/dropping a schema.
+DROP SCHEMA IF EXISTS db_121808 CASCADE;
 
--- Test 62: query (line 382)
-SELECT count(*) FROM system.namespace WHERE name LIKE 'v_51782'
+SELECT format('GRANT CREATE ON DATABASE %I TO db_owner', current_database())
+\gexec
+SET ROLE db_owner;
 
--- Test 63: query (line 387)
-SELECT count(*) FROM system.namespace WHERE name LIKE 'w_51782'
+CREATE SCHEMA db_121808;
+DROP SCHEMA db_121808 RESTRICT;
 
--- Test 64: statement (line 397)
-CREATE USER db_owner WITH CREATEDB
+RESET ROLE;
 
--- Test 65: statement (line 400)
-SET ROLE db_owner
+SELECT format('REVOKE ALL ON DATABASE %I FROM db_owner', current_database())
+\gexec
 
--- Test 66: statement (line 403)
-CREATE DATABASE db_121808
+DROP ROLE db_owner;
+DROP ROLE testuser;
 
--- Test 67: statement (line 406)
-DROP DATABASE db_121808 RESTRICT
-
--- Test 68: statement (line 409)
-RESET role
-
+RESET client_min_messages;
