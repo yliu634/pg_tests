@@ -1,0 +1,333 @@
+SET
+DROP SEQUENCE
+CREATE VIEW
+CREATE SEQUENCE
+ nextval 
+---------
+       1
+(1 row)
+
+ nextval 
+---------
+       2
+(1 row)
+
+ALTER SEQUENCE
+ nextval 
+---------
+       7
+(1 row)
+
+ALTER SEQUENCE
+ nextval 
+---------
+      12
+(1 row)
+
+ nextval 
+---------
+      17
+(1 row)
+
+ nextval 
+---------
+      22
+(1 row)
+
+ schemaname | sequencename | sequenceowner | data_type | start_value | min_value |      max_value      | increment_by | cycle | cache_size 
+------------+--------------+---------------+-----------+-------------+-----------+---------------------+--------------+-------+------------
+ public     | foo          | pan           | bigint    |           1 |         1 | 9223372036854775807 |            5 | f     |        100
+(1 row)
+
+ALTER SEQUENCE
+ schemaname | sequencename | sequenceowner | data_type | start_value | min_value |      max_value      | increment_by | cycle | cache_size 
+------------+--------------+---------------+-----------+-------------+-----------+---------------------+--------------+-------+------------
+ public     | foo          | pan           | bigint    |           1 |         1 | 9223372036854775807 |            5 | f     |          1
+(1 row)
+
+CREATE SEQUENCE
+ schemaname | sequencename | sequenceowner | data_type | start_value | min_value | max_value | increment_by | cycle | cache_size 
+------------+--------------+---------------+-----------+-------------+-----------+-----------+--------------+-------+------------
+ public     | seq_as       | pan           | smallint  |           1 |         1 |     32767 |            1 | f     |          1
+(1 row)
+
+ALTER SEQUENCE
+ schemaname | sequencename | sequenceowner | data_type | start_value | min_value | max_value  | increment_by | cycle | cache_size 
+------------+--------------+---------------+-----------+-------------+-----------+------------+--------------+-------+------------
+ public     | seq_as       | pan           | integer   |           1 |         1 | 2147483647 |            1 | f     |          1
+(1 row)
+
+ALTER SEQUENCE
+ schemaname | sequencename | sequenceowner | data_type | start_value | min_value |      max_value      | increment_by | cycle | cache_size 
+------------+--------------+---------------+-----------+-------------+-----------+---------------------+--------------+-------+------------
+ public     | seq_as       | pan           | bigint    |           1 |         1 | 9223372036854775807 |            1 | f     |          1
+(1 row)
+
+ALTER SEQUENCE
+ schemaname | sequencename | sequenceowner | data_type | start_value | min_value | max_value  | increment_by | cycle | cache_size 
+------------+--------------+---------------+-----------+-------------+-----------+------------+--------------+-------+------------
+ public     | seq_as       | pan           | integer   |           1 |         1 | 2147483647 |            1 | f     |          1
+(1 row)
+
+ALTER SEQUENCE
+ schemaname | sequencename | sequenceowner | data_type | start_value | min_value | max_value | increment_by | cycle | cache_size 
+------------+--------------+---------------+-----------+-------------+-----------+-----------+--------------+-------+------------
+ public     | seq_as       | pan           | smallint  |           1 |         1 |     32767 |            1 | f     |          1
+(1 row)
+
+CREATE SEQUENCE
+ schemaname |   sequencename    | sequenceowner | data_type | start_value | min_value | max_value | increment_by | cycle | cache_size 
+------------+-------------------+---------------+-----------+-------------+-----------+-----------+--------------+-------+------------
+ public     | seq_int4_max_high | pan           | integer   |           1 |         1 |     99999 |            1 | f     |          1
+(1 row)
+
+ALTER SEQUENCE
+ALTER SEQUENCE
+ALTER SEQUENCE
+ schemaname |   sequencename    | sequenceowner | data_type | start_value | min_value | max_value | increment_by | cycle | cache_size 
+------------+-------------------+---------------+-----------+-------------+-----------+-----------+--------------+-------+------------
+ public     | seq_int4_max_high | pan           | bigint    |           1 |         1 |     32000 |            1 | f     |          1
+(1 row)
+
+CREATE SEQUENCE
+ schemaname |   sequencename    | sequenceowner | data_type | start_value | min_value | max_value  | increment_by | cycle | cache_size 
+------------+-------------------+---------------+-----------+-------------+-----------+------------+--------------+-------+------------
+ public     | seq_int4_min_high | pan           | integer   |       99999 |     99999 | 2147483647 |            1 | f     |          1
+(1 row)
+
+ALTER SEQUENCE
+ALTER SEQUENCE
+ALTER SEQUENCE
+ schemaname |   sequencename    | sequenceowner | data_type | start_value | min_value |      max_value      | increment_by | cycle | cache_size 
+------------+-------------------+---------------+-----------+-------------+-----------+---------------------+--------------+-------+------------
+ public     | seq_int4_min_high | pan           | bigint    |       32000 |     32000 | 9223372036854775807 |            1 | f     |          1
+(1 row)
+
+CREATE SEQUENCE
+ALTER SEQUENCE
+ALTER SEQUENCE
+ALTER SEQUENCE
+ schemaname |    sequencename     | sequenceowner | data_type | start_value | min_value |      max_value      | increment_by | cycle | cache_size 
+------------+---------------------+---------------+-----------+-------------+-----------+---------------------+--------------+-------+------------
+ public     | seq_int4_start_high | pan           | bigint    |       32000 |         1 | 9223372036854775807 |            1 | f     |          1
+(1 row)
+
+CREATE SEQUENCE
+ schemaname |   sequencename   | sequenceowner | data_type | start_value | min_value | max_value  | increment_by | cycle | cache_size 
+------------+------------------+---------------+-----------+-------------+-----------+------------+--------------+-------+------------
+ public     | seq_int4_min_low | pan           | integer   |      -99999 |    -99999 | 2147483647 |            1 | f     |          1
+(1 row)
+
+ALTER SEQUENCE
+ALTER SEQUENCE
+ALTER SEQUENCE
+ schemaname |   sequencename   | sequenceowner | data_type | start_value | min_value |      max_value      | increment_by | cycle | cache_size 
+------------+------------------+---------------+-----------+-------------+-----------+---------------------+--------------+-------+------------
+ public     | seq_int4_min_low | pan           | bigint    |      -32000 |    -32000 | 9223372036854775807 |            1 | f     |          1
+(1 row)
+
+CREATE SEQUENCE
+ schemaname |      sequencename      | sequenceowner | data_type | start_value |  min_value  | max_value | increment_by | cycle | cache_size 
+------------+------------------------+---------------+-----------+-------------+-------------+-----------+--------------+-------+------------
+ public     | seq_int4_max_high_desc | pan           | integer   |       99999 | -2147483648 |     99999 |           -1 | f     |          1
+(1 row)
+
+ALTER SEQUENCE
+ALTER SEQUENCE
+ALTER SEQUENCE
+ schemaname |      sequencename      | sequenceowner | data_type | start_value |      min_value       | max_value | increment_by | cycle | cache_size 
+------------+------------------------+---------------+-----------+-------------+----------------------+-----------+--------------+-------+------------
+ public     | seq_int4_max_high_desc | pan           | bigint    |       32000 | -9223372036854775808 |     32000 |           -1 | f     |          1
+(1 row)
+
+CREATE SEQUENCE
+ schemaname |      sequencename      | sequenceowner | data_type | start_value | min_value | max_value | increment_by | cycle | cache_size 
+------------+------------------------+---------------+-----------+-------------+-----------+-----------+--------------+-------+------------
+ public     | seq_int4_min_high_desc | pan           | integer   |          -1 |    -99999 |        -1 |           -1 | f     |          1
+(1 row)
+
+ALTER SEQUENCE
+ALTER SEQUENCE
+ALTER SEQUENCE
+ schemaname |      sequencename      | sequenceowner | data_type | start_value | min_value | max_value | increment_by | cycle | cache_size 
+------------+------------------------+---------------+-----------+-------------+-----------+-----------+--------------+-------+------------
+ public     | seq_int4_min_high_desc | pan           | bigint    |          -1 |    -32000 |        -1 |           -1 | f     |          1
+(1 row)
+
+CREATE SEQUENCE
+ALTER SEQUENCE
+ schemaname |      sequencename       | sequenceowner | data_type | start_value | min_value | max_value | increment_by | cycle | cache_size 
+------------+-------------------------+---------------+-----------+-------------+-----------+-----------+--------------+-------+------------
+ public     | reverse_direction_seqas | pan           | smallint  |           1 |         1 |     32767 |           -1 | f     |          1
+(1 row)
+
+ALTER SEQUENCE
+ schemaname |      sequencename       | sequenceowner | data_type | start_value | min_value | max_value  | increment_by | cycle | cache_size 
+------------+-------------------------+---------------+-----------+-------------+-----------+------------+--------------+-------+------------
+ public     | reverse_direction_seqas | pan           | integer   |           1 |         1 | 2147483647 |            1 | f     |          1
+(1 row)
+
+CREATE SEQUENCE
+ nextval 
+---------
+       5
+(1 row)
+
+ALTER SEQUENCE
+ nextval 
+---------
+       1
+(1 row)
+
+ALTER SEQUENCE
+ nextval 
+---------
+       5
+(1 row)
+
+ALTER SEQUENCE
+ nextval 
+---------
+      11
+(1 row)
+
+ALTER SEQUENCE
+ nextval 
+---------
+       3
+(1 row)
+
+CREATE SEQUENCE
+ALTER SEQUENCE
+CREATE SEQUENCE
+ALTER SEQUENCE
+CREATE SEQUENCE
+ nextval | nextval | nextval 
+---------+---------+---------
+       1 |       2 |       3
+(1 row)
+
+ nextval 
+---------
+       1
+(1 row)
+
+ALTER SEQUENCE
+ nextval 
+---------
+       2
+(1 row)
+
+CREATE SEQUENCE
+ nextval | nextval | nextval 
+---------+---------+---------
+      -1 |      -2 |      -3
+(1 row)
+
+ nextval 
+---------
+      -1
+(1 row)
+
+ALTER SEQUENCE
+ nextval 
+---------
+      -2
+(1 row)
+
+CREATE SEQUENCE
+ALTER SEQUENCE
+ schemaname |     sequencename      | sequenceowner | data_type | start_value | min_value |      max_value      | increment_by | cycle | cache_size 
+------------+-----------------------+---------------+-----------+-------------+-----------+---------------------+--------------+-------+------------
+ public     | seq_inverse_no_change | pan           | bigint    |           1 |         1 | 9223372036854775807 |           -1 | f     |          1
+(1 row)
+
+ALTER SEQUENCE
+ schemaname |     sequencename      | sequenceowner | data_type | start_value | min_value |      max_value      | increment_by | cycle | cache_size 
+------------+-----------------------+---------------+-----------+-------------+-----------+---------------------+--------------+-------+------------
+ public     | seq_inverse_no_change | pan           | bigint    |           1 |         1 | 9223372036854775807 |            1 | f     |          1
+(1 row)
+
+CREATE SEQUENCE
+ALTER SEQUENCE
+ALTER SEQUENCE
+ schemaname |      sequencename      | sequenceowner | data_type | start_value | min_value | max_value | increment_by | cycle | cache_size 
+------------+------------------------+---------------+-----------+-------------+-----------+-----------+--------------+-------+------------
+ public     | seq_change_type_bounds | pan           | smallint  |           0 |    -32768 |     32767 |            1 | f     |          1
+(1 row)
+
+ALTER SEQUENCE
+ schemaname |      sequencename      | sequenceowner | data_type | start_value |  min_value  | max_value  | increment_by | cycle | cache_size 
+------------+------------------------+---------------+-----------+-------------+-------------+------------+--------------+-------+------------
+ public     | seq_change_type_bounds | pan           | integer   |           0 | -2147483648 | 2147483647 |            1 | f     |          1
+(1 row)
+
+CREATE SEQUENCE
+ALTER SEQUENCE
+ schemaname |       sequencename       | sequenceowner | data_type | start_value | min_value |      max_value      | increment_by | cycle | cache_size 
+------------+--------------------------+---------------+-----------+-------------+-----------+---------------------+--------------+-------+------------
+ public     | seq_alter_no_min_max_asc | pan           | bigint    |           5 |         1 | 9223372036854775807 |            1 | f     |          1
+(1 row)
+
+CREATE SEQUENCE
+ALTER SEQUENCE
+ schemaname |       sequencename       | sequenceowner | data_type | start_value |      min_value       | max_value | increment_by | cycle | cache_size 
+------------+--------------------------+---------------+-----------+-------------+----------------------+-----------+--------------+-------+------------
+ public     | seq_alter_no_min_max_des | pan           | bigint    |          -5 | -9223372036854775808 |        -1 |           -1 | f     |          1
+(1 row)
+
+CREATE SEQUENCE
+ALTER SEQUENCE
+ nextval | nextval 
+---------+---------
+       1 |       9
+(1 row)
+
+ nextval 
+---------
+      17
+(1 row)
+
+ nextval 
+---------
+      25
+(1 row)
+
+ALTER SEQUENCE
+ nextval 
+---------
+      33
+(1 row)
+
+CREATE SEQUENCE
+ALTER SEQUENCE
+ nextval | nextval 
+---------+---------
+      12 |       4
+(1 row)
+
+ nextval 
+---------
+      -4
+(1 row)
+
+ nextval 
+---------
+     -12
+(1 row)
+
+ALTER SEQUENCE
+ nextval 
+---------
+     -20
+(1 row)
+
+CREATE SEQUENCE
+ALTER SEQUENCE
+ nextval 
+---------
+      50
+(1 row)
+
+DROP SEQUENCE
+RESET

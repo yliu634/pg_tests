@@ -1,0 +1,39 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP SCHEMA
+DROP TYPE
+DROP TYPE
+DROP DATABASE
+RESET
+CREATE SCHEMA
+COMMENT
+COMMENT
+psql:/home/pan/workspace/pg_tests/compatible/comment_on.sql:67: ERROR:  type "idxb" does not exist
+LINE 5:   INDEX idxb (b)
+                ^
+psql:/home/pan/workspace/pg_tests/compatible/comment_on.sql:70: ERROR:  relation "t" does not exist
+psql:/home/pan/workspace/pg_tests/compatible/comment_on.sql:73: ERROR:  relation "t" does not exist
+LINE 1: SELECT obj_description('t'::regclass);
+                               ^
+psql:/home/pan/workspace/pg_tests/compatible/comment_on.sql:76: ERROR:  relation "t" does not exist
+psql:/home/pan/workspace/pg_tests/compatible/comment_on.sql:79: ERROR:  relation "t" does not exist
+psql:/home/pan/workspace/pg_tests/compatible/comment_on.sql:82: ERROR:  relation "t" does not exist
+psql:/home/pan/workspace/pg_tests/compatible/comment_on.sql:85: ERROR:  relation "t" does not exist
+psql:/home/pan/workspace/pg_tests/compatible/comment_on.sql:91: ERROR:  relation "t" does not exist
+psql:/home/pan/workspace/pg_tests/compatible/comment_on.sql:94: ERROR:  relation "idxb" does not exist
+psql:/home/pan/workspace/pg_tests/compatible/comment_on.sql:97: ERROR:  relation "idxb" does not exist
+psql:/home/pan/workspace/pg_tests/compatible/comment_on.sql:100: ERROR:  relation "idxb" does not exist
+psql:/home/pan/workspace/pg_tests/compatible/comment_on.sql:103: ERROR:  relation "t" does not exist
+psql:/home/pan/workspace/pg_tests/compatible/comment_on.sql:106: ERROR:  relation "t" does not exist
+psql:/home/pan/workspace/pg_tests/compatible/comment_on.sql:109: ERROR:  relation "t" does not exist
+CREATE TABLE
+COMMENT
+CREATE TYPE
+CREATE TYPE
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+COMMENT

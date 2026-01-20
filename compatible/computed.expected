@@ -1,0 +1,138 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+RESET
+CREATE TABLE
+INSERT 0 1
+ c 
+---
+ 3
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+ c | d 
+---+---
+ 1 | 3
+(1 row)
+
+DELETE 1
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+ c | d 
+---+---
+ 1 |  
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+ c | d 
+---+---
+ 2 | 0
+(1 row)
+
+UPDATE 1
+ a | b | c 
+---+---+---
+ 1 | 3 | 4
+(1 row)
+
+UPDATE 1
+ a | b | c 
+---+---+---
+ 1 | 4 | 5
+(1 row)
+
+DROP TABLE
+psql:/home/pan/workspace/pg_tests/compatible/computed.sql:128: ERROR:  generation expression is not immutable
+psql:/home/pan/workspace/pg_tests/compatible/computed.sql:129: ERROR:  table "y" does not exist
+psql:/home/pan/workspace/pg_tests/compatible/computed.sql:136: ERROR:  generation expression is not immutable
+psql:/home/pan/workspace/pg_tests/compatible/computed.sql:137: ERROR:  table "y" does not exist
+CREATE TABLE
+CREATE TABLE
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+psql:/home/pan/workspace/pg_tests/compatible/computed.sql:152: ERROR:  cannot use generated column "i" in column generation expression
+DETAIL:  A generated column cannot reference another generated column.
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 2
+ k |  b  
+---+-----
+ 2 | abc
+ 1 | xyz
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+    d    
+---------
+ {1,2,3}
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+ALTER TABLE
+DROP TABLE
+CREATE TABLE
+ generation_expression 
+-----------------------
+ (a * 2)
+(1 row)
+
+INSERT 0 1
+ALTER TABLE
+INSERT 0 1
+ a | b  | c  
+---+----+----
+ 3 |  6 |  7
+ 6 | 12 | 10
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+ALTER TABLE
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+ALTER TABLE
+    j     | c | expected_c 
+----------+---+------------
+ {"a": 1} |   | 
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+DROP TABLE

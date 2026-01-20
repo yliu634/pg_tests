@@ -1,0 +1,55 @@
+SET
+psql:/tmp/hash_join_dist.sql:5: ERROR:  "a" is not a table
+HINT:  Use DROP SEQUENCE to remove a sequence.
+RESET
+psql:/tmp/hash_join_dist.sql:9: ERROR:  relation "t" already exists
+psql:/tmp/hash_join_dist.sql:12: ERROR:  INSERT has more expressions than target columns
+LINE 1: INSERT INTO t VALUES (1, 10), (2, 20), (3, 30);
+                                 ^
+psql:/tmp/hash_join_dist.sql:17: ERROR:  relation "xy" already exists
+psql:/tmp/hash_join_dist.sql:20: ERROR:  duplicate key value violates unique constraint "xy_pkey"
+DETAIL:  Key (x)=(2) already exists.
+psql:/tmp/hash_join_dist.sql:23: ERROR:  column t.k does not exist
+LINE 1: SELECT * FROM t WHERE EXISTS(SELECT * FROM xy WHERE x=t.k);
+                                                              ^
+psql:/tmp/hash_join_dist.sql:26: ERROR:  relation "small" already exists
+psql:/tmp/hash_join_dist.sql:29: ERROR:  relation "large" already exists
+psql:/tmp/hash_join_dist.sql:33: ERROR:  duplicate key value violates unique constraint "small_pkey"
+DETAIL:  Key (a)=(1) already exists.
+INSERT 0 10
+ b | d  
+---+----
+ 3 |   
+ 6 | 12
+ 6 | 12
+ 6 | 12
+ 9 |   
+(5 rows)
+
+psql:/tmp/hash_join_dist.sql:48: ERROR:  relation "a" already exists
+psql:/tmp/hash_join_dist.sql:53: ERROR:  relation "b" already exists
+psql:/tmp/hash_join_dist.sql:54: ERROR:  cannot create index on relation "b"
+DETAIL:  This operation is not supported for sequences.
+psql:/tmp/hash_join_dist.sql:55: ERROR:  cannot create index on relation "b"
+DETAIL:  This operation is not supported for sequences.
+psql:/tmp/hash_join_dist.sql:61: ERROR:  relation "a" does not have a composite type
+psql:/tmp/hash_join_dist.sql:64: ERROR:  relation "t86075" already exists
+psql:/tmp/hash_join_dist.sql:65: ERROR:  duplicate key value violates unique constraint "t86075_pkey"
+DETAIL:  Key (k)=(1) already exists.
+psql:/tmp/hash_join_dist.sql:66: ERROR:  relation "t86075_2" already exists
+psql:/tmp/hash_join_dist.sql:67: ERROR:  duplicate key value violates unique constraint "t86075_2_pkey"
+DETAIL:  Key (k)=(1) already exists.
+ k 
+---
+ 1
+ 2
+ 3
+(3 rows)
+
+ k 
+---
+ 1
+ 2
+ 3
+(3 rows)
+

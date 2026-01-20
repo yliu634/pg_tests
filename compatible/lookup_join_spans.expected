@@ -1,0 +1,23 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 4
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 8
+DROP TABLE
+psql:pg_tests/compatible/lookup_join_spans.sql:47: ERROR:  syntax error at or near "DESC"
+LINE 6:   PRIMARY KEY (metric_id, time DESC),
+                                       ^
+psql:pg_tests/compatible/lookup_join_spans.sql:376: ERROR:  syntax error at or near "TABLE"
+LINE 3: ALTER TABLE metric_values INJECT STATISTICS
+              ^
+psql:pg_tests/compatible/lookup_join_spans.sql:377: ERROR:  relation "order_line" already exists
+INSERT 0 4
+psql:pg_tests/compatible/lookup_join_spans.sql:383: ERROR:  relation "ol_io" already exists
+psql:pg_tests/compatible/lookup_join_spans.sql:384: ERROR:  relation "stock" already exists
+INSERT 0 1
+psql:pg_tests/compatible/lookup_join_spans.sql:405: ERROR:  syntax error at or near "WHERE"
+LINE 5: WHERE
+        ^

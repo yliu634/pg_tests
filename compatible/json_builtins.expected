@@ -1,0 +1,49 @@
+psql:/tmp/json_builtins.sql:74: ERROR:  syntax error at or near "jsonb_typeof"
+LINE 3: SELECT jsonb_typeof('-123.4'::JSON)
+               ^
+psql:/tmp/json_builtins.sql:140: ERROR:  syntax error at or near "to_json"
+LINE 3: SELECT to_json(true::BOOL)
+               ^
+psql:/tmp/json_builtins.sql:188: ERROR:  syntax error at or near "to_jsonb"
+LINE 3: SELECT to_jsonb(true::BOOL)
+               ^
+       to_json       
+---------------------
+ {"a":1,"column2":2}
+(1 row)
+
+          to_json          
+---------------------------
+ {"column2":1,"column2":2}
+(1 row)
+
+psql:/tmp/json_builtins.sql:316: ERROR:  syntax error at or near ")"
+LINE 1: SELECT json_agg((3808362714,))
+                                    ^
+psql:/tmp/json_builtins.sql:319: ERROR:  relation "foo" does not exist
+LINE 1: INSERT INTO foo VALUES (42);
+                    ^
+psql:/tmp/json_builtins.sql:322: ERROR:  prepared statement "jbo_stmt" does not exist
+CREATE TYPE
+psql:/tmp/json_builtins.sql:427: ERROR:  syntax error at or near "json_build_object"
+LINE 3: SELECT json_build_object(''::void, 1)
+               ^
+psql:/tmp/json_builtins.sql:453: error: invalid command \(collatedstring
+psql:/tmp/json_builtins.sql:492: error: invalid command \(collatedstring
+psql:/tmp/json_builtins.sql:681: ERROR:  syntax error at or near "jsonb_build_array"
+LINE 3: SELECT jsonb_build_array('\x0001'::BYTEA)
+               ^
+psql:/tmp/json_builtins.sql:685: ERROR:  function jsonb_exists_any(jsonb, integer[]) does not exist
+LINE 2:     jsonb_exists_any('{"id":12,"name":"Michael","address": {...
+            ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:/tmp/json_builtins.sql:687: error: invalid command \(
+psql:/tmp/json_builtins.sql:689: ERROR:  syntax error at or near "query"
+LINE 1: query error pq: jsonb_exists_any
+        ^
+psql:/tmp/json_builtins.sql:810: error: invalid command \"record
+psql:/tmp/json_builtins.sql:813: error: invalid command \"record
+psql:/tmp/json_builtins.sql:887: error: invalid command \x14',
+psql:/tmp/json_builtins.sql:889: ERROR:  syntax error at or near "#"
+LINE 1: # json_populate_record
+        ^

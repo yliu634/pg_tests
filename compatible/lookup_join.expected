@@ -1,0 +1,249 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 6
+DROP TABLE
+CREATE TABLE
+INSERT 0 6
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/lookup_join.sql:48: ERROR:  invalid input syntax for type time: "infinity"
+LINE 5: ('infinity'::TIME, '1970-01-01 00:00:00'::TIMESTAMP),
+         ^
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/lookup_join.sql:163: ERROR:  syntax error at or near "INJECT"
+LINE 1: ALTER TABLE abc INJECT STATISTICS '[
+                        ^
+psql:pg_tests/compatible/lookup_join.sql:164: ERROR:  relation "data" already exists
+psql:pg_tests/compatible/lookup_join.sql:171: ERROR:  duplicate key value violates unique constraint "data_pkey"
+DETAIL:  Key (a, b, c, d)=(1, 1, 1, 1) already exists.
+psql:pg_tests/compatible/lookup_join.sql:189: ERROR:  syntax error at or near "INJECT"
+LINE 1: ALTER TABLE data INJECT STATISTICS '[
+                         ^
+psql:pg_tests/compatible/lookup_join.sql:190: ERROR:  relation "foo" already exists
+psql:pg_tests/compatible/lookup_join.sql:190: ERROR:  cannot open relation "foo"
+LINE 1: INSERT INTO foo VALUES (0, 1), (0, 2), (1, 1);
+                    ^
+DETAIL:  This operation is not supported for indexes.
+psql:pg_tests/compatible/lookup_join.sql:193: ERROR:  "bar" is not a table
+HINT:  Use DROP SEQUENCE to remove a sequence.
+psql:pg_tests/compatible/lookup_join.sql:194: ERROR:  relation "bar" already exists
+psql:pg_tests/compatible/lookup_join.sql:194: ERROR:  cannot change sequence "bar"
+psql:pg_tests/compatible/lookup_join.sql:239: ERROR:  syntax error at or near "TABLE"
+LINE 3: ALTER TABLE books INJECT STATISTICS '[
+              ^
+psql:pg_tests/compatible/lookup_join.sql:240: ERROR:  relation "small" already exists
+DROP TABLE
+psql:pg_tests/compatible/lookup_join.sql:244: ERROR:  syntax error at or near "STORING"
+LINE 1: ...e (a INT, b INT, c INT, d INT, PRIMARY KEY (a, b) STORING (c...
+                                                             ^
+psql:pg_tests/compatible/lookup_join.sql:248: ERROR:  INSERT has more expressions than target columns
+LINE 1: INSERT INTO small SELECT x, 2*x, 3*x, 4*x FROM
+                                    ^
+psql:pg_tests/compatible/lookup_join.sql:252: ERROR:  relation "large" does not exist
+LINE 1: INSERT INTO large SELECT x, 2*x, 3*x, 4*x FROM
+                    ^
+psql:pg_tests/compatible/lookup_join.sql:299: ERROR:  syntax error at or near "INJECT"
+LINE 1: ALTER TABLE small INJECT STATISTICS '[
+                          ^
+psql:pg_tests/compatible/lookup_join.sql:302: ERROR:  column small.c does not exist
+LINE 1: SELECT small.c FROM small WHERE NOT EXISTS(SELECT 1 FROM lar...
+               ^
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/lookup_join.sql:309: ERROR:  "u" is not a table
+HINT:  Use DROP TYPE to remove a type.
+psql:pg_tests/compatible/lookup_join.sql:310: ERROR:  syntax error at or near "DESC"
+LINE 1: ...a INT, b INT, c INT, d INT, e INT, PRIMARY KEY (a DESC, b, c...
+                                                             ^
+INSERT 0 1
+psql:pg_tests/compatible/lookup_join.sql:320: ERROR:  cannot open relation "u"
+LINE 1: INSERT INTO u VALUES
+                    ^
+DETAIL:  This operation is not supported for composite types.
+psql:pg_tests/compatible/lookup_join.sql:323: ERROR:  cannot open relation "u"
+DETAIL:  This operation is not supported for composite types.
+psql:pg_tests/compatible/lookup_join.sql:332: ERROR:  syntax error at or near "DROP"
+LINE 3: DROP INDEX u
+        ^
+psql:pg_tests/compatible/lookup_join.sql:341: ERROR:  syntax error at or near "DROP"
+LINE 3: DROP INDEX u CASCADE
+        ^
+psql:pg_tests/compatible/lookup_join.sql:350: ERROR:  syntax error at or near "DROP"
+LINE 3: DROP INDEX u
+        ^
+psql:pg_tests/compatible/lookup_join.sql:359: ERROR:  syntax error at or near "DROP"
+LINE 3: DROP INDEX u
+        ^
+psql:pg_tests/compatible/lookup_join.sql:368: ERROR:  syntax error at or near "SELECT"
+LINE 3: SELECT * FROM def JOIN abc ON a=f ORDER BY a
+        ^
+ a | b | c 
+---+---+---
+(0 rows)
+
+ a | b | c 
+---+---+---
+ 1 | 1 | 2
+ 2 | 1 | 1
+(2 rows)
+
+ a | b | c 
+---+---+---
+ 2 |   | 2
+(1 row)
+
+ a | b | c 
+---+---+---
+ 1 | 1 | 2
+ 2 | 1 | 1
+(2 rows)
+
+ a | b | c 
+---+---+---
+ 2 |   | 2
+(1 row)
+
+psql:pg_tests/compatible/lookup_join.sql:392: ERROR:  syntax error at or near "SELECT"
+LINE 3: SELECT a,b from small WHERE a+b<20 AND EXISTS (SELECT a FROM...
+        ^
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/lookup_join.sql:409: ERROR:  syntax error at or near "SELECT"
+LINE 3: SELECT * FROM (VALUES (1), (2)) AS u(y) WHERE NOT EXISTS (
+        ^
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/lookup_join.sql:430: ERROR:  syntax error at or near "INJECT"
+LINE 1: ALTER TABLE t78681 INJECT STATISTICS '[
+                           ^
+ y 
+---
+(0 rows)
+
+psql:pg_tests/compatible/lookup_join.sql:448: ERROR:  relation "lookup_expr" does not exist
+LINE 1: INSERT INTO lookup_expr VALUES
+                    ^
+psql:pg_tests/compatible/lookup_join.sql:457: ERROR:  syntax error at or near "SELECT"
+LINE 4: SELECT * FROM (VALUES (1, 10), (2, 20), (3, NULL)) AS u(w, x...
+        ^
+DROP TABLE
+CREATE TABLE
+DROP TABLE
+psql:pg_tests/compatible/lookup_join.sql:472: ERROR:  syntax error at or near "("
+LINE 5:   INDEX (a, b, c)
+                ^
+INSERT 0 1
+psql:pg_tests/compatible/lookup_join.sql:478: ERROR:  relation "t79384b" does not exist
+LINE 1: INSERT INTO t79384b VALUES (1, 1, 1);
+                    ^
+DROP TABLE
+psql:pg_tests/compatible/lookup_join.sql:490: ERROR:  type "chat_id_idx" does not exist
+LINE 5:     INDEX chat_id_idx (chat_id)
+                  ^
+psql:pg_tests/compatible/lookup_join.sql:495: ERROR:  column "user_id" named in key does not exist
+LINE 4:     PRIMARY KEY (chat_id, user_id)
+            ^
+psql:pg_tests/compatible/lookup_join.sql:496: ERROR:  duplicate key value violates unique constraint "views_pkey"
+DETAIL:  Key (chat_id, user_id)=(1, 1) already exists.
+psql:pg_tests/compatible/lookup_join.sql:500: ERROR:  relation "items" does not exist
+LINE 1: INSERT INTO items(id, chat_id, author_id) VALUES
+                    ^
+psql:pg_tests/compatible/lookup_join.sql:509: ERROR:  relation "items" does not exist
+LINE 2:         FROM items
+                     ^
+psql:pg_tests/compatible/lookup_join.sql:515: ERROR:  syntax error at or near "ON"
+LINE 1: ON items.chat_id = views.chat_id
+        ^
+DROP TABLE
+psql:pg_tests/compatible/lookup_join.sql:519: ERROR:  syntax error at or near "DESC"
+LINE 1: ... TABLE xyz (x INT, y INT, z INT, PRIMARY KEY(x, y DESC, z));
+                                                             ^
+DROP TABLE
+psql:pg_tests/compatible/lookup_join.sql:523: ERROR:  syntax error at or near "DESC"
+LINE 1: ... TABLE uvw (u INT, v INT, w INT, PRIMARY KEY(u, v, w DESC));
+                                                                ^
+psql:pg_tests/compatible/lookup_join.sql:526: ERROR:  relation "xyz" does not exist
+LINE 1: INSERT INTO xyz VALUES (1, 1, 1), (1, 1, 2), (1, 2, 3), (2, ...
+                    ^
+psql:pg_tests/compatible/lookup_join.sql:529: ERROR:  relation "uvw" does not exist
+LINE 1: INSERT INTO uvw VALUES (1, 1, 1), (1, 2, 2), (1, 2, 3), (2, ...
+                    ^
+psql:pg_tests/compatible/lookup_join.sql:748: ERROR:  syntax error at or near "HASH"
+LINE 1: SELECT * FROM xyz INNER HASH JOIN uvw ON x = u ORDER BY x, y...
+                                ^
+psql:pg_tests/compatible/lookup_join.sql:755: ERROR:  syntax error at or near "ON"
+LINE 4: ON (t2.v) = (t1.v)
+        ^
+DROP TABLE
+psql:pg_tests/compatible/lookup_join.sql:762: ERROR:  relation "t108489_1" does not exist
+LINE 1: INSERT INTO t108489_1 VALUES (1);
+                    ^
+psql:pg_tests/compatible/lookup_join.sql:763: ERROR:  relation "t108489_2" does not exist
+LINE 1: INSERT INTO t108489_2 VALUES (1, 1, 1);
+                    ^
+psql:pg_tests/compatible/lookup_join.sql:764: ERROR:  relation "t108489_3" does not exist
+LINE 1: INSERT INTO t108489_3 VALUES (1, 1, 1, 1, 1);
+                    ^
+psql:pg_tests/compatible/lookup_join.sql:779: ERROR:  relation "l_113013" does not exist
+LINE 1: SELECT length(c1), length(c3) FROM l_113013 l INNER JOIN r_1...
+                                           ^
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/lookup_join.sql:790: ERROR:  relation "table_3_124732" does not exist
+LINE 1: INSERT INTO table_3_124732 (col3_0) VALUES (0);
+                    ^
+psql:pg_tests/compatible/lookup_join.sql:793: ERROR:  syntax error at or near "HASH"
+LINE 1: SELECT col1_6 FROM table_1_124732 INNER HASH JOIN table_3_12...
+                                                ^
+psql:pg_tests/compatible/lookup_join.sql:799: ERROR:  relation "t_124732" does not exist
+LINE 1: INSERT INTO t_124732 VALUES (1.000);
+                    ^
+psql:pg_tests/compatible/lookup_join.sql:807: ERROR:  syntax error at or near "SELECT"
+LINE 4: SELECT * FROM (VALUES (1::DECIMAL)) AS v(i)
+        ^
+DROP TABLE
+psql:pg_tests/compatible/lookup_join.sql:823: ERROR:  syntax error at or near "("
+LINE 8:   INDEX (b, a),
+                ^
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/lookup_join.sql:832: ERROR:  relation "t134697" does not exist
+LINE 1: INSERT INTO t134697 VALUES (1, '11', '11', 'ab', 'ab', 1234....
+                    ^
+INSERT 0 1
+psql:pg_tests/compatible/lookup_join.sql:839: ERROR:  relation "t134697" does not exist
+LINE 2: JOIN t134697 ON a = x AND b = '111';
+             ^
+psql:pg_tests/compatible/lookup_join.sql:847: ERROR:  syntax error at or near "SELECT"
+LINE 4: SELECT a, vb FROM t134697_x
+        ^
+psql:pg_tests/compatible/lookup_join.sql:855: ERROR:  syntax error at or near "SELECT"
+LINE 4: SELECT a, c FROM t134697_x
+        ^
+psql:pg_tests/compatible/lookup_join.sql:863: ERROR:  syntax error at or near "SELECT"
+LINE 4: SELECT a, vc FROM t134697_x
+        ^
+psql:pg_tests/compatible/lookup_join.sql:871: ERROR:  syntax error at or near "SELECT"
+LINE 4: SELECT a, d FROM t134697_x
+        ^
+psql:pg_tests/compatible/lookup_join.sql:879: ERROR:  syntax error at or near "client_min_messages"
+LINE 3: RESET client_min_messages;
+              ^

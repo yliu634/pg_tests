@@ -1,0 +1,289 @@
+SET
+DROP TABLE
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE SCHEMA
+GRANT
+SET
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE ROLE
+GRANT
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ testuser | testuser  | pg_tests      | public       | t1         | DELETE         | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t1         | INSERT         | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t1         | REFERENCES     | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t1         | SELECT         | YES          | YES
+ testuser | testuser  | pg_tests      | public       | t1         | TRIGGER        | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t1         | TRUNCATE       | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t1         | UPDATE         | YES          | NO
+ testuser | testuser2 | pg_tests      | public       | t1         | SELECT         | NO           | YES
+(8 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ testuser | testuser  | pg_tests      | public       | t2         | DELETE         | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t2         | INSERT         | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t2         | REFERENCES     | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t2         | SELECT         | YES          | YES
+ testuser | testuser  | pg_tests      | public       | t2         | TRIGGER        | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t2         | TRUNCATE       | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t2         | UPDATE         | YES          | NO
+ testuser | testuser2 | pg_tests      | public       | t2         | INSERT         | NO           | NO
+ testuser | testuser2 | pg_tests      | public       | t2         | SELECT         | NO           | YES
+(9 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ testuser | testuser  | pg_tests      | public       | t3         | DELETE         | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t3         | INSERT         | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t3         | REFERENCES     | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t3         | SELECT         | YES          | YES
+ testuser | testuser  | pg_tests      | public       | t3         | TRIGGER        | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t3         | TRUNCATE       | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t3         | UPDATE         | YES          | NO
+ testuser | testuser2 | pg_tests      | public       | t3         | DELETE         | NO           | NO
+ testuser | testuser2 | pg_tests      | public       | t3         | INSERT         | NO           | NO
+ testuser | testuser2 | pg_tests      | public       | t3         | REFERENCES     | NO           | NO
+ testuser | testuser2 | pg_tests      | public       | t3         | SELECT         | NO           | YES
+ testuser | testuser2 | pg_tests      | public       | t3         | TRIGGER        | NO           | NO
+ testuser | testuser2 | pg_tests      | public       | t3         | TRUNCATE       | NO           | NO
+ testuser | testuser2 | pg_tests      | public       | t3         | UPDATE         | NO           | NO
+(14 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ testuser | testuser  | pg_tests      | public       | t4         | DELETE         | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t4         | INSERT         | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t4         | REFERENCES     | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t4         | SELECT         | YES          | YES
+ testuser | testuser  | pg_tests      | public       | t4         | TRIGGER        | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t4         | TRUNCATE       | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t4         | UPDATE         | YES          | NO
+ testuser | testuser2 | pg_tests      | public       | t4         | SELECT         | NO           | YES
+(8 rows)
+
+CREATE SCHEMA
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+CREATE TABLE
+ grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ testuser | testuser  | pg_tests      | public       | t5         | DELETE         | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t5         | INSERT         | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t5         | REFERENCES     | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t5         | SELECT         | YES          | YES
+ testuser | testuser  | pg_tests      | public       | t5         | TRIGGER        | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t5         | TRUNCATE       | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t5         | UPDATE         | YES          | NO
+ testuser | testuser2 | pg_tests      | public       | t5         | DELETE         | NO           | NO
+ testuser | testuser2 | pg_tests      | public       | t5         | INSERT         | NO           | NO
+ testuser | testuser2 | pg_tests      | public       | t5         | REFERENCES     | NO           | NO
+ testuser | testuser2 | pg_tests      | public       | t5         | SELECT         | NO           | YES
+ testuser | testuser2 | pg_tests      | public       | t5         | TRIGGER        | NO           | NO
+ testuser | testuser2 | pg_tests      | public       | t5         | TRUNCATE       | NO           | NO
+ testuser | testuser2 | pg_tests      | public       | t5         | UPDATE         | NO           | NO
+(14 rows)
+
+ grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ testuser | testuser  | pg_tests      | s            | t6         | DELETE         | YES          | NO
+ testuser | testuser  | pg_tests      | s            | t6         | INSERT         | YES          | NO
+ testuser | testuser  | pg_tests      | s            | t6         | REFERENCES     | YES          | NO
+ testuser | testuser  | pg_tests      | s            | t6         | SELECT         | YES          | YES
+ testuser | testuser  | pg_tests      | s            | t6         | TRIGGER        | YES          | NO
+ testuser | testuser  | pg_tests      | s            | t6         | TRUNCATE       | YES          | NO
+ testuser | testuser  | pg_tests      | s            | t6         | UPDATE         | YES          | NO
+ testuser | testuser2 | pg_tests      | s            | t6         | DELETE         | NO           | NO
+ testuser | testuser2 | pg_tests      | s            | t6         | INSERT         | NO           | NO
+ testuser | testuser2 | pg_tests      | s            | t6         | REFERENCES     | NO           | NO
+ testuser | testuser2 | pg_tests      | s            | t6         | SELECT         | NO           | YES
+ testuser | testuser2 | pg_tests      | s            | t6         | TRIGGER        | NO           | NO
+ testuser | testuser2 | pg_tests      | s            | t6         | TRUNCATE       | NO           | NO
+ testuser | testuser2 | pg_tests      | s            | t6         | UPDATE         | NO           | NO
+(14 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+SET
+CREATE TABLE
+CREATE TABLE
+ grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ testuser | testuser  | pg_tests      | public       | t7         | DELETE         | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t7         | INSERT         | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t7         | REFERENCES     | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t7         | SELECT         | YES          | YES
+ testuser | testuser  | pg_tests      | public       | t7         | TRIGGER        | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t7         | TRUNCATE       | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t7         | UPDATE         | YES          | NO
+ testuser | testuser2 | pg_tests      | public       | t7         | SELECT         | NO           | YES
+(8 rows)
+
+ grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ testuser | testuser  | pg_tests      | s            | t8         | DELETE         | YES          | NO
+ testuser | testuser  | pg_tests      | s            | t8         | INSERT         | YES          | NO
+ testuser | testuser  | pg_tests      | s            | t8         | REFERENCES     | YES          | NO
+ testuser | testuser  | pg_tests      | s            | t8         | SELECT         | YES          | YES
+ testuser | testuser  | pg_tests      | s            | t8         | TRIGGER        | YES          | NO
+ testuser | testuser  | pg_tests      | s            | t8         | TRUNCATE       | YES          | NO
+ testuser | testuser  | pg_tests      | s            | t8         | UPDATE         | YES          | NO
+ testuser | testuser2 | pg_tests      | s            | t8         | SELECT         | NO           | YES
+(8 rows)
+
+CREATE TABLE
+CREATE TABLE
+ grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ testuser | testuser  | pg_tests      | public       | t9         | DELETE         | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t9         | INSERT         | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t9         | REFERENCES     | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t9         | SELECT         | YES          | YES
+ testuser | testuser  | pg_tests      | public       | t9         | TRIGGER        | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t9         | TRUNCATE       | YES          | NO
+ testuser | testuser  | pg_tests      | public       | t9         | UPDATE         | YES          | NO
+ testuser | testuser2 | pg_tests      | public       | t9         | SELECT         | NO           | YES
+(8 rows)
+
+ grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ testuser | testuser  | pg_tests      | s            | t10        | DELETE         | YES          | NO
+ testuser | testuser  | pg_tests      | s            | t10        | INSERT         | YES          | NO
+ testuser | testuser  | pg_tests      | s            | t10        | REFERENCES     | YES          | NO
+ testuser | testuser  | pg_tests      | s            | t10        | SELECT         | YES          | YES
+ testuser | testuser  | pg_tests      | s            | t10        | TRIGGER        | YES          | NO
+ testuser | testuser  | pg_tests      | s            | t10        | TRUNCATE       | YES          | NO
+ testuser | testuser  | pg_tests      | s            | t10        | UPDATE         | YES          | NO
+ testuser | testuser2 | pg_tests      | s            | t10        | SELECT         | NO           | YES
+(8 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ testuser | testuser2 | pg_tests      | public       | t11        | SELECT         | NO           | YES
+(1 row)
+
+CREATE SCHEMA
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+----------+---------------+--------------+------------+----------------+--------------+----------------
+ testuser | testuser | pg_tests      | s2           | t12        | DELETE         | YES          | NO
+ testuser | testuser | pg_tests      | s2           | t12        | INSERT         | YES          | NO
+ testuser | testuser | pg_tests      | s2           | t12        | REFERENCES     | YES          | NO
+ testuser | testuser | pg_tests      | s2           | t12        | SELECT         | YES          | YES
+ testuser | testuser | pg_tests      | s2           | t12        | TRIGGER        | YES          | NO
+ testuser | testuser | pg_tests      | s2           | t12        | TRUNCATE       | YES          | NO
+ testuser | testuser | pg_tests      | s2           | t12        | UPDATE         | YES          | NO
+(7 rows)
+
+ definer_role |  schema_name  | object_type | grantor  |  grantee  | privilege_type | is_grantable 
+--------------+---------------+-------------+----------+-----------+----------------+--------------
+ root         | crdb_internal | TABLES      | root     | root      | SELECT         | f
+ testuser     | public        | TABLES      | testuser | testuser2 | SELECT         | f
+ testuser     | s             | TABLES      | testuser | testuser2 | SELECT         | f
+(3 rows)
+
+ definer_role | schema_name | object_type |  grantee  | privilege_type | is_grantable 
+--------------+-------------+-------------+-----------+----------------+--------------
+ testuser     | public      | TABLES      | testuser2 | SELECT         | f
+(1 row)
+
+ definer_role | schema_name | object_type |  grantee  | privilege_type | is_grantable 
+--------------+-------------+-------------+-----------+----------------+--------------
+ testuser     | s           | TABLES      | testuser2 | SELECT         | f
+(1 row)
+
+ definer_role | schema_name | object_type | grantee | privilege_type | is_grantable 
+--------------+-------------+-------------+---------+----------------+--------------
+(0 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ definer_role |  schema_name  | object_type | grantor  |  grantee  | privilege_type | is_grantable 
+--------------+---------------+-------------+----------+-----------+----------------+--------------
+ root         | crdb_internal | TABLES      | root     | root      | SELECT         | f
+ testuser     | public        | TABLES      | testuser | testuser  | DELETE         | f
+ testuser     | public        | TABLES      | testuser | testuser  | INSERT         | f
+ testuser     | public        | TABLES      | testuser | testuser  | REFERENCES     | f
+ testuser     | public        | TABLES      | testuser | testuser  | SELECT         | f
+ testuser     | public        | TABLES      | testuser | testuser  | TRIGGER        | f
+ testuser     | public        | TABLES      | testuser | testuser  | TRUNCATE       | f
+ testuser     | public        | TABLES      | testuser | testuser  | UPDATE         | f
+ testuser     | public        | TABLES      | testuser | testuser2 | SELECT         | f
+ testuser     | s             | TABLES      | testuser | testuser2 | SELECT         | f
+ testuser     | s             | TYPES       | testuser | testuser2 | USAGE          | f
+ testuser     | s2            | TABLES      | testuser | testuser2 | DELETE         | f
+ testuser     | s2            | TABLES      | testuser | testuser2 | SELECT         | f
+ testuser     | s2            | TABLES      | testuser | testuser2 | UPDATE         | f
+(14 rows)
+
+ definer_role | schema_name | object_type |  grantee  | privilege_type | is_grantable 
+--------------+-------------+-------------+-----------+----------------+--------------
+ testuser     | public      | TABLES      | testuser  | DELETE         | f
+ testuser     | public      | TABLES      | testuser  | INSERT         | f
+ testuser     | public      | TABLES      | testuser  | REFERENCES     | f
+ testuser     | public      | TABLES      | testuser  | SELECT         | f
+ testuser     | public      | TABLES      | testuser  | TRIGGER        | f
+ testuser     | public      | TABLES      | testuser  | TRUNCATE       | f
+ testuser     | public      | TABLES      | testuser  | UPDATE         | f
+ testuser     | public      | TABLES      | testuser2 | SELECT         | f
+(8 rows)
+
+ definer_role | schema_name | object_type |  grantee  | privilege_type | is_grantable 
+--------------+-------------+-------------+-----------+----------------+--------------
+ testuser     | s           | TABLES      | testuser2 | SELECT         | f
+ testuser     | s           | TYPES       | testuser2 | USAGE          | f
+(2 rows)
+
+ definer_role | schema_name | object_type |  grantee  | privilege_type | is_grantable 
+--------------+-------------+-------------+-----------+----------------+--------------
+ testuser     | s2          | TABLES      | testuser2 | DELETE         | f
+ testuser     | s2          | TABLES      | testuser2 | SELECT         | f
+ testuser     | s2          | TABLES      | testuser2 | UPDATE         | f
+(3 rows)
+
+ definer_role | schema_name | object_type |  grantee  | privilege_type | is_grantable 
+--------------+-------------+-------------+-----------+----------------+--------------
+ testuser     | s2          | TABLES      | testuser2 | DELETE         | f
+ testuser     | s2          | TABLES      | testuser2 | SELECT         | f
+ testuser     | s2          | TABLES      | testuser2 | UPDATE         | f
+(3 rows)
+
+ definer_role | schema_name | object_type | grantee | privilege_type | is_grantable 
+--------------+-------------+-------------+---------+----------------+--------------
+(0 rows)
+
+RESET
+DROP TABLE
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP OWNED
+DROP OWNED
+DROP OWNED
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET

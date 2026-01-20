@@ -1,0 +1,226 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP DATABASE
+DROP INDEX
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP SEQUENCE
+DROP DATABASE
+DROP DATABASE
+DROP TABLE
+DROP VIEW
+DROP VIEW
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+RESET
+SELECT 3
+  item  | quantity 
+--------+----------
+ cups   |       10
+ plates |       15
+ forks  |       30
+(3 rows)
+
+SELECT 1
+ item | quantity 
+------+----------
+ cups |       10
+(1 row)
+
+ item | quantity 
+------+----------
+ cups |       10
+(1 row)
+
+SELECT 3
+ color 
+-------
+ blue
+ red
+ green
+(3 rows)
+
+SELECT 9
+  item  | color 
+--------+-------
+ cups   | blue
+ plates | blue
+ forks  | blue
+ cups   | red
+ plates | red
+ forks  | red
+ cups   | green
+ plates | green
+ forks  | green
+(9 rows)
+
+  item  | color 
+--------+-------
+ cups   | blue
+ plates | blue
+ forks  | blue
+ cups   | red
+ plates | red
+ forks  | red
+ cups   | green
+ plates | green
+ forks  | green
+(9 rows)
+
+SELECT 5
+  item  | quantity 
+--------+----------
+ knives |       50
+ plates |       15
+ spoons |       25
+ forks  |       30
+ cups   |       10
+(5 rows)
+
+  item  | quantity 
+--------+----------
+ cups   |       10
+ plates |       15
+ spoons |       25
+ forks  |       30
+ knives |       50
+(5 rows)
+
+psql:compatible/create_as.sql:95: NOTICE:  relation "unionstock" already exists, skipping
+CREATE TABLE AS
+ item | quantity 
+------+----------
+ cups |       10
+(1 row)
+
+CREATE DATABASE
+You are now connected to database "smtng" as user "pan".
+CREATE TABLE
+INSERT 0 3
+  item  | quantity 
+--------+----------
+ cups   |       10
+ plates |       15
+ forks  |       30
+(3 rows)
+
+ item | quantity 
+------+----------
+ cups |       10
+(1 row)
+
+You are now connected to database "pg_tests" as user "pan".
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+SELECT 2
+ x 
+---
+ 1
+  
+(2 rows)
+
+SELECT 1
+ x 
+---
+ t
+(1 row)
+
+SELECT 1
+ a | b | c 
+---+---+---
+ 1 | 2 | 1
+(1 row)
+
+SELECT 1
+ a | b | c 
+---+---+---
+ 1 | 2 | 1
+(1 row)
+
+SELECT 1
+ALTER TABLE
+SELECT 1
+ALTER TABLE
+BEGIN
+SELECT 5
+ALTER TABLE
+COMMIT
+SELECT 1
+ALTER TABLE
+SELECT 1
+ALTER TABLE
+SELECT 2
+ALTER TABLE
+CREATE TABLE
+SELECT 1
+ x | y | z 
+---+---+---
+ 1 | 2 |  
+(1 row)
+
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 3
+SELECT 3
+ a | b | exists 
+---+---+--------
+ 1 | 1 | f
+ 2 | 2 | t
+ 3 | 3 | t
+(3 rows)
+
+BEGIN
+ROLLBACK
+CREATE SEQUENCE
+SELECT 1
+ ?column? 
+----------
+ f
+(1 row)
+
+CREATE DATABASE
+You are now connected to database "db105393_1" as user "pan".
+CREATE TYPE
+CREATE TABLE
+You are now connected to database "pg_tests" as user "pan".
+CREATE DATABASE
+You are now connected to database "db105393_2" as user "pan".
+You are now connected to database "pg_tests" as user "pan".
+CREATE TABLE
+INSERT 0 1
+ALTER TABLE
+INSERT 0 1
+BEGIN
+ROLLBACK
+DROP TABLE

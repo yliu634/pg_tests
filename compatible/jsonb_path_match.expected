@@ -1,0 +1,22 @@
+SET
+ jsonb_path_match 
+------------------
+ t
+(1 row)
+
+ jsonb_path_match 
+------------------
+ f
+(1 row)
+
+ jsonb_path_match 
+------------------
+ 
+(1 row)
+
+ jsonb_path_match 
+------------------
+ 
+(1 row)
+
+RESET

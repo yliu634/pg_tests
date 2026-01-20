@@ -1,0 +1,204 @@
+SET
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+RESET
+SET
+ search_path 
+-------------
+ foo
+(1 row)
+
+DISCARD ALL
+   search_path   
+-----------------
+ "$user", public
+(1 row)
+
+SET
+     TimeZone     
+------------------
+ Europe/Amsterdam
+(1 row)
+
+DISCARD ALL
+ TimeZone 
+----------
+ Etc/UTC
+(1 row)
+
+SET
+     TimeZone     
+------------------
+ Europe/Amsterdam
+(1 row)
+
+DISCARD ALL
+ TimeZone 
+----------
+ Etc/UTC
+(1 row)
+
+PREPARE
+DISCARD ALL
+psql:/home/pan/workspace/pg_tests/compatible/discard.sql:49: ERROR:  prepared statement "a" does not exist
+BEGIN
+psql:/home/pan/workspace/pg_tests/compatible/discard.sql:58: ERROR:  DISCARD ALL cannot run inside a transaction block
+ROLLBACK
+CREATE SEQUENCE
+ nextval 
+---------
+      10
+(1 row)
+
+ lastval 
+---------
+      10
+(1 row)
+
+ currval 
+---------
+      10
+(1 row)
+
+DISCARD SEQUENCES
+psql:/home/pan/workspace/pg_tests/compatible/discard.sql:79: ERROR:  lastval is not yet defined in this session
+psql:/home/pan/workspace/pg_tests/compatible/discard.sql:82: ERROR:  currval of sequence "discard_seq_test" is not yet defined in this session
+CREATE SEQUENCE
+ nextval 
+---------
+      10
+(1 row)
+
+DISCARD ALL
+psql:/home/pan/workspace/pg_tests/compatible/discard.sql:94: ERROR:  lastval is not yet defined in this session
+CREATE SEQUENCE
+ nextval 
+---------
+       1
+(1 row)
+
+DISCARD SEQUENCES
+ nextval 
+---------
+      11
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+DISCARD TEMP
+ count 
+-------
+     1
+(1 row)
+
+CREATE TABLE
+CREATE TABLE
+ table_name 
+------------
+ test
+ test2
+(2 rows)
+
+DISCARD TEMP
+ table_name 
+------------
+(0 rows)
+
+ count 
+-------
+     2
+(1 row)
+
+UNLISTEN
+SET
+ search_path 
+-------------
+ bar, public
+(1 row)
+
+SET
+     TimeZone     
+------------------
+ Europe/Amsterdam
+(1 row)
+
+PREPARE
+CREATE SEQUENCE
+CREATE TABLE
+ table_name 
+------------
+ tempy
+(1 row)
+
+SET
+psql:/home/pan/workspace/pg_tests/compatible/discard.sql:167: ERROR:  cannot execute DROP TABLE in a read-only transaction
+DISCARD ALL
+ default_transaction_read_only 
+-------------------------------
+ off
+(1 row)
+
+   search_path   
+-----------------
+ "$user", public
+(1 row)
+
+ TimeZone 
+----------
+ Etc/UTC
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/discard.sql:182: ERROR:  prepared statement "a" does not exist
+psql:/home/pan/workspace/pg_tests/compatible/discard.sql:185: ERROR:  currval of sequence "discard_seq" is not yet defined in this session
+ table_name 
+------------
+(0 rows)
+
+SET
+ search_path 
+-------------
+ bar, public
+(1 row)
+
+SET
+     TimeZone     
+------------------
+ Europe/Amsterdam
+(1 row)
+
+PREPARE
+CREATE SEQUENCE
+CREATE TABLE
+ table_name 
+------------
+ tempy
+(1 row)
+
+ pg_sleep 
+----------
+ 
+(1 row)
+
+DISCARD ALL
+   search_path   
+-----------------
+ "$user", public
+(1 row)
+
+ TimeZone 
+----------
+ Etc/UTC
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/discard.sql:229: ERROR:  prepared statement "a" does not exist
+psql:/home/pan/workspace/pg_tests/compatible/discard.sql:232: ERROR:  currval of sequence "discard_seq2" is not yet defined in this session
+ table_name 
+------------
+(0 rows)
+

@@ -1,0 +1,54 @@
+SET
+DROP DATABASE
+DROP DATABASE
+DROP DATABASE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET
+CREATE DATABASE
+ datname | datacl 
+---------+--------
+ a       | 
+(1 row)
+
+CREATE ROLE
+psql:/tmp/grant_database.sql:28: ERROR:  role "test-user" already exists
+GRANT
+ datname |                                          datacl                                          
+---------+------------------------------------------------------------------------------------------
+ a       | {=Tc/postgres,postgres=CTc/postgres,readwrite=CTc/postgres,"\"test-user\"=CTc/postgres"}
+(1 row)
+
+REVOKE
+ datname |                                         datacl                                         
+---------+----------------------------------------------------------------------------------------
+ a       | {=Tc/postgres,postgres=CTc/postgres,readwrite=CT/postgres,"\"test-user\"=CT/postgres"}
+(1 row)
+
+REVOKE
+ datname |                                        datacl                                         
+---------+---------------------------------------------------------------------------------------
+ a       | {=Tc/postgres,postgres=CTc/postgres,readwrite=CT/postgres,"\"test-user\"=T/postgres"}
+(1 row)
+
+REVOKE
+ datname |                           datacl                           
+---------+------------------------------------------------------------
+ a       | {=Tc/postgres,postgres=CTc/postgres,readwrite=CT/postgres}
+(1 row)
+
+REVOKE
+ datname |                datacl                
+---------+--------------------------------------
+ a       | {=Tc/postgres,postgres=CTc/postgres}
+(1 row)
+
+CREATE ROLE
+CREATE DATABASE
+GRANT
+CREATE ROLE
+GRANT ROLE
+ALTER ROLE
+CREATE ROLE

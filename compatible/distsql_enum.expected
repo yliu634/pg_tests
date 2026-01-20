@@ -1,0 +1,22 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TYPE
+RESET
+CREATE TYPE
+psql:/home/pan/workspace/pg_tests/compatible/distsql_enum.sql:19: ERROR:  syntax error at or near "["
+LINE 3:   enum_range(NULL::greeting)[g] as _enum
+                                    ^
+psql:/home/pan/workspace/pg_tests/compatible/distsql_enum.sql:37: ERROR:  relation "seed" does not exist
+LINE 16:    w, seed;
+               ^
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+ x 
+---
+ 0
+(1 row)
+

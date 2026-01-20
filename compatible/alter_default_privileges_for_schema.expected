@@ -1,0 +1,123 @@
+SET
+You are now connected to database "pg_tests" as user "pan".
+psql:compatible/alter_default_privileges_for_schema.sql:8: NOTICE:  database "d" does not exist, skipping
+DROP DATABASE
+psql:compatible/alter_default_privileges_for_schema.sql:10: NOTICE:  schema "s" does not exist, skipping
+DROP SCHEMA
+psql:compatible/alter_default_privileges_for_schema.sql:11: NOTICE:  schema "s2" does not exist, skipping
+DROP SCHEMA
+psql:compatible/alter_default_privileges_for_schema.sql:12: NOTICE:  schema "s3" does not exist, skipping
+DROP SCHEMA
+psql:compatible/alter_default_privileges_for_schema.sql:14: NOTICE:  role "testuser2" does not exist, skipping
+DROP ROLE
+psql:compatible/alter_default_privileges_for_schema.sql:15: NOTICE:  role "testuser" does not exist, skipping
+DROP ROLE
+psql:compatible/alter_default_privileges_for_schema.sql:16: NOTICE:  role "root" does not exist, skipping
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+SET
+CREATE DATABASE
+GRANT
+You are now connected to database "d" as user "pan".
+SET
+      grantor      |      grantee      | schema_catalog | schema_name | privilege_type | is_grantable 
+-------------------+-------------------+----------------+-------------+----------------+--------------
+ pg_database_owner | pg_database_owner | d              | public      | CREATE         | f
+ pg_database_owner | pg_database_owner | d              | public      | USAGE          | f
+ pg_database_owner | unknown (OID=0)   | d              | public      | USAGE          | f
+(3 rows)
+
+CREATE SCHEMA
+ grantor | grantee | schema_catalog | schema_name | privilege_type | is_grantable 
+---------+---------+----------------+-------------+----------------+--------------
+ root    | root    | d              | testuser_s  | CREATE         | f
+ root    | root    | d              | testuser_s  | USAGE          | f
+(2 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE SCHEMA
+ grantor | grantee | schema_catalog | schema_name | privilege_type | is_grantable 
+---------+---------+----------------+-------------+----------------+--------------
+ root    | root    | d              | testuser_s2 | CREATE         | f
+ root    | root    | d              | testuser_s2 | USAGE          | f
+(2 rows)
+
+You are now connected to database "pg_tests" as user "pan".
+SET
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+CREATE SCHEMA
+ grantor |  grantee  | schema_catalog | schema_name | privilege_type | is_grantable 
+---------+-----------+----------------+-------------+----------------+--------------
+ root    | root      | pg_tests       | s           | CREATE         | f
+ root    | root      | pg_tests       | s           | USAGE          | f
+ root    | testuser  | pg_tests       | s           | CREATE         | f
+ root    | testuser  | pg_tests       | s           | USAGE          | f
+ root    | testuser2 | pg_tests       | s           | CREATE         | f
+ root    | testuser2 | pg_tests       | s           | USAGE          | f
+(6 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE SCHEMA
+ grantor |  grantee  | schema_catalog | schema_name | privilege_type | is_grantable 
+---------+-----------+----------------+-------------+----------------+--------------
+ root    | root      | pg_tests       | s2          | CREATE         | f
+ root    | root      | pg_tests       | s2          | USAGE          | f
+ root    | testuser  | pg_tests       | s2          | CREATE         | f
+ root    | testuser2 | pg_tests       | s2          | CREATE         | f
+(4 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE SCHEMA
+ grantor | grantee | schema_catalog | schema_name | privilege_type | is_grantable 
+---------+---------+----------------+-------------+----------------+--------------
+ root    | root    | pg_tests       | s3          | CREATE         | f
+ root    | root    | pg_tests       | s3          | USAGE          | f
+(2 rows)
+
+GRANT
+You are now connected to database "d" as user "pan".
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE SCHEMA
+ grantor  | grantee  | schema_catalog | schema_name | privilege_type | is_grantable 
+----------+----------+----------------+-------------+----------------+--------------
+ testuser | testuser | d              | s4          | CREATE         | f
+ testuser | testuser | d              | s4          | USAGE          | f
+(2 rows)
+
+You are now connected to database "d" as user "pan".
+SET
+ALTER DEFAULT PRIVILEGES
+You are now connected to database "d" as user "pan".
+SET
+CREATE SCHEMA
+ grantor  | grantee  | schema_catalog | schema_name | privilege_type | is_grantable 
+----------+----------+----------------+-------------+----------------+--------------
+ testuser | testuser | d              | s5          | CREATE         | f
+ testuser | testuser | d              | s5          | USAGE          | f
+(2 rows)
+
+ALTER DEFAULT PRIVILEGES
+SET
+CREATE SCHEMA
+ grantor | grantee | schema_catalog | schema_name | privilege_type | is_grantable 
+---------+---------+----------------+-------------+----------------+--------------
+ root    | root    | d              | s_72322     | CREATE         | f
+ root    | root    | d              | s_72322     | USAGE          | f
+(2 rows)
+
+RESET
+You are now connected to database "pg_tests" as user "pan".
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP DATABASE
+DROP OWNED
+DROP OWNED
+DROP OWNED
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET

@@ -1,0 +1,52 @@
+psql:/tmp/geo_meta.sql:5: ERROR:  function postgis_extensions_upgrade() does not exist
+LINE 1: SELECT PostGIS_Extensions_Upgrade();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:/tmp/geo_meta.sql:8: ERROR:  function postgis_full_version() does not exist
+LINE 1: SELECT PostGIS_Full_Version();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:/tmp/geo_meta.sql:11: ERROR:  function postgis_geos_version() does not exist
+LINE 1: SELECT PostGIS_GEOS_Version();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:/tmp/geo_meta.sql:14: ERROR:  function postgis_libxml_version() does not exist
+LINE 1: SELECT PostGIS_LibXML_Version();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:/tmp/geo_meta.sql:17: ERROR:  function postgis_lib_build_date() does not exist
+LINE 1: SELECT PostGIS_Lib_Build_Date();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:/tmp/geo_meta.sql:20: ERROR:  function postgis_lib_version() does not exist
+LINE 1: SELECT PostGIS_Lib_Version();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:/tmp/geo_meta.sql:23: ERROR:  function postgis_liblwgeom_version() does not exist
+LINE 1: SELECT PostGIS_Liblwgeom_Version();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:/tmp/geo_meta.sql:26: ERROR:  function postgis_proj_version() does not exist
+LINE 1: SELECT PostGIS_PROJ_Version();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:/tmp/geo_meta.sql:29: ERROR:  function postgis_scripts_build_date() does not exist
+LINE 1: SELECT PostGIS_Scripts_Build_Date();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:/tmp/geo_meta.sql:32: ERROR:  function postgis_scripts_installed() does not exist
+LINE 1: SELECT PostGIS_Scripts_Installed();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:/tmp/geo_meta.sql:35: ERROR:  function postgis_scripts_released() does not exist
+LINE 1: SELECT PostGIS_Scripts_Released();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:/tmp/geo_meta.sql:38: ERROR:  function postgis_version() does not exist
+LINE 1: SELECT PostGIS_Version();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:/tmp/geo_meta.sql:41: ERROR:  function postgis_wagyu_version() does not exist
+LINE 1: SELECT PostGIS_Wagyu_Version();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.

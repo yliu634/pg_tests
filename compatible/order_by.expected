@@ -1,0 +1,364 @@
+SET
+DROP TABLE
+DROP TABLE
+psql:pg_tests/compatible/order_by.sql:13: ERROR:  syntax error at or near ";"
+LINE 1: CREATE TABLE t (;
+                        ^
+psql:pg_tests/compatible/order_by.sql:16: ERROR:  relation "t" does not exist
+LINE 1: INSERT INTO t VALUES (1, 9, true), (2, 8, false), (3, 7, NUL...
+                    ^
+psql:pg_tests/compatible/order_by.sql:19: ERROR:  relation "t" does not exist
+LINE 1: SELECT c FROM t ORDER BY c;
+                      ^
+psql:pg_tests/compatible/order_by.sql:22: ERROR:  relation "t" does not exist
+LINE 1: SELECT c FROM t ORDER BY c;
+                      ^
+psql:pg_tests/compatible/order_by.sql:25: ERROR:  relation "t" does not exist
+LINE 1: SELECT c FROM t ORDER BY c DESC;
+                      ^
+psql:pg_tests/compatible/order_by.sql:28: ERROR:  relation "t" does not exist
+LINE 1: SELECT a, b FROM t ORDER BY b;
+                         ^
+psql:pg_tests/compatible/order_by.sql:31: ERROR:  relation "t" does not exist
+LINE 1: SELECT a, b FROM t ORDER BY b DESC;
+                         ^
+psql:pg_tests/compatible/order_by.sql:34: ERROR:  relation "t" does not exist
+LINE 1: SELECT a FROM t ORDER BY 1 DESC;
+                      ^
+psql:pg_tests/compatible/order_by.sql:37: ERROR:  relation "t" does not exist
+LINE 1: SELECT a, b FROM t ORDER BY b DESC LIMIT 2;
+                         ^
+psql:pg_tests/compatible/order_by.sql:40: ERROR:  relation "t" does not exist
+LINE 1: SELECT DISTINCT c, b FROM t ORDER BY b DESC LIMIT 2;
+                                  ^
+psql:pg_tests/compatible/order_by.sql:43: ERROR:  relation "t" does not exist
+LINE 1: SELECT a AS foo, b FROM t ORDER BY foo DESC;
+                                ^
+psql:pg_tests/compatible/order_by.sql:46: ERROR:  relation "t" does not exist
+LINE 1: SELECT a AS foo, b AS foo FROM t ORDER BY foo;
+                                       ^
+psql:pg_tests/compatible/order_by.sql:51: ERROR:  syntax error at or near "#"
+LINE 1: # Check that no ambiguity is reported if the ORDER BY name r...
+        ^
+psql:pg_tests/compatible/order_by.sql:54: ERROR:  relation "t" does not exist
+LINE 1: SELECT a AS "foo.bar", b FROM t ORDER BY "foo.bar" DESC;
+                                      ^
+psql:pg_tests/compatible/order_by.sql:57: ERROR:  relation "t" does not exist
+LINE 1: SELECT a AS foo, b FROM t ORDER BY a DESC;
+                                ^
+psql:pg_tests/compatible/order_by.sql:60: ERROR:  relation "t" does not exist
+LINE 1: SELECT b FROM t ORDER BY a DESC;
+                      ^
+psql:pg_tests/compatible/order_by.sql:63: ERROR:  relation "t" does not exist
+LINE 1: INSERT INTO t VALUES (4, 7), (5, 7);
+                    ^
+psql:pg_tests/compatible/order_by.sql:66: ERROR:  relation "t" does not exist
+LINE 1: SELECT a, b FROM t WHERE b = 7 ORDER BY b, a;
+                         ^
+psql:pg_tests/compatible/order_by.sql:69: ERROR:  relation "t" does not exist
+LINE 1: SELECT a, b FROM t ORDER BY b, a DESC;
+                         ^
+psql:pg_tests/compatible/order_by.sql:72: ERROR:  relation "t" does not exist
+LINE 1: SELECT a, b, a+b AS ab FROM t WHERE b = 7 ORDER BY ab DESC, ...
+                                    ^
+psql:pg_tests/compatible/order_by.sql:75: ERROR:  relation "t" does not exist
+LINE 1: SELECT a FROM t ORDER BY a+b DESC, a;
+                      ^
+psql:pg_tests/compatible/order_by.sql:78: ERROR:  relation "t" does not exist
+LINE 1: SELECT a FROM t ORDER BY (((a)));
+                      ^
+psql:pg_tests/compatible/order_by.sql:84: ERROR:  syntax error at or near "("
+LINE 3: (((SELECT a FROM t ORDER BY a DESC LIMIT 4)));
+        ^
+psql:pg_tests/compatible/order_by.sql:90: ERROR:  multiple ORDER BY clauses not allowed
+LINE 1: ((SELECT a FROM t ORDER BY a)) ORDER BY a
+                                                ^
+psql:pg_tests/compatible/order_by.sql:93: ERROR:  relation "t" does not exist
+LINE 1: SELECT * FROM t ORDER BY 0;
+                      ^
+psql:pg_tests/compatible/order_by.sql:96: ERROR:  relation "t" does not exist
+LINE 1: SELECT * FROM t ORDER BY true;
+                      ^
+psql:pg_tests/compatible/order_by.sql:99: ERROR:  relation "t" does not exist
+LINE 1: SELECT * FROM t ORDER BY 'a';
+                      ^
+psql:pg_tests/compatible/order_by.sql:102: ERROR:  relation "t" does not exist
+LINE 1: SELECT * FROM t ORDER BY 2.5;
+                      ^
+psql:pg_tests/compatible/order_by.sql:105: ERROR:  relation "t" does not exist
+LINE 1: SELECT * FROM t ORDER BY foo;
+                      ^
+psql:pg_tests/compatible/order_by.sql:108: ERROR:  relation "t" does not exist
+LINE 1: SELECT a FROM t ORDER BY a.b;
+                      ^
+ generate_series | array 
+-----------------+-------
+               1 | {1}
+(1 row)
+
+ generate_series | array 
+-----------------+-------
+               1 | {1}
+(1 row)
+
+ generate_series | array 
+-----------------+-------
+               1 | {1}
+(1 row)
+
+DROP TABLE
+DROP TABLE
+psql:pg_tests/compatible/order_by.sql:132: ERROR:  syntax error at or near ";"
+LINE 1: CREATE TABLE abc (;
+                          ^
+psql:pg_tests/compatible/order_by.sql:135: ERROR:  relation "abc" does not exist
+LINE 1: INSERT INTO abc VALUES (1, 2, 3, 'one'), (4, 5, 6, 'Two');
+                    ^
+psql:pg_tests/compatible/order_by.sql:138: ERROR:  relation "abc" does not exist
+LINE 1: SELECT d FROM abc ORDER BY lower(d);
+                      ^
+psql:pg_tests/compatible/order_by.sql:141: ERROR:  relation "abc" does not exist
+LINE 1: SELECT a FROM abc ORDER BY a DESC;
+                      ^
+psql:pg_tests/compatible/order_by.sql:144: ERROR:  relation "abc" does not exist
+LINE 1: SELECT a FROM abc ORDER BY a DESC LIMIT 1;
+                      ^
+psql:pg_tests/compatible/order_by.sql:147: ERROR:  relation "abc" does not exist
+LINE 1: SELECT a FROM abc ORDER BY a DESC OFFSET 1;
+                      ^
+psql:pg_tests/compatible/order_by.sql:150: ERROR:  cannot change sequence "bar"
+psql:pg_tests/compatible/order_by.sql:153: ERROR:  column "baz" does not exist
+LINE 1: SELECT * FROM bar ORDER BY baz, id;
+                                   ^
+DROP TABLE
+DROP TABLE
+psql:pg_tests/compatible/order_by.sql:164: ERROR:  syntax error at or near ";"
+LINE 1: CREATE TABLE abcd (;
+                           ^
+psql:pg_tests/compatible/order_by.sql:167: ERROR:  relation "abcd" does not exist
+LINE 1: INSERT INTO abcd VALUES (1, 4, 2, 3), (2, 3, 4, 1), (3, 2, 1...
+                    ^
+psql:pg_tests/compatible/order_by.sql:170: ERROR:  relation "abcd" does not exist
+LINE 1: SELECT a+b FROM (SELECT * FROM abcd ORDER BY d);
+                                       ^
+psql:pg_tests/compatible/order_by.sql:173: ERROR:  relation "abcd" does not exist
+LINE 1: SELECT b+d FROM (SELECT * FROM abcd ORDER BY a,d);
+                                       ^
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+INSERT 0 4
+  x  
+-----
+  -1
+   1
+ NaN
+ NaN
+(4 rows)
+
+psql:pg_tests/compatible/order_by.sql:187: ERROR:  relation "store" does not exist
+LINE 1: INSERT INTO store VALUES (0, NULL, 10), (1, NULL, 5);
+                    ^
+psql:pg_tests/compatible/order_by.sql:190: ERROR:  relation "store" does not exist
+LINE 1: SELECT * FROM store ORDER BY baz, extra;
+                      ^
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/order_by.sql:195: ERROR:  relation "foo" already exists
+psql:pg_tests/compatible/order_by.sql:198: ERROR:  syntax error at or near "PRIMARY"
+LINE 1: SELECT * FROM kv AS a, kv AS b ORDER BY PRIMARY KEY kv;
+                                                ^
+psql:pg_tests/compatible/order_by.sql:201: ERROR:  syntax error at or near "PRIMARY"
+LINE 1: ...M generate_series(1,10) g(i)) AS kv(k,v) ORDER BY PRIMARY KE...
+                                                             ^
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/order_by.sql:206: ERROR:  syntax error at or near "PRIMARY"
+LINE 1: SELECT * FROM unrelated ORDER BY PRIMARY KEY kv;
+                                         ^
+psql:pg_tests/compatible/order_by.sql:212: ERROR:  syntax error at or near "PRIMARY"
+LINE 1: PREPARE a AS (TABLE kv) ORDER BY PRIMARY KEY kv
+                                         ^
+INSERT 0 5
+psql:pg_tests/compatible/order_by.sql:218: ERROR:  syntax error at or near "kv"
+LINE 1: SELECT k FROM kv ORDER BY INDEX kv;
+                                        ^
+DROP TABLE
+DROP TABLE
+psql:pg_tests/compatible/order_by.sql:230: ERROR:  syntax error at or near ";"
+LINE 1: CREATE TABLE abc2 (;
+                           ^
+psql:pg_tests/compatible/order_by.sql:233: ERROR:  relation "abc2" does not exist
+LINE 1: INSERT INTO abc2 VALUES (2, 30, 400), (1, 30, 500), (3, 30, ...
+                    ^
+psql:pg_tests/compatible/order_by.sql:236: ERROR:  syntax error at or near "PRIMARY"
+LINE 1: SELECT a, b, c FROM abc2 ORDER BY PRIMARY KEY abc2;
+                                          ^
+psql:pg_tests/compatible/order_by.sql:239: ERROR:  syntax error at or near "PRIMARY"
+LINE 1: SELECT a, b, c FROM abc2 ORDER BY PRIMARY KEY abc2 DESC;
+                                          ^
+psql:pg_tests/compatible/order_by.sql:242: ERROR:  syntax error at or near "abc2"
+LINE 1: SELECT a, b, c FROM abc2 ORDER BY INDEX abc2;
+                                                ^
+psql:pg_tests/compatible/order_by.sql:245: ERROR:  syntax error at or near "abc2"
+LINE 1: SELECT a, b, c FROM abc2 ORDER BY INDEX abc2 DESC;
+                                                ^
+psql:pg_tests/compatible/order_by.sql:248: ERROR:  syntax error at or near "abc2"
+LINE 1: SELECT a, b, c FROM abc2 ORDER BY INDEX abc2;
+                                                ^
+psql:pg_tests/compatible/order_by.sql:251: ERROR:  syntax error at or near "abc2"
+LINE 1: SELECT a, b, c FROM abc2 ORDER BY INDEX abc2 DESC;
+                                                ^
+psql:pg_tests/compatible/order_by.sql:254: ERROR:  syntax error at or near "x"
+LINE 1: SELECT a, b, c FROM abc2 AS x ORDER BY INDEX x;
+                                                     ^
+psql:pg_tests/compatible/order_by.sql:257: ERROR:  syntax error at or near "abc2"
+LINE 1: SELECT a, b, c FROM abc2 AS x ORDER BY INDEX abc2;
+                                                     ^
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+INSERT 0 4
+ x | y 
+---+---
+ 2 |  
+ 2 | 5
+   | 6
+ 4 | 8
+(4 rows)
+
+ x | y 
+---+---
+ 2 | 5
+   | 6
+ 4 | 8
+ 2 |  
+(4 rows)
+
+ x | y 
+---+---
+ 2 |  
+ 4 | 8
+   | 6
+ 2 | 5
+(4 rows)
+
+ x | y 
+---+---
+ 4 | 8
+   | 6
+ 2 | 5
+ 2 |  
+(4 rows)
+
+CREATE INDEX
+ x | y 
+---+---
+ 2 | 5
+   | 6
+ 4 | 8
+ 2 |  
+(4 rows)
+
+INSERT 0 1
+ x | y 
+---+---
+   | 6
+   |  
+ 2 | 5
+ 2 |  
+ 4 | 8
+(5 rows)
+
+ x | y 
+---+---
+ 2 |  
+ 2 | 5
+ 4 | 8
+   |  
+   | 6
+(5 rows)
+
+psql:pg_tests/compatible/order_by.sql:298: ERROR:  unrecognized configuration parameter "null_ordered_last"
+ x | y 
+---+---
+ 2 | 5
+ 2 |  
+ 4 | 8
+   | 6
+   |  
+(5 rows)
+
+ x | y 
+---+---
+ 2 |  
+ 2 | 5
+ 4 | 8
+   |  
+   | 6
+(5 rows)
+
+ x | y 
+---+---
+ 2 |  
+ 2 | 5
+ 4 | 8
+   |  
+   | 6
+(5 rows)
+
+ x | y 
+---+---
+   | 6
+   |  
+ 2 | 5
+ 2 |  
+ 4 | 8
+(5 rows)
+
+ x | y 
+---+---
+   |  
+   | 6
+ 2 |  
+ 2 | 5
+ 4 | 8
+(5 rows)
+
+ x | y 
+---+---
+   |  
+   | 6
+ 2 |  
+ 2 | 5
+ 4 | 8
+(5 rows)
+
+   x   | y 
+-------+---
+ (1,1) | 1
+ (1,)  | 3
+ (,)   | 4
+       | 2
+(4 rows)
+
+psql:pg_tests/compatible/order_by.sql:331: ERROR:  unrecognized configuration parameter "null_ordered_last"
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+INSERT 0 5
+ a |  b  
+---+-----
+ 1 |  -1
+ 1 | 100
+ 2 |   0
+(3 rows)
+
+ a | b  
+---+----
+ 1 | -1
+(1 row)
+
+RESET

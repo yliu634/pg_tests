@@ -1,0 +1,59 @@
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+           ?column?            
+-------------------------------
+ CREATE TABLE i4 (i4 integer);
+(1 row)
+
+CREATE TABLE
+           ?column?           
+------------------------------
+ CREATE TABLE i8 (i8 bigint);
+(1 row)
+
+BEGIN
+CREATE TABLE
+COMMIT
+            ?column?             
+---------------------------------
+ CREATE TABLE late4 (a integer);
+(1 row)
+
+CREATE TABLE
+              ?column?              
+------------------------------------
+ CREATE TABLE i4_rowid (a integer);
+(1 row)
+
+CREATE TABLE
+             ?column?              
+-----------------------------------
+ CREATE TABLE i8_rowid (a bigint);
+(1 row)
+
+CREATE TABLE
+                 ?column?                  
+-------------------------------------------
+ CREATE TABLE i4_sql_sequence (a integer);
+(1 row)
+
+CREATE TABLE
+                 ?column?                 
+------------------------------------------
+ CREATE TABLE i8_sql_sequence (a bigint);
+(1 row)
+
+CREATE TABLE
+                   ?column?                    
+-----------------------------------------------
+ CREATE TABLE i4_virtual_sequence (a integer);
+(1 row)
+
+CREATE TABLE
+                   ?column?                   
+----------------------------------------------
+ CREATE TABLE i8_virtual_sequence (a bigint);
+(1 row)
+

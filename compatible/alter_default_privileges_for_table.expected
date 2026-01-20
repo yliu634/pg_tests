@@ -1,0 +1,341 @@
+SET
+You are now connected to database "pg_tests" as user "pan".
+psql:compatible/alter_default_privileges_for_table.sql:8: NOTICE:  database "d" does not exist, skipping
+DROP DATABASE
+psql:compatible/alter_default_privileges_for_table.sql:10: NOTICE:  view "vx" does not exist, skipping
+DROP VIEW
+psql:compatible/alter_default_privileges_for_table.sql:11: NOTICE:  table "t" does not exist, skipping
+DROP TABLE
+psql:compatible/alter_default_privileges_for_table.sql:12: NOTICE:  table "t2" does not exist, skipping
+DROP TABLE
+psql:compatible/alter_default_privileges_for_table.sql:13: NOTICE:  table "t3" does not exist, skipping
+DROP TABLE
+psql:compatible/alter_default_privileges_for_table.sql:14: NOTICE:  table "t4" does not exist, skipping
+DROP TABLE
+psql:compatible/alter_default_privileges_for_table.sql:15: NOTICE:  sequence "s" does not exist, skipping
+DROP SEQUENCE
+psql:compatible/alter_default_privileges_for_table.sql:16: NOTICE:  sequence "s2" does not exist, skipping
+DROP SEQUENCE
+psql:compatible/alter_default_privileges_for_table.sql:17: NOTICE:  sequence "s3" does not exist, skipping
+DROP SEQUENCE
+psql:compatible/alter_default_privileges_for_table.sql:18: NOTICE:  sequence "s4" does not exist, skipping
+DROP SEQUENCE
+psql:compatible/alter_default_privileges_for_table.sql:20: NOTICE:  role "testuser3" does not exist, skipping
+DROP ROLE
+psql:compatible/alter_default_privileges_for_table.sql:21: NOTICE:  role "testuser2" does not exist, skipping
+DROP ROLE
+psql:compatible/alter_default_privileges_for_table.sql:22: NOTICE:  role "testuser" does not exist, skipping
+DROP ROLE
+psql:compatible/alter_default_privileges_for_table.sql:23: NOTICE:  role "who" does not exist, skipping
+DROP ROLE
+psql:compatible/alter_default_privileges_for_table.sql:24: NOTICE:  role "root" does not exist, skipping
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+SET
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE DATABASE
+GRANT
+You are now connected to database "d" as user "pan".
+SET
+GRANT
+CREATE TABLE
+ grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+---------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root    | d             | public       | testuser_t | DELETE         | YES          | NO
+ root    | root    | d             | public       | testuser_t | INSERT         | YES          | NO
+ root    | root    | d             | public       | testuser_t | REFERENCES     | YES          | NO
+ root    | root    | d             | public       | testuser_t | SELECT         | YES          | YES
+ root    | root    | d             | public       | testuser_t | TRIGGER        | YES          | NO
+ root    | root    | d             | public       | testuser_t | TRUNCATE       | YES          | NO
+ root    | root    | d             | public       | testuser_t | UPDATE         | YES          | NO
+(7 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor | grantee | table_catalog | table_schema | table_name  | privilege_type | is_grantable | with_hierarchy 
+---------+---------+---------------+--------------+-------------+----------------+--------------+----------------
+ root    | root    | d             | public       | testuser_t2 | DELETE         | YES          | NO
+ root    | root    | d             | public       | testuser_t2 | INSERT         | YES          | NO
+ root    | root    | d             | public       | testuser_t2 | REFERENCES     | YES          | NO
+ root    | root    | d             | public       | testuser_t2 | SELECT         | YES          | YES
+ root    | root    | d             | public       | testuser_t2 | TRIGGER        | YES          | NO
+ root    | root    | d             | public       | testuser_t2 | TRUNCATE       | YES          | NO
+ root    | root    | d             | public       | testuser_t2 | UPDATE         | YES          | NO
+(7 rows)
+
+You are now connected to database "pg_tests" as user "pan".
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root     | pg_tests      | public       | t          | DELETE         | YES          | NO
+ root    | root     | pg_tests      | public       | t          | INSERT         | YES          | NO
+ root    | root     | pg_tests      | public       | t          | REFERENCES     | YES          | NO
+ root    | root     | pg_tests      | public       | t          | SELECT         | YES          | YES
+ root    | root     | pg_tests      | public       | t          | TRIGGER        | YES          | NO
+ root    | root     | pg_tests      | public       | t          | TRUNCATE       | YES          | NO
+ root    | root     | pg_tests      | public       | t          | UPDATE         | YES          | NO
+ root    | testuser | pg_tests      | public       | t          | INSERT         | NO           | NO
+ root    | testuser | pg_tests      | public       | t          | SELECT         | NO           | YES
+ root    | who      | pg_tests      | public       | t          | SELECT         | NO           | YES
+(10 rows)
+
+CREATE SEQUENCE
+CREATE VIEW
+ grantor | grantee | sequence_catalog | sequence_schema | sequence_name | privilege_type | is_grantable 
+---------+---------+------------------+-----------------+---------------+----------------+--------------
+ root    | root    | pg_tests         | public          | s             | USAGE          | f
+(1 row)
+
+ grantor | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root     | pg_tests      | public       | vx         | DELETE         | YES          | NO
+ root    | root     | pg_tests      | public       | vx         | INSERT         | YES          | NO
+ root    | root     | pg_tests      | public       | vx         | REFERENCES     | YES          | NO
+ root    | root     | pg_tests      | public       | vx         | SELECT         | YES          | YES
+ root    | root     | pg_tests      | public       | vx         | TRIGGER        | YES          | NO
+ root    | root     | pg_tests      | public       | vx         | TRUNCATE       | YES          | NO
+ root    | root     | pg_tests      | public       | vx         | UPDATE         | YES          | NO
+ root    | testuser | pg_tests      | public       | vx         | INSERT         | NO           | NO
+ root    | testuser | pg_tests      | public       | vx         | SELECT         | NO           | YES
+ root    | who      | pg_tests      | public       | vx         | SELECT         | NO           | YES
+(10 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root     | pg_tests      | public       | t2         | DELETE         | YES          | NO
+ root    | root     | pg_tests      | public       | t2         | INSERT         | YES          | NO
+ root    | root     | pg_tests      | public       | t2         | REFERENCES     | YES          | NO
+ root    | root     | pg_tests      | public       | t2         | SELECT         | YES          | YES
+ root    | root     | pg_tests      | public       | t2         | TRIGGER        | YES          | NO
+ root    | root     | pg_tests      | public       | t2         | TRUNCATE       | YES          | NO
+ root    | root     | pg_tests      | public       | t2         | UPDATE         | YES          | NO
+ root    | testuser | pg_tests      | public       | t2         | INSERT         | NO           | NO
+ root    | who      | pg_tests      | public       | t2         | SELECT         | NO           | YES
+(9 rows)
+
+CREATE SEQUENCE
+ grantor | grantee | sequence_catalog | sequence_schema | sequence_name | privilege_type | is_grantable 
+---------+---------+------------------+-----------------+---------------+----------------+--------------
+ root    | root    | pg_tests         | public          | s2            | USAGE          | f
+(1 row)
+
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root      | pg_tests      | public       | t3         | DELETE         | YES          | NO
+ root    | root      | pg_tests      | public       | t3         | INSERT         | YES          | NO
+ root    | root      | pg_tests      | public       | t3         | REFERENCES     | YES          | NO
+ root    | root      | pg_tests      | public       | t3         | SELECT         | YES          | YES
+ root    | root      | pg_tests      | public       | t3         | TRIGGER        | YES          | NO
+ root    | root      | pg_tests      | public       | t3         | TRUNCATE       | YES          | NO
+ root    | root      | pg_tests      | public       | t3         | UPDATE         | YES          | NO
+ root    | testuser  | pg_tests      | public       | t3         | INSERT         | NO           | NO
+ root    | testuser  | pg_tests      | public       | t3         | SELECT         | NO           | YES
+ root    | testuser2 | pg_tests      | public       | t3         | SELECT         | NO           | YES
+ root    | who       | pg_tests      | public       | t3         | SELECT         | NO           | YES
+(11 rows)
+
+CREATE SEQUENCE
+ grantor | grantee | sequence_catalog | sequence_schema | sequence_name | privilege_type | is_grantable 
+---------+---------+------------------+-----------------+---------------+----------------+--------------
+ root    | root    | pg_tests         | public          | s3            | USAGE          | f
+(1 row)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root     | pg_tests      | public       | t4         | DELETE         | YES          | NO
+ root    | root     | pg_tests      | public       | t4         | INSERT         | YES          | NO
+ root    | root     | pg_tests      | public       | t4         | REFERENCES     | YES          | NO
+ root    | root     | pg_tests      | public       | t4         | SELECT         | YES          | YES
+ root    | root     | pg_tests      | public       | t4         | TRIGGER        | YES          | NO
+ root    | root     | pg_tests      | public       | t4         | TRUNCATE       | YES          | NO
+ root    | root     | pg_tests      | public       | t4         | UPDATE         | YES          | NO
+ root    | testuser | pg_tests      | public       | t4         | INSERT         | NO           | NO
+ root    | who      | pg_tests      | public       | t4         | SELECT         | NO           | YES
+(9 rows)
+
+CREATE SEQUENCE
+ grantor | grantee | sequence_catalog | sequence_schema | sequence_name | privilege_type | is_grantable 
+---------+---------+------------------+-----------------+---------------+----------------+--------------
+ root    | root    | pg_tests         | public          | s4            | USAGE          | f
+(1 row)
+
+You are now connected to database "d" as user "pan".
+SET
+GRANT
+ALTER DEFAULT PRIVILEGES
+You are now connected to database "d" as user "pan".
+SET
+CREATE TABLE
+ grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ testuser | testuser  | d             | public       | t5         | DELETE         | YES          | NO
+ testuser | testuser  | d             | public       | t5         | INSERT         | YES          | NO
+ testuser | testuser  | d             | public       | t5         | REFERENCES     | YES          | NO
+ testuser | testuser  | d             | public       | t5         | SELECT         | YES          | YES
+ testuser | testuser  | d             | public       | t5         | TRIGGER        | YES          | NO
+ testuser | testuser  | d             | public       | t5         | TRUNCATE       | YES          | NO
+ testuser | testuser  | d             | public       | t5         | UPDATE         | YES          | NO
+ testuser | testuser2 | d             | public       | t5         | SELECT         | NO           | YES
+(8 rows)
+
+You are now connected to database "d" as user "pan".
+SET
+ALTER DEFAULT PRIVILEGES
+You are now connected to database "d" as user "pan".
+SET
+CREATE TABLE
+ grantor  | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+----------+---------------+--------------+------------+----------------+--------------+----------------
+ testuser | testuser | d             | public       | t6         | DELETE         | YES          | NO
+ testuser | testuser | d             | public       | t6         | INSERT         | YES          | NO
+ testuser | testuser | d             | public       | t6         | REFERENCES     | YES          | NO
+ testuser | testuser | d             | public       | t6         | TRIGGER        | YES          | NO
+ testuser | testuser | d             | public       | t6         | TRUNCATE       | YES          | NO
+ testuser | testuser | d             | public       | t6         | UPDATE         | YES          | NO
+(6 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ testuser | testuser  | d             | public       | t7         | DELETE         | YES          | NO
+ testuser | testuser  | d             | public       | t7         | INSERT         | YES          | NO
+ testuser | testuser  | d             | public       | t7         | REFERENCES     | YES          | NO
+ testuser | testuser  | d             | public       | t7         | SELECT         | YES          | YES
+ testuser | testuser  | d             | public       | t7         | TRIGGER        | YES          | NO
+ testuser | testuser  | d             | public       | t7         | TRUNCATE       | YES          | NO
+ testuser | testuser  | d             | public       | t7         | UPDATE         | YES          | NO
+ testuser | testuser2 | d             | public       | t7         | DELETE         | NO           | NO
+ testuser | testuser2 | d             | public       | t7         | INSERT         | NO           | NO
+ testuser | testuser2 | d             | public       | t7         | REFERENCES     | NO           | NO
+ testuser | testuser2 | d             | public       | t7         | SELECT         | NO           | YES
+ testuser | testuser2 | d             | public       | t7         | TRIGGER        | NO           | NO
+ testuser | testuser2 | d             | public       | t7         | TRUNCATE       | NO           | NO
+ testuser | testuser2 | d             | public       | t7         | UPDATE         | NO           | NO
+(14 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ testuser | testuser  | d             | public       | t8         | DELETE         | YES          | NO
+ testuser | testuser  | d             | public       | t8         | INSERT         | YES          | NO
+ testuser | testuser  | d             | public       | t8         | REFERENCES     | YES          | NO
+ testuser | testuser  | d             | public       | t8         | TRIGGER        | YES          | NO
+ testuser | testuser  | d             | public       | t8         | TRUNCATE       | YES          | NO
+ testuser | testuser  | d             | public       | t8         | UPDATE         | YES          | NO
+ testuser | testuser2 | d             | public       | t8         | DELETE         | NO           | NO
+ testuser | testuser2 | d             | public       | t8         | INSERT         | NO           | NO
+ testuser | testuser2 | d             | public       | t8         | REFERENCES     | NO           | NO
+ testuser | testuser2 | d             | public       | t8         | TRIGGER        | NO           | NO
+ testuser | testuser2 | d             | public       | t8         | TRUNCATE       | NO           | NO
+ testuser | testuser2 | d             | public       | t8         | UPDATE         | NO           | NO
+(12 rows)
+
+You are now connected to database "d" as user "pan".
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root      | d             | public       | t9         | DELETE         | YES          | NO
+ root    | root      | d             | public       | t9         | INSERT         | YES          | NO
+ root    | root      | d             | public       | t9         | REFERENCES     | YES          | NO
+ root    | root      | d             | public       | t9         | SELECT         | YES          | YES
+ root    | root      | d             | public       | t9         | TRIGGER        | YES          | NO
+ root    | root      | d             | public       | t9         | TRUNCATE       | YES          | NO
+ root    | root      | d             | public       | t9         | UPDATE         | YES          | NO
+ root    | testuser2 | d             | public       | t9         | SELECT         | NO           | YES
+ root    | testuser3 | d             | public       | t9         | SELECT         | NO           | YES
+(9 rows)
+
+CREATE TABLE
+ grantor |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root      | d             | public       | t10        | DELETE         | YES          | NO
+ root    | root      | d             | public       | t10        | INSERT         | YES          | NO
+ root    | root      | d             | public       | t10        | REFERENCES     | YES          | NO
+ root    | root      | d             | public       | t10        | SELECT         | YES          | YES
+ root    | root      | d             | public       | t10        | TRIGGER        | YES          | NO
+ root    | root      | d             | public       | t10        | TRUNCATE       | YES          | NO
+ root    | root      | d             | public       | t10        | UPDATE         | YES          | NO
+ root    | testuser2 | d             | public       | t10        | SELECT         | NO           | YES
+ root    | testuser3 | d             | public       | t10        | SELECT         | NO           | YES
+(9 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+---------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root    | d             | public       | t11        | DELETE         | YES          | NO
+ root    | root    | d             | public       | t11        | INSERT         | YES          | NO
+ root    | root    | d             | public       | t11        | REFERENCES     | YES          | NO
+ root    | root    | d             | public       | t11        | SELECT         | YES          | YES
+ root    | root    | d             | public       | t11        | TRIGGER        | YES          | NO
+ root    | root    | d             | public       | t11        | TRUNCATE       | YES          | NO
+ root    | root    | d             | public       | t11        | UPDATE         | YES          | NO
+(7 rows)
+
+CREATE TABLE
+ grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+---------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root    | d             | public       | t12        | DELETE         | YES          | NO
+ root    | root    | d             | public       | t12        | INSERT         | YES          | NO
+ root    | root    | d             | public       | t12        | REFERENCES     | YES          | NO
+ root    | root    | d             | public       | t12        | SELECT         | YES          | YES
+ root    | root    | d             | public       | t12        | TRIGGER        | YES          | NO
+ root    | root    | d             | public       | t12        | TRUNCATE       | YES          | NO
+ root    | root    | d             | public       | t12        | UPDATE         | YES          | NO
+(7 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ role | inheriting_member | member_is_explicit 
+------+-------------------+--------------------
+(0 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+RESET
+You are now connected to database "pg_tests" as user "pan".
+DROP VIEW
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP DATABASE
+DROP OWNED
+DROP OWNED
+DROP OWNED
+DROP OWNED
+DROP OWNED
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET

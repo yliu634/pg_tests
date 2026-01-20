@@ -1,0 +1,324 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+RESET
+CREATE TABLE
+INSERT 0 7
+CREATE TABLE
+INSERT 0 3
+ x | y | z 
+---+---+---
+ 1 | 1 | 2
+ 1 | 1 |  
+ 1 | 2 | 1
+ 2 | 2 | 3
+ 4 | 1 | 6
+ 4 | 5 | 6
+(6 rows)
+
+ x 
+---
+ 1
+ 1
+ 4
+ 1
+ 2
+ 4
+(6 rows)
+
+ z 
+---
+ 1
+ 2
+ 3
+ 6
+ 6
+  
+(6 rows)
+
+ a | c | b 
+---+---+---
+ 1 | 1 | 1
+ 1 | 2 | 1
+ 1 | 2 | 2
+(3 rows)
+
+ a 
+---
+ 1
+ 1
+ 1
+(3 rows)
+
+ b 
+---
+ 1
+ 1
+ 2
+(3 rows)
+
+ y | x 
+---+---
+ 1 | 1
+ 2 | 1
+ 2 | 2
+ 1 | 4
+ 5 | 4
+(5 rows)
+
+ x 
+---
+ 1
+ 4
+ 1
+ 2
+ 4
+(5 rows)
+
+ y 
+---
+ 1
+ 2
+ 2
+ 1
+ 5
+(5 rows)
+
+ a | b 
+---+---
+ 1 | 1
+ 1 | 1
+(2 rows)
+
+ b | c | a 
+---+---+---
+ 1 | 1 | 1
+ 2 | 2 | 1
+(2 rows)
+
+ y 
+---
+ 1
+ 2
+ 5
+(3 rows)
+
+ a 
+---
+ 1
+ 1
+(2 rows)
+
+ b 
+---
+ 1
+ 2
+(2 rows)
+
+ a | b | c 
+---+---+---
+ 1 | 1 | 1
+(1 row)
+
+ a | c 
+---+---
+ 1 | 2
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/distinct_on.sql:88: ERROR:  SELECT DISTINCT ON expressions must match initial ORDER BY expressions
+LINE 1: SELECT DISTINCT ON (x) x, y, z FROM xyz ORDER BY y;
+                            ^
+psql:/home/pan/workspace/pg_tests/compatible/distinct_on.sql:91: ERROR:  SELECT DISTINCT ON expressions must match initial ORDER BY expressions
+LINE 1: SELECT DISTINCT ON (y) x, y, z FROM xyz ORDER BY x, y;
+                            ^
+psql:/home/pan/workspace/pg_tests/compatible/distinct_on.sql:94: ERROR:  SELECT DISTINCT ON expressions must match initial ORDER BY expressions
+LINE 1: SELECT DISTINCT ON (y, z) x, y, z FROM xyz ORDER BY x;
+                            ^
+ x 
+---
+ 4
+ 2
+ 1
+(3 rows)
+
+ y | z | x 
+---+---+---
+ 2 | 1 | 1
+ 1 | 2 | 1
+ 2 | 3 | 2
+ 5 | 6 | 4
+ 1 |   | 1
+(5 rows)
+
+ y | z | x 
+---+---+---
+ 1 |   | 1
+ 2 | 3 | 2
+ 5 | 6 | 4
+(3 rows)
+
+ ?column? 
+----------
+ 1bar
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/distinct_on.sql:109: ERROR:  column "xyz.y" must appear in the GROUP BY clause or be used in an aggregate function
+LINE 1: SELECT DISTINCT ON(max(x)) y FROM xyz;
+                                   ^
+psql:/home/pan/workspace/pg_tests/compatible/distinct_on.sql:112: ERROR:  column "xyz.z" must appear in the GROUP BY clause or be used in an aggregate function
+LINE 1: SELECT DISTINCT ON(max(x), z) min(y) FROM xyz;
+                                   ^
+ min 
+-----
+   1
+(1 row)
+
+ max 
+-----
+   5
+(1 row)
+
+ max 
+-----
+ 2
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/distinct_on.sql:124: ERROR:  column "xyz.x" must appear in the GROUP BY clause or be used in an aggregate function
+LINE 1: SELECT DISTINCT ON (x) min(x) FROM xyz GROUP BY y;
+                            ^
+ min 
+-----
+   1
+   1
+   4
+(3 rows)
+
+ min 
+-----
+   1
+(1 row)
+
+ y 
+---
+ 1
+ 1
+ 1
+ 2
+ 2
+ 5
+ 1
+(7 rows)
+
+ y 
+---
+ 1
+ 5
+ 2
+ 2
+ 1
+ 1
+ 1
+(7 rows)
+
+psql:/home/pan/workspace/pg_tests/compatible/distinct_on.sql:139: ERROR:  DISTINCT ON position 2 is not in select list
+LINE 1: SELECT DISTINCT ON (2) x FROM xyz;
+                            ^
+ x 
+---
+ 1
+ 2
+ 4
+(3 rows)
+
+ x | y | z 
+---+---+---
+ 1 | 1 | 2
+ 1 | 1 |  
+ 1 | 2 | 1
+ 2 | 2 | 3
+ 4 | 1 | 6
+ 4 | 5 | 6
+(6 rows)
+
+ y 
+---
+ 1
+ 2
+ 4
+(3 rows)
+
+ y 
+---
+ 1
+ 2
+ 4
+(3 rows)
+
+ x | y 
+---+---
+ 1 | 1
+ 1 | 2
+ 2 | 2
+ 4 | 1
+ 4 | 5
+(5 rows)
+
+ x | y | z 
+---+---+---
+ 1 | 1 |  
+ 1 | 1 | 2
+ 1 | 1 | 2
+ 1 | 2 | 1
+ 2 | 2 | 3
+ 4 | 1 | 6
+ 4 | 5 | 6
+(7 rows)
+
+ pk1 
+-----
+   5
+   7
+   6
+(3 rows)
+
+ x | y 
+---+---
+ 1 | 1
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+CREATE TABLE
+INSERT 0 6
+   genre   
+-----------
+ Action
+ Biography
+ Crime
+ 
+(4 rows)
+
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 3
+ id | num 
+----+-----
+    |    
+  2 |   2
+  1 |   1
+(3 rows)
+
+ id | num 
+----+-----
+  1 |   1
+  2 |   2
+    |    
+(3 rows)
+

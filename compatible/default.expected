@@ -1,0 +1,90 @@
+psql:/home/pan/workspace/pg_tests/compatible/default.sql:5: ERROR:  column "a" is of type integer but default expression is of type boolean
+HINT:  You will need to rewrite or cast the expression.
+psql:/home/pan/workspace/pg_tests/compatible/default.sql:8: ERROR:  cannot use subquery in DEFAULT expression
+LINE 1: CREATE TABLE t (a INT PRIMARY KEY DEFAULT (SELECT 1));
+                                                  ^
+psql:/home/pan/workspace/pg_tests/compatible/default.sql:11: ERROR:  cannot use column reference in DEFAULT expression
+LINE 1: CREATE TABLE t (a INT PRIMARY KEY DEFAULT b);
+                                                  ^
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+psql:/home/pan/workspace/pg_tests/compatible/default.sql:21: ERROR:  aggregate functions are not allowed in DEFAULT expressions
+LINE 1: CREATE TABLE bad (a INT DEFAULT count(1));
+                                        ^
+psql:/home/pan/workspace/pg_tests/compatible/default.sql:24: ERROR:  window functions are not allowed in DEFAULT expressions
+LINE 1: CREATE TABLE bad (a INT DEFAULT count(1) OVER ());
+                                        ^
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+psql:/home/pan/workspace/pg_tests/compatible/default.sql:39: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW COLUMNS FROM t;
+                     ^
+COMMENT
+psql:/home/pan/workspace/pg_tests/compatible/default.sql:45: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW COLUMNS FROM t WITH COMMENT;
+                     ^
+INSERT 0 1
+ a  | ?column? | ?column? | ?column? 
+----+----------+----------+----------
+ 42 | t        | t        | t
+(1 row)
+
+TRUNCATE TABLE
+INSERT 0 1
+ a  | ?column? | ?column? | ?column? 
+----+----------+----------+----------
+ 42 | t        | t        | t
+(1 row)
+
+INSERT 0 1
+ a | ?column? | ?column? | ?column? 
+---+----------+----------+----------
+ 1 | t        | t        | t
+(1 row)
+
+INSERT 0 1
+ a | ?column? | ?column? | ?column? 
+---+----------+----------+----------
+ 2 | t        | t        | t
+(1 row)
+
+UPDATE 3
+UPDATE 1
+ a | ?column? | ?column? | ?column? 
+---+----------+----------+----------
+ 1 | t        | t        | t
+(1 row)
+
+UPDATE 1
+ a | ?column? | ?column? | ?column? 
+---+----------+----------+----------
+ 2 | t        | t        | t
+(1 row)
+
+UPDATE 3
+psql:/home/pan/workspace/pg_tests/compatible/default.sql:101: ERROR:  source for a multiple-column UPDATE item must be a sub-SELECT or ROW() expression
+LINE 1: UPDATE t SET (b) = (DEFAULT), (c) = (DEFAULT), (d) = (DEFAUL...
+                            ^
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+UPDATE 0
+UPDATE 0
+psql:/home/pan/workspace/pg_tests/compatible/default.sql:121: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW COLUMNS FROM v;
+                     ^
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+INSERT 0 1
+ a |  b  
+---+-----
+ a | bar
+(1 row)
+

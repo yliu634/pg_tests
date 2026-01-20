@@ -1,0 +1,63 @@
+SET
+DROP TABLE
+DROP SCHEMA
+DROP TABLE
+DROP DATABASE
+DROP DATABASE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP MATERIALIZED VIEW
+DROP FUNCTION
+DROP FUNCTION
+DROP PROCEDURE
+DROP PROCEDURE
+DROP FUNCTION
+DROP DATABASE
+DROP TABLE
+DROP SEQUENCE
+DROP ROLE
+RESET
+CREATE DATABASE
+You are now connected to database "testdb" as user "pan".
+CREATE TABLE
+You are now connected to database "pg_tests" as user "pan".
+CREATE ROLE
+You are now connected to database "testdb" as user "pan".
+ x 
+---
+(0 rows)
+
+You are now connected to database "pg_tests" as user "pan".
+You are now connected to database "testdb" as user "pan".
+CREATE TABLE
+ name 
+------
+  "\'
+(1 row)
+
+You are now connected to database "pg_tests" as user "pan".
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+CREATE SEQUENCE
+CREATE TABLE
+CREATE TABLE
+CREATE DATABASE
+You are now connected to database "other_db" as user "pan".
+CREATE TABLE
+You are now connected to database "pg_tests" as user "pan".
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+SELECT 1
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE PROCEDURE
+CREATE DATABASE
+DROP SEQUENCE

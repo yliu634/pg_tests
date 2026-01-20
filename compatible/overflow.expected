@@ -1,0 +1,38 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+psql:pg_tests/compatible/overflow.sql:14: ERROR:  function sum_int(bigint) does not exist
+LINE 1: SELECT sum_int(a) FROM large_numbers;
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+DELETE 2
+INSERT 0 2
+psql:pg_tests/compatible/overflow.sql:23: ERROR:  function sum_int(bigint) does not exist
+LINE 1: SELECT sum_int(a) FROM large_numbers;
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+RESET

@@ -1,0 +1,271 @@
+SET
+psql:pg_tests/compatible/orms.sql:25: ERROR:  syntax error at or near "SELECT"
+LINE 10: SELECT t.typname enum_name, array_agg(e.enumlabel ORDER BY e...
+         ^
+psql:pg_tests/compatible/orms.sql:60: ERROR:  syntax error at or near "SELECT"
+LINE 24: SELECT a.attname, format_type(a.atttypid, a.atttypmod) AS da...
+         ^
+psql:pg_tests/compatible/orms.sql:61: ERROR:  relation "b" already exists
+psql:pg_tests/compatible/orms.sql:77: ERROR:  syntax error at or near "SELECT"
+LINE 13: SELECT 'decimal(18,2)'::regtype::oid;
+         ^
+ oid  
+------
+ 1043
+(1 row)
+
+psql:pg_tests/compatible/orms.sql:83: ERROR:  column "a_id" does not exist
+ count 
+-------
+     0
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+--
+(1 row)
+
+psql:pg_tests/compatible/orms.sql:118: ERROR:  syntax error at or near "a"
+LINE 1: a.attname
+        ^
+psql:pg_tests/compatible/orms.sql:119: ERROR:  relation "metatest" already exists
+psql:pg_tests/compatible/orms.sql:141: ERROR:  syntax error at or near "SELECT"
+LINE 19: SELECT;
+         ^
+psql:pg_tests/compatible/orms.sql:194: ERROR:  syntax error at or near "attname"
+LINE 1: attname AS name,
+        ^
+ nspname |           relname           |  attname  | atttypid | attnotnull | atttypmod | attlen | attnum |         adsrc         | description | typbasetype | typtype 
+---------+-----------------------------+-----------+----------+------------+-----------+--------+--------+-----------------------+-------------+-------------+---------
+ public  | views                       | chat_id   |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | views                       | user_id   |       23 | t          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | stock                       | s_i_id    |       20 | f          |        -1 |      8 |      1 |                       |             |           0 | b
+ public  | materialized_view           | ?column?  |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t44798_1                    | c0        |       20 | t          |        -1 |      8 |      1 |                       |             |           0 | b
+ public  | woo; DROP USER humpty;      | x         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | table_in_db2                | a         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | test_unlogged               | id        |     2950 | t          |        -1 |     16 |      1 |                       |             |           0 | b
+ public  | test_persistent             | id        |     2950 | t          |        -1 |     16 |      1 |                       |             |           0 | b
+ public  | stx                         | stx       |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | data                        | a         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | data                        | b         |       23 | t          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | data                        | c         |       23 | t          |        -1 |      4 |      3 |                       |             |           0 | b
+ public  | data                        | d         |       23 | t          |        -1 |      4 |      4 |                       |             |           0 | b
+ public  | order_line                  | ol_o_id   |       20 | f          |        -1 |      8 |      1 |                       |             |           0 | b
+ public  | order_line                  | ol_i_id   |       20 | f          |        -1 |      8 |      2 |                       |             |           0 | b
+ public  | view_from_seq_2             | nextval   |       20 | f          |        -1 |      8 |      1 |                       |             |           0 | b
+ public  | metatest                    | a         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | f                           | a         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | f                           | b         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | numeric                     | a         |       21 | f          |        -1 |      2 |      1 |                       |             |           0 | b
+ public  | numeric                     | b         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | numeric                     | c         |       20 | f          |        -1 |      8 |      3 |                       |             |           0 | b
+ public  | numeric                     | d         |      700 | f          |        -1 |      4 |      4 |                       |             |           0 | b
+ public  | numeric                     | e         |      700 | f          |        -1 |      4 |      5 |                       |             |           0 | b
+ public  | numeric                     | f         |      701 | f          |        -1 |      8 |      6 |                       |             |           0 | b
+ public  | numeric                     | g         |      701 | f          |        -1 |      8 |      7 |                       |             |           0 | b
+ public  | numeric                     | h         |      701 | f          |        -1 |      8 |      8 |                       |             |           0 | b
+ public  | numeric                     | i         |     1700 | f          |    786438 |     -1 |      9 |                       |             |           0 | b
+ public  | numeric                     | j         |     1700 | f          |    262152 |     -1 |     10 |                       |             |           0 | b
+ public  | t144384                     | c         |       25 | f          |        -1 |     -1 |      1 |                       |             |           0 | b
+ public  | t_with_pk_seq               | a         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t_with_pk_seq               | b         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | source_table                | a         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | source_table                | b         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | source_table                | c         |       23 | f          |        -1 |      4 |      3 |                       |             |           0 | b
+ public  | depend_view                 | b         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | depend_view                 | c         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | view_dependingon_view       | b         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | view_dependingon_view       | c         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | t46799                      | x         |       23 | f          |        -1 |      4 |      1 | 1                     |             |           0 | b
+ public  | t46799                      | y         |       23 | f          |        -1 |      4 |      2 | 1                     |             |           0 | b
+ public  | parent_table_a              | id        |     2950 | t          |        -1 |     16 |      1 |                       |             |           0 | b
+ public  | child_table_b               | id        |     2950 | t          |        -1 |     16 |      1 |                       |             |           0 | b
+ public  | child_table_b               | a_id      |     2950 | f          |        -1 |     16 |      2 |                       |             |           0 | b
+ public  | stxtbl                      | a         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | stxtbl                      | b         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | stxtbl                      | c         |       23 | f          |        -1 |      4 |      3 |                       |             |           0 | b
+ public  | t57108                      | id        |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t57108                      | a         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | t57108_v                    | a         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | json_tab                    | a         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | json_tab                    | b         |     3802 | f          |        -1 |     -1 |      2 |                       |             |           0 | b
+ public  | json_tab                    | c         |     3802 | f          |        -1 |     -1 |      3 |                       |             |           0 | b
+ public  | anykey_json_tab             | a         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | anykey_json_tab             | b         |     3802 | f          |        -1 |     -1 |      2 |                       |             |           0 | b
+ public  | normal_view                 | ?column?  |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | with_options                | ?column?  |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | view_from_seq               | nextval   |       20 | f          |        -1 |      8 |      1 |                       |             |           0 | b
+ public  | v3                          | k         |       25 | f          |        -1 |     -1 |      1 |                       |             |           0 | b
+ public  | v                           | ?column?  |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | dst                         | a         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | dst                         | b         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | src                         | c         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | src                         | d         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | large_numbers               | a         |       20 | f          |        -1 |      8 |      1 |                       |             |           0 | b
+ public  | t88128                      | i         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | is_visible                  | a         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | mv1                         | ?column?  |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | mv_test                     | ?column?  |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | tbl_test                    | k         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | tbl_test                    | v         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | view_test                   | k         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | view_test                   | v         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | t_prepare                   | x         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t_prepare                   | y         |     1043 | f          |        14 |     -1 |      2 |                       |             |           0 | b
+ public  | t_prepare                   | z         |       21 | f          |        -1 |      2 |      3 |                       |             |           0 | b
+ public  | regression_46450            | id        |     2950 | t          |        -1 |     16 |      1 |                       |             |           0 | b
+ public  | regression_46450            | json      |     3802 | f          |        -1 |     -1 |      2 |                       |             |           0 | b
+ public  | hidden_in_vtable_index_test | a         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | jt                          | a         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t91012                      | id        |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t91012                      | a_id      |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | t_47283                     | k         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t_47283                     | a         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | t65171                      | x         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t65171                      | y         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | t122748                     | a         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t122748                     | b         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | t5                          | a         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | e                           | a         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | e                           | b         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | h                           | a         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | h                           | b         |    19582 | f          |        -1 |      4 |      2 |                       |             |           0 | e
+ public  | k                           | a         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | k                           | b         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | t75907                      | k         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t75907                      | j         |     3802 | f          |        -1 |     -1 |      2 |                       |             |           0 | b
+ public  | t96924                      | a         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | b                           | j         |     3802 | f          |        -1 |     -1 |      1 |                       |             |           0 | b
+ public  | def                         | d         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | def                         | e         |       23 | t          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | def                         | f         |       23 | t          |        -1 |      4 |      3 |                       |             |           0 | b
+ public  | def_e_desc                  | d         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | def_e_desc                  | e         |       23 | t          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | def_e_desc                  | f         |       23 | t          |        -1 |      4 |      3 |                       |             |           0 | b
+ public  | def_e_decimal               | d         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | def_e_decimal               | e         |     1700 | t          |        -1 |     -1 |      2 |                       |             |           0 | b
+ public  | def_e_decimal               | f         |       23 | t          |        -1 |      4 |      3 |                       |             |           0 | b
+ public  | float_xy                    | x         |      701 | f          |        -1 |      8 |      1 |                       |             |           0 | b
+ public  | float_xy                    | y         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | string_xy                   | x         |       25 | f          |        -1 |     -1 |      1 |                       |             |           0 | b
+ public  | string_xy                   | y         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | time_xy                     | x         |     1083 | f          |        -1 |      8 |      1 |                       |             |           0 | b
+ public  | time_xy                     | y         |     1114 | f          |        -1 |      8 |      2 |                       |             |           0 | b
+ public  | gh                          | g         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | gh                          | h         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | t59615                      | x         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t59615                      | y         |       23 | t          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | t59615                      | z         |       23 | f          |        -1 |      4 |      3 |                       |             |           0 | b
+ public  | t78681                      | x         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t78681                      | y         |       23 | t          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | t79384a                     | k         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | table_1_124732              | col1_6    |     2205 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t134697_x                   | x         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | large                       | n         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | large                       | v         |       25 | f          |        -1 |     -1 |      2 |                       |             |           0 | b
+ public  | small                       | n         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | metrics                     | id        |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | metrics                     | nullable  |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | metrics                     | name      |       25 | f          |        -1 |     -1 |      3 |                       |             |           0 | b
+ public  | metric_values               | metric_id |       20 | t          |        -1 |      8 |      1 |                       |             |           0 | b
+ public  | metric_values               | time      |     1184 | t          |        -1 |      8 |      2 |                       |             |           0 | b
+ public  | metric_values               | nullable  |       23 | f          |        -1 |      4 |      3 |                       |             |           0 | b
+ public  | metric_values               | value     |       20 | f          |        -1 |      8 |      4 |                       |             |           0 | b
+ public  | la                          | lta       |    17453 | f          |        -1 |     -1 |      1 |                       |             |           0 | b
+ public  | t_defaults                  | id        |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t_defaults                  | path      |    17450 | f          |        -1 |     -1 |      2 | 'default.path'::ltree |             |           0 | b
+ public  | t_defaults                  | path_null |    17450 | f          |        -1 |     -1 |      3 |                       |             |           0 | b
+ public  | t_sort                      | id        |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t_sort                      | path      |    17450 | f          |        -1 |     -1 |      2 |                       |             |           0 | b
+ public  | t_boundary                  | path      |    17450 | f          |        -1 |     -1 |      1 |                       |             |           0 | b
+ public  | dup                         | x         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | v_dup                       | x         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | tab_as_of                   | a         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t2                          | x         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t44798_0                    | c0        |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | l                           | a         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | l                           | b         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | r                           | a         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | r                           | b         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | a                           | a         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t4                          | i         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t4                          | j         |    20369 | f          |        -1 |      4 |      2 |                       |             |           0 | e
+ public  | v4                          | i         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | v4_dep                      | j         |    20369 | f          |        -1 |      4 |      1 |                       |             |           0 | e
+ public  | v6                          | j         |    20369 | f          |        -1 |      4 |      1 |                       |             |           0 | e
+ public  | t6                          | i         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t6                          | k         |    19262 | f          |        -1 |      4 |      2 |                       |             |           0 | e
+ public  | v7                          | i         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | v7_dep                      | i         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t1                          | id        |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t1                          | name      |     1043 | f          |       260 |     -1 |      2 |                       |             |           0 | b
+ public  | privs                       | a         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | privs                       | b         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | t1dr                        | name      |     1043 | f          |       260 |     -1 |      1 |                       |             |           0 | b
+ public  | v1dr                        | name      |     1043 | f          |       260 |     -1 |      1 |                       |             |           0 | b
+ public  | fooev                       | i         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | fooev                       | j         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | sbt1                        | test      |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | sbt1                        | value     |       23 | t          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | multiple_pk_attempt         | n         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | multiple_pk_attempt         | j         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | num_ref_hidden              | a         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | num_ref_hidden              | b         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | t81698                      | i         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | nan                         | id        |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | nan                         | x         |      700 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | kv                          | k         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | kv                          | v         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | unrelated                   | x         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | xy                          | x         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | xy                          | y         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | t106678                     | a         |       23 | f          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | t106678                     | b         |       23 | f          |        -1 |      4 |      2 |                       |             |           0 | b
+ public  | c                           | a         |       23 | t          |        -1 |      4 |      1 |                       |             |           0 | b
+ public  | c                           | b         |       23 | t          |        -1 |      4 |      2 |                       |             |           0 | b
+(187 rows)
+
+--
+(1 row)
+
+psql:pg_tests/compatible/orms.sql:218: ERROR:  syntax error at or near "array_agg"
+LINE 1: array_agg(t_pk.table_name ORDER BY t_pk.table_name)
+        ^
+psql:pg_tests/compatible/orms.sql:266: ERROR:  syntax error at or near "s_p"
+LINE 1: s_p.nspname AS parentschema,
+        ^
+DROP TABLE
+CREATE TABLE
+--
+(1 row)
+
+psql:pg_tests/compatible/orms.sql:287: ERROR:  syntax error at or near "typname"
+LINE 1: typname,
+        ^
+psql:pg_tests/compatible/orms.sql:290: ERROR:  syntax error at or near "$"
+LINE 1: SELECT typname FROM pg_type WHERE oid = $oid;
+                                                ^
+psql:pg_tests/compatible/orms.sql:293: ERROR:  syntax error at or near "$"
+LINE 1: SELECT relname FROM pg_class WHERE oid = $oid;
+                                                 ^
+DROP TABLE
+CREATE TABLE
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/orms.sql:321: ERROR:  syntax error at or near ";"
+LINE 3:   SELECT;
+                ^
+psql:pg_tests/compatible/orms.sql:348: ERROR:  syntax error at or near "ns1"
+LINE 1: ns1.nspname AS table_schema,
+        ^
+psql:pg_tests/compatible/orms.sql:352: ERROR:  syntax error at or near ";"
+LINE 1: CREATE TABLE efcore_identity_test (;
+                                           ^
+--
+(1 row)
+
+psql:pg_tests/compatible/orms.sql:408: ERROR:  syntax error at or near "nspname"
+LINE 1: nspname,
+        ^
+RESET

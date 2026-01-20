@@ -1,0 +1,3 @@
+psql:/home/pan/workspace/pg_tests/compatible/mixed_version_timeseries_range_already_exists.sql:5: ERROR:  syntax error at or near "RANGE"
+LINE 1: ALTER RANGE timeseries CONFIGURE ZONE USING gc.ttlseconds = ...
+              ^

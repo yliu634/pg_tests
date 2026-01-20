@@ -1,0 +1,160 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TYPE
+psql:/home/pan/workspace/pg_tests/compatible/composite_types.sql:12: ERROR:  cannot drop type t2 because table t2 requires it
+HINT:  You can drop table t2 instead.
+DROP TYPE
+DROP TYPE
+DROP TYPE
+DROP TYPE
+DROP SCHEMA
+RESET
+CREATE TYPE
+DROP TYPE
+CREATE TYPE
+psql:/home/pan/workspace/pg_tests/compatible/composite_types.sql:33: ERROR:  relation "t" already exists
+CREATE TABLE
+psql:/home/pan/workspace/pg_tests/compatible/composite_types.sql:42: ERROR:  relation "t" already exists
+  row  | a | b 
+-------+---+---
+ (1,2) | 1 | 2
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+INSERT 0 1
+INSERT 0 2
+   a   | a | b 
+-------+---+---
+       |   |  
+ (1,2) | 1 | 2
+ (1,)  | 1 |  
+ (1,2) | 1 | 2
+ (1,)  | 1 |  
+(5 rows)
+
+psql:/home/pan/workspace/pg_tests/compatible/composite_types.sql:66: NOTICE:  drop cascades to column a of table tab
+DROP TYPE
+CREATE TYPE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+          x          
+---------------------
+ ("{1,2,3}","{a,b}")
+ ("{4,5}","{c,d,e}")
+(2 rows)
+
+    a    |    b    
+---------+---------
+ {1,2,3} | {a,b}
+ {4,5}   | {c,d,e}
+(2 rows)
+
+DROP TABLE
+DROP TYPE
+CREATE TYPE
+CREATE TABLE
+psql:/home/pan/workspace/pg_tests/compatible/composite_types.sql:104: ERROR:  column "a" is of type t[] but expression is of type record[]
+LINE 1: INSERT INTO atyp VALUES(ARRAY[(1, 2), (3, 4), NULL, (5, NULL...
+                                ^
+HINT:  You will need to rewrite or cast the expression.
+ a 
+---
+(0 rows)
+
+DROP TABLE
+psql:/home/pan/workspace/pg_tests/compatible/composite_types.sql:113: ERROR:  type "t2" already exists
+DROP TABLE
+DROP TYPE
+CREATE TYPE
+DROP TYPE
+CREATE TYPE
+CREATE TABLE
+CREATE TYPE
+psql:/home/pan/workspace/pg_tests/compatible/composite_types.sql:146: NOTICE:  drop cascades to column e of composite type t
+DROP TYPE
+psql:/home/pan/workspace/pg_tests/compatible/composite_types.sql:149: ERROR:  type "t" already exists
+psql:/home/pan/workspace/pg_tests/compatible/composite_types.sql:152: ERROR:  cannot cast type record to t
+LINE 1: CREATE TABLE a (a INT DEFAULT (((1, 'hi')::t).a));
+                                                 ^
+DETAIL:  Input has too many columns.
+psql:/home/pan/workspace/pg_tests/compatible/composite_types.sql:158: ERROR:  relation "a" does not exist
+DROP TYPE
+CREATE TYPE
+psql:/home/pan/workspace/pg_tests/compatible/composite_types.sql:167: ERROR:  table "a" does not exist
+CREATE TABLE
+DROP TABLE
+DROP TYPE
+CREATE TYPE
+CREATE TABLE
+CREATE INDEX
+DROP TABLE
+DROP TYPE
+CREATE TYPE
+CREATE TABLE
+ALTER TABLE
+DROP TYPE
+DROP TABLE
+CREATE TYPE
+CREATE TYPE
+CREATE SCHEMA
+CREATE TYPE
+CREATE TYPE
+     typname     
+-----------------
+ abc
+ b
+ big
+ blog_posts
+ c
+ ct1
+ d
+ empty
+ in_this_db
+ kv
+ kw
+ moretest_t
+ moretest_v
+ normal_table
+ roach_legs
+ smalldata
+ t0
+ t1
+ t145232
+ t2
+ t44079
+ t66306
+ t69684
+ t76710_1
+ t76710_2
+ t_53504
+ t_99316
+ tab
+ table41834
+ test_kv
+ test_kvi1
+ test_kvi2
+ test_kvr1
+ test_kvr2
+ test_kvr3
+ test_uwi_child
+ test_uwi_parent
+ test_v1
+ test_v2
+ torename
+ ts
+ v0
+ xyz
+(43 rows)
+
+DROP TYPE
+DROP TYPE
+DROP SCHEMA
+DROP TYPE
+DROP TYPE

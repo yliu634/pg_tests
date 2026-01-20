@@ -1,8 +1,11 @@
+SET client_min_messages = warning;
+
 -- PostgreSQL compatible tests from optimizer_timeout
 -- 4 tests
 
 -- Test 1: statement (line 2)
-CREATE TABLE table1
+DROP TABLE IF EXISTS table1 CASCADE;
+CREATE TABLE table1;
 (
     col1_0 INT NULL,
     col1_1 BYTES[] NOT NULL,
@@ -27,7 +30,7 @@ CREATE TABLE table1
 SET statement_timeout='0.1s';
 
 -- Test 3: statement (line 30)
-SELECT
+SELECT;
   tab_124176.col1_4 AS col_298240, tab_124184.col1_8 AS col_298241
 FROM
   table1@[0] AS tab_124176,
@@ -53,5 +56,8 @@ FROM
       (tab_124177.col1_8) = (tab_124181.col1_2) AND (tab_124177.col3) = (tab_124178.col2) AND (tab_124177.col3) = (tab_124183.col1_3);
 
 -- Test 4: statement (line 56)
-RESET statement_timeout
+RESET statement_timeout;
 
+
+
+RESET client_min_messages;

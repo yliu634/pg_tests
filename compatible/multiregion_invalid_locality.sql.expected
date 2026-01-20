@@ -1,0 +1,11 @@
+psql:/home/pan/workspace/pg_tests/compatible/multiregion_invalid_locality.sql:5: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW REGIONS FROM CLUSTER;
+                     ^
+psql:/home/pan/workspace/pg_tests/compatible/multiregion_invalid_locality.sql:8: ERROR:  function gateway_region() does not exist
+LINE 1: SELECT gateway_region();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:/home/pan/workspace/pg_tests/compatible/multiregion_invalid_locality.sql:11: ERROR:  function gateway_region() does not exist
+LINE 1: SELECT gateway_region();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.

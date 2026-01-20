@@ -1,0 +1,23 @@
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+INSERT 0 2
+BEGIN
+psql:/home/pan/workspace/pg_tests/compatible/distsql_buffered_writes.sql:25: ERROR:  relation "kv" does not exist
+LINE 1: INSERT INTO kv VALUES (3, 3);
+                    ^
+ROLLBACK
+BEGIN
+psql:/home/pan/workspace/pg_tests/compatible/distsql_buffered_writes.sql:46: ERROR:  relation "kv" does not exist
+LINE 1: INSERT INTO kv VALUES (4, 4);
+                    ^
+ROLLBACK
+BEGIN
+psql:/home/pan/workspace/pg_tests/compatible/distsql_buffered_writes.sql:70: ERROR:  relation "kv" does not exist
+LINE 1: INSERT INTO kv VALUES (5, 5);
+                    ^
+ROLLBACK
+psql:/home/pan/workspace/pg_tests/compatible/distsql_buffered_writes.sql:76: ERROR:  relation "kv" does not exist
+LINE 1: SELECT count(*) FROM kv;
+                             ^

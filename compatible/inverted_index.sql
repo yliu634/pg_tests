@@ -1,3 +1,7 @@
+DROP TABLE IF EXISTS t CASCADE;
+DROP TABLE IF EXISTS c CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+
 -- PostgreSQL compatible tests from inverted_index
 -- 358 tests
 
@@ -6,9 +10,7 @@ CREATE TABLE t (
   a INT PRIMARY KEY,
   b INT,
   c INT,
-  FAMILY (a),
-  FAMILY (b)
-)
+    )
 
 -- Test 2: statement (line 12)
 INSERT INTO t VALUES (1,1,1)
@@ -17,13 +19,13 @@ INSERT INTO t VALUES (1,1,1)
 CREATE INDEX foo ON t (b)
 
 -- Test 4: statement (line 18)
-CREATE INVERTED INDEX foo_inv ON t(b)
+CREATE INDEX foo_inv ON t(b)
 
 -- Test 5: statement (line 21)
 CREATE INDEX foo_inv2 ON t USING GIN (b)
 
 -- Test 6: statement (line 24)
-CREATE UNIQUE INVERTED INDEX foo_inv ON t(b)
+CREATE UNIQUE INDEX foo_inv ON t(b)
 
 -- Test 7: statement (line 27)
 CREATE TABLE c (
@@ -31,21 +33,17 @@ CREATE TABLE c (
   foo JSON,
   "bAr" JSON,
   "qUuX" JSON,
-  INVERTED INDEX (foo),
-  INVERTED INDEX ("bAr"),
-  FAMILY "primary" (id, foo, "bAr", "qUuX")
-)
+  INDEX USING GIN (foo),
+  INDEX USING GIN ("bAr"),
+  )
 
-onlyif config schema-locked-disabled
 
 -- Test 8: query (line 39)
-SHOW CREATE TABLE c
 
 -- Test 9: query (line 53)
-SHOW CREATE TABLE c
 
 -- Test 10: statement (line 67)
-CREATE INVERTED INDEX ON c(foo blah_ops)
+CREATE INDEX ON c(foo blah_ops)
 
 -- Test 11: statement (line 70)
 CREATE INDEX ON c USING GIN(foo blah_ops)
@@ -54,37 +52,37 @@ CREATE INDEX ON c USING GIN(foo blah_ops)
 CREATE INDEX ON c USING GIN(foo jsonb_path_ops)
 
 -- Test 13: statement (line 76)
-CREATE INVERTED INDEX ON c(foo jsonb_ops)
+CREATE INDEX ON c(foo jsonb_ops)
 
 -- Test 14: statement (line 79)
 CREATE INDEX ON c USING GIN(foo jsonb_ops)
 
 -- Test 15: statement (line 82)
-CREATE INVERTED INDEX ON c (foo ASC)
+CREATE INDEX ON c (foo ASC)
 
 -- Test 16: statement (line 85)
-CREATE INVERTED INDEX ON c (foo DESC)
+CREATE INDEX ON c (foo DESC)
 
 -- Test 17: statement (line 90)
-CREATE INVERTED INDEX ON c("qUuX")
+CREATE INDEX ON c("qUuX")
 
 -- Test 18: statement (line 93)
 CREATE TABLE d (
   id INT PRIMARY KEY,
   foo INT,
-  INVERTED INDEX (foo)
+  INDEX USING GIN (foo)
 )
 
 -- Test 19: statement (line 100)
 CREATE TABLE d (
   foo JSON,
-  INVERTED INDEX (foo DESC)
+  INDEX USING GIN (foo DESC)
 )
 
 -- Test 20: statement (line 106)
 CREATE TABLE d_asc (
   foo JSON,
-  INVERTED INDEX (foo ASC)
+  INDEX USING GIN (foo ASC)
 )
 
 -- Test 21: statement (line 112)
@@ -94,7 +92,7 @@ CREATE TABLE t1 (id1 INT PRIMARY KEY, id2 INT, id3 INT);
 CREATE INDEX c on t1 USING GIN (id2) STORING (id1,id3);
 
 -- Test 23: statement (line 118)
-CREATE INVERTED INDEX c on t1 (id2) STORING (id1,id3);
+CREATE INDEX c on t1 (id2) STORING (id1,id3);
 
 -- Test 24: statement (line 121)
 CREATE UNIQUE INDEX foo_inv2 ON t USING GIN (b)
@@ -106,7 +104,7 @@ CREATE TABLE d (
 )
 
 -- Test 26: statement (line 130)
-CREATE INVERTED INDEX foo_inv ON d(b)
+CREATE INDEX foo_inv ON d(b)
 
 -- Test 27: statement (line 133)
 SHOW INDEX FROM d
@@ -382,7 +380,7 @@ INSERT INTO users (user_profile) VALUES  ('{"first_name": "Lola", "last_name": "
                                          ('{"first_name": "Ernie", "status": "Looking for treats", "location" : "Brooklyn"}');
 
 -- Test 116: statement (line 549)
-CREATE INVERTED INDEX dogs on users(user_profile);
+CREATE INDEX dogs on users(user_profile);
 
 -- Test 117: statement (line 552)
 SELECT count(*) FROM users@dogs
@@ -534,7 +532,7 @@ CREATE TABLE table_with_nulls (a JSON)
 INSERT INTO table_with_nulls VALUES (NULL)
 
 -- Test 164: statement (line 759)
-CREATE INVERTED INDEX ON table_with_nulls (a)
+CREATE INDEX ON table_with_nulls (a)
 
 -- Test 165: statement (line 762)
 DROP TABLE table_with_nulls
@@ -960,10 +958,10 @@ SELECT j FROM e@i WHERE j ?& ARRAY['a', 'b'] ORDER BY k
 SELECT j FROM e@i WHERE j ?| ARRAY['a', 'b'] ORDER BY k
 
 -- Test 284: statement (line 1555)
-CREATE INVERTED INDEX ON c(foo blah_ops)
+CREATE INDEX ON c(foo blah_ops)
 
 -- Test 285: statement (line 1558)
-CREATE INVERTED INDEX blorp ON c(foo array_ops)
+CREATE INDEX blorp ON c(foo array_ops)
 
 -- Test 286: statement (line 1561)
 DROP INDEX blorp
@@ -977,13 +975,10 @@ INSERT INTO c VALUES(1, ARRAY[], ARRAY['foo', 'bar', 'baz'])
 -- Test 289: statement (line 1570)
 CREATE INDEX ON c USING GIN (bar)
 
-onlyif config schema-locked-disabled
 
 -- Test 290: query (line 1574)
-SHOW CREATE TABLE c
 
 -- Test 291: query (line 1587)
-SHOW CREATE TABLE c
 
 -- Test 292: query (line 1599)
 SELECT * FROM c WHERE bar @> ARRAY['foo']
@@ -1007,10 +1002,10 @@ INSERT INTO c VALUES(4, ARRAY[1,2,3], ARRAY['b',NULL,'c'])
 INSERT INTO c VALUES(5, ARRAY[], ARRAY[NULL, NULL])
 
 -- Test 299: statement (line 1626)
-CREATE INVERTED INDEX ON c(foo)
+CREATE INDEX ON c(foo)
 
 -- Test 300: statement (line 1629)
-CREATE INVERTED INDEX ON c(bar)
+CREATE INDEX ON c(bar)
 
 -- Test 301: query (line 1632)
 SELECT * FROM c WHERE foo @> ARRAY[0]
@@ -1179,17 +1174,12 @@ CREATE TABLE table_desc_inverted_index (
    last_accessed TIMESTAMP,
    testdata JSONB,
    INVERTED INDEX inv_idx_testdata (last_accessed DESC, testdata),
-   FAMILY f1 (id, last_accessed),
-   FAMILY f2 (testdata)
-);
+      );
 
-onlyif config schema-locked-disabled
 
 -- Test 338: query (line 1958)
-SELECT create_statement FROM [SHOW CREATE TABLE table_desc_inverted_index];
 
 -- Test 339: query (line 1972)
-SELECT create_statement FROM [SHOW CREATE TABLE table_desc_inverted_index];
 
 -- Test 340: statement (line 1987)
 DROP TABLE cb
@@ -1235,7 +1225,7 @@ SELECT words FROM cb@w WHERE words && ARRAY[NULL, 'rat'] ORDER BY words
 SELECT primes FROM cb WHERE primes && numbers ORDER BY primes
 
 -- Test 351: statement (line 2090)
-CREATE TABLE t84569 (name_col NAME NOT NULL, INVERTED INDEX (name_col gin_trgm_ops));
+CREATE TABLE t84569 (name_col NAME NOT NULL, INDEX USING GIN (name_col gin_trgm_ops));
 INSERT INTO t84569 (name_col) VALUES ('X'::NAME)
 
 -- Test 352: statement (line 2095)
@@ -1243,14 +1233,14 @@ CREATE TABLE t117979 (id INT PRIMARY KEY, links text[], INVERTED INDEX idx_links
 INSERT INTO t117979 (id, links) VALUES (1, '{str2,str3}');
 
 -- Test 353: statement (line 2119)
-CREATE INVERTED INDEX ON t126444 ("b
+CREATE INDEX ON t126444 ("b
 c" gin_trgm_ops)
 
 -- Test 354: statement (line 2124)
 CREATE TABLE t151995 (
   c0 INT PRIMARY KEY,
   c1 GEOMETRY,
-  INVERTED INDEX (c1 ASC)
+  INDEX USING GIN (c1 ASC)
 );
 
 -- Test 355: statement (line 2131)

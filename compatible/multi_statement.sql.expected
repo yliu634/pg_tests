@@ -1,0 +1,62 @@
+SET
+DROP TABLE
+psql:/home/pan/workspace/pg_tests/compatible/multi_statement.sql:11: ERROR:  syntax error at or near ";"
+LINE 1: CREATE TABLE kv (;
+                         ^
+psql:/home/pan/workspace/pg_tests/compatible/multi_statement.sql:14: ERROR:  relation "kv" does not exist
+LINE 1: SELECT * FROM kv;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/multi_statement.sql:17: ERROR:  relation "kv" does not exist
+LINE 1: INSERT INTO kv (k,v) VALUES ('a', 'b');
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/multi_statement.sql:17: ERROR:  relation "kv" does not exist
+LINE 1: INSERT INTO kv (k,v) VALUES ('c', 'd');
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/multi_statement.sql:20: ERROR:  relation "kv" does not exist
+LINE 1: SELECT * FROM kv;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/multi_statement.sql:23: ERROR:  relation "kv" does not exist
+LINE 1: INSERT INTO kv (k,v) VALUES ('a', 'b');
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/multi_statement.sql:23: ERROR:  relation "kv" does not exist
+LINE 1: INSERT INTO kv (k,v) VALUES ('e', 'f');
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/multi_statement.sql:26: ERROR:  relation "kv" does not exist
+LINE 1: SELECT * FROM kv;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/multi_statement.sql:29: ERROR:  relation "kv" does not exist
+LINE 1: INSERT INTO kv (k,v) VALUES ('g', 'h');
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/multi_statement.sql:29: ERROR:  relation "kv" does not exist
+LINE 1: INSERT INTO kv (k,v) VALUES ('a', 'b');
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/multi_statement.sql:32: ERROR:  relation "kv" does not exist
+LINE 1: SELECT * FROM kv;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/multi_statement.sql:35: ERROR:  relation "kv" does not exist
+LINE 1: INSERT INTO kv (k,v) VALUES ('i', 'j');
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/multi_statement.sql:35: ERROR:  syntax error at or near "'k'"
+LINE 1: INSERT INTO VALUES ('k', 'l');
+                            ^
+psql:/home/pan/workspace/pg_tests/compatible/multi_statement.sql:38: ERROR:  relation "kv" does not exist
+LINE 1: SELECT * FROM kv;
+                      ^
+BEGIN
+psql:/home/pan/workspace/pg_tests/compatible/multi_statement.sql:41: ERROR:  relation "x.y" does not exist
+LINE 1: INSERT INTO x.y(a) VALUES (1);
+                    ^
+ROLLBACK
+psql:/home/pan/workspace/pg_tests/compatible/multi_statement.sql:44: ERROR:  relation "kv" does not exist
+LINE 1: SELECT * from kv;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/multi_statement.sql:44: WARNING:  there is no transaction in progress
+ROLLBACK
+psql:/home/pan/workspace/pg_tests/compatible/multi_statement.sql:47: WARNING:  there is no transaction in progress
+ROLLBACK
+BEGIN
+psql:/home/pan/workspace/pg_tests/compatible/multi_statement.sql:50: ERROR:  relation "system.t" does not exist
+LINE 1: SELECT * FROM system.t;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/multi_statement.sql:50: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:/home/pan/workspace/pg_tests/compatible/multi_statement.sql:54: ERROR:  current transaction is aborted, commands ignored until end of transaction block

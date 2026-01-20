@@ -1,0 +1,76 @@
+SET
+ALTER ROLE
+DROP DATABASE
+DROP DATABASE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE DATABASE
+CREATE DATABASE
+ database | role | setconfig 
+----------+------+-----------
+(0 rows)
+
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+  database   |     role      |                                                                  setconfig                                                                  
+-------------+---------------+---------------------------------------------------------------------------------------------------------------------------------------------
+ ALL         | ALL           | {application_name=d}
+ ALL         | test_set_role | {application_name=a,custom_option.setting=e,backslash_quote=safe_encoding,potato.setting=potato,default_transaction_isolation=serializable}
+ test_set_db | ALL           | {application_name=c}
+ test_set_db | test_set_role | {application_name=b}
+(4 rows)
+
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+  database   |     role      |      setconfig       
+-------------+---------------+----------------------
+ ALL         | ALL           | {application_name=d}
+ test_set_db | ALL           | {application_name=c}
+ test_set_db | test_set_role | {application_name=b}
+(3 rows)
+
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ current_user 
+--------------
+ pan
+(1 row)
+
+ALTER ROLE
+ALTER ROLE
+DROP DATABASE
+DROP DATABASE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET

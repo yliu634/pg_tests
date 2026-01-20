@@ -1,0 +1,44 @@
+SET
+DROP TABLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+SET
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+  name  |         uri          
+--------+----------------------
+ conn_1 | nodelocal://1/conn_1
+ conn_2 | nodelocal://1/conn_2
+(2 rows)
+
+UPDATE 1
+GRANT
+SET
+UPDATE 1
+  name  |                   uri                    
+--------+------------------------------------------
+ conn_1 | nodelocal://1/conn_update_with_privilege
+(1 row)
+
+RESET
+SET
+UPDATE 1
+GRANT
+SET
+UPDATE 0
+UPDATE 1
+  name  |               uri                
+--------+----------------------------------
+ conn_2 | nodelocal://1/connection_2_alter
+(1 row)
+
+RESET
+DROP TABLE
+DROP OWNED
+DROP OWNED
+DROP ROLE
+DROP ROLE
+RESET
