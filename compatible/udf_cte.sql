@@ -91,9 +91,12 @@ CREATE FUNCTION f() RETURNS INT[] LANGUAGE SQL AS $$
   WITH RECURSIVE foo (x, y) AS (
     SELECT a, b FROM ab WHERE a = 1
     UNION ALL
-    SELECT a, b FROM ab WHERE a = (SELECT max(x) + 1 FROM foo)
+    -- In PostgreSQL, recursive references must appear in the FROM clause.
+    SELECT ab.a, ab.b
+    FROM ab
+    JOIN foo ON ab.a = foo.x + 1
   )
-  SELECT array_agg(y) FROM foo;
+  SELECT array_agg(y ORDER BY x) FROM foo;
 $$;
 
 -- Test 20: query (line 120)
@@ -119,7 +122,7 @@ $$;
 -- Test 23: statement (line 147)
 CREATE FUNCTION f138273_2() RETURNS INT LANGUAGE PLpgSQL AS $$
   BEGIN
-    SELECT nextval('seq_1');
+    PERFORM nextval('seq_1');
     WHILE EXISTS (WITH cte(col) AS (SELECT * FROM (VALUES (currval('seq_1'))) AS foo) SELECT 1 FROM cte) LOOP
       RETURN currval('seq_1');
     END LOOP;
@@ -128,4 +131,3 @@ $$;
 
 -- Test 24: query (line 157)
 SELECT f138273_2();
-
