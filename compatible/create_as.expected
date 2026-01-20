@@ -1,0 +1,439 @@
+SET
+SELECT 3
+  item  | quantity 
+--------+----------
+ cups   |       10
+ plates |       15
+ forks  |       30
+(3 rows)
+
+SELECT 1
+ item | quantity 
+------+----------
+ cups |       10
+(1 row)
+
+ item | quantity 
+------+----------
+ cups |       10
+(1 row)
+
+SELECT 3
+ color 
+-------
+ blue
+ red
+ green
+(3 rows)
+
+SELECT 9
+  item  | color 
+--------+-------
+ cups   | blue
+ plates | blue
+ forks  | blue
+ cups   | red
+ plates | red
+ forks  | red
+ cups   | green
+ plates | green
+ forks  | green
+(9 rows)
+
+  item  | color 
+--------+-------
+ cups   | blue
+ plates | blue
+ forks  | blue
+ cups   | red
+ plates | red
+ forks  | red
+ cups   | green
+ plates | green
+ forks  | green
+(9 rows)
+
+psql:compatible/create_as.sql:39: ERROR:  too many column names were specified
+SELECT 3
+SELECT 5
+  item  | quantity 
+--------+----------
+ knives |       50
+ plates |       15
+ spoons |       25
+ forks  |       30
+ cups   |       10
+(5 rows)
+
+  item  | quantity 
+--------+----------
+ cups   |       10
+ plates |       15
+ spoons |       25
+ forks  |       30
+ knives |       50
+(5 rows)
+
+CREATE TABLE AS
+ item | quantity 
+------+----------
+ cups |       10
+(1 row)
+
+CREATE SCHEMA
+SELECT 3
+  item  | quantity 
+--------+----------
+ cups   |       10
+ plates |       15
+ forks  |       30
+(3 rows)
+
+CREATE TABLE AS
+ item | quantity 
+------+----------
+ cups |       10
+(1 row)
+
+psql:compatible/create_as.sql:78: ERROR:  relation "something" does not exist
+LINE 1: SELECT * FROM something LIMIT 1;
+                      ^
+SELECT 5
+psql:compatible/create_as.sql:87: ERROR:  relation "foo" already exists
+psql:compatible/create_as.sql:93: ERROR:  column "x" has pseudo-type record
+DROP TABLE
+SELECT 1
+DROP TABLE
+SELECT 3
+DROP TABLE
+SELECT 1
+SELECT 2
+ x 
+---
+ 1
+  
+(2 rows)
+
+SELECT 1
+ x 
+---
+ t
+(1 row)
+
+SELECT 1
+ a | b | c 
+---+---+---
+ 1 | 2 | 5
+(1 row)
+
+SELECT 1
+ a | b | c 
+---+---+---
+ 1 | 2 | 5
+(1 row)
+
+SELECT 1
+ALTER TABLE
+ column_name | data_type | is_nullable | is_primary_key 
+-------------+-----------+-------------+----------------
+ a           | integer   | YES         | 
+ b           | integer   | NO          | t
+ c           | bigint    | YES         | 
+(3 rows)
+
+ column_name | data_type | is_nullable | is_primary_key 
+-------------+-----------+-------------+----------------
+ a           | integer   | YES         | 
+ b           | integer   | NO          | t
+ c           | bigint    | YES         | 
+(3 rows)
+
+SELECT 1
+ALTER TABLE
+ column_name | data_type | is_nullable | is_primary_key 
+-------------+-----------+-------------+----------------
+ a           | integer   | NO          | t
+ b           | integer   | YES         | 
+ c           | bigint    | YES         | 
+(3 rows)
+
+ column_name | data_type | is_nullable | is_primary_key 
+-------------+-----------+-------------+----------------
+ a           | integer   | NO          | t
+ b           | integer   | YES         | 
+ c           | bigint    | YES         | 
+(3 rows)
+
+SELECT 2
+psql:compatible/create_as.sql:210: ERROR:  column "x" of relation "foo7" contains null values
+BEGIN
+SELECT 5
+ALTER TABLE
+COMMIT
+ column_name | data_type | is_nullable | is_primary_key 
+-------------+-----------+-------------+----------------
+ item        | text      | NO          | t
+ qty         | integer   | YES         | 
+(2 rows)
+
+ column_name | data_type | is_nullable | is_primary_key 
+-------------+-----------+-------------+----------------
+ item        | text      | NO          | t
+ qty         | integer   | YES         | 
+(2 rows)
+
+SELECT 1
+ALTER TABLE
+ column_name | data_type | is_nullable | is_primary_key 
+-------------+-----------+-------------+----------------
+ a           | integer   | NO          | t
+ b           | integer   | YES         | 
+ c           | bigint    | NO          | t
+(3 rows)
+
+ column_name | data_type | is_nullable | is_primary_key 
+-------------+-----------+-------------+----------------
+ a           | integer   | NO          | t
+ b           | integer   | YES         | 
+ c           | bigint    | NO          | t
+(3 rows)
+
+SELECT 1
+ALTER TABLE
+ column_name | data_type | is_nullable | is_primary_key 
+-------------+-----------+-------------+----------------
+ a           | integer   | NO          | t
+ b           | integer   | NO          | t
+ c           | bigint    | NO          | t
+(3 rows)
+
+ column_name | data_type | is_nullable | is_primary_key 
+-------------+-----------+-------------+----------------
+ a           | integer   | NO          | t
+ b           | integer   | NO          | t
+ c           | bigint    | NO          | t
+(3 rows)
+
+SELECT 2
+ALTER TABLE
+ column_name | data_type | is_nullable | is_primary_key 
+-------------+-----------+-------------+----------------
+ x           | integer   | NO          | t
+ y           | integer   | YES         | 
+ z           | integer   | NO          | t
+(3 rows)
+
+ column_name | data_type | is_nullable | is_primary_key 
+-------------+-----------+-------------+----------------
+ x           | integer   | NO          | t
+ y           | integer   | YES         | 
+ z           | integer   | NO          | t
+(3 rows)
+
+psql:compatible/create_as.sql:366: ERROR:  multiple primary keys for table "foo12" are not allowed
+LINE 1: CREATE TABLE foo12 (x INT PRIMARY KEY, y INT, PRIMARY KEY (y...
+                                                      ^
+CREATE TABLE
+SELECT 0
+ALTER TABLE
+ column_name | data_type | is_nullable | is_primary_key 
+-------------+-----------+-------------+----------------
+ a           | integer   | NO          | t
+ b           | integer   | YES         | 
+ c           | integer   | YES         | 
+ d           | integer   | YES         | 
+(4 rows)
+
+ column_name | data_type | is_nullable | is_primary_key 
+-------------+-----------+-------------+----------------
+ a           | integer   | NO          | t
+ b           | integer   | YES         | 
+ c           | integer   | YES         | 
+ d           | integer   | YES         | 
+(4 rows)
+
+SELECT 0
+ALTER TABLE
+ column_name | data_type | is_nullable | is_primary_key 
+-------------+-----------+-------------+----------------
+ a           | integer   | NO          | t
+ b           | integer   | NO          | t
+ c           | integer   | YES         | 
+ d           | integer   | YES         | 
+(4 rows)
+
+ column_name | data_type | is_nullable | is_primary_key 
+-------------+-----------+-------------+----------------
+ a           | integer   | NO          | t
+ b           | integer   | NO          | t
+ c           | integer   | YES         | 
+ d           | integer   | YES         | 
+(4 rows)
+
+ALTER TABLE
+ALTER TABLE
+ column_name | data_type | is_nullable | is_primary_key 
+-------------+-----------+-------------+----------------
+ a           | integer   | NO          | t
+ b           | integer   | NO          | t
+ e           | integer   | YES         | 
+ z           | integer   | YES         | 
+(4 rows)
+
+ column_name | data_type | is_nullable | is_primary_key 
+-------------+-----------+-------------+----------------
+ a           | integer   | NO          | t
+ b           | integer   | NO          | t
+ e           | integer   | YES         | 
+ z           | integer   | YES         | 
+(4 rows)
+
+SELECT 1
+ x | y | z 
+---+---+---
+ 1 | 2 |  
+(1 row)
+
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 3
+SELECT 3
+ a | b | exists 
+---+---+--------
+ 1 | 1 | f
+ 2 | 2 | t
+ 3 | 3 | t
+(3 rows)
+
+DROP TABLE
+SELECT 1
+ a | b 
+---+---
+ 3 | 3
+(1 row)
+
+ a | b | exists 
+---+---+--------
+ 1 | 1 | f
+ 2 | 2 | t
+(2 rows)
+
+BEGIN
+SELECT 2
+psql:compatible/create_as.sql:530: ERROR:  column "x" of relation "foo69867" contains null values
+ROLLBACK
+CREATE SEQUENCE
+SELECT 1
+ ?column? 
+----------
+ f
+(1 row)
+
+CREATE SCHEMA
+CREATE SCHEMA
+SET
+CREATE TYPE
+CREATE TABLE
+SET
+DROP TABLE
+SELECT 0
+DROP TABLE
+SELECT 0
+DROP TABLE
+SELECT 0
+DROP TABLE
+SELECT 0
+ALTER TABLE
+DROP TABLE
+SELECT 0
+SET
+CREATE TABLE
+INSERT 0 1
+ALTER TABLE
+CREATE SCHEMA
+CREATE TABLE
+INSERT 0 1
+CREATE VIEW
+CREATE VIEW
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT 3
+SELECT 3
+CREATE VIEW
+  item  | quantity 
+--------+----------
+ cups   |       10
+ plates |       15
+ forks  |       30
+(3 rows)
+
+INSERT 0 1
+ item | quantity 
+------+----------
+(0 rows)
+
+  item  | quantity 
+--------+----------
+ spoons |       10
+(1 row)
+
+ALTER TABLE
+SELECT 4
+SELECT 4
+ newcol 
+--------
+      1
+      1
+      1
+      1
+(4 rows)
+
+  item  | quantity 
+--------+----------
+ cups   |       10
+ plates |       15
+ forks  |       30
+ spoons |       10
+(4 rows)
+
+BEGIN
+ROLLBACK
+DROP VIEW
+DROP TABLE
+  item  | quantity | newcol 
+--------+----------+--------
+ cups   |       10 |      1
+ plates |       15 |      1
+ forks  |       30 |      1
+ spoons |       10 |      1
+(4 rows)
+
+RESET

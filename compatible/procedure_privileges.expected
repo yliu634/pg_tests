@@ -1,0 +1,414 @@
+SET
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE SCHEMA
+SET
+CREATE PROCEDURE
+CREATE PROCEDURE
+CREATE PROCEDURE
+CREATE ROLE
+CREATE ROLE
+GRANT ROLE
+ grantee | routine_schema | routine_name | privilege_type | is_grantable 
+---------+----------------+--------------+----------------+--------------
+ PUBLIC  | public         | test_priv_p1 | EXECUTE        | NO
+ PUBLIC  | public         | test_priv_p2 | EXECUTE        | NO
+ PUBLIC  | test_priv_sc1  | test_priv_p3 | EXECUTE        | NO
+ pan     | public         | test_priv_p1 | EXECUTE        | YES
+ pan     | public         | test_priv_p2 | EXECUTE        | YES
+ pan     | test_priv_sc1  | test_priv_p3 | EXECUTE        | YES
+(6 rows)
+
+ grantee | routine_schema | routine_name | privilege_type | is_grantable 
+---------+----------------+--------------+----------------+--------------
+ PUBLIC  | public         | test_priv_p1 | EXECUTE        | NO
+ PUBLIC  | public         | test_priv_p2 | EXECUTE        | NO
+ PUBLIC  | test_priv_sc1  | test_priv_p3 | EXECUTE        | NO
+ pan     | public         | test_priv_p1 | EXECUTE        | YES
+ pan     | public         | test_priv_p2 | EXECUTE        | YES
+ pan     | test_priv_sc1  | test_priv_p3 | EXECUTE        | YES
+(6 rows)
+
+ grantee | routine_schema | routine_name | privilege_type | is_grantable 
+---------+----------------+--------------+----------------+--------------
+ PUBLIC  | public         | test_priv_p1 | EXECUTE        | NO
+ PUBLIC  | public         | test_priv_p2 | EXECUTE        | NO
+ PUBLIC  | test_priv_sc1  | test_priv_p3 | EXECUTE        | NO
+ pan     | public         | test_priv_p1 | EXECUTE        | YES
+ pan     | public         | test_priv_p2 | EXECUTE        | YES
+ pan     | test_priv_sc1  | test_priv_p3 | EXECUTE        | YES
+(6 rows)
+
+ procedure_schema | procedure_name | arguments  
+------------------+----------------+------------
+ public           | test_priv_p1   | 
+ public           | test_priv_p2   | IN integer
+ test_priv_sc1    | test_priv_p3   | 
+(3 rows)
+
+ procedure_schema | procedure_name | arguments  
+------------------+----------------+------------
+ public           | test_priv_p1   | 
+ public           | test_priv_p2   | IN integer
+(2 rows)
+
+ procedure_schema | procedure_name | arguments 
+------------------+----------------+-----------
+ test_priv_sc1    | test_priv_p3   | 
+(1 row)
+
+ procedure_schema | procedure_name | arguments 
+------------------+----------------+-----------
+(0 rows)
+
+psql:compatible/procedure_privileges.sql:83: ERROR:  test_priv_p1() is not a function
+GRANT
+  grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+-----------+----------------+--------------+----------------+--------------
+ test_user | public         | test_priv_p1 | EXECUTE        | YES
+ test_user | public         | test_priv_p2 | EXECUTE        | YES
+ test_user | test_priv_sc1  | test_priv_p3 | EXECUTE        | YES
+(3 rows)
+
+  grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+-----------+----------------+--------------+----------------+--------------
+ PUBLIC    | public         | test_priv_p1 | EXECUTE        | NO
+ PUBLIC    | public         | test_priv_p2 | EXECUTE        | NO
+ PUBLIC    | test_priv_sc1  | test_priv_p3 | EXECUTE        | NO
+ pan       | public         | test_priv_p1 | EXECUTE        | YES
+ pan       | public         | test_priv_p2 | EXECUTE        | YES
+ pan       | test_priv_sc1  | test_priv_p3 | EXECUTE        | YES
+ test_user | public         | test_priv_p1 | EXECUTE        | YES
+ test_user | public         | test_priv_p2 | EXECUTE        | YES
+ test_user | test_priv_sc1  | test_priv_p3 | EXECUTE        | YES
+(9 rows)
+
+psql:compatible/procedure_privileges.sql:105: ERROR:  role "test_user" cannot be dropped because some objects depend on it
+DETAIL:  privileges for function test_priv_p1()
+privileges for function test_priv_p2(integer)
+privileges for function test_priv_p3()
+psql:compatible/procedure_privileges.sql:111: ERROR:  test_priv_p1() is not a function
+REVOKE
+  grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+-----------+----------------+--------------+----------------+--------------
+ test_user | public         | test_priv_p1 | EXECUTE        | NO
+ test_user | public         | test_priv_p2 | EXECUTE        | NO
+ test_user | test_priv_sc1  | test_priv_p3 | EXECUTE        | NO
+(3 rows)
+
+  grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+-----------+----------------+--------------+----------------+--------------
+ PUBLIC    | public         | test_priv_p1 | EXECUTE        | NO
+ PUBLIC    | public         | test_priv_p2 | EXECUTE        | NO
+ PUBLIC    | test_priv_sc1  | test_priv_p3 | EXECUTE        | NO
+ pan       | public         | test_priv_p1 | EXECUTE        | YES
+ pan       | public         | test_priv_p2 | EXECUTE        | YES
+ pan       | test_priv_sc1  | test_priv_p3 | EXECUTE        | YES
+ test_user | public         | test_priv_p1 | EXECUTE        | NO
+ test_user | public         | test_priv_p2 | EXECUTE        | NO
+ test_user | test_priv_sc1  | test_priv_p3 | EXECUTE        | NO
+(9 rows)
+
+REVOKE
+ grantee | routine_schema | routine_name | privilege_type | is_grantable 
+---------+----------------+--------------+----------------+--------------
+(0 rows)
+
+ grantee | routine_schema | routine_name | privilege_type | is_grantable 
+---------+----------------+--------------+----------------+--------------
+ PUBLIC  | public         | test_priv_p1 | EXECUTE        | NO
+ PUBLIC  | public         | test_priv_p2 | EXECUTE        | NO
+ PUBLIC  | test_priv_sc1  | test_priv_p3 | EXECUTE        | NO
+ pan     | public         | test_priv_p1 | EXECUTE        | YES
+ pan     | public         | test_priv_p2 | EXECUTE        | YES
+ pan     | test_priv_sc1  | test_priv_p3 | EXECUTE        | YES
+(6 rows)
+
+GRANT
+ grantee | routine_schema | routine_name | privilege_type | is_grantable 
+---------+----------------+--------------+----------------+--------------
+(0 rows)
+
+GRANT
+  grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+-----------+----------------+--------------+----------------+--------------
+ test_user | public         | test_priv_p1 | EXECUTE        | YES
+ test_user | public         | test_priv_p2 | EXECUTE        | YES
+ test_user | test_priv_sc1  | test_priv_p3 | EXECUTE        | YES
+(3 rows)
+
+  grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+-----------+----------------+--------------+----------------+--------------
+ PUBLIC    | public         | test_priv_p1 | EXECUTE        | NO
+ PUBLIC    | public         | test_priv_p2 | EXECUTE        | NO
+ PUBLIC    | test_priv_sc1  | test_priv_p3 | EXECUTE        | NO
+ pan       | public         | test_priv_p1 | EXECUTE        | YES
+ pan       | public         | test_priv_p2 | EXECUTE        | YES
+ pan       | test_priv_sc1  | test_priv_p3 | EXECUTE        | YES
+ test_user | public         | test_priv_p1 | EXECUTE        | YES
+ test_user | public         | test_priv_p2 | EXECUTE        | YES
+ test_user | test_priv_sc1  | test_priv_p3 | EXECUTE        | YES
+(9 rows)
+
+REVOKE
+  grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+-----------+----------------+--------------+----------------+--------------
+ test_user | public         | test_priv_p1 | EXECUTE        | YES
+ test_user | public         | test_priv_p2 | EXECUTE        | YES
+ test_user | test_priv_sc1  | test_priv_p3 | EXECUTE        | YES
+(3 rows)
+
+REVOKE
+  grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+-----------+----------------+--------------+----------------+--------------
+ test_user | public         | test_priv_p1 | EXECUTE        | NO
+ test_user | public         | test_priv_p2 | EXECUTE        | NO
+ test_user | test_priv_sc1  | test_priv_p3 | EXECUTE        | NO
+(3 rows)
+
+  grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+-----------+----------------+--------------+----------------+--------------
+ PUBLIC    | public         | test_priv_p1 | EXECUTE        | NO
+ PUBLIC    | public         | test_priv_p2 | EXECUTE        | NO
+ PUBLIC    | test_priv_sc1  | test_priv_p3 | EXECUTE        | NO
+ pan       | public         | test_priv_p1 | EXECUTE        | YES
+ pan       | public         | test_priv_p2 | EXECUTE        | YES
+ pan       | test_priv_sc1  | test_priv_p3 | EXECUTE        | YES
+ test_user | public         | test_priv_p1 | EXECUTE        | NO
+ test_user | public         | test_priv_p2 | EXECUTE        | NO
+ test_user | test_priv_sc1  | test_priv_p3 | EXECUTE        | NO
+(9 rows)
+
+REVOKE
+  grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+-----------+----------------+--------------+----------------+--------------
+ test_user | public         | test_priv_p1 | EXECUTE        | NO
+ test_user | public         | test_priv_p2 | EXECUTE        | NO
+ test_user | test_priv_sc1  | test_priv_p3 | EXECUTE        | NO
+(3 rows)
+
+REVOKE
+ grantee | routine_schema | routine_name | privilege_type | is_grantable 
+---------+----------------+--------------+----------------+--------------
+(0 rows)
+
+ grantee | routine_schema | routine_name | privilege_type | is_grantable 
+---------+----------------+--------------+----------------+--------------
+ PUBLIC  | public         | test_priv_p1 | EXECUTE        | NO
+ PUBLIC  | public         | test_priv_p2 | EXECUTE        | NO
+ PUBLIC  | test_priv_sc1  | test_priv_p3 | EXECUTE        | NO
+ pan     | public         | test_priv_p1 | EXECUTE        | YES
+ pan     | public         | test_priv_p2 | EXECUTE        | YES
+ pan     | test_priv_sc1  | test_priv_p3 | EXECUTE        | YES
+(6 rows)
+
+CREATE FUNCTION
+GRANT
+  grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+-----------+----------------+--------------+----------------+--------------
+ test_user | public         | test_priv_f1 | EXECUTE        | NO
+ test_user | public         | test_priv_p1 | EXECUTE        | NO
+ test_user | public         | test_priv_p2 | EXECUTE        | NO
+ test_user | test_priv_sc1  | test_priv_p3 | EXECUTE        | NO
+(4 rows)
+
+REVOKE
+ grantee | routine_schema | routine_name | privilege_type | is_grantable 
+---------+----------------+--------------+----------------+--------------
+(0 rows)
+
+DROP PROCEDURE
+DROP PROCEDURE
+DROP PROCEDURE
+DROP FUNCTION
+DROP ROLE
+CREATE ROLE
+CREATE PROCEDURE
+ grantee | routine_schema | routine_name | privilege_type | is_grantable 
+---------+----------------+--------------+----------------+--------------
+ PUBLIC  | public         | test_priv_p1 | EXECUTE        | NO
+ pan     | public         | test_priv_p1 | EXECUTE        | YES
+(2 rows)
+
+ grantee | routine_schema | routine_name | privilege_type | is_grantable 
+---------+----------------+--------------+----------------+--------------
+ PUBLIC  | public         | test_priv_p1 | EXECUTE        | NO
+ pan     | public         | test_priv_p1 | EXECUTE        | YES
+(2 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE PROCEDURE
+CREATE PROCEDURE
+  grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+-----------+----------------+--------------+----------------+--------------
+ test_user | public         | test_priv_p2 | EXECUTE        | YES
+ test_user | test_priv_sc1  | test_priv_p3 | EXECUTE        | YES
+(2 rows)
+
+  grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+-----------+----------------+--------------+----------------+--------------
+ PUBLIC    | public         | test_priv_p1 | EXECUTE        | NO
+ PUBLIC    | public         | test_priv_p2 | EXECUTE        | NO
+ PUBLIC    | test_priv_sc1  | test_priv_p3 | EXECUTE        | NO
+ pan       | public         | test_priv_p1 | EXECUTE        | YES
+ pan       | public         | test_priv_p2 | EXECUTE        | YES
+ pan       | test_priv_sc1  | test_priv_p3 | EXECUTE        | YES
+ test_user | public         | test_priv_p2 | EXECUTE        | YES
+ test_user | test_priv_sc1  | test_priv_p3 | EXECUTE        | YES
+(8 rows)
+
+DROP PROCEDURE
+DROP PROCEDURE
+ grantee | routine_schema | routine_name | privilege_type | is_grantable 
+---------+----------------+--------------+----------------+--------------
+ PUBLIC  | public         | test_priv_p1 | EXECUTE        | NO
+ pan     | public         | test_priv_p1 | EXECUTE        | YES
+(2 rows)
+
+ grantee | routine_schema | routine_name | privilege_type | is_grantable 
+---------+----------------+--------------+----------------+--------------
+ PUBLIC  | public         | test_priv_p1 | EXECUTE        | NO
+ pan     | public         | test_priv_p1 | EXECUTE        | YES
+(2 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE PROCEDURE
+CREATE PROCEDURE
+ grantee | routine_schema | routine_name | privilege_type | is_grantable 
+---------+----------------+--------------+----------------+--------------
+ PUBLIC  | public         | test_priv_p1 | EXECUTE        | NO
+ PUBLIC  | public         | test_priv_p2 | EXECUTE        | NO
+ PUBLIC  | test_priv_sc1  | test_priv_p3 | EXECUTE        | NO
+ pan     | public         | test_priv_p1 | EXECUTE        | YES
+ pan     | public         | test_priv_p2 | EXECUTE        | YES
+ pan     | test_priv_sc1  | test_priv_p3 | EXECUTE        | YES
+(6 rows)
+
+ grantee | routine_schema | routine_name | privilege_type | is_grantable 
+---------+----------------+--------------+----------------+--------------
+ PUBLIC  | public         | test_priv_p1 | EXECUTE        | NO
+ PUBLIC  | public         | test_priv_p2 | EXECUTE        | NO
+ PUBLIC  | test_priv_sc1  | test_priv_p3 | EXECUTE        | NO
+ pan     | public         | test_priv_p1 | EXECUTE        | YES
+ pan     | public         | test_priv_p2 | EXECUTE        | YES
+ pan     | test_priv_sc1  | test_priv_p3 | EXECUTE        | YES
+(6 rows)
+
+ has_function_privilege 
+------------------------
+ t
+(1 row)
+
+ has_function_privilege 
+------------------------
+ t
+(1 row)
+
+ has_function_privilege 
+------------------------
+ t
+(1 row)
+
+ has_function_privilege 
+------------------------
+ t
+(1 row)
+
+ has_function_privilege 
+------------------------
+ t
+(1 row)
+
+ has_function_privilege 
+------------------------
+ t
+(1 row)
+
+GRANT
+SET
+ has_function_privilege 
+------------------------
+ t
+(1 row)
+
+ has_function_privilege 
+------------------------
+ t
+(1 row)
+
+ has_function_privilege 
+------------------------
+ t
+(1 row)
+
+RESET
+REVOKE
+SET
+ has_function_privilege 
+------------------------
+ f
+(1 row)
+
+ has_function_privilege 
+------------------------
+ t
+(1 row)
+
+ has_function_privilege 
+------------------------
+ t
+(1 row)
+
+RESET
+SET
+CREATE ROLE
+GRANT ROLE
+CREATE PROCEDURE
+GRANT
+      grantee       | routine_schema |    routine_name    | privilege_type | is_grantable 
+--------------------+----------------+--------------------+----------------+--------------
+ PUBLIC             | public         | p_test_show_grants | EXECUTE        | NO
+ pan                | public         | p_test_show_grants | EXECUTE        | YES
+ u_test_show_grants | public         | p_test_show_grants | EXECUTE        | NO
+(3 rows)
+
+      grantee       | routine_schema |    routine_name    | privilege_type | is_grantable 
+--------------------+----------------+--------------------+----------------+--------------
+ PUBLIC             | public         | p_test_show_grants | EXECUTE        | NO
+ pan                | public         | p_test_show_grants | EXECUTE        | YES
+ u_test_show_grants | public         | p_test_show_grants | EXECUTE        | NO
+(3 rows)
+
+psql:compatible/procedure_privileges.sql:398: ERROR:  procedure p_not_existing() does not exist
+ object_schema |    object_name     | privilege_type | is_grantable 
+---------------+--------------------+----------------+--------------
+ public        | p_test_show_grants | EXECUTE        | NO
+(1 row)
+
+SET
+CREATE SCHEMA
+SET
+psql:compatible/procedure_privileges.sql:421: ERROR:  permission denied for schema sc_test_priv
+RESET
+GRANT
+SET
+CREATE PROCEDURE
+RESET
+CREATE ROLE
+GRANT ROLE
+CREATE SCHEMA
+GRANT
+CREATE PROCEDURE
+SET
+CALL
+RESET
+REVOKE
+CALL
+SET
+psql:compatible/procedure_privileges.sql:470: ERROR:  permission denied for procedure p
+RESET
+GRANT
+SET
+CALL
