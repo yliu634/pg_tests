@@ -1,0 +1,16 @@
+ region 
+--------
+ global
+(1 row)
+
+CREATE FUNCTION
+ gateway_region 
+----------------
+ global
+(1 row)
+
+ gateway_region 
+----------------
+ global
+(1 row)
+

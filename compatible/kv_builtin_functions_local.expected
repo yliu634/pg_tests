@@ -1,0 +1,18 @@
+CREATE SCHEMA
+CREATE FUNCTION
+CREATE FUNCTION
+ kv_enqueue_replica 
+--------------------
+ t
+(1 row)
+
+ kv_enqueue_replica 
+--------------------
+ t
+(1 row)
+
+ kv_enqueue_replica 
+--------------------
+ t
+(1 row)
+
