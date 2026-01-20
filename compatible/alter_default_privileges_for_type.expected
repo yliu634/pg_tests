@@ -1,0 +1,104 @@
+SET
+You are now connected to database "pg_tests" as user "pan".
+psql:compatible/alter_default_privileges_for_type.sql:8: NOTICE:  database "d" does not exist, skipping
+DROP DATABASE
+psql:compatible/alter_default_privileges_for_type.sql:9: NOTICE:  type "t" does not exist, skipping
+DROP TYPE
+psql:compatible/alter_default_privileges_for_type.sql:10: NOTICE:  type "t2" does not exist, skipping
+DROP TYPE
+psql:compatible/alter_default_privileges_for_type.sql:11: NOTICE:  type "t3" does not exist, skipping
+DROP TYPE
+psql:compatible/alter_default_privileges_for_type.sql:13: NOTICE:  role "testuser2" does not exist, skipping
+DROP ROLE
+psql:compatible/alter_default_privileges_for_type.sql:14: NOTICE:  role "testuser" does not exist, skipping
+DROP ROLE
+psql:compatible/alter_default_privileges_for_type.sql:15: NOTICE:  role "root" does not exist, skipping
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+SET
+CREATE DATABASE
+GRANT
+You are now connected to database "d" as user "pan".
+SET
+GRANT
+CREATE TYPE
+ grantor |     grantee     | type_catalog | type_schema | type_name  | privilege_type | is_grantable 
+---------+-----------------+--------------+-------------+------------+----------------+--------------
+ root    | root            | d            | public      | testuser_t | USAGE          | f
+ root    | unknown (OID=0) | d            | public      | testuser_t | USAGE          | f
+(2 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE TYPE
+ grantor | grantee | type_catalog | type_schema |  type_name  | privilege_type | is_grantable 
+---------+---------+--------------+-------------+-------------+----------------+--------------
+ root    | root    | d            | public      | testuser_t2 | USAGE          | f
+(1 row)
+
+You are now connected to database "pg_tests" as user "pan".
+SET
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+CREATE TYPE
+ grantor |     grantee     | type_catalog | type_schema | type_name | privilege_type | is_grantable 
+---------+-----------------+--------------+-------------+-----------+----------------+--------------
+ root    | root            | pg_tests     | public      | t         | USAGE          | f
+ root    | testuser        | pg_tests     | public      | t         | USAGE          | f
+ root    | testuser2       | pg_tests     | public      | t         | USAGE          | f
+ root    | unknown (OID=0) | pg_tests     | public      | t         | USAGE          | f
+(4 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TYPE
+ grantor |     grantee     | type_catalog | type_schema | type_name | privilege_type | is_grantable 
+---------+-----------------+--------------+-------------+-----------+----------------+--------------
+ root    | root            | pg_tests     | public      | t2        | USAGE          | f
+ root    | unknown (OID=0) | pg_tests     | public      | t2        | USAGE          | f
+(2 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TYPE
+ grantor |     grantee     | type_catalog | type_schema | type_name | privilege_type | is_grantable 
+---------+-----------------+--------------+-------------+-----------+----------------+--------------
+ root    | root            | pg_tests     | public      | t3        | USAGE          | f
+ root    | unknown (OID=0) | pg_tests     | public      | t3        | USAGE          | f
+(2 rows)
+
+GRANT
+You are now connected to database "d" as user "pan".
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE TYPE
+ grantor  |     grantee     | type_catalog | type_schema | type_name | privilege_type | is_grantable 
+----------+-----------------+--------------+-------------+-----------+----------------+--------------
+ testuser | unknown (OID=0) | d            | public      | t4        | USAGE          | f
+(1 row)
+
+You are now connected to database "d" as user "pan".
+SET
+ALTER DEFAULT PRIVILEGES
+You are now connected to database "d" as user "pan".
+SET
+CREATE TYPE
+ grantor  |     grantee     | type_catalog | type_schema | type_name | privilege_type | is_grantable 
+----------+-----------------+--------------+-------------+-----------+----------------+--------------
+ testuser | unknown (OID=0) | d            | public      | t5        | USAGE          | f
+(1 row)
+
+RESET
+You are now connected to database "pg_tests" as user "pan".
+DROP TYPE
+DROP TYPE
+DROP TYPE
+DROP DATABASE
+DROP OWNED
+DROP OWNED
+DROP OWNED
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET

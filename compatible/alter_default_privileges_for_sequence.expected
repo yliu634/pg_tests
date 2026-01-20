@@ -1,0 +1,125 @@
+SET
+You are now connected to database "pg_tests" as user "pan".
+psql:compatible/alter_default_privileges_for_sequence.sql:8: NOTICE:  database "d" does not exist, skipping
+DROP DATABASE
+psql:compatible/alter_default_privileges_for_sequence.sql:9: NOTICE:  table "t" does not exist, skipping
+DROP TABLE
+psql:compatible/alter_default_privileges_for_sequence.sql:10: NOTICE:  sequence "s" does not exist, skipping
+DROP SEQUENCE
+psql:compatible/alter_default_privileges_for_sequence.sql:11: NOTICE:  sequence "s2" does not exist, skipping
+DROP SEQUENCE
+psql:compatible/alter_default_privileges_for_sequence.sql:12: NOTICE:  sequence "s3" does not exist, skipping
+DROP SEQUENCE
+psql:compatible/alter_default_privileges_for_sequence.sql:14: NOTICE:  role "testuser2" does not exist, skipping
+DROP ROLE
+psql:compatible/alter_default_privileges_for_sequence.sql:15: NOTICE:  role "testuser" does not exist, skipping
+DROP ROLE
+psql:compatible/alter_default_privileges_for_sequence.sql:16: NOTICE:  role "root" does not exist, skipping
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+SET
+CREATE DATABASE
+GRANT
+You are now connected to database "d" as user "pan".
+SET
+GRANT
+CREATE SEQUENCE
+ grantor | grantee | sequence_catalog | sequence_schema | sequence_name | privilege_type | is_grantable 
+---------+---------+------------------+-----------------+---------------+----------------+--------------
+ root    | root    | d                | public          | testuser_s    | USAGE          | f
+(1 row)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE SEQUENCE
+ grantor | grantee | sequence_catalog | sequence_schema | sequence_name | privilege_type | is_grantable 
+---------+---------+------------------+-----------------+---------------+----------------+--------------
+ root    | root    | d                | public          | testuser_s2   | USAGE          | f
+(1 row)
+
+You are now connected to database "pg_tests" as user "pan".
+SET
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+CREATE SEQUENCE
+ grantor |  grantee  | sequence_catalog | sequence_schema | sequence_name | privilege_type | is_grantable 
+---------+-----------+------------------+-----------------+---------------+----------------+--------------
+ root    | root      | pg_tests         | public          | s             | SELECT         | f
+ root    | root      | pg_tests         | public          | s             | UPDATE         | f
+ root    | root      | pg_tests         | public          | s             | USAGE          | f
+ root    | testuser  | pg_tests         | public          | s             | SELECT         | f
+ root    | testuser  | pg_tests         | public          | s             | UPDATE         | f
+ root    | testuser  | pg_tests         | public          | s             | USAGE          | f
+ root    | testuser2 | pg_tests         | public          | s             | SELECT         | f
+ root    | testuser2 | pg_tests         | public          | s             | UPDATE         | f
+ root    | testuser2 | pg_tests         | public          | s             | USAGE          | f
+(9 rows)
+
+CREATE TABLE
+ grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+---------+---------------+--------------+------------+----------------+--------------+----------------
+ root    | root    | pg_tests      | public       | t          | DELETE         | YES          | NO
+ root    | root    | pg_tests      | public       | t          | INSERT         | YES          | NO
+ root    | root    | pg_tests      | public       | t          | REFERENCES     | YES          | NO
+ root    | root    | pg_tests      | public       | t          | SELECT         | YES          | YES
+ root    | root    | pg_tests      | public       | t          | TRIGGER        | YES          | NO
+ root    | root    | pg_tests      | public       | t          | TRUNCATE       | YES          | NO
+ root    | root    | pg_tests      | public       | t          | UPDATE         | YES          | NO
+(7 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE SEQUENCE
+ grantor |  grantee  | sequence_catalog | sequence_schema | sequence_name | privilege_type | is_grantable 
+---------+-----------+------------------+-----------------+---------------+----------------+--------------
+ root    | root      | pg_tests         | public          | s2            | SELECT         | f
+ root    | root      | pg_tests         | public          | s2            | UPDATE         | f
+ root    | root      | pg_tests         | public          | s2            | USAGE          | f
+ root    | testuser  | pg_tests         | public          | s2            | UPDATE         | f
+ root    | testuser  | pg_tests         | public          | s2            | USAGE          | f
+ root    | testuser2 | pg_tests         | public          | s2            | UPDATE         | f
+ root    | testuser2 | pg_tests         | public          | s2            | USAGE          | f
+(7 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE SEQUENCE
+ grantor | grantee | sequence_catalog | sequence_schema | sequence_name | privilege_type | is_grantable 
+---------+---------+------------------+-----------------+---------------+----------------+--------------
+ root    | root    | pg_tests         | public          | s3            | USAGE          | f
+(1 row)
+
+GRANT
+You are now connected to database "d" as user "pan".
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE SEQUENCE
+ grantor  | grantee  | sequence_catalog | sequence_schema | sequence_name | privilege_type | is_grantable 
+----------+----------+------------------+-----------------+---------------+----------------+--------------
+ testuser | testuser | d                | public          | s4            | USAGE          | f
+(1 row)
+
+You are now connected to database "d" as user "pan".
+SET
+ALTER DEFAULT PRIVILEGES
+You are now connected to database "d" as user "pan".
+SET
+CREATE SEQUENCE
+ grantor  | grantee  | sequence_catalog | sequence_schema | sequence_name | privilege_type | is_grantable 
+----------+----------+------------------+-----------------+---------------+----------------+--------------
+ testuser | testuser | d                | public          | s5            | USAGE          | f
+(1 row)
+
+RESET
+You are now connected to database "pg_tests" as user "pan".
+DROP TABLE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP DATABASE
+DROP OWNED
+DROP OWNED
+DROP OWNED
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET
