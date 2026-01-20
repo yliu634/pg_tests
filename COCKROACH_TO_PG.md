@@ -3,6 +3,9 @@
 This file summarizes the common errors seen when running Cockroach-style SQL
 under PostgreSQL and the typical fixes used in this workspace.
 
+OUR GOAL IS TRANSLATING COCKROACH SQL TO PG SYNTAX TEST WITHOUT CHANING ITS SEMANTIC MEANING OF TESTS.
+IF ERROR APPEARS, YOU ARE WELCOME TO REFER THIS FILE FOR HELP.
+
 ## General approach
 - Prefer PG-native syntax and functions over Cockroach-specific ones.
 - Add `DROP TABLE IF EXISTS` before `CREATE TABLE` when repeated runs are
@@ -130,6 +133,7 @@ under PostgreSQL and the typical fixes used in this workspace.
   `DO $$ BEGIN EXECUTE '...'; EXCEPTION WHEN others THEN END $$;`
 
 - If a statement shows error in PG, you are not allow to **comment** test just to avoid errors, unless its semantic is not available in PG (this case is not common).
+- If a statement shows error in PG, you are not allow to change it to **SELECT true** just to avoid errors, unless its semantic is not available in PG (this case is not common).
 
 
 ---
