@@ -1,0 +1,74 @@
+SET
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP SEQUENCE
+DROP SEQUENCE
+CREATE TABLE
+CREATE SCHEMA
+CREATE TABLE
+ column_name | data_type | is_nullable 
+-------------+-----------+-------------
+ id          | integer   | NO
+(1 row)
+
+ conname |  constraintdef   
+---------+------------------
+ a_pkey  | PRIMARY KEY (id)
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+SELECT 1
+CREATE VIEW
+CREATE TABLE
+CREATE TABLE
+CREATE SCHEMA
+CREATE TABLE
+   to_regclass   
+-----------------
+ same_table_name
+(1 row)
+
+   to_regclass   
+-----------------
+ same_table_name
+(1 row)
+
+            to_regclass             
+------------------------------------
+ alternative_schema.same_table_name
+(1 row)
+
+            to_regclass             
+------------------------------------
+ alternative_schema.same_table_name
+(1 row)
+
+DROP TABLE
+CREATE SCHEMA
+CREATE TABLE
+INSERT 0 1
+DROP SCHEMA
+CREATE TABLE
+INSERT 0 1
+DROP TABLE
+CREATE SEQUENCE
+CREATE TABLE
+CREATE INDEX
+BEGIN
+ALTER TABLE
+ALTER TABLE
+COMMIT
+CREATE TABLE
+ALTER TABLE
+CREATE SEQUENCE
+DROP SEQUENCE
+RESET
