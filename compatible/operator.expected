@@ -1,5 +1,5 @@
-psql:pg_tests/compatible/operator.sql:7: ERROR:  cannot take square root of a negative number
-psql:pg_tests/compatible/operator.sql:8: ERROR:  cannot take square root of a negative number
+psql:compatible/operator.sql:7: ERROR:  cannot take square root of a negative number
+psql:compatible/operator.sql:8: ERROR:  cannot take square root of a negative number
  ?column? 
 ----------
         0
@@ -30,14 +30,14 @@ psql:pg_tests/compatible/operator.sql:8: ERROR:  cannot take square root of a ne
  0
 (1 row)
 
-psql:pg_tests/compatible/operator.sql:32: ERROR:  "2" is not a valid binary digit
+psql:compatible/operator.sql:32: ERROR:  "2" is not a valid binary digit
 LINE 1: SELECT ~B'2';
                 ^
-psql:pg_tests/compatible/operator.sql:38: ERROR:  operator is not unique: ~ unknown
+psql:compatible/operator.sql:38: ERROR:  operator is not unique: ~ unknown
 LINE 1: SELECT ~'0';
                ^
 HINT:  Could not choose a best candidate operator. You might need to add explicit type casts.
-psql:pg_tests/compatible/operator.sql:44: ERROR:  operator is not unique: ~ unknown
+psql:compatible/operator.sql:44: ERROR:  operator is not unique: ~ unknown
 LINE 1: SELECT ~'1';
                ^
 HINT:  Could not choose a best candidate operator. You might need to add explicit type casts.

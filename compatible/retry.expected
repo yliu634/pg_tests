@@ -6,5 +6,5 @@ CREATE SEQUENCE
        1
 (1 row)
 
-psql:pg_tests/compatible/retry.sql:27: ERROR:  wrong
+psql:compatible/retry.sql:27: ERROR:  wrong
 CONTEXT:  PL/pgSQL function crdb_internal.force_error(text,text) line 3 at RAISE

@@ -1,7 +1,7 @@
 CREATE SCHEMA
 CREATE TABLE
 CREATE FUNCTION
-psql:pg_tests/compatible/feature_counts.sql:26: ERROR:  syntax error at or near ";"
+psql:compatible/feature_counts.sql:26: ERROR:  syntax error at or near ";"
 LINE 1: SELECT 1+;
                  ^
  bump_feature 
