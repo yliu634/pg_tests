@@ -1,0 +1,37 @@
+SET
+SET
+DEALLOCATE ALL
+ bytea_output 
+--------------
+ escape
+(1 row)
+
+ decode 
+--------
+ \\x
+(1 row)
+
+ decode 
+--------
+ \\x
+(1 row)
+
+SET
+SET
+DROP TABLE
+PREPARE
+ bytea 
+-------
+ abc
+(1 row)
+
+DEALLOCATE
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+ col 
+-----
+ {a}
+(1 row)
+
+RESET

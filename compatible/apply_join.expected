@@ -75,6 +75,7 @@ PREPARE
  t
 (2 rows)
 
+DROP TABLE
 CREATE TABLE
 CREATE TABLE
 INSERT 0 1
@@ -84,11 +85,12 @@ INSERT 0 1
  1 | 2
 (1 row)
 
-SELECT 0
+CREATE TABLE AS
  ?column? 
 ----------
 (0 rows)
 
+DROP TABLE
 CREATE TABLE
 INSERT 0 3
 UPDATE 2
@@ -99,6 +101,7 @@ UPDATE 2
  k3  |     3 |    13
 (3 rows)
 
+DROP TABLE
 CREATE TABLE
 INSERT 0 1
 INSERT 0 1
@@ -114,12 +117,14 @@ INSERT 0 1
  
 (2 rows)
 
+DROP TABLE
 SELECT 1
  ?column? 
 ----------
  
 (1 row)
 
+DROP TABLE
 CREATE TABLE
 INSERT 0 1
  ?column? 
@@ -127,6 +132,7 @@ INSERT 0 1
  
 (1 row)
 
+DROP TABLE
 SELECT 1
 SELECT 1
 SELECT 1

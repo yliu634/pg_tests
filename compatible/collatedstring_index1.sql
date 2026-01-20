@@ -1,6 +1,16 @@
 -- PostgreSQL compatible tests from collatedstring_index1
 -- 17 tests
 
+SET client_min_messages = warning;
+CREATE COLLATION IF NOT EXISTS da (provider = icu, locale = 'da');
+
+DROP TABLE IF EXISTS t;
+CREATE TABLE t (
+  a text COLLATE da,
+  b int,
+  c boolean
+);
+
 -- Test 1: statement (line 14)
 INSERT INTO t VALUES
   ('A' COLLATE da, 1, TRUE),
@@ -11,53 +21,54 @@ INSERT INTO t VALUES
   ('b' COLLATE da, 4, FALSE),
   ('ü' COLLATE da, 6, TRUE),
   ('ü' COLLATE da, 5, NULL),
-  ('x' COLLATE da, 5, FALSE)
+  ('x' COLLATE da, 5, FALSE);
 
 -- Test 2: query (line 26)
-SELECT a, b FROM t ORDER BY a, b
+SELECT a, b FROM t ORDER BY a, b;
 
 -- Test 3: query (line 39)
-SELECT b, a FROM t ORDER BY b, a
+SELECT b, a FROM t ORDER BY b, a;
 
 -- Test 4: query (line 52)
-SELECT COUNT (a) FROM t WHERE a = ('a' COLLATE da)
+SELECT COUNT (a) FROM t WHERE a = ('a' COLLATE da);
 
 -- Test 5: query (line 57)
-SELECT COUNT (a) FROM t WHERE a = ('y' COLLATE da)
+SELECT COUNT (a) FROM t WHERE a = ('y' COLLATE da);
 
 -- Test 6: query (line 62)
-SELECT COUNT (a) FROM t WHERE a > ('a' COLLATE da) AND a < ('c' COLLATE da)
+SELECT COUNT (a) FROM t WHERE a > ('a' COLLATE da) AND a < ('c' COLLATE da);
 
 -- Test 7: statement (line 69)
-CREATE INDEX ON t (b, a) STORING (c)
+CREATE INDEX ON t (b, a) INCLUDE (c);
 
 -- Test 8: query (line 72)
-SELECT a, b FROM t ORDER BY a, b
+SELECT a, b FROM t ORDER BY a, b;
 
 -- Test 9: query (line 85)
-SELECT b, a FROM t ORDER BY b, a
+SELECT b, a FROM t ORDER BY b, a;
 
 -- Test 10: query (line 98)
-SELECT COUNT (a) FROM t WHERE a = ('a' COLLATE da)
+SELECT COUNT (a) FROM t WHERE a = ('a' COLLATE da);
 
 -- Test 11: query (line 103)
-SELECT COUNT (a) FROM t WHERE a = ('y' COLLATE da)
+SELECT COUNT (a) FROM t WHERE a = ('y' COLLATE da);
 
 -- Test 12: query (line 108)
-SELECT COUNT (a) FROM t WHERE a > ('a' COLLATE da) AND a < ('c' COLLATE da)
+SELECT COUNT (a) FROM t WHERE a > ('a' COLLATE da) AND a < ('c' COLLATE da);
 
 -- Test 13: query (line 118)
-SELECT a, b FROM t ORDER BY a, b
+SELECT a, b FROM t ORDER BY a, b;
 
 -- Test 14: query (line 131)
-SELECT b, a FROM t ORDER BY b, a
+SELECT b, a FROM t ORDER BY b, a;
 
 -- Test 15: statement (line 146)
-DELETE FROM t WHERE a > ('a' COLLATE da) AND a < ('c' COLLATE da)
+DELETE FROM t WHERE a > ('a' COLLATE da) AND a < ('c' COLLATE da);
 
 -- Test 16: query (line 149)
-SELECT a, b FROM t ORDER BY a, b
+SELECT a, b FROM t ORDER BY a, b;
 
 -- Test 17: query (line 160)
-SELECT b, a FROM t ORDER BY b, a
+SELECT b, a FROM t ORDER BY b, a;
 
+RESET client_min_messages;

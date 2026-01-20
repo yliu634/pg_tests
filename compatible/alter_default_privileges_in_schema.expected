@@ -1,0 +1,279 @@
+SET
+RESET
+DROP SCHEMA
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+GRANT
+GRANT
+CREATE SCHEMA
+CREATE VIEW
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE ROLE
+GRANT
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ testuser | testuser  | DELETE         | f
+ testuser | testuser  | INSERT         | f
+ testuser | testuser  | REFERENCES     | f
+ testuser | testuser  | SELECT         | f
+ testuser | testuser  | TRIGGER        | f
+ testuser | testuser  | TRUNCATE       | f
+ testuser | testuser  | UPDATE         | f
+ testuser | testuser2 | SELECT         | f
+(8 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ testuser | testuser  | DELETE         | f
+ testuser | testuser  | INSERT         | f
+ testuser | testuser  | REFERENCES     | f
+ testuser | testuser  | SELECT         | f
+ testuser | testuser  | TRIGGER        | f
+ testuser | testuser  | TRUNCATE       | f
+ testuser | testuser  | UPDATE         | f
+ testuser | testuser2 | INSERT         | f
+ testuser | testuser2 | SELECT         | f
+(9 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ testuser | testuser  | DELETE         | f
+ testuser | testuser  | INSERT         | f
+ testuser | testuser  | REFERENCES     | f
+ testuser | testuser  | SELECT         | f
+ testuser | testuser  | TRIGGER        | f
+ testuser | testuser  | TRUNCATE       | f
+ testuser | testuser  | UPDATE         | f
+ testuser | testuser2 | DELETE         | f
+ testuser | testuser2 | INSERT         | f
+ testuser | testuser2 | REFERENCES     | f
+ testuser | testuser2 | SELECT         | f
+ testuser | testuser2 | TRIGGER        | f
+ testuser | testuser2 | TRUNCATE       | f
+ testuser | testuser2 | UPDATE         | f
+(14 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ testuser | testuser  | DELETE         | f
+ testuser | testuser  | INSERT         | f
+ testuser | testuser  | REFERENCES     | f
+ testuser | testuser  | SELECT         | f
+ testuser | testuser  | TRIGGER        | f
+ testuser | testuser  | TRUNCATE       | f
+ testuser | testuser  | UPDATE         | f
+ testuser | testuser2 | SELECT         | f
+(8 rows)
+
+CREATE SCHEMA
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+CREATE TABLE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ testuser | testuser  | DELETE         | f
+ testuser | testuser  | INSERT         | f
+ testuser | testuser  | REFERENCES     | f
+ testuser | testuser  | SELECT         | f
+ testuser | testuser  | TRIGGER        | f
+ testuser | testuser  | TRUNCATE       | f
+ testuser | testuser  | UPDATE         | f
+ testuser | testuser2 | DELETE         | f
+ testuser | testuser2 | INSERT         | f
+ testuser | testuser2 | REFERENCES     | f
+ testuser | testuser2 | SELECT         | f
+ testuser | testuser2 | TRIGGER        | f
+ testuser | testuser2 | TRUNCATE       | f
+ testuser | testuser2 | UPDATE         | f
+(14 rows)
+
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ testuser | testuser  | DELETE         | f
+ testuser | testuser  | INSERT         | f
+ testuser | testuser  | REFERENCES     | f
+ testuser | testuser  | SELECT         | f
+ testuser | testuser  | TRIGGER        | f
+ testuser | testuser  | TRUNCATE       | f
+ testuser | testuser  | UPDATE         | f
+ testuser | testuser2 | DELETE         | f
+ testuser | testuser2 | INSERT         | f
+ testuser | testuser2 | REFERENCES     | f
+ testuser | testuser2 | SELECT         | f
+ testuser | testuser2 | TRIGGER        | f
+ testuser | testuser2 | TRUNCATE       | f
+ testuser | testuser2 | UPDATE         | f
+(14 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+SET
+CREATE TABLE
+CREATE TABLE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ testuser | testuser  | DELETE         | f
+ testuser | testuser  | INSERT         | f
+ testuser | testuser  | REFERENCES     | f
+ testuser | testuser  | SELECT         | f
+ testuser | testuser  | TRIGGER        | f
+ testuser | testuser  | TRUNCATE       | f
+ testuser | testuser  | UPDATE         | f
+ testuser | testuser2 | SELECT         | f
+(8 rows)
+
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ testuser | testuser  | DELETE         | f
+ testuser | testuser  | INSERT         | f
+ testuser | testuser  | REFERENCES     | f
+ testuser | testuser  | SELECT         | f
+ testuser | testuser  | TRIGGER        | f
+ testuser | testuser  | TRUNCATE       | f
+ testuser | testuser  | UPDATE         | f
+ testuser | testuser2 | SELECT         | f
+(8 rows)
+
+CREATE TABLE
+CREATE TABLE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ testuser | testuser  | DELETE         | f
+ testuser | testuser  | INSERT         | f
+ testuser | testuser  | REFERENCES     | f
+ testuser | testuser  | SELECT         | f
+ testuser | testuser  | TRIGGER        | f
+ testuser | testuser  | TRUNCATE       | f
+ testuser | testuser  | UPDATE         | f
+ testuser | testuser2 | SELECT         | f
+(8 rows)
+
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ testuser | testuser  | DELETE         | f
+ testuser | testuser  | INSERT         | f
+ testuser | testuser  | REFERENCES     | f
+ testuser | testuser  | SELECT         | f
+ testuser | testuser  | TRIGGER        | f
+ testuser | testuser  | TRUNCATE       | f
+ testuser | testuser  | UPDATE         | f
+ testuser | testuser2 | SELECT         | f
+(8 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ testuser | testuser2 | SELECT         | f
+(1 row)
+
+CREATE SCHEMA
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ testuser | testuser | DELETE         | f
+ testuser | testuser | INSERT         | f
+ testuser | testuser | REFERENCES     | f
+ testuser | testuser | SELECT         | f
+ testuser | testuser | TRIGGER        | f
+ testuser | testuser | TRUNCATE       | f
+ testuser | testuser | UPDATE         | f
+(7 rows)
+
+RESET
+ role_name |  schema_name  | object_type | grantor  |  grantee  | privilege_type | is_grantable 
+-----------+---------------+-------------+----------+-----------+----------------+--------------
+ postgres  | crdb_internal | r           | postgres | postgres  | SELECT         | f
+ testuser  | public        | r           | testuser | testuser2 | SELECT         | f
+ testuser  | s             | r           | testuser | testuser2 | SELECT         | f
+(3 rows)
+
+ role_name | schema_name | object_type |  grantee  | privilege_type | is_grantable 
+-----------+-------------+-------------+-----------+----------------+--------------
+ testuser  | public      | r           | testuser2 | SELECT         | f
+(1 row)
+
+ role_name | schema_name | object_type |  grantee  | privilege_type | is_grantable 
+-----------+-------------+-------------+-----------+----------------+--------------
+ testuser  | s           | r           | testuser2 | SELECT         | f
+(1 row)
+
+ role_name | schema_name | object_type | grantee | privilege_type | is_grantable 
+-----------+-------------+-------------+---------+----------------+--------------
+(0 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ role_name |  schema_name  | object_type | grantor  |  grantee  | privilege_type | is_grantable 
+-----------+---------------+-------------+----------+-----------+----------------+--------------
+ postgres  | crdb_internal | r           | postgres | postgres  | SELECT         | f
+ testuser  | public        | r           | testuser | testuser  | DELETE         | f
+ testuser  | public        | r           | testuser | testuser  | INSERT         | f
+ testuser  | public        | r           | testuser | testuser  | REFERENCES     | f
+ testuser  | public        | r           | testuser | testuser  | SELECT         | f
+ testuser  | public        | r           | testuser | testuser  | TRIGGER        | f
+ testuser  | public        | r           | testuser | testuser  | TRUNCATE       | f
+ testuser  | public        | r           | testuser | testuser  | UPDATE         | f
+ testuser  | public        | r           | testuser | testuser2 | SELECT         | f
+ testuser  | s             | T           | testuser | testuser2 | USAGE          | f
+ testuser  | s             | r           | testuser | testuser2 | SELECT         | f
+ testuser  | s2            | r           | testuser | testuser2 | SELECT         | f
+ testuser  | s2            | r           | testuser | testuser2 | UPDATE         | f
+(13 rows)
+
+ role_name | schema_name | object_type |  grantee  | privilege_type | is_grantable 
+-----------+-------------+-------------+-----------+----------------+--------------
+ testuser  | public      | r           | testuser  | DELETE         | f
+ testuser  | public      | r           | testuser  | INSERT         | f
+ testuser  | public      | r           | testuser  | REFERENCES     | f
+ testuser  | public      | r           | testuser  | SELECT         | f
+ testuser  | public      | r           | testuser  | TRIGGER        | f
+ testuser  | public      | r           | testuser  | TRUNCATE       | f
+ testuser  | public      | r           | testuser  | UPDATE         | f
+ testuser  | public      | r           | testuser2 | SELECT         | f
+(8 rows)
+
+ role_name | schema_name | object_type |  grantee  | privilege_type | is_grantable 
+-----------+-------------+-------------+-----------+----------------+--------------
+ testuser  | s           | T           | testuser2 | USAGE          | f
+ testuser  | s           | r           | testuser2 | SELECT         | f
+(2 rows)
+
+ role_name | schema_name | object_type |  grantee  | privilege_type | is_grantable 
+-----------+-------------+-------------+-----------+----------------+--------------
+ testuser  | s2          | r           | testuser2 | SELECT         | f
+ testuser  | s2          | r           | testuser2 | UPDATE         | f
+(2 rows)
+
+ role_name | schema_name | object_type |  grantee  | privilege_type | is_grantable 
+-----------+-------------+-------------+-----------+----------------+--------------
+ testuser  | s2          | r           | testuser2 | SELECT         | f
+ testuser  | s2          | r           | testuser2 | UPDATE         | f
+(2 rows)
+
+ role_name | schema_name | object_type | grantee | privilege_type | is_grantable 
+-----------+-------------+-------------+---------+----------------+--------------
+(0 rows)
+
+RESET
+DROP OWNED
+DROP OWNED
+DROP SCHEMA
+DROP ROLE
+DROP ROLE
+RESET

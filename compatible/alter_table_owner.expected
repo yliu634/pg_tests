@@ -1,0 +1,40 @@
+SET
+RESET
+DROP TABLE
+DROP TABLE
+DROP SCHEMA
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+ name |  owner   
+------+----------
+ t    | testuser
+(1 row)
+
+ name |  owner   
+------+----------
+ s.t  | testuser
+(1 row)
+
+ALTER TABLE
+ name |   owner   
+------+-----------
+ t    | testuser2
+(1 row)
+
+ALTER TABLE
+RESET
+DROP TABLE
+DROP TABLE
+DROP SCHEMA
+DROP OWNED
+DROP OWNED
+DROP ROLE
+DROP ROLE
+RESET

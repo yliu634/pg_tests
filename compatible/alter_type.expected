@@ -1,0 +1,44 @@
+SET
+DROP TYPE
+DROP TYPE
+DROP TYPE
+CREATE TYPE
+ enumlabel 
+-----------
+ a
+ b
+(2 rows)
+
+ALTER TYPE
+ enumlabel 
+-----------
+ a
+ b
+ c
+(3 rows)
+
+ALTER TYPE
+ enumlabel 
+-----------
+ aa
+ b
+ c
+(3 rows)
+
+ALTER TYPE
+  typname   
+------------
+ alphabets2
+(1 row)
+
+CREATE TYPE
+ALTER TYPE
+ attname | atttype 
+---------+---------
+ name    | text
+ age     | integer
+(2 rows)
+
+DROP TYPE
+DROP TYPE
+RESET

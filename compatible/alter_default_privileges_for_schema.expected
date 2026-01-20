@@ -1,0 +1,116 @@
+SET
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP DATABASE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE DATABASE
+GRANT
+You are now connected to database "d" as user "postgres".
+SET
+      grantor      |      grantee      | privilege_type | is_grantable 
+-------------------+-------------------+----------------+--------------
+ pg_database_owner | PUBLIC            | USAGE          | f
+ pg_database_owner | pg_database_owner | CREATE         | f
+ pg_database_owner | pg_database_owner | USAGE          | f
+(3 rows)
+
+CREATE SCHEMA
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | CREATE         | f
+ postgres | postgres | USAGE          | f
+(2 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE SCHEMA
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | CREATE         | f
+ postgres | postgres | USAGE          | f
+(2 rows)
+
+You are now connected to database "pg_tests" as user "postgres".
+SET
+DROP ROLE
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+CREATE SCHEMA
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ postgres | postgres  | CREATE         | f
+ postgres | postgres  | USAGE          | f
+ postgres | testuser  | CREATE         | f
+ postgres | testuser  | USAGE          | f
+ postgres | testuser2 | CREATE         | f
+ postgres | testuser2 | USAGE          | f
+(6 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE SCHEMA
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ postgres | postgres  | CREATE         | f
+ postgres | postgres  | USAGE          | f
+ postgres | testuser  | CREATE         | f
+ postgres | testuser2 | CREATE         | f
+(4 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE SCHEMA
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | CREATE         | f
+ postgres | postgres | USAGE          | f
+(2 rows)
+
+GRANT
+You are now connected to database "d" as user "postgres".
+SET
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE SCHEMA
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ testuser | testuser | CREATE         | f
+ testuser | testuser | USAGE          | f
+(2 rows)
+
+You are now connected to database "d" as user "postgres".
+SET
+SET
+ALTER DEFAULT PRIVILEGES
+You are now connected to database "d" as user "postgres".
+SET
+SET
+CREATE SCHEMA
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ testuser | testuser | CREATE         | f
+ testuser | testuser | USAGE          | f
+(2 rows)
+
+ALTER DEFAULT PRIVILEGES
+RESET
+CREATE SCHEMA
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | CREATE         | f
+ postgres | postgres | USAGE          | f
+(2 rows)
+
+You are now connected to database "pg_tests" as user "postgres".
+SET
+ALTER DEFAULT PRIVILEGES
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+You are now connected to database "postgres" as user "postgres".
+SET
+DROP DATABASE
+DROP ROLE
+DROP ROLE
+RESET

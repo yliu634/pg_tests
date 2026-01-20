@@ -1,0 +1,39 @@
+SET
+RESET
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SCHEMA
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE SCHEMA
+CREATE SEQUENCE
+CREATE SEQUENCE
+ALTER SEQUENCE
+ALTER SEQUENCE
+ name |  owner   
+------+----------
+ seq  | testuser
+(1 row)
+
+ name  |  owner   
+-------+----------
+ s.seq | testuser
+(1 row)
+
+ALTER SEQUENCE
+ name |   owner   
+------+-----------
+ seq  | testuser2
+(1 row)
+
+RESET
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SCHEMA
+DROP OWNED
+DROP OWNED
+DROP ROLE
+DROP ROLE
+RESET

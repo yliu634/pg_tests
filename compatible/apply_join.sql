@@ -163,6 +163,7 @@ LIMIT
     89::BIGINT;
 
 -- Test 18: statement (line 299)
+DROP TABLE IF EXISTS x, y;
 CREATE TABLE x (a BIGINT);
 CREATE TABLE y (b BIGINT);
 INSERT INTO x VALUES (1);
@@ -197,7 +198,8 @@ FROM
 	t40589 AS t;
 
 -- Test 22: statement (line 355)
-CREATE TABLE IF NOT EXISTS cpk (
+DROP TABLE IF EXISTS cpk;
+CREATE TABLE cpk (
   key VARCHAR(255) NOT NULL,
   value INTEGER NOT NULL,
   extra INTEGER NOT NULL,
@@ -223,6 +225,7 @@ WHERE ((cpk.key, cpk.value) IN (SELECT target_values.k, target_values.v FROM tar
 SELECT * FROM cpk;
 
 -- Test 26: statement (line 391)
+DROP TABLE IF EXISTS t65040;
 CREATE TABLE t65040 (a INT, b TIMESTAMP);
 INSERT INTO t65040 VALUES (1, '2001-01-01');
 INSERT INTO t65040 VALUES (2, '2002-02-02');
@@ -264,6 +267,7 @@ FROM
   (VALUES (NULL), (NULL)) AS tab_5 (col_5);
 
 -- Test 29: statement (line 437)
+DROP TABLE IF EXISTS t39433;
 CREATE TABLE t39433 AS SELECT true AS _bool;
 
 -- Test 30: query (line 440)
@@ -277,6 +281,7 @@ FROM
   t39433 AS tab_57069;
 
 -- Test 31: statement (line 611)
+DROP TABLE IF EXISTS t89601;
 CREATE TABLE t89601 (i INTEGER);
 INSERT INTO t89601 VALUES (0);
 
@@ -293,6 +298,7 @@ WHERE EXISTS(
 );
 
 -- Test 33: statement (line 631)
+DROP TABLE IF EXISTS t1, t2, t3, t4, t5 CASCADE;
 CREATE TABLE t1 (said, smid) AS VALUES (1, 1);
 CREATE TABLE t2 (aid, said, mid, pid) AS VALUES (1, 1, 1, 1);
 CREATE TABLE t3 (mid, smid) AS VALUES (1, 1);

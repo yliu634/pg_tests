@@ -1,0 +1,610 @@
+SET
+RESET
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+DROP SCHEMA
+DROP SCHEMA
+DROP TYPE
+DROP SEQUENCE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+GRANT
+CREATE ROLE
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+ postgres | testuser | SELECT         | t
+ postgres | who      | SELECT         | t
+(9 rows)
+
+--
+(0 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+ postgres | target   | SELECT         | t
+ postgres | testuser | SELECT         | t
+ postgres | who      | SELECT         | t
+(10 rows)
+
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+ postgres | testuser | INSERT         | t
+ postgres | testuser | SELECT         | t
+ postgres | who      | SELECT         | t
+(10 rows)
+
+GRANT
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+ postgres | testuser | DELETE         | t
+ postgres | testuser | INSERT         | t
+ postgres | testuser | REFERENCES     | t
+ postgres | testuser | SELECT         | t
+ postgres | testuser | TRIGGER        | t
+ postgres | testuser | TRUNCATE       | t
+ postgres | testuser | UPDATE         | t
+ postgres | who      | SELECT         | t
+(15 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+ postgres | testuser | DELETE         | f
+ postgres | testuser | INSERT         | f
+ postgres | testuser | REFERENCES     | t
+ postgres | testuser | SELECT         | t
+ postgres | testuser | TRIGGER        | t
+ postgres | testuser | TRUNCATE       | t
+ postgres | testuser | UPDATE         | t
+ postgres | who      | SELECT         | t
+(15 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+ postgres | testuser | DELETE         | f
+ postgres | testuser | INSERT         | f
+ postgres | testuser | REFERENCES     | f
+ postgres | testuser | SELECT         | f
+ postgres | testuser | TRIGGER        | f
+ postgres | testuser | TRUNCATE       | f
+ postgres | testuser | UPDATE         | f
+ postgres | who      | SELECT         | t
+(15 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+ postgres | who      | SELECT         | t
+(8 rows)
+
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+ postgres | who      | SELECT         | t
+(8 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+ postgres | testuser | DELETE         | t
+ postgres | testuser | INSERT         | t
+ postgres | testuser | REFERENCES     | t
+ postgres | testuser | SELECT         | t
+ postgres | testuser | TRIGGER        | t
+ postgres | testuser | TRUNCATE       | t
+ postgres | testuser | UPDATE         | t
+ postgres | who      | SELECT         | t
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+ postgres | testuser | DELETE         | t
+ postgres | testuser | INSERT         | t
+ postgres | testuser | REFERENCES     | t
+ postgres | testuser | SELECT         | t
+ postgres | testuser | TRIGGER        | t
+ postgres | testuser | TRUNCATE       | t
+ postgres | testuser | UPDATE         | t
+ postgres | who      | SELECT         | t
+(15 rows)
+
+GRANT
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+GRANT
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+ postgres | testuser | DELETE         | f
+ postgres | testuser | INSERT         | f
+ postgres | testuser | REFERENCES     | f
+ postgres | testuser | SELECT         | f
+ postgres | testuser | TRIGGER        | f
+ postgres | testuser | TRUNCATE       | f
+ postgres | testuser | UPDATE         | f
+ postgres | who      | SELECT         | t
+(15 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+ postgres | who      | SELECT         | t
+(8 rows)
+
+GRANT
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+ postgres | testuser | DELETE         | f
+ postgres | testuser | INSERT         | f
+ postgres | testuser | REFERENCES     | f
+ postgres | testuser | SELECT         | f
+ postgres | testuser | TRIGGER        | f
+ postgres | testuser | TRUNCATE       | f
+ postgres | testuser | UPDATE         | f
+ postgres | who      | SELECT         | t
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ postgres | postgres  | DELETE         | f
+ postgres | postgres  | INSERT         | f
+ postgres | postgres  | REFERENCES     | f
+ postgres | postgres  | SELECT         | f
+ postgres | postgres  | TRIGGER        | f
+ postgres | postgres  | TRUNCATE       | f
+ postgres | postgres  | UPDATE         | f
+ postgres | testuser  | DELETE         | t
+ postgres | testuser  | INSERT         | t
+ postgres | testuser  | REFERENCES     | t
+ postgres | testuser  | SELECT         | t
+ postgres | testuser  | TRIGGER        | t
+ postgres | testuser  | TRUNCATE       | t
+ postgres | testuser  | UPDATE         | t
+ postgres | testuser2 | INSERT         | t
+ postgres | testuser2 | SELECT         | f
+ postgres | who       | SELECT         | t
+(17 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ postgres | postgres  | DELETE         | f
+ postgres | postgres  | INSERT         | f
+ postgres | postgres  | REFERENCES     | f
+ postgres | postgres  | SELECT         | f
+ postgres | postgres  | TRIGGER        | f
+ postgres | postgres  | TRUNCATE       | f
+ postgres | postgres  | UPDATE         | f
+ postgres | testuser  | DELETE         | t
+ postgres | testuser  | INSERT         | t
+ postgres | testuser  | REFERENCES     | t
+ postgres | testuser  | SELECT         | t
+ postgres | testuser  | TRIGGER        | t
+ postgres | testuser  | TRUNCATE       | t
+ postgres | testuser  | UPDATE         | t
+ postgres | testuser2 | INSERT         | t
+ postgres | testuser2 | SELECT         | t
+ postgres | who       | SELECT         | t
+(17 rows)
+
+GRANT
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ postgres | postgres  | DELETE         | f
+ postgres | postgres  | INSERT         | f
+ postgres | postgres  | REFERENCES     | f
+ postgres | postgres  | SELECT         | f
+ postgres | postgres  | TRIGGER        | f
+ postgres | postgres  | TRUNCATE       | f
+ postgres | postgres  | UPDATE         | f
+ postgres | testuser  | DELETE         | t
+ postgres | testuser  | INSERT         | t
+ postgres | testuser  | REFERENCES     | t
+ postgres | testuser  | SELECT         | t
+ postgres | testuser  | TRIGGER        | t
+ postgres | testuser  | TRUNCATE       | t
+ postgres | testuser  | UPDATE         | t
+ postgres | testuser2 | DELETE         | t
+ postgres | testuser2 | INSERT         | t
+ postgres | testuser2 | REFERENCES     | t
+ postgres | testuser2 | SELECT         | t
+ postgres | testuser2 | TRIGGER        | t
+ postgres | testuser2 | TRUNCATE       | t
+ postgres | testuser2 | UPDATE         | t
+ postgres | who       | SELECT         | t
+(22 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ postgres | postgres  | DELETE         | f
+ postgres | postgres  | INSERT         | f
+ postgres | postgres  | REFERENCES     | f
+ postgres | postgres  | SELECT         | f
+ postgres | postgres  | TRIGGER        | f
+ postgres | postgres  | TRUNCATE       | f
+ postgres | postgres  | UPDATE         | f
+ postgres | testuser  | DELETE         | t
+ postgres | testuser  | INSERT         | t
+ postgres | testuser  | REFERENCES     | t
+ postgres | testuser  | SELECT         | t
+ postgres | testuser  | TRIGGER        | t
+ postgres | testuser  | TRUNCATE       | t
+ postgres | testuser  | UPDATE         | t
+ postgres | testuser2 | DELETE         | t
+ postgres | testuser2 | INSERT         | f
+ postgres | testuser2 | REFERENCES     | t
+ postgres | testuser2 | SELECT         | f
+ postgres | testuser2 | TRIGGER        | t
+ postgres | testuser2 | TRUNCATE       | t
+ postgres | testuser2 | UPDATE         | t
+ postgres | who       | SELECT         | t
+(22 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ postgres | postgres  | DELETE         | f
+ postgres | postgres  | INSERT         | f
+ postgres | postgres  | REFERENCES     | f
+ postgres | postgres  | SELECT         | f
+ postgres | postgres  | TRIGGER        | f
+ postgres | postgres  | TRUNCATE       | f
+ postgres | postgres  | UPDATE         | f
+ postgres | testuser  | DELETE         | t
+ postgres | testuser  | INSERT         | t
+ postgres | testuser  | REFERENCES     | t
+ postgres | testuser  | SELECT         | t
+ postgres | testuser  | TRIGGER        | t
+ postgres | testuser  | TRUNCATE       | t
+ postgres | testuser  | UPDATE         | t
+ postgres | testuser2 | DELETE         | f
+ postgres | testuser2 | INSERT         | f
+ postgres | testuser2 | REFERENCES     | f
+ postgres | testuser2 | SELECT         | f
+ postgres | testuser2 | TRIGGER        | f
+ postgres | testuser2 | TRUNCATE       | f
+ postgres | testuser2 | UPDATE         | f
+ postgres | who       | SELECT         | t
+(22 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+ postgres | testuser | DELETE         | t
+ postgres | testuser | INSERT         | t
+ postgres | testuser | REFERENCES     | t
+ postgres | testuser | SELECT         | t
+ postgres | testuser | TRIGGER        | t
+ postgres | testuser | TRUNCATE       | t
+ postgres | testuser | UPDATE         | t
+ postgres | who      | SELECT         | t
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE SCHEMA
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ postgres | postgres  | CREATE         | f
+ postgres | postgres  | USAGE          | f
+ postgres | testuser  | CREATE         | t
+ postgres | testuser  | USAGE          | t
+ postgres | testuser2 | CREATE         | t
+ postgres | testuser2 | USAGE          | t
+(6 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE SCHEMA
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ postgres | postgres  | CREATE         | f
+ postgres | postgres  | USAGE          | f
+ postgres | testuser  | CREATE         | f
+ postgres | testuser  | USAGE          | f
+ postgres | testuser2 | CREATE         | f
+ postgres | testuser2 | USAGE          | f
+(6 rows)
+
+GRANT
+GRANT
+GRANT
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+ postgres | testuser | DELETE         | t
+ postgres | testuser | INSERT         | t
+ postgres | testuser | REFERENCES     | t
+ postgres | testuser | SELECT         | t
+ postgres | testuser | TRIGGER        | t
+ postgres | testuser | TRUNCATE       | t
+ postgres | testuser | UPDATE         | t
+ postgres | who      | SELECT         | t
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+GRANT
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE SEQUENCE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ postgres | postgres  | SELECT         | f
+ postgres | postgres  | UPDATE         | f
+ postgres | postgres  | USAGE          | f
+ postgres | testuser2 | USAGE          | t
+(4 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE TYPE
+ grantor  |  grantee  | privilege_type | is_grantable 
+----------+-----------+----------------+--------------
+ postgres | postgres  | USAGE          | f
+ postgres | testuser2 | USAGE          | t
+(2 rows)
+
+GRANT
+GRANT
+GRANT
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+GRANT ROLE
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+ postgres | who      | SELECT         | t
+(8 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | DELETE         | f
+ postgres | postgres | INSERT         | f
+ postgres | postgres | REFERENCES     | f
+ postgres | postgres | SELECT         | f
+ postgres | postgres | TRIGGER        | f
+ postgres | postgres | TRUNCATE       | f
+ postgres | postgres | UPDATE         | f
+ postgres | who      | SELECT         | t
+(8 rows)
+
+GRANT
+GRANT
+RESET
+DROP OWNED
+DROP OWNED
+DROP OWNED
+DROP OWNED
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+DROP SCHEMA
+DROP SCHEMA
+DROP TYPE
+DROP SEQUENCE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET

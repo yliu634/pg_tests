@@ -1,0 +1,44 @@
+SET
+RESET
+DROP SERVER
+DROP SERVER
+DROP ROLE
+CREATE ROLE
+CREATE EXTENSION
+CREATE SERVER
+CREATE SERVER
+ srvname |  owner   |          srvoptions           
+---------+----------+-------------------------------
+ conn_1  | postgres | {dbname=nodelocal://1/conn_1}
+ conn_2  | postgres | {dbname=nodelocal://1/conn_2}
+(2 rows)
+
+ALTER SERVER
+RESET
+GRANT
+ALTER SERVER
+SET
+ALTER SERVER
+ srvname |  owner   |                    srvoptions                     
+---------+----------+---------------------------------------------------
+ conn_1  | testuser | {dbname=nodelocal://1/conn_update_with_privilege}
+(1 row)
+
+RESET
+ALTER SERVER
+RESET
+GRANT
+ALTER SERVER
+SET
+ALTER SERVER
+ srvname |  owner   |                srvoptions                 
+---------+----------+-------------------------------------------
+ conn_2  | testuser | {dbname=nodelocal://1/connection_2_alter}
+(1 row)
+
+RESET
+DROP SERVER
+DROP SERVER
+DROP OWNED
+DROP ROLE
+RESET

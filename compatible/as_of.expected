@@ -1,0 +1,46 @@
+SET
+CREATE FUNCTION
+CREATE FUNCTION
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+ pg_sleep 
+----------
+ 
+(1 row)
+
+   with_min_timestamp   
+------------------------
+ 2020-01-15 15:16:17+00
+(1 row)
+
+      with_min_timestamp       
+-------------------------------
+ 2026-01-20 06:13:19.768692+00
+(1 row)
+
+ with_max_staleness 
+--------------------
+ 00:00:01
+(1 row)
+
+BEGIN
+ i 
+---
+ 2
+(1 row)
+
+ROLLBACK
+SET
+BEGIN
+INSERT 0 1
+ROLLBACK
+SET
+SET
+BEGIN
+INSERT 0 1
+ROLLBACK
+RESET
+DROP TABLE
+CREATE TABLE
+RESET

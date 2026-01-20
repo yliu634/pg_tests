@@ -1,0 +1,9 @@
+pg_tests/compatible/array.sql
+pg_tests/compatible/builtin_function.sql
+pg_tests/compatible/cascade.sql
+pg_tests/compatible/cast.sql
+pg_tests/compatible/check_constraints.sql
+pg_tests/compatible/cluster_locks.sql
+pg_tests/compatible/cluster_locks_write_buffering.sql
+pg_tests/compatible/collatedstring.sql
+pg_tests/compatible/comment_on.sql

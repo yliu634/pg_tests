@@ -1,0 +1,30 @@
+SET
+RESET
+DROP TYPE
+DROP SCHEMA
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE SCHEMA
+CREATE TYPE
+ALTER TYPE
+ name  |  owner   
+-------+----------
+ s.typ | testuser
+(1 row)
+
+ALTER TYPE
+ name  |   owner   
+-------+-----------
+ s.typ | testuser2
+(1 row)
+
+RESET
+DROP TYPE
+DROP SCHEMA
+DROP OWNED
+DROP OWNED
+DROP ROLE
+DROP ROLE
+RESET

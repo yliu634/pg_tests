@@ -1,0 +1,59 @@
+SET
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+DROP DATABASE
+CREATE DATABASE
+REVOKE
+You are now connected to database "root_test" as user "postgres".
+CREATE TABLE
+                            notice                             
+---------------------------------------------------------------
+ ALTER DATABASE ... CONFIGURE ZONE (unsupported in PostgreSQL)
+(1 row)
+
+ namespace_id 
+--------------
+             
+(1 row)
+
+ namespace_id 
+--------------
+        27000
+(1 row)
+
+ namespace_id 
+--------------
+             
+(1 row)
+
+ regclass 
+----------
+ t
+(1 row)
+
+You are now connected to database "pg_tests" as user "postgres".
+DROP DATABASE
+RESET
