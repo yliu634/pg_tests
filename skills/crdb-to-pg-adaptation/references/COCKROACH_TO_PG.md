@@ -140,3 +140,4 @@ IF ERROR APPEARS, YOU ARE WELCOME TO REFER THIS FILE FOR HELP.
 
 This guide reflects the changes applied to `compatible/aggregate.sql` to make it
 run cleanly under PostgreSQL.
+
