@@ -1,0 +1,26 @@
+SET
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+GRANT ROLE
+GRANT ROLE
+  role  | member | admin_option 
+--------+--------+--------------
+ role_a | role_b | f
+ role_b | role_c | t
+(2 rows)
+
+SET
+ current_user | session_user 
+--------------+--------------
+ role_c       | postgres
+(1 row)
+
+RESET
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET

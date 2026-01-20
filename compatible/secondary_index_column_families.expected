@@ -1,0 +1,19 @@
+SET
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+UPDATE 1
+ y | z | w 
+---+---+---
+ 2 |   |  
+(1 row)
+
+ indexname |                         indexdef                          
+-----------+-----------------------------------------------------------
+ i         | CREATE INDEX i ON public.t USING btree (y) INCLUDE (z, w)
+ t_pkey    | CREATE UNIQUE INDEX t_pkey ON public.t USING btree (x)
+(2 rows)
+
+DROP TABLE
+RESET

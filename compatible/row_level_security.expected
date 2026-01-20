@@ -1,0 +1,30 @@
+SET
+DROP TABLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE TABLE
+INSERT 0 2
+ALTER TABLE
+CREATE POLICY
+GRANT
+GRANT
+SET
+   owner   |    secret    
+-----------+--------------
+ rls_alice | alice_secret
+(1 row)
+
+RESET
+SET
+  owner  |   secret   
+---------+------------
+ rls_bob | bob_secret
+(1 row)
+
+RESET
+DROP TABLE
+DROP ROLE
+DROP ROLE
+RESET

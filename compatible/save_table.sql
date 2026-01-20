@@ -1,62 +1,37 @@
 -- PostgreSQL compatible tests from save_table
--- 17 tests
+--
+-- CockroachDB has a `save_tables_prefix` debugging feature that materializes
+-- intermediate results for query plans. PostgreSQL does not provide an
+-- equivalent. This reduced version creates two tables and runs a couple of
+-- joins deterministically.
 
--- Test 1: statement (line 3)
-CREATE DATABASE savetables; USE savetables
+SET client_min_messages = warning;
 
--- Test 2: statement (line 9)
-INSERT INTO t SELECT i, to_english(i) FROM generate_series(1, 5) AS g(i)
+DROP TABLE IF EXISTS t;
+DROP TABLE IF EXISTS u;
 
--- Test 3: statement (line 15)
-INSERT INTO u SELECT i, to_english(i) FROM generate_series(2, 10) AS g(i)
+CREATE TABLE t (k INT PRIMARY KEY, str TEXT);
+CREATE TABLE u (key INT PRIMARY KEY, val TEXT);
 
--- Test 4: statement (line 18)
-SET save_tables_prefix = 'save_table_test'
+INSERT INTO t SELECT i, 't_' || i::text FROM generate_series(1, 5) AS g(i);
+INSERT INTO u SELECT i, 'u_' || i::text FROM generate_series(2, 10) AS g(i);
 
--- Test 5: query (line 21)
-SELECT * FROM t
+SELECT * FROM t ORDER BY k;
+SELECT * FROM u ORDER BY key;
 
--- Test 6: query (line 30)
-SELECT * FROM u
+SELECT u.key, t.str
+  FROM t
+  JOIN u ON t.k = u.key
+ WHERE t.k >= 3
+ ORDER BY u.key;
 
-statement ok
-SET save_tables_prefix = 'st_test'
+SELECT u.key, t.str
+  FROM t
+  JOIN u ON t.k = u.key
+ WHERE u.val LIKE 'u_%'
+ ORDER BY u.key;
 
-query IT rowsort
-SELECT u.key, t.str FROM t, u WHERE t.k = u.key AND t.k >= 3
+DROP TABLE t;
+DROP TABLE u;
 
--- Test 7: statement (line 43)
-SET save_tables_prefix = 'st'
-
--- Test 8: query (line 46)
-SELECT u.key, t.str FROM t, u WHERE t.k = u.key AND u.val LIKE 't%'
-
--- Test 9: statement (line 53)
-SET save_tables_prefix = ''
-
--- Test 10: query (line 56)
-SELECT * FROM st_test_merge_join_2 ORDER BY k
-
--- Test 11: query (line 64)
-SELECT * FROM st_scan_4 ORDER BY key
-
--- Test 12: query (line 78)
-SHOW TABLES
-
--- Test 13: statement (line 95)
-GRANT ALL ON t TO testuser
-
-user testuser
-
--- Test 14: statement (line 100)
-USE savetables
-
--- Test 15: query (line 103)
-SELECT * FROM t
-
--- Test 16: statement (line 112)
-SET save_tables_prefix = 'tt'
-
--- Test 17: statement (line 115)
-SELECT * FROM t
-
+RESET client_min_messages;

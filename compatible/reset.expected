@@ -1,0 +1,49 @@
+SET
+   search_path   
+-----------------
+ "$user", public
+(1 row)
+
+SET
+ search_path 
+-------------
+ public
+(1 row)
+
+RESET
+   search_path   
+-----------------
+ "$user", public
+(1 row)
+
+ TimeZone 
+----------
+ Etc/UTC
+(1 row)
+
+SET
+     TimeZone     
+------------------
+ Europe/Amsterdam
+(1 row)
+
+RESET
+ TimeZone 
+----------
+ Etc/UTC
+(1 row)
+
+BEGIN
+ transaction_read_only 
+-----------------------
+ on
+(1 row)
+
+RESET
+ transaction_read_only 
+-----------------------
+ on
+(1 row)
+
+COMMIT
+RESET

@@ -1,0 +1,7 @@
+SET
+                                                 info                                                 
+------------------------------------------------------------------------------------------------------
+ SKIPPED: CockroachDB schema repair via crdb_internal descriptor APIs is not supported in PostgreSQL.
+(1 row)
+
+RESET

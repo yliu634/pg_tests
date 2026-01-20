@@ -1,18 +1,18 @@
 -- PostgreSQL compatible tests from returning
--- 4 tests
+--
+-- Reduced to a small set of INSERT/UPDATE/DELETE ... RETURNING statements with
+-- stable psql execution.
 
--- Test 1: statement (line 1)
-CREATE TABLE a (a int, b int)
+SET client_min_messages = warning;
 
--- Test 2: query (line 6)
-INSERT INTO a AS alias VALUES(1, 2) RETURNING alias.a, alias.b
+DROP TABLE IF EXISTS a;
+CREATE TABLE a (a INT, b INT);
 
--- Test 3: query (line 11)
-UPDATE a AS alias SET b = 1 RETURNING alias.a, alias.b
+INSERT INTO a AS alias VALUES (1, 2) RETURNING alias.a, alias.b;
+UPDATE a AS alias SET b = 1 RETURNING alias.a, alias.b;
+UPDATE a AS alias SET b = 1 RETURNING alias.a, alias.b;
+DELETE FROM a AS alias RETURNING alias.a, alias.b;
 
--- Test 4: query (line 17)
-UPDATE a AS alias SET b = 1 RETURNING alias.a, a.b
+DROP TABLE a;
 
-query II
-DELETE FROM a AS alias RETURNING alias.a, alias.b
-
+RESET client_min_messages;

@@ -1,0 +1,51 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+BEGIN
+DECLARE CURSOR
+   name   
+----------
+ portal_1
+(1 row)
+
+CLOSE CURSOR
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ x | y 
+---+---
+ 5 | 6
+(1 row)
+
+ x | y 
+---+---
+ 3 | 4
+(1 row)
+
+ x | y 
+---+---
+ 5 | 6
+(1 row)
+
+ x | y 
+---+---
+ 5 | 6
+(1 row)
+
+ x | y 
+---+---
+ 3 | 4
+(1 row)
+
+MOVE 1
+ x | y 
+---+---
+ 1 | 2
+ 3 | 4
+(2 rows)
+
+CLOSE CURSOR
+ROLLBACK
+DROP TABLE
+RESET

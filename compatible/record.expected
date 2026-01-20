@@ -1,0 +1,31 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+   t   | a | b 
+-------+---+---
+ (1,2) | 1 | 2
+(1 row)
+
+   rec   |  b  
+---------+-----
+ (1,foo) | foo
+(1 row)
+
+          arr          
+-----------------------
+ {"(1,foo)","(2,bar)"}
+(1 row)
+
+ arr_type 
+----------
+ a[]
+(1 row)
+
+   a   
+-------
+ (1,2)
+(1 row)
+
+DROP TABLE
+RESET

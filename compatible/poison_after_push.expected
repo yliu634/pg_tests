@@ -1,0 +1,42 @@
+SET
+DROP TABLE
+DROP ROLE
+CREATE ROLE
+CREATE TABLE
+INSERT 0 1
+GRANT
+BEGIN
+INSERT 0 1
+COMMIT
+BEGIN
+ id 
+----
+  1
+  2
+(2 rows)
+
+COMMIT
+BEGIN
+INSERT 0 1
+COMMIT
+SET
+BEGIN
+ id 
+----
+  1
+  2
+  3
+(3 rows)
+
+COMMIT
+RESET
+ id 
+----
+  1
+  2
+  3
+(3 rows)
+
+DROP TABLE
+DROP ROLE
+RESET

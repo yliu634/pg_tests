@@ -1,0 +1,24 @@
+SET
+DROP PROCEDURE
+DROP ROLE
+CREATE PROCEDURE
+CREATE ROLE
+REVOKE
+ can_execute_before 
+--------------------
+ f
+(1 row)
+
+GRANT
+ can_execute_after 
+-------------------
+ t
+(1 row)
+
+SET
+CALL
+RESET
+DROP PROCEDURE
+REVOKE
+DROP ROLE
+RESET

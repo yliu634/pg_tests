@@ -1,0 +1,64 @@
+SET
+CREATE SCHEMA
+CREATE FUNCTION
+ gen_rand_ident 
+----------------
+ hello_31d4
+(1 row)
+
+ gen_rand_ident 
+----------------
+ helloworld
+(1 row)
+
+ gen_rand_ident 
+----------------
+ helloworld
+(1 row)
+
+ gen_rand_ident 
+----------------
+ helloworld
+(1 row)
+
+ gen_rand_ident 
+----------------
+ helloworld
+(1 row)
+
+ gen_rand_ident 
+----------------
+ helloworld
+(1 row)
+
+ gen_rand_ident 
+----------------
+ helloworld
+(1 row)
+
+ gen_rand_ident 
+----------------
+ helloworld
+(1 row)
+
+ quote_ident 
+-------------
+ helloworld
+(1 row)
+
+ gen_rand_ident 
+----------------
+ helloworld
+(1 row)
+
+ gen_rand_ident 
+----------------
+ aeaeiao_a1
+(1 row)
+
+ gen_rand_ident 
+----------------
+ aeaeiao_a1
+(1 row)
+
+RESET

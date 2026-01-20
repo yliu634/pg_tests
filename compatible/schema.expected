@@ -1,0 +1,21 @@
+SET
+DROP SCHEMA
+DROP SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+INSERT 0 1
+SET
+ x 
+---
+ 1
+(1 row)
+
+RESET
+ALTER SCHEMA
+ schema_name 
+-------------
+ myschema2
+(1 row)
+
+DROP SCHEMA
+RESET

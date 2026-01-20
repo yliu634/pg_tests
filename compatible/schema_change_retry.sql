@@ -1,30 +1,11 @@
 -- PostgreSQL compatible tests from schema_change_retry
--- 8 tests
+--
+-- CockroachDB includes automatic transaction retries and exposes retry-related
+-- knobs (cockroach_restart savepoints, refresh span limits). PostgreSQL does
+-- not provide equivalent automatic retry semantics. This file records that gap.
 
--- Test 1: statement (line 9)
-SET CLUSTER SETTING kv.transaction.max_refresh_spans_bytes = 0;
+SET client_min_messages = warning;
 
--- Test 2: statement (line 13)
-SET autocommit_before_ddl = false
+SELECT 'SKIPPED: CockroachDB schema-change retry semantics (cockroach_restart, refresh spans) are not supported in PostgreSQL.' AS info;
 
--- Test 3: statement (line 16)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-
--- Test 4: statement (line 19)
-SAVEPOINT cockroach_restart
-
--- Test 5: statement (line 22)
-CREATE TABLE t (x INT PRIMARY KEY, y INT) WITH (schema_locked=false);
-
--- Test 6: statement (line 29)
-CREATE INDEX y_idx ON t (y);
-
--- Test 7: statement (line 36)
-BEGIN TRANSACTION PRIORITY HIGH;
-SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-
--- Test 8: statement (line 40)
-SHOW TABLES
-
-user root
-
+RESET client_min_messages;
