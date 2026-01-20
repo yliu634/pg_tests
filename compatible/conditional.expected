@@ -1,0 +1,50 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+RESET
+ case | case 
+------+------
+    1 |     
+(1 row)
+
+ nullif | nullif | nullif 
+--------+--------+--------
+      1 |        | 
+(1 row)
+
+ coalesce | coalesce | coalesce | coalesce 
+----------+----------+----------+----------
+        1 |        2 |        1 |        2
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/conditional.sql:25: ERROR:  syntax error at or near "AS"
+LINE 1: CREATE TABLE t (a INT) AS VALUES (1), (2), (3);
+                               ^
+psql:/home/pan/workspace/pg_tests/compatible/conditional.sql:38: ERROR:  relation "t" does not exist
+LINE 9:     t
+            ^
+psql:/home/pan/workspace/pg_tests/compatible/conditional.sql:51: ERROR:  relation "t" does not exist
+LINE 9:     t
+            ^
+psql:/home/pan/workspace/pg_tests/compatible/conditional.sql:54: ERROR:  relation "t" does not exist
+LINE 1: ...(a, 2), CASE WHEN a = 2 THEN NULL ELSE a END FROM t ORDER BY...
+                                                             ^
+ case | case | case  | case 
+------+------+-------+------
+ two  | one  | three | 
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/conditional.sql:97: ERROR:  operator does not exist: text = boolean
+LINE 13:     WHEN true THEN 'one'
+             ^
+HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+ coalesce 
+----------
+        1
+(1 row)
+

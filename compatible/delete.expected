@@ -1,0 +1,293 @@
+SET
+DROP TABLE
+DROP VIEW
+RESET
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:36: ERROR:  syntax error at or near ";"
+LINE 1: CREATE TABLE kv (;
+                         ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:39: ERROR:  relation "kv" does not exist
+LINE 1: CREATE VIEW kview AS SELECT k,v FROM kv;
+                                             ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:42: ERROR:  relation "kview" does not exist
+LINE 1: SELECT * FROM kview;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:45: ERROR:  relation "kview" does not exist
+LINE 1: DELETE FROM kview;
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:48: ERROR:  relation "kview" does not exist
+LINE 1: SELECT * FROM kview;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:51: ERROR:  relation "kv" does not exist
+LINE 1: DELETE FROM kv WHERE k=3 OR v=6;
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:54: ERROR:  relation "kv" does not exist
+LINE 1: SELECT * FROM kv;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:57: ERROR:  relation "kv" does not exist
+LINE 1: DELETE FROM kv WHERE k=5;
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:60: ERROR:  relation "kv" does not exist
+LINE 1: DELETE FROM kv RETURNING k, v;
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:63: ERROR:  relation "kv" does not exist
+LINE 1: SELECT * FROM kv;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:66: ERROR:  relation "kv" does not exist
+LINE 1: DELETE FROM kv WHERE nonexistent = 1;
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:69: ERROR:  relation "unindexed" does not exist
+LINE 1: DELETE FROM unindexed WHERE k=3 OR v=6;
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:72: ERROR:  relation "unindexed" does not exist
+LINE 1: SELECT * FROM unindexed;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:75: ERROR:  relation "unindexed" does not exist
+LINE 1: DELETE FROM unindexed RETURNING k, v;
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:78: ERROR:  relation "unindexed" does not exist
+LINE 1: SELECT * FROM unindexed;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:84: ERROR:  syntax error at or near "DELETE"
+LINE 3: DELETE FROM unindexed WHERE k=3 or v=6 RETURNING *;
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:87: ERROR:  relation "unindexed" does not exist
+LINE 1: DELETE FROM unindexed RETURNING unindexed.*;
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:93: ERROR:  syntax error at or near "SELECT"
+LINE 3: SELECT k, v FROM unindexed;
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:96: ERROR:  relation "unindexed" does not exist
+LINE 1: DELETE FROM unindexed;
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:102: ERROR:  syntax error at or near "DELETE"
+LINE 3: DELETE FROM unindexed WHERE k >= 4 ORDER BY k LIMIT 1;
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:105: ERROR:  relation "unindexed" does not exist
+LINE 1: SELECT k, v FROM unindexed;
+                         ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:108: ERROR:  relation "unindexed" does not exist
+LINE 1: DELETE FROM unindexed;
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:111: ERROR:  relation "unindexed" does not exist
+LINE 1: SELECT k, v FROM unindexed;
+                         ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:117: ERROR:  syntax error at or near "DELETE"
+LINE 3: DELETE FROM ONLY unindexed WHERE k >= 4 ORDER BY k LIMIT 1;
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:120: ERROR:  relation "unindexed" does not exist
+LINE 1: SELECT k, v FROM unindexed;
+                         ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:123: ERROR:  relation "unindexed" does not exist
+LINE 1: DELETE FROM unindexed * WHERE k >= 7;
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:126: ERROR:  relation "unindexed" does not exist
+LINE 1: SELECT k, v FROM unindexed;
+                         ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:129: ERROR:  syntax error at or near "*"
+LINE 1: DELETE FROM ONLY unindexed * WHERE k <=3;
+                                   ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:132: ERROR:  relation "unindexed" does not exist
+LINE 1: SELECT k, v FROM unindexed;
+                         ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:138: ERROR:  syntax error at or near "("
+LINE 1: ...ed (id int primary key, value int, other int, index (value))
+                                                               ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:144: ERROR:  syntax error at or near "DELETE"
+LINE 3: DELETE FROM unindexed WHERE k > 1 AND v < 7 ORDER BY v DESC ...
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:147: ERROR:  syntax error at or near "ORDER"
+LINE 1: DELETE FROM unindexed ORDER BY v LIMIT 2 RETURNING k,v;
+                              ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:153: ERROR:  syntax error at or near "SELECT"
+LINE 3: SELECT count(*) FROM [DELETE FROM unindexed LIMIT 2 RETURNIN...
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:156: ERROR:  syntax error at or near "["
+LINE 1: SELECT count(*) FROM [DELETE FROM unindexed LIMIT 1 RETURNIN...
+                             ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:159: ERROR:  syntax error at or near "["
+LINE 1: SELECT count(*) FROM [DELETE FROM unindexed LIMIT 5 RETURNIN...
+                             ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:162: ERROR:  unrecognized parameter "schema_locked"
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:165: ERROR:  syntax error at or near "BEGIN"
+LINE 3: BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:167: ERROR:  relation "t29494" does not exist
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:170: ERROR:  syntax error at or near "["
+LINE 1: SELECT create_statement FROM [SHOW CREATE t29494];
+                                     ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:173: ERROR:  relation "t29494" does not exist
+LINE 1: DELETE FROM t29494 RETURNING y;
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:176: WARNING:  there is no transaction in progress
+ROLLBACK
+BEGIN
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:181: ERROR:  relation "t29494" does not exist
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:184: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:190: ERROR:  unrecognized parameter "schema_locked"
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:193: ERROR:  syntax error at or near "BEGIN"
+LINE 3: BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:195: ERROR:  relation "t33361" does not exist
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:198: ERROR:  relation "t33361" does not exist
+LINE 1: DELETE FROM t33361 RETURNING y;
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:201: WARNING:  there is no transaction in progress
+ROLLBACK
+BEGIN
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:205: ERROR:  relation "t33361" does not exist
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:208: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:217: ERROR:  syntax error at or near ";"
+LINE 1: CREATE TABLE family (;
+                             ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:221: ERROR:  syntax error at or near "BEGIN"
+LINE 3: BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:222: ERROR:  syntax error at or near "CREATE"
+LINE 1: ALTER TABLE family ADD COLUMN z INT CREATE FAMILY;
+                                            ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:225: ERROR:  relation "family" does not exist
+LINE 1: DELETE FROM family WHERE x=2;
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:228: WARNING:  there is no transaction in progress
+COMMIT
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:231: ERROR:  relation "family" does not exist
+LINE 1: SELECT x, y, z FROM family;
+                            ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:240: ERROR:  syntax error at or near "INSERT"
+LINE 3: INSERT INTO a SELECT generate_series(1,5)
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:244: ERROR:  syntax error at or near "let"
+LINE 1: let $ts
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:247: WARNING:  there is no transaction in progress
+COMMIT
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:250: ERROR:  relation "a" does not exist
+LINE 1: DELETE FROM a WHERE a <= 3;
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:253: ERROR:  relation "a" does not exist
+LINE 1: SELECT * FROM a;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:271: ERROR:  syntax error at or near ";"
+LINE 1: CREATE TABLE u_d (;
+                          ^
+ a | b | c 
+---+---+---
+(0 rows)
+
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:280: ERROR:  syntax error at or near "DELETE"
+LINE 3: DELETE FROM u_a USING u_a u_a2 WHERE u_a.a = u_a2.c;
+        ^
+ a | b | c 
+---+---+---
+(0 rows)
+
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:289: ERROR:  syntax error at or near "DELETE"
+LINE 3: DELETE FROM u_a USING u_b, u_c WHERE u_a.c = u_b.a AND u_a.c...
+        ^
+ a | b | c 
+---+---+---
+(0 rows)
+
+ a | b | a | b 
+---+---+---+---
+(0 rows)
+
+DELETE 0
+ a | b | c 
+---+---+---
+(0 rows)
+
+INSERT 0 4
+ a | b | c | a | b | c 
+---+---+---+---+---+---
+(0 rows)
+
+DELETE 0
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:310: ERROR:  syntax error at or near "TRUNCATE"
+LINE 3: TRUNCATE u_a;
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:319: ERROR:  syntax error at or near "INSERT"
+LINE 3: INSERT INTO u_a VALUES (1, 'a', 5), (2, 'b', 10), (3, 'c', 1...
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:322: ERROR:  syntax error at or near "ORDER"
+LINE 1: ...M u_a AS foo USING u_b AS bar WHERE bar.a > foo.c ORDER BY f...
+                                                             ^
+ a | b | c  
+---+---+----
+ 1 | a | 10
+ 2 | b | 20
+ 3 | c | 30
+ 4 | d | 40
+(4 rows)
+
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:331: ERROR:  syntax error at or near "SELECT"
+LINE 3: SELECT * FROM u_b;
+        ^
+ a | b | c 
+---+---+---
+(0 rows)
+
+DELETE 0
+ a | b | c  
+---+---+----
+ 1 | a | 10
+ 2 | b | 20
+ 3 | c | 30
+ 4 | d | 40
+(4 rows)
+
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:352: ERROR:  syntax error at or near ";"
+LINE 1: CREATE TABLE pindex (;
+                             ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:355: ERROR:  relation "pindex" does not exist
+LINE 1: SELECT * FROM pindex;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:358: ERROR:  relation "pindex" does not exist
+LINE 1: SELECT a FROM pindex WHERE a > 3;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:361: ERROR:  relation "pindex" does not exist
+LINE 1: DELETE FROM pindex USING (VALUES (2.0), (4.0)) v(b) WHERE pi...
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:364: ERROR:  relation "pindex" does not exist
+LINE 1: SELECT * FROM pindex;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:367: ERROR:  relation "pindex" does not exist
+LINE 1: SELECT a FROM pindex WHERE a > 3;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:370: ERROR:  syntax error at or near "WHERE"
+LINE 1: CREATE TABLE t99630a (a INT, INDEX idx (a) WHERE a > 0);
+                                                   ^
+CREATE TABLE
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:372: ERROR:  relation "t99630a" does not exist
+LINE 1: INSERT INTO t99630a VALUES (11);
+                    ^
+INSERT 0 1
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:376: ERROR:  relation "t99630a" does not exist
+LINE 1: DELETE FROM t99630a USING t99630b RETURNING b;
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:379: ERROR:  relation "t99630a" does not exist
+LINE 1: SELECT a FROM t99630a WHERE a > 0;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:385: ERROR:  syntax error at or near "DELETE"
+LINE 3: DELETE FROM t107634 ORDER BY sum(a) LIMIT 1;
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:391: ERROR:  syntax error at or near "DELETE"
+LINE 3: DELETE FROM t108166 ORDER BY COALESCE(sum(a), 1) LIMIT 1;
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:397: ERROR:  syntax error at or near ";"
+LINE 1: CREATE TABLE t (;
+                        ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:400: ERROR:  relation "t" does not exist
+LINE 1: INSERT INTO t SELECT i, NULL FROM generate_series(1, 599) AS...
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:401: ERROR:  relation "t" does not exist
+LINE 1: INSERT INTO t VALUES (600, 2);
+                    ^
+psql:/home/pan/workspace/pg_tests/compatible/delete.sql:404: ERROR:  relation "t" does not exist
+LINE 1: DELETE FROM t WHERE k > 0 AND k < 1000;
+                    ^

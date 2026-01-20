@@ -1,0 +1,44 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+RESET
+CREATE TABLE
+INSERT 0 5
+CREATE TABLE
+INSERT 0 5
+ k 
+---
+ 1
+ 2
+ 3
+ 4
+ 5
+(5 rows)
+
+ exists 
+--------
+ t
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+ case 
+------
+     
+     
+(2 rows)
+
+CREATE TABLE
+INSERT 0 1
+ int2 |  s   
+------+------
+    1 | test
+(1 row)
+
+                        QUERY PLAN                         
+-----------------------------------------------------------
+ Seq Scan on t66306  (cost=0.00..23.60 rows=1360 width=34)
+(1 row)
+

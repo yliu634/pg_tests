@@ -1,0 +1,9 @@
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+psql:/home/pan/workspace/pg_tests/compatible/distsql_builtin.sql:17: WARNING:  TIMESTAMP(7) precision reduced to maximum allowed, 6
+ c 
+---
+(0 rows)
+
