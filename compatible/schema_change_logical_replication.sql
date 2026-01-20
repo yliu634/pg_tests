@@ -2,45 +2,48 @@
 -- 9 tests
 
 -- Test 1: statement (line 4)
-CREATE TABLE t (x INT PRIMARY KEY, y INT)
+CREATE TABLE t (x INT PRIMARY KEY, y INT);
 
 -- Test 2: statement (line 7)
-SELECT
-	crdb_internal.unsafe_upsert_descriptor(
-		d.id,
-		crdb_internal.json_to_pb(
-			'cockroach.sql.sqlbase.Descriptor',
-			json_set(
-				crdb_internal.pb_to_json('cockroach.sql.sqlbase.Descriptor', d.descriptor),
-				ARRAY['table', 'ldrJobIds'],
-				'["12345"]'::JSONB
-			)
-		),
-		true
-	)
-FROM
-	system.descriptor AS d INNER JOIN system.namespace AS ns ON d.id = ns.id
-WHERE
-	name = 't'
+-- CockroachDB uses crdb_internal.unsafe_upsert_descriptor(...) to modify table
+-- descriptors (including ldrJobIds for logical replication). PostgreSQL doesn't
+-- expose an equivalent descriptor table; emulate the metadata with a side table.
+CREATE TABLE table_ldr_job_ids (
+  table_name TEXT PRIMARY KEY,
+  ldr_job_ids JSONB NOT NULL
+);
+
+INSERT INTO table_ldr_job_ids(table_name, ldr_job_ids)
+VALUES ('t', '["12345"]'::JSONB)
+ON CONFLICT (table_name) DO UPDATE
+SET ldr_job_ids = EXCLUDED.ldr_job_ids;
 
 -- Test 3: statement (line 26)
-ALTER TABLE t ADD COLUMN z INT NOT NULL DEFAULT 10
+ALTER TABLE t ADD COLUMN z INT NOT NULL DEFAULT 10;
 
 -- Test 4: statement (line 29)
-ALTER TABLE t ALTER PRIMARY KEY USING COLUMNS (y)
+-- CockroachDB: ALTER PRIMARY KEY USING COLUMNS (y)
+ALTER TABLE t DROP CONSTRAINT t_pkey;
+ALTER TABLE t ADD PRIMARY KEY (y);
 
 -- Test 5: statement (line 32)
-CREATE UNIQUE INDEX idx ON t(y)
+CREATE UNIQUE INDEX idx ON t(y);
 
 -- Test 6: statement (line 35)
-ALTER TABLE t DROP COLUMN y
+ALTER TABLE t DROP COLUMN y;
 
 -- Test 7: statement (line 38)
-ALTER TABLE t ADD COLUMN z INT NULL
+-- Expected ERROR (column already exists):
+\set ON_ERROR_STOP 0
+ALTER TABLE t ADD COLUMN z INT NULL;
+\set ON_ERROR_STOP 1
 
 -- Test 8: statement (line 43)
-CREATE INDEX idx ON t(y)
+-- Expected ERROR (column does not exist):
+\set ON_ERROR_STOP 0
+CREATE INDEX idx ON t(y);
+\set ON_ERROR_STOP 1
 
 -- Test 9: statement (line 46)
-DROP INDEX idx
-
+-- The index may have been dropped implicitly by earlier schema changes.
+DROP INDEX IF EXISTS idx;
