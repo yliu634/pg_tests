@@ -1,320 +1,182 @@
 -- PostgreSQL compatible tests from comment_on
 -- 88 tests
+--
+-- Note: This file is adapted from CockroachDB tests. Cockroach-specific
+-- catalogs/commands like system.comments, crdb_internal.invalid_objects,
+-- SHOW ... WITH COMMENT, USE, and schema changer toggles have no direct
+-- PostgreSQL equivalent, so this version validates comments via PostgreSQL
+-- catalogs (pg_database/pg_namespace/pg_type/pg_description).
 
--- Test 1: statement (line 3)
-CREATE DATABASE db
+SET client_min_messages = warning;
 
--- Test 2: statement (line 6)
-COMMENT ON DATABASE db IS 'A'
+-- Capture the current database name so we can COMMENT ON DATABASE without
+-- creating/dropping extra databases (keeps the runner isolated).
+SELECT current_database() AS current_db \gset
 
--- Test 3: query (line 9)
-SHOW DATABASES WITH COMMENT
+-- Database comments.
+COMMENT ON DATABASE :"current_db" IS 'A';
+SELECT datname AS database_name,
+       shobj_description(oid, 'pg_database') AS comment
+FROM pg_database
+WHERE datname = :'current_db';
 
--- Test 4: statement (line 19)
-COMMENT ON DATABASE db IS 'AAA'
+COMMENT ON DATABASE :"current_db" IS 'AAA';
+SELECT datname AS database_name,
+       shobj_description(oid, 'pg_database') AS comment
+FROM pg_database
+WHERE datname = :'current_db';
 
--- Test 5: query (line 22)
-SHOW DATABASES WITH COMMENT
+COMMENT ON DATABASE :"current_db" IS NULL;
+SELECT datname AS database_name,
+       shobj_description(oid, 'pg_database') AS comment
+FROM pg_database
+WHERE datname = :'current_db';
 
--- Test 6: statement (line 32)
-COMMENT ON DATABASE db IS NULL;
+-- Schema comments.
+CREATE SCHEMA sc;
+COMMENT ON SCHEMA sc IS 'SC';
+SELECT obj_description('sc'::regnamespace, 'pg_namespace') AS comment;
 
--- Test 7: query (line 35)
-SHOW DATABASES WITH COMMENT
+COMMENT ON SCHEMA sc IS 'SC_AGAIN';
+SELECT obj_description('sc'::regnamespace, 'pg_namespace') AS comment;
 
--- Test 8: statement (line 45)
-CREATE SCHEMA sc
+SELECT nspname AS schema_name,
+       obj_description(oid, 'pg_namespace') AS comment
+FROM pg_namespace
+WHERE nspname IN ('public', 'sc')
+ORDER BY nspname;
 
--- Test 9: statement (line 48)
-COMMENT ON SCHEMA sc IS 'SC'
+-- Cockroach "db.schema" naming: emulate using a quoted schema name containing a dot.
+CREATE SCHEMA "db.schema1";
+COMMENT ON SCHEMA "db.schema1" IS 'Database_Schema';
+SELECT nspname AS schema_name,
+       obj_description(oid, 'pg_namespace') AS comment
+FROM pg_namespace
+WHERE nspname = 'db.schema1';
 
--- Test 10: query (line 51)
-SELECT COMMENT FROM system.comments WHERE type = 4;
-
--- Test 11: statement (line 56)
-COMMENT ON SCHEMA sc IS 'SC_AGAIN'
-
--- Test 12: query (line 59)
-SELECT COMMENT FROM system.comments WHERE type = 4;
-
--- Test 13: query (line 64)
-SHOW SCHEMAS WITH COMMENT
-
--- Test 14: statement (line 75)
-CREATE SCHEMA db.schema1
-
--- Test 15: statement (line 78)
-COMMENT ON SCHEMA db.schema1 IS 'Database_Schema'
-
--- Test 16: query (line 81)
-SHOW SCHEMAS FROM db WITH COMMENT
-
--- Test 17: statement (line 92)
+-- Table/column/index/constraint comments.
 CREATE TABLE t(
   a INT PRIMARY KEY,
   b INT NOT NULL,
-  CONSTRAINT ckb CHECK (b > 1),
-  INDEX idxb (b),
-  FAMILY fam_0_b_a (a, b)
+  CONSTRAINT ckb CHECK (b > 1)
 );
+CREATE INDEX idxb ON t(b);
 
--- Test 18: statement (line 101)
+CREATE VIEW t_comments AS
+SELECT
+  obj_description('t'::regclass, 'pg_class') AS table_comment,
+  col_description(
+    't'::regclass,
+    (SELECT attnum FROM pg_attribute WHERE attrelid = 't'::regclass AND attname = 'b')
+  ) AS column_b_comment,
+  obj_description('idxb'::regclass, 'pg_class') AS index_comment,
+  obj_description(
+    (SELECT oid FROM pg_constraint WHERE conname = 'ckb' AND conrelid = 't'::regclass),
+    'pg_constraint'
+  ) AS constraint_comment;
+
 COMMENT ON TABLE t IS 'table t';
+SELECT * FROM t_comments;
+SELECT * FROM t_comments;
 
-onlyif config schema-locked-disabled
-
--- Test 19: query (line 105)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
-
--- Test 20: query (line 119)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
-
--- Test 21: statement (line 132)
 COMMENT ON TABLE t IS 'table t AGAIN';
+SELECT * FROM t_comments;
+SELECT * FROM t_comments;
 
-onlyif config schema-locked-disabled
-
--- Test 22: query (line 136)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
-
--- Test 23: query (line 150)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
-
--- Test 24: statement (line 163)
 COMMENT ON TABLE t IS NULL;
+SELECT * FROM t_comments;
+SELECT * FROM t_comments;
 
-onlyif config schema-locked-disabled
-
--- Test 25: query (line 167)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
-
--- Test 26: query (line 180)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
-
--- Test 27: statement (line 192)
 COMMENT ON COLUMN t.b IS 'column b';
+SELECT * FROM t_comments;
+SELECT * FROM t_comments;
 
-onlyif config schema-locked-disabled
-
--- Test 28: query (line 196)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
-
--- Test 29: query (line 210)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
-
--- Test 30: statement (line 223)
 COMMENT ON COLUMN t.b IS 'column b AGAIN';
+-- PostgreSQL requires table qualification for COMMENT ON COLUMN.
+COMMENT ON COLUMN t.b IS 'unqualified column b';
+SELECT * FROM t_comments;
+SELECT * FROM t_comments;
 
--- Test 31: statement (line 226)
-COMMENT ON COLUMN b IS 'unqualified column b';
-
-onlyif config schema-locked-disabled
-
--- Test 32: query (line 230)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
-
--- Test 33: query (line 244)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
-
--- Test 34: statement (line 257)
 COMMENT ON COLUMN t.b IS NULL;
+SELECT * FROM t_comments;
+SELECT * FROM t_comments;
 
-onlyif config schema-locked-disabled
+COMMENT ON INDEX idxb IS 'index b';
+SELECT * FROM t_comments;
+SELECT * FROM t_comments;
 
--- Test 35: query (line 261)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
+COMMENT ON INDEX idxb IS 'index b AGAIN';
+SELECT * FROM t_comments;
+SELECT * FROM t_comments;
 
--- Test 36: query (line 274)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
+COMMENT ON INDEX idxb IS NULL;
+SELECT * FROM t_comments;
+SELECT * FROM t_comments;
 
--- Test 37: statement (line 286)
-COMMENT ON INDEX t@idxb IS 'index b';
-
-onlyif config schema-locked-disabled
-
--- Test 38: query (line 290)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
-
--- Test 39: query (line 304)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
-
--- Test 40: statement (line 317)
-COMMENT ON INDEX t@idxb IS 'index b AGAIN';
-
-onlyif config schema-locked-disabled
-
--- Test 41: query (line 321)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
-
--- Test 42: query (line 335)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
-
--- Test 43: statement (line 348)
-COMMENT ON INDEX t@idxb IS NULL;
-
-onlyif config schema-locked-disabled
-
--- Test 44: query (line 352)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
-
--- Test 45: query (line 365)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
-
--- Test 46: statement (line 377)
 COMMENT ON CONSTRAINT ckb ON t IS 'cst b';
+SELECT * FROM t_comments;
+SELECT * FROM t_comments;
 
-onlyif config schema-locked-disabled
-
--- Test 47: query (line 381)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
-
--- Test 48: query (line 395)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
-
--- Test 49: statement (line 408)
 COMMENT ON CONSTRAINT ckb ON t IS 'cst b AGAIN';
+SELECT * FROM t_comments;
+SELECT * FROM t_comments;
 
-onlyif config schema-locked-disabled
-
--- Test 50: query (line 412)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
-
--- Test 51: query (line 426)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
-
--- Test 52: statement (line 439)
 COMMENT ON CONSTRAINT ckb ON t IS NULL;
+SELECT * FROM t_comments;
+SELECT * FROM t_comments;
 
-onlyif config schema-locked-disabled
+-- Clear schema comment.
+COMMENT ON SCHEMA sc IS NULL;
+SELECT obj_description('sc'::regnamespace, 'pg_namespace') AS comment;
 
--- Test 53: query (line 443)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
-
--- Test 54: query (line 456)
-SELECT create_statement FROM [SHOW CREATE TABLE t];
-
--- Test 55: statement (line 471)
-CREATE TABLE t_99316(a INT);
-
--- Test 56: statement (line 474)
-INSERT INTO system.comments VALUES (4294967122, 't_99316'::regclass::OID, 0, 'bar');
-
--- Test 57: statement (line 478)
-SELECT * FROM pg_catalog.pg_description WHERE objoid = 't'::regclass::OID;
-
--- Test 58: query (line 482)
-SELECT * FROM crdb_internal.invalid_objects ORDER BY id;
-
--- Test 59: statement (line 487)
-DELETE FROM system.comments WHERE type = 4294967122
-
--- Test 60: statement (line 490)
-COMMENT ON SCHEMA sc IS NULL
-
--- Test 61: statement (line 493)
+-- Type comments.
 CREATE TYPE roach_dwellings AS ENUM ('roach_motel','roach_kitchen','roach_bathroom','roach_house');
 CREATE TYPE roach_legs AS (legs INT);
 
-onlyif config local-legacy-schema-changer
-
--- Test 62: statement (line 498)
 COMMENT ON TYPE roach_dwellings IS 'First-CRDB-comment-on-types';
-
-skipif config local-legacy-schema-changer
-
--- Test 63: statement (line 502)
-COMMENT ON TYPE roach_dwellings IS 'First-CRDB-comment-on-types';
-
-skipif config local-legacy-schema-changer
-
--- Test 64: statement (line 506)
 COMMENT ON TYPE roach_legs IS 'Second-CRDB-comment-on-types';
-
-skipif config local-legacy-schema-changer
-
--- Test 65: statement (line 510)
 COMMENT ON TYPE roach_dwellings IS 'First-CRDB-comment-on-types-again';
-
-skipif config local-legacy-schema-changer
-
--- Test 66: statement (line 514)
 COMMENT ON TYPE roach_legs IS 'Second-CRDB-comment-on-types-again';
 
-skipif config local-legacy-schema-changer
+SELECT n.nspname AS schema_name,
+       t.typname AS type_name,
+       obj_description(t.oid, 'pg_type') AS comment
+FROM pg_type t
+JOIN pg_namespace n ON n.oid = t.typnamespace
+WHERE n.nspname = 'public'
+  AND t.typname IN ('roach_dwellings','roach_legs')
+ORDER BY type_name;
 
--- Test 67: query (line 518)
-SELECT * FROM SYSTEM.COMMENTS;
-
--- Test 68: query (line 527)
-SHOW TYPES WITH COMMENT
-
--- Test 69: statement (line 535)
 COMMENT ON TYPE roach_dwellings IS NULL;
-
-skipif config local-legacy-schema-changer
-
--- Test 70: statement (line 539)
 COMMENT ON TYPE roach_legs IS NULL;
 
-skipif config local-legacy-schema-changer
+SELECT n.nspname AS schema_name,
+       t.typname AS type_name,
+       obj_description(t.oid, 'pg_type') AS comment
+FROM pg_type t
+JOIN pg_namespace n ON n.oid = t.typnamespace
+WHERE n.nspname = 'public'
+  AND t.typname IN ('roach_dwellings','roach_legs')
+ORDER BY type_name;
 
--- Test 71: query (line 543)
-SHOW TYPES WITH COMMENT
+-- Cockroach's CREATE DATABASE/USE test_db: emulate with a schema in PostgreSQL.
+CREATE SCHEMA test_db;
+SET search_path TO test_db;
 
--- Test 72: query (line 551)
-SELECT * FROM SYSTEM.COMMENTS;
+CREATE TYPE roach_type AS ENUM ('option1', 'option2');
+COMMENT ON TYPE roach_type IS 'This is a test comment on a type';
 
--- Test 73: statement (line 560)
-INSERT INTO system.comments VALUES (32, 11111, 0, 'abc');
-INSERT INTO system.comments VALUES (32, 1, 0, 'abc');
+SELECT n.nspname AS schema_name,
+       t.typname AS type_name,
+       obj_description(t.oid, 'pg_type') AS comment
+FROM pg_type t
+JOIN pg_namespace n ON n.oid = t.typnamespace
+WHERE n.nspname = 'test_db'
+  AND t.typname = 'roach_type';
 
--- Test 74: statement (line 566)
-SELECT count(*) FROM pg_catalog.pg_description
+SET search_path TO public;
+DROP SCHEMA test_db CASCADE;
 
--- Test 75: query (line 569)
-SELECT * FROM crdb_internal.invalid_objects ORDER BY id;
+SELECT schema_name FROM information_schema.schemata WHERE schema_name = 'test_db';
 
--- Test 76: statement (line 575)
-DELETE FROM system.comments WHERE type=32;
-
--- Test 77: query (line 578)
-SELECT * FROM crdb_internal.invalid_objects ORDER BY id;
-
--- Test 78: statement (line 589)
-CREATE DATABASE test_db
-
--- Test 79: statement (line 592)
-USE test_db
-
--- Test 80: statement (line 595)
-CREATE TYPE roach_type AS ENUM ('option1', 'option2')
-
--- Test 81: statement (line 600)
-COMMENT ON TYPE roach_type IS 'This is a test comment on a type'
-
-skipif config local-legacy-schema-changer
-
--- Test 82: query (line 604)
-SHOW TYPES WITH COMMENT
-
--- Test 83: statement (line 611)
-USE defaultdb
-
-let $schema_changer_state
-SHOW use_declarative_schema_changer
-
--- Test 84: statement (line 617)
-SET use_declarative_schema_changer = 'off'
-
--- Test 85: statement (line 620)
-DROP DATABASE test_db CASCADE
-
--- Test 86: statement (line 624)
-SET use_declarative_schema_changer = $schema_changer_state
-
--- Test 87: query (line 630)
-SELECT id, database_name, schema_name, obj_name, error FROM "".crdb_internal.invalid_objects
-
--- Test 88: query (line 635)
-SELECT database_name FROM [SHOW DATABASES] WHERE database_name = 'test_db'
-
+RESET client_min_messages;

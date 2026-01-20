@@ -1,5 +1,24 @@
 -- PostgreSQL compatible tests from schema_repair
 -- 59 tests
+--
+-- PG-NOT-SUPPORTED: CockroachDB schema repair tests depend on internal
+-- descriptor/catalog APIs (system.namespace/system.descriptor/crdb_internal.*)
+-- that do not exist in PostgreSQL.
+--
+-- The original CockroachDB-derived SQL is preserved below for reference, but is
+-- not executed under PostgreSQL.
+
+SET client_min_messages = warning;
+
+SELECT
+  'skipped: schema_repair requires CockroachDB crdb_internal/system catalog APIs'
+    AS notice;
+
+RESET client_min_messages;
+
+/*
+-- PostgreSQL compatible tests from schema_repair
+-- 59 tests
 
 -- Test 1: statement (line 8)
 SET CLUSTER SETTING sql.catalog.descriptor_wait_for_initial_version.enabled=false
@@ -268,7 +287,7 @@ SELECT
 							desc_bytes('t')
 						),
 						ARRAY['table', 'modificationTime'],
-						'{"logical": 1, "wallTime": "123456789"}'::JSONB
+						'{\"logical\": 1, \"wallTime\": \"123456789\"}'::JSONB
 					)
 				)
 			)
@@ -283,4 +302,5 @@ SELECT stripped(tbl_json(desc_bytes('t_renamed')))
 
 -- Test 59: statement (line 481)
 DROP TABLE t_renamed
+*/
 
