@@ -1,0 +1,9 @@
+SET
+DROP TABLE
+psql:pg_tests/compatible/mixed_version_upgrade_preserve_ttl.sql:18: ERROR:  syntax error at or near ";"
+LINE 1: CREATE TABLE tbl (;
+                          ^
+psql:pg_tests/compatible/mixed_version_upgrade_preserve_ttl.sql:21: ERROR:  syntax error at or near "["
+LINE 1: SELECT create_statement FROM [SHOW CREATE TABLE tbl];
+                                     ^
+RESET

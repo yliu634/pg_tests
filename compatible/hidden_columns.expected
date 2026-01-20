@@ -1,0 +1,79 @@
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+      create_statement       
+-----------------------------
+ CREATE TABLE t (x integer);
+(1 row)
+
+ ?column? |  x  
+----------+-----
+       42 | 123
+       42 | 456
+(2 rows)
+
+ ?column? |  k  |  v  
+----------+-----+-----
+       42 | 123 | 456
+       42 | 111 | 222
+(2 rows)
+
+ ?column? |  x  
+----------+-----
+       42 | 123
+       42 | 456
+(2 rows)
+
+ALTER TABLE
+  x  
+-----
+ 123
+ 456
+(2 rows)
+
+CREATE INDEX
+ALTER TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+ conname | contype 
+---------+---------
+ t2_pkey | p
+(1 row)
+
+ALTER TABLE
+  conname  | contype 
+-----------+---------
+ t2_b_fkey | f
+ t2_pkey   | p
+(2 rows)
+
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+psql:/tmp/hidden_columns.sql:103: NOTICE:  drop cascades to constraint t6_c_fkey on table t6
+ALTER TABLE
+ALTER TABLE
+ conname | contype 
+---------+---------
+ t3_pkey | p
+(1 row)
+
+ conname | contype 
+---------+---------
+ t4_pkey | p
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+ conname | contype 
+---------+---------
+ t4_pkey | p
+(1 row)
+

@@ -1,0 +1,97 @@
+psql:pg_tests/compatible/with.sql:95: ERROR:  syntax error at or near "CREATE"
+LINE 3: CREATE TABLE y(a) AS SELECT generate_series(2, 4)
+        ^
+psql:pg_tests/compatible/with.sql:103: ERROR:  syntax error at or near "INSERT"
+LINE 4: INSERT INTO a(x)
+        ^
+psql:pg_tests/compatible/with.sql:167: ERROR:  multiple WITH clauses not allowed
+LINE 1: (WITH woo AS (VALUES (1))
+         ^
+psql:pg_tests/compatible/with.sql:271: ERROR:  syntax error at or near "*"
+LINE 3: SELECT * FROM z
+               ^
+ a | b 
+---+---
+ 0 | 1
+ 1 | 1
+ 2 | 2
+ 3 | 3
+ 4 | 4
+ 5 | 5
+(6 rows)
+
+psql:pg_tests/compatible/with.sql:339: ERROR:  syntax error at or near "WITH"
+LINE 31: WITH RECURSIVE points AS (
+         ^
+ a | b 
+---+---
+ 1 | 1
+ 1 | 2
+ 2 | 2
+ 3 | 3
+(4 rows)
+
+ a | b 
+---+---
+ 1 | 1
+ 1 | 2
+ 2 | 2
+ 2 | 1
+ 1 | 3
+ 2 | 3
+ 3 | 2
+ 3 | 1
+ 1 | 0
+ 2 | 0
+ 3 | 3
+ 0 | 2
+ 0 | 1
+ 3 | 0
+ 0 | 3
+ 0 | 0
+(16 rows)
+
+psql:pg_tests/compatible/with.sql:394: ERROR:  syntax error at or near "ctestmt"
+LINE 11:   ctestmt
+           ^
+psql:pg_tests/compatible/with.sql:395: ERROR:  relation "xy" does not exist
+LINE 1: INSERT INTO xy VALUES (1,1),(1,2),(2,1),(2,2);
+                    ^
+psql:pg_tests/compatible/with.sql:445: ERROR:  syntax error at or near "CREATE"
+LINE 3: CREATE TABLE graph_node (
+        ^
+CREATE TABLE
+psql:pg_tests/compatible/with.sql:510: ERROR:  syntax error at or near "WITH"
+LINE 3: WITH
+        ^
+psql:pg_tests/compatible/with.sql:572: ERROR:  syntax error at or near "WITH"
+LINE 3: WITH
+        ^
+psql:pg_tests/compatible/with.sql:646: ERROR:  syntax error at or near "WITH"
+LINE 3: WITH
+        ^
+psql:pg_tests/compatible/with.sql:651: ERROR:  relation "ints" does not exist
+LINE 1: INSERT INTO ints
+                    ^
+psql:pg_tests/compatible/with.sql:667: ERROR:  relation "ints" does not exist
+LINE 2:   (SELECT n FROM ints ORDER BY n ASC LIMIT 1)
+                         ^
+psql:pg_tests/compatible/with.sql:683: ERROR:  relation "ints" does not exist
+LINE 2:   (SELECT n FROM ints ORDER BY n ASC LIMIT 1)
+                         ^
+psql:pg_tests/compatible/with.sql:699: ERROR:  relation "ints" does not exist
+LINE 2:   (SELECT n FROM ints ORDER BY n ASC LIMIT 1)
+                         ^
+psql:pg_tests/compatible/with.sql:715: ERROR:  relation "ints" does not exist
+LINE 2:   (SELECT n FROM ints ORDER BY n ASC LIMIT 1)
+                         ^
+psql:pg_tests/compatible/with.sql:737: ERROR:  syntax error at or near "insVals"
+LINE 3: WITH insVals AS NOT MATERIALIZED (INSERT INTO t95360 VALUES ...
+             ^
+psql:pg_tests/compatible/with.sql:746: ERROR:  syntax error at or near "WITH"
+LINE 3: WITH RECURSIVE
+        ^
+CREATE TABLE
+psql:pg_tests/compatible/with.sql:762: ERROR:  syntax error at or near "SELECT"
+LINE 3: SELECT t3.c2, t3.c1 FROM (
+        ^

@@ -1,0 +1,23 @@
+SET
+DROP DATABASE
+DROP DATABASE
+CREATE DATABASE
+CREATE DATABASE
+You are now connected to database "pgdatabase" as user "postgres".
+SET
+DROP SCHEMA
+CREATE SCHEMA
+You are now connected to database "postgres" as user "postgres".
+SET
+DROP DATABASE
+You are now connected to database "pgdatabase" as user "postgres".
+SET
+ schema_name 
+-------------
+ parent
+(1 row)
+
+You are now connected to database "postgres" as user "postgres".
+SET
+DROP DATABASE
+RESET

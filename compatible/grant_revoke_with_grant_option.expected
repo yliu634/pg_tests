@@ -1,0 +1,79 @@
+DROP TABLE
+psql:/tmp/grant_revoke_with_grant_option_test.sql:6: NOTICE:  table "t1" does not exist, skipping
+DROP TABLE
+psql:/tmp/grant_revoke_with_grant_option_test.sql:7: NOTICE:  table "tbl_owned_by_root" does not exist, skipping
+DROP TABLE
+psql:/tmp/grant_revoke_with_grant_option_test.sql:8: NOTICE:  table "tbl_owned_by_parent" does not exist, skipping
+DROP TABLE
+psql:/tmp/grant_revoke_with_grant_option_test.sql:9: NOTICE:  table "owner_grant_option" does not exist, skipping
+DROP TABLE
+DROP TABLE
+DROP SCHEMA
+DROP TYPE
+psql:/tmp/grant_revoke_with_grant_option_test.sql:13: NOTICE:  role "owner_grant_option_child" does not exist, skipping
+psql:/tmp/grant_revoke_with_grant_option_test.sql:13: NOTICE:  role "other_owner" does not exist, skipping
+DROP ROLE
+psql:/tmp/grant_revoke_with_grant_option_test.sql:14: NOTICE:  role "roach" does not exist, skipping
+DROP ROLE
+CREATE TABLE
+CREATE ROLE
+CREATE ROLE
+GRANT
+CREATE SCHEMA
+GRANT
+ grantor | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+---------+---------+---------------+--------------+------------+----------------+--------------+----------------
+(0 rows)
+
+CREATE TYPE
+GRANT
+CREATE TABLE
+CREATE ROLE
+GRANT
+ grantor  |       grantee       | table_catalog | table_schema |      table_name      | privilege_type | is_grantable | with_hierarchy 
+----------+---------------------+---------------+--------------+----------------------+----------------+--------------+----------------
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | TRIGGER        | YES          | NO
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | REFERENCES     | YES          | NO
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | TRUNCATE       | YES          | NO
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | DELETE         | YES          | NO
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | UPDATE         | YES          | NO
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | SELECT         | YES          | YES
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | INSERT         | YES          | NO
+(7 rows)
+
+REVOKE
+ grantor  |       grantee       | table_catalog | table_schema |      table_name      | privilege_type | is_grantable | with_hierarchy 
+----------+---------------------+---------------+--------------+----------------------+----------------+--------------+----------------
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | TRIGGER        | NO           | NO
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | REFERENCES     | NO           | NO
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | TRUNCATE       | NO           | NO
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | DELETE         | NO           | NO
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | UPDATE         | NO           | NO
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | SELECT         | NO           | YES
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | INSERT         | NO           | NO
+(7 rows)
+
+GRANT
+ grantor  |       grantee       | table_catalog | table_schema |      table_name      | privilege_type | is_grantable | with_hierarchy 
+----------+---------------------+---------------+--------------+----------------------+----------------+--------------+----------------
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | TRIGGER        | NO           | NO
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | REFERENCES     | NO           | NO
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | TRUNCATE       | NO           | NO
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | DELETE         | NO           | NO
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | UPDATE         | NO           | NO
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | SELECT         | YES          | YES
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | INSERT         | NO           | NO
+(7 rows)
+
+REVOKE
+ grantor  |       grantee       | table_catalog | table_schema |      table_name      | privilege_type | is_grantable | with_hierarchy 
+----------+---------------------+---------------+--------------+----------------------+----------------+--------------+----------------
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | TRIGGER        | NO           | NO
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | REFERENCES     | NO           | NO
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | TRUNCATE       | NO           | NO
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | DELETE         | NO           | NO
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | UPDATE         | NO           | NO
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | SELECT         | NO           | YES
+ postgres | grant_ordering_user | pg_tests      | public       | grant_ordering_table | INSERT         | NO           | NO
+(7 rows)
+

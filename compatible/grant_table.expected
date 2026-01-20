@@ -1,0 +1,229 @@
+DO
+DROP VIEW
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP ROLE
+CREATE ROLE
+CREATE TABLE
+ grantor  | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+----------+---------------+--------------+------------+----------------+--------------+----------------
+ postgres | postgres | pg_tests      | public       | t          | INSERT         | YES          | NO
+ postgres | postgres | pg_tests      | public       | t          | SELECT         | YES          | YES
+ postgres | postgres | pg_tests      | public       | t          | UPDATE         | YES          | NO
+ postgres | postgres | pg_tests      | public       | t          | DELETE         | YES          | NO
+ postgres | postgres | pg_tests      | public       | t          | TRUNCATE       | YES          | NO
+ postgres | postgres | pg_tests      | public       | t          | REFERENCES     | YES          | NO
+ postgres | postgres | pg_tests      | public       | t          | TRIGGER        | YES          | NO
+ postgres | postgres | pg_tests      | s2           | t          | INSERT         | YES          | NO
+ postgres | postgres | pg_tests      | s2           | t          | SELECT         | YES          | YES
+ postgres | postgres | pg_tests      | s2           | t          | UPDATE         | YES          | NO
+ postgres | postgres | pg_tests      | s2           | t          | DELETE         | YES          | NO
+ postgres | postgres | pg_tests      | s2           | t          | TRUNCATE       | YES          | NO
+ postgres | postgres | pg_tests      | s2           | t          | REFERENCES     | YES          | NO
+ postgres | postgres | pg_tests      | s2           | t          | TRIGGER        | YES          | NO
+(14 rows)
+
+CREATE ROLE
+GRANT
+ grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ postgres | postgres  | pg_tests      | public       | t          | INSERT         | YES          | NO
+ postgres | postgres  | pg_tests      | public       | t          | SELECT         | YES          | YES
+ postgres | postgres  | pg_tests      | public       | t          | UPDATE         | YES          | NO
+ postgres | postgres  | pg_tests      | public       | t          | DELETE         | YES          | NO
+ postgres | postgres  | pg_tests      | public       | t          | TRUNCATE       | YES          | NO
+ postgres | postgres  | pg_tests      | public       | t          | REFERENCES     | YES          | NO
+ postgres | postgres  | pg_tests      | public       | t          | TRIGGER        | YES          | NO
+ postgres | postgres  | pg_tests      | s2           | t          | INSERT         | YES          | NO
+ postgres | postgres  | pg_tests      | s2           | t          | SELECT         | YES          | YES
+ postgres | postgres  | pg_tests      | s2           | t          | UPDATE         | YES          | NO
+ postgres | postgres  | pg_tests      | s2           | t          | DELETE         | YES          | NO
+ postgres | postgres  | pg_tests      | s2           | t          | TRUNCATE       | YES          | NO
+ postgres | postgres  | pg_tests      | s2           | t          | REFERENCES     | YES          | NO
+ postgres | postgres  | pg_tests      | s2           | t          | TRIGGER        | YES          | NO
+ postgres | readwrite | pg_tests      | public       | t          | INSERT         | NO           | NO
+ postgres | readwrite | pg_tests      | public       | t          | SELECT         | NO           | YES
+ postgres | readwrite | pg_tests      | public       | t          | UPDATE         | NO           | NO
+ postgres | readwrite | pg_tests      | public       | t          | DELETE         | NO           | NO
+ postgres | readwrite | pg_tests      | public       | t          | TRUNCATE       | NO           | NO
+ postgres | readwrite | pg_tests      | public       | t          | REFERENCES     | NO           | NO
+ postgres | readwrite | pg_tests      | public       | t          | TRIGGER        | NO           | NO
+ postgres | test-user | pg_tests      | public       | t          | INSERT         | NO           | NO
+ postgres | test-user | pg_tests      | public       | t          | SELECT         | NO           | YES
+ postgres | test-user | pg_tests      | public       | t          | UPDATE         | NO           | NO
+ postgres | test-user | pg_tests      | public       | t          | DELETE         | NO           | NO
+ postgres | test-user | pg_tests      | public       | t          | TRUNCATE       | NO           | NO
+ postgres | test-user | pg_tests      | public       | t          | REFERENCES     | NO           | NO
+ postgres | test-user | pg_tests      | public       | t          | TRIGGER        | NO           | NO
+(28 rows)
+
+ grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ postgres | readwrite | pg_tests      | public       | t          | INSERT         | NO           | NO
+ postgres | readwrite | pg_tests      | public       | t          | SELECT         | NO           | YES
+ postgres | readwrite | pg_tests      | public       | t          | UPDATE         | NO           | NO
+ postgres | readwrite | pg_tests      | public       | t          | DELETE         | NO           | NO
+ postgres | readwrite | pg_tests      | public       | t          | TRUNCATE       | NO           | NO
+ postgres | readwrite | pg_tests      | public       | t          | REFERENCES     | NO           | NO
+ postgres | readwrite | pg_tests      | public       | t          | TRIGGER        | NO           | NO
+ postgres | test-user | pg_tests      | public       | t          | INSERT         | NO           | NO
+ postgres | test-user | pg_tests      | public       | t          | SELECT         | NO           | YES
+ postgres | test-user | pg_tests      | public       | t          | UPDATE         | NO           | NO
+ postgres | test-user | pg_tests      | public       | t          | DELETE         | NO           | NO
+ postgres | test-user | pg_tests      | public       | t          | TRUNCATE       | NO           | NO
+ postgres | test-user | pg_tests      | public       | t          | REFERENCES     | NO           | NO
+ postgres | test-user | pg_tests      | public       | t          | TRIGGER        | NO           | NO
+(14 rows)
+
+REVOKE
+ grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ postgres | postgres  | pg_tests      | s2           | t          | DELETE         | YES          | NO
+ postgres | postgres  | pg_tests      | public       | t          | DELETE         | YES          | NO
+ postgres | postgres  | pg_tests      | s2           | t          | INSERT         | YES          | NO
+ postgres | postgres  | pg_tests      | public       | t          | INSERT         | YES          | NO
+ postgres | postgres  | pg_tests      | s2           | t          | REFERENCES     | YES          | NO
+ postgres | postgres  | pg_tests      | public       | t          | REFERENCES     | YES          | NO
+ postgres | postgres  | pg_tests      | s2           | t          | SELECT         | YES          | YES
+ postgres | postgres  | pg_tests      | public       | t          | SELECT         | YES          | YES
+ postgres | postgres  | pg_tests      | public       | t          | TRIGGER        | YES          | NO
+ postgres | postgres  | pg_tests      | s2           | t          | TRIGGER        | YES          | NO
+ postgres | postgres  | pg_tests      | s2           | t          | TRUNCATE       | YES          | NO
+ postgres | postgres  | pg_tests      | public       | t          | TRUNCATE       | YES          | NO
+ postgres | postgres  | pg_tests      | public       | t          | UPDATE         | YES          | NO
+ postgres | postgres  | pg_tests      | s2           | t          | UPDATE         | YES          | NO
+ postgres | readwrite | pg_tests      | public       | t          | REFERENCES     | NO           | NO
+ postgres | readwrite | pg_tests      | public       | t          | SELECT         | NO           | YES
+ postgres | readwrite | pg_tests      | public       | t          | TRIGGER        | NO           | NO
+ postgres | readwrite | pg_tests      | public       | t          | TRUNCATE       | NO           | NO
+ postgres | readwrite | pg_tests      | public       | t          | UPDATE         | NO           | NO
+ postgres | test-user | pg_tests      | public       | t          | REFERENCES     | NO           | NO
+ postgres | test-user | pg_tests      | public       | t          | SELECT         | NO           | YES
+ postgres | test-user | pg_tests      | public       | t          | TRIGGER        | NO           | NO
+ postgres | test-user | pg_tests      | public       | t          | TRUNCATE       | NO           | NO
+ postgres | test-user | pg_tests      | public       | t          | UPDATE         | NO           | NO
+(24 rows)
+
+REVOKE
+ grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ postgres | postgres  | pg_tests      | s2           | t          | DELETE         | YES          | NO
+ postgres | postgres  | pg_tests      | public       | t          | DELETE         | YES          | NO
+ postgres | postgres  | pg_tests      | s2           | t          | INSERT         | YES          | NO
+ postgres | postgres  | pg_tests      | public       | t          | INSERT         | YES          | NO
+ postgres | postgres  | pg_tests      | s2           | t          | REFERENCES     | YES          | NO
+ postgres | postgres  | pg_tests      | public       | t          | REFERENCES     | YES          | NO
+ postgres | postgres  | pg_tests      | public       | t          | SELECT         | YES          | YES
+ postgres | postgres  | pg_tests      | s2           | t          | SELECT         | YES          | YES
+ postgres | postgres  | pg_tests      | public       | t          | TRIGGER        | YES          | NO
+ postgres | postgres  | pg_tests      | s2           | t          | TRIGGER        | YES          | NO
+ postgres | postgres  | pg_tests      | s2           | t          | TRUNCATE       | YES          | NO
+ postgres | postgres  | pg_tests      | public       | t          | TRUNCATE       | YES          | NO
+ postgres | postgres  | pg_tests      | s2           | t          | UPDATE         | YES          | NO
+ postgres | postgres  | pg_tests      | public       | t          | UPDATE         | YES          | NO
+ postgres | readwrite | pg_tests      | public       | t          | REFERENCES     | NO           | NO
+ postgres | readwrite | pg_tests      | public       | t          | SELECT         | NO           | YES
+ postgres | readwrite | pg_tests      | public       | t          | TRIGGER        | NO           | NO
+ postgres | readwrite | pg_tests      | public       | t          | TRUNCATE       | NO           | NO
+ postgres | readwrite | pg_tests      | public       | t          | UPDATE         | NO           | NO
+ postgres | test-user | pg_tests      | public       | t          | REFERENCES     | NO           | NO
+ postgres | test-user | pg_tests      | public       | t          | TRIGGER        | NO           | NO
+ postgres | test-user | pg_tests      | public       | t          | TRUNCATE       | NO           | NO
+ postgres | test-user | pg_tests      | public       | t          | UPDATE         | NO           | NO
+(23 rows)
+
+REVOKE
+ grantor  | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+----------+---------------+--------------+------------+----------------+--------------+----------------
+ postgres | postgres | pg_tests      | public       | t          | INSERT         | YES          | NO
+ postgres | postgres | pg_tests      | public       | t          | SELECT         | YES          | YES
+ postgres | postgres | pg_tests      | public       | t          | UPDATE         | YES          | NO
+ postgres | postgres | pg_tests      | public       | t          | DELETE         | YES          | NO
+ postgres | postgres | pg_tests      | public       | t          | TRUNCATE       | YES          | NO
+ postgres | postgres | pg_tests      | public       | t          | REFERENCES     | YES          | NO
+ postgres | postgres | pg_tests      | public       | t          | TRIGGER        | YES          | NO
+ postgres | postgres | pg_tests      | s2           | t          | INSERT         | YES          | NO
+ postgres | postgres | pg_tests      | s2           | t          | SELECT         | YES          | YES
+ postgres | postgres | pg_tests      | s2           | t          | UPDATE         | YES          | NO
+ postgres | postgres | pg_tests      | s2           | t          | DELETE         | YES          | NO
+ postgres | postgres | pg_tests      | s2           | t          | TRUNCATE       | YES          | NO
+ postgres | postgres | pg_tests      | s2           | t          | REFERENCES     | YES          | NO
+ postgres | postgres | pg_tests      | s2           | t          | TRIGGER        | YES          | NO
+(14 rows)
+
+CREATE VIEW
+ grantor  | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+----------+---------------+--------------+------------+----------------+--------------+----------------
+ postgres | postgres | pg_tests      | public       | v          | INSERT         | YES          | NO
+ postgres | postgres | pg_tests      | public       | v          | SELECT         | YES          | YES
+ postgres | postgres | pg_tests      | public       | v          | UPDATE         | YES          | NO
+ postgres | postgres | pg_tests      | public       | v          | DELETE         | YES          | NO
+ postgres | postgres | pg_tests      | public       | v          | TRUNCATE       | YES          | NO
+ postgres | postgres | pg_tests      | public       | v          | REFERENCES     | YES          | NO
+ postgres | postgres | pg_tests      | public       | v          | TRIGGER        | YES          | NO
+(7 rows)
+
+GRANT
+ grantor  |  grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+-----------+---------------+--------------+------------+----------------+--------------+----------------
+ postgres | postgres  | pg_tests      | public       | v          | INSERT         | YES          | NO
+ postgres | postgres  | pg_tests      | public       | v          | SELECT         | YES          | YES
+ postgres | postgres  | pg_tests      | public       | v          | UPDATE         | YES          | NO
+ postgres | postgres  | pg_tests      | public       | v          | DELETE         | YES          | NO
+ postgres | postgres  | pg_tests      | public       | v          | TRUNCATE       | YES          | NO
+ postgres | postgres  | pg_tests      | public       | v          | REFERENCES     | YES          | NO
+ postgres | postgres  | pg_tests      | public       | v          | TRIGGER        | YES          | NO
+ postgres | readwrite | pg_tests      | public       | v          | INSERT         | NO           | NO
+ postgres | readwrite | pg_tests      | public       | v          | SELECT         | NO           | YES
+ postgres | readwrite | pg_tests      | public       | v          | UPDATE         | NO           | NO
+ postgres | readwrite | pg_tests      | public       | v          | DELETE         | NO           | NO
+ postgres | readwrite | pg_tests      | public       | v          | TRUNCATE       | NO           | NO
+ postgres | readwrite | pg_tests      | public       | v          | REFERENCES     | NO           | NO
+ postgres | readwrite | pg_tests      | public       | v          | TRIGGER        | NO           | NO
+ postgres | test-user | pg_tests      | public       | v          | INSERT         | NO           | NO
+ postgres | test-user | pg_tests      | public       | v          | SELECT         | NO           | YES
+ postgres | test-user | pg_tests      | public       | v          | UPDATE         | NO           | NO
+ postgres | test-user | pg_tests      | public       | v          | DELETE         | NO           | NO
+ postgres | test-user | pg_tests      | public       | v          | TRUNCATE       | NO           | NO
+ postgres | test-user | pg_tests      | public       | v          | REFERENCES     | NO           | NO
+ postgres | test-user | pg_tests      | public       | v          | TRIGGER        | NO           | NO
+(21 rows)
+
+REVOKE
+ grantor  | grantee  | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+----------+---------------+--------------+------------+----------------+--------------+----------------
+ postgres | postgres | pg_tests      | public       | v          | INSERT         | YES          | NO
+ postgres | postgres | pg_tests      | public       | v          | SELECT         | YES          | YES
+ postgres | postgres | pg_tests      | public       | v          | UPDATE         | YES          | NO
+ postgres | postgres | pg_tests      | public       | v          | DELETE         | YES          | NO
+ postgres | postgres | pg_tests      | public       | v          | TRUNCATE       | YES          | NO
+ postgres | postgres | pg_tests      | public       | v          | REFERENCES     | YES          | NO
+ postgres | postgres | pg_tests      | public       | v          | TRIGGER        | YES          | NO
+(7 rows)
+
+CREATE ROLE
+CREATE TABLE
+CREATE TABLE
+BEGIN
+GRANT
+GRANT
+COMMIT
+ grantor  | grantee | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+---------+---------------+--------------+------------+----------------+--------------+----------------
+ postgres | roach   | pg_tests      | public       | table1     | INSERT         | NO           | NO
+ postgres | roach   | pg_tests      | public       | table1     | SELECT         | NO           | YES
+ postgres | roach   | pg_tests      | public       | table1     | UPDATE         | NO           | NO
+ postgres | roach   | pg_tests      | public       | table1     | DELETE         | NO           | NO
+ postgres | roach   | pg_tests      | public       | table1     | TRUNCATE       | NO           | NO
+ postgres | roach   | pg_tests      | public       | table1     | REFERENCES     | NO           | NO
+ postgres | roach   | pg_tests      | public       | table1     | TRIGGER        | NO           | NO
+ postgres | roach   | pg_tests      | public       | table2     | INSERT         | NO           | NO
+ postgres | roach   | pg_tests      | public       | table2     | SELECT         | NO           | YES
+ postgres | roach   | pg_tests      | public       | table2     | UPDATE         | NO           | NO
+ postgres | roach   | pg_tests      | public       | table2     | DELETE         | NO           | NO
+ postgres | roach   | pg_tests      | public       | table2     | TRUNCATE       | NO           | NO
+ postgres | roach   | pg_tests      | public       | table2     | REFERENCES     | NO           | NO
+ postgres | roach   | pg_tests      | public       | table2     | TRIGGER        | NO           | NO
+(14 rows)
+

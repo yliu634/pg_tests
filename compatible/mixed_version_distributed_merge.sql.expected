@@ -1,0 +1,19 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+psql:/home/pan/workspace/pg_tests/compatible/mixed_version_distributed_merge.sql:14: ERROR:  syntax error at or near "SETTING"
+LINE 1: SHOW CLUSTER SETTING bulkio.index_backfill.distributed_merge...
+                     ^
+psql:/home/pan/workspace/pg_tests/compatible/mixed_version_distributed_merge.sql:17: ERROR:  syntax error at or near "SETTING"
+LINE 1: SET CLUSTER SETTING bulkio.index_backfill.distributed_merge....
+                    ^
+CREATE INDEX
+psql:/home/pan/workspace/pg_tests/compatible/mixed_version_distributed_merge.sql:23: ERROR:  syntax error at or near "PRIMARY"
+LINE 1: ALTER TABLE dist_merge_idx ALTER PRIMARY KEY USING COLUMNS (...
+                                         ^
+psql:/home/pan/workspace/pg_tests/compatible/mixed_version_distributed_merge.sql:26: ERROR:  syntax error at or near "SETTING"
+LINE 1: SET CLUSTER SETTING bulkio.index_backfill.distributed_merge....
+                    ^
+DROP TABLE
+RESET

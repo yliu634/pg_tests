@@ -1,0 +1,247 @@
+SET
+psql:pg_tests/compatible/on_update.sql:7: ERROR:  relation "test_simple" does not exist
+LINE 1: INSERT INTO test_simple VALUES ('pk1', 'to_be_changed');
+                    ^
+psql:pg_tests/compatible/on_update.sql:10: ERROR:  relation "test_simple" does not exist
+LINE 1: SELECT p, k FROM test_simple;
+                         ^
+psql:pg_tests/compatible/on_update.sql:13: ERROR:  relation "test_simple" does not exist
+LINE 1: UPDATE test_simple SET p = 'pk2' WHERE p = 'pk1';
+               ^
+psql:pg_tests/compatible/on_update.sql:16: ERROR:  relation "test_simple" does not exist
+LINE 1: SELECT p, k FROM test_simple;
+                         ^
+psql:pg_tests/compatible/on_update.sql:19: ERROR:  relation "test_with_default" does not exist
+LINE 1: INSERT INTO test_with_default VALUES ('pk1');
+                    ^
+psql:pg_tests/compatible/on_update.sql:22: ERROR:  relation "test_with_default" does not exist
+LINE 1: SELECT p, k FROM test_with_default;
+                         ^
+psql:pg_tests/compatible/on_update.sql:25: ERROR:  relation "test_with_default" does not exist
+LINE 1: UPDATE test_with_default SET p = 'pk2' WHERE p = 'pk1';
+               ^
+psql:pg_tests/compatible/on_update.sql:28: ERROR:  relation "test_with_default" does not exist
+LINE 1: SELECT p, k FROM test_with_default;
+                         ^
+psql:pg_tests/compatible/on_update.sql:31: ERROR:  relation "test_upsert" does not exist
+LINE 1: INSERT INTO test_upsert VALUES ('pk1', 'val1', 'whatevs');
+                    ^
+psql:pg_tests/compatible/on_update.sql:34: ERROR:  relation "test_upsert" does not exist
+LINE 1: SELECT p, j, k FROM test_upsert;
+                            ^
+psql:pg_tests/compatible/on_update.sql:37: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO test_upsert (p, j) VALUES ('pk1', 'val2'), ('pk2...
+        ^
+psql:pg_tests/compatible/on_update.sql:40: ERROR:  relation "test_upsert" does not exist
+LINE 1: SELECT p, j, k FROM test_upsert ORDER BY p;
+                            ^
+psql:pg_tests/compatible/on_update.sql:43: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO test_upsert VALUES ('pk1', 'val20'), ('pk2', 'va...
+        ^
+psql:pg_tests/compatible/on_update.sql:46: ERROR:  relation "test_upsert" does not exist
+LINE 1: SELECT p, j, k FROM test_upsert ORDER BY p;
+                            ^
+psql:pg_tests/compatible/on_update.sql:49: ERROR:  relation "test_alter" does not exist
+LINE 1: INSERT INTO test_alter VALUES ('pk1', 'to_be_changed');
+                    ^
+psql:pg_tests/compatible/on_update.sql:52: ERROR:  relation "test_alter" does not exist
+LINE 1: SELECT p, k FROM test_alter;
+                         ^
+psql:pg_tests/compatible/on_update.sql:55: ERROR:  relation "test_alter" does not exist
+LINE 1: UPDATE test_alter SET p = 'pk2' WHERE p = 'pk1';
+               ^
+psql:pg_tests/compatible/on_update.sql:58: ERROR:  relation "test_alter" does not exist
+LINE 1: SELECT p, k FROM test_alter;
+                         ^
+psql:pg_tests/compatible/on_update.sql:61: ERROR:  syntax error at or near "ON"
+LINE 1: ALTER TABLE test_alter ALTER COLUMN k SET ON UPDATE 'regress...
+                                                  ^
+psql:pg_tests/compatible/on_update.sql:64: ERROR:  relation "test_alter" does not exist
+LINE 1: UPDATE test_alter SET p = 'pk3' WHERE p = 'pk2';
+               ^
+psql:pg_tests/compatible/on_update.sql:67: ERROR:  relation "test_alter" does not exist
+LINE 1: SELECT p, k FROM test_alter;
+                         ^
+psql:pg_tests/compatible/on_update.sql:70: ERROR:  syntax error at or near "ON"
+LINE 1: ALTER TABLE test_alter ALTER COLUMN k DROP ON UPDATE;
+                                                   ^
+psql:pg_tests/compatible/on_update.sql:73: ERROR:  relation "test_alter" does not exist
+LINE 1: UPDATE test_alter SET k = 'should_not_change' WHERE p = 'pk3...
+               ^
+psql:pg_tests/compatible/on_update.sql:76: ERROR:  relation "test_alter" does not exist
+LINE 1: UPDATE test_alter SET p = 'pk4' WHERE p = 'pk3';
+               ^
+psql:pg_tests/compatible/on_update.sql:79: ERROR:  relation "test_alter" does not exist
+LINE 1: SELECT p, k FROM test_alter;
+                         ^
+psql:pg_tests/compatible/on_update.sql:82: ERROR:  relation "test_fk_base" does not exist
+LINE 1: INSERT INTO test_fk_base VALUES ('pk1', 'val1'), ('pk2', 'va...
+                    ^
+psql:pg_tests/compatible/on_update.sql:85: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO test_fk_ref (p, j) VALUES ('pk1', 'val1'), ('pk2...
+        ^
+psql:pg_tests/compatible/on_update.sql:88: ERROR:  relation "test_fk_base" does not exist
+LINE 1: UPDATE test_fk_base SET j = 'arbitrary' WHERE p = 'pk1';
+               ^
+psql:pg_tests/compatible/on_update.sql:91: ERROR:  relation "test_fk_base" does not exist
+LINE 1: SELECT p, j FROM test_fk_base ORDER BY p;
+                         ^
+psql:pg_tests/compatible/on_update.sql:94: ERROR:  relation "test_fk_ref" does not exist
+LINE 1: SELECT p, j, k FROM test_fk_ref ORDER BY p;
+                            ^
+psql:pg_tests/compatible/on_update.sql:97: ERROR:  syntax error at or near "ON"
+LINE 1: ALTER TABLE alter_fk ALTER COLUMN j SET ON UPDATE 'failure';
+                                                ^
+psql:pg_tests/compatible/on_update.sql:100: ERROR:  relation "alter_update" does not exist
+psql:pg_tests/compatible/on_update.sql:103: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE test_show_default;
+             ^
+psql:pg_tests/compatible/on_update.sql:106: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE test_show_default;
+             ^
+psql:pg_tests/compatible/on_update.sql:109: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE test_show_fk;
+             ^
+psql:pg_tests/compatible/on_update.sql:112: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE test_show_fk;
+             ^
+CREATE SEQUENCE
+psql:pg_tests/compatible/on_update.sql:118: ERROR:  relation "test_table_seq" does not exist
+LINE 1: INSERT INTO test_table_seq VALUES ('pk1', 20);
+                    ^
+psql:pg_tests/compatible/on_update.sql:121: ERROR:  relation "test_table_seq" does not exist
+LINE 1: SELECT p, k FROM test_table_seq;
+                         ^
+psql:pg_tests/compatible/on_update.sql:124: ERROR:  relation "test_table_seq" does not exist
+LINE 1: UPDATE test_table_seq SET p = 'pk2' WHERE p = 'pk1';
+               ^
+psql:pg_tests/compatible/on_update.sql:127: ERROR:  relation "test_table_seq" does not exist
+LINE 1: SELECT p, k FROM test_table_seq;
+                         ^
+psql:pg_tests/compatible/on_update.sql:130: ERROR:  relation "test_table_seq" does not exist
+LINE 1: UPDATE test_table_seq SET p = 'pk3' WHERE p = 'pk2';
+               ^
+psql:pg_tests/compatible/on_update.sql:133: ERROR:  relation "test_table_seq" does not exist
+LINE 1: SELECT p, k FROM test_table_seq;
+                         ^
+psql:pg_tests/compatible/on_update.sql:136: ERROR:  relation "test_table_seq" does not exist
+psql:pg_tests/compatible/on_update.sql:139: ERROR:  relation "test_table_seq" does not exist
+LINE 1: INSERT INTO test_table_seq VALUES ('pk1');
+                    ^
+psql:pg_tests/compatible/on_update.sql:142: ERROR:  relation "test_table_seq" does not exist
+LINE 1: SELECT p, k FROM test_table_seq ORDER BY p;
+                         ^
+DROP SEQUENCE
+psql:pg_tests/compatible/on_update.sql:148: ERROR:  syntax error at or near "ON"
+LINE 1: ALTER TABLE test_table_seq ALTER COLUMN k DROP ON UPDATE;
+                                                       ^
+psql:pg_tests/compatible/on_update.sql:151: ERROR:  sequence "test_seq" does not exist
+psql:pg_tests/compatible/on_update.sql:154: ERROR:  relation "test_table_seq" does not exist
+LINE 1: INSERT INTO test_table_seq VALUES ('pk2');
+                    ^
+psql:pg_tests/compatible/on_update.sql:157: ERROR:  relation "test_table_seq" does not exist
+LINE 1: SELECT p, k FROM test_table_seq ORDER BY p;
+                         ^
+CREATE SEQUENCE
+CREATE TABLE
+psql:pg_tests/compatible/on_update.sql:162: ERROR:  syntax error at or near "ON"
+LINE 1: ...116 ADD COLUMN b INT DEFAULT nextval('seq_72116') ON UPDATE ...
+                                                             ^
+DROP SEQUENCE
+DROP TABLE
+DROP TABLE
+psql:pg_tests/compatible/on_update.sql:172: ERROR:  syntax error at or near "ON"
+LINE 1: ...E table_72116 (a INT DEFAULT nextval('seq_72116') ON UPDATE ...
+                                                             ^
+psql:pg_tests/compatible/on_update.sql:175: ERROR:  sequence "seq_72116" does not exist
+psql:pg_tests/compatible/on_update.sql:178: ERROR:  table "table_72116" does not exist
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/on_update.sql:185: ERROR:  syntax error at or near "ON"
+LINE 1: ...ER TABLE table_72116 ADD COLUMN b INT DEFAULT (1) ON UPDATE ...
+                                                             ^
+psql:pg_tests/compatible/on_update.sql:188: ERROR:  sequence "seq_72116" does not exist
+DROP TABLE
+psql:pg_tests/compatible/on_update.sql:192: ERROR:  syntax error at or near "ON"
+LINE 1: CREATE TABLE table_72116 (a INT DEFAULT (1) ON UPDATE nextva...
+                                                    ^
+psql:pg_tests/compatible/on_update.sql:195: ERROR:  sequence "seq_72116" does not exist
+psql:pg_tests/compatible/on_update.sql:198: ERROR:  type "test_enum" already exists
+psql:pg_tests/compatible/on_update.sql:201: ERROR:  relation "test_table_enum" does not exist
+LINE 1: INSERT INTO test_table_enum VALUES ('pk1', 'y');
+                    ^
+psql:pg_tests/compatible/on_update.sql:204: ERROR:  relation "test_table_enum" does not exist
+LINE 1: SELECT p, k FROM test_table_enum;
+                         ^
+psql:pg_tests/compatible/on_update.sql:207: ERROR:  syntax error at or near "VALUE"
+LINE 1: ALTER TYPE test_enum DROP VALUE 'z';
+                                  ^
+psql:pg_tests/compatible/on_update.sql:210: ERROR:  syntax error at or near "VALUE"
+LINE 1: ALTER TYPE test_enum DROP VALUE 'x';
+                                  ^
+psql:pg_tests/compatible/on_update.sql:213: ERROR:  enum label "z" already exists
+psql:pg_tests/compatible/on_update.sql:216: ERROR:  relation "test_table_enum" does not exist
+LINE 1: UPDATE test_table_enum SET p = 'pk2' WHERE p = 'pk1';
+               ^
+psql:pg_tests/compatible/on_update.sql:219: ERROR:  relation "test_table_enum" does not exist
+LINE 1: SELECT p, k FROM test_table_enum;
+                         ^
+DROP TYPE
+psql:pg_tests/compatible/on_update.sql:225: ERROR:  relation "test_table_enum" does not exist
+psql:pg_tests/compatible/on_update.sql:228: ERROR:  relation "test_table_enum" does not exist
+LINE 1: INSERT INTO test_table_enum VALUES ('pk3');
+                    ^
+psql:pg_tests/compatible/on_update.sql:231: ERROR:  relation "test_table_enum" does not exist
+LINE 1: SELECT p, k FROM test_table_enum ORDER BY p;
+                         ^
+psql:pg_tests/compatible/on_update.sql:234: ERROR:  syntax error at or near "ON"
+LINE 1: ALTER TABLE test_table_enum ALTER COLUMN k DROP ON UPDATE;
+                                                        ^
+psql:pg_tests/compatible/on_update.sql:237: ERROR:  relation "test_table_enum" does not exist
+LINE 1: DELETE FROM test_table_enum WHERE p = 'pk2';
+                    ^
+psql:pg_tests/compatible/on_update.sql:240: ERROR:  syntax error at or near "VALUE"
+LINE 1: ALTER TYPE test_enum DROP VALUE 'x';
+                                  ^
+psql:pg_tests/compatible/on_update.sql:243: ERROR:  type "test_enum" does not exist
+psql:pg_tests/compatible/on_update.sql:246: ERROR:  relation "test_table_enum" does not exist
+psql:pg_tests/compatible/on_update.sql:249: ERROR:  type "test_enum" does not exist
+CREATE TYPE
+psql:pg_tests/compatible/on_update.sql:255: ERROR:  syntax error at or near "VALUE"
+LINE 1: ALTER TYPE test_enum DROP VALUE 'z';
+                                  ^
+psql:pg_tests/compatible/on_update.sql:258: ERROR:  syntax error at or near "VALUE"
+LINE 1: ALTER TYPE test_enum DROP VALUE 'x';
+                                  ^
+psql:pg_tests/compatible/on_update.sql:261: ERROR:  syntax error at or near "VALUE"
+LINE 1: ALTER TYPE test_enum DROP VALUE 'y';
+                                  ^
+DROP TABLE
+psql:pg_tests/compatible/on_update.sql:265: ERROR:  syntax error at or near "ON"
+LINE 1: ...ATE TABLE test_backfill (x INT, y INT DEFAULT 100 ON UPDATE ...
+                                                             ^
+psql:pg_tests/compatible/on_update.sql:268: ERROR:  relation "test_backfill" does not exist
+LINE 1: INSERT INTO test_backfill VALUES (1), (2), (3);
+                    ^
+psql:pg_tests/compatible/on_update.sql:271: ERROR:  relation "test_backfill" does not exist
+LINE 1: SELECT * FROM test_backfill ORDER BY x;
+                      ^
+psql:pg_tests/compatible/on_update.sql:274: ERROR:  relation "test_backfill" does not exist
+psql:pg_tests/compatible/on_update.sql:277: ERROR:  relation "test_backfill" does not exist
+LINE 1: SELECT * FROM test_backfill ORDER BY x;
+                      ^
+psql:pg_tests/compatible/on_update.sql:280: ERROR:  unrecognized configuration parameter "sql_safe_updates"
+psql:pg_tests/compatible/on_update.sql:283: ERROR:  relation "test_backfill" does not exist
+psql:pg_tests/compatible/on_update.sql:286: ERROR:  relation "test_backfill" does not exist
+LINE 1: SELECT * FROM test_backfill ORDER BY x;
+                      ^
+psql:pg_tests/compatible/on_update.sql:289: ERROR:  unrecognized configuration parameter "sql_safe_updates"
+psql:pg_tests/compatible/on_update.sql:292: ERROR:  table "test_backfill" does not exist
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/on_update.sql:302: ERROR:  syntax error at or near "ON"
+LINE 1: ...1698 ADD COLUMN v VARCHAR(2) NOT NULL DEFAULT 'd' ON UPDATE ...
+                                                             ^
+UPDATE 1
+RESET

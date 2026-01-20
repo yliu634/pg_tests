@@ -1,0 +1,54 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 5
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 6
+ k | v | x | y 
+---+---+---+---
+ 0 | 4 | 0 | 5
+ 3 | 4 | 3 | 2
+ 3 | 4 | 3 | 3
+(3 rows)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 2
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 2
+ k | x 
+---+---
+ 0 | 0
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+psql:/home/pan/workspace/pg_tests/compatible/merge_join.sql:51: ERROR:  relation "t44798_1" already exists
+INSERT 0 3
+psql:/home/pan/workspace/pg_tests/compatible/merge_join.sql:54: ERROR:  duplicate key value violates unique constraint "t44798_1_pkey"
+DETAIL:  Key (c0)=(0) already exists.
+ c0 
+----
+  0
+  2
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+psql:/home/pan/workspace/pg_tests/compatible/merge_join.sql:62: ERROR:  relation "r" already exists
+psql:/home/pan/workspace/pg_tests/compatible/merge_join.sql:62: ERROR:  duplicate key value violates unique constraint "r_pkey"
+DETAIL:  Key (r)=(1) already exists.
+ l | ?column? 
+---+----------
+ 2 | t
+(1 row)
+
+RESET

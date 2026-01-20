@@ -1,0 +1,134 @@
+SET
+DROP TABLE
+psql:pg_tests/compatible/numeric_references.sql:8: ERROR:  type "bc" does not exist
+LINE 1: ...x (a INT PRIMARY KEY, xx INT, b INT, c INT, INDEX bc (b,c));
+                                                             ^
+psql:pg_tests/compatible/numeric_references.sql:11: ERROR:  relation "x" does not exist
+LINE 1: INSERT INTO x VALUES (1), (2), (3);
+                    ^
+psql:pg_tests/compatible/numeric_references.sql:14: ERROR:  relation "x" does not exist
+LINE 1: CREATE VIEW view_ref AS SELECT a, 1 FROM x;
+                                                 ^
+psql:pg_tests/compatible/numeric_references.sql:17: ERROR:  relation "system.namespace" does not exist
+LINE 1: SELECT id FROM system.namespace WHERE name='view_ref';
+                       ^
+psql:pg_tests/compatible/numeric_references.sql:20: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [$v_id(1) AS _];
+                      ^
+psql:pg_tests/compatible/numeric_references.sql:23: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [$v_id AS _];
+                      ^
+psql:pg_tests/compatible/numeric_references.sql:26: ERROR:  syntax error at or near "["
+LINE 1: SELECT foo.a FROM [$v_id AS foo];
+                          ^
+psql:pg_tests/compatible/numeric_references.sql:29: ERROR:  relation "seq" already exists
+psql:pg_tests/compatible/numeric_references.sql:32: ERROR:  relation "system.namespace" does not exist
+LINE 1: SELECT id FROM system.namespace WHERE name='seq';
+                       ^
+psql:pg_tests/compatible/numeric_references.sql:35: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [$seq_id AS _];
+                      ^
+psql:pg_tests/compatible/numeric_references.sql:38: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [$seq_id(1) AS _];
+                      ^
+psql:pg_tests/compatible/numeric_references.sql:41: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [$seq_id(1, 2) AS _];
+                      ^
+DROP TABLE
+psql:pg_tests/compatible/numeric_references.sql:45: ERROR:  type "bc" does not exist
+LINE 1: ...f (a INT PRIMARY KEY, xx INT, b INT, c INT, INDEX bc (b,c));
+                                                             ^
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/numeric_references.sql:52: ERROR:  relation "num_ref" does not exist
+psql:pg_tests/compatible/numeric_references.sql:55: ERROR:  relation "num_ref" does not exist
+psql:pg_tests/compatible/numeric_references.sql:58: ERROR:  relation "num_ref" does not exist
+psql:pg_tests/compatible/numeric_references.sql:61: ERROR:  relation "num_ref" does not exist
+LINE 1: INSERT INTO num_ref VALUES (1, 10, 101), (2, 20, 200), (3, 3...
+                    ^
+INSERT 0 3
+psql:pg_tests/compatible/numeric_references.sql:67: ERROR:  relation "num_ref" does not exist
+LINE 1: SELECT * FROM num_ref;
+                      ^
+psql:pg_tests/compatible/numeric_references.sql:70: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [$num_ref_id as num_ref_alias];
+                      ^
+psql:pg_tests/compatible/numeric_references.sql:73: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [$num_ref_id(4,3,1) AS num_ref_alias];
+                      ^
+psql:pg_tests/compatible/numeric_references.sql:76: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [$num_ref_id(4) AS num_ref_alias]@[$num_ref_bc...
+                      ^
+psql:pg_tests/compatible/numeric_references.sql:79: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [$num_ref_id(1) AS num_ref_alias]@[$num_ref_pk...
+                      ^
+psql:pg_tests/compatible/numeric_references.sql:82: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [$num_ref_id(1,3,4) AS num_ref_alias(col1,col2...
+                      ^
+psql:pg_tests/compatible/numeric_references.sql:85: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO [$num_ref_id AS num_ref_alias] VALUES (4, 40, 40...
+        ^
+psql:pg_tests/compatible/numeric_references.sql:88: ERROR:  syntax error at or near "["
+LINE 1: INSERT INTO [$num_ref_id(1) AS num_ref_alias] VALUES (5);
+                    ^
+psql:pg_tests/compatible/numeric_references.sql:91: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [$num_ref_id as num_ref_alias];
+                      ^
+psql:pg_tests/compatible/numeric_references.sql:94: ERROR:  syntax error at or near "["
+LINE 1: DELETE FROM [$num_ref_id AS num_ref_alias]@bc WHERE p=5;
+                    ^
+psql:pg_tests/compatible/numeric_references.sql:97: ERROR:  syntax error at or near "["
+LINE 1: DELETE FROM [$num_ref_id AS num_ref_alias] WHERE d=40 RETURN...
+                    ^
+psql:pg_tests/compatible/numeric_references.sql:100: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [$num_ref_id AS num_ref_alias];
+                      ^
+psql:pg_tests/compatible/numeric_references.sql:103: ERROR:  syntax error at or near "["
+LINE 1: INSERT INTO [$num_ref_id AS num_ref_alias] (p, c) VALUES (4,...
+                    ^
+psql:pg_tests/compatible/numeric_references.sql:106: ERROR:  syntax error at or near "["
+LINE 1: INSERT INTO [$num_ref_id(1,4) AS num_ref_alias] VALUES (5, 5...
+                    ^
+psql:pg_tests/compatible/numeric_references.sql:109: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [$num_ref_id AS num_ref_alias];
+                      ^
+psql:pg_tests/compatible/numeric_references.sql:112: ERROR:  syntax error at or near "["
+LINE 1: UPDATE [$num_ref_id AS num_ref_alias] SET d=40 WHERE p=4 RET...
+               ^
+psql:pg_tests/compatible/numeric_references.sql:115: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [$num_ref_id AS num_ref_alias];
+                      ^
+psql:pg_tests/compatible/numeric_references.sql:118: ERROR:  syntax error at or near "["
+LINE 1: INSERT INTO [$num_ref_id(1,4) AS num_ref_alias] (p,c) VALUES...
+                    ^
+psql:pg_tests/compatible/numeric_references.sql:121: ERROR:  syntax error at or near "["
+LINE 1: DELETE FROM [$num_ref_id(1) AS num_ref_alias];
+                    ^
+psql:pg_tests/compatible/numeric_references.sql:124: ERROR:  syntax error at or near "["
+LINE 1: UPDATE [$num_ref_id(1) AS num_ref_alias] SET d=10;
+               ^
+psql:pg_tests/compatible/numeric_references.sql:127: ERROR:  relation "system.namespace" does not exist
+LINE 1: SELECT id FROM system.namespace WHERE name='num_ref_hidden';
+                       ^
+psql:pg_tests/compatible/numeric_references.sql:130: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [$num_ref_hidden_id(1,3) AS num_ref_hidden];
+                      ^
+psql:pg_tests/compatible/numeric_references.sql:133: ERROR:  syntax error at or near "["
+LINE 1: SELECT count(rowid) FROM [$num_ref_hidden_id(3) AS num_ref_h...
+                                 ^
+psql:pg_tests/compatible/numeric_references.sql:136: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [$num_ref_id AS t];
+                      ^
+psql:pg_tests/compatible/numeric_references.sql:139: ERROR:  syntax error at or near "["
+LINE 1: INSERT INTO [$num_ref_id AS t] VALUES (1);
+                    ^
+psql:pg_tests/compatible/numeric_references.sql:142: ERROR:  syntax error at or near "["
+LINE 1: DELETE FROM [$num_ref_id AS t];
+                    ^
+psql:pg_tests/compatible/numeric_references.sql:145: ERROR:  syntax error at or near "["
+LINE 1: UPDATE [$num_ref_id AS t] SET d=1;
+               ^
+psql:pg_tests/compatible/numeric_references.sql:148: ERROR:  syntax error at or near "@"
+LINE 1: SELECT 1::@115210;
+                  ^
+RESET

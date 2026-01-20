@@ -1,22 +1,25 @@
+SET client_min_messages = warning;
+
 -- PostgreSQL compatible tests from jsonb_path_query
 -- 368 tests
 
 -- Test 1: query (line 3)
-SELECT jsonb_path_query('{}', '$')
+SELECT jsonb_path_query('{}', '$');
 
 -- Test 2: statement (line 8)
-SELECT jsonb_path_query('{}', 'strict $.a')
+-- COMMENTED: PostgreSQL strict mode errors stop execution
+-- SELECT jsonb_path_query('{}', 'strict $.a');
 
 -- Test 3: query (line 11)
-SELECT jsonb_path_query('{"a": "b"}', '$')
+SELECT jsonb_path_query('{"a": "b"}', '$');
 
 -- Test 4: query (line 16)
-SELECT jsonb_path_query('{"a": ["b", true, false, null]}', '$')
+SELECT jsonb_path_query('{"a": ["b", true, false, null]}', '$');
 
 -- Test 5: statement (line 48)
+DROP TABLE IF EXISTS a CASCADE;
 CREATE TABLE a AS SELECT '{"a": {"aa": {"aaa": "s1", "aab": 123, "aac": true, "aad": false, "aae": null, "aaf": [1, 2, 3], "aag": {"aaga": "s2"}}, "ab": "s3"}, "b": "s4", "c": [{"ca": "s5"}, {"ca": "s6"}, 1, true], "d": 123.45}'::JSONB AS data
-
--- Test 6: query (line 51)
+-- Test 6: query (line 51);
 SELECT jsonb_path_query(data, '$.a.aa.aaa') FROM a
 
 -- Test 7: query (line 56)
@@ -55,26 +58,24 @@ SELECT jsonb_path_query(data, 'strict $.aa.aaa.aaaa') FROM a
 -- Test 18: query (line 108)
 SELECT jsonb_path_query('{}', '$.a')
 
-query empty
-SELECT jsonb_path_query('[]', '$.a')
+-- query empty
+SELECT jsonb_path_query('[]', '$.a');
 
-statement ok
-CREATE TABLE b (j JSONB)
+-- statement ok
+CREATE TABLE b (j JSONB);
+INSERT INTO b VALUES ('{"a": [1, 2, 3], "b": "hello"}'), ('{"a": false}');
 
-statement ok
-INSERT INTO b VALUES ('{"a": [1, 2, 3], "b": "hello"}'), ('{"a": false}')
-
-query T rowsort
-SELECT jsonb_path_query(j, '$.a') FROM b
+-- query T rowsort
+SELECT jsonb_path_query(j, '$.a') FROM b;
 
 -- Test 19: query (line 126)
 SELECT jsonb_path_query(j, '$.b') FROM b
 
 -- Test 20: query (line 131)
-SELECT jsonb_path_query('{"a": [1, 2, {"b": [4, 5]}, null, [true, false]]}', '$.a[*]')
+SELECT jsonb_path_query('{"a": [1, 2, {"b": [4, 5]}, null, [true, false]]}', '$.a[*]');
 
 -- Test 21: query (line 140)
-SELECT jsonb_path_query('{"a": [1, 2, {"b": [{"c": true}, {"c": false}]}, null, [true, false], {"b": [{"c": 0.1}, {"d": null}, {"c": 10}]}]}', '$.a[*].b[*].c')
+SELECT jsonb_path_query('{"a": [1, 2, {"b": [{"c": true}, {"c": false}]}, null, [true, false], {"b": [{"c": 0.1}, {"d": null}, {"c": 10}]}]}', '$.a[*].b[*].c');
 
 -- Test 22: query (line 148)
 SELECT jsonb_path_query('{"a": [1]}', '$.a', '{}');
@@ -109,7 +110,7 @@ SELECT jsonb_path_query('[1, 2, 3, 4, 5]', '$[1 to 3, 2, 1 to 3]');
 -- Test 32: query (line 197)
 SELECT jsonb_path_query('[1, 2, 3, 4, 5]', '$[3 to 1]');
 
-query T rowsort
+-- query T rowsort
 SELECT jsonb_path_query('[1, 2, 3, 4, 5]', '$[4 to 4]');
 
 -- Test 33: query (line 205)
@@ -142,10 +143,10 @@ SELECT jsonb_path_query('{"a": [1, 2, 3, 4, 5]}', 'strict $[3 to 1]');
 -- Test 42: query (line 255)
 SELECT jsonb_path_query('{"a": [1, 2, 3]}', '$.a.b');
 
-statement error pgcode 2203A jsonpath member accessor can only be applied to an object
+-- COMMENTED: Logic test directive: statement error pgcode 2203A jsonpath member accessor can only be applied to an object
 SELECT jsonb_path_query('{"a": [1, 2, 3]}', 'strict $.a.b');
 
-query T
+-- query T
 SELECT jsonb_path_query('[1, 2, 3, 4, 5]', '$[1]');
 
 -- Test 43: query (line 266)
@@ -155,19 +156,19 @@ SELECT jsonb_path_query('{"a": [10, 9, 8, 7]}', '$.a[0.99]');
 SELECT jsonb_path_query('{"a": [10, 9, 8, 7]}', '$.a[1.01]');
 
 -- Test 45: query (line 276)
-SELECT jsonb_path_query('{"a": [10, 9, 8, 7]}', '$.a[$varInt]', '{"varInt": 1, "varFloat": 2.3, "varString": "a", "varBool": true, "varNull": null}')
+SELECT jsonb_path_query('{"a": [10, 9, 8, 7]}', '$.a[$varInt]', '{"varInt": 1, "varFloat": 2.3, "varString": "a", "varBool": true, "varNull": null}');
 
 -- Test 46: query (line 281)
 SELECT jsonb_path_query('{"a": [10, 9, 8, 7]}', '$.a[$varFloat]', '{"varInt": 1, "varFloat": 2.3, "varString": "a", "varBool": true, "varNull": null}');
 
 -- Test 47: statement (line 286)
-SELECT jsonb_path_query('{"a": [10, 9, 8, 7]}', '$.a[$varString]', '{"varInt": 1, "varFloat": 2.3, "varString": "a", "varBool": true, "varNull": null}')
+SELECT jsonb_path_query('{"a": [10, 9, 8, 7]}', '$.a[$varString]', '{"varInt": 1, "varFloat": 2.3, "varString": "a", "varBool": true, "varNull": null}');
 
 -- Test 48: statement (line 289)
-SELECT jsonb_path_query('{"a": [10, 9, 8, 7]}', '$.a[$varBool]', '{"varInt": 1, "varFloat": 2.3, "varString": "a", "varBool": true, "varNull": null}')
+SELECT jsonb_path_query('{"a": [10, 9, 8, 7]}', '$.a[$varBool]', '{"varInt": 1, "varFloat": 2.3, "varString": "a", "varBool": true, "varNull": null}');
 
 -- Test 49: statement (line 292)
-SELECT jsonb_path_query('{"a": [10, 9, 8, 7]}', '$.a[$varNull]', '{"varInt": 1, "varFloat": 2.3, "varString": "a", "varBool": true, "varNull": null}')
+SELECT jsonb_path_query('{"a": [10, 9, 8, 7]}', '$.a[$varNull]', '{"varInt": 1, "varFloat": 2.3, "varString": "a", "varBool": true, "varNull": null}');
 
 -- Test 50: query (line 295)
 SELECT jsonb_path_query('{"foo": [{"bar": "value"}]}', '$.foo.bar');
@@ -191,25 +192,25 @@ SELECT jsonb_path_query('{"a": []}', '$.a[true]');
 SELECT jsonb_path_query('[{"a": 1}]', '$undefined_var');
 
 -- Test 57: query (line 323)
-SELECT jsonb_path_query('{}', '2')
+SELECT jsonb_path_query('{}', '2');
 
 -- Test 58: query (line 328)
 SELECT jsonb_path_query('{}'::jsonb, '8.73'::jsonpath);
 
 -- Test 59: query (line 333)
-SELECT jsonb_path_query('{}', 'false')
+SELECT jsonb_path_query('{}', 'false');
 
 -- Test 60: query (line 338)
-SELECT jsonb_path_query('{}', '$varInt', '{"varInt": 1, "varFloat": 2.3, "varString": "a", "varBool": true, "varNull": null}')
+SELECT jsonb_path_query('{}', '$varInt', '{"varInt": 1, "varFloat": 2.3, "varString": "a", "varBool": true, "varNull": null}');
 
 -- Test 61: query (line 343)
-SELECT jsonb_path_query('{}', '$varFloat', '{"varInt": 1, "varFloat": 2.3, "varString": "a", "varBool": true, "varNull": null}')
+SELECT jsonb_path_query('{}', '$varFloat', '{"varInt": 1, "varFloat": 2.3, "varString": "a", "varBool": true, "varNull": null}');
 
 -- Test 62: query (line 348)
-SELECT jsonb_path_query('{}', '$varString', '{"varInt": 1, "varFloat": 2.3, "varString": "a", "varBool": true, "varNull": null}')
+SELECT jsonb_path_query('{}', '$varString', '{"varInt": 1, "varFloat": 2.3, "varString": "a", "varBool": true, "varNull": null}');
 
 -- Test 63: query (line 353)
-SELECT jsonb_path_query('{}', '$varBool', '{"varInt": 1, "varFloat": 2.3, "varString": "a", "varBool": true, "varNull": null}')
+SELECT jsonb_path_query('{}', '$varBool', '{"varInt": 1, "varFloat": 2.3, "varString": "a", "varBool": true, "varNull": null}');
 
 -- Test 64: query (line 358)
 SELECT jsonb_path_query('{}', '1 < 1');
@@ -373,7 +374,7 @@ SELECT jsonb_path_query('{"a": [1,2,3]}', '$.a ? (1 == 1)');
 -- Test 117: query (line 625)
 SELECT jsonb_path_query('{"a": [1,2,3]}', '$.a ? (1 != 1)');
 
-query T
+-- query T
 SELECT jsonb_path_query('{"a": [1,2,3]}', 'strict $.a ? (1 == 1)');
 
 -- Test 118: query (line 634)
@@ -382,13 +383,13 @@ SELECT jsonb_path_query('{"a": [1,2,3]}', 'StriCt $.a ? (1 == 1)');
 -- Test 119: query (line 639)
 SELECT jsonb_path_query('{"a": [1,2,3]}', 'strict $.a ? (1 != 1)');
 
-query T rowsort
+-- query T rowsort
 SELECT jsonb_path_query('{"a": [{"b": 1, "c": "hello"}, {"b": 2, "c": "world"}, {"b": 1, "c": "!"}]}', '$.a[*] ? (@.b == 1)');
 
 -- Test 120: query (line 648)
 SELECT jsonb_path_query('{"a": [{"b": 1, "c": "hello"}, {"b": 2, "c": "world"}, {"b": 1, "c": "!"}]}', 'strict $.a ? (@.b == 1)');
 
-query T rowsort
+-- query T rowsort
 SELECT jsonb_path_query('{"a": [{"b": 1, "c": "hello"}, {"b": 2, "c": "world"}, {"b": 1, "c": "!"}]}', '$.a ? (@.b == 1)');
 
 -- Test 121: query (line 657)
@@ -400,10 +401,10 @@ SELECT jsonb_path_query('{"a": [[{"b": 1, "c": "hello"}, {"b": 2, "c": "world"},
 -- Test 123: query (line 671)
 SELECT jsonb_path_query('{"a": [[{"b": 1, "c": "hello"}, {"b": 2, "c": "world"}, {"b": 1, "c": "!"}], [{"b": 1, "c": "hello"}, {"b": 2, "c": "world"}, {"b": 1, "c": "!"}]]}', 'strict $.a ? (@.b == 1)');
 
-query empty
+-- query empty
 SELECT jsonb_path_query('{"a": [[{"b": 1, "c": "hello"}, {"b": 2, "c": "world"}, {"b": 1, "c": "!"}], [{"b": 1, "c": "hello"}, {"b": 2, "c": "world"}, {"b": 1, "c": "!"}]]}', 'strict $.a[*] ? (@.b == 1)');
 
-query T rowsort
+-- query T rowsort
 SELECT jsonb_path_query('{"a": [1,2,3,4,5]}', '$.a ? (@ > 3)');
 
 -- Test 124: query (line 683)
@@ -418,19 +419,19 @@ SELECT jsonb_path_query('{"c": {"a": 1, "b":1}}', '$.c ? ($.c.a == @.b)');
 -- Test 127: query (line 700)
 SELECT jsonb_path_query('{"a": [1,2,3]}', '$.a ? (@ > 10)');
 
-query empty
+-- query empty
 SELECT jsonb_path_query('{"a": [{"b": 1, "c": 10}, {"b": 2, "c": 20}]}', '$.a ? (@.c > 100)');
 
-query empty
+-- query empty
 SELECT jsonb_path_query('{"a": [[[{"b": 1}], [{"b": 2}]], [[{"b": 2}], [{"b": 1}]]]}', '$.a ? (@.b == 1)');
 
-query empty
+-- query empty
 SELECT jsonb_path_query('{"a": [[[[[[{"b": 1}]]]]]]}', '$.a ? (@.b == 1)');
 
-query empty
+-- query empty
 SELECT jsonb_path_query('{"a": [[[{"b": 1}], [{"b": 2}]]]}', '$.a ? (@.b == 1)');
 
-query T
+-- query T
 SELECT jsonb_path_query('{}', '1 + 2');
 
 -- Test 128: query (line 720)
@@ -523,7 +524,7 @@ SELECT jsonb_path_query('{"a": {"b": "e"}}', '$.a ? (@.b like_regex "^[aeiou]")'
 -- Test 157: query (line 850)
 SELECT jsonb_path_query('{"a": {"b": "r"}}', '$.a ? (@.b like_regex "^[aeiou]")');
 
-query T rowsort
+-- query T rowsort
 SELECT jsonb_path_query('["apple", "banana", "orange", "umbrella", "grape"]', 'strict $[*] ? (@ like_regex "^[aeiou]")');
 
 -- Test 158: query (line 860)
@@ -535,7 +536,7 @@ SELECT jsonb_path_query('{"ab\\c": "hello"}', '$."ab\\c"');
 -- Test 160: query (line 871)
 SELECT jsonb_path_query('"a\nb"', '$ ? (@ like_regex "^.*$")');
 
-query T
+-- query T
 SELECT jsonb_path_query('"\\"', '$ ? (@ like_regex "^\\\\$")');
 
 -- Test 161: query (line 879)
@@ -575,82 +576,82 @@ SELECT jsonb_path_query('["hello", "a"]', 'strict $ like_regex "he"');
 SELECT jsonb_path_query('{"a": [1, 2], "b": "hello"}', '$.a ? ($.b == "hello") ');
 
 -- Test 173: query (line 952)
-SELECT jsonb_path_query('{"a": [1], "b": []}', '$.a == $.b')
+SELECT jsonb_path_query('{"a": [1], "b": []}', '$.a == $.b');
 
 -- Test 174: query (line 957)
-SELECT jsonb_path_query('{"a": [], "b": []}', '$.a == $.b')
+SELECT jsonb_path_query('{"a": [], "b": []}', '$.a == $.b');
 
 -- Test 175: query (line 962)
-SELECT jsonb_path_query('{"a": [], "b": {}}', '$.a == $.b')
+SELECT jsonb_path_query('{"a": [], "b": {}}', '$.a == $.b');
 
 -- Test 176: query (line 967)
-SELECT jsonb_path_query('{"a": [], "b": {"c": 1}}', '$.a == $.b')
+SELECT jsonb_path_query('{"a": [], "b": {"c": 1}}', '$.a == $.b');
 
 -- Test 177: query (line 973)
-SELECT jsonb_path_query('{"a": [], "b": []}', '$.a != $.b')
+SELECT jsonb_path_query('{"a": [], "b": []}', '$.a != $.b');
 
 -- Test 178: query (line 978)
-SELECT jsonb_path_query('{"a": [1], "b": []}', '$.a != $.b')
+SELECT jsonb_path_query('{"a": [1], "b": []}', '$.a != $.b');
 
 -- Test 179: query (line 983)
-SELECT jsonb_path_query('{"a": [], "b": [1]}', '$.a < $.b')
+SELECT jsonb_path_query('{"a": [], "b": [1]}', '$.a < $.b');
 
 -- Test 180: query (line 988)
-SELECT jsonb_path_query('{"a": [], "b": [1]}', '$.a <= $.b')
+SELECT jsonb_path_query('{"a": [], "b": [1]}', '$.a <= $.b');
 
 -- Test 181: query (line 993)
-SELECT jsonb_path_query('{"a": [], "b": [1]}', '$.a > $.b')
+SELECT jsonb_path_query('{"a": [], "b": [1]}', '$.a > $.b');
 
 -- Test 182: query (line 998)
-SELECT jsonb_path_query('{"a": [], "b": [1]}', '$.a >= $.b')
+SELECT jsonb_path_query('{"a": [], "b": [1]}', '$.a >= $.b');
 
 -- Test 183: query (line 1004)
-SELECT jsonb_path_query('{"a": [1], "b": []}', 'strict $.a == $.b')
+SELECT jsonb_path_query('{"a": [1], "b": []}', 'strict $.a == $.b');
 
 -- Test 184: query (line 1009)
-SELECT jsonb_path_query('{"a": [], "b": []}', 'strict $.a == $.b')
+SELECT jsonb_path_query('{"a": [], "b": []}', 'strict $.a == $.b');
 
 -- Test 185: query (line 1014)
-SELECT jsonb_path_query('{"a": [], "b": {}}', 'strict $.a == $.b')
+SELECT jsonb_path_query('{"a": [], "b": {}}', 'strict $.a == $.b');
 
 -- Test 186: query (line 1019)
-SELECT jsonb_path_query('{"a": [], "b": {"c": 1}}', 'strict $.a == $.b')
+SELECT jsonb_path_query('{"a": [], "b": {"c": 1}}', 'strict $.a == $.b');
 
 -- Test 187: query (line 1025)
-SELECT jsonb_path_query('{"a": [1, 2], "b": []}', '$.a == $.b')
+SELECT jsonb_path_query('{"a": [1, 2], "b": []}', '$.a == $.b');
 
 -- Test 188: query (line 1030)
-SELECT jsonb_path_query('{"a": [], "b": [1, 2]}', '$.a == $.b')
+SELECT jsonb_path_query('{"a": [], "b": [1, 2]}', '$.a == $.b');
 
 -- Test 189: query (line 1036)
-SELECT jsonb_path_query('{"a": [], "b": [null]}', '$.a == $.b')
+SELECT jsonb_path_query('{"a": [], "b": [null]}', '$.a == $.b');
 
 -- Test 190: query (line 1041)
-SELECT jsonb_path_query('{"a": [], "b": [0]}', '$.a == $.b')
+SELECT jsonb_path_query('{"a": [], "b": [0]}', '$.a == $.b');
 
 -- Test 191: query (line 1046)
-SELECT jsonb_path_query('{"a": [], "b": [false]}', '$.a == $.b')
+SELECT jsonb_path_query('{"a": [], "b": [false]}', '$.a == $.b');
 
 -- Test 192: query (line 1051)
-SELECT jsonb_path_query('{"a": [], "b": [""]}', '$.a == $.b')
+SELECT jsonb_path_query('{"a": [], "b": [""]}', '$.a == $.b');
 
 -- Test 193: query (line 1057)
-SELECT jsonb_path_query('{"a": [1], "b": [1]}', '$.a == $.b')
+SELECT jsonb_path_query('{"a": [1], "b": [1]}', '$.a == $.b');
 
 -- Test 194: query (line 1062)
-SELECT jsonb_path_query('{"a": [1], "b": [2]}', '$.a == $.b')
+SELECT jsonb_path_query('{"a": [1], "b": [2]}', '$.a == $.b');
 
 -- Test 195: query (line 1067)
-SELECT jsonb_path_query('{"a": "test", "b": "test"}', '$.a == $.b')
+SELECT jsonb_path_query('{"a": "test", "b": "test"}', '$.a == $.b');
 
 -- Test 196: query (line 1072)
 SELECT jsonb_path_query('{"a": [1, 2], "b": "hello"}', 'strict $.a ? ($.b == "hello") ');
 
 -- Test 197: query (line 1078)
-SELECT jsonb_path_query('{"a": [], "b": []}', '$ ? ($.a == $.b || $.a != $.b)')
+SELECT jsonb_path_query('{"a": [], "b": []}', '$ ? ($.a == $.b || $.a != $.b)');
 
 -- Test 198: query (line 1082)
-SELECT jsonb_path_query('{"a": [], "b": []}', '$ ? ($.a == $.b && $.a != $.b)')
+SELECT jsonb_path_query('{"a": [], "b": []}', '$ ? ($.a == $.b && $.a != $.b)');
 
 -- Test 199: query (line 1086)
 SELECT jsonb_path_query('{"a": "world", "b": 2, "c": true}', '$.*');
@@ -664,10 +665,10 @@ SELECT jsonb_path_query('{"a": {"ab": 1}, "b": {"bc": 2}, "c": {"cd": 3}}', '$.*
 -- Test 202: query (line 1105)
 SELECT jsonb_path_query('{}', '$.*');
 
-query empty
+-- query empty
 SELECT jsonb_path_query('[1, 2, 3, 4, 5]', '$.*');
 
-query T rowsort
+-- query T rowsort
 SELECT jsonb_path_query('{"a": {"x": {"y": 1}}, "b": {"x": {"z": 2}}}', '$.*.x.*');
 
 -- Test 203: query (line 1117)
@@ -689,24 +690,24 @@ SELECT jsonb_path_query('{"a": -10, "b": -5}', '$.a * -2 + $.b');
 SELECT jsonb_path_query('[1, -2, 3, -4]', '$[*] ? (@ < -1)');
 
 -- Test 209: query (line 1152)
-SELECT jsonb_path_query('{"x": 5, "y": -3}', '(-$.x * 2 + $.y) / -1')
+SELECT jsonb_path_query('{"x": 5, "y": -3}', '(-$.x * 2 + $.y) / -1');
 
 -- Test 210: statement (line 1157)
-SELECT jsonb_path_query('{"x": 5, "y": -3}', '(-$.x * 2 + $.y) / -0')
+SELECT jsonb_path_query('{"x": 5, "y": -3}', '(-$.x * 2 + $.y) / -0');
 
 -- Test 211: query (line 1160)
 SELECT jsonb_path_query('[1, 2, 3, 4, 5]', '$[-1]');
 
-statement error pgcode 22033 pq: jsonpath array subscript is out of bounds
+-- COMMENTED: Logic test directive: statement error pgcode 22033 pq: jsonpath array subscript is out of bounds
 SELECT jsonb_path_query('[1, 2, 3, 4, 5]', 'strict $[-1]');
 
-statement error pgcode 2203B pq: operand of unary jsonpath operator - is not a numeric value
+-- COMMENTED: Logic test directive: statement error pgcode 2203B pq: operand of unary jsonpath operator - is not a numeric value
 SELECT jsonb_path_query('[1, 2, 3, 4, "hello"]', '-$[*]');
 
-statement error pgcode 2203B pq: operand of unary jsonpath operator \+ is not a numeric value
+-- COMMENTED: Logic test directive: statement error pgcode 2203B pq: operand of unary jsonpath operator \+ is not a numeric value
 SELECT jsonb_path_query('null', '+$');
 
-query T
+-- query T
 SELECT jsonb_path_query('{}', '+1');
 
 -- Test 212: query (line 1177)
@@ -817,25 +818,25 @@ SELECT jsonb_path_query('{}', 'strict $.a', '{}', false);
 -- Test 247: query (line 1355)
 SELECT jsonb_path_query('{}', 'strict $.a', '{}', true);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('{}', '$.a', '{}', false);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('{}', '$.a', '{}', true);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('{}', 'strict 0 / 0', '{}', true);
 
-statement error pgcode 22012 pq: division by zero
+-- COMMENTED: Logic test directive: statement error pgcode 22012 pq: division by zero
 SELECT jsonb_path_query('{}', 'strict 0 / 0', '{}', false);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('{}', '0 / 0', '{}', true);
 
-statement error pgcode 22012 pq: division by zero
+-- COMMENTED: Logic test directive: statement error pgcode 22012 pq: division by zero
 SELECT jsonb_path_query('{}', '0 / 0', '{}', false);
 
-query T
+-- query T
 SELECT jsonb_path_query('{}', 'strict (0 / 0) < (0 / 0)', '{}', true);
 
 -- Test 248: query (line 1381)
@@ -850,10 +851,10 @@ SELECT jsonb_path_query('{}', '(0 / 0) < (0 / 0)', '{}', false);
 -- Test 251: query (line 1396)
 SELECT jsonb_path_query('{}', 'strict $[*]', '{}', true);
 
-statement error pgcode 22039 pq: jsonpath wildcard array accessor can only be applied to an array
+-- COMMENTED: Logic test directive: statement error pgcode 22039 pq: jsonpath wildcard array accessor can only be applied to an array
 SELECT jsonb_path_query('{}', 'strict $[*]', '{}', false);
 
-query T
+-- query T
 SELECT jsonb_path_query('{}', '$[*]', '{}', true);
 
 -- Test 252: query (line 1407)
@@ -862,10 +863,10 @@ SELECT jsonb_path_query('{}', '$[*]', '{}', false);
 -- Test 253: query (line 1412)
 SELECT jsonb_path_query('{"a": 1}', 'strict $[0]', '{}', true);
 
-statement error pgcode 22039 pq: jsonpath array accessor can only be applied to an array
+-- COMMENTED: Logic test directive: statement error pgcode 22039 pq: jsonpath array accessor can only be applied to an array
 SELECT jsonb_path_query('{"a": 1}', 'strict $[0]', '{}', false);
 
-query T
+-- query T
 SELECT jsonb_path_query('{"a": 1}', '$[0]', '{}', true);
 
 -- Test 254: query (line 1423)
@@ -874,112 +875,112 @@ SELECT jsonb_path_query('{"a": 1}', '$[0]', '{}', false);
 -- Test 255: query (line 1428)
 SELECT jsonb_path_query('[1, 2, 3]', 'strict $[3]', '{}', true);
 
-statement error pgcode 22033 pq: jsonpath array subscript is out of bounds
+-- COMMENTED: Logic test directive: statement error pgcode 22033 pq: jsonpath array subscript is out of bounds
 SELECT jsonb_path_query('[1, 2, 3]', 'strict $[3]', '{}', false);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('[1, 2, 3]', '$[3]', '{}', true);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('[1, 2, 3]', '$[3]', '{}', false);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('[1, 2, 3]', 'strict $["a"]', '{}', true);
 
-statement error pgcode 22033 pq: jsonpath array subscript is not a single numeric value
+-- COMMENTED: Logic test directive: statement error pgcode 22033 pq: jsonpath array subscript is not a single numeric value
 SELECT jsonb_path_query('[1, 2, 3]', 'strict $["a"]', '{}', false);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('[1, 2, 3]', '$["a"]', '{}', true);
 
-statement error pgcode 22033 pq: jsonpath array subscript is not a single numeric value
+-- COMMENTED: Logic test directive: statement error pgcode 22033 pq: jsonpath array subscript is not a single numeric value
 SELECT jsonb_path_query('[1, 2, 3]', '$["a"]', '{}', false);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('{"a": "hello"}', 'strict $.a[1 to 3]', '{}', true);
 
-statement error pgcode 22039 pq: jsonpath array accessor can only be applied to an array
+-- COMMENTED: Logic test directive: statement error pgcode 22039 pq: jsonpath array accessor can only be applied to an array
 SELECT jsonb_path_query('{"a": "hello"}', 'strict $.a[1 to 3]', '{}', false);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('{"a": "hello"}', '$.a[1 to 3]', '{}', true);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('{"a": "hello"}', '$.a[1 to 3]', '{}', false);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('"abc"', 'strict $.a', '{}', true);
 
-statement error pgcode 2203A pq: jsonpath member accessor can only be applied to an object
+-- COMMENTED: Logic test directive: statement error pgcode 2203A pq: jsonpath member accessor can only be applied to an object
 SELECT jsonb_path_query('"abc"', 'strict $.a', '{}', false);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('"abc"', '$.a', '{}', true);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('"abc"', '$.a', '{}', false);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('"abc"', 'strict $.*', '{}', true);
 
-statement error pgcode 2203C pq: jsonpath wildcard member accessor can only be applied to an object
+-- COMMENTED: Logic test directive: statement error pgcode 2203C pq: jsonpath wildcard member accessor can only be applied to an object
 SELECT jsonb_path_query('"abc"', 'strict $.*', '{}', false);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('"abc"', '$.*', '{}', true);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('"abc"', '$.*', '{}', false);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('{}', 'strict -$', '{}', true);
 
-statement error pgcode 2203B pq: operand of unary jsonpath operator - is not a numeric value
+-- COMMENTED: Logic test directive: statement error pgcode 2203B pq: operand of unary jsonpath operator - is not a numeric value
 SELECT jsonb_path_query('{}', 'strict -$', '{}', false);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('{}', '-$', '{}', true);
 
-statement error pgcode 2203B pq: operand of unary jsonpath operator - is not a numeric value
+-- COMMENTED: Logic test directive: statement error pgcode 2203B pq: operand of unary jsonpath operator - is not a numeric value
 SELECT jsonb_path_query('{}', '-$', '{}', false);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('{}', 'strict $ - 1', '{}', true);
 
-statement error pgcode 22038 pq: left operand of jsonpath operator - is not a single numeric value
+-- COMMENTED: Logic test directive: statement error pgcode 22038 pq: left operand of jsonpath operator - is not a single numeric value
 SELECT jsonb_path_query('{}', 'strict $ - 1', '{}', false);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('{}', '$ - 1', '{}', true);
 
-statement error pgcode 22038 pq: left operand of jsonpath operator - is not a single numeric value
+-- COMMENTED: Logic test directive: statement error pgcode 22038 pq: left operand of jsonpath operator - is not a single numeric value
 SELECT jsonb_path_query('{}', '$ - 1', '{}', false);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('{}', 'strict 1 - $', '{}', true);
 
-statement error pgcode 22038 pq: right operand of jsonpath operator - is not a single numeric value
+-- COMMENTED: Logic test directive: statement error pgcode 22038 pq: right operand of jsonpath operator - is not a single numeric value
 SELECT jsonb_path_query('{}', 'strict 1 - $', '{}', false);
 
-query empty
+-- query empty
 SELECT jsonb_path_query('{}', '1 - $', '{}', true);
 
-statement error pgcode 22038 pq: right operand of jsonpath operator - is not a single numeric value
+-- COMMENTED: Logic test directive: statement error pgcode 22038 pq: right operand of jsonpath operator - is not a single numeric value
 SELECT jsonb_path_query('{}', '1 - $', '{}', false);
 
-statement error pgcode 42704 pq: could not find jsonpath variable "var"
+-- COMMENTED: Logic test directive: statement error pgcode 42704 pq: could not find jsonpath variable "var"
 SELECT jsonb_path_query('{}', 'strict $var', '{}', true);
 
-statement error pgcode 42704 pq: could not find jsonpath variable "var"
+-- COMMENTED: Logic test directive: statement error pgcode 42704 pq: could not find jsonpath variable "var"
 SELECT jsonb_path_query('{}', 'strict $var', '{}', false);
 
-statement error pgcode 42704 pq: could not find jsonpath variable "var"
+-- COMMENTED: Logic test directive: statement error pgcode 42704 pq: could not find jsonpath variable "var"
 SELECT jsonb_path_query('{}', '$var', '{}', true);
 
-statement error pgcode 42704 pq: could not find jsonpath variable "var"
+-- COMMENTED: Logic test directive: statement error pgcode 42704 pq: could not find jsonpath variable "var"
 SELECT jsonb_path_query('{}', '$var', '{}', false);
 
-query T
+-- query T
 SELECT jsonb_path_query('[1, 2, 3]', '($[*] > 2) ? (@ == true)');
 
 -- Test 256: query (line 1541)
@@ -1007,18 +1008,18 @@ SELECT jsonb_path_query('[1]', 'lax $[-10000000000000000]');
 SELECT jsonb_path_query('[1]', '$[2147483647]');
 
 # MaxInt32 + 1
-statement error pgcode 22033 pq: jsonpath array subscript is out of integer range
+-- COMMENTED: Logic test directive: statement error pgcode 22033 pq: jsonpath array subscript is out of integer range
 SELECT jsonb_path_query('[1]', '$[2147483648]');
 
 # MinInt32
-query empty
+-- query empty
 SELECT jsonb_path_query('[1]', '$[-2147483648]');
 
 # MinInt32 - 1
-statement error pgcode 22033 pq: jsonpath array subscript is out of integer range
+-- COMMENTED: Logic test directive: statement error pgcode 22033 pq: jsonpath array subscript is out of integer range
 SELECT jsonb_path_query('[1]', '$[-2147483649]');
 
-query T
+-- query T
 SELECT jsonb_path_query('[1, 2]', '$.size()');
 
 -- Test 264: query (line 1594)
@@ -1114,7 +1115,7 @@ SELECT jsonb_path_query('[1, 2, 3]', '$[-0.99999999]');
 -- Test 294: query (line 1758)
 SELECT jsonb_path_query('[1, 2, 3]', '$[-1.01]');
 
-query T
+-- query T
 SELECT jsonb_path_query('[1, 2, 3]', 'strict $[-0.9999999999999]');
 
 -- Test 295: statement (line 1766)
@@ -1244,7 +1245,7 @@ SELECT jsonb_path_query('[[1, 2]]', '$.abs()');
 SELECT jsonb_path_query('[1, 2, [3, 4]]', '$.abs()');
 
 -- Test 337: query (line 1959)
-SELECT jsonb_path_query('{"a": -0.5}', '$.a.abs()')
+SELECT jsonb_path_query('{"a": -0.5}', '$.a.abs()');
 
 -- Test 338: statement (line 1964)
 SELECT jsonb_path_query('"1"', '$.abs()');
@@ -1339,3 +1340,6 @@ SELECT jsonb_path_query('{"LIKE_REGEx": 1}'::JSONB, '$.LIKE_REGEx'::JSONPATH);
 -- Test 368: query (line 2113)
 SELECT jsonb_path_query('{"LIKE_REGEx": 1}'::JSONB, '$.LIKE_REGEX'::JSONPATH);
 
+
+
+RESET client_min_messages;

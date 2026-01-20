@@ -1,0 +1,84 @@
+SET
+BEGIN
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+GRANT ROLE
+GRANT ROLE
+GRANT ROLE
+CREATE ROLE
+GRANT ROLE
+GRANT ROLE
+GRANT ROLE
+CREATE ROLE
+GRANT ROLE
+GRANT ROLE
+CREATE ROLE
+GRANT ROLE
+GRANT ROLE
+GRANT ROLE
+COMMIT
+CREATE ROLE
+CREATE ROLE
+GRANT ROLE
+GRANT ROLE
+BEGIN
+         grantee          |      role_name       | is_grantable 
+--------------------------+----------------------+--------------
+ postgres                 | pg_database_owner    | NO
+ pg_monitor               | pg_read_all_settings | NO
+ pg_monitor               | pg_read_all_stats    | NO
+ pg_monitor               | pg_stat_scan_tables  | NO
+ user5                    | role1                | NO
+ user6                    | role11               | NO
+ user7                    | role2                | NO
+ role9                    | role3                | NO
+ role10                   | role4                | NO
+ role11                   | role5                | NO
+ user1                    | role5                | NO
+ role9                    | role6                | NO
+ role10                   | role7                | NO
+ role11                   | role8                | NO
+ user1                    | role9                | NO
+ role_foo                 | role_bar             | YES
+ testuser                 | role_foo             | YES
+ owner_grant_option_child | testuser             | NO
+(18 rows)
+
+REVOKE ROLE
+SAVEPOINT
+ROLLBACK
+         grantee          |      role_name       | is_grantable 
+--------------------------+----------------------+--------------
+ postgres                 | pg_database_owner    | NO
+ pg_monitor               | pg_read_all_settings | NO
+ pg_monitor               | pg_read_all_stats    | NO
+ pg_monitor               | pg_stat_scan_tables  | NO
+ owner_grant_option_child | testuser             | NO
+ user5                    | role1                | NO
+ user7                    | role2                | NO
+ role9                    | role3                | NO
+ role10                   | role4                | NO
+ role11                   | role5                | NO
+ user1                    | role5                | NO
+ role9                    | role6                | NO
+ role10                   | role7                | NO
+ role11                   | role8                | NO
+ user1                    | role9                | NO
+ user6                    | role11               | NO
+ role_foo                 | role_bar             | YES
+(17 rows)
+
+COMMIT

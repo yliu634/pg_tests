@@ -1,0 +1,420 @@
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+  oid  | defaclrole | defaclnamespace | defaclobjtype |                    defaclacl                    
+-------+------------+-----------------+---------------+-------------------------------------------------
+ 19821 |      19811 |               0 | S             | {foo=r*w*U*/foo}
+ 19819 |      19811 |               0 | n             | {foo=U*C*/foo}
+ 19817 |      19811 |               0 | T             | {=U/foo,foo=U*/foo}
+ 19823 |      19811 |               0 | f             | {=X/foo,foo=X*/foo}
+ 19816 |      19812 |               0 | r             | {bar=a*r*w*d*D*x*t*/bar}
+ 19822 |      19812 |               0 | S             | {bar=r*w*U*/bar}
+ 19820 |      19812 |               0 | n             | {bar=U*C*/bar}
+ 19818 |      19812 |               0 | T             | {=U/bar,bar=U*/bar}
+ 19824 |      19812 |               0 | f             | {=X/bar,bar=X*/bar}
+ 19815 |      19811 |               0 | r             | {foo=a*rw*d*D*x*t*/foo}
+ 19825 |      16384 |               0 | T             | {pan=U/pan,foo=U*/pan}
+ 19829 |      16384 |            2200 | r             | {foo=arwd/pan}
+ 19830 |      16384 |            2200 | S             | {foo=rwU/pan}
+ 19831 |      16384 |            2200 | T             | {foo=U/pan}
+ 19832 |      16384 |            2200 | f             | {foo=X/pan}
+ 19834 |      16384 |               0 | r             | {=r/pan,pan=arwdDxt/pan,foo=a*r*w*d*D*x*t*/pan}
+ 19836 |      16384 |               0 | n             | {=U/pan,pan=UC/pan,foo=U*C*/pan}
+ 19835 |      16384 |               0 | S             | {=r/pan,pan=rwU/pan,foo=r*w*U*/pan}
+ 19814 |      16384 |               0 | f             | {pan=X/pan,foo=X*/pan}
+(19 rows)
+
+ALTER DEFAULT PRIVILEGES
+psql:pg_tests/compatible/pg_catalog_pg_default_acl.sql:17: ERROR:  role "foo" already exists
+psql:pg_tests/compatible/pg_catalog_pg_default_acl.sql:20: ERROR:  role "bar" already exists
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+  oid  | defaclrole | defaclnamespace | defaclobjtype |                               defaclacl                                
+-------+------------+-----------------+---------------+------------------------------------------------------------------------
+ 19814 |      16384 |               0 | f             | {=X/pan,pan=X/pan,foo=X*/pan,bar=X*/pan}
+ 19821 |      19811 |               0 | S             | {foo=r*w*U*/foo}
+ 19819 |      19811 |               0 | n             | {foo=U*C*/foo}
+ 19817 |      19811 |               0 | T             | {=U/foo,foo=U*/foo}
+ 19823 |      19811 |               0 | f             | {=X/foo,foo=X*/foo}
+ 19816 |      19812 |               0 | r             | {bar=a*r*w*d*D*x*t*/bar}
+ 19822 |      19812 |               0 | S             | {bar=r*w*U*/bar}
+ 19820 |      19812 |               0 | n             | {bar=U*C*/bar}
+ 19818 |      19812 |               0 | T             | {=U/bar,bar=U*/bar}
+ 19824 |      19812 |               0 | f             | {=X/bar,bar=X*/bar}
+ 19815 |      19811 |               0 | r             | {foo=a*rw*d*D*x*t*/foo}
+ 19829 |      16384 |            2200 | r             | {foo=arwd/pan}
+ 19830 |      16384 |            2200 | S             | {foo=rwU/pan}
+ 19831 |      16384 |            2200 | T             | {foo=U/pan}
+ 19832 |      16384 |            2200 | f             | {foo=X/pan}
+ 19834 |      16384 |               0 | r             | {=r/pan,pan=arwdDxt/pan,foo=a*r*w*d*D*x*t*/pan,bar=a*r*w*d*D*x*t*/pan}
+ 19825 |      16384 |               0 | T             | {pan=U/pan,foo=U*/pan,bar=U*/pan}
+ 19836 |      16384 |               0 | n             | {=U/pan,pan=UC/pan,foo=U*C*/pan,bar=U*C*/pan}
+ 19835 |      16384 |               0 | S             | {=r/pan,pan=rwU/pan,foo=r*w*U*/pan,bar=r*w*U*/pan}
+(19 rows)
+
+psql:pg_tests/compatible/pg_catalog_pg_default_acl.sql:33: ERROR:  role "root" does not exist
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+  oid  | defaclrole | defaclnamespace | defaclobjtype |                               defaclacl                                
+-------+------------+-----------------+---------------+------------------------------------------------------------------------
+ 19814 |      16384 |               0 | f             | {=X/pan,pan=X/pan,foo=X*/pan,bar=X*/pan}
+ 19815 |      19811 |               0 | r             | {foo=a*r*w*d*D*x*t*/foo,bar=a*r*w*d*D*x*t*/foo}
+ 19816 |      19812 |               0 | r             | {foo=a*r*w*d*D*x*t*/bar,bar=a*r*w*d*D*x*t*/bar}
+ 19817 |      19811 |               0 | T             | {=U/foo,foo=U*/foo,bar=U*/foo}
+ 19818 |      19812 |               0 | T             | {=U/bar,foo=U*/bar,bar=U*/bar}
+ 19819 |      19811 |               0 | n             | {foo=U*C*/foo,bar=U*C*/foo}
+ 19820 |      19812 |               0 | n             | {foo=U*C*/bar,bar=U*C*/bar}
+ 19821 |      19811 |               0 | S             | {foo=r*w*U*/foo,bar=r*w*U*/foo}
+ 19822 |      19812 |               0 | S             | {foo=r*w*U*/bar,bar=r*w*U*/bar}
+ 19823 |      19811 |               0 | f             | {=X/foo,foo=X*/foo,bar=X*/foo}
+ 19824 |      19812 |               0 | f             | {=X/bar,foo=X*/bar,bar=X*/bar}
+ 19829 |      16384 |            2200 | r             | {foo=arwd/pan}
+ 19830 |      16384 |            2200 | S             | {foo=rwU/pan}
+ 19831 |      16384 |            2200 | T             | {foo=U/pan}
+ 19832 |      16384 |            2200 | f             | {foo=X/pan}
+ 19834 |      16384 |               0 | r             | {=r/pan,pan=arwdDxt/pan,foo=a*r*w*d*D*x*t*/pan,bar=a*r*w*d*D*x*t*/pan}
+ 19825 |      16384 |               0 | T             | {pan=U/pan,foo=U*/pan,bar=U*/pan}
+ 19836 |      16384 |               0 | n             | {=U/pan,pan=UC/pan,foo=U*C*/pan,bar=U*C*/pan}
+ 19835 |      16384 |               0 | S             | {=r/pan,pan=rwU/pan,foo=r*w*U*/pan,bar=r*w*U*/pan}
+(19 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+  oid  | defaclrole | defaclnamespace | defaclobjtype |                               defaclacl                                
+-------+------------+-----------------+---------------+------------------------------------------------------------------------
+ 19814 |      16384 |               0 | f             | {=X/pan,pan=X/pan,foo=X*/pan,bar=X*/pan}
+ 19815 |      19811 |               0 | r             | {}
+ 19816 |      19812 |               0 | r             | {}
+ 19817 |      19811 |               0 | T             | {=U/foo}
+ 19818 |      19812 |               0 | T             | {=U/bar}
+ 19819 |      19811 |               0 | n             | {}
+ 19820 |      19812 |               0 | n             | {}
+ 19821 |      19811 |               0 | S             | {}
+ 19822 |      19812 |               0 | S             | {}
+ 19823 |      19811 |               0 | f             | {=X/foo}
+ 19824 |      19812 |               0 | f             | {=X/bar}
+ 19829 |      16384 |            2200 | r             | {foo=arwd/pan}
+ 19830 |      16384 |            2200 | S             | {foo=rwU/pan}
+ 19831 |      16384 |            2200 | T             | {foo=U/pan}
+ 19832 |      16384 |            2200 | f             | {foo=X/pan}
+ 19834 |      16384 |               0 | r             | {=r/pan,pan=arwdDxt/pan,foo=a*r*w*d*D*x*t*/pan,bar=a*r*w*d*D*x*t*/pan}
+ 19825 |      16384 |               0 | T             | {pan=U/pan,foo=U*/pan,bar=U*/pan}
+ 19836 |      16384 |               0 | n             | {=U/pan,pan=UC/pan,foo=U*C*/pan,bar=U*C*/pan}
+ 19835 |      16384 |               0 | S             | {=r/pan,pan=rwU/pan,foo=r*w*U*/pan,bar=r*w*U*/pan}
+(19 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+  oid  | defaclrole | defaclnamespace | defaclobjtype |                               defaclacl                                
+-------+------------+-----------------+---------------+------------------------------------------------------------------------
+ 19814 |      16384 |               0 | f             | {=X/pan,pan=X/pan,foo=X*/pan,bar=X*/pan}
+ 19815 |      19811 |               0 | r             | {foo=a*r*w*d*D*x*t*/foo}
+ 19821 |      19811 |               0 | S             | {foo=r*w*U*/foo}
+ 19819 |      19811 |               0 | n             | {foo=U*C*/foo}
+ 19817 |      19811 |               0 | T             | {=U/foo,foo=U*/foo}
+ 19823 |      19811 |               0 | f             | {=X/foo,foo=X*/foo}
+ 19816 |      19812 |               0 | r             | {bar=a*r*w*d*D*x*t*/bar}
+ 19822 |      19812 |               0 | S             | {bar=r*w*U*/bar}
+ 19820 |      19812 |               0 | n             | {bar=U*C*/bar}
+ 19818 |      19812 |               0 | T             | {=U/bar,bar=U*/bar}
+ 19824 |      19812 |               0 | f             | {=X/bar,bar=X*/bar}
+ 19829 |      16384 |            2200 | r             | {foo=arwd/pan}
+ 19830 |      16384 |            2200 | S             | {foo=rwU/pan}
+ 19831 |      16384 |            2200 | T             | {foo=U/pan}
+ 19832 |      16384 |            2200 | f             | {foo=X/pan}
+ 19834 |      16384 |               0 | r             | {=r/pan,pan=arwdDxt/pan,foo=a*r*w*d*D*x*t*/pan,bar=a*r*w*d*D*x*t*/pan}
+ 19825 |      16384 |               0 | T             | {pan=U/pan,foo=U*/pan,bar=U*/pan}
+ 19836 |      16384 |               0 | n             | {=U/pan,pan=UC/pan,foo=U*C*/pan,bar=U*C*/pan}
+ 19835 |      16384 |               0 | S             | {=r/pan,pan=rwU/pan,foo=r*w*U*/pan,bar=r*w*U*/pan}
+(19 rows)
+
+ALTER DEFAULT PRIVILEGES
+  oid  | defaclrole | defaclnamespace | defaclobjtype |                               defaclacl                                
+-------+------------+-----------------+---------------+------------------------------------------------------------------------
+ 19814 |      16384 |               0 | f             | {=X/pan,pan=X/pan,foo=X*/pan,bar=X*/pan}
+ 19821 |      19811 |               0 | S             | {foo=r*w*U*/foo}
+ 19819 |      19811 |               0 | n             | {foo=U*C*/foo}
+ 19817 |      19811 |               0 | T             | {=U/foo,foo=U*/foo}
+ 19823 |      19811 |               0 | f             | {=X/foo,foo=X*/foo}
+ 19816 |      19812 |               0 | r             | {bar=a*r*w*d*D*x*t*/bar}
+ 19822 |      19812 |               0 | S             | {bar=r*w*U*/bar}
+ 19820 |      19812 |               0 | n             | {bar=U*C*/bar}
+ 19818 |      19812 |               0 | T             | {=U/bar,bar=U*/bar}
+ 19824 |      19812 |               0 | f             | {=X/bar,bar=X*/bar}
+ 19815 |      19811 |               0 | r             | {foo=a*w*d*D*x*t*/foo}
+ 19829 |      16384 |            2200 | r             | {foo=arwd/pan}
+ 19830 |      16384 |            2200 | S             | {foo=rwU/pan}
+ 19831 |      16384 |            2200 | T             | {foo=U/pan}
+ 19832 |      16384 |            2200 | f             | {foo=X/pan}
+ 19834 |      16384 |               0 | r             | {=r/pan,pan=arwdDxt/pan,foo=a*r*w*d*D*x*t*/pan,bar=a*r*w*d*D*x*t*/pan}
+ 19825 |      16384 |               0 | T             | {pan=U/pan,foo=U*/pan,bar=U*/pan}
+ 19836 |      16384 |               0 | n             | {=U/pan,pan=UC/pan,foo=U*C*/pan,bar=U*C*/pan}
+ 19835 |      16384 |               0 | S             | {=r/pan,pan=rwU/pan,foo=r*w*U*/pan,bar=r*w*U*/pan}
+(19 rows)
+
+ALTER DEFAULT PRIVILEGES
+  oid  | defaclrole | defaclnamespace | defaclobjtype |                               defaclacl                                
+-------+------------+-----------------+---------------+------------------------------------------------------------------------
+ 19814 |      16384 |               0 | f             | {=X/pan,pan=X/pan,foo=X*/pan,bar=X*/pan}
+ 19821 |      19811 |               0 | S             | {foo=r*w*U*/foo}
+ 19819 |      19811 |               0 | n             | {foo=U*C*/foo}
+ 19817 |      19811 |               0 | T             | {=U/foo,foo=U*/foo}
+ 19823 |      19811 |               0 | f             | {=X/foo,foo=X*/foo}
+ 19816 |      19812 |               0 | r             | {bar=a*r*w*d*D*x*t*/bar}
+ 19822 |      19812 |               0 | S             | {bar=r*w*U*/bar}
+ 19820 |      19812 |               0 | n             | {bar=U*C*/bar}
+ 19818 |      19812 |               0 | T             | {=U/bar,bar=U*/bar}
+ 19824 |      19812 |               0 | f             | {=X/bar,bar=X*/bar}
+ 19815 |      19811 |               0 | r             | {foo=a*rw*d*D*x*t*/foo}
+ 19829 |      16384 |            2200 | r             | {foo=arwd/pan}
+ 19830 |      16384 |            2200 | S             | {foo=rwU/pan}
+ 19831 |      16384 |            2200 | T             | {foo=U/pan}
+ 19832 |      16384 |            2200 | f             | {foo=X/pan}
+ 19834 |      16384 |               0 | r             | {=r/pan,pan=arwdDxt/pan,foo=a*r*w*d*D*x*t*/pan,bar=a*r*w*d*D*x*t*/pan}
+ 19825 |      16384 |               0 | T             | {pan=U/pan,foo=U*/pan,bar=U*/pan}
+ 19836 |      16384 |               0 | n             | {=U/pan,pan=UC/pan,foo=U*C*/pan,bar=U*C*/pan}
+ 19835 |      16384 |               0 | S             | {=r/pan,pan=rwU/pan,foo=r*w*U*/pan,bar=r*w*U*/pan}
+(19 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+  oid  | defaclrole | defaclnamespace | defaclobjtype |                          defaclacl                          
+-------+------------+-----------------+---------------+-------------------------------------------------------------
+ 19821 |      19811 |               0 | S             | {foo=r*w*U*/foo}
+ 19819 |      19811 |               0 | n             | {foo=U*C*/foo}
+ 19817 |      19811 |               0 | T             | {=U/foo,foo=U*/foo}
+ 19823 |      19811 |               0 | f             | {=X/foo,foo=X*/foo}
+ 19816 |      19812 |               0 | r             | {bar=a*r*w*d*D*x*t*/bar}
+ 19822 |      19812 |               0 | S             | {bar=r*w*U*/bar}
+ 19820 |      19812 |               0 | n             | {bar=U*C*/bar}
+ 19818 |      19812 |               0 | T             | {=U/bar,bar=U*/bar}
+ 19824 |      19812 |               0 | f             | {=X/bar,bar=X*/bar}
+ 19815 |      19811 |               0 | r             | {foo=a*rw*d*D*x*t*/foo}
+ 19834 |      16384 |               0 | r             | {pan=arwdDxt/pan,foo=a*w*d*D*x*t*/pan,bar=a*w*d*D*x*t*/pan}
+ 19814 |      16384 |               0 | f             | {pan=X/pan}
+ 19825 |      16384 |               0 | T             | {pan=U/pan}
+ 19829 |      16384 |            2200 | r             | {foo=arwd/pan}
+ 19830 |      16384 |            2200 | S             | {foo=rwU/pan}
+ 19831 |      16384 |            2200 | T             | {foo=U/pan}
+ 19832 |      16384 |            2200 | f             | {foo=X/pan}
+(17 rows)
+
+ALTER DEFAULT PRIVILEGES
+  oid  | defaclrole | defaclnamespace | defaclobjtype |        defaclacl         
+-------+------------+-----------------+---------------+--------------------------
+ 19821 |      19811 |               0 | S             | {foo=r*w*U*/foo}
+ 19819 |      19811 |               0 | n             | {foo=U*C*/foo}
+ 19817 |      19811 |               0 | T             | {=U/foo,foo=U*/foo}
+ 19823 |      19811 |               0 | f             | {=X/foo,foo=X*/foo}
+ 19816 |      19812 |               0 | r             | {bar=a*r*w*d*D*x*t*/bar}
+ 19822 |      19812 |               0 | S             | {bar=r*w*U*/bar}
+ 19820 |      19812 |               0 | n             | {bar=U*C*/bar}
+ 19818 |      19812 |               0 | T             | {=U/bar,bar=U*/bar}
+ 19824 |      19812 |               0 | f             | {=X/bar,bar=X*/bar}
+ 19815 |      19811 |               0 | r             | {foo=a*rw*d*D*x*t*/foo}
+ 19814 |      16384 |               0 | f             | {pan=X/pan}
+ 19825 |      16384 |               0 | T             | {pan=U/pan}
+ 19829 |      16384 |            2200 | r             | {foo=arwd/pan}
+ 19830 |      16384 |            2200 | S             | {foo=rwU/pan}
+ 19831 |      16384 |            2200 | T             | {foo=U/pan}
+ 19832 |      16384 |            2200 | f             | {foo=X/pan}
+(16 rows)
+
+psql:pg_tests/compatible/pg_catalog_pg_default_acl.sql:107: ERROR:  syntax error at or near "ALL"
+LINE 1: ALTER DEFAULT PRIVILEGES FOR ALL ROLES GRANT ALL ON TABLES T...
+                                     ^
+psql:pg_tests/compatible/pg_catalog_pg_default_acl.sql:108: ERROR:  syntax error at or near "ALL"
+LINE 1: ALTER DEFAULT PRIVILEGES FOR ALL ROLES GRANT ALL ON TYPES TO...
+                                     ^
+psql:pg_tests/compatible/pg_catalog_pg_default_acl.sql:109: ERROR:  syntax error at or near "ALL"
+LINE 1: ALTER DEFAULT PRIVILEGES FOR ALL ROLES GRANT ALL ON SCHEMAS ...
+                                     ^
+psql:pg_tests/compatible/pg_catalog_pg_default_acl.sql:110: ERROR:  syntax error at or near "ALL"
+LINE 1: ALTER DEFAULT PRIVILEGES FOR ALL ROLES GRANT ALL ON SEQUENCE...
+                                     ^
+psql:pg_tests/compatible/pg_catalog_pg_default_acl.sql:111: ERROR:  syntax error at or near "ALL"
+LINE 1: ALTER DEFAULT PRIVILEGES FOR ALL ROLES GRANT ALL ON FUNCTION...
+                                     ^
+  oid  | defaclrole | defaclnamespace | defaclobjtype |        defaclacl         
+-------+------------+-----------------+---------------+--------------------------
+ 19821 |      19811 |               0 | S             | {foo=r*w*U*/foo}
+ 19819 |      19811 |               0 | n             | {foo=U*C*/foo}
+ 19817 |      19811 |               0 | T             | {=U/foo,foo=U*/foo}
+ 19823 |      19811 |               0 | f             | {=X/foo,foo=X*/foo}
+ 19816 |      19812 |               0 | r             | {bar=a*r*w*d*D*x*t*/bar}
+ 19822 |      19812 |               0 | S             | {bar=r*w*U*/bar}
+ 19820 |      19812 |               0 | n             | {bar=U*C*/bar}
+ 19818 |      19812 |               0 | T             | {=U/bar,bar=U*/bar}
+ 19824 |      19812 |               0 | f             | {=X/bar,bar=X*/bar}
+ 19815 |      19811 |               0 | r             | {foo=a*rw*d*D*x*t*/foo}
+ 19814 |      16384 |               0 | f             | {pan=X/pan}
+ 19825 |      16384 |               0 | T             | {pan=U/pan}
+ 19829 |      16384 |            2200 | r             | {foo=arwd/pan}
+ 19830 |      16384 |            2200 | S             | {foo=rwU/pan}
+ 19831 |      16384 |            2200 | T             | {foo=U/pan}
+ 19832 |      16384 |            2200 | f             | {foo=X/pan}
+(16 rows)
+
+psql:pg_tests/compatible/pg_catalog_pg_default_acl.sql:117: ERROR:  syntax error at or near "ALL"
+LINE 1: ALTER DEFAULT PRIVILEGES FOR ALL ROLES REVOKE ALL ON TABLES ...
+                                     ^
+psql:pg_tests/compatible/pg_catalog_pg_default_acl.sql:118: ERROR:  syntax error at or near "ALL"
+LINE 1: ALTER DEFAULT PRIVILEGES FOR ALL ROLES REVOKE ALL ON TYPES F...
+                                     ^
+psql:pg_tests/compatible/pg_catalog_pg_default_acl.sql:119: ERROR:  syntax error at or near "ALL"
+LINE 1: ALTER DEFAULT PRIVILEGES FOR ALL ROLES REVOKE ALL ON SCHEMAS...
+                                     ^
+psql:pg_tests/compatible/pg_catalog_pg_default_acl.sql:120: ERROR:  syntax error at or near "ALL"
+LINE 1: ALTER DEFAULT PRIVILEGES FOR ALL ROLES REVOKE ALL ON SEQUENC...
+                                     ^
+psql:pg_tests/compatible/pg_catalog_pg_default_acl.sql:121: ERROR:  syntax error at or near "ALL"
+LINE 1: ALTER DEFAULT PRIVILEGES FOR ALL ROLES REVOKE ALL ON FUNCTIO...
+                                     ^
+  oid  | defaclrole | defaclnamespace | defaclobjtype |        defaclacl         
+-------+------------+-----------------+---------------+--------------------------
+ 19821 |      19811 |               0 | S             | {foo=r*w*U*/foo}
+ 19819 |      19811 |               0 | n             | {foo=U*C*/foo}
+ 19817 |      19811 |               0 | T             | {=U/foo,foo=U*/foo}
+ 19823 |      19811 |               0 | f             | {=X/foo,foo=X*/foo}
+ 19816 |      19812 |               0 | r             | {bar=a*r*w*d*D*x*t*/bar}
+ 19822 |      19812 |               0 | S             | {bar=r*w*U*/bar}
+ 19820 |      19812 |               0 | n             | {bar=U*C*/bar}
+ 19818 |      19812 |               0 | T             | {=U/bar,bar=U*/bar}
+ 19824 |      19812 |               0 | f             | {=X/bar,bar=X*/bar}
+ 19815 |      19811 |               0 | r             | {foo=a*rw*d*D*x*t*/foo}
+ 19814 |      16384 |               0 | f             | {pan=X/pan}
+ 19825 |      16384 |               0 | T             | {pan=U/pan}
+ 19829 |      16384 |            2200 | r             | {foo=arwd/pan}
+ 19830 |      16384 |            2200 | S             | {foo=rwU/pan}
+ 19831 |      16384 |            2200 | T             | {foo=U/pan}
+ 19832 |      16384 |            2200 | f             | {foo=X/pan}
+(16 rows)
+
+psql:pg_tests/compatible/pg_catalog_pg_default_acl.sql:127: ERROR:  role "testuser" does not exist
+psql:pg_tests/compatible/pg_catalog_pg_default_acl.sql:128: ERROR:  role "testuser" does not exist
+psql:pg_tests/compatible/pg_catalog_pg_default_acl.sql:129: ERROR:  role "testuser" does not exist
+psql:pg_tests/compatible/pg_catalog_pg_default_acl.sql:130: ERROR:  role "testuser" does not exist
+psql:pg_tests/compatible/pg_catalog_pg_default_acl.sql:131: ERROR:  role "testuser" does not exist
+  oid  | defaclrole | defaclnamespace | defaclobjtype |        defaclacl         
+-------+------------+-----------------+---------------+--------------------------
+ 19821 |      19811 |               0 | S             | {foo=r*w*U*/foo}
+ 19819 |      19811 |               0 | n             | {foo=U*C*/foo}
+ 19817 |      19811 |               0 | T             | {=U/foo,foo=U*/foo}
+ 19823 |      19811 |               0 | f             | {=X/foo,foo=X*/foo}
+ 19816 |      19812 |               0 | r             | {bar=a*r*w*d*D*x*t*/bar}
+ 19822 |      19812 |               0 | S             | {bar=r*w*U*/bar}
+ 19820 |      19812 |               0 | n             | {bar=U*C*/bar}
+ 19818 |      19812 |               0 | T             | {=U/bar,bar=U*/bar}
+ 19824 |      19812 |               0 | f             | {=X/bar,bar=X*/bar}
+ 19815 |      19811 |               0 | r             | {foo=a*rw*d*D*x*t*/foo}
+ 19814 |      16384 |               0 | f             | {pan=X/pan}
+ 19825 |      16384 |               0 | T             | {pan=U/pan}
+ 19829 |      16384 |            2200 | r             | {foo=arwd/pan}
+ 19830 |      16384 |            2200 | S             | {foo=rwU/pan}
+ 19831 |      16384 |            2200 | T             | {foo=U/pan}
+ 19832 |      16384 |            2200 | f             | {foo=X/pan}
+(16 rows)
+
+ALTER DEFAULT PRIVILEGES
+  oid  | defaclrole | defaclnamespace | defaclobjtype |        defaclacl         
+-------+------------+-----------------+---------------+--------------------------
+ 19821 |      19811 |               0 | S             | {foo=r*w*U*/foo}
+ 19819 |      19811 |               0 | n             | {foo=U*C*/foo}
+ 19817 |      19811 |               0 | T             | {=U/foo,foo=U*/foo}
+ 19823 |      19811 |               0 | f             | {=X/foo,foo=X*/foo}
+ 19816 |      19812 |               0 | r             | {bar=a*r*w*d*D*x*t*/bar}
+ 19822 |      19812 |               0 | S             | {bar=r*w*U*/bar}
+ 19820 |      19812 |               0 | n             | {bar=U*C*/bar}
+ 19818 |      19812 |               0 | T             | {=U/bar,bar=U*/bar}
+ 19824 |      19812 |               0 | f             | {=X/bar,bar=X*/bar}
+ 19815 |      19811 |               0 | r             | {foo=a*rw*d*D*x*t*/foo}
+ 19814 |      16384 |               0 | f             | {pan=X/pan}
+ 19825 |      16384 |               0 | T             | {pan=U/pan}
+ 19829 |      16384 |            2200 | r             | {foo=arwd/pan}
+ 19830 |      16384 |            2200 | S             | {foo=rwU/pan}
+ 19831 |      16384 |            2200 | T             | {foo=U/pan}
+ 19832 |      16384 |            2200 | f             | {foo=X/pan}
+(16 rows)
+
+psql:pg_tests/compatible/pg_catalog_pg_default_acl.sql:143: ERROR:  role "testuser" does not exist
+  oid  | defaclrole | defaclnamespace | defaclobjtype |        defaclacl         
+-------+------------+-----------------+---------------+--------------------------
+ 19821 |      19811 |               0 | S             | {foo=r*w*U*/foo}
+ 19819 |      19811 |               0 | n             | {foo=U*C*/foo}
+ 19817 |      19811 |               0 | T             | {=U/foo,foo=U*/foo}
+ 19823 |      19811 |               0 | f             | {=X/foo,foo=X*/foo}
+ 19816 |      19812 |               0 | r             | {bar=a*r*w*d*D*x*t*/bar}
+ 19822 |      19812 |               0 | S             | {bar=r*w*U*/bar}
+ 19820 |      19812 |               0 | n             | {bar=U*C*/bar}
+ 19818 |      19812 |               0 | T             | {=U/bar,bar=U*/bar}
+ 19824 |      19812 |               0 | f             | {=X/bar,bar=X*/bar}
+ 19815 |      19811 |               0 | r             | {foo=a*rw*d*D*x*t*/foo}
+ 19814 |      16384 |               0 | f             | {pan=X/pan}
+ 19825 |      16384 |               0 | T             | {pan=U/pan}
+ 19829 |      16384 |            2200 | r             | {foo=arwd/pan}
+ 19830 |      16384 |            2200 | S             | {foo=rwU/pan}
+ 19831 |      16384 |            2200 | T             | {foo=U/pan}
+ 19832 |      16384 |            2200 | f             | {foo=X/pan}
+(16 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+  oid  | defaclrole | defaclnamespace | defaclobjtype |                defaclacl                 
+-------+------------+-----------------+---------------+------------------------------------------
+ 19821 |      19811 |               0 | S             | {foo=r*w*U*/foo}
+ 19819 |      19811 |               0 | n             | {foo=U*C*/foo}
+ 19817 |      19811 |               0 | T             | {=U/foo,foo=U*/foo}
+ 19823 |      19811 |               0 | f             | {=X/foo,foo=X*/foo}
+ 19816 |      19812 |               0 | r             | {bar=a*r*w*d*D*x*t*/bar}
+ 19822 |      19812 |               0 | S             | {bar=r*w*U*/bar}
+ 19820 |      19812 |               0 | n             | {bar=U*C*/bar}
+ 19818 |      19812 |               0 | T             | {=U/bar,bar=U*/bar}
+ 19824 |      19812 |               0 | f             | {=X/bar,bar=X*/bar}
+ 19815 |      19811 |               0 | r             | {foo=a*rw*d*D*x*t*/foo}
+ 20842 |      16384 |               0 | r             | {pan=arwdDxt/pan,foo=a*r*w*d*D*x*t*/pan}
+ 20843 |      16384 |               0 | S             | {pan=rwU/pan,foo=r*w*U*/pan}
+ 20844 |      16384 |               0 | n             | {pan=UC/pan,foo=U*C*/pan}
+ 19825 |      16384 |               0 | T             | {pan=U/pan,foo=U*/pan}
+ 19814 |      16384 |               0 | f             | {pan=X/pan,foo=X*/pan}
+ 19829 |      16384 |            2200 | r             | {foo=arwd/pan}
+ 19830 |      16384 |            2200 | S             | {foo=rwU/pan}
+ 19831 |      16384 |            2200 | T             | {foo=U/pan}
+ 19832 |      16384 |            2200 | f             | {foo=X/pan}
+(19 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+  oid  | defaclrole | defaclnamespace | defaclobjtype |   defaclacl    
+-------+------------+-----------------+---------------+----------------
+ 19829 |      16384 |            2200 | r             | {foo=arwd/pan}
+ 19830 |      16384 |            2200 | S             | {foo=rwU/pan}
+ 19831 |      16384 |            2200 | T             | {foo=U/pan}
+ 19832 |      16384 |            2200 | f             | {foo=X/pan}
+(4 rows)
+
