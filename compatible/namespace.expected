@@ -1,0 +1,77 @@
+SET
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/namespace.sql:12: ERROR:  database "public" already exists
+DROP TABLE
+psql:pg_tests/compatible/namespace.sql:13: ERROR:  cross-database references are not implemented: "public.public.t"
+LINE 1: CREATE TABLE public.public.t(a INT);
+                     ^
+psql:pg_tests/compatible/namespace.sql:16: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW TABLES FROM public;
+                    ^
+psql:pg_tests/compatible/namespace.sql:19: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW TABLES FROM public.public;
+                    ^
+psql:pg_tests/compatible/namespace.sql:22: ERROR:  unrecognized configuration parameter "database"
+psql:pg_tests/compatible/namespace.sql:25: ERROR:  unrecognized configuration parameter "tables"
+psql:pg_tests/compatible/namespace.sql:28: ERROR:  unrecognized configuration parameter "database"
+DROP DATABASE
+ typname 
+---------
+ date
+(1 row)
+
+SET
+psql:pg_tests/compatible/namespace.sql:40: ERROR:  permission denied: "pg_type" is a system catalog
+psql:pg_tests/compatible/namespace.sql:41: ERROR:  permission denied: "pg_type" is a system catalog
+CREATE TABLE
+INSERT 0 1
+ x  
+----
+ 42
+(1 row)
+
+psql:pg_tests/compatible/namespace.sql:48: ERROR:  unrecognized configuration parameter "database"
+ x  
+----
+ 42
+(1 row)
+
+psql:pg_tests/compatible/namespace.sql:52: ERROR:  syntax error at or near "#"
+LINE 1: # Go to different database, check name still resolves to def...
+        ^
+psql:pg_tests/compatible/namespace.sql:52: ERROR:  unrecognized configuration parameter "database"
+psql:pg_tests/compatible/namespace.sql:52: ERROR:  column "typname" does not exist
+LINE 1: SELECT typname FROM pg_type WHERE typname = 'date';
+               ^
+psql:pg_tests/compatible/namespace.sql:55: ERROR:  unrecognized configuration parameter "database"
+SET
+ typname 
+---------
+ date
+(1 row)
+
+SET
+ x  
+----
+ 42
+(1 row)
+
+DROP TABLE
+RESET
+psql:pg_tests/compatible/namespace.sql:61: ERROR:  unrecognized configuration parameter "database"
+psql:pg_tests/compatible/namespace.sql:64: ERROR:  relation "a_pkey" does not exist
+psql:pg_tests/compatible/namespace.sql:67: ERROR:  relation "public.a_pk" does not exist
+psql:pg_tests/compatible/namespace.sql:70: ERROR:  relation "test.a_pk2" does not exist
+CREATE DATABASE
+DROP TABLE
+psql:pg_tests/compatible/namespace.sql:74: ERROR:  cross-database references are not implemented: "public.public.t"
+LINE 1: CREATE TABLE public.public.t(a INT);
+                     ^
+ALTER INDEX
+psql:pg_tests/compatible/namespace.sql:80: ERROR:  cross-database references are not implemented: "public.public.t_pkey"
+SET
+psql:pg_tests/compatible/namespace.sql:86: ERROR:  relation "a_pk3" does not exist
+psql:pg_tests/compatible/namespace.sql:89: ERROR:  relation "public.a_pk3" does not exist
+RESET

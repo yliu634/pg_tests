@@ -1,0 +1,162 @@
+SET
+DROP TABLE
+DROP TABLE
+psql:pg_tests/compatible/parallel_stmts_compat.sql:12: ERROR:  syntax error at or near ";"
+LINE 1: CREATE TABLE kv(;
+                        ^
+DROP TABLE
+DROP TABLE
+psql:pg_tests/compatible/parallel_stmts_compat.sql:19: ERROR:  syntax error at or near ";"
+LINE 1: CREATE TABLE fk(;
+                        ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:22: ERROR:  relation "kv" does not exist
+LINE 1: INSERT INTO kv VALUES (1, 2) RETURNING NOTHING;
+                    ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:25: ERROR:  relation "kv" does not exist
+LINE 1: INSERT INTO kv VALUES (1, 2) RETURNING NOTHING;
+                    ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:34: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO kv VALUES (2, 2) RETURNING NOTHING
+        ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:37: ERROR:  relation "kv" does not exist
+LINE 1: UPDATE kv SET k = 1 WHERE k = 2 RETURNING NOTHING;
+               ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:40: ERROR:  relation "kv" does not exist
+LINE 1: DELETE FROM kv WHERE k = 1 RETURNING NOTHING;
+                    ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:43: ERROR:  relation "fk" does not exist
+LINE 1: INSERT INTO fk VALUES (2);
+                    ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:46: ERROR:  relation "kv" does not exist
+LINE 1: DELETE FROM kv WHERE k = 2 RETURNING NOTHING;
+                    ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:49: ERROR:  relation "fk" does not exist
+LINE 1: DELETE FROM fk;
+                    ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:52: ERROR:  relation "kv" does not exist
+LINE 1: DELETE FROM kv;
+                    ^
+BEGIN
+psql:pg_tests/compatible/parallel_stmts_compat.sql:58: ERROR:  relation "kv" does not exist
+LINE 1: INSERT INTO kv VALUES (1, 2) RETURNING NOTHING;
+                    ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:61: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/parallel_stmts_compat.sql:64: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/parallel_stmts_compat.sql:70: ERROR:  relation "kv" does not exist
+LINE 1: SELECT k, v FROM kv ORDER BY k;
+                         ^
+BEGIN
+psql:pg_tests/compatible/parallel_stmts_compat.sql:76: ERROR:  relation "kv" does not exist
+LINE 1: INSERT INTO kv VALUES (4, 5) RETURNING NOTHING;
+                    ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:79: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/parallel_stmts_compat.sql:82: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/parallel_stmts_compat.sql:88: ERROR:  syntax error at or near "STATUS"
+LINE 1: SHOW TRANSACTION STATUS;
+                         ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:91: ERROR:  relation "kv" does not exist
+LINE 1: SELECT k, v FROM kv ORDER BY k;
+                         ^
+BEGIN
+psql:pg_tests/compatible/parallel_stmts_compat.sql:106: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO kv VALUES (1, 7) RETURNING NOTHING
+        ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:109: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/parallel_stmts_compat.sql:112: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/parallel_stmts_compat.sql:124: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO kv VALUES (1, 8) RETURNING NOTHING
+        ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:127: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/parallel_stmts_compat.sql:130: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/parallel_stmts_compat.sql:133: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/parallel_stmts_compat.sql:136: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/parallel_stmts_compat.sql:139: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/parallel_stmts_compat.sql:145: ERROR:  relation "kv" does not exist
+LINE 1: SELECT k, v FROM kv ORDER BY k;
+                         ^
+BEGIN
+psql:pg_tests/compatible/parallel_stmts_compat.sql:151: ERROR:  relation "kv" does not exist
+LINE 1: UPDATE kv SET k = 9 WHERE k = 1 RETURNING NOTHING;
+               ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:154: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/parallel_stmts_compat.sql:157: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/parallel_stmts_compat.sql:163: ERROR:  relation "kv" does not exist
+LINE 1: SELECT k, v FROM kv ORDER BY k;
+                         ^
+BEGIN
+psql:pg_tests/compatible/parallel_stmts_compat.sql:169: ERROR:  relation "kv" does not exist
+LINE 1: DELETE FROM kv WHERE k = 1 RETURNING NOTHING;
+                    ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:172: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/parallel_stmts_compat.sql:178: ERROR:  relation "kv" does not exist
+LINE 1: SELECT k, v FROM kv ORDER BY k;
+                         ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:181: ERROR:  relation "fk" does not exist
+LINE 1: INSERT INTO fk VALUES (2);
+                    ^
+BEGIN
+psql:pg_tests/compatible/parallel_stmts_compat.sql:187: ERROR:  relation "kv" does not exist
+LINE 1: DELETE FROM kv WHERE k = 1 RETURNING NOTHING;
+                    ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:190: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/parallel_stmts_compat.sql:193: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/parallel_stmts_compat.sql:199: ERROR:  relation "kv" does not exist
+LINE 1: SELECT k, v FROM kv ORDER BY k;
+                         ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:202: ERROR:  relation "fk" does not exist
+LINE 1: DELETE FROM fk;
+                    ^
+BEGIN
+psql:pg_tests/compatible/parallel_stmts_compat.sql:208: ERROR:  relation "kv" does not exist
+LINE 1: INSERT INTO kv VALUES (1, 2) RETURNING NOTHING;
+                    ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:211: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/parallel_stmts_compat.sql:214: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/parallel_stmts_compat.sql:220: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO kv VALUES (6, 10) RETURNING NOTHING
+        ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:223: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/parallel_stmts_compat.sql:226: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/parallel_stmts_compat.sql:232: ERROR:  relation "kv" does not exist
+LINE 1: SELECT k, v FROM kv ORDER BY k;
+                         ^
+BEGIN
+psql:pg_tests/compatible/parallel_stmts_compat.sql:238: ERROR:  relation "kv" does not exist
+LINE 1: INSERT INTO kv VALUES (1, 2) RETURNING NOTHING;
+                    ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:241: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/parallel_stmts_compat.sql:247: ERROR:  relation "kv" does not exist
+LINE 1: SELECT k, v FROM kv ORDER BY k;
+                         ^
+BEGIN
+psql:pg_tests/compatible/parallel_stmts_compat.sql:253: ERROR:  relation "kv" does not exist
+LINE 1: UPDATE kv SET z = 10 WHERE k = 3 RETURNING NOTHING;
+               ^
+ROLLBACK
+psql:pg_tests/compatible/parallel_stmts_compat.sql:259: ERROR:  relation "kv" does not exist
+LINE 1: DELETE FROM kv;
+                    ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:265: ERROR:  relation "kv" does not exist
+LINE 1: PREPARE x AS INSERT INTO kv VALUES ($1, $2) RETURNING NOTHIN...
+                                 ^
+psql:pg_tests/compatible/parallel_stmts_compat.sql:268: ERROR:  prepared statement "x" does not exist
+psql:pg_tests/compatible/parallel_stmts_compat.sql:271: ERROR:  prepared statement "x" does not exist
+psql:pg_tests/compatible/parallel_stmts_compat.sql:274: WARNING:  there is no transaction in progress
+ROLLBACK
+BEGIN
+psql:pg_tests/compatible/parallel_stmts_compat.sql:280: ERROR:  prepared statement "x" does not exist
+psql:pg_tests/compatible/parallel_stmts_compat.sql:283: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/parallel_stmts_compat.sql:286: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/parallel_stmts_compat.sql:292: ERROR:  relation "kv" does not exist
+LINE 1: SELECT k, v FROM kv ORDER BY k;
+                         ^
+RESET

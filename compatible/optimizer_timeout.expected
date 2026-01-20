@@ -1,0 +1,17 @@
+SET
+DROP TABLE
+psql:pg_tests/compatible/optimizer_timeout.sql:8: ERROR:  syntax error at or near ";"
+LINE 1: CREATE TABLE table1;
+                           ^
+psql:pg_tests/compatible/optimizer_timeout.sql:27: ERROR:  syntax error at or near "col1_0"
+LINE 2:     col1_0 INT NULL,
+            ^
+SET
+--
+(1 row)
+
+psql:pg_tests/compatible/optimizer_timeout.sql:56: ERROR:  syntax error at or near "tab_124176"
+LINE 1: tab_124176.col1_4 AS col_298240, tab_124184.col1_8 AS col_29...
+        ^
+RESET
+RESET

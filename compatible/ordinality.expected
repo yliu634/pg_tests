@@ -1,0 +1,61 @@
+SET
+psql:pg_tests/compatible/ordinality.sql:7: ERROR:  syntax error at or near "WITH"
+LINE 1: SELECT * FROM (VALUES ('a'), ('b')) WITH ORDINALITY AS x(nam...
+                                            ^
+psql:pg_tests/compatible/ordinality.sql:10: ERROR:  syntax error at or near "WITH"
+LINE 1: SELECT ordinality FROM (VALUES ('a'), ('b')) WITH ORDINALITY...
+                                                     ^
+psql:pg_tests/compatible/ordinality.sql:13: ERROR:  "foo" is not a table
+HINT:  Use DROP INDEX to remove an index.
+psql:pg_tests/compatible/ordinality.sql:14: ERROR:  relation "foo" already exists
+psql:pg_tests/compatible/ordinality.sql:14: ERROR:  cannot open relation "foo"
+LINE 1: INSERT INTO foo(x) VALUES ('a'), ('b');
+                    ^
+DETAIL:  This operation is not supported for indexes.
+psql:pg_tests/compatible/ordinality.sql:17: ERROR:  syntax error at or near "WITH"
+LINE 1: SELECT * FROM foo WITH ORDINALITY;
+                          ^
+psql:pg_tests/compatible/ordinality.sql:20: ERROR:  syntax error at or near "WITH"
+LINE 1: SELECT * FROM foo WITH ORDINALITY LIMIT 1;
+                          ^
+psql:pg_tests/compatible/ordinality.sql:23: ERROR:  syntax error at or near "WITH"
+LINE 1: SELECT max(ordinality) FROM foo WITH ORDINALITY;
+                                        ^
+psql:pg_tests/compatible/ordinality.sql:26: ERROR:  syntax error at or near "WITH"
+LINE 1: SELECT * FROM foo WITH ORDINALITY AS a, foo WITH ORDINALITY ...
+                          ^
+psql:pg_tests/compatible/ordinality.sql:29: ERROR:  syntax error at or near "WITH"
+LINE 1: SELECT * FROM (SELECT x||x FROM foo) WITH ORDINALITY;
+                                             ^
+psql:pg_tests/compatible/ordinality.sql:32: ERROR:  syntax error at or near "WITH"
+LINE 1: SELECT * FROM (SELECT x, ordinality*2 FROM foo WITH ORDINALI...
+                                                       ^
+psql:pg_tests/compatible/ordinality.sql:35: ERROR:  syntax error at or near "WITH"
+LINE 1: SELECT * FROM (SELECT * FROM foo ORDER BY x DESC) WITH ORDIN...
+                                                          ^
+psql:pg_tests/compatible/ordinality.sql:38: ERROR:  syntax error at or near "WITH"
+LINE 1: SELECT * FROM (SELECT * FROM foo ORDER BY x) WITH ORDINALITY...
+                                                     ^
+psql:pg_tests/compatible/ordinality.sql:41: ERROR:  syntax error at or near "WITH"
+LINE 1: SELECT * FROM (SELECT * FROM foo ORDER BY x) WITH ORDINALITY...
+                                                     ^
+psql:pg_tests/compatible/ordinality.sql:44: ERROR:  cannot open relation "foo"
+LINE 1: INSERT INTO foo(x) VALUES ('c');
+                    ^
+DETAIL:  This operation is not supported for indexes.
+psql:pg_tests/compatible/ordinality.sql:47: ERROR:  syntax error at or near "WITH"
+LINE 1: SELECT * FROM foo WITH ORDINALITY WHERE x > 'a';
+                          ^
+psql:pg_tests/compatible/ordinality.sql:50: ERROR:  syntax error at or near "WITH"
+LINE 1: SELECT * FROM foo WITH ORDINALITY WHERE ordinality > 1 ORDER...
+                          ^
+psql:pg_tests/compatible/ordinality.sql:53: ERROR:  syntax error at or near "WITH"
+LINE 1: SELECT * FROM (SELECT * FROM foo WHERE x > 'a') WITH ORDINAL...
+                                                        ^
+psql:pg_tests/compatible/ordinality.sql:56: ERROR:  syntax error at or near "WITH"
+LINE 1: SELECT ordinality = row_number() OVER () FROM foo WITH ORDIN...
+                                                          ^
+psql:pg_tests/compatible/ordinality.sql:59: ERROR:  syntax error at or near "WITH"
+LINE 1: SELECT * FROM (SELECT * FROM foo LIMIT 1) WITH ORDINALITY;
+                                                  ^
+RESET

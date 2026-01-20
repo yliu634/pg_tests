@@ -2,12 +2,12 @@
 -- 10 tests
 
 -- Test 1: query (line 1)
-SELECT |/ -1.0::float
+SELECT |/ -1.0::float;
 
-query error cannot take square root of a negative number
-SELECT |/ -1.0::decimal
+-- COMMENTED: Logic test directive: query error cannot take square root of a negative number
+SELECT |/ -1.0::decimal;
 
-query I
+-- query I
 SELECT ~-1;
 
 -- Test 2: query (line 12)

@@ -1,56 +1,60 @@
+SET client_min_messages = warning;
+
 -- PostgreSQL compatible tests from jsonpath
 -- 57 tests
 
 -- Test 1: query (line 2)
-SELECT pg_typeof(JSONPATH '$.a')
+SELECT pg_typeof(JSONPATH '$.a');
 
 -- Test 2: query (line 7)
-SELECT '$.a'::JSONPATH
+SELECT '$.a'::JSONPATH;
 
 -- Test 3: statement (line 12)
-CREATE TABLE a (j JSONPATH)
+DROP TABLE IF EXISTS a CASCADE;
+CREATE TABLE a (j JSONPATH);
 
 -- Test 4: statement (line 15)
-CREATE TABLE a (j JSONPATH[])
+DROP TABLE IF EXISTS a CASCADE;
+CREATE TABLE a (j JSONPATH[]);
 
 -- Test 5: statement (line 18)
 CREATE TYPE typ AS (j JSONPATH);
 
 -- Test 6: query (line 21)
-SELECT '$'::JSONPATH
+SELECT '$'::JSONPATH;
 
 -- Test 7: query (line 26)
-SELECT 'strict $'::JSONPATH
+SELECT 'strict $'::JSONPATH;
 
 -- Test 8: query (line 32)
-SELECT 'sTrict $'::JSONPATH
+SELECT 'sTrict $'::JSONPATH;
 
 -- Test 9: query (line 37)
-SELECT 'lax $'::JSONPATH
+SELECT 'lax $'::JSONPATH;
 
 -- Test 10: query (line 43)
-SELECT 'LaX $'::JSONPATH
+SELECT 'LaX $'::JSONPATH;
 
 -- Test 11: query (line 48)
-SELECT '$.a1[*]'::JSONPATH
+SELECT '$.a1[*]'::JSONPATH;
 
 -- Test 12: query (line 53)
-SELECT '$'::JSONPATH IS NULL
+SELECT '$'::JSONPATH IS NULL;
 
 -- Test 13: query (line 58)
-SELECT '$'::JSONPATH IS NOT NULL
+SELECT '$'::JSONPATH IS NOT NULL;
 
 -- Test 14: statement (line 63)
-SELECT '$'::JSONPATH IS NOT DISTINCT FROM '$'::JSONPATH
+SELECT '$'::JSONPATH IS NOT DISTINCT FROM '$'::JSONPATH;
 
 -- Test 15: statement (line 66)
-SELECT '$'::JSONPATH IS DISTINCT FROM '$'::JSONPATH
+SELECT '$'::JSONPATH IS DISTINCT FROM '$'::JSONPATH;
 
 -- Test 16: query (line 69)
-SELECT '$'::JSONPATH IS NOT DISTINCT FROM NULL
+SELECT '$'::JSONPATH IS NOT DISTINCT FROM NULL;
 
 -- Test 17: query (line 74)
-SELECT '$'::JSONPATH IS DISTINCT FROM NULL
+SELECT '$'::JSONPATH IS DISTINCT FROM NULL;
 
 -- Test 18: statement (line 79)
 SELECT ''::JSONPATH
@@ -71,6 +75,7 @@ SELECT '$'::JSONPATH AS col ORDER BY col DESC NULLS FIRST;
 SELECT '$'::JSONPATH ORDER BY 1 ASC;
 
 -- Test 24: statement (line 101)
+DROP TABLE IF EXISTS t CASCADE;
 CREATE TABLE t (k INT PRIMARY KEY);
 
 -- Test 25: statement (line 104)
@@ -172,3 +177,6 @@ SELECT '$.*'::JSONPATH
 -- Test 57: query (line 228)
 SELECT 'strIct $.STRIcT'::JSONPATH
 
+
+
+RESET client_min_messages;

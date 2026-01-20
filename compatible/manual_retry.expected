@@ -1,0 +1,85 @@
+SET
+CREATE SEQUENCE
+psql:pg_tests/compatible/manual_retry.sql:13: ERROR:  currval of sequence "s" is not yet defined in this session
+DROP SEQUENCE
+CREATE SEQUENCE
+BEGIN
+SAVEPOINT
+ ?column? 
+----------
+        1
+(1 row)
+
+ROLLBACK
+psql:pg_tests/compatible/manual_retry.sql:44: ERROR:  currval of sequence "s" is not yet defined in this session
+ROLLBACK
+BEGIN
+SAVEPOINT
+psql:pg_tests/compatible/manual_retry.sql:56: ERROR:  syntax error at or near "STATUS"
+LINE 1: SHOW TRANSACTION STATUS;
+                         ^
+psql:pg_tests/compatible/manual_retry.sql:59: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/manual_retry.sql:62: ERROR:  syntax error at or near "STATUS"
+LINE 1: SHOW TRANSACTION STATUS;
+                         ^
+ROLLBACK
+BEGIN
+SAVEPOINT
+psql:pg_tests/compatible/manual_retry.sql:74: ERROR:  syntax error at or near "STATUS"
+LINE 1: SHOW TRANSACTION STATUS;
+                         ^
+psql:pg_tests/compatible/manual_retry.sql:77: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/manual_retry.sql:80: ERROR:  syntax error at or near "STATUS"
+LINE 1: SHOW TRANSACTION STATUS;
+                         ^
+ROLLBACK
+BEGIN
+psql:pg_tests/compatible/manual_retry.sql:89: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/manual_retry.sql:92: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/manual_retry.sql:95: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/manual_retry.sql:98: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/manual_retry.sql:101: ERROR:  savepoint "cockroach_restart" does not exist
+psql:pg_tests/compatible/manual_retry.sql:104: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/manual_retry.sql:107: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/manual_retry.sql:110: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/manual_retry.sql:116: ERROR:  column "id" does not exist
+LINE 1: SELECT id FROM t;
+               ^
+HINT:  Perhaps you meant to reference the column "t.d".
+psql:pg_tests/compatible/manual_retry.sql:119: ERROR:  syntax error at or near "force_savepoint_restart"
+LINE 1: show session force_savepoint_restart;
+                     ^
+psql:pg_tests/compatible/manual_retry.sql:122: ERROR:  unrecognized configuration parameter "force_savepoint_restart"
+psql:pg_tests/compatible/manual_retry.sql:125: ERROR:  syntax error at or near "force_savepoint_restart"
+LINE 1: show session force_savepoint_restart;
+                     ^
+BEGIN
+SAVEPOINT
+COMMIT
+BEGIN
+SAVEPOINT
+psql:pg_tests/compatible/manual_retry.sql:134: ERROR:  savepoint "bar" does not exist
+ROLLBACK
+ROLLBACK
+BEGIN
+SAVEPOINT
+psql:pg_tests/compatible/manual_retry.sql:146: ERROR:  savepoint "foobar" does not exist
+psql:pg_tests/compatible/manual_retry.sql:149: ERROR:  savepoint "foo bar" does not exist
+ROLLBACK
+psql:pg_tests/compatible/manual_retry.sql:155: ERROR:  syntax error at or near "STATUS"
+LINE 1: SHOW SAVEPOINT STATUS;
+                       ^
+ROLLBACK
+BEGIN
+SAVEPOINT
+psql:pg_tests/compatible/manual_retry.sql:164: ERROR:  savepoint "uppercase" does not exist
+psql:pg_tests/compatible/manual_retry.sql:167: ERROR:  syntax error at or near "STATUS"
+LINE 1: SHOW SAVEPOINT STATUS;
+                       ^
+ROLLBACK
+psql:pg_tests/compatible/manual_retry.sql:173: ERROR:  unrecognized configuration parameter "force_savepoint_restart"
+psql:pg_tests/compatible/manual_retry.sql:176: ERROR:  syntax error at or near "force_savepoint_restart"
+LINE 1: show session force_savepoint_restart;
+                     ^
+RESET

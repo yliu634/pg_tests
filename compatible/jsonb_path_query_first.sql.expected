@@ -1,0 +1,31 @@
+ jsonb_path_query_first 
+------------------------
+ 1
+(1 row)
+
+ jsonb_path_query_first 
+------------------------
+ 2
+(1 row)
+
+ jsonb_path_query_first 
+------------------------
+ 
+(1 row)
+
+ jsonb_path_query_first 
+------------------------
+ 
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/jsonb_path_query_first.sql:17: ERROR:  JSON object does not contain key "a"
+ jsonb_path_query_first 
+------------------------
+ 
+(1 row)
+
+ jsonb_path_query_first 
+------------------------
+ 
+(1 row)
+
