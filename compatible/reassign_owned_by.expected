@@ -1,0 +1,31 @@
+SET
+DROP SCHEMA
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE SCHEMA
+SET
+CREATE TABLE
+CREATE TYPE
+RESET
+REASSIGN OWNED
+ schema | owner 
+--------+-------
+ s      | rnew
+(1 row)
+
+ rel | owner 
+-----+-------
+ t   | rnew
+(1 row)
+
+ typ | owner 
+-----+-------
+ e   | rnew
+(1 row)
+
+DROP SCHEMA
+DROP ROLE
+DROP ROLE
+RESET

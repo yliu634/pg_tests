@@ -1,0 +1,21 @@
+SET
+DROP SCHEMA
+DROP ROLE
+DROP PROCEDURE
+DROP PROCEDURE
+CREATE SCHEMA
+CREATE ROLE
+CREATE PROCEDURE
+CREATE PROCEDURE
+ALTER PROCEDURE
+ALTER PROCEDURE
+ALTER PROCEDURE
+ schema | proname |  owner   
+--------+---------+----------
+ public | p_int   | postgres
+ sc     | p_new   | u
+(2 rows)
+
+DROP SCHEMA
+DROP ROLE
+RESET

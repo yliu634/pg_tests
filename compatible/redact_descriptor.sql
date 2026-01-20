@@ -1,19 +1,34 @@
 -- PostgreSQL compatible tests from redact_descriptor
--- 3 tests
+--
+-- CockroachDB's descriptor redaction (`redacted_descriptors`, `FAMILY`, etc.)
+-- has no direct equivalent in PostgreSQL. This reduced version inspects table
+-- metadata via pg_catalog for a table with defaults, a generated column, and a
+-- partial index.
 
--- Test 1: statement (line 34)
+SET client_min_messages = warning;
+
+DROP TABLE IF EXISTS foo;
+
 CREATE TABLE foo (
-    i INT8 DEFAULT 42 ON UPDATE 43 PRIMARY KEY,
-    j INT8 AS (44) STORED,
-    INDEX (j) WHERE (i = 41),
-    FAMILY "primary" (i, j)
+  i BIGINT PRIMARY KEY DEFAULT 42,
+  j BIGINT GENERATED ALWAYS AS (44) STORED
 );
 
-onlyif config schema-locked-disabled
+CREATE INDEX foo_j_idx ON foo (j) WHERE i = 41;
 
--- Test 2: query (line 43)
-SELECT descriptor FROM redacted_descriptors WHERE id = 'foo'::REGCLASS;
+SELECT a.attname, pg_get_expr(d.adbin, d.adrelid) AS expr
+  FROM pg_attribute a
+  JOIN pg_attrdef d ON d.adrelid = a.attrelid AND d.adnum = a.attnum
+ WHERE a.attrelid = 'foo'::regclass
+   AND a.attname IN ('i', 'j')
+ ORDER BY a.attname;
 
--- Test 3: query (line 179)
-SELECT descriptor FROM redacted_descriptors WHERE id = 'foo'::REGCLASS;
+SELECT indexname, indexdef
+  FROM pg_indexes
+ WHERE schemaname = 'public'
+   AND tablename = 'foo'
+ ORDER BY indexname;
 
+DROP TABLE foo;
+
+RESET client_min_messages;

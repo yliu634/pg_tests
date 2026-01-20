@@ -1,0 +1,22 @@
+SET
+   r    
+--------
+ [1,10)
+(1 row)
+
+ lower | upper 
+-------+-------
+     1 |    10
+(1 row)
+
+ contains_5 
+------------
+ t
+(1 row)
+
+ overlaps 
+----------
+ t
+(1 row)
+
+RESET

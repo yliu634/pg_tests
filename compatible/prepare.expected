@@ -1,0 +1,52 @@
+SET
+DEALLOCATE ALL
+PREPARE
+ one 
+-----
+   1
+(1 row)
+
+DEALLOCATE
+PREPARE
+ one 
+-----
+   1
+(1 row)
+
+DEALLOCATE ALL
+PREPARE
+ sum 
+-----
+   7
+(1 row)
+
+PREPARE
+ up  
+-----
+ FOO
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+PREPARE
+ a 
+---
+ 1
+(1 row)
+
+INSERT 0 1
+ a 
+---
+ 1
+(1 row)
+
+INSERT 0 1
+PREPARE
+ a 
+---
+ 1
+(1 row)
+
+DEALLOCATE ALL
+DROP TABLE
+RESET

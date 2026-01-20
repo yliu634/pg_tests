@@ -1,0 +1,7 @@
+SET
+                                                          info                                                          
+------------------------------------------------------------------------------------------------------------------------
+ SKIPPED: CockroachDB schema-change retry semantics (cockroach_restart, refresh spans) are not supported in PostgreSQL.
+(1 row)
+
+RESET

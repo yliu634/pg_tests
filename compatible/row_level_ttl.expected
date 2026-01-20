@@ -1,0 +1,7 @@
+SET
+                                             info                                             
+----------------------------------------------------------------------------------------------
+ SKIPPED: row-level TTL (ttl_expire_after/ttl_expiration_expression) is CockroachDB-specific.
+(1 row)
+
+RESET

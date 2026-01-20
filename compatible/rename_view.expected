@@ -1,0 +1,30 @@
+SET
+DROP VIEW
+DROP VIEW
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+CREATE VIEW
+ k | v 
+---+---
+ 1 | 2
+ 3 | 4
+(2 rows)
+
+ALTER VIEW
+ k | v 
+---+---
+ 1 | 2
+ 3 | 4
+(2 rows)
+
+ALTER VIEW
+ k | v 
+---+---
+ 1 | 2
+ 3 | 4
+(2 rows)
+
+DROP VIEW
+DROP TABLE
+RESET

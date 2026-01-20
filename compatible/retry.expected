@@ -1,0 +1,15 @@
+SET
+DROP SEQUENCE
+CREATE SEQUENCE
+ nextval 
+---------
+       1
+(1 row)
+
+   result   
+------------
+ bad: wrong
+(1 row)
+
+DROP SEQUENCE
+RESET

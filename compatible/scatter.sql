@@ -1,6 +1,12 @@
 -- PostgreSQL compatible tests from scatter
--- 1 tests
+--
+-- CockroachDB has `ALTER TABLE ... SCATTER` for distributing ranges. PostgreSQL
+-- has no equivalent. This file keeps a minimal DDL smoke test.
 
--- Test 1: statement (line 3)
-CREATE TABLE t (a INT PRIMARY KEY)
+SET client_min_messages = warning;
 
+DROP TABLE IF EXISTS t;
+CREATE TABLE t (a INT PRIMARY KEY);
+DROP TABLE t;
+
+RESET client_min_messages;

@@ -1,0 +1,7 @@
+SET
+                               info                                
+-------------------------------------------------------------------
+ SKIPPED: schema_locked storage parameter is CockroachDB-specific.
+(1 row)
+
+RESET

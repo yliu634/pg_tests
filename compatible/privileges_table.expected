@@ -1,0 +1,46 @@
+SET
+DROP TABLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE TABLE
+ testuser_select_before 
+------------------------
+ f
+(1 row)
+
+GRANT
+GRANT
+ testuser_select_after 
+-----------------------
+ t
+(1 row)
+
+ bar_insert_after 
+------------------
+ t
+(1 row)
+
+ column_name | data_type 
+-------------+-----------
+ k           | integer
+ v           | integer
+(2 rows)
+
+REVOKE
+REVOKE
+ testuser_select_revoked 
+-------------------------
+ f
+(1 row)
+
+ bar_insert_revoked 
+--------------------
+ f
+(1 row)
+
+DROP TABLE
+DROP ROLE
+DROP ROLE
+RESET

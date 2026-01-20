@@ -1,0 +1,47 @@
+SET
+DROP SCHEMA
+DROP TABLE
+DROP SEQUENCE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE SCHEMA
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+CREATE TABLE
+CREATE SEQUENCE
+GRANT
+GRANT
+ bar_delete_t | bar_select_t 
+--------------+--------------
+ t            | f
+(1 row)
+
+ bar_select_seq | testuser_select_seq 
+----------------+---------------------
+ t              | f
+(1 row)
+
+GRANT
+ bar_select_a | bar_select_b 
+--------------+--------------
+ t            | f
+(1 row)
+
+DROP TABLE
+DROP SEQUENCE
+DROP SCHEMA
+REVOKE
+REVOKE
+REVOKE
+REVOKE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET

@@ -1,0 +1,7 @@
+SET
+                                                  info                                                  
+--------------------------------------------------------------------------------------------------------
+ SKIPPED: CockroachDB schema-change feature flags and multi-region DDL are not supported in PostgreSQL.
+(1 row)
+
+RESET

@@ -1,0 +1,7 @@
+SET
+                                                    info                                                    
+------------------------------------------------------------------------------------------------------------
+ SKIPPED: CockroachDB descriptor-based logical replication schema changes are not applicable to PostgreSQL.
+(1 row)
+
+RESET

@@ -1,146 +1,53 @@
 -- PostgreSQL compatible tests from rename_atomic
--- 32 tests
+--
+-- CockroachDB tests in this area exercise atomic renames across databases and
+-- schemas. PostgreSQL cannot run CREATE/ALTER DATABASE inside transactions, so
+-- this reduced version focuses on transactional schema/view renames.
 
--- Test 1: statement (line 3)
-SET autocommit_before_ddl = false
+SET client_min_messages = warning;
 
--- Test 2: statement (line 6)
-CREATE DATABASE db;
-CREATE DATABASE db_new
+DROP SCHEMA IF EXISTS sc_old CASCADE;
+DROP SCHEMA IF EXISTS sc_new CASCADE;
+DROP SCHEMA IF EXISTS sc CASCADE;
 
--- Test 3: statement (line 10)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-ALTER DATABASE db RENAME TO db_old;
-ALTER DATABASE db_new RENAME TO db
-
--- Test 4: statement (line 15)
-CREATE SCHEMA db_new.sc
-
--- Test 5: statement (line 18)
-ROLLBACK
-
--- Test 6: statement (line 21)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-ALTER DATABASE db RENAME TO db_old;
-ALTER DATABASE db_new RENAME TO db;
-CREATE SCHEMA db.sc;
-COMMIT
-
--- Test 7: statement (line 28)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-DROP DATABASE db CASCADE;
-ALTER DATABASE db_old RENAME TO db;
-COMMIT
-
--- Test 8: statement (line 34)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-ALTER DATABASE db RENAME TO db_old;
-CREATE DATABASE db;
-COMMIT
-
--- Test 9: statement (line 40)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-DROP DATABASE db;
-CREATE DATABASE db;
-COMMIT
-
--- Test 10: statement (line 48)
 CREATE SCHEMA sc;
-CREATE SCHEMA sc_new
+CREATE SCHEMA sc_new;
 
--- Test 11: statement (line 52)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-ALTER SCHEMA sc RENAME TO sc_old;
-ALTER SCHEMA sc_new RENAME TO sc
-
--- Test 12: statement (line 57)
-CREATE VIEW sc_new.v AS SELECT 1
-
--- Test 13: statement (line 60)
-ROLLBACK
-
--- Test 14: statement (line 63)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+BEGIN;
 ALTER SCHEMA sc RENAME TO sc_old;
 ALTER SCHEMA sc_new RENAME TO sc;
-CREATE VIEW sc.v AS SELECT 1;
-COMMIT
+ROLLBACK;
 
--- Test 15: statement (line 70)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-DROP SCHEMA sc CASCADE;
-ALTER SCHEMA sc_old RENAME TO sc;
-COMMIT
+SELECT nspname
+  FROM pg_namespace
+ WHERE nspname IN ('sc', 'sc_new', 'sc_old')
+ ORDER BY nspname;
 
--- Test 16: statement (line 76)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+BEGIN;
 ALTER SCHEMA sc RENAME TO sc_old;
-CREATE SCHEMA sc;
-COMMIT
-
--- Test 17: statement (line 82)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-DROP SCHEMA sc;
-CREATE SCHEMA sc;
-COMMIT
-
--- Test 18: statement (line 90)
-CREATE VIEW v AS SELECT 1;
-CREATE VIEW v_new AS SELECT 2
-
--- Test 19: query (line 94)
-SELECT * FROM v
-
--- Test 20: statement (line 99)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-ALTER VIEW v RENAME TO v_old;
-ALTER VIEW v_new RENAME TO v
-
--- Test 21: query (line 104)
-SELECT * FROM v
-
--- Test 22: statement (line 109)
+ALTER SCHEMA sc_new RENAME TO sc;
+CREATE VIEW sc.v AS SELECT 1 AS v;
 COMMIT;
 
--- Test 23: query (line 112)
-SELECT * FROM v
+SELECT * FROM sc.v;
 
--- Test 24: statement (line 117)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-DROP VIEW v;
-ALTER VIEW v_old RENAME TO v
+DROP VIEW IF EXISTS v_old;
+DROP VIEW IF EXISTS v_new;
+DROP VIEW IF EXISTS v;
 
--- Test 25: query (line 122)
-SELECT * FROM v
+CREATE VIEW v AS SELECT 1 AS v;
+CREATE VIEW v_new AS SELECT 2 AS v;
 
--- Test 26: statement (line 127)
-COMMIT
-
--- Test 27: query (line 130)
-SELECT * FROM v
-
--- Test 28: statement (line 135)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+BEGIN;
 ALTER VIEW v RENAME TO v_old;
-CREATE VIEW v AS SELECT 1;
-COMMIT
-
--- Test 29: statement (line 141)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-DROP VIEW v;
-CREATE VIEW v AS SELECT 1;
-COMMIT
-
--- Test 30: statement (line 150)
-CREATE SCHEMA sc93002
-
--- Test 31: statement (line 153)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-SHOW TABLES FROM sc93002;
-CREATE TABLE sc93002.t(a INT);
-DROP SCHEMA sc93002 CASCADE;
+ALTER VIEW v_new RENAME TO v;
 COMMIT;
 
--- Test 32: statement (line 160)
-RESET autocommit_before_ddl
+SELECT * FROM v;
 
+DROP VIEW v;
+DROP VIEW v_old;
+DROP SCHEMA sc_old CASCADE;
+DROP SCHEMA sc CASCADE;
+
+RESET client_min_messages;

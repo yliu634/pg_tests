@@ -1,0 +1,38 @@
+SET
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+ conname | contype 
+---------+---------
+ cc      | c
+ cf      | f
+ cu      | u
+(3 rows)
+
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ conname | contype 
+---------+---------
+ cc2     | c
+ cf2     | f
+ cu2     | u
+(3 rows)
+
+CREATE TABLE
+    conname    | contype 
+---------------+---------
+ implicit_pkey | p
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+       conname       | contype 
+---------------------+---------
+ implicit_b_positive | c
+ implicit_pk_renamed | p
+(2 rows)
+
+DROP TABLE
+DROP TABLE
+RESET

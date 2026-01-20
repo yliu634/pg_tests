@@ -1,0 +1,43 @@
+SET
+DROP DATABASE
+DROP ROLE
+CREATE ROLE
+CREATE DATABASE
+You are now connected to database "d45707" as user "postgres".
+SET
+SET
+CREATE TABLE
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+ shobj_description 
+-------------------
+ d45707
+(1 row)
+
+ col_description 
+-----------------
+ x45707
+(1 row)
+
+ obj_description 
+-----------------
+ t45707
+(1 row)
+
+ obj_description 
+-----------------
+ p45707
+(1 row)
+
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+RESET
+You are now connected to database "postgres" as user "postgres".
+SET
+DROP DATABASE
+DROP ROLE
+RESET

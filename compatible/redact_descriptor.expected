@@ -1,0 +1,18 @@
+SET
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+ attname | expr 
+---------+------
+ i       | 42
+ j       | 44
+(2 rows)
+
+ indexname |                              indexdef                               
+-----------+---------------------------------------------------------------------
+ foo_j_idx | CREATE INDEX foo_j_idx ON public.foo USING btree (j) WHERE (i = 41)
+ foo_pkey  | CREATE UNIQUE INDEX foo_pkey ON public.foo USING btree (i)
+(2 rows)
+
+DROP TABLE
+RESET

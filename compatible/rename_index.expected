@@ -1,0 +1,33 @@
+SET
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 2
+   indexname   
+---------------
+ users_bar_idx
+ users_foo_idx
+ users_pkey
+(3 rows)
+
+ALTER INDEX
+   indexname   
+---------------
+ users_bar_idx
+ users_foo_new
+ users_pkey
+(3 rows)
+
+BEGIN
+ALTER INDEX
+COMMIT
+   indexname   
+---------------
+ users_bar_idx
+ users_foo_idx
+ users_pkey
+(3 rows)
+
+DROP TABLE
+RESET

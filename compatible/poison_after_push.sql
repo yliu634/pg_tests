@@ -1,61 +1,42 @@
 -- PostgreSQL compatible tests from poison_after_push
--- 18 tests
+--
+-- CockroachDB-specific cluster settings and transaction priority are not
+-- supported by PostgreSQL. This file keeps a small subset that exercises basic
+-- permissions and transaction isolation levels.
 
--- Test 1: statement (line 20)
-SET CLUSTER SETTING kv.transaction.write_pipelining.enabled = false
+SET client_min_messages = warning;
 
--- Test 2: statement (line 23)
-CREATE TABLE t (id INT PRIMARY KEY)
+DROP TABLE IF EXISTS t;
+DROP ROLE IF EXISTS testuser;
+CREATE ROLE testuser;
 
--- Test 3: statement (line 26)
-INSERT INTO t VALUES (1)
+CREATE TABLE t (id INT PRIMARY KEY);
+INSERT INTO t VALUES (1);
 
--- Test 4: statement (line 29)
-GRANT ALL ON t TO testuser
+GRANT ALL ON t TO testuser;
 
--- Test 5: statement (line 32)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE, PRIORITY LOW
+-- Simulated sequential transactions (PostgreSQL has no PRIORITY clause).
+BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+INSERT INTO t VALUES (2);
+COMMIT;
 
--- Test 6: statement (line 35)
-INSERT INTO t VALUES (2)
+BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+SELECT * FROM t ORDER BY id;
+COMMIT;
 
--- Test 7: statement (line 41)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE, PRIORITY HIGH
+BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+INSERT INTO t VALUES (3);
+COMMIT;
 
--- Test 8: query (line 45)
-SELECT * FROM t
+SET ROLE testuser;
+BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+SELECT * FROM t ORDER BY id;
+COMMIT;
+RESET ROLE;
 
--- Test 9: statement (line 50)
-COMMIT
+SELECT * FROM t ORDER BY id;
 
--- Test 10: query (line 57)
-SELECT * FROM t ORDER BY id
+DROP TABLE IF EXISTS t;
+DROP ROLE IF EXISTS testuser;
 
--- Test 11: statement (line 65)
-COMMIT
-
--- Test 12: statement (line 70)
-BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ, PRIORITY LOW
-
--- Test 13: statement (line 73)
-INSERT INTO t VALUES (3)
-
-user testuser
-
--- Test 14: statement (line 78)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE, PRIORITY HIGH
-
--- Test 15: query (line 82)
-SELECT * FROM t ORDER BY id
-
--- Test 16: statement (line 88)
-COMMIT
-
-user root
-
--- Test 17: query (line 93)
-SELECT * FROM t ORDER BY id
-
--- Test 18: statement (line 100)
-COMMIT
-
+RESET client_min_messages;

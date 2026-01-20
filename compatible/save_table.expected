@@ -1,0 +1,47 @@
+SET
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 5
+INSERT 0 9
+ k | str 
+---+-----
+ 1 | t_1
+ 2 | t_2
+ 3 | t_3
+ 4 | t_4
+ 5 | t_5
+(5 rows)
+
+ key | val  
+-----+------
+   2 | u_2
+   3 | u_3
+   4 | u_4
+   5 | u_5
+   6 | u_6
+   7 | u_7
+   8 | u_8
+   9 | u_9
+  10 | u_10
+(9 rows)
+
+ key | str 
+-----+-----
+   3 | t_3
+   4 | t_4
+   5 | t_5
+(3 rows)
+
+ key | str 
+-----+-----
+   2 | t_2
+   3 | t_3
+   4 | t_4
+   5 | t_5
+(4 rows)
+
+DROP TABLE
+DROP TABLE
+RESET
