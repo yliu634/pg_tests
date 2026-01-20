@@ -1,0 +1,19 @@
+SET
+SET
+       search_path       
+-------------------------
+ public, public, a, b, c
+(1 row)
+
+ max_connections 
+-----------------
+ 100
+(1 row)
+
+ max_connections 
+-----------------
+ 100
+(1 row)
+
+psql:compatible/show_var.sql:27: ERROR:  parameter "max_connections" cannot be changed without restarting the server
+RESET
