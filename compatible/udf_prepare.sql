@@ -2,13 +2,13 @@
 -- 14 tests
 
 -- Test 1: statement (line 1)
-CREATE FUNCTION f() RETURNS INT LANGUAGE SQL AS $$ SELECT 1 $$
+CREATE FUNCTION f() RETURNS INT LANGUAGE SQL AS $$ SELECT 1 $$;
 
 -- Test 2: statement (line 4)
-PREPARE p AS SELECT $1::INT
+PREPARE p AS SELECT $1::INT;
 
 -- Test 3: statement (line 7)
-EXECUTE p(f())
+EXECUTE p(f());
 
 -- Test 4: statement (line 10)
 DEALLOCATE p;
@@ -42,4 +42,3 @@ SELECT a, b FROM t147186;
 
 -- Test 14: statement (line 49)
 DEALLOCATE p;
-
