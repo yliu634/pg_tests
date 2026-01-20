@@ -79,11 +79,15 @@ CREATE PROCEDURE p(OUT res INT[]) LANGUAGE SQL AS $$
   WITH RECURSIVE foo (x, y) AS (
     SELECT a, b FROM ab WHERE a = 1
     UNION ALL
-    SELECT a, b FROM ab WHERE a = (SELECT max(x) + 1 FROM foo)
+    -- PostgreSQL forbids referencing the recursive CTE within a subquery.
+    -- The working table for the recursive term contains the previous iteration,
+    -- so max(x)+1 is equivalent to (x+1) here.
+    SELECT ab.a, ab.b
+    FROM ab
+    JOIN foo ON ab.a = foo.x + 1
   )
-  SELECT array_agg(y) FROM foo;
+  SELECT array_agg(y ORDER BY x) FROM foo;
 $$;
 
 -- Test 17: query (line 102)
 CALL p(NULL);
-
