@@ -1,0 +1,32 @@
+SET
+DROP TABLE
+DROP ROLE
+RESET
+CREATE ROLE
+CREATE TABLE
+INSERT 0 2
+GRANT
+   grantee   | privilege_type 
+-------------+----------------
+ postgres    | DELETE
+ postgres    | INSERT
+ postgres    | REFERENCES
+ postgres    | SELECT
+ postgres    | TRIGGER
+ postgres    | TRUNCATE
+ postgres    | UPDATE
+ sp_testuser | SELECT
+(8 rows)
+
+REVOKE
+ grantee  | privilege_type 
+----------+----------------
+ postgres | DELETE
+ postgres | INSERT
+ postgres | REFERENCES
+ postgres | SELECT
+ postgres | TRIGGER
+ postgres | TRUNCATE
+ postgres | UPDATE
+(7 rows)
+

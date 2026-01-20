@@ -1,0 +1,46 @@
+  datname  
+-----------
+ pg_tests
+ postgres
+ template0
+ template1
+(4 rows)
+
+    table_schema    |            table_name             | table_type 
+--------------------+-----------------------------------+------------
+ information_schema | _pg_foreign_data_wrappers         | VIEW
+ information_schema | _pg_foreign_servers               | VIEW
+ information_schema | _pg_foreign_table_columns         | VIEW
+ information_schema | _pg_foreign_tables                | VIEW
+ information_schema | _pg_user_mappings                 | VIEW
+ information_schema | administrable_role_authorizations | VIEW
+ information_schema | applicable_roles                  | VIEW
+ information_schema | attributes                        | VIEW
+ information_schema | character_sets                    | VIEW
+ information_schema | check_constraint_routine_usage    | VIEW
+(10 rows)
+
+  column_name   | data_type 
+----------------+-----------
+ oid            | oid
+ datname        | name
+ datdba         | oid
+ encoding       | integer
+ datlocprovider | "char"
+ datistemplate  | boolean
+ datallowconn   | boolean
+ datconnlimit   | integer
+ datfrozenxid   | xid
+ datminmxid     | xid
+(10 rows)
+
+SET
+DROP ROLE
+RESET
+CREATE ROLE
+GRANT
+ can_connect | can_create 
+-------------+------------
+ t           | f
+(1 row)
+

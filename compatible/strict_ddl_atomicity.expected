@@ -1,0 +1,44 @@
+SET
+DROP TABLE
+DROP TABLE
+RESET
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+SET
+BEGIN
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+COMMIT
+ k | v 
+---+---
+ 1 | a
+ 2 | b
+ 5 | c
+(3 rows)
+
+ x 
+---
+ 1
+(1 row)
+
+DELETE 1
+SET
+BEGIN
+ALTER TABLE
+ROLLBACK
+SET
+ ?column? 
+----------
+        1
+(1 row)
+
+ALTER TABLE
+ ?column? 
+----------
+        1
+(1 row)
+
+ALTER TABLE
+RESET

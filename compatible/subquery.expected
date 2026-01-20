@@ -1,0 +1,53 @@
+SET
+DROP TABLE
+DROP TABLE
+RESET
+CREATE TABLE
+INSERT 0 3
+ one 
+-----
+   1
+(1 row)
+
+ in_abc 
+--------
+ t
+(1 row)
+
+ row_eq 
+--------
+ t
+(1 row)
+
+ exists_a2 
+-----------
+ t
+(1 row)
+
+ any_a2 
+--------
+ t
+(1 row)
+
+ a | max_b_le_a 
+---+------------
+ 1 |         10
+ 2 |         20
+ 3 |         30
+(3 rows)
+
+CREATE TABLE
+INSERT 0 2
+ x | y  
+---+----
+ 2 | 20
+ 3 | 30
+(2 rows)
+
+UPDATE 1
+ x | y  
+---+----
+ 2 | 20
+ 3 | 30
+(2 rows)
+

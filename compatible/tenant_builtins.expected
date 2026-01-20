@@ -1,0 +1,7 @@
+RESET
+ sql.defaults.vectorize 
+------------------------
+ 
+(1 row)
+
+SET

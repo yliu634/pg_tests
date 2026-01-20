@@ -1,0 +1,38 @@
+SET
+CREATE SCHEMA
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+RESET
+ ?column? 
+----------
+         
+(1 row)
+
+  datname  
+-----------
+ pg_tests
+ postgres
+ template0
+ template1
+(4 rows)
+
+DROP ROLE
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+SET
+BEGIN
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+COMMIT
+RESET
+INSERT 0 1
+UPDATE 1
+ last_error_code |                   last_error                   
+-----------------+------------------------------------------------
+ 23505           | duplicate key value violates unique constraint
+(1 row)
+

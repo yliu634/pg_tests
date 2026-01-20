@@ -1,0 +1,11 @@
+SET
+CREATE TABLE
+BEGIN
+INSERT 0 1
+COMMIT
+RESET
+ k 
+---
+ 1
+(1 row)
+

@@ -1,0 +1,47 @@
+SET
+DROP TABLE
+DROP FUNCTION
+DROP FUNCTION
+RESET
+CREATE FUNCTION
+CREATE TABLE
+INSERT 0 2
+ a  | b | g  
+----+---+----
+ 10 | 1 | 11
+ 20 | 1 | 21
+(2 rows)
+
+ attname | attgenerated |    expr    
+---------+--------------+------------
+ a       |              | 
+ b       |              | f1()
+ g       | s            | (a + f1())
+(3 rows)
+
+ALTER FUNCTION
+INSERT 0 1
+ a  | b | g  
+----+---+----
+ 10 | 1 | 11
+ 20 | 1 | 21
+ 30 | 1 | 31
+(3 rows)
+
+ attname | attgenerated |    expr    
+---------+--------------+------------
+ a       |              | 
+ b       |              | f2()
+ g       | s            | (a + f2())
+(3 rows)
+
+           pg_get_functiondef           
+----------------------------------------
+ CREATE OR REPLACE FUNCTION public.f2()+
+  RETURNS integer                      +
+  LANGUAGE sql                         +
+  IMMUTABLE                            +
+ AS $function$ SELECT 1 $function$     +
+ 
+(1 row)
+

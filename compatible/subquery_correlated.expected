@@ -1,0 +1,50 @@
+SET
+DROP TABLE
+DROP TABLE
+RESET
+CREATE TABLE
+CREATE TABLE
+INSERT 0 6
+INSERT 0 9
+ c_id | bill 
+------+------
+    1 | CA
+    2 | TX
+    4 | TX
+    6 | FL
+(4 rows)
+
+ c_id | bill 
+------+------
+    3 | MA
+    5 | 
+(2 rows)
+
+ c_id | bill 
+------+------
+    4 | TX
+(1 row)
+
+ c_id | bill 
+------+------
+    1 | CA
+    2 | TX
+(2 rows)
+
+ c_id | bill | order_count | nonnull_ship_count 
+------+------+-------------+--------------------
+    1 | CA   |           3 |                  3
+    2 | TX   |           3 |                  2
+    3 | MA   |           0 |                  0
+    4 | TX   |           2 |                  1
+    5 |      |           0 |                  0
+    6 | FL   |           1 |                  1
+(6 rows)
+
+ c_id | bill 
+------+------
+    1 | CA
+    2 | TX
+    4 | TX
+(3 rows)
+

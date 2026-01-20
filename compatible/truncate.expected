@@ -1,0 +1,58 @@
+SET
+DROP VIEW
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+RESET
+CREATE TABLE
+INSERT 0 4
+CREATE VIEW
+ k | v 
+---+---
+ 1 | 2
+ 3 | 4
+ 5 | 6
+ 7 | 8
+(4 rows)
+
+TRUNCATE TABLE
+ k | v 
+---+---
+(0 rows)
+
+ k | v 
+---+---
+(0 rows)
+
+CREATE TABLE
+INSERT 0 1
+TRUNCATE TABLE
+ y | z 
+---+---
+(0 rows)
+
+SELECT 1
+TRUNCATE TABLE
+ x 
+---
+(0 rows)
+
+CREATE TABLE
+CREATE INDEX
+COMMENT
+COMMENT
+COMMENT
+TRUNCATE TABLE
+ column_name |       comment        
+-------------+----------------------
+ x           | 'hi'); DROP TABLE t;
+ y           | 
+ z           | comm"en"t2
+(3 rows)
+
+ index_comment 
+---------------
+ comm'ent3
+(1 row)
+

@@ -1,97 +1,25 @@
 -- PostgreSQL compatible tests from type_privileges
--- 27 tests
+-- Reduced subset: CockroachDB type privileges (SELECT/INSERT/ZONECONFIG, etc)
+-- do not exist in PostgreSQL. Validate USAGE privileges on a type.
 
--- Test 1: statement (line 4)
-GRANT CREATE, DROP ON DATABASE test TO testuser;
+SET client_min_messages = warning;
+DROP ROLE IF EXISTS type_testuser;
+DROP TYPE IF EXISTS test_enum;
+RESET client_min_messages;
 
--- Test 2: statement (line 7)
-CREATE TYPE test AS ENUM ('hello');
+CREATE ROLE type_testuser;
+CREATE TYPE test_enum AS ENUM ('hello');
 
--- Test 3: statement (line 10)
-CREATE TABLE for_view(x test);
+REVOKE USAGE ON TYPE test_enum FROM PUBLIC;
+SELECT has_type_privilege('type_testuser', 'test_enum', 'USAGE') AS has_usage_before;
 
--- Test 4: statement (line 13)
-GRANT SELECT on for_view TO testuser;
+GRANT USAGE ON TYPE test_enum TO type_testuser;
+SELECT has_type_privilege('type_testuser', 'test_enum', 'USAGE') AS has_usage_after;
 
--- Test 5: statement (line 20)
-CREATE TABLE t(x test)
+CREATE TABLE for_view(x test_enum);
+GRANT SELECT ON for_view TO type_testuser;
 
--- Test 6: statement (line 23)
-DROP TABLE t
-
-user root
-
--- Test 7: statement (line 28)
-REVOKE USAGE ON TYPE test FROM public;
-
-user testuser
-
--- Test 8: statement (line 33)
-CREATE TABLE t(x test)
-
--- Test 9: statement (line 36)
-SELECT 'hello'::test
-
--- Test 10: statement (line 39)
-CREATE VIEW vx1 as SELECT 'hello'::test
-
--- Test 11: statement (line 42)
-CREATE VIEW vx2 as SELECT x FROM for_view
-
--- Test 12: statement (line 49)
-GRANT USAGE ON TYPE test TO testuser
-
-user testuser
-
--- Test 13: statement (line 54)
-CREATE TABLE t(x test);
-
--- Test 14: statement (line 57)
-CREATE VIEW vx1 as SELECT 'hello'::test
-
--- Test 15: statement (line 60)
-CREATE VIEW vx2 as SELECT x FROM for_view
-
--- Test 16: statement (line 64)
-ALTER TYPE test RENAME TO not_test
-
--- Test 17: statement (line 68)
-DROP TYPE test
-
-user root
-
--- Test 18: statement (line 76)
-GRANT SELECT ON type TEST to testuser
-
--- Test 19: statement (line 79)
-GRANT INSERT ON type TEST to testuser
-
--- Test 20: statement (line 82)
-GRANT DELETE ON type TEST to testuser
-
--- Test 21: statement (line 85)
-GRANT UPDATE ON type TEST to testuser
-
--- Test 22: statement (line 88)
-GRANT ZONECONFIG ON type TEST to testuser
-
--- Test 23: statement (line 93)
-GRANT ALL ON type TEST to testuser
-
--- Test 24: statement (line 97)
-GRANT root TO testuser
-
--- Test 25: statement (line 102)
-DROP VIEW vx1;
-DROP VIEW vx2;
-DROP TABLE t;
-DROP TABLE for_view;
-
-user testuser
-
--- Test 26: statement (line 111)
-ALTER TYPE test RENAME to test1
-
--- Test 27: statement (line 115)
-DROP TYPE test1
-
+SELECT table_name, grantee, privilege_type
+FROM information_schema.table_privileges
+WHERE table_name = 'for_view'
+ORDER BY grantee, privilege_type;

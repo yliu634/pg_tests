@@ -1,0 +1,41 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+RESET
+CREATE TABLE
+INSERT 0 2
+ x | xmin_set 
+---+----------
+ 1 | t
+ 2 | t
+(2 rows)
+
+ x | ctid  
+---+-------
+ 1 | (0,1)
+ 2 | (0,2)
+(2 rows)
+
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+ rel  | x 
+------+---
+ tab1 | 1
+ tab1 | 2
+(2 rows)
+
+ rel  | x 
+------+---
+ tab2 | 1
+ tab2 | 2
+(2 rows)
+
+ rel1 | x | rel2 | x 
+------+---+------+---
+ tab1 | 1 | tab2 | 1
+ tab1 | 2 | tab2 | 2
+(2 rows)
+

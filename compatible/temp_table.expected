@@ -1,0 +1,48 @@
+SET
+DROP TABLE
+DROP TABLE
+RESET
+CREATE TABLE
+ is_temp_schema | tablename 
+----------------+-----------
+ t              | tbl
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+   table_name    | table_schema 
+-----------------+--------------
+ temp_table_ref  | pg_temp_3
+ temp_table_test | pg_temp_3
+(2 rows)
+
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+ a 
+---
+ 2
+(1 row)
+
+ a 
+---
+ 3
+(1 row)
+
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+CREATE VIEW
+ a 
+---
+ 1
+(1 row)
+
+DROP VIEW
+DROP TABLE

@@ -1,0 +1,45 @@
+SET
+DROP SCHEMA
+RESET
+CREATE SCHEMA
+CREATE TABLE
+COMMENT
+ table_schema | table_name 
+--------------+------------
+ test         | a
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+ALTER TABLE
+COMMENT
+   indexname   |                             indexdef                             
+---------------+------------------------------------------------------------------
+ c_bar_unique  | CREATE UNIQUE INDEX c_bar_unique ON test.c USING btree (bar)
+ c_foo_bar_idx | CREATE INDEX c_foo_bar_idx ON test.c USING btree (foo, bar DESC)
+ c_foo_idx     | CREATE INDEX c_foo_idx ON test.c USING btree (foo)
+ c_pkey        | CREATE UNIQUE INDEX c_pkey ON test.c USING btree (id)
+(4 rows)
+
+   conname    | contype 
+--------------+---------
+ c_bar_unique | u
+ c_pkey       | p
+ foo_positive | c
+(3 rows)
+
+CREATE TABLE
+ column_name | data_type | is_nullable 
+-------------+-----------+-------------
+ id          | integer   | NO
+(1 row)
+
+CREATE TABLE
+ column_name | data_type | is_nullable 
+-------------+-----------+-------------
+ a           | integer   | NO
+ b           | integer   | NO
+ c           | integer   | NO
+(3 rows)
+

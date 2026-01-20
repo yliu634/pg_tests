@@ -1,0 +1,330 @@
+SET
+CREATE SCHEMA
+DROP TABLE
+CREATE TABLE
+DROP TABLE
+CREATE TABLE
+INSERT 0 8
+INSERT 0 1
+RESET
+SET
+SET
+ ?column? 
+----------
+        1
+(1 row)
+
+SET
+ ?column? 
+----------
+        2
+(1 row)
+
+RESET
+ ?column? 
+----------
+ t
+ t
+ t
+(3 rows)
+
+SET
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? | ?column? 
+----------+----------
+        1 |        2
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+SET
+    key     | ?column? 
+------------+----------
+ SELECT 1   | t
+ SELECT 1,2 | t
+(2 rows)
+
+SET
+ ?column? | ?column? 
+----------+----------
+        1 |        2
+(1 row)
+
+ ?column? | ?column? | ?column? 
+----------+----------+----------
+        1 |        2 |        3
+(1 row)
+
+ ?column? 
+----------
+ ok
+(1 row)
+
+SET
+ statement_id | txn_fingerprint_id | key | implicit_txn 
+--------------+--------------------+-----+--------------
+(0 rows)
+
+CREATE TABLE
+INSERT 0 1
+SET
+SET
+        sin         
+--------------------
+ 0.9424888019316975
+(1 row)
+
+ sqrt 
+------
+     
+(1 row)
+
+       key        
+------------------
+ SELECT 1
+ SELECT 2
+ SELECT 1,2
+ SELECT sin(1.23)
+ SELECT _
+ SELECT x
+ SELECT 1
+ SELECT 1, 2
+(8 rows)
+
+ x 
+---
+ 1
+ 4
+(2 rows)
+
+INSERT 0 2
+ x 
+---
+ 4
+(1 row)
+
+ x 
+---
+ 0
+ 1
+(2 rows)
+
+ x 
+---
+ 4
+(1 row)
+
+ row 
+-----
+(0 rows)
+
+SET
+ x 
+---
+ 4
+(1 row)
+
+ x 
+---
+(0 rows)
+
+SET
+RESET
+ application_name 
+------------------
+ valuetest
+(1 row)
+
+ debug.panic_on_failed_assertions.enabled 
+------------------------------------------
+ 
+(1 row)
+
+SET
+RESET
+       key        | flags 
+------------------+-------
+ SELECT sin(1.23) |     0
+(1 row)
+
+   key    | svc_ok | parse_ok | plan_ok | run_ok | ovh_ok 
+----------+--------+----------+---------+--------+--------
+ SELECT _ | t      | t        | t       | t      | t
+(1 row)
+
+SET
+BEGIN
+ x 
+---
+(0 rows)
+
+COMMIT
+ ?column? 
+----------
+        1
+(1 row)
+
+BEGIN
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+COMMIT
+BEGIN
+ x | z 
+---+---
+ 0 | 0
+ 1 | 3
+ 4 | 6
+(3 rows)
+
+ x 
+---
+(0 rows)
+
+COMMIT
+ z 
+---
+ 3
+(1 row)
+
+ x 
+---
+(0 rows)
+
+RESET
+ statement_id | txn_fingerprint_id |   key    | implicit_txn 
+--------------+--------------------+----------+--------------
+            6 |                 60 | SELECT x | t
+(1 row)
+
+CREATE VIEW
+CREATE VIEW
+SET
+BEGIN
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? | ?column? 
+----------+----------
+        1 |        2
+(1 row)
+
+ ?column? | ?column? | ?column? 
+----------+----------+----------
+        1 |        2 |        3
+(1 row)
+
+COMMIT
+RESET
+     key     | count 
+-------------+-------
+ SELECT 1    |     2
+ SELECT 1, 2 |     2
+(2 rows)
+
+SET
+SET
+SET
+BEGIN
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? | ?column? 
+----------+----------
+        1 |        3
+(1 row)
+
+ ?column? | ?column? | ?column? | ?column? 
+----------+----------+----------+----------
+        1 |        2 |        3 |        4
+(1 row)
+
+COMMIT
+BEGIN
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? | ?column? 
+----------+----------
+        1 |        3
+(1 row)
+
+ ?column? | ?column? | ?column? 
+----------+----------+----------
+        1 |        2 |        3
+(1 row)
+
+COMMIT
+RESET
+     key     | count 
+-------------+-------
+ SELECT 1    |     2
+ SELECT 1, 2 |     2
+(2 rows)
+
+SET
+RESET
+RESET
+BEGIN
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? | ?column? 
+----------+----------
+        1 |        3
+(1 row)
+
+ ?column? | ?column? | ?column? | ?column? 
+----------+----------+----------+----------
+        1 |        2 |        3 |        4
+(1 row)
+
+COMMIT
+BEGIN
+ wombat1 
+---------
+       1
+(1 row)
+
+COMMIT
+BEGIN
+ wombat2 
+---------
+       1
+(1 row)
+
+COMMIT
+RESET
+ statement_id |     key     | count 
+--------------+-------------+-------
+          100 | SELECT 1    |     2
+          101 | SELECT 1, 2 |     2
+(2 rows)
+
+ key  | statement_ids | count 
+------+---------------+-------
+ txn1 | {100,101}     |     1
+(1 row)
+

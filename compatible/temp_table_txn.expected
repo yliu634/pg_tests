@@ -1,0 +1,10 @@
+BEGIN
+SET
+CREATE TABLE
+INSERT 0 1
+COMMIT
+ a 
+---
+ 1
+(1 row)
+

@@ -1,9 +1,15 @@
 -- PostgreSQL compatible tests from system_namespace
--- 2 tests
+-- Reduced subset: CockroachDB system.namespace is not present in PostgreSQL.
 
--- Test 1: query (line 1)
-SELECT * FROM system.namespace WHERE id >= 100 OR name IN ('comments', 'locations', 'descriptor_id_seq')
+-- Test 1: query
+SELECT oid, nspname
+FROM pg_namespace
+WHERE oid >= 100 OR nspname IN ('pg_catalog', 'public')
+ORDER BY oid
+LIMIT 20;
 
--- Test 2: query (line 15)
-SHOW COLUMNS FROM system.namespace
-
+-- Test 2: SHOW COLUMNS equivalent
+SELECT column_name, data_type
+FROM information_schema.columns
+WHERE table_schema = 'pg_catalog' AND table_name = 'pg_namespace'
+ORDER BY ordinal_position;

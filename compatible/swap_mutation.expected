@@ -1,0 +1,115 @@
+SET
+DROP TABLE
+DROP TABLE
+RESET
+SET
+CREATE TABLE
+INSERT 0 2
+UPDATE 2
+ x | y | z 
+---+---+---
+ 1 | 2 | 1
+ 2 | 1 | 2
+(2 rows)
+
+UPDATE 0
+ x | y | z 
+---+---+---
+ 1 | 2 | 1
+ 2 | 1 | 2
+(2 rows)
+
+BEGIN
+UPDATE 0
+ x | y | z 
+---+---+---
+ 1 | 2 | 1
+ 2 | 1 | 2
+(2 rows)
+
+SAVEPOINT
+UPDATE 0
+ x | y | z 
+---+---+---
+ 1 | 2 | 1
+ 2 | 1 | 2
+(2 rows)
+
+ROLLBACK
+UPDATE 0
+ x | y | z 
+---+---+---
+ 1 | 2 | 1
+ 2 | 1 | 2
+(2 rows)
+
+SAVEPOINT
+UPDATE 0
+ x | y | z 
+---+---+---
+ 1 | 2 | 1
+ 2 | 1 | 2
+(2 rows)
+
+ROLLBACK
+ x | y | z 
+---+---+---
+ 1 | 2 | 1
+ 2 | 1 | 2
+(2 rows)
+
+ROLLBACK
+ x | y | z 
+---+---+---
+ 1 | 2 | 1
+ 2 | 1 | 2
+(2 rows)
+
+UPDATE 0
+ x | y | z 
+---+---+---
+ 1 | 2 | 1
+ 2 | 1 | 2
+(2 rows)
+
+COMMIT
+ x | y | z 
+---+---+---
+ 1 | 2 | 1
+ 2 | 1 | 2
+(2 rows)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 2
+UPDATE 2
+ m | n | o 
+---+---+---
+ 3 | 3 | 4
+ 4 | 4 | 3
+(2 rows)
+
+UPDATE 0
+ m | n | o 
+---+---+---
+ 3 | 3 | 4
+ 4 | 4 | 3
+(2 rows)
+
+ALTER TABLE
+ALTER TABLE
+UPDATE 2
+ m | n | o 
+---+---+---
+ 3 | 3 | 3
+ 4 | 4 | 4
+(2 rows)
+
+UPDATE 0
+ m | n | o 
+---+---+---
+ 3 | 3 | 3
+ 4 | 4 | 4
+(2 rows)
+
+RESET

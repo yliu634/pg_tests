@@ -1,0 +1,53 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TYPE
+RESET
+SET
+CREATE TABLE
+INSERT 0 10000
+INSERT 0 10001
+ANALYZE
+ ?column? 
+----------
+ t
+(1 row)
+
+CREATE TYPE
+CREATE TABLE
+ANALYZE
+INSERT 0 1
+ANALYZE
+ALTER TYPE
+ g  
+----
+ hi
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+ANALYZE
+ attname |  histogram_status   
+---------+---------------------
+ i       | histogram_collected
+ j       | histogram_collected
+(2 rows)
+
+SET
+ANALYZE
+ attname |  histogram_status   
+---------+---------------------
+ i       | histogram_collected
+ j       | histogram_collected
+(2 rows)
+
+CREATE TABLE
+INSERT 0 3
+ANALYZE
+ row_count | distinct_count 
+-----------+----------------
+         3 |              1
+(1 row)
+

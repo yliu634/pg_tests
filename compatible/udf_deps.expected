@@ -1,0 +1,20 @@
+SET
+DROP TABLE
+DROP FUNCTION
+RESET
+CREATE TABLE
+INSERT 0 1
+CREATE FUNCTION
+ a | b  
+---+----
+ 1 | 10
+(1 row)
+
+ALTER TABLE
+DROP FUNCTION
+CREATE FUNCTION
+ a | b2 
+---+----
+ 1 | 10
+(1 row)
+

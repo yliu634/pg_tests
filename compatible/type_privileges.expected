@@ -1,0 +1,32 @@
+SET
+DROP ROLE
+DROP TYPE
+RESET
+CREATE ROLE
+CREATE TYPE
+REVOKE
+ has_usage_before 
+------------------
+ f
+(1 row)
+
+GRANT
+ has_usage_after 
+-----------------
+ t
+(1 row)
+
+CREATE TABLE
+GRANT
+ table_name |    grantee    | privilege_type 
+------------+---------------+----------------
+ for_view   | postgres      | DELETE
+ for_view   | postgres      | INSERT
+ for_view   | postgres      | REFERENCES
+ for_view   | postgres      | SELECT
+ for_view   | postgres      | TRIGGER
+ for_view   | postgres      | TRUNCATE
+ for_view   | postgres      | UPDATE
+ for_view   | type_testuser | SELECT
+(8 rows)
+

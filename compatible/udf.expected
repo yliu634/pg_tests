@@ -1,0 +1,37 @@
+SET
+DROP TABLE
+DROP TYPE
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+RESET
+CREATE TABLE
+INSERT 0 2
+CREATE TYPE
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+ a_5 
+-----
+   5
+(1 row)
+
+ b_2 
+-----
+  20
+(1 row)
+
+ c_10_3 
+--------
+      7
+(1 row)
+
+               pg_get_functiondef               
+------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.a(i integer)+
+  RETURNS integer                              +
+  LANGUAGE sql                                 +
+ AS $function$ SELECT i $function$             +
+ 
+(1 row)
+

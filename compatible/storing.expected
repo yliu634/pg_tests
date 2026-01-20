@@ -1,0 +1,109 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+RESET
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+ indexname |                               indexdef                               
+-----------+----------------------------------------------------------------------
+ b_idx     | CREATE INDEX b_idx ON public.t USING btree (b) INCLUDE (c, d)
+ c_idx     | CREATE UNIQUE INDEX c_idx ON public.t USING btree (c) INCLUDE (b, d)
+ t_pkey    | CREATE UNIQUE INDEX t_pkey ON public.t USING btree (a)
+(3 rows)
+
+INSERT 0 1
+ a | b | c | d 
+---+---+---+---
+ 1 | 2 | 3 | 4
+(1 row)
+
+ a | b | c | d 
+---+---+---+---
+ 1 | 2 | 3 | 4
+(1 row)
+
+CREATE INDEX
+ a | b | d 
+---+---+---
+ 1 | 2 | 4
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+INSERT 0 3
+DELETE 1
+ a 
+---
+ a
+ c
+(2 rows)
+
+DROP INDEX
+ a 
+---
+ a
+ c
+(2 rows)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 3
+UPDATE 1
+ a | b 
+---+---
+ a | f
+ b | f
+ c | f
+(3 rows)
+
+DROP INDEX
+ a | b 
+---+---
+ a | f
+ b | f
+ c | f
+(3 rows)
+
+DELETE 3
+CREATE INDEX
+INSERT 0 3
+UPDATE 1
+ a | b 
+---+---
+ a | f
+ b | f
+ c | f
+(3 rows)
+
+DROP INDEX
+ a | b 
+---+---
+ a | f
+ b | f
+ c | f
+(3 rows)
+
+INSERT 0 1
+INSERT 0 1
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+CREATE INDEX
+ a | b | c 
+---+---+---
+ 1 | 2 | 3
+(1 row)
+

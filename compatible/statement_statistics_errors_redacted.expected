@@ -1,0 +1,52 @@
+SET
+CREATE SCHEMA
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+RESET
+GRANT ROLE
+               role               
+----------------------------------
+ ss_redacted_viewactivityredacted
+(1 row)
+
+ ?column? 
+----------
+         
+(1 row)
+
+  datname  
+-----------
+ pg_tests
+ postgres
+ template0
+ template1
+(4 rows)
+
+ALTER DEFAULT PRIVILEGES
+ last_error_code |         last_error         
+-----------------+----------------------------
+ XX000           | redacted error placeholder
+(1 row)
+
+GRANT ROLE
+REVOKE ROLE
+ last_error_code |         last_error         
+-----------------+----------------------------
+ XX000           | redacted error placeholder
+(1 row)
+
+GRANT ROLE
+ last_error_code |         last_error         
+-----------------+----------------------------
+ XX000           | redacted error placeholder
+(1 row)
+

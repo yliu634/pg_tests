@@ -2,11 +2,10 @@
 -- 3 tests
 
 -- Test 1: statement (line 16)
-SET CLUSTER SETTING trace.redact_at_virtual_cluster_boundary.enabled = false;
+SET trace.redact_at_virtual_cluster_boundary.enabled = false;
 
 -- Test 2: statement (line 20)
-SET CLUSTER SETTING kv.rangefeed.enabled = true
+SET kv.rangefeed.enabled = true;
 
 -- Test 3: statement (line 23)
-SET CLUSTER SETTING server.rangelog.ttl = '300s'
-
+SET server.rangelog.ttl = '300s';

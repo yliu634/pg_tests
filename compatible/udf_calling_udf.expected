@@ -1,0 +1,48 @@
+SET
+DROP SCHEMA
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+DROP PROCEDURE
+RESET
+CREATE FUNCTION
+CREATE FUNCTION
+ nested 
+--------
+    103
+(1 row)
+
+CREATE SCHEMA
+ALTER FUNCTION
+ nested_in_schema 
+------------------
+              103
+(1 row)
+
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE PROCEDURE
+ f131354 
+---------
+       1
+(1 row)
+
+CALL
+             pg_get_functiondef              
+---------------------------------------------
+ CREATE OR REPLACE FUNCTION public.f131354()+
+  RETURNS integer                           +
+  LANGUAGE sql                              +
+ AS $function$ SELECT "fooBAR"() $function$ +
+ 
+(1 row)
+
+              pg_get_functiondef              
+----------------------------------------------
+ CREATE OR REPLACE PROCEDURE public.p131354()+
+  LANGUAGE sql                               +
+ AS $procedure$ SELECT "fooBAR"() $procedure$+
+ 
+(1 row)
+

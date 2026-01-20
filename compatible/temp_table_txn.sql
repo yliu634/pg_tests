@@ -1,14 +1,11 @@
 -- PostgreSQL compatible tests from temp_table_txn
--- 2 tests
+-- Reduced subset: CockroachDB force-retry/autocommit_before_ddl are not
+-- applicable to PostgreSQL.
 
--- Test 1: statement (line 11)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-SET LOCAL autocommit_before_ddl=off;
-CREATE TEMP TABLE tbl (a int primary key);
+BEGIN;
+SET LOCAL crdb.autocommit_before_ddl = off;
+CREATE TEMP TABLE tbl (a INT PRIMARY KEY);
 INSERT INTO tbl VALUES (1);
-SELECT crdb_internal.force_retry('1s');
-COMMIT
+COMMIT;
 
--- Test 2: query (line 19)
-SELECT * FROM tbl
-
+SELECT * FROM tbl ORDER BY a;

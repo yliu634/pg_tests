@@ -14,7 +14,7 @@ $$;
 SELECT f();
 
 -- Test 4: statement (line 15)
-DROP FUNCTION f;
+DROP FUNCTION f();
 CREATE FUNCTION f() RETURNS INT LANGUAGE SQL AS $$
   WITH foo AS MATERIALIZED (SELECT b FROM ab WHERE a = 3) SELECT * FROM foo;
 $$;
@@ -23,7 +23,7 @@ $$;
 SELECT f();
 
 -- Test 6: statement (line 27)
-DROP FUNCTION f;
+DROP FUNCTION f();
 CREATE FUNCTION f() RETURNS INT LANGUAGE SQL AS $$
   WITH foo (bar) AS (SELECT 1) SELECT foo.bar + foo2.bar FROM foo, foo foo2;
 $$;
@@ -32,7 +32,7 @@ $$;
 SELECT f();
 
 -- Test 8: statement (line 39)
-DROP FUNCTION f;
+DROP FUNCTION f();
 CREATE FUNCTION f() RETURNS INT LANGUAGE SQL AS $$
   WITH foo (x) AS MATERIALIZED (SELECT 1),
   bar (x) AS MATERIALIZED (SELECT 2)
@@ -43,7 +43,7 @@ $$;
 SELECT f();
 
 -- Test 10: statement (line 53)
-DROP FUNCTION f;
+DROP FUNCTION f();
 CREATE FUNCTION f() RETURNS INT LANGUAGE SQL AS $$
   WITH foo (x) AS MATERIALIZED (SELECT 100)
   SELECT * FROM (
@@ -56,7 +56,7 @@ $$;
 SELECT f();
 
 -- Test 12: statement (line 69)
-DROP FUNCTION f;
+DROP FUNCTION f();
 CREATE FUNCTION f() RETURNS INT LANGUAGE SQL AS $$
   WITH foo AS MATERIALIZED (SELECT 1) SELECT * FROM foo;
 $$;
@@ -68,7 +68,7 @@ WITH bar AS (SELECT 2) SELECT f(), * FROM bar;
 WITH foo AS (SELECT 2) SELECT f(), * FROM foo;
 
 -- Test 15: statement (line 87)
-DROP FUNCTION f;
+DROP FUNCTION f();
 CREATE FUNCTION f() RETURNS INT LANGUAGE SQL AS $$
   SELECT (
     WITH foo AS MATERIALIZED (SELECT b FROM ab)
@@ -86,14 +86,14 @@ SELECT f();
 INSERT INTO ab VALUES (2, 20), (3, 30), (4, 40);
 
 -- Test 19: statement (line 109)
-DROP FUNCTION f;
+DROP FUNCTION f();
 CREATE FUNCTION f() RETURNS INT[] LANGUAGE SQL AS $$
   WITH RECURSIVE foo (x, y) AS (
     SELECT a, b FROM ab WHERE a = 1
     UNION ALL
-    SELECT a, b FROM ab WHERE a = (SELECT max(x) + 1 FROM foo)
+    SELECT ab.a, ab.b FROM ab JOIN foo ON ab.a = foo.x + 1
   )
-  SELECT array_agg(y) FROM foo;
+  SELECT array_agg(y ORDER BY x) FROM foo;
 $$;
 
 -- Test 20: query (line 120)
@@ -119,7 +119,7 @@ $$;
 -- Test 23: statement (line 147)
 CREATE FUNCTION f138273_2() RETURNS INT LANGUAGE PLpgSQL AS $$
   BEGIN
-    SELECT nextval('seq_1');
+    PERFORM nextval('seq_1');
     WHILE EXISTS (WITH cte(col) AS (SELECT * FROM (VALUES (currval('seq_1'))) AS foo) SELECT 1 FROM cte) LOOP
       RETURN currval('seq_1');
     END LOOP;
@@ -128,4 +128,3 @@ $$;
 
 -- Test 24: query (line 157)
 SELECT f138273_2();
-

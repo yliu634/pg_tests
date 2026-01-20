@@ -1,0 +1,15 @@
+  oid  |      nspname       
+-------+--------------------
+    11 | pg_catalog
+  2200 | public
+ 13256 | information_schema
+(3 rows)
+
+ column_name | data_type 
+-------------+-----------
+ oid         | oid
+ nspname     | name
+ nspowner    | oid
+ nspacl      | ARRAY
+(4 rows)
+

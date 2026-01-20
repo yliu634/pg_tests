@@ -1,0 +1,31 @@
+SET
+DROP TABLE
+DROP FUNCTION
+DROP FUNCTION
+RESET
+CREATE FUNCTION
+CREATE TABLE
+INSERT 0 2
+ conname |       condef        
+---------+---------------------
+ check_a | CHECK ((f1(a) > 1))
+ check_b | CHECK ((f1(b) > 1))
+(2 rows)
+
+ALTER FUNCTION
+ conname |       condef        
+---------+---------------------
+ check_a | CHECK ((f2(a) > 1))
+ check_b | CHECK ((f2(b) > 1))
+(2 rows)
+
+               pg_get_functiondef                
+-------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.f2(a integer)+
+  RETURNS integer                               +
+  LANGUAGE sql                                  +
+  IMMUTABLE                                     +
+ AS $function$ SELECT a + 1 $function$          +
+ 
+(1 row)
+

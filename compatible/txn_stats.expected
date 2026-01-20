@@ -1,0 +1,45 @@
+SET
+CREATE SCHEMA
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+RESET
+SET
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+BEGIN
+ ?column? 
+----------
+        1
+(1 row)
+
+COMMIT
+UPDATE 1
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+

@@ -1,0 +1,57 @@
+CREATE EXTENSION
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+CREATE INDEX
+INSERT 0 4
+ a |    t     
+---+----------
+ 1 | foozoopa
+ 2 | Foo
+(2 rows)
+
+ a |  t  
+---+-----
+ 2 | Foo
+(1 row)
+
+ a |  t  
+---+-----
+ 2 | Foo
+(1 row)
+
+ a |  t  
+---+-----
+ 2 | Foo
+(1 row)
+
+ a |    t     
+---+----------
+ 1 | foozoopa
+(1 row)
+
+ a |    t     
+---+----------
+ 4 | Приветhi
+(1 row)
+
+ sim | a |    t     
+-----+---+----------
+ 0.4 | 1 | foozoopa
+ 0.5 | 2 | Foo
+(2 rows)
+
+SET
+ sim | a |  t  
+-----+---+-----
+ 0.5 | 2 | Foo
+(1 row)
+
+SET
+ sim | a |    t     
+-----+---+----------
+ 0.1 | 1 | foozoopa
+ 0.2 | 2 | Foo
+(2 rows)
+

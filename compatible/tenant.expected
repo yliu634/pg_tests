@@ -1,0 +1,42 @@
+SET
+DROP TABLE
+DROP SCHEMA
+DROP VIEW
+DROP ROLE
+RESET
+CREATE ROLE
+SET
+ default_transaction_read_only 
+-------------------------------
+ on
+(1 row)
+
+SET
+ default_transaction_read_only 
+-------------------------------
+ off
+(1 row)
+
+SET
+ server.controller.default_target_cluster 
+------------------------------------------
+ noservice
+(1 row)
+
+SET
+ server.controller.default_target_cluster 
+------------------------------------------
+ withservice
+(1 row)
+
+RESET
+SET
+ sql.restrict_system_interface.enabled 
+---------------------------------------
+ true
+(1 row)
+
+RESET
+CREATE TABLE
+CREATE SCHEMA
+CREATE VIEW
