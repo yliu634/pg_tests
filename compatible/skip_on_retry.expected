@@ -1,0 +1,11 @@
+SET
+BEGIN
+ ?column? 
+----------
+        1
+(1 row)
+
+psql:compatible/skip_on_retry.sql:14: ERROR:  force_retry
+CONTEXT:  PL/pgSQL function inline_code_block line 1 at RAISE
+ROLLBACK
+RESET
