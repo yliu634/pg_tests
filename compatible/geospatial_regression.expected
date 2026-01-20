@@ -1,1 +1,24 @@
--- Test skipped: Requires PostGIS or CockroachDB-specific features
+SET
+CREATE EXTENSION
+DROP TABLE
+RESET
+CREATE TABLE
+CREATE INDEX
+INSERT 0 2
+ id |         wkt         
+----+---------------------
+  1 | POINT(0 0)
+  2 | LINESTRING(0 0,1 1)
+(2 rows)
+
+    rotatex    
+---------------
+ POINT(1 -3 2)
+(1 row)
+
+ encoded_polyline 
+------------------
+ ??_ibE_ibE
+(1 row)
+
+DROP TABLE

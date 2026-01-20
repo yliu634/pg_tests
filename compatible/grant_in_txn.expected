@@ -1,84 +1,53 @@
 SET
+SET
+DROP SCHEMA
+DROP SCHEMA
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET
+CREATE SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
 BEGIN
-CREATE ROLE
-CREATE ROLE
-CREATE ROLE
-CREATE ROLE
-CREATE ROLE
-CREATE ROLE
-CREATE ROLE
-CREATE ROLE
-CREATE ROLE
-CREATE ROLE
-CREATE ROLE
-CREATE ROLE
-CREATE ROLE
-CREATE ROLE
-CREATE ROLE
+GRANT
+GRANT
 GRANT ROLE
-GRANT ROLE
-GRANT ROLE
-CREATE ROLE
-GRANT ROLE
-GRANT ROLE
-GRANT ROLE
-CREATE ROLE
-GRANT ROLE
-GRANT ROLE
-CREATE ROLE
-GRANT ROLE
-GRANT ROLE
-GRANT ROLE
-COMMIT
-CREATE ROLE
-CREATE ROLE
-GRANT ROLE
-GRANT ROLE
-BEGIN
-         grantee          |      role_name       | is_grantable 
---------------------------+----------------------+--------------
- postgres                 | pg_database_owner    | NO
- pg_monitor               | pg_read_all_settings | NO
- pg_monitor               | pg_read_all_stats    | NO
- pg_monitor               | pg_stat_scan_tables  | NO
- user5                    | role1                | NO
- user6                    | role11               | NO
- user7                    | role2                | NO
- role9                    | role3                | NO
- role10                   | role4                | NO
- role11                   | role5                | NO
- user1                    | role5                | NO
- role9                    | role6                | NO
- role10                   | role7                | NO
- role11                   | role8                | NO
- user1                    | role9                | NO
- role_foo                 | role_bar             | YES
- testuser                 | role_foo             | YES
- owner_grant_option_child | testuser             | NO
-(18 rows)
+ user1_schema_usage | user1_table_select 
+--------------------+--------------------
+ t                  | t
+(1 row)
 
-REVOKE ROLE
 SAVEPOINT
+GRANT
+ user1_insert_before_rb 
+------------------------
+ t
+(1 row)
+
 ROLLBACK
-         grantee          |      role_name       | is_grantable 
---------------------------+----------------------+--------------
- postgres                 | pg_database_owner    | NO
- pg_monitor               | pg_read_all_settings | NO
- pg_monitor               | pg_read_all_stats    | NO
- pg_monitor               | pg_stat_scan_tables  | NO
- owner_grant_option_child | testuser             | NO
- user5                    | role1                | NO
- user7                    | role2                | NO
- role9                    | role3                | NO
- role10                   | role4                | NO
- role11                   | role5                | NO
- user1                    | role5                | NO
- role9                    | role6                | NO
- role10                   | role7                | NO
- role11                   | role8                | NO
- user1                    | role9                | NO
- user6                    | role11               | NO
- role_foo                 | role_bar             | YES
-(17 rows)
+ user1_insert_after_rb 
+-----------------------
+ f
+(1 row)
 
 COMMIT
+ user1_select_after_commit | user1_insert_after_commit 
+---------------------------+---------------------------
+ t                         | f
+(1 row)
+
+SET
+DROP SCHEMA
+DROP SCHEMA
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET

@@ -1,0 +1,64 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+RESET
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 3
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+INSERT 0 3
+INSERT 0 3
+PREPARE
+SET
+                        QUERY PLAN                        
+----------------------------------------------------------
+ Sort
+   Sort Key: k
+   ->  Index Scan using generic_t_abc_idx on generic_t
+         Index Cond: ((a = $1) AND (b = $2) AND (c = $3))
+(4 rows)
+
+SET
+                      QUERY PLAN                       
+-------------------------------------------------------
+ Sort
+   Sort Key: k
+   ->  Index Scan using generic_t_abc_idx on generic_t
+         Index Cond: ((a = 1) AND (b = 2) AND (c = 3))
+(4 rows)
+
+SET
+DEALLOCATE
+PREPARE
+                             QUERY PLAN                              
+---------------------------------------------------------------------
+ Sort
+   Sort Key: t.k, c.k, g.k
+   ->  Nested Loop
+         ->  Nested Loop
+               ->  Index Scan using generic_t_abc_idx on generic_t t
+                     Index Cond: ((a = 1) AND (c = 3))
+               ->  Bitmap Heap Scan on generic_c c
+                     Recheck Cond: (t.k = a)
+                     ->  Bitmap Index Scan on generic_c_a_idx
+                           Index Cond: (a = t.k)
+         ->  Index Scan using generic_g_ab_idx on generic_g g
+               Index Cond: (a = c.k)
+(12 rows)
+
+ k | c_k | g_k 
+---+-----+-----
+ 1 |   1 |   1
+(1 row)
+
+DEALLOCATE
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+RESET

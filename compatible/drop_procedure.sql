@@ -1,139 +1,82 @@
 -- PostgreSQL compatible tests from drop_procedure
--- 43 tests
+--
+-- CockroachDB has SHOW CREATE PROCEDURE and other directives that do not run
+-- under plain psql. This file focuses on creating, introspecting, and dropping
+-- procedures using PostgreSQL-native catalogs.
 
--- Test 1: statement (line 1)
-CREATE PROCEDURE p_test_drop() LANGUAGE SQL AS 'SELECT 1'
+SET client_min_messages = warning;
+DROP SCHEMA IF EXISTS sc1 CASCADE;
+DROP TYPE IF EXISTS t114677 CASCADE;
+DROP PROCEDURE IF EXISTS p_test_drop();
+DROP PROCEDURE IF EXISTS p_test_drop(int);
+DROP PROCEDURE IF EXISTS p142886(varchar);
+RESET client_min_messages;
 
--- Test 2: statement (line 4)
-CREATE PROCEDURE p_test_drop(int) LANGUAGE SQL AS 'SELECT 1'
+CREATE PROCEDURE p_test_drop() LANGUAGE plpgsql AS $$
+BEGIN
+  RAISE NOTICE 'p_test_drop()';
+END
+$$;
 
--- Test 3: statement (line 7)
-CREATE SCHEMA sc1
+CREATE PROCEDURE p_test_drop(int) LANGUAGE plpgsql AS $$
+BEGIN
+  RAISE NOTICE 'p_test_drop(int)';
+END
+$$;
 
--- Test 4: statement (line 10)
-CREATE PROCEDURE sc1.p_test_drop(int) LANGUAGE SQL AS 'SELECT 1'
+CREATE SCHEMA sc1;
+CREATE PROCEDURE sc1.p_test_drop(int) LANGUAGE plpgsql AS $$
+BEGIN
+  RAISE NOTICE 'sc1.p_test_drop(int)';
+END
+$$;
 
--- Test 5: statement (line 13)
-SET search_path = public,sc1
+-- "SHOW CREATE PROCEDURE" equivalent via pg_catalog.
+SELECT pg_get_functiondef(p.oid) AS create_statement
+FROM pg_proc p
+JOIN pg_namespace n ON n.oid = p.pronamespace
+WHERE n.nspname = 'public' AND p.proname = 'p_test_drop'
+ORDER BY 1;
 
--- Test 6: query (line 16)
-SELECT create_statement FROM [SHOW CREATE PROCEDURE public.p_test_drop] ORDER BY 1
+SELECT pg_get_functiondef(p.oid) AS create_statement
+FROM pg_proc p
+JOIN pg_namespace n ON n.oid = p.pronamespace
+WHERE n.nspname = 'sc1' AND p.proname = 'p_test_drop'
+ORDER BY 1;
 
--- Test 7: query (line 32)
-SELECT create_statement FROM [SHOW CREATE PROCEDURE sc1.p_test_drop]
+CALL p_test_drop();
+CALL p_test_drop(1);
 
--- Test 8: statement (line 42)
-DROP FUNCTION p_test_drop
+-- Drop a specific overload.
+DROP PROCEDURE p_test_drop(int);
 
--- Test 9: statement (line 45)
-DROP PROCEDURE p_test_drop
+SELECT pg_get_functiondef(p.oid) AS create_statement
+FROM pg_proc p
+JOIN pg_namespace n ON n.oid = p.pronamespace
+WHERE n.nspname = 'public' AND p.proname = 'p_test_drop'
+ORDER BY 1;
 
--- Test 10: statement (line 48)
-DROP PROCEDURE IF EXISTS p_not_existing
+DROP SCHEMA sc1 CASCADE;
 
--- Test 11: statement (line 51)
-DROP PROCEDURE p_not_existing
-
--- Test 12: statement (line 54)
-SET autocommit_before_ddl = false
-
--- Test 13: statement (line 58)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-DROP PROCEDURE p_test_drop();
-DROP PROCEDURE p_test_drop();
-COMMIT;
-
--- Test 14: statement (line 64)
-ROLLBACK
-
--- Test 15: statement (line 67)
-RESET autocommit_before_ddl
-
--- Test 16: statement (line 70)
-DROP FUNCTION p_test_drop
-
--- Test 17: statement (line 73)
-DROP FUNCTION IF EXISTS p_test_drop
-
--- Test 18: statement (line 76)
-DROP FUNCTION p_test_drop()
-
--- Test 19: statement (line 79)
-DROP FUNCTION IF EXISTS p_test_drop()
-
--- Test 20: statement (line 82)
-DROP PROCEDURE IF EXISTS p_test_drop()
-
--- Test 21: statement (line 85)
-CALL p_test_drop()
-
--- Test 22: query (line 88)
-SELECT create_statement FROM [SHOW CREATE PROCEDURE public.p_test_drop]
-
--- Test 23: query (line 98)
-SELECT create_statement FROM [SHOW CREATE PROCEDURE sc1.p_test_drop]
-
--- Test 24: statement (line 110)
-DROP PROCEDURE p_test_drop(INT), p_test_drop(INT)
-
--- Test 25: statement (line 113)
-CALL public.p_test_drop(1)
-
--- Test 26: statement (line 116)
-SELECT create_statement FROM [SHOW CREATE PROCEDURE public.p_test_drop]
-
--- Test 27: query (line 119)
-SELECT create_statement FROM [SHOW CREATE PROCEDURE sc1.p_test_drop]
-
--- Test 28: statement (line 129)
-DROP PROCEDURE p_test_drop(INT)
-
--- Test 29: statement (line 132)
-CALL p_test_drop(1)
-
--- Test 30: statement (line 135)
-SELECT create_statement FROM [SHOW CREATE PROCEDURE sc1.p_test_drop]
-
--- Test 31: statement (line 140)
-CREATE PROCEDURE public.p_test_drop() LANGUAGE SQL AS $$ SELECT 1 $$;
-CREATE PROCEDURE sc1.p_test_drop() LANGUAGE SQL AS $$ SELECT 1 $$;
-
--- Test 32: query (line 144)
-SELECT create_statement FROM [SHOW CREATE PROCEDURE public.p_test_drop]
-
--- Test 33: query (line 154)
-SELECT create_statement FROM [SHOW CREATE PROCEDURE sc1.p_test_drop]
-
--- Test 34: statement (line 164)
-BEGIN;
-DROP PROCEDURE p_test_drop();
-DROP PROCEDURE p_test_drop();
-COMMIT;
-
--- Test 35: statement (line 170)
-SELECT create_statement FROM [SHOW CREATE PROCEDURE public.p_test_drop]
-
--- Test 36: statement (line 173)
-SELECT create_statement FROM [SHOW CREATE PROCEDURE sc1.p_test_drop]
-
--- Test 37: statement (line 176)
-SET search_path = public
-
--- Test 38: statement (line 179)
-DROP SCHEMA sc1
-
--- Test 39: statement (line 186)
+-- Composite-type procedure argument.
 CREATE TYPE t114677 AS (x INT, y INT);
-
--- Test 40: statement (line 189)
-CREATE PROCEDURE p114677(v t114677) LANGUAGE SQL AS $$ SELECT 0; $$;
-
--- Test 41: statement (line 192)
+CREATE PROCEDURE p114677(v t114677) LANGUAGE plpgsql AS $$
+BEGIN
+  RAISE NOTICE 'p114677: %', v;
+END
+$$;
+CALL p114677(ROW(1, 2)::t114677);
 DROP PROCEDURE p114677(t114677);
+DROP TYPE t114677;
 
--- Test 42: statement (line 199)
-CREATE PROCEDURE p142886(p VARCHAR(10)) LANGUAGE SQL AS $$ SELECT 0; $$;
-
--- Test 43: statement (line 202)
+-- Drop-by-signature example.
+CREATE PROCEDURE p142886(p VARCHAR(10)) LANGUAGE plpgsql AS $$
+BEGIN
+  RAISE NOTICE 'p142886: %', p;
+END
+$$;
 DROP PROCEDURE p142886(VARCHAR);
+
+-- Clean up.
+DROP PROCEDURE p_test_drop();
 

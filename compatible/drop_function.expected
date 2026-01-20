@@ -1,0 +1,95 @@
+SET
+DROP SCHEMA
+DROP SCHEMA
+DROP TABLE
+DROP TYPE
+DROP TYPE
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+RESET
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE SCHEMA
+CREATE FUNCTION
+                    create_statement                    
+--------------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.f_test_drop()       +
+  RETURNS integer                                      +
+  LANGUAGE sql                                         +
+ AS $function$ SELECT 1 $function$                     +
+ 
+ CREATE OR REPLACE FUNCTION public.f_test_drop(integer)+
+  RETURNS integer                                      +
+  LANGUAGE sql                                         +
+ AS $function$ SELECT 1 $function$                     +
+ 
+(2 rows)
+
+                  create_statement                   
+-----------------------------------------------------
+ CREATE OR REPLACE FUNCTION sc1.f_test_drop(integer)+
+  RETURNS integer                                   +
+  LANGUAGE sql                                      +
+ AS $function$ SELECT 1 $function$                  +
+ 
+(1 row)
+
+DROP FUNCTION
+                create_statement                 
+-------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.f_test_drop()+
+  RETURNS integer                               +
+  LANGUAGE sql                                  +
+ AS $function$ SELECT 1 $function$              +
+ 
+(1 row)
+
+psql:pg_tests/compatible/drop_function.sql:51: NOTICE:  drop cascades to function sc1.f_test_drop(integer)
+DROP SCHEMA
+CREATE TYPE
+CREATE TYPE
+CREATE FUNCTION
+CREATE FUNCTION
+                    create_statement                    
+--------------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.f114677(v t114677)  +
+  RETURNS integer                                      +
+  LANGUAGE sql                                         +
+ AS $function$ SELECT 0 $function$                     +
+ 
+ CREATE OR REPLACE FUNCTION public.f114677(v t114677_2)+
+  RETURNS integer                                      +
+  LANGUAGE sql                                         +
+ AS $function$ SELECT 1 $function$                     +
+ 
+(2 rows)
+
+DROP FUNCTION
+DROP FUNCTION
+ create_statement 
+------------------
+(0 rows)
+
+DROP TYPE
+DROP TYPE
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE SCHEMA
+ALTER FUNCTION
+CREATE TABLE
+ column_name |      column_default       
+-------------+---------------------------
+ j           | altschema.f_called_by_b()
+(1 row)
+
+DROP TABLE
+DROP FUNCTION
+psql:pg_tests/compatible/drop_function.sql:96: NOTICE:  drop cascades to function altschema.f_called_by_b()
+DROP SCHEMA
+CREATE FUNCTION
+DROP FUNCTION
+DROP FUNCTION

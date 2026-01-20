@@ -1,0 +1,11 @@
+ interval 
+----------
+ 1 day
+(1 row)
+
+        name        | setting 
+--------------------+---------
+ log_connections    | off
+ log_disconnections | off
+(2 rows)
+

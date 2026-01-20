@@ -1,0 +1,21 @@
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+INSERT 0 3
+ range_id |  op  | error | verbose_trace 
+----------+------+-------+---------------
+       -1 | read |       | 
+(1 row)
+
+ error_count 
+-------------
+           0
+(1 row)
+
+ proposing_count 
+-----------------
+               1
+(1 row)
+
+DROP TABLE

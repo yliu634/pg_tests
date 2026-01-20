@@ -7,6 +7,7 @@ DROP DATABASE IF EXISTS b;
 DROP DATABASE IF EXISTS owner_grant_option;
 DROP ROLE IF EXISTS readwrite;
 DROP ROLE IF EXISTS testuser;
+DROP ROLE IF EXISTS "test-user";
 DROP ROLE IF EXISTS owner_grant_option_child;
 DROP ROLE IF EXISTS other_owner;
 RESET client_min_messages;
@@ -109,4 +110,3 @@ CREATE ROLE other_owner;
 -- Test 36-37: Can't create database as testuser in this script
 -- ALTER DATABASE owner_grant_option OWNER TO other_owner;
 -- SHOW GRANTS ON DATABASE owner_grant_option;
-

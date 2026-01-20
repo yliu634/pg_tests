@@ -1,0 +1,36 @@
+SET
+DROP SCHEMA
+DROP ROLE
+DROP ROLE
+RESET
+CREATE ROLE
+CREATE ROLE
+CREATE TABLE
+INSERT 0 2
+CREATE SCHEMA
+ALTER SCHEMA
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+RESET
+ grantee_can_select 
+--------------------
+ t
+(1 row)
+
+ default_acl_rows 
+------------------
+                1
+(1 row)
+
+psql:pg_tests/compatible/drop_role_with_default_privileges.sql:36: NOTICE:  drop cascades to table drwdp_schema.t
+DROP SCHEMA
+DROP OWNED
+DROP OWNED
+DROP ROLE
+DROP ROLE
+ default_acl_rows_after_drop 
+-----------------------------
+                           0
+(1 row)
+

@@ -1,0 +1,23 @@
+SET
+DROP SCHEMA
+RESET
+CREATE SCHEMA
+CREATE TYPE
+CREATE TABLE
+CREATE VIEW
+CREATE SEQUENCE
+     nspname      
+------------------
+ drop_schema_test
+(1 row)
+
+psql:pg_tests/compatible/drop_schema.sql:18: NOTICE:  drop cascades to 4 other objects
+DETAIL:  drop cascades to type drop_schema_test.enum_test
+drop cascades to table drop_schema_test.t
+drop cascades to view drop_schema_test.v
+drop cascades to sequence drop_schema_test.seq
+DROP SCHEMA
+ nspname 
+---------
+(0 rows)
+

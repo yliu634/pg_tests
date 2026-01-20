@@ -1,40 +1,21 @@
 -- PostgreSQL compatible tests from drop_schema
--- 10 tests
+--
+-- CockroachDB has cross-database schema references and system schemas that do
+-- not exist in PG. This file exercises DROP SCHEMA ... CASCADE.
 
--- Test 1: statement (line 1)
-DROP SCHEMA public
+SET client_min_messages = warning;
+DROP SCHEMA IF EXISTS drop_schema_test CASCADE;
+RESET client_min_messages;
 
--- Test 2: statement (line 4)
-CREATE DATABASE test2
+CREATE SCHEMA drop_schema_test;
+CREATE TYPE drop_schema_test.enum_test AS ENUM ('s', 't');
+CREATE TABLE drop_schema_test.t(a INT, e drop_schema_test.enum_test);
+CREATE VIEW drop_schema_test.v AS SELECT a FROM drop_schema_test.t;
+CREATE SEQUENCE drop_schema_test.seq;
 
--- Test 3: statement (line 7)
-DROP SCHEMA test2.public
+SELECT nspname FROM pg_namespace WHERE nspname = 'drop_schema_test';
 
--- Test 4: statement (line 13)
-CREATE SCHEMA schema_123539;
+DROP SCHEMA drop_schema_test CASCADE;
 
--- Test 5: statement (line 16)
-CREATE TYPE schema_123539.enum_123539 AS ENUM ('s', 't');
-
--- Test 6: statement (line 19)
-BEGIN;
-ALTER TYPE schema_123539.enum_123539 DROP VALUE 's';
-DROP SCHEMA schema_123539 CASCADE;
-COMMIT;
-
--- Test 7: statement (line 28)
-DROP SCHEMA system.public
-
--- Test 8: statement (line 31)
-DROP SCHEMA pg_catalog
-
-user testuser
-
--- Test 9: statement (line 36)
-DROP SCHEMA system.public
-
--- Test 10: statement (line 39)
-DROP SCHEMA crdb_internal
-
-user root
+SELECT nspname FROM pg_namespace WHERE nspname = 'drop_schema_test';
 

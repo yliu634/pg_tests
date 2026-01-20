@@ -1,0 +1,23 @@
+SET
+DROP EVENT TRIGGER
+DROP FUNCTION
+DROP SCHEMA
+RESET
+CREATE SCHEMA
+CREATE TABLE
+CREATE FUNCTION
+CREATE EVENT TRIGGER
+CREATE TABLE
+ALTER TABLE
+ command_tag  |     object_identity     
+--------------+-------------------------
+ CREATE TABLE | event_log_legacy_test.t
+ ALTER TABLE  | event_log_legacy_test.t
+(2 rows)
+
+DROP EVENT TRIGGER
+psql:pg_tests/compatible/event_log_legacy.sql:43: NOTICE:  drop cascades to 3 other objects
+DETAIL:  drop cascades to table event_log_legacy_test.eventlog
+drop cascades to function event_log_legacy_test.capture_ddl()
+drop cascades to table event_log_legacy_test.t
+DROP SCHEMA

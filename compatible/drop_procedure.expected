@@ -1,0 +1,71 @@
+SET
+DROP SCHEMA
+DROP TYPE
+DROP PROCEDURE
+DROP PROCEDURE
+DROP PROCEDURE
+RESET
+CREATE PROCEDURE
+CREATE PROCEDURE
+CREATE SCHEMA
+CREATE PROCEDURE
+                      create_statement                      
+------------------------------------------------------------
+ CREATE OR REPLACE PROCEDURE public.p_test_drop()          +
+  LANGUAGE plpgsql                                         +
+ AS $procedure$                                            +
+ BEGIN                                                     +
+   RAISE NOTICE 'p_test_drop()';                           +
+ END                                                       +
+ $procedure$                                               +
+ 
+ CREATE OR REPLACE PROCEDURE public.p_test_drop(IN integer)+
+  LANGUAGE plpgsql                                         +
+ AS $procedure$                                            +
+ BEGIN                                                     +
+   RAISE NOTICE 'p_test_drop(int)';                        +
+ END                                                       +
+ $procedure$                                               +
+ 
+(2 rows)
+
+                    create_statement                     
+---------------------------------------------------------
+ CREATE OR REPLACE PROCEDURE sc1.p_test_drop(IN integer)+
+  LANGUAGE plpgsql                                      +
+ AS $procedure$                                         +
+ BEGIN                                                  +
+   RAISE NOTICE 'sc1.p_test_drop(int)';                 +
+ END                                                    +
+ $procedure$                                            +
+ 
+(1 row)
+
+psql:pg_tests/compatible/drop_procedure.sql:47: NOTICE:  p_test_drop()
+CALL
+psql:pg_tests/compatible/drop_procedure.sql:48: NOTICE:  p_test_drop(int)
+CALL
+DROP PROCEDURE
+                 create_statement                 
+--------------------------------------------------
+ CREATE OR REPLACE PROCEDURE public.p_test_drop()+
+  LANGUAGE plpgsql                               +
+ AS $procedure$                                  +
+ BEGIN                                           +
+   RAISE NOTICE 'p_test_drop()';                 +
+ END                                             +
+ $procedure$                                     +
+ 
+(1 row)
+
+psql:pg_tests/compatible/drop_procedure.sql:59: NOTICE:  drop cascades to function sc1.p_test_drop(integer)
+DROP SCHEMA
+CREATE TYPE
+CREATE PROCEDURE
+psql:pg_tests/compatible/drop_procedure.sql:68: NOTICE:  p114677: (1,2)
+CALL
+DROP PROCEDURE
+DROP TYPE
+CREATE PROCEDURE
+DROP PROCEDURE
+DROP PROCEDURE

@@ -1,0 +1,47 @@
+SET
+DROP VIEW
+DROP TABLE
+DROP SEQUENCE
+DROP SEQUENCE
+RESET
+CREATE SEQUENCE
+ nextval 
+---------
+       1
+(1 row)
+
+DROP SEQUENCE
+CREATE SEQUENCE
+CREATE TABLE
+ALTER SEQUENCE
+        column_default        
+------------------------------
+ nextval('s_owned'::regclass)
+(1 row)
+
+INSERT 0 1
+ i 
+---
+ 1
+(1 row)
+
+DROP TABLE
+ owned_seq_after_drop 
+----------------------
+ 
+(1 row)
+
+CREATE SEQUENCE
+CREATE VIEW
+ n 
+---
+ 1
+(1 row)
+
+psql:pg_tests/compatible/drop_sequence.sql:39: NOTICE:  drop cascades to view v_seq
+DROP SEQUENCE
+ view_after_drop 
+-----------------
+ 
+(1 row)
+

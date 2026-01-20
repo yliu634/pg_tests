@@ -1,0 +1,42 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+RESET
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+ id 
+----
+  2
+  3
+  7
+(3 rows)
+
+DROP TABLE
+ a_after_drop 
+--------------
+ 
+(1 row)
+
+psql:pg_tests/compatible/drop_table.sql:23: NOTICE:  table "drop_table_a" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+BEGIN
+ALTER TABLE
+DROP TABLE
+COMMIT
+ to_drop_after_commit 
+----------------------
+ 
+(1 row)
+
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE

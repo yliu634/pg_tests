@@ -1,0 +1,40 @@
+SET
+DROP TABLE
+DROP TYPE
+DROP TYPE
+DROP FUNCTION
+RESET
+CREATE TYPE
+CREATE TABLE
+INSERT 0 1
+ e 
+---
+ a
+(1 row)
+
+psql:pg_tests/compatible/drop_type.sql:21: NOTICE:  drop cascades to column e of table drop_type_tab
+DROP TYPE
+ tab_after_drop 
+----------------
+ drop_type_tab
+(1 row)
+
+ enum_still_there 
+------------------
+ f
+(1 row)
+
+CREATE TYPE
+CREATE FUNCTION
+ drop_type_f 
+-------------
+           3
+(1 row)
+
+psql:pg_tests/compatible/drop_type.sql:31: NOTICE:  drop cascades to function drop_type_f(drop_type_composite)
+DROP TYPE
+ func_still_there 
+------------------
+ f
+(1 row)
+

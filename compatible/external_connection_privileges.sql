@@ -1,70 +1,41 @@
 -- PostgreSQL compatible tests from external_connection_privileges
--- 21 tests
+--
+-- CockroachDB has EXTERNAL CONNECTION objects and system.privileges. PostgreSQL
+-- does not. The closest analogue is a FOREIGN SERVER (e.g., via postgres_fdw),
+-- which supports USAGE privileges.
 
--- Test 1: query (line 7)
-SELECT username, path, privileges, grant_options FROM system.privileges
+SET client_min_messages = warning;
+DROP SERVER IF EXISTS ext_conn_foo CASCADE;
+DROP ROLE IF EXISTS ext_conn_testuser;
+DROP ROLE IF EXISTS ext_conn_bar;
+DROP ROLE IF EXISTS ext_conn_testuser2;
+RESET client_min_messages;
 
--- Test 2: statement (line 12)
-GRANT USAGE ON EXTERNAL CONNECTION foo TO testuser
+CREATE EXTENSION IF NOT EXISTS postgres_fdw;
 
--- Test 3: statement (line 15)
-GRANT DROP ON EXTERNAL CONNECTION foo TO testuser
+CREATE SERVER ext_conn_foo FOREIGN DATA WRAPPER postgres_fdw
+  OPTIONS (host 'localhost', dbname 'pg_tests');
 
--- Test 4: statement (line 19)
-GRANT UPDATE ON EXTERNAL CONNECTION foo TO testuser
+CREATE ROLE ext_conn_testuser LOGIN;
+CREATE ROLE ext_conn_bar LOGIN;
+CREATE ROLE ext_conn_testuser2 LOGIN;
 
--- Test 5: statement (line 22)
-CREATE EXTERNAL CONNECTION foo AS 'nodelocal://1/foo'
+SELECT srvname, srvacl FROM pg_foreign_server WHERE srvname = 'ext_conn_foo';
 
--- Test 6: statement (line 25)
-GRANT USAGE,DROP,UPDATE ON EXTERNAL CONNECTION foo TO testuser
+GRANT USAGE ON FOREIGN SERVER ext_conn_foo TO ext_conn_testuser;
+SELECT has_server_privilege('ext_conn_testuser', 'ext_conn_foo', 'USAGE') AS testuser_usage;
 
--- Test 7: query (line 28)
-SELECT username, path, privileges, grant_options FROM system.privileges ORDER by username
+REVOKE USAGE ON FOREIGN SERVER ext_conn_foo FROM ext_conn_testuser;
+SELECT has_server_privilege('ext_conn_testuser', 'ext_conn_foo', 'USAGE') AS testuser_usage_after_revoke;
 
--- Test 8: statement (line 34)
-REVOKE USAGE,DROP,UPDATE ON EXTERNAL CONNECTION foo FROM testuser
+GRANT USAGE ON FOREIGN SERVER ext_conn_foo TO ext_conn_testuser WITH GRANT OPTION;
+GRANT USAGE ON FOREIGN SERVER ext_conn_foo TO ext_conn_bar;
 
--- Test 9: query (line 37)
-SELECT username, path, privileges, grant_options FROM system.privileges ORDER by username
+SELECT srvname, srvacl FROM pg_foreign_server WHERE srvname = 'ext_conn_foo';
 
--- Test 10: statement (line 42)
-GRANT USAGE,DROP,UPDATE ON EXTERNAL CONNECTION foo TO testuser
-
--- Test 11: statement (line 45)
-CREATE USER bar
-
--- Test 12: statement (line 51)
-GRANT USAGE,DROP,UPDATE ON EXTERNAL CONNECTION foo TO bar
-
-user root
-
--- Test 13: statement (line 56)
-GRANT USAGE,DROP,UPDATE ON EXTERNAL CONNECTION foo TO testuser WITH GRANT OPTION
-
--- Test 14: statement (line 62)
-GRANT USAGE,DROP,UPDATE ON EXTERNAL CONNECTION foo TO bar
-
-user root
-
--- Test 15: query (line 67)
-SELECT username, path, privileges, grant_options FROM system.privileges ORDER BY username
-
--- Test 16: statement (line 76)
-GRANT SELECT ON EXTERNAL CONNECTION foo TO testuser
-
--- Test 17: statement (line 79)
-GRANT INSERT ON EXTERNAL CONNECTION foo TO testuser
-
--- Test 18: statement (line 82)
-CREATE ROLE testuser2
-
--- Test 19: statement (line 85)
-GRANT DROP,UPDATE,USAGE ON EXTERNAL CONNECTION foo TO testuser2 WITH GRANT OPTION
-
--- Test 20: query (line 88)
-SHOW GRANTS ON EXTERNAL CONNECTION foo
-
--- Test 21: query (line 103)
-SHOW GRANTS ON EXTERNAL CONNECTION foo FOR testuser, testuser2
+-- Cleanup.
+DROP SERVER ext_conn_foo CASCADE;
+DROP ROLE ext_conn_testuser;
+DROP ROLE ext_conn_bar;
+DROP ROLE ext_conn_testuser2;
 

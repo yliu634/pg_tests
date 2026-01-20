@@ -1,0 +1,41 @@
+SET
+DROP TABLE
+DROP SCHEMA
+RESET
+CREATE TABLE
+INSERT 0 3
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+ schemaname |    tablename    |        indexname         
+------------+-----------------+--------------------------
+ public     | drop_index_test | drop_index_test_a_idx
+ public     | drop_index_test | drop_index_test_b_idx
+ public     | drop_index_test | drop_index_test_expr_idx
+(3 rows)
+
+DROP INDEX
+ schemaname |    tablename    |       indexname       
+------------+-----------------+-----------------------
+ public     | drop_index_test | drop_index_test_a_idx
+ public     | drop_index_test | drop_index_test_b_idx
+(2 rows)
+
+CREATE SCHEMA
+CREATE TABLE
+CREATE INDEX
+    schemaname     | tablename | indexname 
+-------------------+-----------+-----------
+ drop_index_schema | t         | t_a_idx
+(1 row)
+
+DROP INDEX
+ schemaname | tablename | indexname 
+------------+-----------+-----------
+(0 rows)
+
+psql:pg_tests/compatible/drop_index.sql:52: NOTICE:  index "t_a_idx" does not exist, skipping
+DROP INDEX
+DROP TABLE
+psql:pg_tests/compatible/drop_index.sql:55: NOTICE:  drop cascades to table drop_index_schema.t
+DROP SCHEMA

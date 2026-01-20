@@ -1,0 +1,25 @@
+SET
+DROP EVENT TRIGGER
+DROP FUNCTION
+DROP SCHEMA
+RESET
+CREATE SCHEMA
+CREATE TABLE
+CREATE FUNCTION
+CREATE EVENT TRIGGER
+CREATE TABLE
+ALTER TABLE
+CREATE INDEX
+ command_tag  |    object_identity     
+--------------+------------------------
+ CREATE TABLE | event_log_test.a
+ ALTER TABLE  | event_log_test.a
+ CREATE INDEX | event_log_test.a_v_idx
+(3 rows)
+
+DROP EVENT TRIGGER
+psql:pg_tests/compatible/event_log.sql:46: NOTICE:  drop cascades to 3 other objects
+DETAIL:  drop cascades to table event_log_test.eventlog
+drop cascades to function event_log_test.capture_ddl()
+drop cascades to table event_log_test.a
+DROP SCHEMA

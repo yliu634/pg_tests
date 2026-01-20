@@ -1,0 +1,32 @@
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+INSERT 0 3
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+      indexname       |                                        indexdef                                         
+----------------------+-----------------------------------------------------------------------------------------
+ expr_idx_json_k_idx  | CREATE INDEX expr_idx_json_k_idx ON public.expr_idx_t USING btree (((j ->> 'k'::text)))
+ expr_idx_lower_c_idx | CREATE INDEX expr_idx_lower_c_idx ON public.expr_idx_t USING btree (lower(c))
+ expr_idx_sum_idx     | CREATE INDEX expr_idx_sum_idx ON public.expr_idx_t USING btree (((a + b)))
+ expr_idx_t_pkey      | CREATE UNIQUE INDEX expr_idx_t_pkey ON public.expr_idx_t USING btree (id)
+(4 rows)
+
+ id 
+----
+  2
+(1 row)
+
+ id 
+----
+  1
+  2
+(2 rows)
+
+ id 
+----
+  2
+(1 row)
+

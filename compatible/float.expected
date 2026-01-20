@@ -1,0 +1,79 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+RESET
+CREATE TABLE
+CREATE INDEX
+INSERT 0 7
+     f     | is_nan 
+-----------+--------
+ -Infinity | f
+        -1 | f
+         0 | f
+         1 | f
+  Infinity | f
+       NaN | t
+           | 
+(7 rows)
+
+CREATE TABLE
+INSERT 0 2
+CREATE INDEX
+CREATE INDEX
+ f  
+----
+  0
+ -0
+(2 rows)
+
+ f  
+----
+  0
+ -0
+(2 rows)
+
+ f  
+----
+  0
+ -0
+(2 rows)
+
+CREATE TABLE
+INSERT 0 3
+SET
+           f            
+------------------------
+                      0
+ 0.00012345678901234567
+     123.45678901234568
+(3 rows)
+
+SET
+   f    
+--------
+      0
+ 0.0001
+  1e+02
+(3 rows)
+
+RESET
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+     floor      
+----------------
+        1234567
+ 12345678901234
+(2 rows)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+  a  | is_nan 
+-----+--------
+ NaN | t
+(1 row)
+

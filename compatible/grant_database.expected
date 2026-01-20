@@ -6,6 +6,7 @@ DROP ROLE
 DROP ROLE
 DROP ROLE
 DROP ROLE
+DROP ROLE
 RESET
 CREATE DATABASE
  datname | datacl 
@@ -14,7 +15,7 @@ CREATE DATABASE
 (1 row)
 
 CREATE ROLE
-psql:/tmp/grant_database.sql:28: ERROR:  role "test-user" already exists
+CREATE ROLE
 GRANT
  datname |                                          datacl                                          
 ---------+------------------------------------------------------------------------------------------

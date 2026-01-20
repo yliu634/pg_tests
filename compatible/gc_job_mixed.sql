@@ -1,21 +1,15 @@
 -- PostgreSQL compatible tests from gc_job_mixed
--- 6 tests
+--
+-- CockroachDB has GC jobs and crdb_internal catalogs that don't exist in PG.
+-- This file keeps a minimal DDL flow that runs cleanly under PostgreSQL.
 
--- Test 1: statement (line 3)
-CREATE DATABASE db
+SET client_min_messages = warning;
+DROP TABLE IF EXISTS gc_kv;
+RESET client_min_messages;
 
--- Test 2: statement (line 14)
-ALTER TABLE db.kv ALTER PRIMARY KEY USING COLUMNS (k)
+CREATE TABLE gc_kv (k INT PRIMARY KEY, v INT);
+INSERT INTO gc_kv VALUES (1, 1);
+DROP TABLE gc_kv;
 
--- Test 3: statement (line 17)
-DROP TABLE db.kv
-
--- Test 4: statement (line 20)
-DROP DATABASE db
-
--- Test 5: query (line 23)
-SELECT description FROM crdb_internal.jobs WHERE job_type = 'SCHEMA CHANGE GC'
-
--- Test 6: query (line 30)
-SELECT count(*) FROM crdb_internal.lost_descriptors_with_data
+SELECT to_regclass('gc_kv') AS kv_exists_after_drop;
 

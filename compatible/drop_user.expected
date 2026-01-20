@@ -1,0 +1,40 @@
+SET
+DO
+DROP TABLE
+RESET
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+     rolname     
+-----------------
+ drop_user_user1
+ drop_user_user2
+ drop_user_user3
+ drop_user_user4
+(4 rows)
+
+DROP ROLE
+psql:pg_tests/compatible/drop_user.sql:43: NOTICE:  role "drop_user_user1" does not exist, skipping
+DROP ROLE
+     rolname     
+-----------------
+ drop_user_user2
+ drop_user_user3
+ drop_user_user4
+(3 rows)
+
+CREATE TABLE
+GRANT
+DROP OWNED
+DROP ROLE
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+DROP OWNED
+DROP ROLE
+DROP TABLE
+DROP ROLE
+ rolname 
+---------
+(0 rows)
+

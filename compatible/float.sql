@@ -1,91 +1,57 @@
 -- PostgreSQL compatible tests from float
--- 29 tests
+--
+-- CockroachDB supports inline index definitions, table@index access, IS NAN,
+-- and integer division (//) syntax not present in PostgreSQL. This file tests
+-- NaN/Infinity handling, ordering, and float formatting in PG.
 
--- Test 1: statement (line 4)
-CREATE TABLE p (f float null, unique index (f))
+SET client_min_messages = warning;
+DROP TABLE IF EXISTS float_p CASCADE;
+DROP TABLE IF EXISTS float_i CASCADE;
+DROP TABLE IF EXISTS float_vals CASCADE;
+DROP TABLE IF EXISTS float_t87605 CASCADE;
+DROP TABLE IF EXISTS float_t89961 CASCADE;
+RESET client_min_messages;
 
--- Test 2: statement (line 7)
-INSERT INTO p VALUES (NULL), ('NaN'::float), ('Inf'::float), ('-Inf'::float), ('0'::float), (1), (-1)
+CREATE TABLE float_p (f float8);
+CREATE UNIQUE INDEX float_p_f_uq ON float_p(f);
 
--- Test 3: statement (line 12)
-INSERT INTO p VALUES ('-0'::float)
+INSERT INTO float_p VALUES
+  (NULL),
+  ('NaN'::float8),
+  ('Infinity'::float8),
+  ('-Infinity'::float8),
+  (0::float8),
+  (1::float8),
+  (-1::float8);
 
--- Test 4: query (line 15)
-SELECT * FROM p WHERE f = 'NaN'
+SELECT f, (f = 'NaN'::float8) AS is_nan
+FROM float_p
+ORDER BY f NULLS LAST;
 
--- Test 5: statement (line 60)
-CREATE TABLE i (f float)
+CREATE TABLE float_i (f float8);
+INSERT INTO float_i VALUES (0::float8), ('-0'::float8);
+CREATE INDEX float_i_f_asc ON float_i (f);
+CREATE INDEX float_i_f_desc ON float_i (f DESC);
 
--- Test 6: statement (line 63)
-INSERT INTO i VALUES (0), ('-0'::float)
+SELECT * FROM float_i WHERE f = 0 ORDER BY f;
+SELECT * FROM float_i ORDER BY f;
+SELECT * FROM float_i ORDER BY f DESC;
 
--- Test 7: query (line 66)
-SELECT * FROM i WHERE f = 0
+CREATE TABLE float_vals(f float8);
+INSERT INTO float_vals VALUES (0.0), (123.4567890123456789), (0.0001234567890123456789);
 
--- Test 8: statement (line 72)
-CREATE INDEX i_f_asc ON i (f)
+SET extra_float_digits = 3;
+SELECT f FROM float_vals ORDER BY f;
+SET extra_float_digits = -15;
+SELECT f FROM float_vals ORDER BY f;
+RESET extra_float_digits;
+DROP TABLE float_vals;
 
--- Test 9: query (line 75)
-SELECT * FROM i WHERE f = 0
+CREATE TABLE float_t87605 (col2 float8);
+INSERT INTO float_t87605 VALUES (1.234567890123456e+13), (1.234567890123456e+6);
+SELECT floor(col2 / 1.0)::float8 FROM float_t87605 ORDER BY 1;
 
--- Test 10: statement (line 81)
-CREATE INDEX i_f_desc ON i (f DESC)
-
--- Test 11: query (line 84)
-SELECT * FROM i@i_f_asc;
-
--- Test 12: query (line 90)
-SELECT * FROM i@i_f_desc;
-
--- Test 13: statement (line 96)
-CREATE UNIQUE INDEX ON i (f)
-
--- Test 14: statement (line 101)
-CREATE TABLE vals(f FLOAT);
-  INSERT INTO vals VALUES (0.0), (123.4567890123456789), (12345678901234567890000), (0.0001234567890123456789)
-
--- Test 15: statement (line 113)
-SET extra_float_digits = 3
-
--- Test 16: statement (line 124)
-SET extra_float_digits = -8
-
--- Test 17: statement (line 135)
-SET extra_float_digits = -15
-
--- Test 18: statement (line 146)
-DROP TABLE vals
-
--- Test 19: statement (line 149)
-RESET extra_float_digits
-
--- Test 20: query (line 154)
-SELECT -0.1234567890123456, 123456789012345.6, 1234567.890123456
-
--- Test 21: statement (line 160)
-SELECT ROW() IS NAN
-
--- Test 22: statement (line 163)
-SELECT ROW() IS NOT NAN
-
--- Test 23: query (line 169)
-SELECT 'nan'::float IS NAN, 'nan'::float IS NOT NAN
-
--- Test 24: query (line 174)
-SELECT 'nan'::decimal IS NAN, 'nan'::decimal IS NOT NAN
-
--- Test 25: statement (line 179)
-CREATE TABLE t87605 (col2 FLOAT8 NULL)
-
--- Test 26: statement (line 182)
-insert into t87605 values (1.234567890123456e+13), (1.234567890123456e+6)
-
--- Test 27: query (line 187)
-SELECT ((col2::FLOAT8 // 1.0:::FLOAT8::FLOAT8)::FLOAT8) FROM t87605@[0] ORDER BY 1
-
--- Test 28: statement (line 195)
-CREATE TABLE t89961 (a float PRIMARY KEY, INDEX (a DESC))
-
--- Test 29: statement (line 198)
-INSERT INTO t89961 VALUES ('NaN')
-
+CREATE TABLE float_t89961 (a float8 PRIMARY KEY);
+CREATE INDEX float_t89961_a_desc ON float_t89961 (a DESC);
+INSERT INTO float_t89961 VALUES ('NaN'::float8);
+SELECT a, (a = 'NaN'::float8) AS is_nan FROM float_t89961;

@@ -1,0 +1,33 @@
+SET
+CREATE EXTENSION
+DROP TABLE
+RESET
+CREATE TABLE
+INSERT 0 2
+CREATE INDEX
+CREATE INDEX
+ id |  geog_wkt  |   geom_wkt   | geog_srid | geom_srid 
+----+------------+--------------+-----------+-----------
+  1 | POINT(1 1) | POINT(2 2)   |      4326 |      3857
+  2 | POINT(0 0) | POINT(-1 -1) |      4326 |      3857
+(2 rows)
+
+ id | within_1m 
+----+-----------
+  1 | t
+  2 | f
+(2 rows)
+
+ id | intersects_box 
+----+----------------
+  1 | t
+  2 | t
+(2 rows)
+
+ id |                                          geom_geojson                                          
+----+------------------------------------------------------------------------------------------------
+  1 | {"type":"Point","crs":{"type":"name","properties":{"name":"EPSG:3857"}},"coordinates":[2,2]}
+  2 | {"type":"Point","crs":{"type":"name","properties":{"name":"EPSG:3857"}},"coordinates":[-1,-1]}
+(2 rows)
+
+DROP TABLE

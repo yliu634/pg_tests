@@ -1,0 +1,51 @@
+SET
+DROP VIEW
+DROP TABLE
+DROP SEQUENCE
+DROP TYPE
+DROP FUNCTION
+DROP ROLE
+DROP ROLE
+RESET
+CREATE ROLE
+CREATE ROLE
+GRANT
+SET
+CREATE TABLE
+CREATE VIEW
+CREATE SEQUENCE
+CREATE TYPE
+CREATE FUNCTION
+RESET
+ relkind |      relname      
+---------+-------------------
+ S       | drop_owned_by_seq
+ r       | drop_owned_by_t
+ v       | drop_owned_by_v
+(3 rows)
+
+      typname       
+--------------------
+ drop_owned_by_enum
+(1 row)
+
+     proname     
+-----------------
+ drop_owned_by_f
+(1 row)
+
+DROP OWNED
+ relkind | relname 
+---------+---------
+(0 rows)
+
+ typname 
+---------
+(0 rows)
+
+ proname 
+---------
+(0 rows)
+
+DROP ROLE
+DROP ROLE

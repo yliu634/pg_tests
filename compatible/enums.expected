@@ -1,0 +1,83 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TYPE
+DROP TYPE
+RESET
+CREATE TYPE
+CREATE TYPE
+ enums_greeting | enums_greeting | enums_greeting 
+----------------+----------------+----------------
+ hello          | howdy          | hi
+(1 row)
+
+ hello_lt_howdy | howdy_lt_hi | hi_gt_hello | null_is_null 
+----------------+-------------+-------------+--------------
+ t              | t           | t           | t
+(1 row)
+
+ enum_first | enum_last 
+------------+-----------
+ postgres   | cockroach
+(1 row)
+
+             full_range             
+------------------------------------
+ {postgres,mysql,spanner,cockroach}
+(1 row)
+
+        sub_range         
+--------------------------
+ {postgres,mysql,spanner}
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+  x1   |  x2   
+-------+-------
+ hello | howdy
+ hi    | hello
+(2 rows)
+
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 2
+INSERT 0 4
+ t1_x  | t2_x  
+-------+-------
+ hello | hello
+ hello | hello
+ hi    | hi
+(3 rows)
+
+   x   
+-------
+ hi
+ howdy
+ hello
+(3 rows)
+
+CREATE TABLE
+INSERT 0 5
+   x   | max_y | sum_y | min_y 
+-------+-------+-------+-------
+ hello |     3 |     4 |     1
+ howdy |     5 |     5 |     0
+ hi    |    10 |    10 |    10
+(3 rows)
+
+ max_x | min_x 
+-------+-------
+ hi    | hello
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TYPE
+DROP TYPE

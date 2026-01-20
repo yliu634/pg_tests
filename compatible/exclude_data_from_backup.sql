@@ -1,39 +1,35 @@
 -- PostgreSQL compatible tests from exclude_data_from_backup
--- 12 tests
+--
+-- CockroachDB's system.namespace and SHOW CREATE TABLE are not available in
+-- PostgreSQL. This file validates table/constraint structure using standard
+-- catalogs.
 
--- Test 1: statement (line 1)
-CREATE TABLE t(x INT PRIMARY KEY)
+SET client_min_messages = warning;
+DROP TABLE IF EXISTS exclude_backup_t2;
+DROP TABLE IF EXISTS exclude_backup_t;
+RESET client_min_messages;
 
--- Test 2: query (line 4)
-SELECT id FROM system.namespace WHERE name='t';
+CREATE TABLE exclude_backup_t(x INT PRIMARY KEY);
 
--- Test 3: query (line 14)
-SHOW CREATE TABLE t
+SELECT to_regclass('exclude_backup_t') AS t_regclass;
 
--- Test 4: query (line 23)
-SHOW CREATE TABLE t
+SELECT column_name, data_type, is_nullable, column_default
+FROM information_schema.columns
+WHERE table_schema = 'public' AND table_name = 'exclude_backup_t'
+ORDER BY ordinal_position;
 
--- Test 5: query (line 35)
-SHOW CREATE TABLE t
+-- Temporary tables are session-scoped and are not included in backups by
+-- default. This statement validates TEMP table syntax under psql.
+CREATE TEMPORARY TABLE exclude_backup_temp1();
 
--- Test 6: query (line 44)
-SHOW CREATE TABLE t
+CREATE TABLE exclude_backup_t2(x INT REFERENCES exclude_backup_t(x) ON DELETE CASCADE);
 
--- Test 7: statement (line 56)
-CREATE TEMPORARY TABLE temp1()
+SELECT column_name, data_type, is_nullable, column_default
+FROM information_schema.columns
+WHERE table_schema = 'public' AND table_name = 'exclude_backup_t2'
+ORDER BY ordinal_position;
 
--- Test 8: statement (line 63)
-CREATE TABLE t2(x INT REFERENCES t(x) ON DELETE CASCADE);
-
--- Test 9: query (line 74)
-SHOW CREATE TABLE t2
-
--- Test 10: query (line 85)
-SHOW CREATE TABLE t2
-
--- Test 11: query (line 100)
-SHOW CREATE TABLE t2
-
--- Test 12: query (line 111)
-SHOW CREATE TABLE t2
-
+SELECT conname, pg_get_constraintdef(oid) AS condef
+FROM pg_constraint
+WHERE conrelid = 'exclude_backup_t2'::regclass
+ORDER BY conname;

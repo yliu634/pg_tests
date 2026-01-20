@@ -1,0 +1,40 @@
+SET
+DROP SERVER
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET
+psql:pg_tests/compatible/external_connection_privileges.sql:14: NOTICE:  extension "postgres_fdw" already exists, skipping
+CREATE EXTENSION
+CREATE SERVER
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+   srvname    | srvacl 
+--------------+--------
+ ext_conn_foo | 
+(1 row)
+
+GRANT
+ testuser_usage 
+----------------
+ t
+(1 row)
+
+REVOKE
+ testuser_usage_after_revoke 
+-----------------------------
+ f
+(1 row)
+
+GRANT
+GRANT
+   srvname    |                                   srvacl                                    
+--------------+-----------------------------------------------------------------------------
+ ext_conn_foo | {postgres=U/postgres,ext_conn_testuser=U*/postgres,ext_conn_bar=U/postgres}
+(1 row)
+
+DROP SERVER
+DROP ROLE
+DROP ROLE
+DROP ROLE

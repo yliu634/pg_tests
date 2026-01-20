@@ -1,8 +1,9 @@
 -- PostgreSQL compatible tests from geospatial_meta
 -- 13 tests
 
--- Test 1: query (line 3)
-SELECT PostGIS_Extensions_Upgrade();
+SET client_min_messages = warning;
+CREATE EXTENSION IF NOT EXISTS postgis;
+RESET client_min_messages;
 
 -- Test 2: query (line 8)
 SELECT PostGIS_Full_Version();
@@ -39,4 +40,3 @@ SELECT PostGIS_Version();
 
 -- Test 13: query (line 63)
 SELECT PostGIS_Wagyu_Version();
-

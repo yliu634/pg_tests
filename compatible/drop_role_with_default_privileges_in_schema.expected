@@ -1,0 +1,45 @@
+SET
+DROP SCHEMA
+DROP ROLE
+DROP ROLE
+RESET
+CREATE ROLE
+CREATE ROLE
+CREATE TABLE
+INSERT 0 2
+CREATE SCHEMA
+ALTER SCHEMA
+SET
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE SEQUENCE
+CREATE FUNCTION
+RESET
+ grantee_seq_usage 
+-------------------
+ t
+(1 row)
+
+ grantee_f_exec 
+----------------
+ t
+(1 row)
+
+ default_acl_rows 
+------------------
+                2
+(1 row)
+
+psql:pg_tests/compatible/drop_role_with_default_privileges_in_schema.sql:38: NOTICE:  drop cascades to 2 other objects
+DETAIL:  drop cascades to sequence drwdp_is_schema.seq
+drop cascades to function drwdp_is_schema.f()
+DROP SCHEMA
+DROP OWNED
+DROP OWNED
+DROP ROLE
+DROP ROLE
+ default_acl_rows_after_drop 
+-----------------------------
+                           0
+(1 row)
+

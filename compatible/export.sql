@@ -1,37 +1,25 @@
 -- PostgreSQL compatible tests from export
--- 8 tests
+--
+-- CockroachDB has EXPORT INTO CSV/PARQUET. PostgreSQL does not; the closest
+-- equivalent is COPY. This file uses COPY ... TO STDOUT for deterministic
+-- output under psql.
 
--- Test 1: statement (line 4)
-CREATE TABLE t (k PRIMARY KEY) AS SELECT 1;
+SET client_min_messages = warning;
+DROP TABLE IF EXISTS t;
+DROP TABLE IF EXISTS t115290;
+RESET client_min_messages;
 
--- Test 2: statement (line 7)
-WITH cte AS (EXPORT INTO CSV 'nodelocal://1/export1/' FROM SELECT * FROM t) SELECT filename FROM cte;
+CREATE TABLE t(k INT PRIMARY KEY);
+INSERT INTO t VALUES (1);
 
--- Test 3: statement (line 10)
-WITH cte AS (EXPORT INTO PARQUET 'nodelocal://1/export1/' FROM SELECT * FROM t) SELECT filename FROM cte;
+COPY (SELECT * FROM t ORDER BY k) TO STDOUT WITH (FORMAT csv, HEADER true);
 
--- Test 4: query (line 13)
-WITH cte AS (EXPORT INTO CSV 'nodelocal://1/export1/' FROM SELECT * FROM t) SELECT filename FROM cte;
-
--- Test 5: statement (line 21)
 CREATE TABLE t115290 (
   id INT PRIMARY KEY,
   a INT NOT NULL,
   b INT
 );
+INSERT INTO t115290 VALUES (1, 10, 100), (2, 20, 200), (3, 30, NULL);
 
--- Test 6: statement (line 28)
-EXPORT INTO PARQUET 'nodelocal://1/export1/' FROM SELECT b FROM t115290 ORDER BY a;
-
--- Test 7: statement (line 37)
-WITH cte(filename, rows, bytes) AS (
-  EXPORT INTO CSV 'nodelocal://1/export1/' FROM SELECT * FROM t
-)
-INSERT INTO records (format, filename, rows, bytes) SELECT 'CSV', * FROM cte;
-
--- Test 8: statement (line 43)
-WITH cte(filename, rows, bytes) AS (
-  EXPORT INTO PARQUET 'nodelocal://1/export1/' FROM SELECT * FROM t
-)
-INSERT INTO records (format, filename, rows, bytes) SELECT 'PARQUET', * FROM cte;
+COPY (SELECT b FROM t115290 ORDER BY a) TO STDOUT WITH (FORMAT csv);
 

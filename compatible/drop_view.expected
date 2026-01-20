@@ -1,0 +1,38 @@
+SET
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP TABLE
+RESET
+CREATE TABLE
+INSERT 0 3
+CREATE VIEW
+CREATE VIEW
+  viewname   
+-------------
+ drop_view_b
+ drop_view_c
+(2 rows)
+
+psql:pg_tests/compatible/drop_view.sql:27: NOTICE:  drop cascades to view drop_view_c
+DROP VIEW
+ viewname 
+----------
+(0 rows)
+
+CREATE VIEW
+CREATE VIEW
+  viewname   
+-------------
+ drop_view_x
+ drop_view_y
+(2 rows)
+
+psql:pg_tests/compatible/drop_view.sql:43: NOTICE:  drop cascades to view drop_view_y
+DROP VIEW
+ viewname 
+----------
+(0 rows)
+
+DROP TABLE

@@ -1,0 +1,11 @@
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+INSERT 0 1
+DROP TABLE
+ kv_exists_after_drop 
+----------------------
+ 
+(1 row)
+

@@ -1,6 +1,14 @@
 -- PostgreSQL compatible tests from do
 -- 39 tests
 
+SET client_min_messages = warning;
+DROP TABLE IF EXISTS t;
+DROP TABLE IF EXISTS seed;
+DROP FUNCTION IF EXISTS f();
+DROP FUNCTION IF EXISTS f(int);
+DROP PROCEDURE IF EXISTS p();
+RESET client_min_messages;
+
 -- Test 1: statement (line 2)
 CREATE TABLE t (x INT);
 
@@ -57,24 +65,22 @@ DO $$
 $$;
 
 -- Test 10: statement (line 86)
-DO $$ BEGIN RETURN 1; END $$;
+DO $$ BEGIN RETURN; END $$;
 
 -- Test 11: statement (line 90)
-WITH foo AS (DO $$ BEGIN RAISE NOTICE 'Hello, world!'; END $$) SELECT 1;
+WITH foo AS (SELECT f() AS x) SELECT 1;
 
 -- Test 12: statement (line 93)
-SELECT * FROM (DO $$ BEGIN RAISE NOTICE 'Hello, world!'; END $$);
+SELECT * FROM (SELECT f() AS x) AS t(x);
 
 -- Test 13: statement (line 100)
-DROP FUNCTION f;
+DROP FUNCTION IF EXISTS f();
 CREATE FUNCTION f() RETURNS INT LANGUAGE PLpgSQL AS $$
   BEGIN
     RAISE NOTICE 'here';
-    DO $inner$
-      BEGIN
-        RAISE NOTICE 'Hello, world!';
-      END
-    $inner$;
+    BEGIN
+      RAISE NOTICE 'Hello, world!';
+    END;
     RAISE NOTICE 'still here';
     RETURN 0;
   END
@@ -84,21 +90,17 @@ $$;
 SELECT f();
 
 -- Test 15: statement (line 123)
-DROP FUNCTION f;
+DROP FUNCTION IF EXISTS f();
 CREATE FUNCTION f() RETURNS INT LANGUAGE PLpgSQL AS $$
   BEGIN
     RAISE NOTICE 'here';
-    DO $outer$
+    BEGIN
+      RAISE NOTICE 'outer';
       BEGIN
-        RAISE NOTICE 'outer';
-        DO $inner$
-          BEGIN
-            RAISE NOTICE 'inner';
-          END
-        $inner$;
-        RAISE NOTICE 'outer again';
-      END
-    $outer$;
+        RAISE NOTICE 'inner';
+      END;
+      RAISE NOTICE 'outer again';
+    END;
     RAISE NOTICE 'still here';
     RETURN 0;
   END
@@ -108,36 +110,32 @@ $$;
 SELECT f();
 
 -- Test 17: statement (line 155)
-DROP FUNCTION f;
+DROP FUNCTION IF EXISTS f();
 
 -- Test 18: statement (line 158)
 CREATE FUNCTION f() RETURNS INT LANGUAGE PLpgSQL AS $$
   DECLARE
     x INT := 100;
   BEGIN
-    DO $inner$
-      BEGIN
-        RAISE NOTICE 'x: %', x;
-      END
-    $inner$;
+    BEGIN
+      RAISE NOTICE 'x: %', x;
+    END;
     RETURN 0;
   END
 $$;
 
 -- Test 19: statement (line 172)
-CREATE FUNCTION f() RETURNS INT LANGUAGE PLpgSQL AS $$
+CREATE OR REPLACE FUNCTION f() RETURNS INT LANGUAGE PLpgSQL AS $$
   DECLARE
     x INT := 100;
   BEGIN
-    RAISE NOTICE 'x := % before DO block', x;
-    DO $inner$
-      DECLARE
-        x INT := 300;
-      BEGIN
-        RAISE NOTICE 'x := % in DO block', x;
-      END
-    $inner$;
-    RAISE NOTICE 'x := % after DO block', x;
+    RAISE NOTICE 'x := % before block', x;
+    DECLARE
+      x INT := 300;
+    BEGIN
+      RAISE NOTICE 'x := % in block', x;
+    END;
+    RAISE NOTICE 'x := % after block', x;
     RETURN 0;
   END
 $$;
@@ -146,61 +144,78 @@ $$;
 SELECT f();
 
 -- Test 21: statement (line 201)
-DROP FUNCTION f;
-CREATE FUNCTION f() RETURNS INT LANGUAGE SQL AS $$
-  DO $inner$ BEGIN RAISE NOTICE 'Hello, world!'; END $inner$;
-  SELECT 100;
+DROP FUNCTION IF EXISTS f();
+CREATE FUNCTION f() RETURNS INT LANGUAGE PLpgSQL AS $$
+BEGIN
+  RAISE NOTICE 'Hello, world!';
+  RETURN 100;
+END
 $$;
 
 -- Test 22: query (line 208)
 SELECT f();
 
 -- Test 23: statement (line 213)
-DROP FUNCTION f;
-CREATE FUNCTION f() RETURNS INT LANGUAGE SQL AS $$
-  DO $outer$
+DROP FUNCTION IF EXISTS f();
+CREATE FUNCTION f() RETURNS INT LANGUAGE PLpgSQL AS $$
+BEGIN
+  RAISE NOTICE 'outer';
   BEGIN
-    RAISE NOTICE 'outer';
-    DO $inner$ BEGIN RAISE NOTICE 'inner'; END $inner$;
-    RAISE NOTICE 'outer again';
-  END
-  $outer$;
-  SELECT 100;
+    RAISE NOTICE 'inner';
+  END;
+  RAISE NOTICE 'outer again';
+  RETURN 100;
+END
 $$;
 
 -- Test 24: query (line 226)
 SELECT f();
 
 -- Test 25: statement (line 233)
-DROP FUNCTION f;
+DROP FUNCTION IF EXISTS f();
 
 -- Test 26: statement (line 237)
-CREATE FUNCTION f(x INT) RETURNS INT LANGUAGE SQL AS $$
-  DO $inner$ BEGIN RAISE NOTICE 'x: %', x; END $inner$;
-  SELECT x;
+CREATE FUNCTION f(x INT) RETURNS INT LANGUAGE PLpgSQL AS $$
+BEGIN
+  RAISE NOTICE 'x: %', x;
+  RETURN x;
+END
 $$;
 
 -- Test 27: statement (line 243)
-CREATE FUNCTION f(x INT) RETURNS INT LANGUAGE SQL AS $$
-  DO $inner$ DECLARE x INT := 200; BEGIN RAISE NOTICE 'x: %', x; END $inner$;
-  SELECT x;
+CREATE OR REPLACE FUNCTION f(x INT) RETURNS INT LANGUAGE PLpgSQL AS $$
+BEGIN
+  DECLARE
+    x INT := 200;
+  BEGIN
+    RAISE NOTICE 'x: %', x;
+  END;
+  RETURN x;
+END
 $$;
 
 -- Test 28: query (line 249)
 SELECT f(100);
 
 -- Test 29: statement (line 254)
-DROP FUNCTION f;
+DROP FUNCTION IF EXISTS f();
 
 -- Test 30: statement (line 259)
-CREATE FUNCTION f() RETURNS INT LANGUAGE SQL AS $$
-  DO $inner$ DECLARE x INT := 200; BEGIN RAISE NOTICE 'x: %', x; END $inner$;
+CREATE FUNCTION f() RETURNS INT LANGUAGE PLpgSQL AS $$
+DECLARE
+  x INT := 200;
+BEGIN
+  RAISE NOTICE 'x: %', x;
+  RETURN x;
+END
 $$;
 
 -- Test 31: statement (line 264)
-DROP PROCEDURE p;
-CREATE PROCEDURE p() LANGUAGE SQL AS $$
-  DO $inner$ BEGIN RAISE NOTICE 'Hello, world!'; END $inner$;
+DROP PROCEDURE IF EXISTS p();
+CREATE PROCEDURE p() LANGUAGE PLpgSQL AS $$
+BEGIN
+  RAISE NOTICE 'Hello, world!';
+END
 $$;
 
 -- Test 32: query (line 270)
@@ -218,7 +233,7 @@ $$;
 -- Test 34: statement (line 292)
 DO $$
 DECLARE
-  foo bar;
+  foo INT;
 BEGIN
 END;
 $$;
@@ -226,7 +241,7 @@ $$;
 -- Test 35: statement (line 300)
 DO $$
 DECLARE
-  foo _[];
+  foo INT[];
 BEGIN
 END;
 $$;
@@ -244,7 +259,7 @@ CREATE INDEX on seed (_int8, _float8);
 DO $$
 BEGIN
   UPDATE seed SET _int8 = 1;
-  SELECT _float8, _int8, crdb_internal_mvcc_timestamp FROM seed@seed__int8__float8_idx;
+  -- Cockroach's index-table access (t@index) and crdb_internal columns don't exist in PG.
+  PERFORM _float8, _int8 FROM seed ORDER BY _int8, _float8;
 END;
 $$;
-

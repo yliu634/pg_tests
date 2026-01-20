@@ -1,0 +1,62 @@
+SET
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+RESET
+CREATE SCHEMA
+CREATE SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+             generated_counts              
+-------------------------------------------
+ {"tables": 3, "columns": 7, "schemas": 3}
+(1 row)
+
+ schema_name 
+-------------
+ gto_1
+ gto_2
+ gto_other
+(3 rows)
+
+ table_schema | table_name 
+--------------+------------
+ gto_1        | base
+ gto_1        | child
+ gto_2        | t
+(3 rows)
+
+ table_schema | table_name | column_name | data_type 
+--------------+------------+-------------+-----------
+ gto_1        | base       | id          | integer
+ gto_1        | base       | v           | text
+ gto_1        | child      | id          | integer
+ gto_1        | child      | v           | text
+ gto_1        | child      | extra       | integer
+ gto_2        | t          | id          | integer
+ gto_2        | t          | payload     | text
+(7 rows)
+
+ table_schema | table_name | constraint_name 
+--------------+------------+-----------------
+ gto_1        | base       | base_pkey
+ gto_1        | child      | child_pkey
+ gto_2        | t          | t_pkey
+(3 rows)
+
+SET
+CREATE TABLE
+RESET
+ table_schema |     table_name     
+--------------+--------------------
+ gto_other    | foo_in_search_path
+(1 row)
+
+SET
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+RESET

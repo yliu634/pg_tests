@@ -1,0 +1,50 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+RESET
+CREATE TABLE
+INSERT 0 4
+CREATE TABLE
+INSERT 0 3
+CREATE TABLE
+INSERT 0 3
+                        QUERY PLAN                         
+-----------------------------------------------------------
+ Bitmap Heap Scan on a (actual rows=2 loops=1)
+   Recheck Cond: (a > 1)
+   Heap Blocks: exact=1
+   ->  Bitmap Index Scan on a_pkey (actual rows=2 loops=1)
+         Index Cond: (a > 1)
+(5 rows)
+
+                 QUERY PLAN                  
+---------------------------------------------
+ Update on a (actual rows=0 loops=1)
+   ->  Seq Scan on a (actual rows=3 loops=1)
+(2 rows)
+
+              QUERY PLAN              
+--------------------------------------
+ Insert on a (actual rows=0 loops=1)
+   Conflict Resolution: NOTHING
+   Conflict Arbiter Indexes: a_pkey
+   Tuples Inserted: 1
+   Conflicting Tuples: 0
+   ->  Result (actual rows=1 loops=1)
+(6 rows)
+
+                           QUERY PLAN                            
+-----------------------------------------------------------------
+ Delete on a (actual rows=0 loops=1)
+   ->  Bitmap Heap Scan on a (actual rows=4 loops=1)
+         Recheck Cond: (a >= 3)
+         Heap Blocks: exact=1
+         ->  Bitmap Index Scan on a_pkey (actual rows=5 loops=1)
+               Index Cond: (a >= 3)
+(6 rows)
+
+CREATE TABLE
+CREATE TABLE

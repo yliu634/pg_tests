@@ -1,0 +1,101 @@
+SET
+DROP DATABASE
+DROP DATABASE
+DROP DATABASE
+DROP DATABASE
+DROP DATABASE
+DROP DATABASE
+DROP DATABASE
+DROP DATABASE
+DROP DATABASE
+DROP ROLE
+RESET
+CREATE DATABASE
+ foo_bar_exists 
+----------------
+ t
+(1 row)
+
+You are now connected to database "foo-bar" as user "postgres".
+CREATE TABLE
+You are now connected to database "pg_tests" as user "postgres".
+DROP DATABASE
+ foo_bar_exists_after_drop 
+---------------------------
+ f
+(1 row)
+
+CREATE DATABASE
+ foo_space_exists 
+------------------
+ t
+(1 row)
+
+DROP DATABASE
+ foo_space_exists_after_drop 
+-----------------------------
+ f
+(1 row)
+
+CREATE DATABASE
+CREATE DATABASE
+ datname 
+---------
+ d1
+ d2
+(2 rows)
+
+DROP DATABASE
+DROP DATABASE
+ datname 
+---------
+(0 rows)
+
+CREATE DATABASE
+You are now connected to database "constraint_db" as user "postgres".
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+You are now connected to database "pg_tests" as user "postgres".
+DROP DATABASE
+ constraint_db_exists_after_drop 
+---------------------------------
+ f
+(1 row)
+
+CREATE DATABASE
+You are now connected to database "db50997" as user "postgres".
+CREATE SEQUENCE
+CREATE SEQUENCE
+CREATE TABLE
+CREATE TABLE
+You are now connected to database "pg_tests" as user "postgres".
+DROP DATABASE
+ db50997_exists_after_drop 
+---------------------------
+ f
+(1 row)
+
+CREATE DATABASE
+You are now connected to database "db_51782" as user "postgres".
+CREATE TABLE
+CREATE VIEW
+CREATE VIEW
+You are now connected to database "pg_tests" as user "postgres".
+DROP DATABASE
+ db_51782_exists_after_drop 
+----------------------------
+ f
+(1 row)
+
+CREATE ROLE
+SET
+CREATE DATABASE
+RESET
+DROP DATABASE
+ db_121808_exists_after_drop 
+-----------------------------
+ f
+(1 row)
+
+DROP ROLE

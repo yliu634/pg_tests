@@ -1,0 +1,27 @@
+SET
+DROP TABLE
+DROP TABLE
+RESET
+CREATE TABLE
+    t_regclass    
+------------------
+ exclude_backup_t
+(1 row)
+
+ column_name | data_type | is_nullable | column_default 
+-------------+-----------+-------------+----------------
+ x           | integer   | NO          | 
+(1 row)
+
+CREATE TABLE
+CREATE TABLE
+ column_name | data_type | is_nullable | column_default 
+-------------+-----------+-------------+----------------
+ x           | integer   | YES         | 
+(1 row)
+
+         conname          |                              condef                              
+--------------------------+------------------------------------------------------------------
+ exclude_backup_t2_x_fkey | FOREIGN KEY (x) REFERENCES exclude_backup_t(x) ON DELETE CASCADE
+(1 row)
+

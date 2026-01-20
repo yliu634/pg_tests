@@ -1,40 +1,30 @@
 -- PostgreSQL compatible tests from drop_temp
--- 12 tests
+--
+-- PostgreSQL does not have a GRANT DROP privilege; DROP is governed by object
+-- ownership. This file tests creating and dropping temporary objects as the
+-- creating role.
 
--- Test 1: statement (line 8)
-CREATE TEMP TABLE t_tmp(X int);
+SET client_min_messages = warning;
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'tmp_dropper') THEN
+    EXECUTE 'DROP OWNED BY tmp_dropper';
+    EXECUTE 'DROP ROLE tmp_dropper';
+  END IF;
+END
+$$;
+RESET client_min_messages;
 
--- Test 2: statement (line 11)
+CREATE ROLE tmp_dropper LOGIN;
+GRANT TEMPORARY ON DATABASE pg_tests TO tmp_dropper;
+
+SET ROLE tmp_dropper;
+CREATE TEMP TABLE t_tmp(x INT);
 CREATE TEMP SEQUENCE s_tmp START 1 INCREMENT 1;
-
--- Test 3: statement (line 14)
-CREATE USER tmp_dropper;
-
--- Test 4: statement (line 17)
-SET ROLE tmp_dropper;
-
--- Test 5: statement (line 20)
+SELECT nextval('s_tmp');
 DROP TABLE t_tmp;
-
--- Test 6: statement (line 23)
 DROP SEQUENCE s_tmp;
+RESET ROLE;
 
--- Test 7: statement (line 26)
-SET ROLE root;
-
--- Test 8: statement (line 29)
-GRANT DROP ON TABLE t_tmp to tmp_dropper;
-GRANT DROP ON SEQUENCE s_tmp to tmp_dropper;
-
--- Test 9: statement (line 34)
-SET ROLE tmp_dropper;
-
--- Test 10: statement (line 37)
-DROP TABLE t_tmp;
-
--- Test 11: statement (line 40)
-DROP SEQUENCE s_tmp;
-
--- Test 12: statement (line 43)
-SET ROLE root;
-
+DROP OWNED BY tmp_dropper;
+DROP ROLE tmp_dropper;
