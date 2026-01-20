@@ -63,10 +63,14 @@ SELECT k FROM (SELECT k, v FROM t ORDER BY v LIMIT 4);
 SELECT k FROM (SELECT k, v, w FROM t ORDER BY v LIMIT 4);
 
 -- Test 19: query (line 116)
-SELECT k, v FROM t ORDER BY k LIMIT length(pg_typeof(123));
+SELECT k, v FROM t ORDER BY k LIMIT length(pg_typeof(123)::text);
 
 -- Test 20: query (line 126)
-SELECT k, v FROM t ORDER BY k LIMIT length(pg_typeof(123)) OFFSET length(pg_typeof(123))-2
+SELECT k, v
+FROM t
+ORDER BY k
+LIMIT length(pg_typeof(123)::text)
+OFFSET length(pg_typeof(123)::text) - 2;
 
 -- Test 21: query (line 132)
 SELECT k, v FROM t ORDER BY k OFFSET (SELECT count(*)-3 FROM t);
@@ -89,6 +93,19 @@ INSERT INTO t_47283 VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6);
 
 -- Test 27: query (line 176)
 SELECT * FROM (SELECT * FROM t_47283 ORDER BY k LIMIT 4) WHERE a > 5 LIMIT 1;
+
+-- Setup for parameterized LIMIT/OFFSET tests (probe/vals).
+DROP TABLE IF EXISTS probe CASCADE;
+CREATE TABLE probe (a INT);
+INSERT INTO probe(a) SELECT generate_series(1, 10);
+
+DROP TABLE IF EXISTS vals CASCADE;
+CREATE TABLE vals (k TEXT PRIMARY KEY, v BIGINT);
+INSERT INTO vals(k, v) VALUES
+  ('zero', 0),
+  ('one', 1),
+  ('large', 100),
+  ('maxint64', 9223372036854775807);
 
 -- Test 28: query (line 189)
 SELECT a FROM probe ORDER BY a LIMIT (SELECT v FROM vals WHERE k = 'zero');
@@ -170,7 +187,8 @@ SELECT a FROM probe ORDER BY a LIMIT (SELECT v FROM vals WHERE k = 'maxint64') O
 SELECT w FROM t ORDER BY k LIMIT 1;
 
 -- Test 54: statement (line 332)
-SET disallow_full_table_scans = false;
+-- COMMENTED: CockroachDB-specific setting
+-- SET disallow_full_table_scans = false;
 
 -- Test 55: statement (line 336)
 DROP TABLE IF EXISTS t65171 CASCADE;

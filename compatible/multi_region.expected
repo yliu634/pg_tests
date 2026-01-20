@@ -1,6 +1,3 @@
-psql:pg_tests/compatible/multi_region.sql:5: ERROR:  syntax error at or near "PRIMARY"
-LINE 1: CREATE DATABASE region_test_db PRIMARY REGION "ap-southeast-...
-                                       ^
-psql:pg_tests/compatible/multi_region.sql:8: ERROR:  syntax error at or near "PRIMARY"
-LINE 1: ALTER DATABASE test PRIMARY REGION "ap-southeast-2";
-                            ^
+DROP DATABASE
+CREATE DATABASE
+ALTER DATABASE

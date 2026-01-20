@@ -11,7 +11,7 @@ CREATE TABLE large_numbers (a INT8);
 INSERT INTO large_numbers VALUES (9223372036854775807),(1);
 
 -- Test 3: statement (line 9)
-SELECT sum_int(a) FROM large_numbers;
+SELECT sum(a::numeric) FROM large_numbers;
 
 -- Test 4: statement (line 12)
 DELETE FROM large_numbers;
@@ -20,7 +20,7 @@ DELETE FROM large_numbers;
 INSERT INTO large_numbers VALUES (-9223372036854775808),(-1);
 
 -- Test 6: statement (line 18)
-SELECT sum_int(a) FROM large_numbers;
+SELECT sum(a::numeric) FROM large_numbers;
 
 -- Test 7: statement (line 23)
 DROP TABLE IF EXISTS t88128 CASCADE;

@@ -1,0 +1,369 @@
+SET
+ oid | oid 
+-----+-----
+   3 |   3
+(1 row)
+
+ oid 
+-----
+   3
+(1 row)
+
+ oid | regclass | regnamespace | regproc | regprocedure | regrole | regtype 
+-----+----------+--------------+---------+--------------+---------+---------
+   1 | 1        | 1            | 1       | 1            | 1       | 1
+(1 row)
+
+ regclass | regnamespace | regproc | regprocedure | regrole | regtype 
+----------+--------------+---------+--------------+---------+---------
+ 1        | 1            | 1       | 1            | 1       | 1
+(1 row)
+
+ pg_typeof | pg_typeof |  pg_typeof   
+-----------+-----------+--------------
+ oid       | regclass  | regnamespace
+(1 row)
+
+ pg_typeof |  pg_typeof   | pg_typeof | pg_typeof 
+-----------+--------------+-----------+-----------
+ regproc   | regprocedure | regrole   | regtype
+(1 row)
+
+ pg_typeof | pg_typeof |  pg_typeof   
+-----------+-----------+--------------
+ oid       | regclass  | regnamespace
+(1 row)
+
+ regprocedure 
+--------------
+ upper(text)
+(1 row)
+
+ regprocedure 
+--------------
+ lower(text)
+(1 row)
+
+ pg_typeof | pg_typeof 
+-----------+-----------
+ regrole   | regtype
+(1 row)
+
+   regclass    |   regclass    
+---------------+---------------
+ pg_constraint | pg_constraint
+(1 row)
+
+   regclass    |   regclass    
+---------------+---------------
+ pg_constraint | pg_constraint
+(1 row)
+
+   regclass    |   regclass    
+---------------+---------------
+ pg_constraint | pg_constraint
+(1 row)
+
+   regclass    | oid 
+---------------+-----
+ pg_constraint |   0
+(1 row)
+
+  regclass  
+------------
+ 4061301040
+(1 row)
+
+ oid |      oid      | ?column? |      oid      |      oid      
+-----+---------------+----------+---------------+---------------
+   0 | pg_constraint |        0 | pg_constraint | pg_constraint
+(1 row)
+
+ regnamespace | oid  
+--------------+------
+ public       | 2200
+(1 row)
+
+ regrole  | oid 
+----------+-----
+ postgres |  10
+(1 row)
+
+ regtype | oid 
+---------+-----
+ boolean |  16
+(1 row)
+
+ regtype | regtype 
+---------+---------
+ numeric | numeric
+(1 row)
+
+ regtype | regtype 
+---------+---------
+ "char"  | integer
+(1 row)
+
+   regclass    
+---------------
+ pg_constraint
+(1 row)
+
+   regclass    | oid 
+---------------+-----
+ pg_constraint |   0
+(1 row)
+
+DROP TABLE
+DROP TYPE
+CREATE TABLE
+CREATE TYPE
+ oid 
+-----
+ a
+(1 row)
+
+ oid 
+-----
+ typ
+(1 row)
+
+ relname 
+---------
+ a
+(1 row)
+
+ typname 
+---------
+ typ
+(1 row)
+
+DROP TABLE
+DROP TYPE
+CREATE TABLE
+CREATE TYPE
+ relname 
+---------
+ hascase
+(1 row)
+
+  typname   
+------------
+ typhascase
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+DROP TYPE
+CREATE TYPE
+  relname   
+------------
+ quotedCase
+(1 row)
+
+  relname   
+------------
+ quotedCase
+(1 row)
+
+    typname    
+---------------
+ typQuotedCase
+(1 row)
+
+    typname    
+---------------
+ typQuotedCase
+(1 row)
+
+ relname 
+---------
+ a
+(1 row)
+
+ typname 
+---------
+ typ
+(1 row)
+
+ typname | count 
+---------+-------
+ typ     |     1
+(1 row)
+
+ relname | relnatts 
+---------+----------
+ a       |        1
+(1 row)
+
+ typname | count 
+---------+-------
+ typ     |     1
+(1 row)
+
+ relname | relnatts 
+---------+----------
+ a       |        1
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+ a 
+---
+ 1
+(1 row)
+
+ a 
+---
+ 1
+ 4
+(2 rows)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+    column1    |    column2    
+---------------+---------------
+ pg_constraint | pg_constraint
+(1 row)
+
+   proargtypes    
+------------------
+ [0:0]={oid}
+ [0:1]={oid,name}
+(2 rows)
+
+ int4 
+------
+ 2279
+(1 row)
+
+ text | quote_literal 
+------+---------------
+ 1    | '1'
+(1 row)
+
+ oid | attnum | attname | relname | nspname | ?column? | ?column? 
+-----+--------+---------+---------+---------+----------+----------
+(0 rows)
+
+DROP TABLE
+CREATE TABLE
+       regclass       
+----------------------
+ "regression_53686"""
+(1 row)
+
+       regclass       
+----------------------
+ "regression_53686"""
+(1 row)
+
+ regproc 
+---------
+ radians
+(1 row)
+
+ regproc 
+---------
+ radians
+(1 row)
+
+       regprocedure        
+---------------------------
+ radians(double precision)
+(1 row)
+
+PREPARE
+       regclass       
+----------------------
+ "regression_53686"""
+(1 row)
+
+    oid     
+------------
+ 4294967295
+(1 row)
+
+  regproc   
+------------
+ 4294967295
+(1 row)
+
+  regclass  
+------------
+ 4294967295
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+     regclass     
+------------------
+ regression_62205
+(1 row)
+
+  oid  
+-------
+ 69907
+(1 row)
+
+     o      |      i      | ?column? | ?column? 
+------------+-------------+----------+----------
+          1 |  4294967295 | f        | t
+          1 | -2147483648 | t        | f
+ 4294967295 |  4294967295 | f        | f
+ 4294967295 | -2147483648 | t        | f
+ 2147483648 |  4294967295 | f        | t
+ 2147483648 | -2147483648 | t        | f
+ 4294967295 |  4294967295 | f        | f
+ 4294967295 | -2147483648 | t        | f
+(8 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE SCHEMA
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+SET
+SET
+RESET
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+ x | y 
+---+---
+ - | -
+(1 row)
+
+ regrole | text 
+---------+------
+ -       | -
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 1
+ col_1 
+-------
+     0
+(1 row)
+
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+ col1 
+------
+ -
+(1 row)
+

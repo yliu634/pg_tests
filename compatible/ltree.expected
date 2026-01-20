@@ -1,15 +1,11 @@
-psql:pg_tests/compatible/ltree.sql:1: NOTICE:  extension "ltree" already exists, skipping
-CREATE EXTENSION
 SET
-DROP TABLE
-CREATE TABLE
+CREATE EXTENSION
 DROP TABLE
 CREATE TABLE
 INSERT 0 7
-psql:pg_tests/compatible/ltree.sql:20: ERROR:  column "lta" is of type ltree[] but expression is of type text[]
-LINE 1: ...ERT INTO la VALUES (ARRAY['A', 'A.B']::ltree[]), (ARRAY['A.B...
-                                                             ^
-HINT:  You will need to rewrite or cast the expression.
+DROP TABLE
+CREATE TABLE
+INSERT 0 4
   lt   
 -------
  
@@ -21,9 +17,13 @@ HINT:  You will need to rewrite or cast the expression.
  
 (7 rows)
 
- lta 
------
-(0 rows)
+       lta       
+-----------------
+ {}
+ {A,A.B}
+ {A.B.C,A.B.D,Z}
+ 
+(4 rows)
 
  pg_typeof 
 -----------
@@ -32,516 +32,55 @@ HINT:  You will need to rewrite or cast the expression.
 
  pg_typeof 
 -----------
-(0 rows)
+ ltree[]
+(1 row)
 
-psql:pg_tests/compatible/ltree.sql:36: ERROR:  label string is too long
-DETAIL:  Label length is 1001, must be at most 1000, at character 1002.
-psql:pg_tests/compatible/ltree.sql:39: ERROR:  number of ltree labels (65536) exceeds the maximum allowed (65535)
- lt  
------
- 
- A
- A.B
-(3 rows)
+  lt   | contains_ab | contained_by_ab 
+-------+-------------+-----------------
+       | t           | f
+ A     | t           | f
+ A.B   | t           | t
+ A.B.C | f           | t
+ A.B.D | f           | t
+ Z     | f           | f
+(6 rows)
 
-  lt   
--------
- A.B
+       lta       | contains_ab | contained_by_ab 
+-----------------+-------------+-----------------
+ {}              |             | 
+ {A,A.B}         | A           | A.B
+ {A.B.C,A.B.D,Z} |             | A.B.C
+                 |             | 
+(4 rows)
+
+ concat_path 
+-------------
  A.B.C
- A.B.D
-(3 rows)
+(1 row)
 
- lta 
+     sub1      
+---------------
+ Child1.Child2
+(1 row)
+
+    subneg2    
+---------------
+ Child1.Child2
+(1 row)
+
+ depth 
+-------
+     3
+(1 row)
+
+ idx 
 -----
-(0 rows)
-
- lta 
------
-(0 rows)
-
- ?column? 
-----------
-(0 rows)
-
- ?column? 
-----------
-(0 rows)
-
-psql:pg_tests/compatible/ltree.sql:123: ERROR:  syntax error at or near "'A.B.C'"
-LINE 3: SELECT 'A.B.C'::LTREE = 'A.B'
-               ^
-    subpath    
----------------
- Child1.Child2
+   2
 (1 row)
 
-psql:pg_tests/compatible/ltree.sql:128: ERROR:  invalid positions
-    subpath    
----------------
- Child1.Child2
-(1 row)
-
-psql:pg_tests/compatible/ltree.sql:134: ERROR:  invalid positions
-psql:pg_tests/compatible/ltree.sql:137: ERROR:  invalid positions
- subpath 
----------
- Child2
-(1 row)
-
- subpath 
----------
- Child1
-(1 row)
-
-    subpath    
----------------
- Child1.Child2
-(1 row)
-
-  subpath   
-------------
- Top.Child1
-(1 row)
-
- subpath 
----------
- 
-(1 row)
-
-psql:pg_tests/compatible/ltree.sql:155: ERROR:  invalid positions
- subpath 
----------
- Top
-(1 row)
-
-psql:pg_tests/compatible/ltree.sql:161: ERROR:  invalid positions
- subpath 
----------
- 
-(1 row)
-
-psql:pg_tests/compatible/ltree.sql:168: ERROR:  function subpath(ltree, integer, bigint) does not exist
-LINE 1: SELECT subpath('A.B.C'::LTREE, 1, 9223372036854775807::INT8)
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
- subltree 
-----------
- Child1
-(1 row)
-
-     subltree      
--------------------
- Top.Child1.Child2
-(1 row)
-
-psql:pg_tests/compatible/ltree.sql:176: ERROR:  invalid positions
-psql:pg_tests/compatible/ltree.sql:179: ERROR:  invalid positions
-psql:pg_tests/compatible/ltree.sql:182: ERROR:  invalid positions
- subltree 
-----------
- 
-(1 row)
-
- nlevel 
---------
-      3
-(1 row)
-
- nlevel 
---------
-      0
-(1 row)
-
- nlevel 
---------
-       
-(1 row)
-
- index 
--------
-    -1
-(1 row)
-
- index 
--------
-     2
-(1 row)
-
- index 
--------
-     4
-(1 row)
-
- index 
--------
-     4
-(1 row)
-
- index 
--------
-     2
-(1 row)
-
- index 
--------
-      
-(1 row)
-
-   text2ltree    
+       t2l       
 -----------------
  foo_bar-baz.baz
 (1 row)
 
-psql:pg_tests/compatible/ltree.sql:218: ERROR:  ltree syntax error at character 5
-   ltree2text    | ?column? | ?column? 
------------------+----------+----------
- foo_bar-baz.baz | t        | t
-(1 row)
-
- lca 
------
- A.B
-(1 row)
-
- lca 
------
- 
-(1 row)
-
- lca 
------
- 
-(1 row)
-
- lca 
------
- 
-(1 row)
-
- lca 
------
- 
-(1 row)
-
-psql:pg_tests/compatible/ltree.sql:241: ERROR:  array must not contain nulls
- lca 
------
- 
-(1 row)
-
- lca 
------
- 
-(1 row)
-
- lca 
------
- A
-(1 row)
-
- lca 
------
- A.B
-(1 row)
-
- lca 
------
- A.B
-(1 row)
-
- lca 
------
- 
-(1 row)
-
-DROP TABLE
-CREATE TABLE
-INSERT 0 1
- id |     path     | path_null 
-----+--------------+-----------
-  1 | default.path | 
-(1 row)
-
-INSERT 0 1
-psql:pg_tests/compatible/ltree.sql:283: ERROR:  syntax error at or near "TABLE"
-LINE 3: DROP TABLE t_defaults
-             ^
-DROP TABLE
-psql:pg_tests/compatible/ltree.sql:289: ERROR:  ltree syntax error at character 9
-LINE 3:   path LTREE DEFAULT 'invalid..path'
-                             ^
-DROP TABLE
-CREATE TABLE
-INSERT 0 1
-INSERT 0 1
- id |   path   
-----+----------
-  1 | root.a.b
-  2 | root
-(2 rows)
-
-psql:pg_tests/compatible/ltree.sql:308: ERROR:  new row for relation "t_check" violates check constraint "t_check_path_check"
-DETAIL:  Failing row contains (3, other.path).
-psql:pg_tests/compatible/ltree.sql:311: ERROR:  new row for relation "t_check" violates check constraint "t_check_path_check"
-DETAIL:  Failing row contains (4, roo).
-psql:pg_tests/compatible/ltree.sql:314: ERROR:  new row for relation "t_check" violates check constraint "t_check_path_check"
-DETAIL:  Failing row contains (4, root.a.b.c).
-DROP TABLE
-DROP TABLE
-CREATE TABLE
-INSERT 0 1
-INSERT 0 1
-psql:pg_tests/compatible/ltree.sql:333: ERROR:  new row for relation "t_check2" violates check constraint "t_check2_path_check"
-DETAIL:  Failing row contains (3, org).
-psql:pg_tests/compatible/ltree.sql:336: ERROR:  new row for relation "t_check2" violates check constraint "t_check2_path_check"
-DETAIL:  Failing row contains (4, other.org.company).
-DROP TABLE
-DROP TABLE
-CREATE TABLE
-INSERT 0 1
-INSERT 0 1
-psql:pg_tests/compatible/ltree.sql:355: ERROR:  new row for relation "t_check3" violates check constraint "t_check3_path_check"
-DETAIL:  Failing row contains (3, single).
-psql:pg_tests/compatible/ltree.sql:358: ERROR:  new row for relation "t_check3" violates check constraint "t_check3_path_check"
-DETAIL:  Failing row contains (4, ).
-DROP TABLE
-psql:pg_tests/compatible/ltree.sql:364: ERROR:  relation "t_schema" does not exist
-LINE 1: INSERT INTO t_schema VALUES (1, 'first'), (2, 'second');
-                    ^
-psql:pg_tests/compatible/ltree.sql:368: ERROR:  relation "t_schema" does not exist
-psql:pg_tests/compatible/ltree.sql:371: ERROR:  relation "t_schema" does not exist
-LINE 1: SELECT * FROM t_schema
-                      ^
-psql:pg_tests/compatible/ltree.sql:373: ERROR:  relation "t_schema" does not exist
-LINE 1: INSERT INTO t_schema VALUES (3, 'third', 'a.b.c');
-                    ^
-psql:pg_tests/compatible/ltree.sql:386: ERROR:  syntax error at or near "TABLE"
-LINE 3: ALTER TABLE t_schema ADD COLUMN path2 LTREE DEFAULT 'default...
-              ^
-psql:pg_tests/compatible/ltree.sql:389: ERROR:  relation "t_schema" does not exist
-LINE 1: SELECT * FROM t_schema
-                      ^
-psql:pg_tests/compatible/ltree.sql:392: ERROR:  table "t_schema" does not exist
-DROP TABLE
-CREATE TABLE
-INSERT 0 3
-CREATE INDEX
-psql:pg_tests/compatible/ltree.sql:411: ERROR:  syntax error at or near "DROP"
-LINE 3: DROP INDEX idx_path
-        ^
-DROP TABLE
-DROP TABLE
-psql:pg_tests/compatible/ltree.sql:441: ERROR:  syntax error at or near "INSERT"
-LINE 4: INSERT INTO t_alter_type VALUES (1, 'a.b.c'), (2, 'x.y')
-        ^
-psql:pg_tests/compatible/ltree.sql:444: ERROR:  relation "t_alter_type" does not exist
-LINE 1: SELECT * FROM t_alter_type
-                      ^
-psql:pg_tests/compatible/ltree.sql:447: ERROR:  relation "t_alter_type" does not exist
-LINE 1: SELECT pg_typeof(path_text) FROM t_alter_type LIMIT 1
-                                         ^
-psql:pg_tests/compatible/ltree.sql:450: ERROR:  table "t_alter_type" does not exist
-DROP TABLE
-psql:pg_tests/compatible/ltree.sql:464: ERROR:  syntax error at or near "INSERT"
-LINE 4: INSERT INTO t_alter_invalid VALUES (1, 'valid.path'), (2, 'i...
-        ^
-psql:pg_tests/compatible/ltree.sql:467: ERROR:  relation "t_alter_invalid" does not exist
-LINE 1: SELECT pg_typeof(path_text) FROM t_alter_invalid LIMIT 1
-                                         ^
-psql:pg_tests/compatible/ltree.sql:470: ERROR:  relation "t_alter_invalid" does not exist
-LINE 1: SELECT * FROM t_alter_invalid
-                      ^
-psql:pg_tests/compatible/ltree.sql:473: ERROR:  table "t_alter_invalid" does not exist
-psql:pg_tests/compatible/ltree.sql:479: ERROR:  relation "t_view_base" does not exist
-LINE 1: INSERT INTO t_view_base VALUES
-                    ^
-psql:pg_tests/compatible/ltree.sql:512: ERROR:  syntax error at or near "SELECT"
-LINE 6: SELECT * FROM v_engineering
-        ^
-psql:pg_tests/compatible/ltree.sql:515: ERROR:  view "v_top_level" does not exist
-psql:pg_tests/compatible/ltree.sql:518: ERROR:  table "t_view_base" does not exist
-DROP TABLE
-psql:pg_tests/compatible/ltree.sql:526: ERROR:  syntax error at or near "AS"
-LINE 4:   depth INT AS (nlevel(path)) STORED,
-                    ^
-psql:pg_tests/compatible/ltree.sql:532: ERROR:  relation "t_computed" does not exist
-LINE 1: INSERT INTO t_computed (id, path) VALUES
-                    ^
-psql:pg_tests/compatible/ltree.sql:536: ERROR:  relation "t_computed" does not exist
-LINE 1: SELECT id, path, depth, parent_path FROM t_computed
-                                                 ^
-psql:pg_tests/compatible/ltree.sql:538: ERROR:  relation "t_computed" does not exist
-LINE 1: INSERT INTO t_computed (id, path) VALUES (4, 'single');
-                    ^
-psql:pg_tests/compatible/ltree.sql:548: ERROR:  syntax error at or near "UPDATE"
-LINE 3: UPDATE t_computed SET path = 'a.b.c.d.e' WHERE id = 1
-        ^
-psql:pg_tests/compatible/ltree.sql:551: ERROR:  table "t_computed" does not exist
-DROP TABLE
-psql:pg_tests/compatible/ltree.sql:558: ERROR:  syntax error at or near "AS"
-LINE 4:   invalid_path LTREE AS ((path || '..invalid')::LTREE) STORE...
-                             ^
-psql:pg_tests/compatible/ltree.sql:561: ERROR:  relation "t_computed_invalid_stored" does not exist
-LINE 1: INSERT INTO t_computed_invalid_stored (id, path) VALUES (1, ...
-                    ^
-psql:pg_tests/compatible/ltree.sql:565: ERROR:  table "t_computed_invalid_stored" does not exist
-DROP TABLE
-psql:pg_tests/compatible/ltree.sql:572: ERROR:  syntax error at or near "AS"
-LINE 4:   invalid_path LTREE AS ((path || '..invalid')::LTREE) VIRTU...
-                             ^
-psql:pg_tests/compatible/ltree.sql:575: ERROR:  relation "t_computed_invalid_virtual" does not exist
-LINE 1: INSERT INTO t_computed_invalid_virtual (id, path) VALUES (1,...
-                    ^
-psql:pg_tests/compatible/ltree.sql:582: ERROR:  syntax error at or near "DROP"
-LINE 3: DROP TABLE t_computed_invalid_virtual
-        ^
- ltree 
--------
- 
-(1 row)
-
- ltree 
--------
- 
-(1 row)
-
-psql:pg_tests/compatible/ltree.sql:638: ERROR:  syntax error at or near "'invalid..path'"
-LINE 3: SELECT 'invalid..path'::LTREE
-               ^
-psql:pg_tests/compatible/ltree.sql:640: ERROR:  function get_depth(unknown) does not exist
-LINE 1: SELECT get_depth('a.b.c.d');
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/ltree.sql:643: ERROR:  function get_depth(unknown) does not exist
-LINE 1: SELECT get_depth('');
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/ltree.sql:646: ERROR:  function get_depth(unknown) does not exist
-LINE 1: SELECT get_depth(NULL);
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/ltree.sql:652: ERROR:  function "make_path" already exists with same argument types
-    make_path    
------------------
- org.engineering
-(1 row)
-
- make_path 
------------
- a.b
-(1 row)
-
-psql:pg_tests/compatible/ltree.sql:663: ERROR:  function "is_descendant" already exists with same argument types
- is_descendant 
----------------
- t
-(1 row)
-
- is_descendant 
----------------
- f
-(1 row)
-
- is_descendant 
----------------
- f
-(1 row)
-
-psql:pg_tests/compatible/ltree.sql:680: ERROR:  function "get_parent" already exists with same argument types
- get_parent 
-------------
- a.b.c
-(1 row)
-
- get_parent 
-------------
- 
-(1 row)
-
- get_parent 
-------------
- 
-(1 row)
-
-psql:pg_tests/compatible/ltree.sql:705: ERROR:  syntax error at or near "SELECT"
-LINE 14: SELECT count_ancestors('a.b.c.d');
-         ^
-psql:pg_tests/compatible/ltree.sql:708: ERROR:  function count_ancestors(unknown) does not exist
-LINE 1: SELECT count_ancestors('x');
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/ltree.sql:711: ERROR:  function count_ancestors(unknown) does not exist
-LINE 1: SELECT count_ancestors('');
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/ltree.sql:730: ERROR:  syntax error at or near "SELECT"
-LINE 16: SELECT build_path(ARRAY['a', 'b', 'c']);
-         ^
-psql:pg_tests/compatible/ltree.sql:733: ERROR:  function build_path(text[]) does not exist
-LINE 1: SELECT build_path(ARRAY['single']);
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/ltree.sql:752: ERROR:  syntax error at or near "DROP"
-LINE 3: DROP FUNCTION make_path
-        ^
-DROP TABLE
-CREATE TABLE
-INSERT 0 10
-psql:pg_tests/compatible/ltree.sql:775: ERROR:  syntax error at or near "SELECT"
-LINE 3: SELECT * FROM t_sort ORDER BY path DESC
-        ^
-CREATE INDEX
-psql:pg_tests/compatible/ltree.sql:787: ERROR:  syntax error at or near "SELECT"
-LINE 3: SELECT * FROM t_sort ORDER BY path DESC
-        ^
-psql:pg_tests/compatible/ltree.sql:794: ERROR:  relation "t_multi_idx" does not exist
-LINE 1: INSERT INTO t_multi_idx VALUES
-                    ^
-psql:pg_tests/compatible/ltree.sql:797: ERROR:  relation "t_multi_idx" does not exist
-psql:pg_tests/compatible/ltree.sql:804: ERROR:  syntax error at or near "SELECT"
-LINE 3: SELECT * FROM t_multi_idx WHERE path <@ 'org.engineering' AN...
-        ^
-psql:pg_tests/compatible/ltree.sql:806: ERROR:  relation "t_multi_idx" does not exist
-psql:pg_tests/compatible/ltree.sql:816: ERROR:  syntax error at or near "SELECT"
-LINE 3: SELECT * FROM t_multi_idx WHERE status = 'inactive' AND path...
-        ^
-psql:pg_tests/compatible/ltree.sql:822: ERROR:  relation "t_multi_idx2" does not exist
-LINE 1: INSERT INTO t_multi_idx2 VALUES
-                    ^
-psql:pg_tests/compatible/ltree.sql:825: ERROR:  relation "t_multi_idx2" does not exist
-psql:pg_tests/compatible/ltree.sql:835: ERROR:  syntax error at or near "SELECT"
-LINE 3: SELECT * FROM t_multi_idx2 WHERE category = 2 AND path <@ 'a...
-        ^
-DROP TABLE
-CREATE TABLE
-INSERT 0 1
- nlevel 
---------
-      1
-(1 row)
-
-psql:pg_tests/compatible/ltree.sql:847: ERROR:  label string is too long
-DETAIL:  Label length is 1001, must be at most 1000, at character 1002.
-INSERT 0 1
- nlevel 
---------
-   1000
-(1 row)
-
-psql:pg_tests/compatible/ltree.sql:856: ERROR:  number of ltree labels (65536) exceeds the maximum allowed (65535)
-psql:pg_tests/compatible/ltree.sql:881: ERROR:  syntax error at or near "'test.label'"
-LINE 3: SELECT 'test.label'::LTREE
-               ^
-INSERT 0 4
-psql:pg_tests/compatible/ltree.sql:893: ERROR:  syntax error at or near "DROP"
-LINE 3: DROP TABLE t_boundary;
-        ^
-DROP TABLE
-psql:pg_tests/compatible/ltree.sql:902: ERROR:  syntax error at or near ")"
-LINE 6: );
-        ^
-psql:pg_tests/compatible/ltree.sql:903: ERROR:  relation "t156478" does not exist
-psql:pg_tests/compatible/ltree.sql:906: ERROR:  relation "t156478" does not exist
-LINE 1: INSERT INTO t156478 VALUES (1, 'foo.bar_'::LTREE);
-                    ^
 RESET

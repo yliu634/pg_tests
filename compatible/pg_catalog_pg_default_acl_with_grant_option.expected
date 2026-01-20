@@ -1,0 +1,18 @@
+SET
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+DROP SCHEMA
+CREATE SCHEMA
+ALTER DEFAULT PRIVILEGES
+SET
+DROP TABLE
+CREATE TABLE
+RESET
+        grantee         | privilege_type | is_grantable 
+------------------------+----------------+--------------
+ default_acl_grantee_go | SELECT         | YES
+(1 row)
+
+RESET

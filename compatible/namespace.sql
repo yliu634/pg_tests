@@ -2,92 +2,62 @@ SET client_min_messages = warning;
 
 -- PostgreSQL compatible tests from namespace
 -- 25 tests
+--
+-- The original CockroachDB test exercises database+schema resolution via
+-- Cockroach-only constructs (SET database, SHOW TABLES FROM <db>, and three-part
+-- names like db.schema.table). PostgreSQL uses schemas and search_path instead.
 
 -- Test 1: statement (line 2)
-DROP TABLE IF EXISTS a CASCADE;
-DROP TABLE IF EXISTS a CASCADE;
-CREATE TABLE a(a INT);
+DROP SCHEMA IF EXISTS ns1 CASCADE;
+DROP SCHEMA IF EXISTS ns2 CASCADE;
+CREATE SCHEMA ns1;
+CREATE SCHEMA ns2;
 
 -- Test 2: statement (line 5)
-CREATE DATABASE public; DROP TABLE IF EXISTS public CASCADE;
-CREATE TABLE public.public.t(a INT);
+DROP TABLE IF EXISTS public.t CASCADE;
+DROP TABLE IF EXISTS ns1.t CASCADE;
+CREATE TABLE public.t(a INT);
+CREATE TABLE ns1.t(a INT);
+INSERT INTO public.t VALUES (1);
+INSERT INTO ns1.t VALUES (2);
 
 -- Test 3: query (line 9)
-SHOW TABLES FROM public;
+SELECT table_schema, table_name
+FROM information_schema.tables
+WHERE table_schema IN ('public', 'ns1') AND table_name = 't'
+ORDER BY table_schema, table_name;
 
 -- Test 4: query (line 16)
-SHOW TABLES FROM public.public;
+SET search_path = ns1, public;
+SELECT a FROM t ORDER BY a;
 
--- Test 5: statement (line 23)
-SET database = public;
+-- Test 5: query (line 23)
+SET search_path = public, ns1;
+SELECT a FROM t ORDER BY a;
 
 -- Test 6: query (line 26)
-SHOW TABLES;
+SELECT current_schema() AS current_schema;
 
--- Test 7: statement (line 31)
-SET database = test;
+-- Test 7: query (line 31)
+SELECT typname FROM pg_catalog.pg_type WHERE typname = 'date';
 
 -- Test 8: statement (line 34)
-DROP DATABASE public;
+DROP TABLE IF EXISTS a CASCADE;
+CREATE TABLE a(a INT PRIMARY KEY);
 
--- Test 9: query (line 38)
-SELECT typname FROM pg_type WHERE typname = 'date';
-
--- Test 10: statement (line 44)
-SET search_path=public,pg_catalog;
-
--- Test 11: statement (line 47)
-DROP TABLE IF EXISTS pg_type CASCADE;
-DROP TABLE IF EXISTS pg_type CASCADE;
-CREATE TABLE pg_type(x INT); INSERT INTO pg_type VALUES(42);
-
--- Test 12: query (line 50)
-SELECT x FROM pg_type;
-
--- Test 13: query (line 57)
-SET database = ''; SELECT * FROM pg_type;
-
-# Go to different database, check name still resolves to default.
--- query T
-CREATE DATABASE foo; SET database = foo; SELECT typname FROM pg_type WHERE typname = 'date';
-
--- Test 14: query (line 67)
-SET database = test; SET search_path = pg_catalog,public; SELECT typname FROM pg_type WHERE typname = 'date';
-
--- Test 15: query (line 74)
-SET search_path = public,pg_catalog; SELECT x FROM pg_type;
-
--- Test 16: statement (line 79)
-DROP TABLE pg_type; RESET search_path; SET database = test;
-
--- Test 17: statement (line 83)
+-- Test 9: statement (line 38)
 ALTER INDEX a_pkey RENAME TO a_pk;
 
--- Test 18: statement (line 87)
-ALTER INDEX public.a_pk RENAME TO a_pk2;
+-- Test 10: statement (line 44)
+ALTER INDEX a_pk RENAME TO a_pk2;
 
--- Test 19: statement (line 91)
-ALTER INDEX test.a_pk2 RENAME TO a_pk3;
+-- Test 11: statement (line 47)
+ALTER INDEX public.a_pk2 RENAME TO a_pk3;
 
--- Test 20: statement (line 94)
-CREATE DATABASE public; DROP TABLE IF EXISTS public CASCADE;
-CREATE TABLE public.public.t(a INT);
-
--- Test 21: statement (line 98)
-ALTER INDEX public.t_pkey RENAME TO t_pk;
-
--- Test 22: statement (line 102)
-ALTER INDEX public.public.t_pkey RENAME TO t_pk;
-
--- Test 23: statement (line 106)
-SET search_path = invalid;
-
--- Test 24: statement (line 109)
-ALTER INDEX a_pk3 RENAME TO a_pk4;
-
--- Test 25: statement (line 113)
-ALTER INDEX public.a_pk3 RENAME TO a_pk4;
-
-
+-- Test 12: statement (line 50)
+-- search_path can include unknown schemas; resolution uses the first existing entry.
+SET search_path = invalid, public;
+SELECT 1;
 
 RESET client_min_messages;
+

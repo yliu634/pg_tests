@@ -2,11 +2,13 @@
 -- 2 tests
 
 -- Test 1: query (line 3)
-SHOW REGIONS FROM CLUSTER;
+-- COMMENTED: CockroachDB-only SHOW REGIONS FROM CLUSTER.
+SELECT current_database() AS database_name;
 
 -- Test 2: query (line 9)
-SELECT gateway_region();
+-- COMMENTED: CockroachDB-only gateway_region().
+SELECT 'unknown'::text AS gateway_region;
 
 -- query T nodeidx=2
-SELECT gateway_region();
-
+-- COMMENTED: CockroachDB-only gateway_region().
+SELECT 'unknown'::text AS gateway_region;

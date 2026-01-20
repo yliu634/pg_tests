@@ -1,25 +1,42 @@
-psql:pg_tests/compatible/name_escapes.sql:5: ERROR:  relation "woo; DROP USER humpty;" already exists
-psql:pg_tests/compatible/name_escapes.sql:19: ERROR:  syntax error at or near ";"
-LINE 1: CREATE TABLE ";--notbetter" (;
-                                     ^
-psql:pg_tests/compatible/name_escapes.sql:24: ERROR:  syntax error at or near "CREATE"
-LINE 1: SHOW CREATE TABLE ";--notbetter";
-             ^
-psql:pg_tests/compatible/name_escapes.sql:27: ERROR:  syntax error at or near "CREATE"
-LINE 1: SHOW CREATE TABLE ";--notbetter";
-             ^
-psql:pg_tests/compatible/name_escapes.sql:30: ERROR:  relation ";--notbetter" does not exist
-LINE 1: ...";--alsoconcerning" AS SELECT x AS a, y AS b FROM ";--notbet...
-                                                             ^
-psql:pg_tests/compatible/name_escapes.sql:33: ERROR:  syntax error at or near "CREATE"
-LINE 1: SHOW CREATE VIEW ";--alsoconcerning";
-             ^
-psql:pg_tests/compatible/name_escapes.sql:36: ERROR:  relation ";--notbetter" does not exist
-LINE 1: ... TABLE ";--dontask" AS SELECT x AS a, y AS b FROM ";--notbet...
-                                                             ^
-psql:pg_tests/compatible/name_escapes.sql:41: ERROR:  syntax error at or near "CREATE"
-LINE 1: SHOW CREATE TABLE ";--dontask";
-             ^
-psql:pg_tests/compatible/name_escapes.sql:44: ERROR:  syntax error at or near "CREATE"
-LINE 1: SHOW CREATE TABLE ";--dontask";
-             ^
+SET
+DROP VIEW
+DROP TABLE
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+ column_name | data_type | is_nullable 
+-------------+-----------+-------------
+ x           | integer   | NO
+ y           | integer   | YES
+(2 rows)
+
+ column_name | data_type | is_nullable 
+-------------+-----------+-------------
+ x           | integer   | NO
+ y           | integer   | YES
+(2 rows)
+
+CREATE VIEW
+         viewdef         
+-------------------------
+  SELECT x AS a,        +
+     y AS b             +
+    FROM ";--notbetter";
+(1 row)
+
+SELECT 2
+ column_name | data_type | is_nullable 
+-------------+-----------+-------------
+ a           | integer   | YES
+ b           | integer   | YES
+(2 rows)
+
+ column_name | data_type | is_nullable 
+-------------+-----------+-------------
+ a           | integer   | YES
+ b           | integer   | YES
+(2 rows)
+
+RESET

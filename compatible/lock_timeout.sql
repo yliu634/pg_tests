@@ -9,7 +9,8 @@ DROP TABLE IF EXISTS t CASCADE;
 CREATE TABLE t (k INT PRIMARY KEY, v int);
 
 -- Test 2: statement (line 5)
-GRANT ALL ON t TO testuser;
+-- COMMENTED: Logic test uses a separate user/session; keep single-user for psql execution.
+-- GRANT ALL ON t TO testuser;
 
 -- Test 3: statement (line 8)
 INSERT INTO t VALUES (1, 1);
@@ -84,7 +85,7 @@ SELECT * FROM t WHERE v = 9 FOR UPDATE NOWAIT;
 SELECT * FROM t WHERE v = 9 FOR UPDATE NOWAIT;
 
 -- Test 23: statement (line 92)
-INSERT INTO t VALUES (1, 3);
+INSERT INTO t VALUES (1, 3) ON CONFLICT (k) DO NOTHING;
 
 -- Test 24: statement (line 95)
 INSERT INTO t VALUES (2, 3);
@@ -115,19 +116,18 @@ UPDATE t SET v = 4 WHERE v = 9;
 UPDATE t SET v = 4 WHERE v = 9;
 
 -- Test 32: statement (line 121)
-DELETE FROM t
+DELETE FROM t;
 
 -- Test 33: statement (line 124)
-DELETE FROM t WHERE k = 1
+DELETE FROM t WHERE k = 1;
 
 -- Test 34: statement (line 127)
-DELETE FROM t WHERE k = 2
+DELETE FROM t WHERE k = 2;
 
 -- skipif config weak-iso-level-configs
 
 -- Test 35: statement (line 131)
-DELETE FROM t WHERE v = 9
-;
+DELETE FROM t WHERE v = 9;
 -- onlyif config weak-iso-level-configs
 
 -- Test 36: statement (line 135)

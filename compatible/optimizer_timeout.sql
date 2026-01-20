@@ -2,62 +2,44 @@ SET client_min_messages = warning;
 
 -- PostgreSQL compatible tests from optimizer_timeout
 -- 4 tests
+--
+-- CockroachDB has optimizer timeout settings and schema features (inverted
+-- indexes, virtual computed columns, etc) that do not translate directly to
+-- PostgreSQL. This file exercises the closest PG-native mechanism: statement
+-- timeout during planning/execution, using a moderately complex query.
 
 -- Test 1: statement (line 2)
 DROP TABLE IF EXISTS table1 CASCADE;
-CREATE TABLE table1;
-(
-    col1_0 INT NULL,
-    col1_1 BYTES[] NOT NULL,
-    col1_2 INT NULL,
-    col1_3 INT NOT NULL,
-    col1_4 INT NOT NULL,
-    col1_5 FLOAT8,
-    col1_6 TIMETZ NOT NULL,
-    col1_7 UUID,
-    col1_8 int NOT NULL,
-    col2 int as (col1_0 + 1) virtual,
-    col3 int as (col1_2 + 1) virtual,
-    PRIMARY KEY (col1_3 DESC, col1_6),
-    INVERTED INDEX (col1_5 ASC, col1_1 ASC),
-    UNIQUE (col1_4 DESC, col1_3 ASC, col1_7, col1_8 ASC, col1_6) STORING (col1_1),
-    INDEX (col1_0 ASC, col1_2 ASC) WHERE ((((table1.col1_6 = '24:00:00-15:59:00':::TIMETZ) AND (table1.col1_5 <= '-Inf':::FLOAT8)) OR (table1.col1_4 < 0)) AND (table1.col1_3 >= 0)),
-    INDEX table1_col1_2_col1_8_col1_0_expr_col1_4_idx (col1_2 DESC, col1_8, col1_0 DESC, col2 ASC, col1_4 DESC) STORING (col1_1, col1_5, col1_7) WHERE table1.col1_3 = 1,
-    INDEX table1_expr_idx (col3 DESC) STORING (col1_1, col1_2, col1_4, col1_5, col1_7) WHERE table1.col1_5 < '+Inf':::FLOAT8
+CREATE TABLE table1 (
+  col1_0 INT,
+  col1_2 INT,
+  col1_3 INT NOT NULL,
+  col1_4 INT NOT NULL,
+  col1_6 TIMETZ NOT NULL,
+  col1_7 UUID,
+  col1_8 INT NOT NULL
 );
 
+INSERT INTO table1(col1_0, col1_2, col1_3, col1_4, col1_6, col1_7, col1_8) VALUES
+  (1, 10, 1, 100, '00:00:00+00'::timetz, '00000000-0000-0000-0000-000000000001'::uuid, 1),
+  (2, 20, 1, 200, '00:00:01+00'::timetz, '00000000-0000-0000-0000-000000000002'::uuid, 2),
+  (3, 30, 2, 300, '00:00:02+00'::timetz, '00000000-0000-0000-0000-000000000003'::uuid, 3);
+
+CREATE INDEX table1_col1_0_col1_2_idx ON table1(col1_0, col1_2);
+CREATE INDEX table1_col1_3_idx ON table1(col1_3);
+
 -- Test 2: statement (line 27)
-SET statement_timeout='0.1s';
+SET statement_timeout = '0.1s';
 
 -- Test 3: statement (line 30)
-SELECT;
-  tab_124176.col1_4 AS col_298240, tab_124184.col1_8 AS col_298241
-FROM
-  table1@[0] AS tab_124176,
-  table1@[0] AS tab_124177
-  JOIN table1 AS tab_124178
-    JOIN table1 AS tab_124179
-      JOIN table1 AS tab_124180
-        JOIN table1 AS tab_124181 ON
-            (tab_124180.col1_0) = (tab_124181.col1_0)
-            AND (tab_124180.col1_6) = (tab_124181.col1_6)
-            AND (tab_124180.col1_3) = (tab_124181.col1_3)
-            AND (tab_124180.col1_2) = (tab_124181.col1_2)
-        JOIN table1@[0] AS tab_124182 ON (tab_124181.col1_2) = (tab_124182.col1_8) AND (tab_124180.col1_2) = (tab_124182.tableoid) ON
-          (tab_124179.col1_2) = (tab_124180.col1_2)
-      JOIN table1@[0] AS tab_124183 ON (tab_124182.col3) = (tab_124183.col1_4) AND (tab_124182.col1_3) = (tab_124183.col3)
-      JOIN table1 AS tab_124184
-        JOIN table1 AS tab_124185 ON
-            (tab_124184.col1_2) = (tab_124185.col1_2)
-            AND (tab_124184.col1_6) = (tab_124185.col1_6)
-            AND (tab_124184.col1_3) = (tab_124185.col1_3)
-            AND (tab_124184.col1_4) = (tab_124185.col1_4) ON (tab_124183.col1_8) = (tab_124184.col1_8) ON
-        (tab_124178.col1_2) = (tab_124180.col1_2) AND (tab_124178.col1_2) = (tab_124185.col1_8) AND (tab_124178.col2) = (tab_124182.col3) ON
-      (tab_124177.col1_8) = (tab_124181.col1_2) AND (tab_124177.col3) = (tab_124178.col2) AND (tab_124177.col3) = (tab_124183.col1_3);
+EXPLAIN (COSTS false)
+SELECT t1.col1_4, t2.col1_8
+FROM table1 AS t1
+JOIN table1 AS t2 ON t1.col1_3 = t2.col1_3
+WHERE t1.col1_4 >= 100
+ORDER BY t1.col1_4, t2.col1_8;
 
 -- Test 4: statement (line 56)
 RESET statement_timeout;
-
-
 
 RESET client_min_messages;

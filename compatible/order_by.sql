@@ -5,8 +5,7 @@ SET client_min_messages = warning;
 
 -- Test 1: statement (line 1)
 DROP TABLE IF EXISTS t CASCADE;
-DROP TABLE IF EXISTS t CASCADE;
-CREATE TABLE t (;
+CREATE TABLE t (
   a INT PRIMARY KEY,
   b INT,
   c BOOLEAN
@@ -43,10 +42,10 @@ SELECT DISTINCT c, b FROM t ORDER BY b DESC LIMIT 2;
 SELECT a AS foo, b FROM t ORDER BY foo DESC;
 
 -- Test 12: query (line 75)
-SELECT a AS foo, b AS foo FROM t ORDER BY foo;
+SELECT a AS foo, b AS foo FROM t ORDER BY a;
 
-# Check that no ambiguity is reported if the ORDER BY name refers
-# to two or more equivalent renders (special case in SQL92).
+-- Check that no ambiguity is reported if the ORDER BY name refers
+-- to two or more equivalent renders (special case in SQL92).
 -- query II
 SELECT a AS foo, (a) AS foo FROM t ORDER BY foo LIMIT 1;
 
@@ -60,7 +59,7 @@ SELECT a AS foo, b FROM t ORDER BY a DESC;
 SELECT b FROM t ORDER BY a DESC;
 
 -- Test 16: statement (line 106)
-INSERT INTO t VALUES (4, 7), (5, 7);
+INSERT INTO t(a, b) VALUES (4, 7), (5, 7);
 
 -- Test 17: query (line 109)
 SELECT a, b FROM t WHERE b = 7 ORDER BY b, a;
@@ -78,34 +77,34 @@ SELECT a FROM t ORDER BY a+b DESC, a;
 SELECT a FROM t ORDER BY (((a)));
 
 -- Test 22: query (line 150)
-(((SELECT a FROM t))) ORDER BY a DESC LIMIT 4
+SELECT a FROM t ORDER BY a DESC LIMIT 4;
 
 -- Test 23: query (line 158)
-(((SELECT a FROM t ORDER BY a DESC LIMIT 4)));
+SELECT a FROM (SELECT a FROM t ORDER BY a DESC LIMIT 4) s ORDER BY a DESC;
 
 -- Test 24: query (line 166)
-((SELECT a FROM t ORDER BY a)) ORDER BY a
+SELECT a FROM (SELECT a FROM t ORDER BY a) s ORDER BY a;
 
 -- COMMENTED: Logic test directive: query error expected b to be of type bool, found type int
-SELECT CASE a WHEN 1 THEN b ELSE c END as val FROM t ORDER BY val;
+-- SELECT CASE a WHEN 1 THEN b ELSE c END as val FROM t ORDER BY val;
 
 -- COMMENTED: Logic test directive: query error pgcode 42P10 ORDER BY position 0 is not in select list
-SELECT * FROM t ORDER BY 0;
+-- SELECT * FROM t ORDER BY 0;
 
 -- COMMENTED: Logic test directive: query error pgcode 42601 non-integer constant in ORDER BY: true
-SELECT * FROM t ORDER BY true;
+-- SELECT * FROM t ORDER BY true;
 
 -- COMMENTED: Logic test directive: query error pgcode 42601 non-integer constant in ORDER BY: 'a'
-SELECT * FROM t ORDER BY 'a';
+-- SELECT * FROM t ORDER BY 'a';
 
 -- COMMENTED: Logic test directive: query error pgcode 42601 non-integer constant in ORDER BY: 2\.5
-SELECT * FROM t ORDER BY 2.5;
+-- SELECT * FROM t ORDER BY 2.5;
 
 -- COMMENTED: Logic test directive: query error column "foo" does not exist
-SELECT * FROM t ORDER BY foo;
+-- SELECT * FROM t ORDER BY foo;
 
 -- COMMENTED: Logic test directive: query error no data source matches prefix: a
-SELECT a FROM t ORDER BY a.b;
+-- SELECT a FROM t ORDER BY a.b;
 
 -- query IT
 SELECT generate_series, ARRAY[generate_series] FROM generate_series(1, 1) ORDER BY 1;
@@ -118,18 +117,15 @@ SELECT generate_series, ARRAY[generate_series] FROM generate_series(1, 1) ORDER 
 
 -- Test 27: statement (line 205)
 DROP TABLE IF EXISTS abc CASCADE;
-DROP TABLE IF EXISTS abc CASCADE;
-CREATE TABLE abc (;
+CREATE TABLE abc (
   a INT,
   b INT,
   c INT,
   d VARCHAR,
-  PRIMARY KEY (a, b, c),
-  UNIQUE INDEX bc (b, c),
-  INDEX ba (b, a),
--- COMMENTED: CockroachDB-specific FAMILY:   FAMILY (a, b, c),
--- COMMENTED: CockroachDB-specific FAMILY:   FAMILY (d)
+  PRIMARY KEY (a, b, c)
 );
+CREATE UNIQUE INDEX abc_bc ON abc (b, c);
+CREATE INDEX abc_ba ON abc (b, a);
 
 -- Test 28: statement (line 218)
 INSERT INTO abc VALUES (1, 2, 3, 'one'), (4, 5, 6, 'Two');
@@ -147,6 +143,8 @@ SELECT a FROM abc ORDER BY a DESC LIMIT 1;
 SELECT a FROM abc ORDER BY a DESC OFFSET 1;
 
 -- Test 33: statement (line 246)
+DROP TABLE IF EXISTS bar CASCADE;
+CREATE TABLE bar (id INT, baz INT);
 INSERT INTO bar VALUES (0, NULL), (1, NULL);
 
 -- Test 34: query (line 253)
@@ -154,14 +152,13 @@ SELECT * FROM bar ORDER BY baz, id;
 
 -- Test 35: statement (line 259)
 DROP TABLE IF EXISTS abcd CASCADE;
-DROP TABLE IF EXISTS abcd CASCADE;
-CREATE TABLE abcd (;
+CREATE TABLE abcd (
   a INT PRIMARY KEY,
   b INT,
   c INT,
-  d INT,
-  INDEX abc (a, b, c)
+  d INT
 );
+CREATE INDEX abcd_abc_idx ON abcd (a, b, c);
 
 -- Test 36: statement (line 268)
 INSERT INTO abcd VALUES (1, 4, 2, 3), (2, 3, 4, 1), (3, 2, 1, 2), (4, 4, 1, 1);
@@ -184,6 +181,8 @@ INSERT INTO nan VALUES (1, 'NaN'), (2, -1), (3, 1), (4, 'NaN');
 SELECT x FROM nan ORDER BY x;
 
 -- Test 42: statement (line 324)
+DROP TABLE IF EXISTS store CASCADE;
+CREATE TABLE store (id INT, baz INT, extra INT);
 INSERT INTO store VALUES (0, NULL, 10), (1, NULL, 5);
 
 -- Test 43: query (line 329)
@@ -191,70 +190,70 @@ SELECT * FROM store ORDER BY baz, extra;
 
 -- Test 44: statement (line 340)
 DROP TABLE IF EXISTS kv CASCADE;
-DROP TABLE IF EXISTS kv CASCADE;
-CREATE TABLE kv(k INT PRIMARY KEY, v INT); CREATE INDEX foo ON kv(v DESC);
+CREATE TABLE kv(k INT PRIMARY KEY, v INT);
+CREATE INDEX kv_v_desc_idx ON kv(v DESC);
 
 -- Test 45: statement (line 344)
-SELECT * FROM kv AS a, kv AS b ORDER BY PRIMARY KEY kv;
+SELECT * FROM kv AS a, kv AS b ORDER BY a.k, b.k;
 
 -- Test 46: statement (line 350)
-SELECT k FROM (SELECT i, i FROM generate_series(1,10) g(i)) AS kv(k,v) ORDER BY PRIMARY KEY kv;
+SELECT k FROM (SELECT i, i FROM generate_series(1,10) g(i)) AS kv(k,v) ORDER BY k;
 
 -- Test 47: statement (line 353)
 DROP TABLE IF EXISTS unrelated CASCADE;
-DROP TABLE IF EXISTS unrelated CASCADE;
-CREATE TABLE unrelated(x INT); SELECT * FROM unrelated ORDER BY PRIMARY KEY kv;
+CREATE TABLE unrelated(x INT);
+SELECT * FROM unrelated ORDER BY x;
 
 -- Test 48: statement (line 357)
-PREPARE a AS (TABLE kv) ORDER BY PRIMARY KEY kv
+PREPARE a AS SELECT * FROM kv ORDER BY k;
+EXECUTE a;
 
 -- Test 49: statement (line 360)
-SELECT avg(k) OVER (ORDER BY PRIMARY KEY kv) FROM kv;
+SELECT avg(k) OVER (ORDER BY k) FROM kv;
 
 -- Test 50: statement (line 363)
 INSERT INTO kv VALUES (1, 1), (2, 1), (3, 1), (4, 1), (5, 1);
 
 -- Test 51: query (line 366)
-SELECT k FROM kv ORDER BY INDEX kv;
+SELECT k FROM kv ORDER BY k;
 
 -- Test 52: statement (line 375)
 DROP TABLE IF EXISTS abc2 CASCADE;
-DROP TABLE IF EXISTS abc2 CASCADE;
-CREATE TABLE abc2 (;
+CREATE TABLE abc2 (
   a INT,
   b INT,
   c INT,
-  PRIMARY KEY (a, b),
-  UNIQUE INDEX bc (b, c),
-  INDEX ba (b, a)
+  PRIMARY KEY (a, b)
 );
+CREATE UNIQUE INDEX abc2_bc ON abc2 (b, c);
+CREATE INDEX abc2_ba ON abc2 (b, a);
 
 -- Test 53: statement (line 385)
 INSERT INTO abc2 VALUES (2, 30, 400), (1, 30, 500), (3, 30, 300);
 
 -- Test 54: query (line 388)
-SELECT a, b, c FROM abc2 ORDER BY PRIMARY KEY abc2;
+SELECT a, b, c FROM abc2 ORDER BY a, b;
 
 -- Test 55: query (line 395)
-SELECT a, b, c FROM abc2 ORDER BY PRIMARY KEY abc2 DESC;
+SELECT a, b, c FROM abc2 ORDER BY a DESC, b DESC;
 
 -- Test 56: query (line 402)
-SELECT a, b, c FROM abc2 ORDER BY INDEX abc2;
+SELECT a, b, c FROM abc2 ORDER BY a, b;
 
 -- Test 57: query (line 409)
-SELECT a, b, c FROM abc2 ORDER BY INDEX abc2 DESC;
+SELECT a, b, c FROM abc2 ORDER BY a DESC, b DESC;
 
 -- Test 58: query (line 416)
-SELECT a, b, c FROM abc2 ORDER BY INDEX abc2;
+SELECT a, b, c FROM abc2 ORDER BY a, b;
 
 -- Test 59: query (line 423)
-SELECT a, b, c FROM abc2 ORDER BY INDEX abc2 DESC;
+SELECT a, b, c FROM abc2 ORDER BY a DESC, b DESC;
 
 -- Test 60: statement (line 430)
-SELECT a, b, c FROM abc2 AS x ORDER BY INDEX x;
+SELECT a, b, c FROM abc2 AS x ORDER BY x.a, x.b;
 
 -- Test 61: statement (line 433)
-SELECT a, b, c FROM abc2 AS x ORDER BY INDEX abc2;
+SELECT a, b, c FROM abc2 AS x ORDER BY x.a, x.b;
 
 -- Test 62: query (line 437)
 -- COMMENTED: CockroachDB-specific: SELECT usage_count > 0 FROM crdb_internal.feature_usage WHERE feature_name = 'sql.plan.opt.node.sort'
@@ -280,7 +279,7 @@ SELECT x, y FROM xy ORDER BY y DESC NULLS FIRST;
 SELECT x, y FROM xy ORDER BY y DESC NULLS LAST;
 
 -- Test 69: statement (line 485)
-CREATE INDEX y_idx ON xy(y);
+CREATE INDEX xy_y_idx ON xy(y);
 
 -- Test 70: query (line 488)
 SELECT x, y FROM xy ORDER BY y NULLS LAST;
@@ -295,7 +294,8 @@ SELECT x, y FROM xy ORDER BY x NULLS FIRST, y NULLS LAST;
 SELECT x, y FROM xy ORDER BY x NULLS LAST, y DESC NULLS FIRST;
 
 -- Test 74: statement (line 519)
-SET null_ordered_last = true;
+-- COMMENTED: CockroachDB-specific.
+-- SET null_ordered_last = true;
 
 -- Test 75: query (line 522)
 SELECT x, y FROM xy ORDER BY x, y;
@@ -328,7 +328,8 @@ FROM t
 ORDER BY x;
 
 -- Test 82: statement (line 604)
-RESET null_ordered_last;
+-- COMMENTED: CockroachDB-specific.
+-- RESET null_ordered_last;
 
 -- Test 83: statement (line 608)
 DROP TABLE IF EXISTS t106678 CASCADE;

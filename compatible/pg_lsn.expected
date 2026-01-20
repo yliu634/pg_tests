@@ -1,0 +1,102 @@
+SET
+   pg_lsn   
+------------
+ A01F0/1AAA
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+      id      |    val    
+--------------+-----------
+ 10/10        | A01/A100
+ 100/100      | A01/A1000
+ FFFFF100/100 | A001/A100
+(3 rows)
+
+  id   |   val    
+-------+----------
+ 10/10 | A01/A100
+(1 row)
+
+   id    |    val    
+---------+-----------
+ 100/100 | A01/A1000
+(1 row)
+
+ ?column? 
+----------
+ 0/0
+(1 row)
+
+ ?column? 
+----------
+ 0/1
+(1 row)
+
+  ?column?  
+------------
+ 0/FFFFFFFF
+(1 row)
+
+  ?column?   
+-------------
+ 4F/FFFFFFCE
+(1 row)
+
+ ?column? 
+----------
+ 0/32
+(1 row)
+
+        val        
+-------------------
+ 0/1
+ 0/2
+ 0/1
+ 0/2
+ 0/2
+ FFFFFFFF/FFFFFFFE
+ FFFFFFFF/FFFFFFFE
+ FFFFFFFF/FFFFFFFE
+ FFFFFFFF/FFFFFFFD
+(9 rows)
+
+          val          
+-----------------------
+          -68719476992
+        23021024706816
+  18446744073709551615
+ -18446744073709551615
+(4 rows)
+
+ pg_lsn 
+--------
+ 0/0
+(1 row)
+
+ pg_lsn 
+--------
+ 1/0
+(1 row)
+
+ pg_lsn 
+--------
+ 2/0
+(1 row)
+
+ pg_lsn 
+--------
+ 3/0
+(1 row)
+
+ pg_lsn 
+--------
+ 4/0
+(1 row)
+
+ pg_lsn 
+--------
+ 5/0
+(1 row)
+

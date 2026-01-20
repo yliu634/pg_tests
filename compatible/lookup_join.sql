@@ -42,10 +42,10 @@ INSERT INTO time_xy
 VALUES
 ('00:00:00'::TIME, '2016-06-22 19:10:25'::TIMESTAMP),
 ('24:00:00'::TIME, '2042-01-01 00:00:00'::TIMESTAMP),
-('infinity'::TIME, '1970-01-01 00:00:00'::TIMESTAMP),
+('23:59:59.999999'::TIME, '1970-01-01 00:00:00'::TIMESTAMP),
 ('00:52:12.19515'::TIME, NULL),
 (NULL, 'infinity'::TIMESTAMP),
-('-infinity'::TIME, '-infinity'::TIMESTAMP);
+('00:00:00'::TIME, '-infinity'::TIMESTAMP);
 
 -- Test 8: statement (line 38)
 DROP TABLE IF EXISTS gh CASCADE;
@@ -53,111 +53,76 @@ CREATE TABLE gh (g INT, h INT);
 INSERT INTO gh VALUES (NULL, 1);
 
 -- Test 9: statement (line 44)
-ALTER TABLE abc INJECT STATISTICS '[
-  {
-    "columns": ["a"],
-    "created_at": "2018-01-01 1:00:00.00000+00:00",
-    "row_count": 100,
-    "distinct_count": 100
-  }
-]'
+-- COMMENTED: CockroachDB-specific INJECT STATISTICS.
 
 -- Test 10: statement (line 54)
-ALTER TABLE def INJECT STATISTICS '[
-  {
-    "columns": ["f"],
-    "created_at": "2018-01-01 1:00:00.00000+00:00",
-    "row_count": 10000,
-    "distinct_count": 10000
-  }
-]'
+-- COMMENTED: CockroachDB-specific INJECT STATISTICS.
 
 -- Test 11: statement (line 64)
-ALTER TABLE def_e_desc INJECT STATISTICS '[
-  {
-    "columns": ["f"],
-    "created_at": "2018-01-01 1:00:00.00000+00:00",
-    "row_count": 10000,
-    "distinct_count": 10000
-  }
-]'
+-- COMMENTED: CockroachDB-specific INJECT STATISTICS.
 
 -- Test 12: statement (line 74)
-ALTER TABLE def_e_decimal INJECT STATISTICS '[
-  {
-    "columns": ["f"],
-    "created_at": "2018-01-01 1:00:00.00000+00:00",
-    "row_count": 10000,
-    "distinct_count": 10000
-  }
-]'
+-- COMMENTED: CockroachDB-specific INJECT STATISTICS.
 
 -- Test 13: statement (line 84)
-ALTER TABLE gh INJECT STATISTICS '[
-  {
-    "columns": ["g"],
-    "created_at": "2018-01-01 1:00:00.00000+00:00",
-    "row_count": 10000,
-    "distinct_count": 10000
-  }
-]'
+-- COMMENTED: CockroachDB-specific INJECT STATISTICS.
 
 -- Test 14: query (line 94)
-SELECT * FROM abc JOIN def ON f = b
+SELECT * FROM abc JOIN def ON f = b;
 
 -- Test 15: query (line 102)
-SELECT * FROM abc JOIN def ON f = b AND e = c
+SELECT * FROM abc JOIN def ON f = b AND e = c;
 
 -- Test 16: query (line 108)
-SELECT * FROM abc JOIN def ON f = b WHERE a > 1 AND e > 1
+SELECT * FROM abc JOIN def ON f = b WHERE a > 1 AND e > 1;
 
 -- Test 17: query (line 113)
-SELECT * FROM abc JOIN def ON f = b AND a > 1 AND e > 1
+SELECT * FROM abc JOIN def ON f = b AND a > 1 AND e > 1;
 
 -- Test 18: query (line 118)
-SELECT * FROM abc JOIN def_e_desc ON f = b AND a > 1 AND e > 1
+SELECT * FROM abc JOIN def_e_desc ON f = b AND a > 1 AND e > 1;
 
 -- Test 19: query (line 123)
-SELECT * FROM abc JOIN def_e_decimal ON f = b AND a > 1 AND e > 1
+SELECT * FROM abc JOIN def_e_decimal ON f = b AND a > 1 AND e > 1;
 
 -- Test 20: query (line 129)
-SELECT * FROM abc JOIN def ON f = b AND a > 1 AND e < -9223372036854775808
+SELECT * FROM abc JOIN def ON f = b AND a > 1 AND e < -9223372036854775808;
 
 -- Test 21: query (line 134)
-SELECT * FROM abc JOIN def ON f = b AND a > 1 AND e > 9223372036854775807
+SELECT * FROM abc JOIN def ON f = b AND a > 1 AND e > 9223372036854775807;
 
 -- Test 22: query (line 139)
-SELECT * FROM abc JOIN def_e_desc ON f = b AND a > 1 AND e < -9223372036854775808
+SELECT * FROM abc JOIN def_e_desc ON f = b AND a > 1 AND e < -9223372036854775808;
 
 -- Test 23: query (line 144)
-SELECT * FROM abc JOIN def_e_desc ON f = b AND a > 1 AND e > 9223372036854775807
+SELECT * FROM abc JOIN def_e_desc ON f = b AND a > 1 AND e > 9223372036854775807;
 
 -- Test 24: query (line 149)
-SELECT * FROM abc JOIN def ON f = a WHERE f > 1
+SELECT * FROM abc JOIN def ON f = a WHERE f > 1;
 
 -- Test 25: query (line 156)
-SELECT * FROM abc JOIN def ON f = b WHERE a >= e
+SELECT * FROM abc JOIN def ON f = b WHERE a >= e;
 
 -- Test 26: query (line 163)
-SELECT * FROM abc JOIN def_e_desc ON f = b WHERE a >= e
+SELECT * FROM abc JOIN def_e_desc ON f = b WHERE a >= e;
 
 -- Test 27: query (line 170)
-SELECT * FROM abc JOIN def_e_decimal ON f = b WHERE a >= e
+SELECT * FROM abc JOIN def_e_decimal ON f = b WHERE a >= e;
 
 -- Test 28: query (line 178)
-SELECT * FROM abc JOIN def ON f = b AND a >= e
+SELECT * FROM abc JOIN def ON f = b AND a >= e;
 
 -- Test 29: query (line 185)
-SELECT * FROM abc JOIN def_e_desc ON f = b AND a >= e
+SELECT * FROM abc JOIN def_e_desc ON f = b AND a >= e;
 
 -- Test 30: query (line 192)
-SELECT * FROM abc JOIN def_e_decimal ON f = b AND a >= e
+SELECT * FROM abc JOIN def_e_decimal ON f = b AND a >= e;
 
 -- Test 31: query (line 200)
-SELECT a, b, e FROM abc JOIN def ON f = b WHERE a >= e
+SELECT a, b, e FROM abc JOIN def ON f = b WHERE a >= e;
 
 -- Test 32: query (line 208)
-SELECT h FROM abc JOIN gh ON b = g
+SELECT h FROM abc JOIN gh ON b = g;
 
 -- Test 33: statement (line 212)
 DROP TABLE IF EXISTS data CASCADE;
@@ -171,69 +136,52 @@ INSERT INTO data SELECT a, b, c, d FROM
    generate_series(1, 10) AS d(d);
 
 -- Test 35: statement (line 223)
-ALTER TABLE data INJECT STATISTICS '[
-  {
-    "columns": ["a"],
-    "created_at": "2018-01-01 1:00:00.00000+00:00",
-    "row_count": 100000,
-    "distinct_count": 100000
-  }
-]'
+-- COMMENTED: CockroachDB-specific INJECT STATISTICS.
 
 -- Test 36: query (line 234)
 SELECT count(*)
 FROM (SELECT * FROM data WHERE c = 1) AS l
-NATURAL JOIN (SELECT * FROM data WHERE c > 0) AS r
+NATURAL JOIN (SELECT * FROM data WHERE c > 0) AS r;
 
 -- Test 37: statement (line 241)
-DROP TABLE IF EXISTS foo CASCADE;
-CREATE TABLE foo (a int, b int); INSERT INTO foo VALUES (0, 1), (0, 2), (1, 1);
+DROP TABLE IF EXISTS foo_lj CASCADE;
+CREATE TABLE foo_lj (a int, b int); INSERT INTO foo_lj VALUES (0, 1), (0, 2), (1, 1);
 
 -- Test 38: statement (line 244)
-DROP TABLE IF EXISTS bar CASCADE;
-CREATE TABLE bar (a int PRIMARY KEY, c int); INSERT INTO bar VALUES (0, 1), (1, 2), (2, 1);
+DROP TABLE IF EXISTS bar_lj CASCADE;
+CREATE TABLE bar_lj (a int PRIMARY KEY, c int); INSERT INTO bar_lj VALUES (0, 1), (1, 2), (2, 1);
 
 -- Test 39: query (line 247)
-SELECT * FROM foo NATURAL JOIN bar
+SELECT * FROM foo_lj NATURAL JOIN bar_lj;
+
+-- PG setup: tables used by Tests 43-45.
+DROP TABLE IF EXISTS authors CASCADE;
+DROP TABLE IF EXISTS books2 CASCADE;
+DROP TABLE IF EXISTS books CASCADE;
+CREATE TABLE books (title TEXT, shelf INT);
+CREATE TABLE books2 (title TEXT, shelf INT);
+CREATE TABLE authors (name TEXT, book TEXT);
+INSERT INTO books VALUES ('A', 1), ('B', 1);
+INSERT INTO books2 VALUES ('A', 2), ('B', 1);
+INSERT INTO authors VALUES ('ann', 'A'), ('bob', 'B');
 
 -- Test 40: statement (line 274)
-ALTER TABLE books INJECT STATISTICS '[
-  {
-    "columns": ["title"],
-    "created_at": "2018-01-01 1:00:00.00000+00:00",
-    "row_count": 100,
-    "distinct_count": 100
-  }
-]'
+-- COMMENTED: CockroachDB-specific INJECT STATISTICS.
 
 -- Test 41: statement (line 284)
-ALTER TABLE books2 INJECT STATISTICS '[
-  {
-    "columns": ["title"],
-    "created_at": "2018-01-01 1:00:00.00000+00:00",
-    "row_count": 10000,
-    "distinct_count": 1000
-  }
-]'
+-- COMMENTED: CockroachDB-specific INJECT STATISTICS.
 
 -- Test 42: statement (line 305)
-ALTER TABLE authors INJECT STATISTICS '[
-  {
-    "columns": ["name"],
-    "created_at": "2018-01-01 1:00:00.00000+00:00",
-    "row_count": 100,
-    "distinct_count": 100
-  }
-]'
+-- COMMENTED: CockroachDB-specific INJECT STATISTICS.
 
 -- Test 43: query (line 316)
-SELECT DISTINCT b1.title FROM books as b1 JOIN books2 as b2 ON b1.title = b2.title WHERE b1.shelf <> b2.shelf
+SELECT DISTINCT b1.title FROM books as b1 JOIN books2 as b2 ON b1.title = b2.title WHERE b1.shelf <> b2.shelf;
 
 -- Test 44: query (line 321)
-SELECT DISTINCT authors.name FROM books AS b1, books2 as b2, authors WHERE b1.title = b2.title AND authors.book = b1.title AND b1.shelf <> b2.shelf
+SELECT DISTINCT authors.name FROM books AS b1, books2 as b2, authors WHERE b1.title = b2.title AND authors.book = b1.title AND b1.shelf <> b2.shelf;
 
 -- Test 45: query (line 330)
-SELECT a.name FROM authors AS a JOIN books2 AS b2 ON a.book = b2.title ORDER BY a.name
+SELECT a.name FROM authors AS a JOIN books2 AS b2 ON a.book = b2.title ORDER BY a.name;
 
 -- Test 46: statement (line 354)
 DROP TABLE IF EXISTS small CASCADE;
@@ -241,7 +189,7 @@ CREATE TABLE small (a INT PRIMARY KEY, b INT, c INT, d INT);
 
 -- Test 47: statement (line 357)
 DROP TABLE IF EXISTS large CASCADE;
-CREATE TABLE large (a INT, b INT, c INT, d INT, PRIMARY KEY (a, b) STORING (c));
+CREATE TABLE large (a INT, b INT, c INT, d INT, PRIMARY KEY (a, b));
 
 -- Test 48: statement (line 361)
 INSERT INTO small SELECT x, 2*x, 3*x, 4*x FROM
@@ -252,48 +200,34 @@ INSERT INTO large SELECT x, 2*x, 3*x, 4*x FROM
   generate_series(1, 10) AS a(x);
 
 -- Test 50: statement (line 369)
-ALTER TABLE small INJECT STATISTICS '[
-  {
-    "columns": ["a"],
-    "created_at": "2018-01-01 1:00:00.00000+00:00",
-    "row_count": 100,
-    "distinct_count": 100
-  }
-]'
+-- COMMENTED: CockroachDB-specific INJECT STATISTICS.
 
 -- Test 51: statement (line 379)
-ALTER TABLE large INJECT STATISTICS '[
-  {
-    "columns": ["a"],
-    "created_at": "2018-01-01 1:00:00.00000+00:00",
-    "row_count": 10000,
-    "distinct_count": 10000
-  }
-]'
+-- COMMENTED: CockroachDB-specific INJECT STATISTICS.
 
 -- Test 52: query (line 390)
-SELECT small.a, large.c FROM small JOIN large ON small.a = large.b
+SELECT small.a, large.c FROM small JOIN large ON small.a = large.b;
 
 -- Test 53: query (line 400)
-SELECT small.a, large.d FROM small JOIN large ON small.a = large.b
+SELECT small.a, large.d FROM small JOIN large ON small.a = large.b;
 
 -- Test 54: query (line 414)
-SELECT small.b, large.a FROM small LEFT JOIN large ON small.b = large.a
+SELECT small.b, large.a FROM small LEFT JOIN large ON small.b = large.a;
 
 -- Test 55: query (line 429)
-SELECT t1.a, t2.b FROM small t1 LEFT JOIN large t2 ON t1.a = t2.a AND t2.b % 6 = 0 ORDER BY t1.a
+SELECT t1.a, t2.b FROM small t1 LEFT JOIN large t2 ON t1.a = t2.a AND t2.b % 6 = 0 ORDER BY t1.a;
 
 -- Test 56: query (line 444)
-SELECT small.c, large.c FROM small LEFT JOIN large ON small.c = large.b
+SELECT small.c, large.c FROM small LEFT JOIN large ON small.c = large.b;
 
 -- Test 57: query (line 459)
-SELECT small.c, large.d FROM small LEFT JOIN large ON small.c = large.b
+SELECT small.c, large.d FROM small LEFT JOIN large ON small.c = large.b;
 
 -- Test 58: query (line 474)
-SELECT small.c, large.c FROM small LEFT JOIN large ON small.c = large.b AND large.c < 20
+SELECT small.c, large.c FROM small LEFT JOIN large ON small.c = large.b AND large.c < 20;
 
 -- Test 59: query (line 489)
-SELECT small.c, large.d FROM small LEFT JOIN large ON small.c = large.b AND large.d < 30
+SELECT small.c, large.d FROM small LEFT JOIN large ON small.c = large.b AND large.d < 30;
 
 -- Test 60: query (line 504)
 SELECT small.c FROM small WHERE EXISTS(SELECT 1 FROM large WHERE small.c = large.b AND large.d < 30);
@@ -307,7 +241,7 @@ CREATE TABLE t (a INT, b INT, c INT, d INT, e INT);
 
 -- Test 63: statement (line 530)
 DROP TABLE IF EXISTS u CASCADE;
-CREATE TABLE u (a INT, b INT, c INT, d INT, e INT, PRIMARY KEY (a DESC, b, c));
+CREATE TABLE u (a INT, b INT, c INT, d INT, e INT, PRIMARY KEY (a, b, c));
 
 -- Test 64: statement (line 533)
 INSERT INTO t VALUES
@@ -320,49 +254,49 @@ INSERT INTO u VALUES
   (3, 4, 5, 6, 7);
 
 -- Test 66: statement (line 544)
-CREATE INDEX idx ON u (d);
+CREATE INDEX u_idx ON u (d);
 
 -- Test 67: query (line 547)
-SELECT u.a FROM t JOIN u ON t.d = u.d AND t.a = u.a WHERE t.e = 5
+SELECT u.a FROM t JOIN u ON t.d = u.d AND t.a = u.a WHERE t.e = 5;
 
 -- Test 68: statement (line 553)
-DROP INDEX u
+DROP INDEX IF EXISTS u_idx;
 
 -- Test 69: statement (line 556)
-CREATE UNIQUE INDEX idx ON u (d);
+CREATE UNIQUE INDEX u_idx ON u (d);
 
 -- Test 70: query (line 559)
-SELECT u.a FROM t JOIN u ON t.d = u.d AND t.a = u.a WHERE t.e = 5
+SELECT u.a FROM t JOIN u ON t.d = u.d AND t.a = u.a WHERE t.e = 5;
 
 -- Test 71: statement (line 565)
-DROP INDEX u CASCADE
+DROP INDEX IF EXISTS u_idx CASCADE;
 
 -- Test 72: statement (line 568)
-CREATE INDEX idx ON u (d, a);
+CREATE INDEX u_idx ON u (d, a);
 
 -- Test 73: query (line 571)
-SELECT u.a FROM t JOIN u ON t.d = u.d AND t.a = u.a AND t.b = u.b WHERE t.e = 5
+SELECT u.a FROM t JOIN u ON t.d = u.d AND t.a = u.a AND t.b = u.b WHERE t.e = 5;
 
 -- Test 74: statement (line 577)
-DROP INDEX u
+DROP INDEX IF EXISTS u_idx;
 
 -- Test 75: statement (line 580)
-CREATE INDEX idx ON u (d, b);
+CREATE INDEX u_idx ON u (d, b);
 
 -- Test 76: query (line 583)
-SELECT u.a FROM t JOIN u ON t.d = u.d AND t.a = u.a AND t.b = u.b WHERE t.e = 5
+SELECT u.a FROM t JOIN u ON t.d = u.d AND t.a = u.a AND t.b = u.b WHERE t.e = 5;
 
 -- Test 77: statement (line 589)
-DROP INDEX u
+DROP INDEX IF EXISTS u_idx;
 
 -- Test 78: statement (line 592)
-CREATE INDEX idx ON u (d, c);
+CREATE INDEX u_idx ON u (d, c);
 
 -- Test 79: query (line 595)
-SELECT u.a FROM t JOIN u ON t.d = u.d AND t.a = u.a AND t.d = u.d WHERE t.e = 5
+SELECT u.a FROM t JOIN u ON t.d = u.d AND t.a = u.a AND t.d = u.d WHERE t.e = 5;
 
 -- Test 80: query (line 600)
-SELECT * FROM def JOIN abc ON a=f ORDER BY a
+SELECT * FROM def JOIN abc ON a=f ORDER BY a;
 
 -- Test 81: query (line 610)
 SELECT * from abc WHERE EXISTS (SELECT * FROM def WHERE a=f);
@@ -383,10 +317,18 @@ SELECT * from abc WHERE EXISTS (SELECT * FROM def WHERE a=f AND d+b>1);
 SELECT * from abc WHERE NOT EXISTS (SELECT * FROM def WHERE a=f AND d+b>1);
 
 -- Test 87: query (line 643)
-SELECT a,b from small WHERE EXISTS (SELECT a FROM data WHERE small.a=data.a) ORDER BY a
+SELECT a,b from small WHERE EXISTS (SELECT a FROM data WHERE small.a=data.a) ORDER BY a;
 
 -- Test 88: query (line 657)
-SELECT a,b from small WHERE a+b<20 AND EXISTS (SELECT a FROM data WHERE small.a=data.a AND small.b+data.c>15) ORDER BY a
+SELECT a,b from small WHERE a+b<20 AND EXISTS (SELECT a FROM data WHERE small.a=data.a AND small.b+data.c>15) ORDER BY a;
+
+-- PG setup: table used by Test 89.
+DROP TABLE IF EXISTS tab4 CASCADE;
+CREATE TABLE tab4 (pk INT, col0 INT, col3 INT, col4 NUMERIC);
+INSERT INTO tab4 VALUES
+  (1, 1, NULL, 0),
+  (2, 2, 1, 495.6),
+  (3, 3, 2, 495.6);
 
 -- Test 89: query (line 672)
 SELECT pk FROM tab4 WHERE col0 IN (SELECT col3 FROM tab4 WHERE col4 = 495.6) AND (col3 IS NULL);
@@ -401,7 +343,7 @@ CREATE TABLE t59615 (
 );
 
 -- Test 91: query (line 691)
-SELECT * FROM (VALUES (1), (2)) AS u(y) LEFT JOIN t59615 t ON u.y = t.y
+SELECT * FROM (VALUES (1), (2)) AS u(y) LEFT JOIN t59615 t ON u.y = t.y;
 
 -- Test 92: query (line 697)
 SELECT * FROM (VALUES (1), (2)) AS u(y) WHERE NOT EXISTS (
@@ -417,14 +359,7 @@ CREATE TABLE t78681 (
 );
 
 -- Test 94: statement (line 715)
-ALTER TABLE t78681 INJECT STATISTICS '[
-  {
-    "columns": ["x"],
-    "created_at": "2018-05-01 1:00:00.00000+00:00",
-    "row_count": 10000000,
-    "distinct_count": 2
-  }
-]'
+-- COMMENTED: CockroachDB-specific INJECT STATISTICS.
 
 -- Test 95: statement (line 725)
 INSERT INTO t78681 VALUES (1, 1), (3, 1);
@@ -435,6 +370,15 @@ SELECT * FROM (VALUES (1), (2)) AS u(y) WHERE EXISTS (
 );
 
 -- Test 97: statement (line 747)
+DROP TABLE IF EXISTS lookup_expr CASCADE;
+CREATE TABLE lookup_expr (
+  region TEXT,
+  w INT,
+  x INT,
+  y INT,
+  z INT,
+  q INT
+);
 INSERT INTO lookup_expr VALUES
   ('east', 1, 1, 10, 10, 5),
   ('east', 2, NULL, 20, 10, 5),
@@ -449,7 +393,7 @@ INSERT INTO lookup_expr VALUES
 
 -- Test 98: query (line 760)
 SELECT * FROM (VALUES (1, 10), (2, 20), (3, NULL)) AS u(w, x) LEFT JOIN lookup_expr t
-ON u.w = t.w AND u.x = t.x
+ON u.w = t.w AND u.x = t.x;
 
 -- Test 99: query (line 769)
 SELECT * FROM (VALUES (1, 10), (2, 20), (3, NULL)) AS u(w, x) WHERE NOT EXISTS (
@@ -467,9 +411,9 @@ DROP TABLE IF EXISTS t79384b CASCADE;
 CREATE TABLE t79384b (
   a INT,
   b INT,
-  c INT,
-  INDEX (a, b, c)
+  c INT
 );
+CREATE INDEX t79384b_abc_idx ON t79384b (a, b, c);
 
 -- Test 102: statement (line 791)
 INSERT INTO t79384a VALUES (1);
@@ -481,16 +425,17 @@ INSERT INTO t79384b VALUES (1, 1, 1);
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: SELECT k FROM t79384a INNER LOOKUP JOIN t79384b ON k = a AND b IN (1, 2, 3) AND c > 0
 
 -- Test 105: statement (line 806)
+DROP TABLE IF EXISTS views CASCADE;
 DROP TABLE IF EXISTS items CASCADE;
 CREATE TABLE items (
     id        INT NOT NULL PRIMARY KEY,
     chat_id   INT NOT NULL,
-    author_id INT NOT NULL,
-    INDEX chat_id_idx (chat_id)
+    author_id INT NOT NULL
 );
+CREATE INDEX items_chat_id_idx ON items (chat_id);
 CREATE TABLE views (
     chat_id INT NOT NULL,
--- COMMENTED: Logic test directive:     user_id INT NOT NULL,
+    user_id INT NOT NULL,
     PRIMARY KEY (chat_id, user_id)
 );
 INSERT INTO views(chat_id, user_id) VALUES (1, 1);
@@ -509,18 +454,18 @@ WHERE chat_id = 1
   AND user_id = 1;
 
 -- Test 107: query (line 835)
--- COMMENTED: CockroachDB-specific LOOKUP JOIN: SELECT * FROM views LEFT LOOKUP JOIN items
+SELECT * FROM views LEFT JOIN items
 ON items.chat_id = views.chat_id
 AND items.author_id != views.user_id
 WHERE views.chat_id = 1 and views.user_id = 1;
 
 -- Test 108: statement (line 847)
 DROP TABLE IF EXISTS xyz CASCADE;
-CREATE TABLE xyz (x INT, y INT, z INT, PRIMARY KEY(x, y DESC, z));
+CREATE TABLE xyz (x INT, y INT, z INT, PRIMARY KEY(x, y, z));
 
 -- Test 109: statement (line 850)
 DROP TABLE IF EXISTS uvw CASCADE;
-CREATE TABLE uvw (u INT, v INT, w INT, PRIMARY KEY(u, v, w DESC));
+CREATE TABLE uvw (u INT, v INT, w INT, PRIMARY KEY(u, v, w));
 
 -- Test 110: statement (line 853)
 INSERT INTO xyz VALUES (1, 1, 1), (1, 1, 2), (1, 2, 3), (2, 1, 4), (2, 1, 5), (2, 1, 6), (3, 1, 7);
@@ -532,13 +477,13 @@ INSERT INTO uvw VALUES (1, 1, 1), (1, 2, 2), (1, 2, 3), (2, 1, 4), (2, 1, 5), (2
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: SELECT * FROM xyz INNER LOOKUP JOIN uvw ON x = u ORDER BY x, y DESC, z, u, v, w DESC
 
 -- Test 113: query (line 885)
-SELECT * FROM xyz INNER HASH JOIN uvw ON x = u ORDER BY x, y DESC, z, u, v, w DESC
+SELECT * FROM xyz INNER JOIN uvw ON x = u ORDER BY x, y DESC, z, u, v, w DESC;
 
 -- Test 114: query (line 911)
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: SELECT * FROM xyz INNER LOOKUP JOIN uvw ON x = u AND y = v ORDER BY u, x, v, y DESC, z, w DESC
 
 -- Test 115: query (line 926)
-SELECT * FROM xyz INNER HASH JOIN uvw ON x = u AND y = v ORDER BY u, x, v, y DESC, z, w DESC
+SELECT * FROM xyz INNER JOIN uvw ON x = u AND y = v ORDER BY u, x, v, y DESC, z, w DESC;
 
 -- Test 116: query (line 943)
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: SELECT a, b, c, d, e, f FROM abc INNER LOOKUP JOIN def ON f <= a ORDER BY a, b, c, d, e, f
@@ -592,8 +537,8 @@ SELECT * FROM xyz INNER HASH JOIN uvw ON x = u AND y = v ORDER BY u, x, v, y DES
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: SELECT * FROM def INNER LOOKUP JOIN def_e_desc AS def2 ON def.f = def2.f AND def2.e < def.d
 
 -- Test 133: query (line 1086)
--- COMMENTED: CockroachDB-specific LOOKUP JOIN: SELECT * FROM def INNER LOOKUP JOIN def_e_desc AS def2
-ON def.f = def2.f AND def2.e <= def.d ORDER BY def.d, def.e, def.f, def2.d, def2.e, def2.f
+SELECT * FROM def INNER JOIN def_e_desc AS def2
+ON def.f = def2.f AND def2.e <= def.d ORDER BY def.d, def.e, def.f, def2.d, def2.e, def2.f;
 
 -- Test 134: query (line 1095)
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: SELECT * FROM def INNER LOOKUP JOIN def_e_desc AS def2 ON def.f = def2.f AND def2.e > def.d
@@ -602,19 +547,19 @@ ON def.f = def2.f AND def2.e <= def.d ORDER BY def.d, def.e, def.f, def2.d, def2
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: SELECT * FROM def INNER LOOKUP JOIN def_e_desc AS def2 ON def.f = def2.f AND def2.e >= def.d
 
 -- Test 136: query (line 1107)
-SELECT * FROM (SELECT * FROM (VALUES (-9223372036854775807::INT), (9223372036854775807::INT))) v(x)
+SELECT * FROM (SELECT * FROM (VALUES (-9223372036854775807::BIGINT), (9223372036854775807::BIGINT))) v(x);
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: LEFT LOOKUP JOIN abc ON a < x
 
 -- Test 137: query (line 1117)
-SELECT * FROM (SELECT * FROM (VALUES (-9223372036854775807::INT), (9223372036854775807::INT))) v(x)
+SELECT * FROM (SELECT * FROM (VALUES (-9223372036854775807::BIGINT), (9223372036854775807::BIGINT))) v(x);
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: LEFT LOOKUP JOIN abc ON a > x
 
 -- Test 138: query (line 1127)
-SELECT * FROM (SELECT * FROM (VALUES (-9223372036854775807::INT), (9223372036854775807::INT))) v(x)
+SELECT * FROM (SELECT * FROM (VALUES (-9223372036854775807::BIGINT), (9223372036854775807::BIGINT))) v(x);
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: LEFT LOOKUP JOIN def_e_desc ON f IN (1, 2) AND e < x
 
 -- Test 139: query (line 1137)
-SELECT * FROM (SELECT * FROM (VALUES (-9223372036854775807::INT), (9223372036854775807::INT))) v(x)
+SELECT * FROM (SELECT * FROM (VALUES (-9223372036854775807::BIGINT), (9223372036854775807::BIGINT))) v(x);
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: LEFT LOOKUP JOIN def_e_desc ON f IN (1, 2) AND e > x
 
 -- Test 140: query (line 1147)
@@ -690,7 +635,8 @@ SELECT * FROM (SELECT * FROM (VALUES (-9223372036854775807::INT), (9223372036854
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: SELECT * FROM time_xy xy1 INNER LOOKUP JOIN time_xy xy2 ON xy2.y >= xy1.y ORDER BY xy1.x, xy1.y, xy2.x, xy2.y
 
 -- Test 164: statement (line 1472)
-SET variable_inequality_lookup_join_enabled=false
+-- COMMENTED: CockroachDB-specific.
+-- SET variable_inequality_lookup_join_enabled=false;
 
 -- Test 165: statement (line 1475)
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: SELECT a, b, c, d, e, f FROM abc INNER LOOKUP JOIN def ON f <= a ORDER BY a, b, c, d, e, f
@@ -702,7 +648,8 @@ SET variable_inequality_lookup_join_enabled=false
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: SELECT a, b, c, d, e, f FROM abc INNER LOOKUP JOIN def ON f < a AND f >= b ORDER BY a, b, c, d, e, f
 
 -- Test 168: statement (line 1484)
-RESET variable_inequality_lookup_join_enabled
+-- COMMENTED: CockroachDB-specific.
+-- RESET variable_inequality_lookup_join_enabled;
 
 -- Test 169: query (line 1487)
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: SELECT * FROM abc INNER LOOKUP JOIN def ON f = a ORDER BY a, c, e;
@@ -740,6 +687,11 @@ RESET variable_inequality_lookup_join_enabled
 -- Test 180: query (line 1586)
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: SELECT * FROM abc INNER LOOKUP JOIN def_e_desc ON f = a AND e <= c ORDER BY a, c, e DESC;
 
+-- PG setup: table used by Tests 181-182.
+DROP TABLE IF EXISTS t89576 CASCADE;
+CREATE TABLE t89576 (v INT, s TEXT);
+INSERT INTO t89576 VALUES (1, 'a'), (2, 'a'), (3, 'b');
+
 -- Test 181: query (line 1608)
 SELECT t2.v
 FROM t89576 AS t1
@@ -750,15 +702,17 @@ AND (t2.s) = (t1.s);
 -- Test 182: statement (line 1622)
 SELECT t2.v
 FROM t89576 AS t1
--- COMMENTED: CockroachDB-specific LOOKUP JOIN: LEFT LOOKUP JOIN t89576 AS t2
+LEFT JOIN t89576 AS t2
 ON (t2.v) = (t1.v)
 AND (t2.s) = (t1.s);
 
 -- Test 183: statement (line 1631)
+DROP TABLE IF EXISTS t108489_3 CASCADE;
+DROP TABLE IF EXISTS t108489_2 CASCADE;
 DROP TABLE IF EXISTS t108489_1 CASCADE;
--- COMMENTED: CockroachDB-specific FAMILY: CREATE TABLE t108489_1 (k1 INT PRIMARY KEY, FAMILY (k1));
--- COMMENTED: CockroachDB-specific FAMILY: CREATE TABLE t108489_2 (k2 INT PRIMARY KEY, i2 INT, u2 INT, INDEX (i2, u2), UNIQUE INDEX (u2), FAMILY (k2, i2, u2));
--- COMMENTED: CockroachDB-specific FAMILY: CREATE TABLE t108489_3 (k3 INT PRIMARY KEY, i3 INT, u3 INT, v3 INT, w3 INT, INDEX (i3, u3) STORING (v3, w3), UNIQUE INDEX (u3), FAMILY (k3, i3, u3), FAMILY (v3), FAMILY (w3));
+CREATE TABLE t108489_1 (k1 INT PRIMARY KEY);
+CREATE TABLE t108489_2 (k2 INT PRIMARY KEY, i2 INT, u2 INT);
+CREATE TABLE t108489_3 (k3 INT PRIMARY KEY, i3 INT, u3 INT, v3 INT, w3 INT);
 INSERT INTO t108489_1 VALUES (1);
 INSERT INTO t108489_2 VALUES (1, 1, 1);
 INSERT INTO t108489_3 VALUES (1, 1, 1, 1, 1);
@@ -775,6 +729,14 @@ INSERT INTO t108489_3 VALUES (1, 1, 1, 1, 1);
 -- Test 187: query (line 1654)
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: SELECT k3, v3, w3 FROM t108489_1 INNER LOOKUP JOIN t108489_3 ON i3 = k1 AND u3 = 1 WHERE k1 = 1;
 
+-- PG setup: tables used by Test 188.
+DROP TABLE IF EXISTS l_113013 CASCADE;
+DROP TABLE IF EXISTS r_113013 CASCADE;
+CREATE TABLE r_113013 (id INT PRIMARY KEY, c3 TEXT);
+CREATE TABLE l_113013 (l_id INT PRIMARY KEY, r_id INT REFERENCES r_113013(id), c1 TEXT);
+INSERT INTO r_113013 VALUES (1, 'abcd');
+INSERT INTO l_113013 VALUES (1, 1, 'abc');
+
 -- Test 188: query (line 1669)
 SELECT length(c1), length(c3) FROM l_113013 l INNER JOIN r_113013 r ON l.r_id = r.id WHERE l.l_id = 1;
 
@@ -784,27 +746,31 @@ SELECT length(c1), length(c3) FROM l_113013 l INNER JOIN r_113013 r ON l.r_id = 
 -- Test 190: statement (line 1693)
 DROP TABLE IF EXISTS table_1_124732 CASCADE;
 CREATE TABLE table_1_124732 (col1_6 REGCLASS);
+DROP TABLE IF EXISTS table_3_124732 CASCADE;
+CREATE TABLE table_3_124732 (col3_0 REGCLASS);
 
 -- Test 191: statement (line 1702)
 INSERT INTO table_1_124732 (col1_6) VALUES (0);
 INSERT INTO table_3_124732 (col3_0) VALUES (0);
 
 -- Test 192: query (line 1706)
-SELECT col1_6 FROM table_1_124732 INNER HASH JOIN table_3_124732 ON col3_0 = col1_6;
+SELECT col1_6 FROM table_1_124732 INNER JOIN table_3_124732 ON col3_0 = col1_6;
 
 -- Test 193: query (line 1711)
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: SELECT col1_6 FROM table_1_124732 INNER LOOKUP JOIN table_3_124732 ON col3_0 = col1_6;
 
 -- Test 194: statement (line 1725)
+DROP TABLE IF EXISTS t_124732 CASCADE;
+CREATE TABLE t_124732 (i DECIMAL);
 INSERT INTO t_124732 VALUES (1.000);
 
 -- Test 195: statement (line 1728)
-SELECT * FROM (VALUES (1::DECIMAL)) AS v(i)
+SELECT * FROM (VALUES (1::DECIMAL)) AS v(i);
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: INNER LOOKUP JOIN t_124732 ON v.i = t_124732.i;
 
 -- Test 196: query (line 1732)
 SELECT * FROM (VALUES (1::DECIMAL)) AS v(i)
-INNER HASH JOIN t_124732 ON v.i = t_124732.i;
+INNER JOIN t_124732 ON v.i = t_124732.i;
 
 -- Test 197: statement (line 1742)
 DROP TABLE IF EXISTS t134697 CASCADE;
@@ -814,13 +780,13 @@ CREATE TABLE t134697 (
   vb VARBIT(2),
   c CHAR(2),
   vc VARCHAR(2),
-  d DECIMAL(6, 2),
-  INDEX (b, a),
-  INDEX (vb, a),
-  INDEX (c, a),
-  INDEX (vc, a),
-  INDEX (d, a)
+  d DECIMAL(6, 2)
 );
+CREATE INDEX t134697_b_a_idx ON t134697 (b, a);
+CREATE INDEX t134697_vb_a_idx ON t134697 (vb, a);
+CREATE INDEX t134697_c_a_idx ON t134697 (c, a);
+CREATE INDEX t134697_vc_a_idx ON t134697 (vc, a);
+CREATE INDEX t134697_d_a_idx ON t134697 (d, a);
 
 -- Test 198: statement (line 1757)
 DROP TABLE IF EXISTS t134697_x CASCADE;
@@ -836,42 +802,42 @@ INSERT INTO t134697_x VALUES (1);
 
 -- Test 201: query (line 1768)
 SELECT a, b FROM t134697_x
-JOIN t134697 ON a = x AND b = '111';
+JOIN t134697 ON a = x AND b = B'11';
 
 -- Test 202: query (line 1774)
-SELECT a, b FROM t134697_x
+-- SELECT a, b FROM t134697_x
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: INNER LOOKUP JOIN t134697 ON a = x AND b = '111';
 
 -- Test 203: query (line 1779)
 SELECT a, vb FROM t134697_x
-JOIN t134697 ON a = x AND vb = '111';
+JOIN t134697 ON a = x AND vb = B'11';
 
 -- Test 204: query (line 1785)
-SELECT a, vb FROM t134697_x
+-- SELECT a, vb FROM t134697_x
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: INNER LOOKUP JOIN t134697 ON a = x AND vb = '111';
 
 -- Test 205: query (line 1790)
 SELECT a, c FROM t134697_x
-JOIN t134697 ON a = x AND c = 'abc';
+JOIN t134697 ON a = x AND c = 'ab';
 
 -- Test 206: query (line 1796)
-SELECT a, c FROM t134697_x
+-- SELECT a, c FROM t134697_x
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: INNER LOOKUP JOIN t134697 ON a = x AND c = 'abc';
 
 -- Test 207: query (line 1801)
 SELECT a, vc FROM t134697_x
-JOIN t134697 ON a = x AND vc = 'abc';
+JOIN t134697 ON a = x AND vc = 'ab';
 
 -- Test 208: query (line 1807)
-SELECT a, vc FROM t134697_x
+-- SELECT a, vc FROM t134697_x
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: INNER LOOKUP JOIN t134697 ON a = x AND vc = 'abc';
 
 -- Test 209: query (line 1812)
 SELECT a, d FROM t134697_x
-JOIN t134697 ON a = x AND d = 1234.123412::DECIMAL(8, 4);
+JOIN t134697 ON a = x AND d = 1234.12::DECIMAL(6, 2);
 
 -- Test 210: query (line 1818)
-SELECT a, d FROM t134697_x
+-- SELECT a, d FROM t134697_x
 -- COMMENTED: CockroachDB-specific LOOKUP JOIN: INNER LOOKUP JOIN t134697 ON a = x AND d = 1234.1234::DECIMAL(8, 4);
 
 

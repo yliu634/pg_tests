@@ -11,19 +11,23 @@ CREATE TABLE dist_merge_idx (a INT NOT NULL PRIMARY KEY, b INT NOT NULL, c INT N
 INSERT INTO dist_merge_idx VALUES (1,1,1), (2,2,2), (3,3,3);
 
 -- COMMENTED: Logic test directive: let $index_backfill_dist_merge_mode
-SHOW CLUSTER SETTING bulkio.index_backfill.distributed_merge.mode;
+-- COMMENTED: CockroachDB-only CLUSTER SETTING
+-- SHOW CLUSTER SETTING bulkio.index_backfill.distributed_merge.mode;
 
 -- Test 3: statement (line 14)
-SET CLUSTER SETTING bulkio.index_backfill.distributed_merge.mode = enabled;
+-- COMMENTED: CockroachDB-only CLUSTER SETTING
+-- SET CLUSTER SETTING bulkio.index_backfill.distributed_merge.mode = enabled;
 
 -- Test 4: statement (line 17)
 CREATE INDEX dist_merge_idx_idx ON dist_merge_idx (b);
 
 -- Test 5: statement (line 21)
-ALTER TABLE dist_merge_idx ALTER PRIMARY KEY USING COLUMNS (b);
+ALTER TABLE dist_merge_idx DROP CONSTRAINT IF EXISTS dist_merge_idx_pkey;
+ALTER TABLE dist_merge_idx ADD PRIMARY KEY (b);
 
 -- Test 6: statement (line 24)
-SET CLUSTER SETTING bulkio.index_backfill.distributed_merge.mode = '$index_backfill_dist_merge_mode';
+-- COMMENTED: CockroachDB-only CLUSTER SETTING
+-- SET CLUSTER SETTING bulkio.index_backfill.distributed_merge.mode = '$index_backfill_dist_merge_mode';
 
 -- Test 7: statement (line 27)
 DROP TABLE dist_merge_idx;

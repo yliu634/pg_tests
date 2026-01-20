@@ -2,8 +2,10 @@
 -- 2 tests
 
 -- Test 1: statement (line 3)
-CREATE DATABASE region_test_db PRIMARY REGION "ap-southeast-2" SURVIVE ZONE FAILURE;
+-- COMMENTED: CockroachDB multi-region database options are not available in PostgreSQL.
+DROP DATABASE IF EXISTS region_test_db;
+CREATE DATABASE region_test_db;
 
 -- Test 2: statement (line 6)
-ALTER DATABASE test PRIMARY REGION "ap-southeast-2";
-
+-- COMMENTED: CockroachDB PRIMARY REGION is not available in PostgreSQL.
+ALTER DATABASE region_test_db SET timezone TO 'UTC';

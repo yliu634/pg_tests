@@ -1,16 +1,23 @@
 SET
-psql:pg_tests/compatible/notice.sql:17: ERROR:  database "d" already exists
-psql:pg_tests/compatible/notice.sql:18: ERROR:  schema "d" does not exist
-LINE 1: CREATE TABLE d.t (x int);
-                     ^
-psql:pg_tests/compatible/notice.sql:21: ERROR:  syntax error at or near "."
-LINE 1: ALTER TABLE d.t RENAME TO d.t2;
-                                   ^
-psql:pg_tests/compatible/notice.sql:24: ERROR:  type "color" already exists
-psql:pg_tests/compatible/notice.sql:27: ERROR:  enum label "black" already exists
-psql:pg_tests/compatible/notice.sql:30: NOTICE:  enum label "black" already exists, skipping
+psql:pg_tests/compatible/notice.sql:17: NOTICE:  schema "d" does not exist, skipping
+DROP SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+ALTER TABLE
+psql:pg_tests/compatible/notice.sql:25: NOTICE:  type "color" does not exist, skipping
+DROP TYPE
+CREATE TYPE
 ALTER TYPE
-psql:pg_tests/compatible/notice.sql:33: ERROR:  relation "v" already exists
-psql:pg_tests/compatible/notice.sql:36: ERROR:  cannot refresh materialized view "public.v" concurrently
-HINT:  Create a unique index with no WHERE clause on one or more columns of the materialized view.
+psql:pg_tests/compatible/notice.sql:32: NOTICE:  enum label "black" already exists, skipping
+ALTER TYPE
+psql:pg_tests/compatible/notice.sql:35: DEBUG:  relation "v" does not exist
+psql:pg_tests/compatible/notice.sql:35: NOTICE:  materialized view "v" does not exist, skipping
+DROP MATERIALIZED VIEW
+SELECT 1
+psql:pg_tests/compatible/notice.sql:37: DEBUG:  building index "v_id_uidx" on table "v" serially
+psql:pg_tests/compatible/notice.sql:37: DEBUG:  index "v_id_uidx" can safely use deduplication
+CREATE INDEX
+psql:pg_tests/compatible/notice.sql:40: DEBUG:  building index "pg_toast_27491_index" on table "pg_toast_27491" serially
+psql:pg_tests/compatible/notice.sql:40: DEBUG:  index "pg_toast_27491_index" can safely use deduplication
+REFRESH MATERIALIZED VIEW
 UNLISTEN
