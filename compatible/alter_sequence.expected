@@ -1,0 +1,300 @@
+SET
+CREATE VIEW
+CREATE SEQUENCE
+ nextval 
+---------
+       1
+(1 row)
+
+ nextval 
+---------
+       2
+(1 row)
+
+ALTER SEQUENCE
+ nextval 
+---------
+       7
+(1 row)
+
+ALTER SEQUENCE
+ nextval 
+---------
+      12
+(1 row)
+
+ nextval 
+---------
+      17
+(1 row)
+
+ nextval 
+---------
+      22
+(1 row)
+
+ sequencename | data_type | start_value | min_value |      max_value      | increment_by | cache_size | cycle 
+--------------+-----------+-------------+-----------+---------------------+--------------+------------+-------
+ foo          | bigint    |           1 |         1 | 9223372036854775807 |            5 |        100 | f
+(1 row)
+
+ALTER SEQUENCE
+ sequencename | data_type | start_value | min_value |      max_value      | increment_by | cache_size | cycle 
+--------------+-----------+-------------+-----------+---------------------+--------------+------------+-------
+ foo          | bigint    |           1 |         1 | 9223372036854775807 |            5 |          1 | f
+(1 row)
+
+CREATE SEQUENCE
+ sequencename | data_type | start_value | min_value | max_value | increment_by | cache_size | cycle 
+--------------+-----------+-------------+-----------+-----------+--------------+------------+-------
+ seq_as       | smallint  |           1 |         1 |     32767 |            1 |          1 | f
+(1 row)
+
+ALTER SEQUENCE
+ sequencename | data_type | start_value | min_value | max_value  | increment_by | cache_size | cycle 
+--------------+-----------+-------------+-----------+------------+--------------+------------+-------
+ seq_as       | integer   |           1 |         1 | 2147483647 |            1 |          1 | f
+(1 row)
+
+ALTER SEQUENCE
+ sequencename | data_type | start_value | min_value |      max_value      | increment_by | cache_size | cycle 
+--------------+-----------+-------------+-----------+---------------------+--------------+------------+-------
+ seq_as       | bigint    |           1 |         1 | 9223372036854775807 |            1 |          1 | f
+(1 row)
+
+ALTER SEQUENCE
+ sequencename | data_type | start_value | min_value | max_value  | increment_by | cache_size | cycle 
+--------------+-----------+-------------+-----------+------------+--------------+------------+-------
+ seq_as       | integer   |           1 |         1 | 2147483647 |            1 |          1 | f
+(1 row)
+
+ALTER SEQUENCE
+ sequencename | data_type | start_value | min_value | max_value | increment_by | cache_size | cycle 
+--------------+-----------+-------------+-----------+-----------+--------------+------------+-------
+ seq_as       | smallint  |           1 |         1 |     32767 |            1 |          1 | f
+(1 row)
+
+CREATE SEQUENCE
+   sequencename    | data_type | start_value | min_value | max_value | increment_by | cache_size | cycle 
+-------------------+-----------+-------------+-----------+-----------+--------------+------------+-------
+ seq_int4_max_high | integer   |           1 |         1 |     99999 |            1 |          1 | f
+(1 row)
+
+psql:pg_tests/compatible/alter_sequence.sql:100: ERROR:  MAXVALUE (99999) is out of range for sequence data type smallint
+ALTER SEQUENCE
+   sequencename    | data_type | start_value | min_value | max_value | increment_by | cache_size | cycle 
+-------------------+-----------+-------------+-----------+-----------+--------------+------------+-------
+ seq_int4_max_high | bigint    |           1 |         1 |     99999 |            1 |          1 | f
+(1 row)
+
+CREATE SEQUENCE
+   sequencename    | data_type | start_value | min_value | max_value  | increment_by | cache_size | cycle 
+-------------------+-----------+-------------+-----------+------------+--------------+------------+-------
+ seq_int4_min_high | integer   |       99999 |     99999 | 2147483647 |            1 |          1 | f
+(1 row)
+
+psql:pg_tests/compatible/alter_sequence.sql:117: ERROR:  MINVALUE (99999) is out of range for sequence data type smallint
+ALTER SEQUENCE
+   sequencename    | data_type | start_value | min_value |      max_value      | increment_by | cache_size | cycle 
+-------------------+-----------+-------------+-----------+---------------------+--------------+------------+-------
+ seq_int4_min_high | bigint    |       99999 |     99999 | 9223372036854775807 |            1 |          1 | f
+(1 row)
+
+CREATE SEQUENCE
+psql:pg_tests/compatible/alter_sequence.sql:131: ERROR:  START value (99999) cannot be greater than MAXVALUE (32767)
+ALTER SEQUENCE
+    sequencename     | data_type | start_value | min_value |      max_value      | increment_by | cache_size | cycle 
+---------------------+-----------+-------------+-----------+---------------------+--------------+------------+-------
+ seq_int4_start_high | bigint    |       99999 |         1 | 9223372036854775807 |            1 |          1 | f
+(1 row)
+
+CREATE SEQUENCE
+   sequencename   | data_type | start_value | min_value | max_value  | increment_by | cache_size | cycle 
+------------------+-----------+-------------+-----------+------------+--------------+------------+-------
+ seq_int4_min_low | integer   |      -99999 |    -99999 | 2147483647 |            1 |          1 | f
+(1 row)
+
+psql:pg_tests/compatible/alter_sequence.sql:148: ERROR:  MINVALUE (-99999) is out of range for sequence data type smallint
+ALTER SEQUENCE
+   sequencename   | data_type | start_value | min_value |      max_value      | increment_by | cache_size | cycle 
+------------------+-----------+-------------+-----------+---------------------+--------------+------------+-------
+ seq_int4_min_low | bigint    |      -99999 |    -99999 | 9223372036854775807 |            1 |          1 | f
+(1 row)
+
+CREATE SEQUENCE
+      sequencename      | data_type | start_value |  min_value  | max_value | increment_by | cache_size | cycle 
+------------------------+-----------+-------------+-------------+-----------+--------------+------------+-------
+ seq_int4_max_high_desc | integer   |       99999 | -2147483648 |     99999 |           -1 |          1 | f
+(1 row)
+
+psql:pg_tests/compatible/alter_sequence.sql:165: ERROR:  MAXVALUE (99999) is out of range for sequence data type smallint
+ALTER SEQUENCE
+      sequencename      | data_type | start_value |      min_value       | max_value | increment_by | cache_size | cycle 
+------------------------+-----------+-------------+----------------------+-----------+--------------+------------+-------
+ seq_int4_max_high_desc | bigint    |       99999 | -9223372036854775808 |     99999 |           -1 |          1 | f
+(1 row)
+
+CREATE SEQUENCE
+      sequencename      | data_type | start_value | min_value | max_value | increment_by | cache_size | cycle 
+------------------------+-----------+-------------+-----------+-----------+--------------+------------+-------
+ seq_int4_min_high_desc | integer   |          -1 |    -99999 |        -1 |           -1 |          1 | f
+(1 row)
+
+psql:pg_tests/compatible/alter_sequence.sql:182: ERROR:  MINVALUE (-99999) is out of range for sequence data type smallint
+ALTER SEQUENCE
+      sequencename      | data_type | start_value | min_value | max_value | increment_by | cache_size | cycle 
+------------------------+-----------+-------------+-----------+-----------+--------------+------------+-------
+ seq_int4_min_high_desc | bigint    |          -1 |    -99999 |        -1 |           -1 |          1 | f
+(1 row)
+
+CREATE SEQUENCE
+ALTER SEQUENCE
+      sequencename       | data_type | start_value | min_value | max_value | increment_by | cache_size | cycle 
+-------------------------+-----------+-------------+-----------+-----------+--------------+------------+-------
+ reverse_direction_seqas | smallint  |           1 |         1 |     32767 |           -1 |          1 | f
+(1 row)
+
+ALTER SEQUENCE
+      sequencename       | data_type | start_value | min_value | max_value  | increment_by | cache_size | cycle 
+-------------------------+-----------+-------------+-----------+------------+--------------+------------+-------
+ reverse_direction_seqas | integer   |           1 |         1 | 2147483647 |            1 |          1 | f
+(1 row)
+
+CREATE SEQUENCE
+ nextval 
+---------
+       5
+(1 row)
+
+ALTER SEQUENCE
+ nextval 
+---------
+       1
+(1 row)
+
+ALTER SEQUENCE
+ nextval 
+---------
+       5
+(1 row)
+
+ALTER SEQUENCE
+ nextval 
+---------
+      11
+(1 row)
+
+ALTER SEQUENCE
+ nextval 
+---------
+       3
+(1 row)
+
+CREATE SEQUENCE
+psql:pg_tests/compatible/alter_sequence.sql:239: ERROR:  RESTART value (0) cannot be less than MINVALUE (1)
+CREATE SEQUENCE
+psql:pg_tests/compatible/alter_sequence.sql:247: ERROR:  RESTART value (1000) cannot be greater than MAXVALUE (100)
+CREATE SEQUENCE
+ nextval | nextval | nextval 
+---------+---------+---------
+       1 |       2 |       3
+(1 row)
+
+psql:pg_tests/compatible/alter_sequence.sql:258: ERROR:  nextval: reached maximum value of sequence "set_no_maxvalue" (3)
+ALTER SEQUENCE
+ nextval 
+---------
+       4
+(1 row)
+
+CREATE SEQUENCE
+ nextval | nextval | nextval 
+---------+---------+---------
+      -1 |      -2 |      -3
+(1 row)
+
+psql:pg_tests/compatible/alter_sequence.sql:275: ERROR:  nextval: reached minimum value of sequence "set_no_minvalue" (-3)
+ALTER SEQUENCE
+ nextval 
+---------
+      -4
+(1 row)
+
+CREATE SEQUENCE
+ALTER SEQUENCE
+     sequencename      | data_type | start_value | min_value |      max_value      | increment_by | cache_size | cycle 
+-----------------------+-----------+-------------+-----------+---------------------+--------------+------------+-------
+ seq_inverse_no_change | bigint    |           1 |         1 | 9223372036854775807 |           -1 |          1 | f
+(1 row)
+
+ALTER SEQUENCE
+     sequencename      | data_type | start_value | min_value |      max_value      | increment_by | cache_size | cycle 
+-----------------------+-----------+-------------+-----------+---------------------+--------------+------------+-------
+ seq_inverse_no_change | bigint    |           1 |         1 | 9223372036854775807 |            1 |          1 | f
+(1 row)
+
+CREATE SEQUENCE
+ALTER SEQUENCE
+      sequencename      | data_type | start_value | min_value | max_value | increment_by | cache_size | cycle 
+------------------------+-----------+-------------+-----------+-----------+--------------+------------+-------
+ seq_change_type_bounds | smallint  |           0 |    -32768 |     32767 |            1 |          1 | f
+(1 row)
+
+ALTER SEQUENCE
+      sequencename      | data_type | start_value |  min_value  | max_value  | increment_by | cache_size | cycle 
+------------------------+-----------+-------------+-------------+------------+--------------+------------+-------
+ seq_change_type_bounds | integer   |           0 | -2147483648 | 2147483647 |            1 |          1 | f
+(1 row)
+
+CREATE SEQUENCE
+ALTER SEQUENCE
+       sequencename       | data_type | start_value | min_value |      max_value      | increment_by | cache_size | cycle 
+--------------------------+-----------+-------------+-----------+---------------------+--------------+------------+-------
+ seq_alter_no_min_max_asc | bigint    |           5 |         1 | 9223372036854775807 |            1 |          1 | f
+(1 row)
+
+CREATE SEQUENCE
+ALTER SEQUENCE
+       sequencename       | data_type | start_value |      min_value       | max_value | increment_by | cache_size | cycle 
+--------------------------+-----------+-------------+----------------------+-----------+--------------+------------+-------
+ seq_alter_no_min_max_des | bigint    |          -5 | -9223372036854775808 |        -1 |           -1 |          1 | f
+(1 row)
+
+RESET
+CREATE SEQUENCE
+ALTER SEQUENCE
+ nextval | nextval 
+---------+---------
+       1 |       9
+(1 row)
+
+psql:pg_tests/compatible/alter_sequence.sql:344: ERROR:  nextval: reached maximum value of sequence "test_52552_asc" (12)
+psql:pg_tests/compatible/alter_sequence.sql:349: ERROR:  nextval: reached maximum value of sequence "test_52552_asc" (12)
+ALTER SEQUENCE
+ nextval 
+---------
+      17
+(1 row)
+
+CREATE SEQUENCE
+ALTER SEQUENCE
+ nextval | nextval 
+---------+---------
+      12 |       4
+(1 row)
+
+psql:pg_tests/compatible/alter_sequence.sql:367: ERROR:  nextval: reached minimum value of sequence "test_52552_desc" (1)
+psql:pg_tests/compatible/alter_sequence.sql:372: ERROR:  nextval: reached minimum value of sequence "test_52552_desc" (1)
+ALTER SEQUENCE
+ nextval 
+---------
+      -4
+(1 row)
+
+CREATE SEQUENCE
+ALTER SEQUENCE
+ nextval 
+---------
+      50
+(1 row)
+
