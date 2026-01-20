@@ -2165,7 +2165,7 @@ SELECT bit_or(x) FROM (VALUES ('100'::bit(3)), ('101'::bit(3))) t(x);
 SELECT bit_or(x) FROM (VALUES ('0'::bit(1)), ('1'::bit(1))) t(x);
 
 -- Test 483: statement (line 3403)
-DROP TABLE IF EXISTS t46981_0;
+DROP TABLE IF EXISTS t46981_0 CASCADE;
 CREATE TABLE t46981_0(c0 INT);
 DROP VIEW IF EXISTS v46981_0;
 CREATE VIEW v46981_0(c0) AS SELECT count(*) FROM t46981_0;
@@ -2174,10 +2174,10 @@ CREATE VIEW v46981_0(c0) AS SELECT count(*) FROM t46981_0;
 SELECT * FROM v46981_0 WHERE '' !~ '\\+';
 
 -- Test 485: statement (line 3413)
-DROP TABLE IF EXISTS osagg;
+DROP TABLE IF EXISTS osagg CASCADE;
 
 -- Test 486: statement (line 3423)
-DROP TABLE IF EXISTS osagg;
+DROP TABLE IF EXISTS osagg CASCADE;
 CREATE TABLE osagg (
   f float,
   v text,
