@@ -1,0 +1,26 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+BEGIN
+DECLARE CURSOR
+ id | v 
+----+---
+  1 | a
+(1 row)
+
+ id | v 
+----+---
+  2 | b
+  3 | c
+(2 rows)
+
+MOVE 1
+ id | v 
+----+---
+  3 | c
+(1 row)
+
+CLOSE CURSOR
+COMMIT
+RESET

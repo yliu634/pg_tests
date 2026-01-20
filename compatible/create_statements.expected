@@ -1,0 +1,47 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+COMMENT
+COMMENT
+COMMENT
+ indexname |                       indexdef                        
+-----------+-------------------------------------------------------
+ c_a_b_idx | CREATE INDEX c_a_b_idx ON public.c USING btree (a, b)
+(1 row)
+
+ conname |             condef              
+---------+---------------------------------
+ c_a_fk  | FOREIGN KEY (a) REFERENCES t(a)
+(1 row)
+
+ table_comment 
+---------------
+ table
+(1 row)
+
+ column_a_comment 
+------------------
+ column
+(1 row)
+
+CREATE TABLE
+   relname    | relpersistence 
+--------------+----------------
+ unlogged_tbl | u
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+ relname |               reloptions               
+---------+----------------------------------------
+ a       | {fillfactor=80,autovacuum_enabled=off}
+ a_idx   | {fillfactor=50}
+(2 rows)
+
+DROP TABLE
+RESET

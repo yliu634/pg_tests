@@ -1,0 +1,69 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+UPDATE 1
+UPDATE 1
+DELETE 0
+DELETE 1
+ x | y 
+---+---
+ 3 | 0
+ 4 | 0
+(2 rows)
+
+ x | y 
+---+---
+ 3 | 0
+ 4 | 0
+(2 rows)
+
+ x | y 
+---+---
+(0 rows)
+
+ x | y 
+---+---
+ 3 | 0
+(1 row)
+
+ x | y 
+---+---
+ 3 | 0
+ 4 | 0
+(2 rows)
+
+ x | y 
+---+---
+(0 rows)
+
+ x | y 
+---+---
+(0 rows)
+
+ x | y 
+---+---
+(0 rows)
+
+ x | y 
+---+---
+(0 rows)
+
+ x | y | x | y 
+---+---+---+---
+(0 rows)
+
+ x | y | x | y 
+---+---+---+---
+ 3 | 0 | 3 | 0
+ 4 | 0 | 4 | 0
+(2 rows)
+
+ x | y 
+---+---
+ 3 | 0
+ 4 | 0
+(2 rows)
+
+ALTER TABLE
+RESET

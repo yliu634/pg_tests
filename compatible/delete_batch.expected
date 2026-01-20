@@ -1,0 +1,24 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+DELETE 1
+ count 
+-------
+     2
+(1 row)
+
+DELETE 1
+ count 
+-------
+     1
+(1 row)
+
+DELETE 1
+ count 
+-------
+     0
+(1 row)
+
+DROP TABLE
+RESET

@@ -1,0 +1,20 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 50
+DROP INDEX
+CREATE INDEX
+ANALYZE
+    tablename    | attname | null_frac | n_distinct 
+-----------------+---------+-----------+------------
+ partial_indexes | a       |         0 |         -1
+ partial_indexes | b       |         0 |          5
+ partial_indexes | c       |         0 |          3
+(3 rows)
+
+        index_name         |                                           index_def                                            | index_predicate 
+---------------------------+------------------------------------------------------------------------------------------------+-----------------
+ partial_indexes_a_partial | CREATE INDEX partial_indexes_a_partial ON public.partial_indexes USING btree (a) WHERE (b > 0) | (b > 0)
+(1 row)
+
+RESET

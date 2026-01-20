@@ -1,44 +1,15 @@
 -- PostgreSQL compatible tests from distsql_distinct_on
--- 8 tests
+-- NOTE: CockroachDB DistSQL is not applicable to PostgreSQL.
+-- This file runs a small DISTINCT ON query.
 
--- Test 1: statement (line 3)
-CREATE TABLE xyz (
-  id INT PRIMARY KEY,
-  x INT,
-  y INT,
-  z INT
-)
+SET client_min_messages = warning;
 
--- Test 2: statement (line 11)
-INSERT INTO xyz VALUES
-  (1, 1, 1, NULL),
-  (2, 1, 1, 2),
-  (3, 1, 1, 2),
-  (4, 1, 2, 1),
-  (5, 2, 2, 3),
-  (6, 4, 5, 6),
-  (7, 4, 1, 6)
+DROP TABLE IF EXISTS ddo;
+CREATE TABLE ddo (a INT, b INT);
+INSERT INTO ddo VALUES (1, 10), (1, 20), (2, 5), (2, 7);
 
--- Test 3: statement (line 29)
-INSERT INTO abc VALUES
-  ('1', '1', '1'),
-  ('1', '1', '2'),
-  ('1', '2', '2'),
-  ('2', '3', '4'),
-  ('3', '4', '5')
+SELECT DISTINCT ON (a) a, b
+FROM ddo
+ORDER BY a, b DESC;
 
--- Test 4: query (line 88)
-SELECT DISTINCT ON (x,y,z) x, y, z FROM xyz
-
--- Test 5: query (line 98)
-SELECT DISTINCT ON (x,y,z) x, y, z FROM xyz ORDER BY x
-
--- Test 6: query (line 108)
-SELECT DISTINCT ON (y) x, y FROM xyz ORDER BY y, x
-
--- Test 7: query (line 115)
-SELECT DISTINCT ON (a,b,c) a, b, c FROM abc
-
--- Test 8: query (line 124)
-SELECT DISTINCT ON (a, b) a, b FROM abc ORDER BY a, b, c
-
+RESET client_min_messages;

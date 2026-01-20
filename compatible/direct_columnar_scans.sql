@@ -1,26 +1,20 @@
 -- PostgreSQL compatible tests from direct_columnar_scans
--- 4 tests
+-- NOTE: CockroachDB direct_columnar_scans_enabled and column FAMILY clauses are not supported by PostgreSQL.
 
--- Test 1: statement (line 1)
-SET direct_columnar_scans_enabled = true
+SET client_min_messages = warning;
 
--- Test 2: statement (line 4)
+DROP TABLE IF EXISTS t145232;
+
 CREATE TABLE t145232 (
-      k INT PRIMARY KEY,
-      a INT NOT NULL,
-      b INT NOT NULL,
-      c INT NOT NULL,
-      v INT NOT NULL DEFAULT 5,
-      FAMILY (c),
-      FAMILY (v),
-      FAMILY (k),
-      FAMILY (a),
-      FAMILY (b)
+  k INT PRIMARY KEY,
+  a INT NOT NULL,
+  b INT NOT NULL,
+  c INT NOT NULL,
+  v INT NOT NULL DEFAULT 5
 );
 
--- Test 3: statement (line 18)
-INSERT INTO t145232 VALUES (2,2,2,2);
+INSERT INTO t145232 VALUES (2, 2, 2, 2, DEFAULT);
 
--- Test 4: query (line 23)
-SELECT * FROM t145232 WHERE k = 2
+SELECT * FROM t145232 WHERE k = 2;
 
+RESET client_min_messages;

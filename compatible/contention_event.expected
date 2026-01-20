@@ -1,0 +1,13 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+BEGIN
+UPDATE 1
+ locktype |       mode       | granted 
+----------+------------------+---------
+ relation | RowExclusiveLock | t
+(1 row)
+
+ROLLBACK
+RESET

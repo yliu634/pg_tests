@@ -1,0 +1,5 @@
+ user_name | database_name 
+-----------+---------------
+ postgres  | pg_tests
+(1 row)
+

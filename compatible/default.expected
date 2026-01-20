@@ -1,0 +1,13 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+ a  | b | c_nonnull 
+----+---+-----------
+  1 | x | t
+ 10 | x | t
+(2 rows)
+
+DROP TABLE
+RESET

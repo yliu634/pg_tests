@@ -1,0 +1,11 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+                 QUERY PLAN                 
+--------------------------------------------
+ Index Scan using insp_tbl_pkey on insp_tbl
+   Index Cond: (id = 2)
+(2 rows)
+
+RESET

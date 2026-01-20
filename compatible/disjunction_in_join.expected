@@ -1,0 +1,15 @@
+SET
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 2
+ id | a_v | b_v 
+----+-----+-----
+  1 |  10 | 100
+  2 |  20 |    
+  3 |  30 |    
+(3 rows)
+
+RESET

@@ -1,0 +1,12 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 50
+ANALYZE
+ tablename | attname | n_distinct 
+-----------+---------+------------
+ as_tbl    | a       |         -1
+ as_tbl    | b       |          2
+(2 rows)
+
+RESET

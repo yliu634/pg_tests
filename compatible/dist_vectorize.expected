@@ -1,0 +1,11 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+        QUERY PLAN         
+---------------------------
+ Aggregate
+   ->  Seq Scan on vec_tbl
+(2 rows)
+
+RESET

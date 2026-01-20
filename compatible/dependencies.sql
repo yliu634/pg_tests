@@ -1,59 +1,69 @@
 -- PostgreSQL compatible tests from dependencies
--- 13 tests
+-- NOTE: CockroachDB crdb_internal.* dependency introspection is not available in PostgreSQL.
+-- This file is rewritten to create a small dependency graph and inspect it via PostgreSQL catalogs.
 
--- Test 1: statement (line 4)
-CREATE TABLE test_kv(k INT PRIMARY KEY, v INT, w DECIMAL);
-  CREATE UNIQUE INDEX test_v_idx ON test_kv(v);
-  CREATE INDEX test_v_idx2 ON test_kv(v DESC) STORING(w);
-  CREATE INDEX test_v_idx3 ON test_kv(w) STORING(v);
-  CREATE TABLE test_kvr1(k INT PRIMARY KEY REFERENCES test_kv(k));
-  CREATE TABLE test_kvr2(k INT, v INT UNIQUE REFERENCES test_kv(k));
-  CREATE TABLE test_kvr3(k INT, v INT UNIQUE REFERENCES test_kv(v));
-  CREATE TABLE test_kvi1(k INT PRIMARY KEY);
-  CREATE TABLE test_kvi2(k INT PRIMARY KEY, v INT);
-  CREATE UNIQUE INDEX test_kvi2_idx ON test_kvi2(v);
-  CREATE VIEW test_v1 AS SELECT v FROM test_kv;
-  CREATE VIEW test_v2 AS SELECT v FROM test_v1;
-  CREATE TABLE test_uwi_parent(a INT UNIQUE WITHOUT INDEX);
-  CREATE TABLE test_uwi_child(a INT REFERENCES test_uwi_parent(a));
+SET client_min_messages = warning;
 
--- Test 2: query (line 20)
-SELECT * FROM crdb_internal.table_columns WHERE descriptor_name LIKE 'test_%' ORDER BY descriptor_id, column_id
+DROP VIEW IF EXISTS test_v2;
+DROP VIEW IF EXISTS test_v1;
+DROP VIEW IF EXISTS moretest_v;
+DROP TABLE IF EXISTS test_kvr3;
+DROP TABLE IF EXISTS test_kvr2;
+DROP TABLE IF EXISTS test_kvr1;
+DROP TABLE IF EXISTS test_kvi2;
+DROP TABLE IF EXISTS test_kvi1;
+DROP TABLE IF EXISTS test_uwi_child;
+DROP TABLE IF EXISTS test_uwi_parent;
+DROP TABLE IF EXISTS test_kv;
+DROP TABLE IF EXISTS moretest_t;
+DROP TABLE IF EXISTS blog_posts;
+DROP SEQUENCE IF EXISTS blog_posts_id_seq;
 
--- Test 3: query (line 44)
-SELECT descriptor_id, descriptor_name, index_id, index_name, index_type, is_unique, is_inverted, is_sharded, shard_bucket_count
-    FROM crdb_internal.table_indexes
-   WHERE descriptor_name LIKE 'test_%'
-ORDER BY descriptor_id, index_id
+CREATE TABLE test_kv(k INT PRIMARY KEY, v INT, w NUMERIC);
+CREATE UNIQUE INDEX test_v_idx ON test_kv(v);
+CREATE INDEX test_v_idx2 ON test_kv(v DESC) INCLUDE (w);
+CREATE INDEX test_v_idx3 ON test_kv(w) INCLUDE (v);
 
--- Test 4: query (line 68)
-SELECT * FROM crdb_internal.index_columns WHERE descriptor_name LIKE 'test_%' ORDER BY descriptor_id, index_id, column_type, column_id
+CREATE TABLE test_kvr1(k INT PRIMARY KEY REFERENCES test_kv(k));
+CREATE TABLE test_kvr2(k INT, v INT UNIQUE, FOREIGN KEY (k) REFERENCES test_kv(k));
+CREATE TABLE test_kvr3(k INT, v INT UNIQUE, FOREIGN KEY (v) REFERENCES test_kv(v));
 
--- Test 5: query (line 96)
-SELECT * FROM crdb_internal.backward_dependencies WHERE descriptor_name LIKE 'test_%' ORDER BY descriptor_id, index_id, dependson_type, dependson_id, dependson_index_id
+CREATE TABLE test_kvi1(k INT PRIMARY KEY);
+CREATE TABLE test_kvi2(k INT PRIMARY KEY, v INT);
+CREATE UNIQUE INDEX test_kvi2_idx ON test_kvi2(v);
 
--- Test 6: query (line 107)
-SELECT * FROM crdb_internal.forward_dependencies WHERE descriptor_name LIKE 'test_%' ORDER BY descriptor_id, index_id, dependedonby_type, dependedonby_id, dependedonby_index_id
+CREATE VIEW test_v1 AS SELECT v FROM test_kv;
+CREATE VIEW test_v2 AS SELECT v FROM test_v1;
 
--- Test 7: statement (line 119)
+-- CockroachDB UNIQUE WITHOUT INDEX has no PG equivalent; use a regular UNIQUE constraint.
+CREATE TABLE test_uwi_parent(a INT UNIQUE);
+CREATE TABLE test_uwi_child(a INT REFERENCES test_uwi_parent(a));
+
 CREATE TABLE moretest_t(k INT, v INT);
-  CREATE VIEW moretest_v AS SELECT v FROM moretest_t WHERE FALSE
+CREATE VIEW moretest_v AS SELECT v FROM moretest_t WHERE FALSE;
 
--- Test 8: query (line 123)
-SELECT * FROM crdb_internal.backward_dependencies WHERE descriptor_name LIKE 'moretest_%' ORDER BY descriptor_id, index_id, dependson_type, dependson_id, dependson_index_id
+CREATE SEQUENCE blog_posts_id_seq;
+CREATE TABLE blog_posts (id INT PRIMARY KEY DEFAULT nextval('blog_posts_id_seq'), title TEXT);
 
--- Test 9: query (line 129)
-SELECT * FROM crdb_internal.forward_dependencies WHERE descriptor_name LIKE 'moretest_%' ORDER BY descriptor_id, index_id, dependedonby_type, dependedonby_id, dependedonby_index_id
+-- Column catalog.
+SELECT table_name, column_name, data_type
+FROM information_schema.columns
+WHERE table_schema = current_schema()
+  AND (table_name LIKE 'test_%' OR table_name LIKE 'moretest_%' OR table_name = 'blog_posts')
+ORDER BY table_name, ordinal_position;
 
--- Test 10: statement (line 137)
-CREATE SEQUENCE blog_posts_id_seq
+-- Index catalog.
+SELECT tablename, indexname, indexdef
+FROM pg_indexes
+WHERE schemaname = current_schema()
+  AND (tablename LIKE 'test_%' OR tablename = 'blog_posts')
+ORDER BY tablename, indexname;
 
--- Test 11: statement (line 140)
-CREATE TABLE blog_posts (id INT PRIMARY KEY DEFAULT nextval('blog_posts_id_seq'), title text)
+-- View definitions.
+SELECT schemaname, viewname, definition
+FROM pg_views
+WHERE schemaname = current_schema()
+  AND (viewname LIKE 'test_%' OR viewname LIKE 'moretest_%')
+ORDER BY viewname;
 
--- Test 12: query (line 143)
-SELECT * FROM crdb_internal.backward_dependencies WHERE descriptor_name LIKE 'blog_posts'
-
--- Test 13: query (line 149)
-SELECT * FROM crdb_internal.forward_dependencies WHERE descriptor_name LIKE 'blog_posts%'
-
+RESET client_min_messages;

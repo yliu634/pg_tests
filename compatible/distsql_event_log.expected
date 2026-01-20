@@ -1,0 +1,11 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+ msg | ts_nonnull 
+-----+------------
+ one | t
+ two | t
+(2 rows)
+
+RESET

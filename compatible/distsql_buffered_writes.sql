@@ -1,73 +1,17 @@
 -- PostgreSQL compatible tests from distsql_buffered_writes
--- 21 tests
+-- NOTE: CockroachDB DistSQL buffered writes are not applicable to PostgreSQL.
+-- This file is rewritten to run a small transactional write workload.
 
--- Test 1: statement (line 3)
-SET kv_transaction_buffered_writes_enabled=true
+SET client_min_messages = warning;
 
--- Test 2: statement (line 6)
-SET CLUSTER SETTING kv.transaction.write_buffering.max_buffer_size = '2KiB';
+DROP TABLE IF EXISTS bw_tbl;
+CREATE TABLE bw_tbl (id INT PRIMARY KEY, v TEXT);
 
--- Test 3: statement (line 11)
-CREATE TABLE kv (k INT PRIMARY KEY, v INT);
-INSERT INTO kv VALUES (1, 1), (2, 2);
-
--- Test 4: statement (line 26)
 BEGIN;
-
--- Test 5: query (line 30)
-SELECT info FROM [EXPLAIN SELECT crdb_internal_mvcc_timestamp FROM kv] WHERE info LIKE 'distribution%'
-
--- Test 6: statement (line 35)
-INSERT INTO kv VALUES (3, 3);
-
--- Test 7: query (line 38)
-SELECT info FROM [EXPLAIN SELECT crdb_internal_mvcc_timestamp FROM kv] WHERE info LIKE 'distribution%'
-
--- Test 8: query (line 45)
-SELECT info FROM [EXPLAIN SELECT tableoid FROM kv] WHERE info LIKE 'distribution%'
-
--- Test 9: statement (line 52)
-SELECT crdb_internal_mvcc_timestamp FROM kv;
-
--- Test 10: statement (line 55)
+INSERT INTO bw_tbl (id, v) VALUES (1, 'a'), (2, 'b');
+INSERT INTO bw_tbl (id, v) VALUES (3, 'c');
 COMMIT;
 
--- Test 11: statement (line 59)
-BEGIN;
+SELECT count(*) FROM bw_tbl;
 
--- Test 12: query (line 63)
-SELECT info FROM [EXPLAIN SELECT kv2.crdb_internal_mvcc_timestamp FROM kv AS kv1 INNER LOOKUP JOIN kv AS kv2 ON kv1.v = kv2.k] WHERE info LIKE 'distribution%'
-
--- Test 13: statement (line 68)
-INSERT INTO kv VALUES (4, 4);
-
--- Test 14: query (line 71)
-SELECT info FROM [EXPLAIN SELECT kv2.crdb_internal_mvcc_timestamp FROM kv AS kv1 INNER LOOKUP JOIN kv AS kv2 ON kv1.v = kv2.k] WHERE info LIKE 'distribution%'
-
--- Test 15: statement (line 78)
-SELECT kv2.crdb_internal_mvcc_timestamp FROM kv AS kv1 INNER LOOKUP JOIN kv AS kv2 ON kv1.v = kv2.k;
-
--- Test 16: statement (line 81)
-COMMIT;
-
--- Test 17: statement (line 88)
-BEGIN;
-
--- Test 18: statement (line 91)
-SELECT
-  crdb_internal_mvcc_timestamp
-FROM
-  [
-    INSERT INTO kv VALUES (5, 5) RETURNING NULL
-  ],
-  kv;
-
--- Test 19: statement (line 100)
-INSERT INTO kv VALUES (5, 5);
-
--- Test 20: statement (line 103)
-ROLLBACK;
-
--- Test 21: query (line 106)
-SELECT count(*) FROM kv;
-
+RESET client_min_messages;

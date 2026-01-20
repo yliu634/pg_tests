@@ -1,0 +1,32 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+SELECT 2
+ a |   b   
+---+-------
+ 2 | two
+ 3 | three
+(2 rows)
+
+SELECT 3
+ x |   y   
+---+-------
+ 1 | one
+ 2 | two
+ 3 | three
+(3 rows)
+
+CREATE TABLE
+INSERT 0 3
+ a |   b   
+---+-------
+ 1 | one
+ 2 | two
+ 3 | three
+(3 rows)
+
+RESET

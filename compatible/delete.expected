@@ -1,0 +1,23 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+DELETE 1
+ id | v 
+----+---
+  1 | a
+  3 | c
+(2 rows)
+
+ id 
+----
+  1
+  3
+(2 rows)
+
+ count 
+-------
+     0
+(1 row)
+
+RESET

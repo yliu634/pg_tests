@@ -1,69 +1,37 @@
 -- PostgreSQL compatible tests from dangerous_statements
--- 22 tests
+-- NOTE: CockroachDB settings like sql_safe_updates and SET database are not supported by PostgreSQL.
+-- This file is adapted to keep the core UPDATE/DELETE/locking statement shapes.
 
--- Test 1: statement (line 1)
-CREATE TABLE foo(x INT)
+SET client_min_messages = warning;
 
--- Test 2: statement (line 4)
-SET sql_safe_updates = true
+DROP TABLE IF EXISTS foo;
+CREATE TABLE foo (x INT, y INT DEFAULT 0);
+INSERT INTO foo (x) VALUES (1), (2), (3);
 
--- Test 3: statement (line 7)
-UPDATE foo SET x = 3
+-- UPDATE variants.
+UPDATE foo SET x = 3 WHERE x = 2;
+UPDATE foo SET x = 4 WHERE ctid IN (SELECT ctid FROM foo ORDER BY x LIMIT 1);
 
--- Test 4: statement (line 10)
-UPDATE foo SET x = 3 WHERE x = 2
+-- DELETE variants.
+DELETE FROM foo WHERE x = 2;
+DELETE FROM foo WHERE ctid IN (SELECT ctid FROM foo ORDER BY x LIMIT 1);
 
--- Test 5: statement (line 13)
-UPDATE foo SET x = 3 ORDER BY x LIMIT 1
+-- Locking statements (should run even if the table is empty).
+SELECT * FROM foo FOR UPDATE;
+SELECT * FROM foo FOR SHARE OF foo SKIP LOCKED;
+SELECT * FROM foo WHERE x = 2 FOR UPDATE;
+SELECT * FROM foo ORDER BY x LIMIT 1 FOR UPDATE;
 
--- Test 6: statement (line 16)
-DELETE FROM foo
+SELECT * FROM (SELECT * FROM foo) AS sub FOR UPDATE;
+SELECT * FROM (SELECT * FROM foo WHERE x = 2) AS sub FOR UPDATE;
+SELECT * FROM (SELECT * FROM foo WHERE x = 2) AS sub FOR UPDATE;
+SELECT * FROM (SELECT * FROM (SELECT * FROM foo) AS s WHERE x = 2) AS sub FOR UPDATE;
 
--- Test 7: statement (line 19)
-DELETE FROM foo WHERE x = 2
+SELECT * FROM (SELECT * FROM foo FOR UPDATE) AS m WHERE x = 2 FOR UPDATE;
+SELECT * FROM (SELECT * FROM foo WHERE x = 2 FOR UPDATE) AS m, (SELECT * FROM foo) AS n FOR SHARE;
+SELECT * FROM (SELECT * FROM foo FOR SHARE) AS m, (SELECT * FROM foo) AS n WHERE m.x = n.x;
+SELECT * FROM (SELECT * FROM (SELECT * FROM foo) AS s WHERE x > 1) AS sub WHERE x > 2 FOR UPDATE;
 
--- Test 8: statement (line 22)
-DELETE FROM foo ORDER BY x LIMIT 1
+ALTER TABLE foo DROP COLUMN x;
 
--- Test 9: statement (line 25)
-SELECT * FROM foo FOR UPDATE
-
--- Test 10: statement (line 28)
-SELECT * FROM foo FOR SHARE OF foo SKIP LOCKED
-
--- Test 11: statement (line 31)
-SELECT * FROM foo WHERE x = 2 FOR UPDATE
-
--- Test 12: statement (line 34)
-SELECT * FROM foo ORDER BY x LIMIT 1 FOR UPDATE
-
--- Test 13: statement (line 37)
-(SELECT * FROM foo) FOR UPDATE
-
--- Test 14: statement (line 40)
-(SELECT * FROM foo WHERE x = 2) FOR UPDATE
-
--- Test 15: statement (line 43)
-SELECT * FROM (SELECT * FROM foo WHERE x = 2) FOR UPDATE
-
--- Test 16: statement (line 46)
-SELECT * FROM (SELECT * FROM (SELECT * FROM foo) WHERE x = 2) FOR UPDATE
-
--- Test 17: statement (line 49)
-SELECT * FROM (SELECT * FROM foo FOR UPDATE) WHERE x = 2 FOR UPDATE
-
--- Test 18: statement (line 52)
-SELECT * FROM (SELECT * FROM foo WHERE x = 2 FOR UPDATE) m, (SELECT * FROM foo) n FOR SHARE
-
--- Test 19: statement (line 55)
-SELECT * FROM (SELECT * FROM foo FOR SHARE) m, (SELECT * FROM foo) n WHERE m.x = n.x
-
--- Test 20: statement (line 58)
-SELECT * FROM (SELECT * FROM (SELECT * FROM foo) WHERE x > 1) WHERE x > 2 FOR UPDATE
-
--- Test 21: statement (line 61)
-ALTER TABLE foo DROP COLUMN x
-
--- Test 22: statement (line 64)
-SET database = ''
-
+RESET client_min_messages;

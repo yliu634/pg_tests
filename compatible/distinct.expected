@@ -1,0 +1,18 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 5
+ a 
+---
+ 1
+ 2
+(2 rows)
+
+ a | b  
+---+----
+ 1 | 10
+ 1 | 20
+ 2 | 10
+(3 rows)
+
+RESET

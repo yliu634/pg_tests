@@ -1,0 +1,32 @@
+SET
+CREATE ROLE
+CREATE ROLE
+DROP SCHEMA
+CREATE SCHEMA
+ALTER DEFAULT PRIVILEGES
+SET
+CREATE TABLE
+RESET
+ bar_can_select 
+----------------
+ t
+(1 row)
+
+ grantee | privilege_type 
+---------+----------------
+ bar     | SELECT
+ foo     | DELETE
+ foo     | INSERT
+ foo     | REFERENCES
+ foo     | SELECT
+ foo     | TRIGGER
+ foo     | TRUNCATE
+ foo     | UPDATE
+(8 rows)
+
+DROP SCHEMA
+DROP OWNED
+DROP ROLE
+DROP OWNED
+DROP ROLE
+RESET

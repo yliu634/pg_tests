@@ -1,0 +1,24 @@
+SET
+DROP SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+INSERT 0 2
+     schema_name     | relname | relkind 
+---------------------+---------+---------
+ crdb_internal_smoke | foo     | r
+(1 row)
+
+ attname | data_type 
+---------+-----------
+ x       | integer
+ y       | text
+(2 rows)
+
+ x | y 
+---+---
+ 1 | a
+ 2 | b
+(2 rows)
+
+DROP SCHEMA
+RESET

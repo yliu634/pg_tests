@@ -1,0 +1,85 @@
+SET
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP SEQUENCE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE VIEW
+CREATE VIEW
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE VIEW
+CREATE SEQUENCE
+CREATE TABLE
+   table_name    | column_name | data_type 
+-----------------+-------------+-----------
+ blog_posts      | id          | integer
+ blog_posts      | title       | text
+ moretest_t      | k           | integer
+ moretest_t      | v           | integer
+ moretest_v      | v           | integer
+ test_kv         | k           | integer
+ test_kv         | v           | integer
+ test_kv         | w           | numeric
+ test_kvi1       | k           | integer
+ test_kvi2       | k           | integer
+ test_kvi2       | v           | integer
+ test_kvr1       | k           | integer
+ test_kvr2       | k           | integer
+ test_kvr2       | v           | integer
+ test_kvr3       | k           | integer
+ test_kvr3       | v           | integer
+ test_uwi_child  | a           | integer
+ test_uwi_parent | a           | integer
+ test_v1         | v           | integer
+ test_v2         | v           | integer
+(20 rows)
+
+    tablename    |       indexname       |                                      indexdef                                       
+-----------------+-----------------------+-------------------------------------------------------------------------------------
+ blog_posts      | blog_posts_pkey       | CREATE UNIQUE INDEX blog_posts_pkey ON public.blog_posts USING btree (id)
+ test_kv         | test_kv_pkey          | CREATE UNIQUE INDEX test_kv_pkey ON public.test_kv USING btree (k)
+ test_kv         | test_v_idx            | CREATE UNIQUE INDEX test_v_idx ON public.test_kv USING btree (v)
+ test_kv         | test_v_idx2           | CREATE INDEX test_v_idx2 ON public.test_kv USING btree (v DESC) INCLUDE (w)
+ test_kv         | test_v_idx3           | CREATE INDEX test_v_idx3 ON public.test_kv USING btree (w) INCLUDE (v)
+ test_kvi1       | test_kvi1_pkey        | CREATE UNIQUE INDEX test_kvi1_pkey ON public.test_kvi1 USING btree (k)
+ test_kvi2       | test_kvi2_idx         | CREATE UNIQUE INDEX test_kvi2_idx ON public.test_kvi2 USING btree (v)
+ test_kvi2       | test_kvi2_pkey        | CREATE UNIQUE INDEX test_kvi2_pkey ON public.test_kvi2 USING btree (k)
+ test_kvr1       | test_kvr1_pkey        | CREATE UNIQUE INDEX test_kvr1_pkey ON public.test_kvr1 USING btree (k)
+ test_kvr2       | test_kvr2_v_key       | CREATE UNIQUE INDEX test_kvr2_v_key ON public.test_kvr2 USING btree (v)
+ test_kvr3       | test_kvr3_v_key       | CREATE UNIQUE INDEX test_kvr3_v_key ON public.test_kvr3 USING btree (v)
+ test_uwi_parent | test_uwi_parent_a_key | CREATE UNIQUE INDEX test_uwi_parent_a_key ON public.test_uwi_parent USING btree (a)
+(12 rows)
+
+ schemaname |  viewname  |     definition     
+------------+------------+--------------------
+ public     | moretest_v |  SELECT v         +
+            |            |    FROM moretest_t+
+            |            |   WHERE false;
+ public     | test_v1    |  SELECT v         +
+            |            |    FROM test_kv;
+ public     | test_v2    |  SELECT v         +
+            |            |    FROM test_v1;
+(3 rows)
+
+RESET

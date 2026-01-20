@@ -1,15 +1,24 @@
 -- PostgreSQL compatible tests from delete_batch
--- 4 tests
+-- NOTE: CockroachDB DELETE BATCH is not supported by PostgreSQL.
+-- This file simulates batched deletes using DELETE + a ctid subquery.
 
--- Test 1: statement (line 3)
-DELETE BATCH FROM tbl;
+SET client_min_messages = warning;
 
--- Test 2: statement (line 10)
-DELETE BATCH (SIZE 1) FROM tbl;
+DROP TABLE IF EXISTS tbl;
+CREATE TABLE tbl (id INT PRIMARY KEY);
+INSERT INTO tbl (id) VALUES (1), (2), (3);
 
--- Test 3: statement (line 17)
-DELETE BATCH (SIZE (SELECT 1)) FROM tbl;
+DELETE FROM tbl
+WHERE ctid IN (SELECT ctid FROM tbl ORDER BY id LIMIT 1);
+SELECT count(*) FROM tbl;
 
--- Test 4: statement (line 24)
-DELETE BATCH (SIZE 1, SIZE 1) FROM tbl;
+DELETE FROM tbl
+WHERE ctid IN (SELECT ctid FROM tbl ORDER BY id LIMIT 1);
+SELECT count(*) FROM tbl;
 
+DELETE FROM tbl;
+SELECT count(*) FROM tbl;
+
+DROP TABLE IF EXISTS tbl;
+
+RESET client_min_messages;

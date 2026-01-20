@@ -1,0 +1,24 @@
+SET
+CREATE ROLE
+ datname  |                datacl                
+----------+--------------------------------------
+ pg_tests | {=Tc/postgres,postgres=CTc/postgres}
+(1 row)
+
+REVOKE
+ datname  |               datacl                
+----------+-------------------------------------
+ pg_tests | {=T/postgres,postgres=CTc/postgres}
+(1 row)
+
+GRANT
+ datname  |                         datacl                          
+----------+---------------------------------------------------------
+ pg_tests | {=T/postgres,postgres=CTc/postgres,testuser=c/postgres}
+(1 row)
+
+GRANT
+REVOKE
+DROP OWNED
+DROP ROLE
+RESET

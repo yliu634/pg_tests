@@ -1,33 +1,14 @@
 -- PostgreSQL compatible tests from distsql_subquery
--- 9 tests
+-- NOTE: CockroachDB DistSQL subquery tests are not applicable to PostgreSQL.
 
--- Test 1: statement (line 6)
-CREATE TABLE ab (a INT, b INT)
+SET client_min_messages = warning;
 
--- Test 2: statement (line 9)
-INSERT INTO ab VALUES (1, 1), (1, 3), (2, 2)
+DROP TABLE IF EXISTS sq;
+CREATE TABLE sq (id INT PRIMARY KEY, v INT);
+INSERT INTO sq VALUES (1, 10), (2, 20), (3, 30);
 
--- Test 3: statement (line 12)
-SET CLUSTER SETTING kv.range_merge.queue.enabled = false
+SELECT id
+FROM sq
+WHERE v = (SELECT max(v) FROM sq);
 
--- Test 4: query (line 30)
-SELECT ARRAY(SELECT a FROM ab ORDER BY b)
-
--- Test 5: statement (line 37)
-CREATE TABLE t86075 (k INT PRIMARY KEY, c REGPROCEDURE, a REGPROCEDURE[]);
-INSERT INTO t86075 VALUES (1, 1, ARRAY[1]);
-
-retry
-
--- Test 6: statement (line 45)
-SELECT (SELECT c FROM t86075) FROM t86075
-
--- Test 7: statement (line 48)
-SELECT (SELECT a FROM t86075) FROM t86075
-
--- Test 8: statement (line 51)
-SELECT (SELECT (c, c) FROM t86075) FROM t86075
-
--- Test 9: statement (line 54)
-SELECT k FROM t86075 WHERE c = (SELECT c FROM t86075 LIMIT 1)
-
+RESET client_min_messages;

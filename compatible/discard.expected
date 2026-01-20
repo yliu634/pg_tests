@@ -1,0 +1,12 @@
+SET
+PREPARE
+ ?column? 
+----------
+        1
+(1 row)
+
+DEALLOCATE
+DISCARD PLANS
+DISCARD TEMP
+DISCARD ALL
+RESET

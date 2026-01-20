@@ -1,0 +1,25 @@
+ like_escape_backslash 
+-----------------------
+ t
+(1 row)
+
+ like_escape_percent 
+---------------------
+ t
+(1 row)
+
+ similar_escape_underscore 
+---------------------------
+ t
+(1 row)
+
+ unicode_escape_like 
+---------------------
+ t
+(1 row)
+
+ unicode_escape_similar 
+------------------------
+ f
+(1 row)
+

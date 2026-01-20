@@ -1,0 +1,45 @@
+SET
+DROP SCHEMA
+CREATE SCHEMA
+SET
+DROP MATERIALIZED VIEW
+DROP TABLE
+DROP TYPE
+CREATE TYPE
+CREATE TABLE
+INSERT 0 2
+SELECT 2
+CREATE INDEX
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+ datname  |            comment            
+----------+-------------------------------
+ pg_tests | this is the pg_tests database
+(1 row)
+
+ nspname |          comment          
+---------+---------------------------
+ public  | this is the public schema
+ sc      | this is a schema
+(2 rows)
+
+ relname |     comment      
+---------+------------------
+ idx     | this is an index
+ kv      | this is a table
+ mv      | 
+(3 rows)
+
+ conname |             comment              
+---------+----------------------------------
+ ck      | this is a check constraint
+ kv_pkey | this is a primary key constraint
+(2 rows)
+
+RESET
+RESET

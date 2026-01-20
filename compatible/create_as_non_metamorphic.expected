@@ -1,0 +1,12 @@
+SET
+DROP TABLE
+BEGIN
+SELECT 5000
+COMMIT
+ count 
+-------
+  5000
+(1 row)
+
+DROP TABLE
+RESET

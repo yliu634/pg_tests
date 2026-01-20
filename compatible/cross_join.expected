@@ -1,0 +1,10 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+ count 
+-------
+     1
+(1 row)
+
+RESET

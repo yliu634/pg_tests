@@ -1,0 +1,12 @@
+SET
+DROP TYPE
+CREATE TYPE
+  val  
+-------
+ sad
+ ok
+ happy
+(3 rows)
+
+DROP TYPE
+RESET

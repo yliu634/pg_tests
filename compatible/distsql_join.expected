@@ -1,0 +1,14 @@
+SET
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+ id | v | w 
+----+---+---
+  1 | a | 
+  2 | b | B
+(2 rows)
+
+RESET

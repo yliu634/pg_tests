@@ -1,0 +1,24 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 4
+DROP INDEX
+CREATE INDEX
+DROP INDEX
+CREATE INDEX
+DROP INDEX
+CREATE INDEX
+DROP INDEX
+CREATE INDEX
+DROP INDEX
+CREATE INDEX
+ schemaname | tablename |     indexname     |                                           indexdef                                           
+------------+-----------+-------------------+----------------------------------------------------------------------------------------------
+ public     | idx_tbl   | idx_tbl_a         | CREATE INDEX idx_tbl_a ON public.idx_tbl USING btree (a)
+ public     | idx_tbl   | idx_tbl_a_include | CREATE INDEX idx_tbl_a_include ON public.idx_tbl USING btree (a) INCLUDE (c)
+ public     | idx_tbl   | idx_tbl_b_unique  | CREATE UNIQUE INDEX idx_tbl_b_unique ON public.idx_tbl USING btree (b) WHERE (b IS NOT NULL)
+ public     | idx_tbl   | idx_tbl_c_expr    | CREATE INDEX idx_tbl_c_expr ON public.idx_tbl USING btree (lower(c))
+ public     | idx_tbl   | idx_tbl_c_partial | CREATE INDEX idx_tbl_c_partial ON public.idx_tbl USING btree (c) WHERE (b > 10)
+(5 rows)
+
+RESET

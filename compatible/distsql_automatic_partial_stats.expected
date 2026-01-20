@@ -1,0 +1,14 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 100
+DROP INDEX
+CREATE INDEX
+ANALYZE
+ tablename | attname | n_distinct | most_common_vals 
+-----------+---------+------------+------------------
+ aps_tbl   | a       |         -1 | 
+ aps_tbl   | b       |          4 | {0,1,2,3}
+(2 rows)
+
+RESET

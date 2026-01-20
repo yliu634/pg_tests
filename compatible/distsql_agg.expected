@@ -1,0 +1,24 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 5
+ total_rows | nonnull_v | sum_v |        avg_v        
+------------+-----------+-------+---------------------
+          5 |         4 |    42 | 10.5000000000000000
+(1 row)
+
+ k | n | sum_v 
+---+---+-------
+ 1 | 2 |    30
+ 2 | 2 |     5
+ 3 | 1 |     7
+(3 rows)
+
+        QUERY PLAN         
+---------------------------
+ HashAggregate
+   Group Key: k
+   ->  Seq Scan on agg_tbl
+(3 rows)
+
+RESET

@@ -1,0 +1,195 @@
+SET
+DROP DATABASE
+DROP SCHEMA
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TYPE
+DROP TYPE
+DROP TYPE
+DROP TYPE
+CREATE TYPE
+DROP TYPE
+CREATE TYPE
+ a | b 
+---+---
+ 1 | 2
+(1 row)
+
+CREATE TABLE
+CREATE TYPE
+CREATE TABLE
+ALTER TABLE
+  row  | a | b 
+-------+---+---
+ (1,2) | 1 | 2
+(1 row)
+
+ foo 
+-----
+   1
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 1
+INSERT 0 2
+   a   | a | b 
+-------+---+---
+       |   |  
+ (1,2) | 1 | 2
+ (1,)  | 1 |  
+ (1,2) | 1 | 2
+ (1,)  | 1 |  
+(5 rows)
+
+DROP TABLE
+CREATE TYPE
+ database_name | schema_name | descriptor_name |                      create_statement                       
+---------------+-------------+-----------------+-------------------------------------------------------------
+ pg_tests      | public      | arr_composite   | CREATE TYPE public.arr_composite AS (a integer[], b text[])
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+          x          
+---------------------
+ ("{1,2,3}","{a,b}")
+ ("{4,5}","{c,d,e}")
+(2 rows)
+
+    a    |    b    
+---------+---------
+ {1,2,3} | {a,b}
+ {4,5}   | {c,d,e}
+(2 rows)
+
+DROP TABLE
+DROP TYPE
+DROP TABLE
+CREATE TABLE
+ column_name | data_type 
+-------------+-----------
+ a           | t[]
+(1 row)
+
+ column_name | data_type 
+-------------+-----------
+ a           | t[]
+(1 row)
+
+INSERT 0 1
+               a               
+-------------------------------
+ {"(1,2)","(3,4)",NULL,"(5,)"}
+(1 row)
+
+DROP TABLE
+DROP TYPE
+CREATE TYPE
+DROP TABLE
+ database_name | schema_name | descriptor_name |                create_statement                
+---------------+-------------+-----------------+------------------------------------------------
+ pg_tests      | public      | t               | CREATE TYPE public.t AS (a integer, b integer)
+ pg_tests      | public      | t2              | CREATE TYPE public.t2 AS (t1 t, t2 t)
+ pg_tests      | public      | t_single        | CREATE TYPE public.t_single AS (a integer)
+(3 rows)
+
+DROP TYPE
+DROP TYPE
+DROP TYPE
+CREATE TYPE
+DROP TYPE
+CREATE TYPE
+DROP TABLE
+CREATE TABLE
+DROP TYPE
+CREATE TYPE
+DROP TYPE
+CREATE TYPE
+DROP TYPE
+CREATE TYPE
+DROP TYPE
+DROP TYPE
+CREATE TYPE
+DROP TABLE
+CREATE TABLE
+ALTER TABLE
+DROP TYPE
+DROP TYPE
+CREATE TYPE
+DROP TABLE
+CREATE TABLE
+CREATE FUNCTION
+DROP TRIGGER
+CREATE TRIGGER
+CREATE FUNCTION
+DROP TRIGGER
+DROP FUNCTION
+DROP TYPE
+CREATE TYPE
+DROP TABLE
+CREATE TABLE
+ALTER TABLE
+DROP TYPE
+DROP TYPE
+CREATE TYPE
+DROP TABLE
+CREATE TABLE
+DROP INDEX
+CREATE INDEX
+DROP INDEX
+DROP TYPE
+DROP TABLE
+DROP TYPE
+CREATE TYPE
+CREATE TABLE
+ALTER TABLE
+DROP TABLE
+DROP TYPE
+DROP TYPE
+DROP TYPE
+DROP SCHEMA
+CREATE TYPE
+CREATE TYPE
+CREATE SCHEMA
+CREATE TYPE
+CREATE TYPE
+ database_name | schema_name | type_name | typtype 
+---------------+-------------+-----------+---------
+ pg_tests      | public      | ct1       | c
+ pg_tests      | public      | et1       | e
+ pg_tests      | sc1         | ct2       | c
+ pg_tests      | sc1         | ct3       | c
+(4 rows)
+
+DROP TYPE
+DROP TYPE
+DROP SCHEMA
+DROP TYPE
+DROP TYPE
+DROP DATABASE
+CREATE DATABASE
+You are now connected to database "CaseSensitiveDatabase" as user "postgres".
+SET
+DROP TYPE
+DROP TYPE
+CREATE TYPE
+CREATE TYPE
+     database_name     | schema_name | type_name | typtype 
+-----------------------+-------------+-----------+---------
+ CaseSensitiveDatabase | public      | ct4       | c
+ CaseSensitiveDatabase | public      | et5       | e
+(2 rows)
+
+You are now connected to database "pg_tests" as user "postgres".
+SET
+DROP DATABASE
+RESET

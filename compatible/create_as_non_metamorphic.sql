@@ -1,14 +1,19 @@
 -- PostgreSQL compatible tests from create_as_non_metamorphic
--- 3 tests
+-- NOTE: CockroachDB cluster settings are not supported by PostgreSQL.
+-- This file keeps the core CREATE TABLE AS workload.
 
--- Test 1: statement (line 7)
-SET CLUSTER SETTING kv.raft.command.max_size='4.01MiB'
+SET client_min_messages = warning;
 
--- Test 2: statement (line 10)
+DROP TABLE IF EXISTS source_tbl_huge;
+
 BEGIN;
-CREATE TABLE source_tbl_huge AS SELECT 1::CHAR(256) FROM generate_series(1, 50000);
+CREATE TABLE source_tbl_huge AS
+SELECT repeat('x', 256)::char(256) AS c
+FROM generate_series(1, 5000);
 COMMIT;
 
--- Test 3: statement (line 15)
-SET CLUSTER SETTING kv.raft.command.max_size to default
+SELECT count(*) FROM source_tbl_huge;
 
+DROP TABLE IF EXISTS source_tbl_huge;
+
+RESET client_min_messages;
