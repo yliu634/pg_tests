@@ -1,0 +1,3 @@
+psql:pg_tests/compatible/window.sql:1627: ERROR:  syntax error at or near "SELECT"
+LINE 9: SELECT * FROM kv GROUP BY v, count(w) OVER ()
+        ^

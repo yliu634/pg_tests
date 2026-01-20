@@ -13,28 +13,28 @@ INSERT INTO kv VALUES
 -- Test 2: query (line 30)
 SELECT * FROM kv GROUP BY v, count(w) OVER ()
 
-query error window functions are not allowed in GROUP BY
+-- query error window functions are not allowed in GROUP BY
 SELECT count(w) OVER () FROM kv GROUP BY 1
 
-query error window functions are not allowed in RETURNING
+-- query error window functions are not allowed in RETURNING
 INSERT INTO kv (k, v) VALUES (99, 100) RETURNING sum(v) OVER ()
 
-query error column "v" does not exist
+-- query error column "v" does not exist
 SELECT sum(v) FROM kv GROUP BY k LIMIT sum(v) OVER ()
 
-query error column "v" does not exist
+-- query error column "v" does not exist
 SELECT sum(v) FROM kv GROUP BY k LIMIT 1 OFFSET sum(v) OVER ()
 
-query error window functions are not allowed in VALUES
+-- query error window functions are not allowed in VALUES
 INSERT INTO kv (k, v) VALUES (99, count(1) OVER ())
 
-query error window functions are not allowed in WHERE
+-- query error window functions are not allowed in WHERE
 SELECT k FROM kv WHERE avg(k) OVER () > 1
 
-query error window functions are not allowed in HAVING
+-- query error window functions are not allowed in HAVING
 SELECT 1 FROM kv GROUP BY 1 HAVING sum(1) OVER (PARTITION BY 1) > 1
 
-query R
+-- query R
 SELECT avg(k) OVER () FROM kv ORDER BY 1
 
 -- Test 3: query (line 64)
@@ -94,33 +94,33 @@ SELECT * FROM kv WINDOW w AS (PARTITION BY v ORDER BY w) ORDER BY avg(k) OVER w 
 -- Test 21: query (line 247)
 SELECT avg(k) OVER w FROM kv WINDOW w AS (), w AS ()
 
-query error window "x" does not exist
+-- query error window "x" does not exist
 SELECT avg(k) OVER x FROM kv WINDOW w AS ()
 
-query error window "x" does not exist
+-- query error window "x" does not exist
 SELECT avg(k) OVER (x) FROM kv WINDOW w AS ()
 
-query error cannot override PARTITION BY clause of window "w"
+-- query error cannot override PARTITION BY clause of window "w"
 SELECT avg(k) OVER (w PARTITION BY v) FROM kv WINDOW w AS ()
 
-query error cannot override PARTITION BY clause of window "w"
+-- query error cannot override PARTITION BY clause of window "w"
 SELECT avg(k) OVER (w PARTITION BY v) FROM kv WINDOW w AS (PARTITION BY v)
 
-query error cannot override ORDER BY clause of window "w"
+-- query error cannot override ORDER BY clause of window "w"
 SELECT avg(k) OVER (w ORDER BY v) FROM kv WINDOW w AS (ORDER BY v)
 
-query error column "a" does not exist
+-- query error column "a" does not exist
 SELECT avg(k) OVER (PARTITION BY a) FROM kv
 
-query error column "a" does not exist
+-- query error column "a" does not exist
 SELECT avg(k) OVER (ORDER BY a) FROM kv
 
 # TODO(justin): this should have pgcode 42803 but CBO currently doesn't get
 # it right.
-query error window functions are not allowed in aggregate
+-- query error window functions are not allowed in aggregate
 SELECT avg(avg(k) OVER ()) FROM kv ORDER BY 1
 
-query R
+-- query R
 SELECT avg(avg(k)) OVER () FROM kv ORDER BY 1
 
 -- Test 22: query (line 281)
@@ -129,19 +129,19 @@ SELECT avg(k) OVER (), avg(v) OVER () FROM kv ORDER BY 1
 -- Test 23: query (line 291)
 SELECT now() OVER () FROM kv ORDER BY 1
 
-query error window function rank\(\) requires an OVER clause
+-- query error window function rank\(\) requires an OVER clause
 SELECT rank() FROM kv
 
-query error unknown signature: rank\(int\)
+-- query error unknown signature: rank\(int\)
 SELECT rank(22) FROM kv
 
-query error window function calls cannot be nested
+-- query error window function calls cannot be nested
 SELECT avg(avg(k) OVER ()) OVER () FROM kv ORDER BY 1
 
-query error OVER specified, but round\(\) is neither a window function nor an aggregate function
+-- query error OVER specified, but round\(\) is neither a window function nor an aggregate function
 SELECT round(avg(k) OVER ()) OVER () FROM kv ORDER BY 1
 
-query R
+-- query R
 SELECT round(avg(k) OVER (PARTITION BY v ORDER BY w)) FROM kv ORDER BY 1
 
 -- Test 24: query (line 316)
@@ -169,10 +169,10 @@ SELECT avg(d) OVER (PARTITION BY v, v, v, v, v, v, v, v, v, v) FROM kv WHERE FAL
 SELECT avg(d) OVER (PARTITION BY v, v, v, v, v, v, v, v, v, v) FROM kv WHERE k = 3 ORDER BY 1
 
 -- Test 32: query (line 379)
-SELECT k, concat_agg(s) OVER (PARTITION BY k ORDER BY w) FROM kv ORDER BY 1
+SELECT k, string_agg(s, '') OVER (PARTITION BY k ORDER BY w) FROM kv ORDER BY 1
 
 -- Test 33: query (line 389)
-SELECT k, concat_agg(s) OVER (PARTITION BY v ORDER BY w, k) FROM kv ORDER BY 1
+SELECT k, string_agg(s, '') OVER (PARTITION BY v ORDER BY w, k) FROM kv ORDER BY 1
 
 -- Test 34: query (line 399)
 SELECT k, bool_and(b) OVER (PARTITION BY v ORDER BY w) FROM kv ORDER BY 1
@@ -324,10 +324,10 @@ SELECT k, v, w, cume_dist() OVER (PARTITION BY v ORDER BY w) FROM kv ORDER BY 1
 -- Test 82: query (line 927)
 SELECT k, ntile(-10) OVER () FROM kv ORDER BY 1
 
-query error argument of ntile\(\) must be greater than zero
+-- query error argument of ntile\(\) must be greater than zero
 SELECT k, ntile(0) OVER () FROM kv ORDER BY 1
 
-query II
+-- query II
 SELECT k, ntile(NULL::INT) OVER () FROM kv ORDER BY 1
 
 -- Test 83: query (line 946)
@@ -532,13 +532,13 @@ SELECT k, last_value(v) OVER (PARTITION BY k) FROM kv ORDER BY 1
 -- Test 149: query (line 1829)
 SELECT k, nth_value(v, 'FOO') OVER () FROM kv ORDER BY 1
 
-query error argument of nth_value\(\) must be greater than zero
+-- query error argument of nth_value\(\) must be greater than zero
 SELECT k, nth_value(v, -99) OVER () FROM kv ORDER BY 1
 
-query error argument of nth_value\(\) must be greater than zero
+-- query error argument of nth_value\(\) must be greater than zero
 SELECT k, nth_value(v, 0) OVER () FROM kv ORDER BY 1
 
-query II
+-- query II
 SELECT k, nth_value(NULL::INT, 5) OVER () FROM kv ORDER BY 1
 
 -- Test 150: query (line 1851)
@@ -577,13 +577,13 @@ INSERT INTO kv VALUES (12, -1, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
 -- Test 161: query (line 1985)
 SELECT k, nth_value(v, v) OVER () FROM kv ORDER BY 1
 
-statement count 1
+-- statement count 1
 DELETE FROM kv WHERE k = 12
 
-query error FILTER specified but rank\(\) is not an aggregate function
+-- query error FILTER specified but rank\(\) is not an aggregate function
 SELECT k, rank() FILTER (WHERE k=1) OVER () FROM kv
 
-query TT
+-- query TT
 SELECT i, avg(i) OVER (ORDER BY i) FROM kv ORDER BY i
 
 -- Test 162: query (line 2009)
@@ -596,7 +596,7 @@ SELECT (1/j) * max(i) * (row_number() OVER (ORDER BY max(i))) FROM (SELECT 1 AS 
 SELECT max(i) * (1/j) * (row_number() OVER (ORDER BY max(i))) FROM (SELECT 1 AS i, 2 AS j) GROUP BY j
 
 -- Test 165: statement (line 2025)
-SELECT final_variance(1.2, 1.2, 123) OVER (PARTITION BY k) FROM kv
+-- SELECT final_variance(1.2, 1.2, 123) OVER (PARTITION BY k) FROM kv (CockroachDB internal function)
 
 -- Test 166: statement (line 2028)
 CREATE TABLE products (
@@ -1346,7 +1346,7 @@ OVER (PARTITION BY company_id ORDER BY id)
 FROM string_agg_test
 ORDER BY company_id, id;
 
-query IT colnames
+-- query IT colnames
 SELECT company_id, string_agg(employee, lower(employee))
 OVER (PARTITION BY company_id)
 FROM string_agg_test
@@ -1435,7 +1435,7 @@ ORDER BY
   k
 
 -- Test 351: query (line 4079)
-SELECT count(*) >= 26 FROM crdb_internal.feature_usage WHERE feature_name LIKE 'sql.plan.window_function%' AND usage_count > 0
+-- SELECT count(*) >= 26 FROM crdb_internal.feature_usage WHERE feature_name LIKE 'sql.plan.window_function%' AND usage_count > 0 (CockroachDB internal table)
 
 -- Test 352: query (line 4085)
 SELECT
@@ -1479,7 +1479,7 @@ VALUES (1.0),
 
 -- Test 359: query (line 4157)
 SELECT x,
-       sqrdiff(x) OVER (ORDER BY x) as sqrdiff,
+       variance(x) OVER (ORDER BY x) as sqrdiff,
        var_pop(x) OVER (ORDER BY x) as var_pop,
        var_samp(x) OVER (ORDER BY x) as var_samp,
        stddev_pop(x) OVER (ORDER BY x) as stddev_pop,
@@ -1532,30 +1532,30 @@ DROP TABLE IF EXISTS t;
 -- Test 371: statement (line 4259)
 CREATE TABLE t (x DATE);
 INSERT INTO t VALUES ('5874897-01-01'::DATE), ('1999-01-08'::DATE);
-SET vectorize=off;
+-- SET vectorize=off (removed - CockroachDB specific)
 
 -- Test 372: query (line 4264)
 SELECT first_value(x) OVER (ORDER BY x RANGE BETWEEN CURRENT ROW AND '0 YEAR'::INTERVAL FOLLOWING) FROM t;
 
-statement ok
-RESET vectorize;
+-- statement ok
+-- RESET vectorize (removed - CockroachDB specific)
 
 # Regression test for incorrect results for min and max when the window frame
 # shrinks.
-statement ok
+-- statement ok
 DROP TABLE IF EXISTS t;
 
-statement ok
+-- statement ok
 CREATE TABLE t (a INT);
 INSERT INTO t VALUES (1), (-1), (NULL);
-SET vectorize=off;
+-- SET vectorize=off (removed - CockroachDB specific)
 
-query III rowsort
+-- query III rowsort
 SELECT a, max(a) OVER w, min(a) OVER w FROM t
 WINDOW w AS (ORDER BY a DESC RANGE BETWEEN 10 PRECEDING AND UNBOUNDED FOLLOWING);
 
 -- Test 373: statement (line 4288)
-RESET vectorize;
+-- RESET vectorize (removed - CockroachDB specific)
 
 -- Test 374: statement (line 4294)
 DROP TABLE IF EXISTS t;
@@ -1607,10 +1607,10 @@ SELECT
 FROM
   nulls_last_test
 ORDER BY
-  id NULLS LAST
+  id NULLS LAST;
 
 -- Test 381: statement (line 4379)
-SET null_ordered_last = true
+-- SET null_ordered_last (removed - CockroachDB specific)
 
 -- Test 382: query (line 4383)
 SELECT
@@ -1620,8 +1620,8 @@ SELECT
 FROM
   nulls_last_test
 ORDER BY
-  id
+  id;
 
 -- Test 383: statement (line 4398)
-RESET null_ordered_last
+-- RESET null_ordered_last (removed - CockroachDB specific)
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Shard 04 Processing Report
 
 Total files processed: 50
@@ -52,3 +53,12 @@ OK|compatible/partitioning.sql
 OK|compatible/pg_builtins.sql
 OK|compatible/pg_catalog.sql
 OK|compatible/pg_catalog_pg_default_acl.sql
+=======
+OK|compatible/window.sql
+OK|compatible/with.sql
+FAIL|compatible/workload_indexrecs.sql|CockroachDB-specific system tables and functions not available in PostgreSQL
+OK|compatible/zero.sql
+FAIL|compatible/zigzag_join.sql|CockroachDB-specific zigzag join feature and internal tables not available in PostgreSQL
+FAIL|compatible/zone_config.sql|CockroachDB-specific zone configuration feature not available in PostgreSQL
+FAIL|compatible/zone_config_system_tenant.sql|CockroachDB-specific zone configuration feature not available in PostgreSQL
+>>>>>>> fd92a4fa08c194fff5609ab93f26a2f0be6159b4

@@ -46,18 +46,18 @@ SELECT * FROM t
 -- Test 12: query (line 63)
 WITH t(b, c) AS (SELECT a FROM x) SELECT b, t.b FROM t
 
-# Ensure you can't reference the original table name
-query error no data source matches prefix: x
+-- # Ensure you can't reference the original table name
+-- query error no data source matches prefix: x
 WITH t AS (SELECT a FROM x) SELECT a, x.t FROM t
 
-# Nested WITH, name shadowing
-query I
+-- # Nested WITH, name shadowing
+-- query I
 WITH t(x) AS (WITH t(x) AS (SELECT 1) SELECT x * 10 FROM t) SELECT x + 2 FROM t
 
 -- Test 13: query (line 78)
 WITH t AS (SELECT * FROM x) INSERT INTO t VALUES (1)
 
-query I rowsort
+-- query I rowsort
 WITH t AS (SELECT a FROM x) INSERT INTO x SELECT a + 20 FROM t RETURNING *
 
 -- Test 14: query (line 88)
@@ -87,8 +87,8 @@ WITH t AS (
 )
 SELECT * FROM t
 
-# however if there are no side effects, no errors are required.
-query I
+-- # however if there are no side effects, no errors are required.
+-- query I
 WITH t AS (SELECT 1) SELECT 2
 
 -- Test 20: statement (line 153)
@@ -108,20 +108,20 @@ INSERT INTO a(x)
 	   TABLE waa))
 
 
-# When #24303 is fixed, the following query should fail with
-# error "no such relation woo".
-query error unimplemented: multiple WITH clauses in parentheses
+-- # When #24303 is fixed, the following query should fail with
+-- # error "no such relation woo".
+-- query error unimplemented: multiple WITH clauses in parentheses
 (WITH woo AS (VALUES (1))
     (WITH waa AS (VALUES (2))
 	   TABLE woo))
 
-statement ok
+-- statement ok
 CREATE TABLE lim(x) AS SELECT 0
 
-# This is an oddity in PostgreSQL: even though the WITH clause
-# occurs in the inside parentheses, the scope of the alias `lim`
-# extends to the outer parentheses.
-query I
+-- # This is an oddity in PostgreSQL: even though the WITH clause
+-- # occurs in the inside parentheses, the scope of the alias `lim`
+-- # extends to the outer parentheses.
+-- query I
 ((WITH lim(x) AS (SELECT 1) SELECT 123)
  LIMIT (
     SELECT x FROM lim -- intuitively this should refer to the real table lim defined above
@@ -418,19 +418,19 @@ WITH RECURSIVE nodes AS (
 )
 SELECT * FROM nodes
 
-# The recursive query seed column types must match the output columns types.
-query error pgcode 42804 recursive query \"foo\" column 1 has type int in non-recursive term but type decimal overall
+-- # The recursive query seed column types must match the output columns types.
+-- query error pgcode 42804 recursive query \"foo\" column 1 has type int in non-recursive term but type decimal overall
 WITH RECURSIVE foo(i) AS
     (SELECT i FROM (VALUES(1),(2)) t(i)
     UNION ALL
     SELECT (i+1)::numeric(10,0) FROM foo WHERE i < 10)
 SELECT * FROM foo
 
-# Tests with correlated CTEs.
-statement ok
+-- # Tests with correlated CTEs.
+-- statement ok
 INSERT INTO x SELECT generate_series(1, 3)
 
-query II rowsort
+-- query II rowsort
 SELECT y.a, (
   WITH foo AS MATERIALIZED (SELECT x.a FROM x WHERE x.a = y.a)
   SELECT * FROM foo
@@ -577,7 +577,7 @@ WITH
   v AS (INSERT INTO u VALUES (1, 1) RETURNING *)
 INSERT INTO u SELECT * FROM v
 
-query II
+-- query II
 SELECT i, j FROM u@u_pkey
 
 -- Test 113: query (line 1038)
@@ -589,7 +589,7 @@ WITH
   w AS (UPSERT INTO u SELECT i, j + 1 FROM v RETURNING *)
 SELECT * FROM w
 
-query II
+-- query II
 SELECT i, j FROM u@u_pkey
 
 -- Test 115: query (line 1056)
@@ -601,7 +601,7 @@ WITH
   w AS (UPDATE u SET j = 4 WHERE i = 0 RETURNING *)
 SELECT * FROM u
 
-query II
+-- query II
 SELECT i, j FROM u@u_pkey
 
 -- Test 117: query (line 1075)
@@ -613,7 +613,7 @@ WITH
   w AS (UPDATE u SET j = v.j + 1 FROM v WHERE u.i = v.i RETURNING *)
 SELECT * FROM w
 
-query II
+-- query II
 SELECT i, j FROM u@u_pkey
 
 -- Test 119: query (line 1094)
@@ -624,7 +624,7 @@ WITH
   v AS (INSERT INTO u VALUES (0, 42), (1, 42) ON CONFLICT (i) DO UPDATE SET j = 52 RETURNING *)
 INSERT INTO u SELECT i, j + 1 FROM v ON CONFLICT (i) DO UPDATE SET j = v.j + 100 RETURNING *
 
-query II
+-- query II
 SELECT i, j FROM u@u_pkey
 
 -- Test 121: query (line 1111)
@@ -636,7 +636,7 @@ WITH
   w AS (DELETE FROM u ORDER BY i LIMIT 2 RETURNING *)
 SELECT * FROM w
 
-query II
+-- query II
 SELECT i, j FROM u@u_pkey
 
 -- Test 123: query (line 1129)
