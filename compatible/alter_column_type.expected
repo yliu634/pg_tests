@@ -169,15 +169,15 @@ INSERT 0 3
     x     
 ----------
  Backhaus
- Bär
  Baz
+ Bär
 (3 rows)
 
     x     
 ----------
  Backhaus
- Bär
  Baz
+ Bär
 (3 rows)
 
 CREATE TABLE
