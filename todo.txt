@@ -1,8 +1,3 @@
-pg_tests/compatible/alter_role_set.sql
-pg_tests/compatible/alter_schema_owner.sql
-pg_tests/compatible/alter_sequence.sql
-pg_tests/compatible/alter_sequence_owner.sql
-pg_tests/compatible/alter_table.sql
 pg_tests/compatible/alter_table_owner.sql
 pg_tests/compatible/alter_type.sql
 pg_tests/compatible/alter_type_owner.sql

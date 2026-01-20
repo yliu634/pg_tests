@@ -20,3 +20,8 @@
 - Processed: [pg_tests/compatible/alter_default_privileges_in_schema.sql, pg_tests/compatible/alter_default_privileges_with_grant_option.sql, pg_tests/compatible/alter_external_connection.sql, pg_tests/compatible/alter_primary_key.sql, pg_tests/compatible/alter_role.sql]
 - Remaining: 445
 - Failures this batch: 0
+
+## Batch 2026-01-20T11:58:29Z
+- Processed: [pg_tests/compatible/alter_role_set.sql, pg_tests/compatible/alter_schema_owner.sql, pg_tests/compatible/alter_sequence.sql, pg_tests/compatible/alter_sequence_owner.sql, pg_tests/compatible/alter_table.sql]
+- Remaining: 440
+- Failures this batch: 0
