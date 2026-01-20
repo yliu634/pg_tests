@@ -1,0 +1,5 @@
+pg_tests/compatible/canary_stats.sql
+pg_tests/compatible/cascade.sql
+pg_tests/compatible/case.sql
+pg_tests/compatible/case_sensitive_names.sql
+pg_tests/compatible/cast.sql
