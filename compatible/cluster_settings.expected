@@ -1,0 +1,72 @@
+SET
+DROP ROLE
+CREATE ROLE
+SET
+SET
+SET
+SET
+psql:pg_tests/compatible/cluster_settings.sql:21: ERROR:  invalid value for parameter "log_min_duration_statement": "true"
+psql:pg_tests/compatible/cluster_settings.sql:22: ERROR:  invalid value for parameter "log_min_duration_statement": "true"
+psql:pg_tests/compatible/cluster_settings.sql:28: ERROR:  0 kB is outside the valid range for parameter "work_mem" (64 .. 2147483647)
+SET
+RESET
+SET
+SET
+ default_statistics_target 
+---------------------------
+ 4
+(1 row)
+
+          variable          | value 
+----------------------------+-------
+ application_name           | 22.2
+ default_statistics_target  | 4
+ log_min_duration_statement | -1
+ work_mem                   | 4096
+(4 rows)
+
+          variable          | value | default_value | origin  
+----------------------------+-------+---------------+---------
+ application_name           | 22.2  | psql          | session
+ default_statistics_target  | 4     | 100           | session
+ log_min_duration_statement | -1    | -1            | session
+ work_mem                   | 4096  | 4096          | default
+(4 rows)
+
+RESET
+ALTER ROLE
+SET
+psql:pg_tests/compatible/cluster_settings.sql:74: ERROR:  permission denied to set parameter "log_min_duration_statement"
+RESET
+ALTER ROLE
+SET
+SET
+ log_min_duration_statement 
+----------------------------
+ 1ms
+(1 row)
+
+RESET
+ALTER ROLE
+SET
+ name 
+------
+(0 rows)
+
+RESET
+GRANT ROLE
+SET
+      name      
+----------------
+ data_directory
+(1 row)
+
+RESET
+REVOKE ROLE
+SET
+ name 
+------
+(0 rows)
+
+RESET
+RESET
