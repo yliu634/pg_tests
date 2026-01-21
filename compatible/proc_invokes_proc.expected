@@ -1,0 +1,46 @@
+CREATE PROCEDURE
+CREATE PROCEDURE
+CREATE PROCEDURE
+DROP PROCEDURE
+DROP PROCEDURE
+psql:compatible/proc_invokes_proc.sql:25: ERROR:  procedure a() does not exist
+CREATE TYPE
+CREATE PROCEDURE
+CREATE PROCEDURE
+DROP TYPE
+DROP PROCEDURE
+DROP PROCEDURE
+psql:compatible/proc_invokes_proc.sql:48: ERROR:  type "e" does not exist
+CREATE TABLE
+CREATE PROCEDURE
+CREATE PROCEDURE
+CALL
+CALL
+psql:compatible/proc_invokes_proc.sql:77: ERROR:  duplicate key value violates unique constraint "ab_pkey"
+DETAIL:  Key (a)=(1) already exists.
+CONTEXT:  SQL function "ins_ab" statement 1
+SQL function "ins3" statement 1
+ a | b  
+---+----
+ 4 | 40
+ 1 | 10
+ 2 | 20
+ 3 | 30
+(4 rows)
+
+DROP PROCEDURE
+DROP PROCEDURE
+psql:compatible/proc_invokes_proc.sql:89: ERROR:  procedure ins_ab(integer, integer) does not exist
+DROP TABLE
+CREATE TABLE
+CREATE PROCEDURE
+CREATE PROCEDURE
+CALL
+ i  
+----
+ 11
+(1 row)
+
+DROP PROCEDURE
+DROP PROCEDURE
+DROP TABLE

@@ -1,0 +1,70 @@
+SET
+   pg_lsn   
+------------
+ A01F0/1AAA
+(1 row)
+
+CREATE TABLE
+INSERT 0 3
+      id      |    val    
+--------------+-----------
+ 10/10        | A01/A100
+ 100/100      | A01/A1000
+ FFFFF100/100 | A001/A100
+(3 rows)
+
+  id   |   val    
+-------+----------
+ 10/10 | A01/A100
+(1 row)
+
+   id    |    val    
+---------+-----------
+ 100/100 | A01/A1000
+(1 row)
+
+psql:pg_tests/compatible/pg_lsn.sql:31: ERROR:  cannot convert infinity to pg_lsn
+psql:pg_tests/compatible/pg_lsn.sql:34: ERROR:  cannot add NaN to pg_lsn
+psql:pg_tests/compatible/pg_lsn.sql:37: ERROR:  cannot subtract NaN from pg_lsn
+psql:pg_tests/compatible/pg_lsn.sql:40: ERROR:  pg_lsn out of range
+psql:pg_tests/compatible/pg_lsn.sql:43: ERROR:  pg_lsn out of range
+        val        
+-------------------
+ 0/1
+ 0/2
+ 0/1
+ 0/2
+ 0/2
+ FFFFFFFF/FFFFFFFE
+ FFFFFFFF/FFFFFFFE
+ FFFFFFFF/FFFFFFFE
+ FFFFFFFF/FFFFFFFD
+(9 rows)
+
+          val          
+-----------------------
+          -68719476992
+        23021024706816
+  18446744073709551615
+ -18446744073709551615
+(4 rows)
+
+psql:pg_tests/compatible/pg_lsn.sql:69: ERROR:  invalid input syntax for type pg_lsn: "A/G"
+LINE 1: SELECT 'A/G'::pg_lsn;
+               ^
+psql:pg_tests/compatible/pg_lsn.sql:72: ERROR:  invalid input syntax for type pg_lsn: "0G"
+LINE 1: SELECT '0G'::pg_lsn;
+               ^
+psql:pg_tests/compatible/pg_lsn.sql:75: ERROR:  invalid input syntax for type pg_lsn: "ab"
+LINE 1: SELECT 'ab'::PG_LSN;
+               ^
+psql:pg_tests/compatible/pg_lsn.sql:78: ERROR:  invalid input syntax for type pg_lsn: "ab"
+LINE 1: SELECT pg_lsn('ab');
+                      ^
+psql:pg_tests/compatible/pg_lsn.sql:81: ERROR:  invalid input syntax for type pg_lsn: "1"
+LINE 1: SELECT '1'::PG_LSN;
+               ^
+psql:pg_tests/compatible/pg_lsn.sql:84: ERROR:  invalid input syntax for type pg_lsn: ""
+LINE 1: SELECT ''::PG_LSN;
+               ^
+RESET

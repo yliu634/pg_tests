@@ -1,0 +1,10 @@
+CREATE SCHEMA
+CREATE FUNCTION
+CREATE SEQUENCE
+ nextval 
+---------
+       1
+(1 row)
+
+psql:compatible/retry.sql:27: ERROR:  wrong
+CONTEXT:  PL/pgSQL function crdb_internal.force_error(text,text) line 3 at RAISE

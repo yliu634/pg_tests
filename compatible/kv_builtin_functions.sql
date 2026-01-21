@@ -1,6 +1,43 @@
 -- PostgreSQL compatible tests from kv_builtin_functions
 -- 10 tests
 
+SET client_min_messages = warning;
+
+-- CockroachDB exposes crdb_internal.kv_set_queue_active(); PostgreSQL doesn't.
+-- Provide a tiny stub with matching signature so the test can run.
+CREATE SCHEMA IF NOT EXISTS crdb_internal;
+CREATE OR REPLACE FUNCTION crdb_internal.kv_set_queue_active(
+  queue_name TEXT,
+  active BOOL,
+  store_id INT DEFAULT NULL
+) RETURNS BOOL
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  -- In Cockroach, targeting a non-existent store errors.
+  IF store_id IS NOT NULL AND store_id <> 1 THEN
+    RAISE EXCEPTION 'pq: store % not found on this node', store_id;
+  END IF;
+
+  IF queue_name IN (
+    'mvccGC',
+    'merge',
+    'split',
+    'replicate',
+    'replicaGC',
+    'raftlog',
+    'raftsnapshot',
+    'consistencyChecker',
+    'timeseriesMaintenance'
+  ) THEN
+    -- Cockroach returns true on success.
+    RETURN true;
+  END IF;
+
+  RAISE EXCEPTION 'pq: unknown queue "%"', queue_name;
+END;
+$$;
+
 -- Test 1: query (line 7)
 SELECT crdb_internal.kv_set_queue_active('mvccGC', true);
 
@@ -29,12 +66,15 @@ SELECT crdb_internal.kv_set_queue_active('consistencyChecker', false);
 SELECT crdb_internal.kv_set_queue_active('timeseriesMaintenance', false);
 
 -- Test 10: query (line 52)
+\set ON_ERROR_STOP 0
 SELECT crdb_internal.kv_set_queue_active('non-existent', true);
+\set ON_ERROR_STOP 1
 
-# Test crdb_internal.kv_set_queue_active commands that target a named store on
-# the gateway node.
-subtest kv_set_queue_active_named_store
+-- Test crdb_internal.kv_set_queue_active commands that target a named store on
+-- the gateway node.
+-- subtest kv_set_queue_active_named_store
 
-query B
+-- query B
 SELECT crdb_internal.kv_set_queue_active('split', false, 1);
 
+RESET client_min_messages;

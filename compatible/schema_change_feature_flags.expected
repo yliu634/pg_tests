@@ -1,0 +1,86 @@
+SET
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE SEQUENCE
+CREATE TYPE
+CREATE VIEW
+psql:compatible/schema_change_feature_flags.sql:19: ERROR:  syntax error at or near "SETTING"
+LINE 1: SET CLUSTER SETTING feature.schema_change.enabled = FALSE;
+                    ^
+psql:compatible/schema_change_feature_flags.sql:25: ERROR:  relation "t" already exists
+psql:compatible/schema_change_feature_flags.sql:28: ERROR:  schema "s" already exists
+psql:compatible/schema_change_feature_flags.sql:31: ERROR:  type "typ" already exists
+psql:compatible/schema_change_feature_flags.sql:34: ERROR:  relation "bar" already exists
+psql:compatible/schema_change_feature_flags.sql:37: ERROR:  relation "seq" already exists
+CREATE INDEX
+psql:compatible/schema_change_feature_flags.sql:61: ERROR:  syntax error at or near "PARTITION"
+LINE 1: ALTER TABLE t1 PARTITION BY NOTHING;
+                       ^
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+psql:compatible/schema_change_feature_flags.sql:76: ERROR:  column "a" of relation "t1" does not exist
+psql:compatible/schema_change_feature_flags.sql:79: ERROR:  column "a" of relation "t1" does not exist
+psql:compatible/schema_change_feature_flags.sql:82: ERROR:  syntax error at or near "STORED"
+LINE 1: ALTER TABLE t1 ALTER COLUMN a DROP STORED;
+                                           ^
+psql:compatible/schema_change_feature_flags.sql:85: ERROR:  syntax error at or near "CONFIGURE"
+LINE 1: ALTER TABLE t1 CONFIGURE ZONE USING num_replicas=5;
+                       ^
+ALTER TABLE
+psql:compatible/schema_change_feature_flags.sql:91: ERROR:  relation "t" does not exist
+psql:compatible/schema_change_feature_flags.sql:94: ERROR:  syntax error at or near "LOCALITY"
+LINE 1: ALTER TABLE t SET LOCALITY REGIONAL BY ROW;
+                          ^
+psql:compatible/schema_change_feature_flags.sql:97: ERROR:  syntax error at or near "UNSPLIT"
+LINE 1: ALTER TABLE t1 UNSPLIT ALL;
+                       ^
+psql:compatible/schema_change_feature_flags.sql:100: ERROR:  column "a" does not exist
+psql:compatible/schema_change_feature_flags.sql:103: ERROR:  syntax error at or near "@"
+LINE 1: ALTER INDEX t1@i CONFIGURE ZONE DISCARD;
+                      ^
+psql:compatible/schema_change_feature_flags.sql:106: ERROR:  syntax error at or near "@"
+LINE 1: ALTER INDEX t1@i RENAME TO r;
+                      ^
+psql:compatible/schema_change_feature_flags.sql:109: ERROR:  syntax error at or near "@"
+LINE 1: ALTER INDEX t1@i UNSPLIT ALL;
+                      ^
+ALTER SCHEMA
+psql:compatible/schema_change_feature_flags.sql:115: ERROR:  role "testuser" does not exist
+psql:compatible/schema_change_feature_flags.sql:118: ERROR:  schema "s" does not exist
+psql:compatible/schema_change_feature_flags.sql:121: ERROR:  schema "s" does not exist
+psql:compatible/schema_change_feature_flags.sql:124: ERROR:  schema "s" does not exist
+psql:compatible/schema_change_feature_flags.sql:127: ERROR:  schema "s" does not exist
+ALTER SEQUENCE
+psql:compatible/schema_change_feature_flags.sql:133: ERROR:  relation "seq" does not exist
+psql:compatible/schema_change_feature_flags.sql:136: ERROR:  relation "seq" does not exist
+psql:compatible/schema_change_feature_flags.sql:139: ERROR:  role "root" does not exist
+psql:compatible/schema_change_feature_flags.sql:142: ERROR:  role "testuser" does not exist
+psql:compatible/schema_change_feature_flags.sql:148: ERROR:  schema "s" does not exist
+psql:compatible/schema_change_feature_flags.sql:151: ERROR:  schema "s" does not exist
+psql:compatible/schema_change_feature_flags.sql:154: ERROR:  table "t" does not exist
+psql:compatible/schema_change_feature_flags.sql:157: ERROR:  sequence "seq" does not exist
+psql:compatible/schema_change_feature_flags.sql:160: ERROR:  schema "s" does not exist
+DROP VIEW
+psql:compatible/schema_change_feature_flags.sql:166: ERROR:  syntax error at or near "@"
+LINE 1: DROP INDEX t1@i;
+                     ^
+psql:compatible/schema_change_feature_flags.sql:169: ERROR:  relation "t" does not exist
+psql:compatible/schema_change_feature_flags.sql:175: ERROR:  syntax error at or near "@"
+LINE 1: COMMENT ON INDEX t1@i IS 'comment';
+                           ^
+psql:compatible/schema_change_feature_flags.sql:178: ERROR:  relation "t" does not exist
+CREATE FUNCTION
+CREATE FUNCTION
+DROP FUNCTION
+psql:compatible/schema_change_feature_flags.sql:190: ERROR:  function f() does not exist
+psql:compatible/schema_change_feature_flags.sql:193: ERROR:  function f() does not exist
+psql:compatible/schema_change_feature_flags.sql:196: ERROR:  role "new_owner" does not exist
+psql:compatible/schema_change_feature_flags.sql:199: ERROR:  function f() does not exist
+psql:compatible/schema_change_feature_flags.sql:202: ERROR:  syntax error at or near "SETTING"
+LINE 1: SET CLUSTER SETTING feature.schema_change.enabled = TRUE;
+                    ^
+RESET

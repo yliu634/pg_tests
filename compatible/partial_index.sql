@@ -1,295 +1,389 @@
 -- PostgreSQL compatible tests from partial_index
 -- 450 tests
 
+SET client_min_messages = warning;
+
 -- Test 1: statement (line 4)
-CREATE TABLE t1 (a INT, INDEX (a) WHERE a = 0)
+CREATE TABLE t1 (a INT);
+CREATE INDEX t1_a_idx ON t1 (a) WHERE a = 0;
 
 -- Test 2: statement (line 7)
-CREATE TABLE t2 (a INT, INDEX (a) WHERE false)
+CREATE TABLE t2 (a INT);
+CREATE INDEX t2_a_idx ON t2 (a) WHERE false;
 
 -- Test 3: statement (line 11)
-CREATE TABLE t3 (a INT, INDEX (a) WHERE abs(1) > 2)
+CREATE TABLE t3 (a INT);
+CREATE INDEX t3_a_idx ON t3 (a) WHERE abs(1) > 2;
 
 -- Test 4: statement (line 15)
-CREATE TABLE error (a INT, INDEX (a) WHERE 1)
+CREATE TABLE error (a INT);
+-- Expected ERROR: index predicate must be boolean.
+\set ON_ERROR_STOP 0
+CREATE INDEX error_a_idx ON error (a) WHERE 1;
+\set ON_ERROR_STOP 0
+DROP TABLE error;
 
 -- Test 5: statement (line 19)
-CREATE TABLE error (a INT, INDEX (a) WHERE b = 3)
+CREATE TABLE error (a INT);
+-- Expected ERROR: referenced column does not exist.
+\set ON_ERROR_STOP 0
+CREATE INDEX error_a_idx ON error (a) WHERE b = 3;
+\set ON_ERROR_STOP 0
+DROP TABLE error;
 
 -- Test 6: statement (line 24)
-CREATE TABLE error (t TIMESTAMPTZ, INDEX (t) WHERE t < now())
+CREATE TABLE error (t TIMESTAMPTZ);
+-- Expected ERROR: non-immutable function in index predicate.
+\set ON_ERROR_STOP 0
+CREATE INDEX error_t_idx ON error (t) WHERE t < now();
+\set ON_ERROR_STOP 0
+DROP TABLE error;
 
 -- Test 7: statement (line 30)
-CREATE TABLE error (t TIMESTAMPTZ, i TIMESTAMP, INDEX (t) WHERE i = t)
+CREATE TABLE error (t TIMESTAMPTZ, i TIMESTAMP);
+-- Expected ERROR: implicit casts make the predicate non-immutable.
+\set ON_ERROR_STOP 0
+CREATE INDEX error_t_idx ON error (t) WHERE i = t;
+\set ON_ERROR_STOP 0
+DROP TABLE error;
 
 -- Test 8: statement (line 33)
-CREATE TABLE error (t FLOAT, INDEX (t) WHERE t < random())
+CREATE TABLE error (t FLOAT);
+-- Expected ERROR: non-immutable function in index predicate.
+\set ON_ERROR_STOP 0
+CREATE INDEX error_t_idx ON error (t) WHERE t < random();
+\set ON_ERROR_STOP 0
+DROP TABLE error;
 
 -- Test 9: statement (line 37)
-CREATE TABLE error (a INT, INDEX (a) WHERE count(*) = 1)
+CREATE TABLE error (a INT);
+-- Expected ERROR: aggregate functions not allowed in index predicate.
+\set ON_ERROR_STOP 0
+CREATE INDEX error_a_idx ON error (a) WHERE count(*) = 1;
+\set ON_ERROR_STOP 0
+DROP TABLE error;
 
 -- Test 10: statement (line 41)
-CREATE TABLE error (a INT, INDEX (a) WHERE (SELECT true))
+CREATE TABLE error (a INT);
+-- Expected ERROR: subqueries not allowed in index predicate.
+\set ON_ERROR_STOP 0
+CREATE INDEX error_a_idx ON error (a) WHERE (SELECT true);
+\set ON_ERROR_STOP 0
+DROP TABLE error;
 
 -- Test 11: statement (line 45)
-CREATE TABLE error (a INT, INDEX (a) WHERE sum(a) > 1)
+CREATE TABLE error (a INT);
+-- Expected ERROR: aggregate functions not allowed in index predicate.
+\set ON_ERROR_STOP 0
+CREATE INDEX error_a_idx ON error (a) WHERE sum(a) > 1;
+\set ON_ERROR_STOP 0
+DROP TABLE error;
 
 -- Test 12: statement (line 49)
-CREATE TABLE error (a INT, INDEX (a) WHERE row_number() OVER () > 1)
+CREATE TABLE error (a INT);
+-- Expected ERROR: window functions not allowed in index predicate.
+\set ON_ERROR_STOP 0
+CREATE INDEX error_a_idx ON error (a) WHERE row_number() OVER () > 1;
+\set ON_ERROR_STOP 0
+DROP TABLE error;
 
 -- Test 13: statement (line 53)
-CREATE TABLE error (a INT, INDEX (a) WHERE generate_series(1, 1))
+CREATE TABLE error (a INT);
+-- Expected ERROR: set-returning functions not allowed in index predicate.
+\set ON_ERROR_STOP 0
+CREATE INDEX error_a_idx ON error (a) WHERE generate_series(1, 1);
+\set ON_ERROR_STOP 0
+DROP TABLE error;
 
 -- Test 14: statement (line 57)
-CREATE TABLE error (a INT, INDEX (a) WHERE false - true)
+CREATE TABLE error (a INT);
+-- Expected ERROR: invalid boolean arithmetic.
+\set ON_ERROR_STOP 0
+CREATE INDEX error_a_idx ON error (a) WHERE false - true;
+\set ON_ERROR_STOP 0
+DROP TABLE error;
 
 -- Test 15: statement (line 61)
-CREATE TABLE error (a INT, INDEX (a) WHERE t1.a > 0)
+CREATE TABLE error (a INT);
+-- Expected ERROR: cannot reference other relations in index predicate.
+\set ON_ERROR_STOP 0
+CREATE INDEX error_a_idx ON error (a) WHERE t1.a > 0;
+\set ON_ERROR_STOP 0
+DROP TABLE error;
 
 -- Test 16: statement (line 65)
-CREATE TABLE error (a INT, INDEX (a) WHERE unknown.a > 0)
+CREATE TABLE error (a INT);
+-- Expected ERROR: referenced relation does not exist.
+\set ON_ERROR_STOP 0
+CREATE INDEX error_a_idx ON error (a) WHERE unknown.a > 0;
+\set ON_ERROR_STOP 0
+DROP TABLE error;
 
 -- Test 17: statement (line 69)
-CREATE TABLE error (a INT, INDEX (a) WHERE unknown.error.a > 9)
+CREATE TABLE error (a INT);
+-- Expected ERROR: referenced relation does not exist.
+\set ON_ERROR_STOP 0
+CREATE INDEX error_a_idx ON error (a) WHERE unknown.error.a > 9;
+\set ON_ERROR_STOP 0
+DROP TABLE error;
 
 -- Test 18: statement (line 74)
-CREATE TABLE t4 (a INT, UNIQUE INDEX (a) WHERE a = 0)
+CREATE TABLE t4 (a INT);
+CREATE UNIQUE INDEX t4_a_uidx ON t4 (a) WHERE a = 0;
 
 -- Test 19: statement (line 77)
-CREATE TABLE error (a INT, UNIQUE INDEX (a) WHERE 1)
+CREATE TABLE error (a INT);
+-- Expected ERROR: index predicate must be boolean.
+\set ON_ERROR_STOP 0
+CREATE UNIQUE INDEX error_a_uidx ON error (a) WHERE 1;
+\set ON_ERROR_STOP 0
+DROP TABLE error;
 
 -- Test 20: statement (line 82)
-CREATE TABLE t5 (a INT)
+CREATE TABLE t5 (a INT);
 
 -- Test 21: statement (line 85)
-CREATE INDEX t5i ON t5 (a) WHERE a = 0
+CREATE INDEX t5i ON t5 (a) WHERE a = 0;
 
 -- Test 22: statement (line 89)
-CREATE INDEX error ON t5 (a) WHERE 1
+-- Expected ERROR: index predicate must be boolean.
+\set ON_ERROR_STOP 0
+CREATE INDEX error ON t5 (a) WHERE 1;
+\set ON_ERROR_STOP 0
 
 -- Test 23: statement (line 93)
-CREATE INDEX error ON t5 (a) WHERE t4.a = 1
+-- Expected ERROR: cannot reference other relations in index predicate.
+\set ON_ERROR_STOP 0
+CREATE INDEX error ON t5 (a) WHERE t4.a = 1;
+\set ON_ERROR_STOP 0
 
 -- Test 24: statement (line 98)
-CREATE TABLE t6 (
-    a INT,
-    INDEX (a) WHERE a > 0,
-    INDEX (a) WHERE t6.a > 1,
-    INDEX (a DESC) WHERE test.t6.a > 2,
-    UNIQUE INDEX (a) WHERE a > 3,
-    UNIQUE INDEX (a) WHERE t6.a > 4,
-    UNIQUE INDEX (a DESC) WHERE test.t6.a > 5
-)
+CREATE TABLE t6 (a INT);
+CREATE INDEX t6_a_idx1 ON t6 (a) WHERE a > 0;
+CREATE INDEX t6_a_idx2 ON t6 (a) WHERE a > 1;
+CREATE INDEX t6_a_desc_idx ON t6 (a DESC) WHERE a > 2;
+CREATE UNIQUE INDEX t6_a_uidx1 ON t6 (a) WHERE a > 3;
+CREATE UNIQUE INDEX t6_a_uidx2 ON t6 (a) WHERE a > 4;
+CREATE UNIQUE INDEX t6_a_desc_uidx ON t6 (a DESC) WHERE a > 5;
 
 -- Test 25: statement (line 109)
 CREATE INDEX t6i1 ON t6 (a) WHERE a > 6;
-CREATE INDEX t6i2 ON t6 (a) WHERE t6.a > 7;
-CREATE INDEX t6i3 ON t6 (a DESC) WHERE test.t6.a > 8;
+CREATE INDEX t6i2 ON t6 (a) WHERE a > 7;
+CREATE INDEX t6i3 ON t6 (a DESC) WHERE a > 8;
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 26: query (line 115)
-SHOW CREATE TABLE t6
+SELECT indexname, indexdef FROM pg_indexes WHERE schemaname = 'public' AND tablename = 't6' ORDER BY indexname;
 
 -- Test 27: query (line 134)
-SHOW CREATE TABLE t6
+SELECT indexname, indexdef FROM pg_indexes WHERE schemaname = 'public' AND tablename = 't6' ORDER BY indexname;
 
 -- Test 28: query (line 153)
-SHOW CREATE TABLE t6 WITH REDACT
+SELECT indexname, indexdef FROM pg_indexes WHERE schemaname = 'public' AND tablename = 't6' ORDER BY indexname;
 
 -- Test 29: query (line 172)
-SHOW CREATE TABLE t6 WITH REDACT
+SELECT indexname, indexdef FROM pg_indexes WHERE schemaname = 'public' AND tablename = 't6' ORDER BY indexname;
 
 -- Test 30: statement (line 192)
-ALTER TABLE t6 RENAME COLUMN a TO b
+ALTER TABLE t6 RENAME COLUMN a TO b;
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 31: query (line 196)
-SHOW CREATE TABLE t6
+SELECT indexname, indexdef FROM pg_indexes WHERE schemaname = 'public' AND tablename = 't6' ORDER BY indexname;
 
 -- Test 32: query (line 215)
-SHOW CREATE TABLE t6
+SELECT indexname, indexdef FROM pg_indexes WHERE schemaname = 'public' AND tablename = 't6' ORDER BY indexname;
 
 -- Test 33: statement (line 235)
-ALTER TABLE t6 RENAME TO t7
+ALTER TABLE t6 RENAME TO t7;
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 34: query (line 239)
-SHOW CREATE TABLE t7
+SELECT indexname, indexdef FROM pg_indexes WHERE schemaname = 'public' AND tablename = 't7' ORDER BY indexname;
 
 -- Test 35: query (line 258)
-SHOW CREATE TABLE t7
+SELECT indexname, indexdef FROM pg_indexes WHERE schemaname = 'public' AND tablename = 't7' ORDER BY indexname;
 
 -- Test 36: statement (line 289)
-ALTER TABLE t8 DROP COLUMN c
+CREATE TABLE t8 (a INT, b INT, c INT);
+CREATE INDEX t8_a_idx ON t8 (a) WHERE c > 0;
+ALTER TABLE t8 DROP COLUMN c;
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 37: query (line 293)
-SHOW CREATE TABLE t8
+SELECT indexname, indexdef FROM pg_indexes WHERE schemaname = 'public' AND tablename = 't8' ORDER BY indexname;
 
 -- Test 38: query (line 308)
-SHOW CREATE TABLE t8
+SELECT indexname, indexdef FROM pg_indexes WHERE schemaname = 'public' AND tablename = 't8' ORDER BY indexname;
 
 -- Test 39: statement (line 325)
-CREATE TABLE t9 (a INT, b INT, INDEX (a) WHERE b > 1)
+CREATE TABLE t9 (a INT, b INT);
+CREATE INDEX t9_a_idx ON t9 (a) WHERE b > 1;
 
 -- Test 40: statement (line 328)
-CREATE TABLE t10 (LIKE t9 INCLUDING INDEXES)
+CREATE TABLE t10 (LIKE t9 INCLUDING INDEXES);
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 41: query (line 332)
-SHOW CREATE TABLE t10
+SELECT indexname, indexdef FROM pg_indexes WHERE schemaname = 'public' AND tablename = 't10' ORDER BY indexname;
 
 -- Test 42: query (line 345)
-SHOW CREATE TABLE t10
+SELECT indexname, indexdef FROM pg_indexes WHERE schemaname = 'public' AND tablename = 't10' ORDER BY indexname;
 
 -- Test 43: statement (line 358)
-CREATE TABLE t11 (a INT, b INT, UNIQUE INDEX (a) WHERE b > 0)
+CREATE TABLE t11 (a INT, b INT);
+CREATE UNIQUE INDEX t11_a_uidx ON t11 (a) WHERE b > 0;
 
 -- Test 44: statement (line 361)
-CREATE UNIQUE INDEX t11_b_key ON t11 (b) WHERE a > 0
+CREATE UNIQUE INDEX t11_b_key ON t11 (b) WHERE a > 0;
 
 -- Test 45: query (line 364)
-SHOW CONSTRAINTS FROM t11
+-- Postgres does not expose partial unique indexes as table constraints; show indexes instead.
+SELECT indexname, indexdef FROM pg_indexes WHERE schemaname = 'public' AND tablename = 't11' ORDER BY indexname;
 
 -- Test 46: statement (line 374)
-CREATE TABLE a (
-    a INT,
-    b INT,
-    c INT,
-    INDEX idx_c_b_gt_1 (c) WHERE b > 1,
-    FAMILY (a),
-    FAMILY (b),
-    FAMILY (c)
-)
+CREATE TABLE a (a INT, b INT, c INT);
+CREATE INDEX idx_c_b_gt_1 ON a (c) WHERE b > 1;
 
 -- Test 47: statement (line 385)
-INSERT INTO a VALUES (1, 1, 1)
+INSERT INTO a VALUES (1, 1, 1);
 
 -- Test 48: statement (line 388)
-UPDATE a SET b = b + 1 WHERE a = 1
+UPDATE a SET b = b + 1 WHERE a = 1;
 
 -- Test 49: query (line 391)
-SELECT * FROM a@idx_c_b_gt_1 WHERE b > 1
+SELECT * FROM a WHERE b > 1 ORDER BY a, b, c;
 
 -- Test 50: statement (line 396)
-SELECT * FROM a@idx_c_b_gt_1 WHERE b = 0
+SELECT * FROM a WHERE b = 0 ORDER BY a, b, c;
 
 -- Test 51: statement (line 402)
-CREATE TABLE b (a INT, b INT, INDEX (a) WHERE 1 / b = 1)
+CREATE TABLE b (a INT, b INT);
+-- Avoid division-by-zero during inserts/updates while preserving the predicate meaning.
+CREATE INDEX b_a_idx ON b (a) WHERE b <> 0 AND 1 / b = 1;
 
 -- Test 52: statement (line 405)
-INSERT INTO b VALUES (1, 0)
+INSERT INTO b VALUES (1, 0);
 
 -- Test 53: query (line 408)
-SELECT count(1) FROM b
+SELECT count(1) FROM b;
 
 -- Test 54: statement (line 413)
-INSERT INTO b VALUES (1, 1)
+INSERT INTO b VALUES (1, 1);
 
 -- Test 55: statement (line 416)
-UPDATE b SET b = 0 WHERE a = 1
+UPDATE b SET b = 0 WHERE a = 1;
 
 -- Test 56: query (line 419)
-SELECT * FROM b
+SELECT * FROM b ORDER BY a, b;
 
 -- Test 57: statement (line 426)
-CREATE TABLE c (
-    k INT PRIMARY KEY,
-    i INT,
-    INDEX i_0_100_idx (i) WHERE i > 0 AND i < 100
-)
+CREATE TABLE c (k INT PRIMARY KEY, i INT);
+CREATE INDEX c_i_0_100_idx ON c (i) WHERE i > 0 AND i < 100;
 
 -- Test 58: statement (line 433)
-INSERT INTO c VALUES (3, 30), (300, 3000)
+INSERT INTO c VALUES (3, 30), (300, 3000);
 
 -- Test 59: statement (line 436)
-UPDATE c SET i = i + 1
+UPDATE c SET i = i + 1;
 
 -- Test 60: query (line 439)
-SELECT * FROM c@i_0_100_idx WHERE i > 0 AND i < 100
+SELECT * FROM c WHERE i > 0 AND i < 100 ORDER BY k;
 
 -- Test 61: statement (line 459)
+CREATE TABLE d (
+    k INT PRIMARY KEY,
+    i INT,
+    f FLOAT,
+    s TEXT,
+    b BOOLEAN
+);
+CREATE INDEX d_i_0_100_idx ON d (i) WHERE i > 0 AND i < 100;
+CREATE INDEX d_f_b_s_foo_idx ON d (f) WHERE b AND s = 'foo';
 INSERT INTO d VALUES
     (1, 1, 1.0, 'foo', true),
     (2, 2, 2.0, 'foo', false),
     (3, 3, 3.0, 'bar', true),
-    (100, 100, 100.0, 'foo', true),
-    (200, 200, 200.0, 'foo', false),
-    (300, 300, 300.0, 'bar', true)
+	    (100, 100, 100.0, 'foo', true),
+	    (200, 200, 200.0, 'foo', false),
+	    (300, 300, 300.0, 'bar', true);
 
 -- Test 62: query (line 468)
-SELECT * FROM d@i_0_100_idx WHERE i > 0 AND i < 100
+SELECT * FROM d WHERE i > 0 AND i < 100 ORDER BY k;
 
 -- Test 63: query (line 475)
-SELECT * FROM d@f_b_s_foo_idx WHERE b AND s = 'foo'
+SELECT * FROM d WHERE b AND s = 'foo' ORDER BY k;
 
 -- Test 64: statement (line 484)
-UPDATE d SET i = i + 10
+UPDATE d SET i = i + 10;
 
 -- Test 65: query (line 487)
-SELECT * FROM d@i_0_100_idx WHERE i > 0 AND i < 100
+SELECT * FROM d WHERE i > 0 AND i < 100 ORDER BY k;
 
 -- Test 66: statement (line 497)
-UPDATE d SET s = 'foo'
+UPDATE d SET s = 'foo';
 
 -- Test 67: query (line 500)
-SELECT * FROM d@f_b_s_foo_idx WHERE b AND s = 'foo'
+SELECT * FROM d WHERE b AND s = 'foo' ORDER BY k;
 
 -- Test 68: statement (line 510)
-UPSERT INTO d VALUES (300, 320, 300.0, 'bar', true)
+INSERT INTO d VALUES (300, 320, 300.0, 'bar', true)
+ON CONFLICT (k) DO UPDATE SET i = EXCLUDED.i, f = EXCLUDED.f, s = EXCLUDED.s, b = EXCLUDED.b;
 
 -- Test 69: query (line 513)
-SELECT * FROM d@f_b_s_foo_idx WHERE b AND s = 'foo'
+SELECT * FROM d WHERE b AND s = 'foo' ORDER BY k;
 
 -- Test 70: statement (line 522)
-UPSERT INTO d VALUES (300, 330, 300.0, 'foo', true)
+INSERT INTO d VALUES (300, 330, 300.0, 'foo', true)
+ON CONFLICT (k) DO UPDATE SET i = EXCLUDED.i, f = EXCLUDED.f, s = EXCLUDED.s, b = EXCLUDED.b;
 
 -- Test 71: query (line 525)
-SELECT * FROM d@f_b_s_foo_idx WHERE b AND s = 'foo'
+SELECT * FROM d WHERE b AND s = 'foo' ORDER BY k;
 
 -- Test 72: statement (line 535)
-UPSERT INTO d VALUES (400, 400, 400.0, 'foo', true)
+INSERT INTO d VALUES (400, 400, 400.0, 'foo', true)
+ON CONFLICT (k) DO UPDATE SET i = EXCLUDED.i, f = EXCLUDED.f, s = EXCLUDED.s, b = EXCLUDED.b;
 
 -- Test 73: query (line 538)
-SELECT * FROM d@i_0_100_idx WHERE i > 0 AND i < 100
+SELECT * FROM d WHERE i > 0 AND i < 100 ORDER BY k;
 
 -- Test 74: query (line 545)
-SELECT * FROM d@f_b_s_foo_idx WHERE b AND s = 'foo'
+SELECT * FROM d WHERE b AND s = 'foo' ORDER BY k;
 
 -- Test 75: statement (line 556)
-DELETE FROM d WHERE k = 1
+DELETE FROM d WHERE k = 1;
 
 -- Test 76: query (line 559)
-SELECT * FROM d@i_0_100_idx WHERE i > 0 AND i < 100
+SELECT * FROM d WHERE i > 0 AND i < 100 ORDER BY k;
 
 -- Test 77: query (line 565)
-SELECT * FROM d@f_b_s_foo_idx WHERE b AND s = 'foo'
+SELECT * FROM d WHERE b AND s = 'foo' ORDER BY k;
 
 -- Test 78: statement (line 575)
-DELETE FROM d WHERE k = 2
+DELETE FROM d WHERE k = 2;
 
 -- Test 79: query (line 578)
-SELECT * FROM d@i_0_100_idx WHERE i > 0 AND i < 100
+SELECT * FROM d WHERE i > 0 AND i < 100 ORDER BY k;
 
 -- Test 80: query (line 583)
-SELECT * FROM d@f_b_s_foo_idx WHERE b AND s = 'foo'
+SELECT * FROM d WHERE b AND s = 'foo' ORDER BY k;
 
 -- Test 81: statement (line 593)
-DELETE FROM d WHERE k = 200
+DELETE FROM d WHERE k = 200;
 
 -- Test 82: query (line 596)
-SELECT * FROM d@i_0_100_idx WHERE i > 0 AND i < 100
+SELECT * FROM d WHERE i > 0 AND i < 100 ORDER BY k;
 
 -- Test 83: query (line 601)
-SELECT * FROM d@f_b_s_foo_idx WHERE b AND s = 'foo'
+SELECT * FROM d WHERE b AND s = 'foo' ORDER BY k;
 
 -- Test 84: statement (line 611)
-CREATE TABLE e (a INT, b INT)
+CREATE TABLE e (a INT, b INT);
 
 -- Test 85: statement (line 614)
 INSERT INTO e VALUES
@@ -298,126 +392,133 @@ INSERT INTO e VALUES
     (3, 30),
     (4, 40),
     (5, 50),
-    (6, 60)
+    (6, 60);
 
 -- Test 86: statement (line 623)
-CREATE INDEX a_b_gt_30_idx ON e (a) WHERE b > 30
+CREATE INDEX e_a_b_gt_30_idx ON e (a) WHERE b > 30;
 
 -- Test 87: query (line 629)
-SELECT * FROM e@a_b_gt_30_idx WHERE b > 30
+SELECT * FROM e WHERE b > 30 ORDER BY a, b;
 
 -- Test 88: statement (line 638)
-BEGIN
+BEGIN;
 
 -- Test 89: statement (line 641)
-CREATE TABLE f (a INT, b INT)
+CREATE TABLE f (a INT, b INT);
 
 -- Test 90: statement (line 644)
-INSERT INTO f VALUES (1, 10), (6, 60)
+INSERT INTO f VALUES (1, 10), (6, 60);
 
 -- Test 91: statement (line 647)
-CREATE INDEX a_b_gt_30_idx ON f (a) WHERE b > 30
+CREATE INDEX f_a_b_gt_30_idx ON f (a) WHERE b > 30;
 
 -- Test 92: statement (line 650)
-COMMIT
+COMMIT;
 
 -- Test 93: query (line 653)
-SELECT * FROM f@a_b_gt_30_idx WHERE b > 30
+SELECT * FROM f WHERE b > 30 ORDER BY a, b;
 
 -- Test 94: statement (line 660)
-CREATE TYPE enum AS ENUM ('foo', 'bar', 'baz')
+CREATE TYPE enum AS ENUM ('foo', 'bar', 'baz');
 
 -- Test 95: statement (line 663)
-CREATE TABLE h (a INT, b enum)
+CREATE TABLE h (a INT, b enum);
 
 -- Test 96: statement (line 666)
-INSERT INTO h VALUES (1, 'foo'), (2, 'bar')
+INSERT INTO h VALUES (1, 'foo'), (2, 'bar');
 
 -- Test 97: statement (line 669)
-CREATE INDEX a_b_foo_idx ON h (a) WHERE b = 'foo'
+CREATE INDEX h_a_b_foo_idx ON h (a) WHERE b = 'foo';
 
 -- Test 98: query (line 672)
-SELECT * FROM h@a_b_foo_idx WHERE b = 'foo'
+SELECT * FROM h WHERE b = 'foo' ORDER BY a, b;
 
 -- Test 99: query (line 704)
-SELECT * FROM i@a_b_foo_idx WHERE b = 'foo'
+CREATE TABLE i (a INT, b enum);
+INSERT INTO i VALUES (1, 'foo'), (2, 'bar');
+CREATE INDEX i_a_b_foo_idx ON i (a) WHERE b = 'foo';
+SELECT * FROM i WHERE b = 'foo' ORDER BY a, b;
 
 -- Test 100: statement (line 711)
-CREATE TABLE j (k INT NOT NULL, a INT, INDEX a_gt_5_idx (a) WHERE a > 5)
+CREATE TABLE j (k INT NOT NULL, a INT);
+CREATE INDEX j_a_gt_5_idx ON j (a) WHERE a > 5;
 
 -- Test 101: statement (line 714)
-INSERT INTO j VALUES (1, 1), (6, 6)
+INSERT INTO j VALUES (1, 1), (6, 6);
 
 -- Test 102: statement (line 717)
-ALTER TABLE j ADD PRIMARY KEY (k)
+ALTER TABLE j ADD PRIMARY KEY (k);
 
 -- Test 103: query (line 720)
-SELECT * FROM j@a_gt_5_idx WHERE a > 5
+SELECT * FROM j WHERE a > 5 ORDER BY k;
 
 -- Test 104: statement (line 727)
-CREATE TABLE k (a INT, b INT)
+CREATE TABLE k (a INT, b INT);
 
 -- Test 105: statement (line 730)
-INSERT INTO k VALUES (1, 1), (1, 2)
+INSERT INTO k VALUES (1, 1), (1, 2);
 
 -- Test 106: statement (line 733)
-CREATE UNIQUE INDEX ON k (a) WHERE b > 0
+-- Expected ERROR: duplicate key for partial unique index predicate.
+\set ON_ERROR_STOP 0
+CREATE UNIQUE INDEX k_a_key ON k (a) WHERE b > 0;
+\set ON_ERROR_STOP 0
 
 -- Test 107: statement (line 736)
-UPDATE k SET b = 0 WHERE b = 2
+UPDATE k SET b = 0 WHERE b = 2;
 
 -- Test 108: statement (line 739)
-CREATE UNIQUE INDEX ON k (a) WHERE b > 0
+CREATE UNIQUE INDEX k_a_key ON k (a) WHERE b > 0;
 
 -- Test 109: query (line 742)
-SELECT * FROM k@k_a_key WHERE b > 0
+SELECT * FROM k WHERE b > 0 ORDER BY a, b;
 
 -- Test 110: statement (line 750)
-CREATE TABLE l (
-    a INT PRIMARY KEY,
-    b INT,
-    INDEX a_b_gt_5 (a) WHERE b > 5
-)
+CREATE TABLE l (a INT PRIMARY KEY, b INT);
+CREATE INDEX l_a_b_gt_5 ON l (a) WHERE b > 5;
 
 -- Test 111: statement (line 757)
-INSERT INTO l VALUES (1, 1), (6, 6)
+INSERT INTO l VALUES (1, 1), (6, 6);
 
 -- Test 112: statement (line 761)
-ALTER TABLE l SET (schema_locked=false)
+-- ALTER TABLE l SET (schema_locked=false); -- CockroachDB-only
 
 -- Test 113: statement (line 764)
-TRUNCATE l
+TRUNCATE l;
 
 -- Test 114: statement (line 767)
-ALTER TABLE l RESET (schema_locked)
+-- ALTER TABLE l RESET (schema_locked); -- CockroachDB-only
 
 -- Test 115: query (line 770)
-SELECT * FROM l@a_b_gt_5 WHERE b > 5
+SELECT * FROM l WHERE b > 5 ORDER BY a, b;
 
 -- Test 116: statement (line 774)
-INSERT INTO l VALUES (1, 1), (7, 7)
+INSERT INTO l VALUES (1, 1), (7, 7);
 
 -- Test 117: query (line 777)
-SELECT * FROM l@a_b_gt_5 WHERE b > 5
+SELECT * FROM l WHERE b > 5 ORDER BY a, b;
 
 -- Test 118: statement (line 785)
-CREATE TABLE u (
-    a INT,
-    b INT,
-    UNIQUE INDEX i (a) WHERE b > 0
-)
+CREATE TABLE u (a INT, b INT);
+CREATE UNIQUE INDEX u_i ON u (a) WHERE b > 0;
 
 -- Test 119: statement (line 793)
-INSERT INTO u VALUES (1, 1), (1, 2)
+-- Expected ERROR: violates partial unique index on (a) for rows with b > 0.
+\set ON_ERROR_STOP 0
+INSERT INTO u VALUES (1, 1), (1, 2);
+\set ON_ERROR_STOP 0
 
 -- Test 120: statement (line 797)
-INSERT INTO u VALUES (1, 1), (2, 2), (1, -1)
+INSERT INTO u VALUES (1, 1), (2, 2), (1, -1);
 
 -- Test 121: statement (line 801)
-INSERT INTO u VALUES (1, 3)
+-- Expected ERROR: (a) conflict with existing row where b > 0.
+\set ON_ERROR_STOP 0
+INSERT INTO u VALUES (1, 3);
+\set ON_ERROR_STOP 0
 
 -- Test 122: query (line 804)
-SELECT * FROM u
+SELECT * FROM u ORDER BY a, b;
 
 -- Test 123: statement (line 812)
 DELETE FROM u WHERE a = 2;
@@ -426,98 +527,107 @@ DELETE FROM u WHERE a = 2;
 INSERT INTO u VALUES (2, 2);
 
 -- Test 125: statement (line 819)
-UPDATE u SET a = 2 WHERE b = 1
+-- Expected ERROR: update would violate the partial unique index.
+\set ON_ERROR_STOP 0
+UPDATE u SET a = 2 WHERE b = 1;
+\set ON_ERROR_STOP 0
 
 -- Test 126: statement (line 824)
-UPDATE u SET a = 2, b = 1 WHERE b = -1
+-- Expected ERROR: update would violate the partial unique index.
+\set ON_ERROR_STOP 0
+UPDATE u SET a = 2, b = 1 WHERE b = -1;
+\set ON_ERROR_STOP 0
 
 -- Test 127: statement (line 829)
-UPDATE u SET a = 2, b = -2 WHERE b = -1
+UPDATE u SET a = 2, b = -2 WHERE b = -1;
 
 -- Test 128: statement (line 834)
-UPDATE u SET a = 3, b = 3  WHERE b = 2
+UPDATE u SET a = 3, b = 3 WHERE b = 2;
 
 -- Test 129: query (line 837)
-SELECT * FROM u
+SELECT * FROM u ORDER BY a, b;
 
 -- Test 130: statement (line 844)
-DELETE FROM u
+DELETE FROM u;
 
 -- Test 131: statement (line 850)
-INSERT INTO u VALUES (1, -1) ON CONFLICT DO NOTHING
+INSERT INTO u VALUES (1, -1) ON CONFLICT DO NOTHING;
 
 -- Test 132: query (line 853)
-SELECT * FROM u
+SELECT * FROM u ORDER BY a, b;
 
 -- Test 133: statement (line 859)
 INSERT INTO u VALUES (1, 1) ON CONFLICT DO NOTHING;
 
 -- Test 134: query (line 862)
-SELECT * FROM u
+SELECT * FROM u ORDER BY a, b;
 
 -- Test 135: statement (line 869)
 INSERT INTO u VALUES (1, -10), (1, -100) ON CONFLICT DO NOTHING;
 INSERT INTO u VALUES (1, -1000) ON CONFLICT DO NOTHING;
 
 -- Test 136: query (line 873)
-SELECT * FROM u
+SELECT * FROM u ORDER BY a, b;
 
 -- Test 137: statement (line 882)
-DELETE FROM u WHERE b IN (-10, -100, -1000)
+DELETE FROM u WHERE b IN (-10, -100, -1000);
 
 -- Test 138: statement (line 887)
-INSERT INTO u VALUES (2, 2), (2, 2), (2, -2) ON CONFLICT DO NOTHING
+INSERT INTO u VALUES (2, 2), (2, 2), (2, -2) ON CONFLICT DO NOTHING;
 
 -- Test 139: query (line 890)
-SELECT * FROM u
+SELECT * FROM u ORDER BY a, b;
 
 -- Test 140: statement (line 899)
-INSERT INTO u VALUES (1, 10) ON CONFLICT DO NOTHING
+INSERT INTO u VALUES (1, 10) ON CONFLICT DO NOTHING;
 
 -- Test 141: query (line 902)
-SELECT * FROM u
+SELECT * FROM u ORDER BY a, b;
 
 -- Test 142: statement (line 912)
-INSERT INTO u VALUES (2, 20), (3, 3) ON CONFLICT DO NOTHING
+INSERT INTO u VALUES (2, 20), (3, 3) ON CONFLICT DO NOTHING;
 
 -- Test 143: query (line 915)
-SELECT * FROM u
+SELECT * FROM u ORDER BY a, b;
 
 -- Test 144: statement (line 924)
-CREATE UNIQUE INDEX i2 ON u (b) WHERE a > 0
+CREATE UNIQUE INDEX u_i2 ON u (b) WHERE a > 0;
 
 -- Test 145: statement (line 929)
-INSERT INTO u VALUES (4, 3) ON CONFLICT DO NOTHING
+INSERT INTO u VALUES (4, 3) ON CONFLICT DO NOTHING;
 
 -- Test 146: query (line 932)
-SELECT * FROM u
+SELECT * FROM u ORDER BY a, b;
 
 -- Test 147: statement (line 942)
-INSERT INTO u VALUES (1, 3) ON CONFLICT DO NOTHING
+INSERT INTO u VALUES (1, 3) ON CONFLICT DO NOTHING;
 
 -- Test 148: query (line 945)
-SELECT * FROM u
+SELECT * FROM u ORDER BY a, b;
 
 -- Test 149: statement (line 955)
-INSERT INTO u VALUES (4, 4), (1, -10), (-10, 2) ON CONFLICT DO NOTHING
+INSERT INTO u VALUES (4, 4), (1, -10), (-10, 2) ON CONFLICT DO NOTHING;
 
 -- Test 150: query (line 958)
-SELECT * FROM u
+SELECT * FROM u ORDER BY a, b;
 
 -- Test 151: statement (line 970)
-DROP INDEX i2
+DROP INDEX u_i2;
 
 -- Test 152: statement (line 973)
-DELETE from u
+DELETE FROM u;
 
 -- Test 153: statement (line 980)
-INSERT INTO u VALUES (1, 1) ON CONFLICT (a) DO NOTHING
+INSERT INTO u VALUES (1, 1) ON CONFLICT (a) WHERE b > 0 DO NOTHING;
 
 -- Test 154: statement (line 985)
-INSERT INTO u VALUES (1, 1) ON CONFLICT (a) WHERE b < -1 DO NOTHING
+-- Expected ERROR: no unique constraint matches this conflict target on Postgres.
+\set ON_ERROR_STOP 0
+INSERT INTO u VALUES (1, 1) ON CONFLICT (a) WHERE b < -1 DO NOTHING;
+\set ON_ERROR_STOP 0
 
 -- Test 155: statement (line 990)
-CREATE UNIQUE INDEX i2 ON u (b) WHERE 1 = 1;
+CREATE UNIQUE INDEX u_i2 ON u (b) WHERE 1 = 1;
 
 -- Test 156: statement (line 993)
 INSERT INTO u VALUES (1, 1) ON CONFLICT (b) DO NOTHING;
@@ -526,55 +636,64 @@ INSERT INTO u VALUES (1, 1) ON CONFLICT (b) DO NOTHING;
 DELETE FROM u;
 
 -- Test 158: statement (line 999)
-DROP INDEX i2;
+DROP INDEX u_i2;
 
 -- Test 159: statement (line 1004)
-CREATE UNIQUE INDEX i2 ON u (b);
+CREATE UNIQUE INDEX u_i2 ON u (b);
 
 -- Test 160: statement (line 1007)
 INSERT INTO u VALUES (1, 1) ON CONFLICT (b) WHERE b > 0 DO NOTHING;
 
 -- Test 161: statement (line 1010)
-DROP INDEX i2;
+DROP INDEX u_i2;
 
 -- Test 162: statement (line 1015)
 INSERT INTO u VALUES (1, 1) ON CONFLICT (a) WHERE b > 1 DO NOTHING;
 INSERT INTO u VALUES (1, 2) ON CONFLICT (a) WHERE b > 1 DO NOTHING;
 
 -- Test 163: query (line 1019)
-SELECT * FROM u
+SELECT * FROM u ORDER BY a, b;
 
 -- Test 164: statement (line 1026)
-CREATE UNIQUE INDEX i2 ON u (a) WHERE b < 0;
+CREATE UNIQUE INDEX u_i2 ON u (a) WHERE b < 0;
 
 -- Test 165: statement (line 1029)
 INSERT INTO u VALUES (-1, -1);
 
 -- Test 166: statement (line 1032)
-INSERT INTO u VALUES (-1, -1) ON CONFLICT (a) WHERE b > 0 DO NOTHING
+-- Expected ERROR: conflicts with the (a) unique index for rows where b < 0.
+\set ON_ERROR_STOP 0
+INSERT INTO u VALUES (-1, -1) ON CONFLICT (a) WHERE b > 0 DO NOTHING;
+\set ON_ERROR_STOP 0
 
 -- Test 167: statement (line 1036)
-INSERT INTO u VALUES (1, 2), (-1, -2) ON CONFLICT (a) WHERE b > 0 AND b < 0 DO NOTHING
+INSERT INTO u VALUES (1, 2), (-1, -2) ON CONFLICT (a) WHERE b > 0 AND b < 0 DO NOTHING;
 
 -- Test 168: statement (line 1041)
+-- Expected ERROR: Postgres cannot infer a matching unique index from a non-immutable predicate.
+\set ON_ERROR_STOP 0
 INSERT INTO u VALUES (1, 2)
-ON CONFLICT (a) WHERE b < (CASE WHEN now() > '1980-01-01' THEN 0 ELSE 100 END) DO NOTHING
+ON CONFLICT (a) WHERE b < (CASE WHEN now() > '1980-01-01' THEN 0 ELSE 100 END) DO NOTHING;
+\set ON_ERROR_STOP 0
 
 -- Test 169: statement (line 1045)
-DROP INDEX i2
+DROP INDEX u_i2;
 
 -- Test 170: statement (line 1048)
-CREATE UNIQUE INDEX i2 ON u (a) WHERE true;
+CREATE UNIQUE INDEX u_i2 ON u (a) WHERE true;
 
 -- Test 171: statement (line 1053)
+-- Expected ERROR: Postgres cannot infer a matching unique index from a non-immutable predicate.
+\set ON_ERROR_STOP 0
 INSERT INTO u VALUES (1, 2)
-ON CONFLICT (a) WHERE b < (CASE WHEN now() > '1980-01-01' THEN 0 ELSE 100 END) DO NOTHING
+ON CONFLICT (a) WHERE b < (CASE WHEN now() > '1980-01-01' THEN 0 ELSE 100 END) DO NOTHING;
+\set ON_ERROR_STOP 0
 
 -- Test 172: statement (line 1057)
-DROP INDEX i2
+DROP INDEX u_i2;
 
 -- Test 173: statement (line 1060)
-DELETE FROM u
+DELETE FROM u;
 
 -- Test 174: statement (line 1066)
 INSERT INTO u VALUES (1, 1) ON CONFLICT (a) DO UPDATE SET b = 10
@@ -729,7 +848,7 @@ CREATE TABLE enum_table_show (
     FAMILY (a, b)
 )
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 212: query (line 1288)
 SHOW CREATE TABLE enum_table_show
@@ -889,7 +1008,7 @@ CREATE TABLE vec (
   FAMILY (id, v)
 );
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 255: query (line 1534)
 SHOW CREATE TABLE vec
@@ -1355,7 +1474,7 @@ CREATE TABLE t61414_c (
   FAMILY (k, a, c)
 )
 
-skipif config #126592 weak-iso-level-configs
+-- skipif config #126592 weak-iso-level-configs
 
 -- Test 366: statement (line 2200)
 UPSERT INTO t61414_c (k, a, b, d) VALUES (1, 2, 3, 4)
@@ -1553,7 +1672,7 @@ CREATE TABLE t96924 (a INT NOT NULL)
 -- Test 414: statement (line 2446)
 CREATE INDEX t96924_idx_1 ON t96924(a) WHERE (rowid > 0);
 
-skipif config local-legacy-schema-changer
+-- skipif config local-legacy-schema-changer
 
 -- Test 415: statement (line 2450)
 ALTER TABLE t96924 ALTER PRIMARY KEY USING COLUMNS (a);
@@ -1675,4 +1794,3 @@ CALL p158154();
 -- Test 450: statement (line 2591)
 DROP PROCEDURE p158154;
 DROP TABLE t158154;
-

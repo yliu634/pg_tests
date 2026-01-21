@@ -1,0 +1,42 @@
+SET
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+INSERT 0 4
+CREATE TABLE
+BEGIN
+SAVEPOINT
+psql:compatible/strict_ddl_atomicity.sql:23: ERROR:  could not create unique index "unique_values"
+DETAIL:  Key (v)=(a) is duplicated.
+ROLLBACK
+RELEASE
+INSERT 0 1
+INSERT 0 1
+COMMIT
+ k | v 
+---+---
+ 1 | a
+ 2 | b
+ 3 | a
+ 4 | b
+ 5 | c
+(5 rows)
+
+ x 
+---
+ 1
+(1 row)
+
+DELETE 1
+BEGIN
+psql:compatible/strict_ddl_atomicity.sql:54: ERROR:  could not create unique index "unique_values"
+DETAIL:  Key (v)=(a) is duplicated.
+ROLLBACK
+ ?column? 
+----------
+        1
+(1 row)
+
+psql:compatible/strict_ddl_atomicity.sql:67: ERROR:  could not create unique index "unique_values"
+DETAIL:  Key (v)=(a) is duplicated.
+RESET

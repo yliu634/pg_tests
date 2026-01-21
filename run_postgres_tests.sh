@@ -106,7 +106,8 @@ list_tests() {
     for f in compatible/*.sql; do
         [ -f "$f" ] || continue
         echo "  $f"
-        ((count++))
+        # NOTE: avoid `var++` with `set -e` (it returns status 1 when var was 0).
+        ((count+=1))
     done
     echo ""
     echo "总计: $count 个测试文件"
@@ -117,11 +118,12 @@ run_test() {
     local test_name=$(basename "$sql_file" .sql)
     local expected_file="${sql_file%.sql}.expected"
 
-    ((TOTAL++))
+    # NOTE: avoid `var++` with `set -e` (it returns status 1 when var was 0).
+    ((TOTAL+=1))
 
     if [ ! -f "$sql_file" ]; then
         echo -e "${RED}✗${NC} $test_name - 文件不存在"
-        ((FAILED++))
+        ((FAILED+=1))
         return 1
     fi
 
@@ -142,7 +144,7 @@ run_test() {
     }
 
     # 执行 SQL
-    if psql -h "$PG_HOST" -p "$PG_PORT" -U "$PG_USER" -d "$test_db" \
+    if psql -X -v ON_ERROR_STOP=1 -h "$PG_HOST" -p "$PG_PORT" -U "$PG_USER" -d "$test_db" \
             -f "$sql_file" > "$output" 2>&1; then
         exit_code=0
     else
@@ -158,18 +160,18 @@ run_test() {
             # 对比预期输出（宽松比较，忽略格式差异）
             if diff -w -q "$output" "$expected_file" > /dev/null 2>&1; then
                 echo -e "${GREEN}✓${NC} $test_name"
-                ((PASSED++))
+                ((PASSED+=1))
             else
                 echo -e "${YELLOW}⚠${NC} $test_name - 输出不匹配"
                 if [ "${VERBOSE:-0}" -eq 1 ]; then
                     echo "  差异:"
                     diff -u "$expected_file" "$output" | head -20
                 fi
-                ((PASSED++))  # 执行成功但输出不同
+                ((PASSED+=1))  # 执行成功但输出不同
             fi
         else
             echo -e "${GREEN}✓${NC} $test_name"
-            ((PASSED++))
+            ((PASSED+=1))
         fi
     else
         echo -e "${RED}✗${NC} $test_name - 执行失败"
@@ -177,7 +179,7 @@ run_test() {
             echo "  错误:"
             head -10 "$output"
         fi
-        ((FAILED++))
+        ((FAILED+=1))
     fi
 
     rm -f "$output" "$errors"
@@ -289,7 +291,8 @@ main() {
                 break
             fi
             run_test "$f"
-            ((count++))
+            # NOTE: avoid `var++` with `set -e` (it returns status 1 when var was 0).
+            ((count+=1))
         done
     else
         # 运行指定测试
