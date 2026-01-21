@@ -1,70 +1,94 @@
 -- PostgreSQL compatible tests from external_connection_privileges
--- 21 tests
+-- PostgreSQL does not support CRDB EXTERNAL CONNECTION objects; this file exercises
+-- analogous GRANT/REVOKE behavior using SEQUENCE privileges.
 
--- Test 1: query (line 7)
-SELECT username, path, privileges, grant_options FROM system.privileges
+-- Clean up any leftovers from a previous run (roles are cluster-global).
+-- Drop the sequence first to remove any privilege dependencies, then drop roles.
+DROP SEQUENCE IF EXISTS extconn_priv_seq;
 
--- Test 2: statement (line 12)
-GRANT USAGE ON EXTERNAL CONNECTION foo TO testuser
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'extconn_priv_testuser') THEN
+    -- If present, remove the membership added below so DROP ROLE succeeds.
+    BEGIN
+      EXECUTE 'REVOKE extconn_priv_testuser FROM pan';
+    EXCEPTION WHEN OTHERS THEN
+      NULL;
+    END;
+    EXECUTE 'DROP ROLE extconn_priv_testuser';
+  END IF;
 
--- Test 3: statement (line 15)
-GRANT DROP ON EXTERNAL CONNECTION foo TO testuser
+  IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'extconn_priv_bar') THEN
+    EXECUTE 'DROP ROLE extconn_priv_bar';
+  END IF;
 
--- Test 4: statement (line 19)
-GRANT UPDATE ON EXTERNAL CONNECTION foo TO testuser
+  IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'extconn_priv_testuser2') THEN
+    EXECUTE 'DROP ROLE extconn_priv_testuser2';
+  END IF;
+END $$;
 
--- Test 5: statement (line 22)
-CREATE EXTERNAL CONNECTION foo AS 'nodelocal://1/foo'
+CREATE ROLE extconn_priv_testuser;
+CREATE ROLE extconn_priv_bar;
+CREATE ROLE extconn_priv_testuser2;
 
--- Test 6: statement (line 25)
-GRANT USAGE,DROP,UPDATE ON EXTERNAL CONNECTION foo TO testuser
+-- Allow SET ROLE in this script.
+GRANT extconn_priv_testuser TO pan;
 
--- Test 7: query (line 28)
-SELECT username, path, privileges, grant_options FROM system.privileges ORDER by username
+CREATE SEQUENCE extconn_priv_seq;
 
--- Test 8: statement (line 34)
-REVOKE USAGE,DROP,UPDATE ON EXTERNAL CONNECTION foo FROM testuser
+-- Inspect privileges via pg_class ACLs.
+SELECT grantee::regrole AS grantee, privilege_type, is_grantable
+FROM pg_class c, LATERAL aclexplode(c.relacl) a
+WHERE c.relkind = 'S' AND c.relname = 'extconn_priv_seq'
+ORDER BY grantee::regrole::text, privilege_type;
 
--- Test 9: query (line 37)
-SELECT username, path, privileges, grant_options FROM system.privileges ORDER by username
+GRANT USAGE ON SEQUENCE extconn_priv_seq TO extconn_priv_testuser;
+GRANT SELECT ON SEQUENCE extconn_priv_seq TO extconn_priv_testuser;
+GRANT UPDATE ON SEQUENCE extconn_priv_seq TO extconn_priv_testuser;
 
--- Test 10: statement (line 42)
-GRANT USAGE,DROP,UPDATE ON EXTERNAL CONNECTION foo TO testuser
+SELECT grantee::regrole AS grantee, privilege_type, is_grantable
+FROM pg_class c, LATERAL aclexplode(c.relacl) a
+WHERE c.relkind = 'S' AND c.relname = 'extconn_priv_seq'
+ORDER BY grantee::regrole::text, privilege_type;
 
--- Test 11: statement (line 45)
-CREATE USER bar
+REVOKE USAGE, SELECT, UPDATE ON SEQUENCE extconn_priv_seq FROM extconn_priv_testuser;
 
--- Test 12: statement (line 51)
-GRANT USAGE,DROP,UPDATE ON EXTERNAL CONNECTION foo TO bar
+SELECT grantee::regrole AS grantee, privilege_type, is_grantable
+FROM pg_class c, LATERAL aclexplode(c.relacl) a
+WHERE c.relkind = 'S' AND c.relname = 'extconn_priv_seq'
+ORDER BY grantee::regrole::text, privilege_type;
 
-user root
+GRANT USAGE, SELECT, UPDATE ON SEQUENCE extconn_priv_seq TO extconn_priv_testuser;
+GRANT USAGE, SELECT, UPDATE ON SEQUENCE extconn_priv_seq TO extconn_priv_bar;
 
--- Test 13: statement (line 56)
-GRANT USAGE,DROP,UPDATE ON EXTERNAL CONNECTION foo TO testuser WITH GRANT OPTION
+-- Grant option propagation.
+GRANT USAGE, SELECT, UPDATE ON SEQUENCE extconn_priv_seq TO extconn_priv_testuser WITH GRANT OPTION;
 
--- Test 14: statement (line 62)
-GRANT USAGE,DROP,UPDATE ON EXTERNAL CONNECTION foo TO bar
+SET ROLE extconn_priv_testuser;
+GRANT USAGE, UPDATE ON SEQUENCE extconn_priv_seq TO extconn_priv_bar;
+RESET ROLE;
 
-user root
+SELECT grantee::regrole AS grantee, privilege_type, is_grantable
+FROM pg_class c, LATERAL aclexplode(c.relacl) a
+WHERE c.relkind = 'S' AND c.relname = 'extconn_priv_seq'
+ORDER BY grantee::regrole::text, privilege_type;
 
--- Test 15: query (line 67)
-SELECT username, path, privileges, grant_options FROM system.privileges ORDER BY username
+GRANT USAGE, SELECT, UPDATE ON SEQUENCE extconn_priv_seq TO extconn_priv_testuser2 WITH GRANT OPTION;
 
--- Test 16: statement (line 76)
-GRANT SELECT ON EXTERNAL CONNECTION foo TO testuser
+-- "SHOW GRANTS" equivalent.
+SELECT grantee::regrole AS grantee, privilege_type, is_grantable
+FROM pg_class c, LATERAL aclexplode(c.relacl) a
+WHERE c.relkind = 'S'
+  AND c.relname = 'extconn_priv_seq'
+  AND grantee::regrole::text IN ('extconn_priv_testuser', 'extconn_priv_testuser2')
+ORDER BY grantee::regrole::text, privilege_type;
 
--- Test 17: statement (line 79)
-GRANT INSERT ON EXTERNAL CONNECTION foo TO testuser
+-- Final cleanup.
+DROP SEQUENCE extconn_priv_seq;
 
--- Test 18: statement (line 82)
-CREATE ROLE testuser2
+-- Memberships can block DROP ROLE, so remove the one we added above.
+REVOKE extconn_priv_testuser FROM pan;
 
--- Test 19: statement (line 85)
-GRANT DROP,UPDATE,USAGE ON EXTERNAL CONNECTION foo TO testuser2 WITH GRANT OPTION
-
--- Test 20: query (line 88)
-SHOW GRANTS ON EXTERNAL CONNECTION foo
-
--- Test 21: query (line 103)
-SHOW GRANTS ON EXTERNAL CONNECTION foo FOR testuser, testuser2
-
+DROP ROLE extconn_priv_bar;
+DROP ROLE extconn_priv_testuser2;
+DROP ROLE extconn_priv_testuser;

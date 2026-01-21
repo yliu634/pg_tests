@@ -1,0 +1,70 @@
+psql:pg_tests/compatible/external_connection_privileges.sql:7: NOTICE:  sequence "extconn_priv_seq" does not exist, skipping
+DROP SEQUENCE
+DO
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+GRANT ROLE
+CREATE SEQUENCE
+ grantee | privilege_type | is_grantable 
+---------+----------------+--------------
+(0 rows)
+
+GRANT
+GRANT
+GRANT
+        grantee        | privilege_type | is_grantable 
+-----------------------+----------------+--------------
+ extconn_priv_testuser | SELECT         | f
+ extconn_priv_testuser | UPDATE         | f
+ extconn_priv_testuser | USAGE          | f
+ pan                   | SELECT         | f
+ pan                   | UPDATE         | f
+ pan                   | USAGE          | f
+(6 rows)
+
+REVOKE
+ grantee | privilege_type | is_grantable 
+---------+----------------+--------------
+ pan     | SELECT         | f
+ pan     | UPDATE         | f
+ pan     | USAGE          | f
+(3 rows)
+
+GRANT
+GRANT
+GRANT
+SET
+GRANT
+RESET
+        grantee        | privilege_type | is_grantable 
+-----------------------+----------------+--------------
+ extconn_priv_bar      | SELECT         | f
+ extconn_priv_bar      | UPDATE         | f
+ extconn_priv_bar      | UPDATE         | f
+ extconn_priv_bar      | USAGE          | f
+ extconn_priv_bar      | USAGE          | f
+ extconn_priv_testuser | SELECT         | t
+ extconn_priv_testuser | UPDATE         | t
+ extconn_priv_testuser | USAGE          | t
+ pan                   | SELECT         | f
+ pan                   | UPDATE         | f
+ pan                   | USAGE          | f
+(11 rows)
+
+GRANT
+        grantee         | privilege_type | is_grantable 
+------------------------+----------------+--------------
+ extconn_priv_testuser  | SELECT         | t
+ extconn_priv_testuser  | UPDATE         | t
+ extconn_priv_testuser  | USAGE          | t
+ extconn_priv_testuser2 | SELECT         | t
+ extconn_priv_testuser2 | UPDATE         | t
+ extconn_priv_testuser2 | USAGE          | t
+(6 rows)
+
+DROP SEQUENCE
+REVOKE ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
