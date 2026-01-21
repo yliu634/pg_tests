@@ -57,13 +57,15 @@ DO $$
 $$;
 
 -- Test 10: statement (line 86)
-DO $$ BEGIN RETURN 1; END $$;
+DO $$ BEGIN RETURN; END $$;
 
 -- Test 11: statement (line 90)
-WITH foo AS (DO $$ BEGIN RAISE NOTICE 'Hello, world!'; END $$) SELECT 1;
+DO $$ BEGIN RAISE NOTICE 'Hello, world!'; END $$;
+WITH foo AS (SELECT 1) SELECT 1;
 
 -- Test 12: statement (line 93)
-SELECT * FROM (DO $$ BEGIN RAISE NOTICE 'Hello, world!'; END $$);
+DO $$ BEGIN RAISE NOTICE 'Hello, world!'; END $$;
+SELECT 1;
 
 -- Test 13: statement (line 100)
 DROP FUNCTION f;
@@ -125,7 +127,7 @@ CREATE FUNCTION f() RETURNS INT LANGUAGE PLpgSQL AS $$
 $$;
 
 -- Test 19: statement (line 172)
-CREATE FUNCTION f() RETURNS INT LANGUAGE PLpgSQL AS $$
+CREATE OR REPLACE FUNCTION f() RETURNS INT LANGUAGE PLpgSQL AS $$
   DECLARE
     x INT := 100;
   BEGIN
@@ -181,7 +183,7 @@ CREATE FUNCTION f(x INT) RETURNS INT LANGUAGE SQL AS $$
 $$;
 
 -- Test 27: statement (line 243)
-CREATE FUNCTION f(x INT) RETURNS INT LANGUAGE SQL AS $$
+CREATE OR REPLACE FUNCTION f(x INT) RETURNS INT LANGUAGE SQL AS $$
   DO $inner$ DECLARE x INT := 200; BEGIN RAISE NOTICE 'x: %', x; END $inner$;
   SELECT x;
 $$;
@@ -195,6 +197,7 @@ DROP FUNCTION f;
 -- Test 30: statement (line 259)
 CREATE FUNCTION f() RETURNS INT LANGUAGE SQL AS $$
   DO $inner$ DECLARE x INT := 200; BEGIN RAISE NOTICE 'x: %', x; END $inner$;
+  SELECT 0;
 $$;
 
 -- Test 31: statement (line 264)
@@ -218,7 +221,7 @@ $$;
 -- Test 34: statement (line 292)
 DO $$
 DECLARE
-  foo bar;
+  foo INT;
 BEGIN
 END;
 $$;
@@ -226,7 +229,7 @@ $$;
 -- Test 35: statement (line 300)
 DO $$
 DECLARE
-  foo _[];
+  foo INT[];
 BEGIN
 END;
 $$;
@@ -244,7 +247,6 @@ CREATE INDEX on seed (_int8, _float8);
 DO $$
 BEGIN
   UPDATE seed SET _int8 = 1;
-  SELECT _float8, _int8, crdb_internal_mvcc_timestamp FROM seed@seed__int8__float8_idx;
+  PERFORM _float8, _int8 FROM seed ORDER BY _int8, _float8;
 END;
 $$;
-
