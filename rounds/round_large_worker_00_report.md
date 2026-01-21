@@ -6,3 +6,7 @@ ADAPTED_SUCCESS: pg_tests/compatible/jsonb_path_query.sql (1341 lines)
 ADAPTED_SUCCESS: pg_tests/compatible/lookup_join.sql (870 lines)
 - Adaptations: commented CRDB-only INJECT STATISTICS + session settings, rewrote LOOKUP/HASH JOIN to JOIN, removed @index hints and CRDB-specific DDL (inline INDEX/STORING/FAMILY), fixed TIME 'infinity' literals + BIGINT casts, added missing table/data setup (books/authors/tab4/lookup_expr/t89576/etc), and normalized statement terminators.
 
+
+Worker ID: 00
+Large files processed: 2
+Status: COMPLETE
