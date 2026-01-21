@@ -1,0 +1,9 @@
+source: compatible/rename_column.expected
+pattern: psql:.* ERROR:
+matches:
+line 19: psql:compatible/rename_column.sql:34: ERROR:  column "name" of relation "users" already exists
+line 23: psql:compatible/rename_column.sql:46: ERROR:  column "ttle" does not exist
+line 52: psql:compatible/rename_column.sql:104: ERROR:  column "id" does not exist
+line 57: psql:compatible/rename_column.sql:113: ERROR:  column "id" does not exist
+line 59: psql:compatible/rename_column.sql:125: ERROR:  view "v2" does not exist
+line 104: psql:compatible/rename_column.sql:207: ERROR:  column "UPPERCASE" of relation "mixed_case_table" already exists

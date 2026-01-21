@@ -1,0 +1,6 @@
+source: compatible/alter_default_privileges_with_grant_option.expected
+pattern: psql:.* ERROR:
+matches:
+line 21: psql:pg_tests/compatible/alter_default_privileges_with_grant_option.sql:59: ERROR:  invalid privilege type USAGE for relation
+line 291: psql:pg_tests/compatible/alter_default_privileges_with_grant_option.sql:318: ERROR:  permission denied for table t14
+line 435: psql:pg_tests/compatible/alter_default_privileges_with_grant_option.sql:465: ERROR:  invalid privilege type CREATE for sequence

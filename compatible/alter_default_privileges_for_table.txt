@@ -1,0 +1,4 @@
+source: compatible/alter_default_privileges_for_table.expected
+pattern: psql:.* ERROR:
+matches:
+line 86: psql:compatible/alter_default_privileges_for_table.sql:98: ERROR:  invalid privilege type USAGE for relation

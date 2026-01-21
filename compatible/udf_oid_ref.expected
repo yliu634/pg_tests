@@ -1,0 +1,79 @@
+SET
+DROP FUNCTION
+CREATE FUNCTION
+DROP FUNCTION
+CREATE FUNCTION
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+CREATE SCHEMA
+SET
+DROP TABLE
+CREATE TABLE
+ string_to_array 
+-----------------
+ {hello,world}
+(1 row)
+
+INSERT 0 1
+ a | b 
+---+---
+ 1 | 
+(1 row)
+
+INSERT 0 1
+CREATE INDEX
+ a |        b        
+---+-----------------
+ 2 | hello,new,world
+(1 row)
+
+ALTER TABLE
+psql:compatible/udf_oid_ref.sql:102: ERROR:  new row for relation "t1" violates check constraint "c_len"
+DETAIL:  Failing row contains (3, a).
+DROP FUNCTION
+CREATE FUNCTION
+ crdb_call_int 
+---------------
+             1
+(1 row)
+
+psql:compatible/udf_oid_ref.sql:116: ERROR:  function test.f1 expects 0 argument(s) but got 1
+CONTEXT:  PL/pgSQL function crdb_call_int(oid,text[]) line 33 at RAISE
+psql:compatible/udf_oid_ref.sql:121: ERROR:  function test.f1 expects 0 argument(s) but got 1
+CONTEXT:  PL/pgSQL function crdb_call_int(oid,text[]) line 33 at RAISE
+psql:compatible/udf_oid_ref.sql:126: ERROR:  function test.f1 expects 0 argument(s) but got 1
+CONTEXT:  PL/pgSQL function crdb_call_int(oid,text[]) line 33 at RAISE
+CREATE SCHEMA
+psql:compatible/udf_oid_ref.sql:134: ERROR:  function test.f1 expects 0 argument(s) but got 1
+CONTEXT:  PL/pgSQL function crdb_call_int(oid,text[]) line 33 at RAISE
+psql:compatible/udf_oid_ref.sql:139: ERROR:  function test.f1 expects 0 argument(s) but got 1
+CONTEXT:  PL/pgSQL function crdb_call_int(oid,text[]) line 33 at RAISE
+DROP FUNCTION
+CREATE FUNCTION
+DROP FUNCTION
+CREATE FUNCTION
+ f_using_udf 
+-------------
+           1
+(1 row)
+
+DROP FUNCTION
+CREATE FUNCTION
+ f_using_udf_2 
+---------------
+             3
+(1 row)
+
+CREATE SCHEMA
+SET
+DROP FUNCTION
+CREATE FUNCTION
+SET
+ crdb_call_int 
+---------------
+           321
+(1 row)
+
+RESET
+RESET

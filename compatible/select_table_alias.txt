@@ -1,0 +1,9 @@
+source: compatible/select_table_alias.expected
+pattern: psql:.* ERROR:
+matches:
+line 54: psql:compatible/select_table_alias.sql:41: ERROR:  invalid reference to FROM-clause entry for table "abc"
+line 58: psql:compatible/select_table_alias.sql:44: ERROR:  invalid reference to FROM-clause entry for table "abc"
+line 62: psql:compatible/select_table_alias.sql:47: ERROR:  column foo.a does not exist
+line 65: psql:compatible/select_table_alias.sql:55: ERROR:  table "foo" has 3 columns available but 4 columns specified
+line 82: psql:compatible/select_table_alias.sql:75: ERROR:  invalid reference to FROM-clause entry for table "ab"
+line 86: psql:compatible/select_table_alias.sql:80: ERROR:  table "foo" has 2 columns available but 3 columns specified

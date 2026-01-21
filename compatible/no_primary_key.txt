@@ -1,0 +1,5 @@
+source: compatible/no_primary_key.expected
+pattern: psql:.* ERROR:
+matches:
+line 19: psql:compatible/no_primary_key.sql:33: ERROR:  INSERT has more expressions than target columns
+line 29: psql:compatible/no_primary_key.sql:41: ERROR:  column "c" does not exist

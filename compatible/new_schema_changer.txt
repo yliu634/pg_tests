@@ -1,0 +1,165 @@
+source: compatible/new_schema_changer.expected
+pattern: psql:.* ERROR:
+matches:
+line 43: psql:compatible/new_schema_changer.sql:92: ERROR:  syntax error at or near "AS"
+line 55: psql:compatible/new_schema_changer.sql:107: ERROR:  syntax error at or near "CREATE"
+line 58: psql:compatible/new_schema_changer.sql:110: ERROR:  syntax error at or near "FAMILY"
+line 61: psql:compatible/new_schema_changer.sql:113: ERROR:  INSERT has more expressions than target columns
+line 96: psql:compatible/new_schema_changer.sql:189: ERROR:  view "v" does not exist
+line 100: psql:compatible/new_schema_changer.sql:195: ERROR:  type "typ" does not exist
+line 102: psql:compatible/new_schema_changer.sql:201: ERROR:  relation "t" does not exist
+line 105: psql:compatible/new_schema_changer.sql:204: ERROR:  type "typ" does not exist
+line 109: psql:compatible/new_schema_changer.sql:210: ERROR:  type "typ" does not exist
+line 113: psql:compatible/new_schema_changer.sql:222: ERROR:  type "typ2" does not exist
+line 116: psql:compatible/new_schema_changer.sql:231: ERROR:  type "typ2" does not exist
+line 121: psql:compatible/new_schema_changer.sql:246: ERROR:  cannot drop type typ4 because other objects depend on it
+line 129: psql:compatible/new_schema_changer.sql:264: ERROR:  cannot drop type typ4 because other objects depend on it
+line 134: psql:compatible/new_schema_changer.sql:270: ERROR:  relation "t5" does not exist
+line 138: psql:compatible/new_schema_changer.sql:276: ERROR:  relation "t5" does not exist
+line 141: psql:compatible/new_schema_changer.sql:279: ERROR:  type "typ5" does not exist
+line 143: psql:compatible/new_schema_changer.sql:285: ERROR:  cannot drop type typ4 because other objects depend on it
+line 152: psql:compatible/new_schema_changer.sql:296: ERROR:  cannot drop type typ6 because other objects depend on it
+line 155: psql:compatible/new_schema_changer.sql:299: ERROR:  syntax error at or near "@"
+line 158: psql:compatible/new_schema_changer.sql:302: ERROR:  cannot drop type typ6 because other objects depend on it
+line 166: psql:compatible/new_schema_changer.sql:323: ERROR:  cannot drop view v1dep because other objects depend on it
+line 171: psql:compatible/new_schema_changer.sql:326: ERROR:  "v1dep" is not a materialized view
+line 174: psql:compatible/new_schema_changer.sql:332: ERROR:  relation "v4dep" does not exist
+line 177: psql:compatible/new_schema_changer.sql:335: ERROR:  relation "v3dep" does not exist
+line 180: psql:compatible/new_schema_changer.sql:338: ERROR:  relation "v2dep" does not exist
+line 183: psql:compatible/new_schema_changer.sql:341: ERROR:  relation "v1dep" does not exist
+line 187: psql:compatible/new_schema_changer.sql:347: ERROR:  "mv" is not a view
+line 190: psql:compatible/new_schema_changer.sql:358: ERROR:  syntax error at or near "("
+line 193: psql:compatible/new_schema_changer.sql:361: ERROR:  schema "defaultdb" does not exist
+line 195: psql:compatible/new_schema_changer.sql:367: ERROR:  schema "defaultdb" does not exist
+line 199: psql:compatible/new_schema_changer.sql:375: ERROR:  schema "defaultdb" does not exist
+line 201: psql:compatible/new_schema_changer.sql:379: ERROR:  schema "defaultdb" does not exist
+line 205: psql:compatible/new_schema_changer.sql:385: ERROR:  schema "defaultdb" does not exist
+line 207: psql:compatible/new_schema_changer.sql:391: ERROR:  schema "defaultdb" does not exist
+line 212: psql:compatible/new_schema_changer.sql:410: ERROR:  cannot drop type typ8 because other objects depend on it
+line 216: psql:compatible/new_schema_changer.sql:416: ERROR:  cannot drop type typ8 because other objects depend on it
+line 221: psql:compatible/new_schema_changer.sql:422: ERROR:  cannot drop type typ8 because other objects depend on it
+line 228: psql:compatible/new_schema_changer.sql:435: ERROR:  cannot drop type typ8 because other objects depend on it
+line 233: psql:compatible/new_schema_changer.sql:444: ERROR:  schema "defaultdb" does not exist
+line 238: psql:compatible/new_schema_changer.sql:453: ERROR:  schema "defaultdb" does not exist
+line 240: psql:compatible/new_schema_changer.sql:462: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+line 244: psql:compatible/new_schema_changer.sql:478: ERROR:  syntax error at or near "."
+line 247: psql:compatible/new_schema_changer.sql:481: ERROR:  cross-database references are not implemented: "db1.sc1.sq1"
+line 251: psql:compatible/new_schema_changer.sql:487: ERROR:  cross-database references are not implemented: "db1.sc1.t1"
+line 254: psql:compatible/new_schema_changer.sql:490: ERROR:  cross-database references are not implemented: "db1.sc1.v1"
+line 257: psql:compatible/new_schema_changer.sql:493: ERROR:  cross-database references are not implemented: "db1.sc1.v1"
+line 260: psql:compatible/new_schema_changer.sql:496: ERROR:  cross-database references are not implemented: "db1.sc1.v2"
+line 263: psql:compatible/new_schema_changer.sql:499: ERROR:  cross-database references are not implemented: db1.sc1.typ
+line 266: psql:compatible/new_schema_changer.sql:508: ERROR:  syntax error at or near "."
+line 270: psql:compatible/new_schema_changer.sql:514: ERROR:  syntax error at or near "CASCADE"
+line 274: psql:compatible/new_schema_changer.sql:520: ERROR:  database "db1" already exists
+line 280: psql:compatible/new_schema_changer.sql:530: ERROR:  syntax error at or near "."
+line 283: psql:compatible/new_schema_changer.sql:533: ERROR:  cross-database references are not implemented: "db1.public.sq1"
+line 285: psql:compatible/new_schema_changer.sql:539: ERROR:  cross-database references are not implemented: "db1.sc1.t1"
+line 288: psql:compatible/new_schema_changer.sql:542: ERROR:  cross-database references are not implemented: "db1.public.t1"
+line 291: psql:compatible/new_schema_changer.sql:545: ERROR:  cross-database references are not implemented: "db1.sc1.t1"
+line 294: psql:compatible/new_schema_changer.sql:548: ERROR:  cross-database references are not implemented: "db1.sc1.v1"
+line 297: psql:compatible/new_schema_changer.sql:551: ERROR:  cross-database references are not implemented: "db1.sc1.v1"
+line 300: psql:compatible/new_schema_changer.sql:554: ERROR:  cross-database references are not implemented: "db1.sc1.v2"
+line 303: psql:compatible/new_schema_changer.sql:557: ERROR:  cross-database references are not implemented: "db1.sc1.t1"
+line 308: psql:compatible/new_schema_changer.sql:564: ERROR:  schema "sc1" does not exist
+line 310: psql:compatible/new_schema_changer.sql:566: ERROR:  cross-database references are not implemented: "db1.sc1.t1"
+line 312: psql:compatible/new_schema_changer.sql:568: ERROR:  syntax error at or near "use"
+line 315: psql:compatible/new_schema_changer.sql:571: ERROR:  cross-database references are not implemented: db1.sc1.typ
+line 318: psql:compatible/new_schema_changer.sql:580: ERROR:  relation "system.comments" does not exist
+line 321: psql:compatible/new_schema_changer.sql:586: ERROR:  relation "system.database_role_settings" does not exist
+line 324: psql:compatible/new_schema_changer.sql:589: ERROR:  syntax error at or near "."
+line 327: psql:compatible/new_schema_changer.sql:592: ERROR:  syntax error at or near "RESTRICT"
+line 331: psql:compatible/new_schema_changer.sql:601: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+line 335: psql:compatible/new_schema_changer.sql:607: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+line 337: psql:compatible/new_schema_changer.sql:613: ERROR:  cross-database references are not implemented: "db1.sc1.v1"
+line 340: psql:compatible/new_schema_changer.sql:616: ERROR:  cross-database references are not implemented: "db1.sc1.t1"
+line 343: psql:compatible/new_schema_changer.sql:619: ERROR:  cross-database references are not implemented: "db1.sc1.sq1"
+line 346: psql:compatible/new_schema_changer.sql:625: ERROR:  syntax error at or near "let"
+line 349: psql:compatible/new_schema_changer.sql:628: ERROR:  syntax error at or near "CASCADE"
+line 353: psql:compatible/new_schema_changer.sql:634: ERROR:  relation "system.comments" does not exist
+line 356: psql:compatible/new_schema_changer.sql:637: ERROR:  relation "system.database_role_settings" does not exist
+line 359: psql:compatible/new_schema_changer.sql:640: ERROR:  syntax error at or near "$"
+line 362: psql:compatible/new_schema_changer.sql:643: ERROR:  syntax error at or near "("
+line 365: psql:compatible/new_schema_changer.sql:646: ERROR:  syntax error at or near "["
+line 368: psql:compatible/new_schema_changer.sql:649: ERROR:  syntax error at or near "["
+line 371: psql:compatible/new_schema_changer.sql:657: ERROR:  syntax error at or near "("
+line 374: psql:compatible/new_schema_changer.sql:660: ERROR:  relation "tindex" does not exist
+line 377: psql:compatible/new_schema_changer.sql:662: ERROR:  syntax error at or near "user"
+line 380: psql:compatible/new_schema_changer.sql:665: ERROR:  relation "tindex" does not exist
+line 382: psql:compatible/new_schema_changer.sql:671: ERROR:  relation "tindex" does not exist
+line 384: psql:compatible/new_schema_changer.sql:677: ERROR:  relation "tindex" does not exist
+line 386: psql:compatible/new_schema_changer.sql:683: ERROR:  relation "tindex" does not exist
+line 390: psql:compatible/new_schema_changer.sql:689: ERROR:  syntax error at or near "("
+line 393: psql:compatible/new_schema_changer.sql:692: ERROR:  type "index" does not exist
+line 396: psql:compatible/new_schema_changer.sql:695: ERROR:  syntax error at or near "FROM"
+line 399: psql:compatible/new_schema_changer.sql:698: ERROR:  relation "tindex" does not exist
+line 402: psql:compatible/new_schema_changer.sql:701: ERROR:  relation "tindex" does not exist
+line 405: psql:compatible/new_schema_changer.sql:704: ERROR:  syntax error at or near "FROM"
+line 408: psql:compatible/new_schema_changer.sql:707: ERROR:  table "tindex" does not exist
+line 413: psql:compatible/new_schema_changer.sql:726: ERROR:  syntax error at or near "FROM"
+line 416: psql:compatible/new_schema_changer.sql:729: ERROR:  relation "foo" does not exist
+line 418: psql:compatible/new_schema_changer.sql:735: ERROR:  cannot create index on relation "vindx"
+line 421: psql:compatible/new_schema_changer.sql:740: ERROR:  syntax error at or near "user"
+line 424: psql:compatible/new_schema_changer.sql:742: ERROR:  syntax error at or near "skipif"
+line 428: psql:compatible/new_schema_changer.sql:747: ERROR:  syntax error at or near "onlyif"
+line 431: psql:compatible/new_schema_changer.sql:750: ERROR:  relation "foo" already exists
+line 435: psql:compatible/new_schema_changer.sql:755: ERROR:  syntax error at or near "FROM"
+line 438: psql:compatible/new_schema_changer.sql:758: ERROR:  role "testuser" does not exist
+line 442: psql:compatible/new_schema_changer.sql:763: ERROR:  relation "foo" already exists
+line 450: psql:compatible/new_schema_changer.sql:782: ERROR:  column "c1" does not exist
+line 456: psql:compatible/new_schema_changer.sql:800: ERROR:  "t1dr" is not a view
+line 458: psql:compatible/new_schema_changer.sql:803: ERROR:  "t1dr" is not a sequence
+line 460: psql:compatible/new_schema_changer.sql:806: ERROR:  "v1dr" is not a table
+line 462: psql:compatible/new_schema_changer.sql:809: ERROR:  "v1dr" is not a sequence
+line 464: psql:compatible/new_schema_changer.sql:812: ERROR:  "s1dr" is not a view
+line 466: psql:compatible/new_schema_changer.sql:815: ERROR:  "s1dr" is not a table
+line 468: psql:compatible/new_schema_changer.sql:821: ERROR:  unrecognized configuration parameter "sql_safe_updates"
+line 475: psql:compatible/new_schema_changer.sql:842: ERROR:  relation "system.eventlog" does not exist
+line 479: psql:compatible/new_schema_changer.sql:850: ERROR:  relation "system.eventlog" does not exist
+line 482: psql:compatible/new_schema_changer.sql:854: ERROR:  relation "system.eventlog" does not exist
+line 487: psql:compatible/new_schema_changer.sql:863: ERROR:  relation "system.eventlog" does not exist
+line 491: psql:compatible/new_schema_changer.sql:871: ERROR:  relation "system.eventlog" does not exist
+line 495: psql:compatible/new_schema_changer.sql:877: ERROR:  relation "system.eventlog" does not exist
+line 499: psql:compatible/new_schema_changer.sql:885: ERROR:  relation "system.eventlog" does not exist
+line 503: psql:compatible/new_schema_changer.sql:891: ERROR:  syntax error at or near "."
+line 506: psql:compatible/new_schema_changer.sql:894: ERROR:  syntax error at or near "."
+line 510: psql:compatible/new_schema_changer.sql:900: ERROR:  syntax error at or near "."
+line 513: psql:compatible/new_schema_changer.sql:903: ERROR:  schema "'db1-a'" does not exist
+line 516: psql:compatible/new_schema_changer.sql:906: ERROR:  schema "'db1-a'" does not exist
+line 518: psql:compatible/new_schema_changer.sql:912: ERROR:  relation "system.eventlog" does not exist
+line 521: psql:compatible/new_schema_changer.sql:915: ERROR:  syntax error at or near "cascade"
+line 524: psql:compatible/new_schema_changer.sql:918: ERROR:  syntax error at or near "cascade"
+line 527: psql:compatible/new_schema_changer.sql:923: ERROR:  relation "system.eventlog" does not exist
+line 548: psql:compatible/new_schema_changer.sql:962: ERROR:  null value in column "value" of relation "sbt1" violates not-null constraint
+line 550: psql:compatible/new_schema_changer.sql:965: ERROR:  relation "sbv1" does not exist
+line 553: psql:compatible/new_schema_changer.sql:973: ERROR:  syntax error at or near "("
+line 556: psql:compatible/new_schema_changer.sql:976: ERROR:  schema "defaultdb" does not exist
+line 572: psql:compatible/new_schema_changer.sql:1013: ERROR:  type "d_tc" does not exist
+line 574: psql:compatible/new_schema_changer.sql:1019: ERROR:  type "d_tc" does not exist
+line 576: psql:compatible/new_schema_changer.sql:1025: ERROR:  type "d_tc" does not exist
+line 578: psql:compatible/new_schema_changer.sql:1031: ERROR:  type "d_tc" does not exist
+line 583: psql:compatible/new_schema_changer.sql:1040: ERROR:  database "db1" already exists
+line 589: psql:compatible/new_schema_changer.sql:1054: ERROR:  relation "parent" does not exist
+line 593: psql:compatible/new_schema_changer.sql:1063: ERROR:  syntax error at or near "@"
+line 596: psql:compatible/new_schema_changer.sql:1072: ERROR:  syntax error at or near "CASCADE"
+line 600: psql:compatible/new_schema_changer.sql:1076: ERROR:  syntax error at or near "USE"
+line 606: psql:compatible/new_schema_changer.sql:1089: ERROR:  syntax error at or near "AS"
+line 609: psql:compatible/new_schema_changer.sql:1090: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+line 611: psql:compatible/new_schema_changer.sql:1095: ERROR:  syntax error at or near "onlyif"
+line 614: psql:compatible/new_schema_changer.sql:1098: ERROR:  syntax error at or near "["
+line 617: psql:compatible/new_schema_changer.sql:1101: ERROR:  syntax error at or near "["
+line 629: psql:compatible/new_schema_changer.sql:1113: ERROR:  unrecognized configuration parameter "schemas"
+line 631: psql:compatible/new_schema_changer.sql:1119: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+line 633: psql:compatible/new_schema_changer.sql:1128: ERROR:  syntax error at or near "SETTING"
+line 636: psql:compatible/new_schema_changer.sql:1131: ERROR:  unrecognized parameter "schema_locked"
+line 638: psql:compatible/new_schema_changer.sql:1140: ERROR:  syntax error at or near "SETTING"
+line 641: psql:compatible/new_schema_changer.sql:1146: ERROR:  syntax error at or near "SETTING"
+line 644: psql:compatible/new_schema_changer.sql:1152: ERROR:  syntax error at or near "SETTING"
+line 647: psql:compatible/new_schema_changer.sql:1155: ERROR:  unrecognized parameter "schema_locked"
+line 649: psql:compatible/new_schema_changer.sql:1167: ERROR:  syntax error at or near "SETTING"
+line 652: psql:compatible/new_schema_changer.sql:1173: ERROR:  relation "stmt_ctrl_sub" does not exist
+line 656: psql:compatible/new_schema_changer.sql:1185: ERROR:  syntax error at or near "SETTING"
+line 659: psql:compatible/new_schema_changer.sql:1188: ERROR:  syntax error at or near "SETTING"
+line 662: psql:compatible/new_schema_changer.sql:1191: ERROR:  table "stmt_ctrl_sub" does not exist
+line 664: psql:compatible/new_schema_changer.sql:1196: ERROR:  syntax error at or near "let"
+line 667: psql:compatible/new_schema_changer.sql:1203: ERROR:  multiple primary keys for table "multiple_pk_attempt" are not allowed

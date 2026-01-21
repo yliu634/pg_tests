@@ -1,0 +1,4 @@
+source: compatible/show_var.expected
+pattern: psql:.* ERROR:
+matches:
+line 18: psql:compatible/show_var.sql:27: ERROR:  parameter "max_connections" cannot be changed without restarting the server

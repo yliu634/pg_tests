@@ -1,0 +1,9 @@
+source: compatible/type_privileges.expected
+pattern: psql:.* ERROR:
+matches:
+line 13: psql:compatible/type_privileges.sql:49: ERROR:  permission denied for type test
+line 19: psql:compatible/type_privileges.sql:55: ERROR:  permission denied for type test
+line 28: psql:compatible/type_privileges.sql:80: ERROR:  must be owner of type test
+line 31: psql:compatible/type_privileges.sql:91: ERROR:  invalid privilege type SELECT for type
+line 33: psql:compatible/type_privileges.sql:97: ERROR:  invalid privilege type DELETE for type
+line 35: psql:compatible/type_privileges.sql:103: ERROR:  unrecognized privilege type "zoneconfig"

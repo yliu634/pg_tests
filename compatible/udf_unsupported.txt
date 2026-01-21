@@ -1,0 +1,12 @@
+source: compatible/udf_unsupported.expected
+pattern: psql:.* ERROR:
+matches:
+line 14: psql:compatible/udf_unsupported.sql:41: ERROR:  function "f_cross_db" already exists with same argument types
+line 17: psql:compatible/udf_unsupported.sql:52: ERROR:  function "err" already exists with same argument types
+line 19: psql:compatible/udf_unsupported.sql:58: ERROR:  function "err" already exists with same argument types
+line 22: psql:compatible/udf_unsupported.sql:69: ERROR:  function "err" already exists with same argument types
+line 26: psql:compatible/udf_unsupported.sql:75: ERROR:  schema "crdb_internal" does not exist
+line 29: psql:compatible/udf_unsupported.sql:84: ERROR:  schema "pg_extension" does not exist
+line 33: psql:compatible/udf_unsupported.sql:102: ERROR:  f_call() is not a procedure
+line 37: psql:compatible/udf_unsupported.sql:105: ERROR:  return type mismatch in function declared to return integer
+line 40: psql:compatible/udf_unsupported.sql:108: ERROR:  f_call() is not a procedure

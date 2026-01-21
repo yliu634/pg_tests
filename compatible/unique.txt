@@ -1,0 +1,10 @@
+source: compatible/unique.expected
+pattern: psql:.* ERROR:
+matches:
+line 6: psql:compatible/unique.sql:36: ERROR:  duplicate key value violates unique constraint "uniq_pkey"
+line 8: psql:compatible/unique.sql:37: ERROR:  duplicate key value violates unique constraint "uniq_v_key"
+line 10: psql:compatible/unique.sql:38: ERROR:  duplicate key value violates unique constraint "uniq_w_key"
+line 12: psql:compatible/unique.sql:39: ERROR:  duplicate key value violates unique constraint "uniq_x_y_key"
+line 30: psql:compatible/unique.sql:71: ERROR:  duplicate key value violates unique constraint "uniq_partial_a_pos_idx"
+line 47: psql:compatible/unique.sql:112: ERROR:  insert or update on table "uniq_fk_child" violates foreign key constraint "uniq_fk_child_d_fkey"
+line 59: psql:compatible/unique.sql:134: ERROR:  duplicate key value violates unique constraint "t126988_pkey"

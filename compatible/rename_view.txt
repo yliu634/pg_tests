@@ -1,0 +1,15 @@
+source: compatible/rename_view.expected
+pattern: psql:.* ERROR:
+matches:
+line 9: psql:compatible/rename_view.sql:23: ERROR:  relation "foo" does not exist
+line 27: psql:compatible/rename_view.sql:52: ERROR:  "kv" is not a view
+line 29: psql:compatible/rename_view.sql:60: ERROR:  relation "v" does not exist
+line 55: psql:compatible/rename_view.sql:81: ERROR:  zero-length delimited identifier at or near """"
+line 58: psql:compatible/rename_view.sql:86: ERROR:  zero-length delimited identifier at or near """"
+line 61: psql:compatible/rename_view.sql:91: ERROR:  relation "new_v" already exists
+line 68: psql:compatible/rename_view.sql:116: ERROR:  relation "new_v" already exists
+line 71: psql:compatible/rename_view.sql:124: ERROR:  permission denied for schema test
+line 78: psql:compatible/rename_view.sql:140: ERROR:  permission denied for schema test
+line 91: psql:compatible/rename_view.sql:160: ERROR:  syntax error at or near "."
+line 124: psql:compatible/rename_view.sql:198: ERROR:  relation "v3" already exists
+line 126: psql:compatible/rename_view.sql:206: ERROR:  relation "v4" already exists

@@ -1,0 +1,5 @@
+source: compatible/collatedstring_constraint.expected
+pattern: psql:.* ERROR:
+matches:
+line 4: psql:compatible/collatedstring_constraint.sql:19: ERROR:  duplicate key value violates unique constraint "p_pkey"
+line 34: psql:compatible/collatedstring_constraint.sql:62: ERROR:  insert or update on table "c2" violates foreign key constraint "fk_p"

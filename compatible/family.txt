@@ -1,0 +1,8 @@
+source: compatible/family.expected
+pattern: psql:.* ERROR:
+matches:
+line 85: psql:compatible/family.sql:93: ERROR:  INSERT has more expressions than target columns
+line 95: psql:compatible/family.sql:107: ERROR:  column "g" of relation "abcd" already exists
+line 97: psql:compatible/family.sql:115: ERROR:  column "h" of relation "abcd" already exists
+line 143: psql:compatible/family.sql:163: ERROR:  relation "f1" does not exist
+line 146: psql:compatible/family.sql:168: ERROR:  relation "f1" does not exist

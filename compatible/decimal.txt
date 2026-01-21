@@ -1,0 +1,11 @@
+source: compatible/decimal.expected
+pattern: psql:.* ERROR:
+matches:
+line 74: psql:compatible/decimal.sql:63: ERROR:  duplicate key value violates unique constraint "t2_pkey"
+line 76: psql:compatible/decimal.sql:66: ERROR:  duplicate key value violates unique constraint "t2_pkey"
+line 185: psql:compatible/decimal.sql:148: ERROR:  numeric field overflow
+line 187: psql:compatible/decimal.sql:151: ERROR:  numeric field overflow
+line 189: psql:compatible/decimal.sql:154: ERROR:  numeric field overflow
+line 347: psql:compatible/decimal.sql:223: ERROR:  division by zero
+line 379: psql:compatible/decimal.sql:251: ERROR:  cannot convert NaN to smallint
+line 386: psql:compatible/decimal.sql:264: ERROR:  lower and upper bounds must be finite

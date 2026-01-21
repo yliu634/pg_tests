@@ -1,0 +1,233 @@
+ pg_typeof 
+-----------
+ jsonpath
+(1 row)
+
+ jsonpath 
+----------
+ $."a"
+(1 row)
+
+CREATE TABLE
+psql:compatible/jsonpath.sql:15: ERROR:  relation "a" already exists
+CREATE TYPE
+ jsonpath 
+----------
+ $
+(1 row)
+
+ jsonpath 
+----------
+ strict $
+(1 row)
+
+ jsonpath 
+----------
+ strict $
+(1 row)
+
+ jsonpath 
+----------
+ $
+(1 row)
+
+ jsonpath 
+----------
+ $
+(1 row)
+
+ jsonpath  
+-----------
+ $."a1"[*]
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+psql:compatible/jsonpath.sql:59: ERROR:  invalid input syntax for type jsonpath: ""
+LINE 1: SELECT ''::JSONPATH;
+               ^
+psql:compatible/jsonpath.sql:64: ERROR:  trailing junk after numeric literal at or near ".1a" of jsonpath input
+LINE 1: SELECT '$.1a[*]'::JSONPATH;
+               ^
+         jsonpath          
+---------------------------
+ $."abc"[*]."DEF"."ghi"[*]
+(1 row)
+
+         jsonpath          
+---------------------------
+ $."ABC"[*]."DEF"."GHI"[*]
+(1 row)
+
+ col 
+-----
+ $
+(1 row)
+
+ col 
+-----
+ $
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+  bpchar   
+-----------
+ $."a1"[*]
+(1 row)
+
+   bpchar   
+------------
+ $."abc"[*]
+(1 row)
+
+              jsonpath               
+-------------------------------------
+ $."a"[*]?(@."b" == 1 && @."c" != 1)
+(1 row)
+
+       jsonpath        
+-----------------------
+ $."a"[*]?(@."b" != 1)
+(1 row)
+
+       jsonpath       
+----------------------
+ $."a"[*]?(@."b" < 1)
+(1 row)
+
+       jsonpath        
+-----------------------
+ $."a"[*]?(@."b" <= 1)
+(1 row)
+
+       jsonpath       
+----------------------
+ $."a"[*]?(@."b" > 1)
+(1 row)
+
+       jsonpath        
+-----------------------
+ $."a"[*]?(@."b" >= 1)
+(1 row)
+
+      jsonpath      
+--------------------
+ $."a"?($."b" == 1)
+(1 row)
+
+              jsonpath               
+-------------------------------------
+ $."a"?(@."b" == 1)."c"?(@."d" == 2)
+(1 row)
+
+              jsonpath               
+-------------------------------------
+ $."a"?(@."b" == 1)."c"?(@."d" == 2)
+(1 row)
+
+              jsonpath               
+-------------------------------------
+ $."a"?(@."b" == 1)."c"?(@."d" == 2)
+(1 row)
+
+psql:compatible/jsonpath.sql:123: ERROR:  invalid regular expression: parentheses () not balanced
+LINE 1: SELECT '$ ? (@ like_regex "(invalid pattern")'::JSONPATH;
+               ^
+psql:compatible/jsonpath.sql:128: ERROR:  LAST is allowed only in array subscripts
+LINE 1: SELECT 'last'::JSONPATH;
+               ^
+psql:compatible/jsonpath.sql:133: ERROR:  @ is not allowed in root expressions
+LINE 1: SELECT '@'::JSONPATH;
+               ^
+   jsonpath   
+--------------
+ $.keyvalue()
+(1 row)
+
+psql:compatible/jsonpath.sql:141: ERROR:  syntax error at or near "(" of jsonpath input
+LINE 1: SELECT '$.bigint()'::JSONPATH;
+               ^
+psql:compatible/jsonpath.sql:146: ERROR:  syntax error at or near "(" of jsonpath input
+LINE 1: SELECT '$.boolean()'::JSONPATH;
+               ^
+psql:compatible/jsonpath.sql:151: ERROR:  syntax error at or near "(" of jsonpath input
+LINE 1: SELECT '$.date()'::JSONPATH;
+               ^
+  jsonpath  
+------------
+ $.double()
+(1 row)
+
+psql:compatible/jsonpath.sql:161: ERROR:  syntax error at or near "(" of jsonpath input
+LINE 1: SELECT '$.integer()'::JSONPATH;
+               ^
+psql:compatible/jsonpath.sql:166: ERROR:  syntax error at or near "(" of jsonpath input
+LINE 1: SELECT '$.number()'::JSONPATH;
+               ^
+psql:compatible/jsonpath.sql:171: ERROR:  syntax error at or near "(" of jsonpath input
+LINE 1: SELECT '$.string()'::JSONPATH;
+               ^
+ jsonpath 
+----------
+ $.**
+(1 row)
+
+psql:compatible/jsonpath.sql:179: ERROR:  syntax error at or near "(" of jsonpath input
+LINE 1: SELECT '$.decimal()'::JSONPATH;
+               ^
+   jsonpath   
+--------------
+ $.datetime()
+(1 row)
+
+psql:compatible/jsonpath.sql:189: ERROR:  syntax error at or near "(" of jsonpath input
+LINE 1: SELECT '$.time()'::JSONPATH;
+               ^
+psql:compatible/jsonpath.sql:194: ERROR:  syntax error at or near "(" of jsonpath input
+LINE 1: SELECT '$.time_tz()'::JSONPATH;
+               ^
+psql:compatible/jsonpath.sql:199: ERROR:  syntax error at or near "(" of jsonpath input
+LINE 1: SELECT '$.timestamp()'::JSONPATH;
+               ^
+psql:compatible/jsonpath.sql:204: ERROR:  syntax error at or near "(" of jsonpath input
+LINE 1: SELECT '$.timestamp_tz()'::JSONPATH;
+               ^
+ jsonpath 
+----------
+ $.*
+(1 row)
+
+     jsonpath      
+-------------------
+ strict $."STRIcT"
+(1 row)
+

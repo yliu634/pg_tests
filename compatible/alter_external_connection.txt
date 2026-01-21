@@ -1,0 +1,6 @@
+source: compatible/alter_external_connection.expected
+pattern: psql:.* ERROR:
+matches:
+line 27: psql:compatible/alter_external_connection.sql:190: ERROR:  user testuser does not have UPDATE privilege on external_connection conn_1
+line 39: psql:compatible/alter_external_connection.sql:212: ERROR:  user testuser does not have UPDATE privilege on external_connection conn_2
+line 45: psql:compatible/alter_external_connection.sql:228: ERROR:  user testuser does not have UPDATE privilege on external_connection conn_not_exist

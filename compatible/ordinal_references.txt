@@ -1,0 +1,6 @@
+source: compatible/ordinal_references.expected
+pattern: psql:.* ERROR:
+matches:
+line 10: psql:compatible/ordinal_references.sql:18: ERROR:  ORDER BY position 0 is not in select list
+line 13: psql:compatible/ordinal_references.sql:23: ERROR:  ORDER BY position 42 is not in select list
+line 62: psql:compatible/ordinal_references.sql:50: ERROR:  column "a" does not exist

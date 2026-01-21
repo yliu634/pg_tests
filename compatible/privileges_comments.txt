@@ -1,0 +1,5 @@
+source: compatible/privileges_comments.expected
+pattern: psql:.* ERROR:
+matches:
+line 18: psql:pg_tests/compatible/privileges_comments.sql:32: ERROR:  must be owner of database d45707
+line 20: psql:pg_tests/compatible/privileges_comments.sql:47: ERROR:  must be owner of relation t45707

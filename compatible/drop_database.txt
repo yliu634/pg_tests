@@ -1,0 +1,10 @@
+source: compatible/drop_database.expected
+pattern: psql:.* ERROR:
+matches:
+line 14: psql:compatible/drop_database.sql:33: ERROR:  cannot drop schema foo-bar because other objects depend on it
+line 59: psql:compatible/drop_database.sql:110: ERROR:  must be owner of schema d1
+line 102: psql:compatible/drop_database.sql:142: ERROR:  relation "d1.v2" does not exist
+line 105: psql:compatible/drop_database.sql:143: ERROR:  relation "d2.v2" does not exist
+line 108: psql:compatible/drop_database.sql:144: ERROR:  relation "d2.v3" does not exist
+line 111: psql:compatible/drop_database.sql:145: ERROR:  relation "d2.v4" does not exist
+line 125: psql:compatible/drop_database.sql:162: ERROR:  relation "d2.v1" does not exist

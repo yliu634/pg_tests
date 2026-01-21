@@ -1,0 +1,4 @@
+source: compatible/schema_change_logical_replication.expected
+pattern: psql:.* ERROR:
+matches:
+line 9: psql:compatible/schema_change_logical_replication.sql:38: ERROR:  column "z" of relation "t" already exists

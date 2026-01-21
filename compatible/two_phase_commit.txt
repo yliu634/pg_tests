@@ -1,0 +1,11 @@
+source: compatible/two_phase_commit.expected
+pattern: psql:.* ERROR:
+matches:
+line 80: psql:compatible/two_phase_commit.sql:129: ERROR:  transaction identifier "duplicate" is already in use
+line 91: psql:compatible/two_phase_commit.sql:148: ERROR:  transaction identifier "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" is too long
+line 103: psql:compatible/two_phase_commit.sql:173: ERROR:  division by zero
+line 116: psql:compatible/two_phase_commit.sql:214: ERROR:  COMMIT PREPARED cannot run inside a transaction block
+line 119: psql:compatible/two_phase_commit.sql:224: ERROR:  ROLLBACK PREPARED cannot run inside a transaction block
+line 121: psql:compatible/two_phase_commit.sql:234: ERROR:  prepared transaction with identifier "unknown" does not exist
+line 132: psql:compatible/two_phase_commit.sql:261: ERROR:  permission denied to finish prepared transaction
+line 143: psql:compatible/two_phase_commit.sql:281: ERROR:  cannot delete from view "pg_prepared_xacts"

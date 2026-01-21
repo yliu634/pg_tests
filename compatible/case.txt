@@ -1,0 +1,7 @@
+source: compatible/case.expected
+pattern: psql:.* ERROR:
+matches:
+line 11: psql:compatible/case.sql:31: ERROR:  division by zero
+line 17: psql:compatible/case.sql:40: ERROR:  division by zero
+line 23: psql:compatible/case.sql:49: ERROR:  division by zero
+line 29: psql:compatible/case.sql:64: ERROR:  division by zero

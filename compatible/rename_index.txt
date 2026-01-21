@@ -1,0 +1,6 @@
+source: compatible/rename_index.expected
+pattern: psql:.* ERROR:
+matches:
+line 26: psql:compatible/rename_index.sql:51: ERROR:  relation "bar" already exists
+line 30: psql:compatible/rename_index.sql:59: ERROR:  relation "ffo" does not exist
+line 49: psql:compatible/rename_index.sql:110: ERROR:  must be owner of index rar

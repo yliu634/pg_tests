@@ -1,0 +1,5 @@
+source: compatible/explain_analyze.expected
+pattern: psql:.* ERROR:
+matches:
+line 13: psql:compatible/explain_analyze.sql:24: ERROR:  duplicate key value violates unique constraint "a_pkey"
+line 65: psql:compatible/explain_analyze.sql:62: ERROR:  duplicate key value violates unique constraint "a_pkey"

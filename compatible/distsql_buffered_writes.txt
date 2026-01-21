@@ -1,0 +1,4 @@
+source: compatible/distsql_buffered_writes.expected
+pattern: psql:.* ERROR:
+matches:
+line 66: psql:compatible/distsql_buffered_writes.sql:79: ERROR:  duplicate key value violates unique constraint "kv_pkey"

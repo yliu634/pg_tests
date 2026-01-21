@@ -1,0 +1,11 @@
+source: compatible/procedure_schema_change.expected
+pattern: psql:.* ERROR:
+matches:
+line 5: psql:compatible/procedure_schema_change.sql:19: ERROR:  function p() already exists in schema "public"
+line 7: psql:compatible/procedure_schema_change.sql:31: ERROR:  p() is not a function
+line 10: psql:compatible/procedure_schema_change.sql:46: ERROR:  function "p()" does not exist
+line 22: psql:compatible/procedure_schema_change.sql:58: ERROR:  function "p_new()" does not exist
+line 77: psql:compatible/procedure_schema_change.sql:130: ERROR:  function p() already exists in schema "sc"
+line 103: psql:compatible/procedure_schema_change.sql:175: ERROR:  function "public.p()" does not exist
+line 129: psql:compatible/procedure_schema_change.sql:208: ERROR:  f() is not a procedure
+line 149: psql:compatible/procedure_schema_change.sql:247: ERROR:  role "u" cannot be dropped because some objects depend on it

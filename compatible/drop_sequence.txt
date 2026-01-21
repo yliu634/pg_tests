@@ -1,0 +1,10 @@
+source: compatible/drop_sequence.expected
+pattern: psql:.* ERROR:
+matches:
+line 42: psql:compatible/drop_sequence.sql:77: ERROR:  cannot drop sequence drop_test because other objects depend on it
+line 83: psql:compatible/drop_sequence.sql:143: ERROR:  cannot drop schema other_db because other objects depend on it
+line 126: psql:compatible/drop_sequence.sql:205: ERROR:  cannot drop schema other_sc because other objects depend on it
+line 157: psql:compatible/drop_sequence.sql:248: ERROR:  cannot drop table t2 because other objects depend on it
+line 210: psql:compatible/drop_sequence.sql:328: ERROR:  cannot drop column i of table t5 because other objects depend on it
+line 232: psql:compatible/drop_sequence.sql:368: ERROR:  cannot drop sequence s6 because other objects depend on it
+line 236: psql:compatible/drop_sequence.sql:377: ERROR:  relation "v" does not exist

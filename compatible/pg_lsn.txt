@@ -1,0 +1,12 @@
+source: compatible/pg_lsn.expected
+pattern: psql:.* ERROR:
+matches:
+line 26: psql:pg_tests/compatible/pg_lsn.sql:31: ERROR:  cannot convert infinity to pg_lsn
+line 28: psql:pg_tests/compatible/pg_lsn.sql:37: ERROR:  cannot subtract NaN from pg_lsn
+line 30: psql:pg_tests/compatible/pg_lsn.sql:43: ERROR:  pg_lsn out of range
+line 52: psql:pg_tests/compatible/pg_lsn.sql:69: ERROR:  invalid input syntax for type pg_lsn: "A/G"
+line 55: psql:pg_tests/compatible/pg_lsn.sql:72: ERROR:  invalid input syntax for type pg_lsn: "0G"
+line 58: psql:pg_tests/compatible/pg_lsn.sql:75: ERROR:  invalid input syntax for type pg_lsn: "ab"
+line 61: psql:pg_tests/compatible/pg_lsn.sql:78: ERROR:  invalid input syntax for type pg_lsn: "ab"
+line 64: psql:pg_tests/compatible/pg_lsn.sql:81: ERROR:  invalid input syntax for type pg_lsn: "1"
+line 67: psql:pg_tests/compatible/pg_lsn.sql:84: ERROR:  invalid input syntax for type pg_lsn: ""

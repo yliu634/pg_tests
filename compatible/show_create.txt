@@ -1,0 +1,8 @@
+source: compatible/show_create.expected
+pattern: psql:.* ERROR:
+matches:
+line 83: psql:compatible/show_create.sql:130: ERROR:  constraint "unique_b" of relation "c" is not a foreign key or check constraint
+line 85: psql:compatible/show_create.sql:132: ERROR:  constraint "unique_b_partial" of relation "c" does not exist
+line 87: psql:compatible/show_create.sql:145: ERROR:  constraint "unique_a" of relation "c" is not a foreign key or check constraint
+line 261: psql:compatible/show_create.sql:226: ERROR:  relation "nonexistent" does not exist
+line 264: psql:compatible/show_create.sql:232: ERROR:  relation "nonexistent" does not exist

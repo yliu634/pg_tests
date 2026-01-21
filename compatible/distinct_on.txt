@@ -1,0 +1,7 @@
+source: compatible/distinct_on.expected
+pattern: psql:.* ERROR:
+matches:
+line 177: psql:compatible/distinct_on.sql:104: ERROR:  column "xyz.y" must appear in the GROUP BY clause or be used in an aggregate function
+line 180: psql:compatible/distinct_on.sql:109: ERROR:  column "xyz.z" must appear in the GROUP BY clause or be used in an aggregate function
+line 198: psql:compatible/distinct_on.sql:123: ERROR:  column "xyz.x" must appear in the GROUP BY clause or be used in an aggregate function
+line 235: psql:compatible/distinct_on.sql:140: ERROR:  DISTINCT ON position 2 is not in select list

@@ -1,0 +1,30 @@
+source: compatible/zone_config_system_tenant.expected
+pattern: psql:.* ERROR:
+matches:
+line 3: psql:compatible/zone_config_system_tenant.sql:11: ERROR:  syntax error at or near "CONFIGURE"
+line 6: psql:compatible/zone_config_system_tenant.sql:14: ERROR:  syntax error at or near "SETTING"
+line 9: psql:compatible/zone_config_system_tenant.sql:17: ERROR:  syntax error at or near "CONFIGURE"
+line 13: psql:compatible/zone_config_system_tenant.sql:23: ERROR:  syntax error at or near "CONFIGURE"
+line 16: psql:compatible/zone_config_system_tenant.sql:26: ERROR:  relation "crdb_internal.zones" does not exist
+line 19: psql:compatible/zone_config_system_tenant.sql:29: ERROR:  syntax error at or near "RANGE"
+line 22: psql:compatible/zone_config_system_tenant.sql:32: ERROR:  syntax error at or near "RANGE"
+line 25: psql:compatible/zone_config_system_tenant.sql:35: ERROR:  syntax error at or near "RANGE"
+line 28: psql:compatible/zone_config_system_tenant.sql:38: ERROR:  syntax error at or near "RANGE"
+line 31: psql:compatible/zone_config_system_tenant.sql:41: ERROR:  syntax error at or near "RANGE"
+line 34: psql:compatible/zone_config_system_tenant.sql:44: ERROR:  syntax error at or near "RANGE"
+line 37: psql:compatible/zone_config_system_tenant.sql:47: ERROR:  syntax error at or near "RANGE"
+line 40: psql:compatible/zone_config_system_tenant.sql:50: ERROR:  syntax error at or near "RANGE"
+line 43: psql:compatible/zone_config_system_tenant.sql:53: ERROR:  syntax error at or near "RANGE"
+line 46: psql:compatible/zone_config_system_tenant.sql:56: ERROR:  syntax error at or near "RANGE"
+line 49: psql:compatible/zone_config_system_tenant.sql:60: ERROR:  schema "db2" does not exist
+line 53: psql:compatible/zone_config_system_tenant.sql:67: ERROR:  syntax error at or near "CONFIGURE"
+line 56: psql:compatible/zone_config_system_tenant.sql:68: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+line 58: psql:compatible/zone_config_system_tenant.sql:74: ERROR:  syntax error at or near "$"
+line 61: psql:compatible/zone_config_system_tenant.sql:79: ERROR:  syntax error at or near "$"
+line 64: psql:compatible/zone_config_system_tenant.sql:82: ERROR:  schema "db2" does not exist
+line 67: psql:compatible/zone_config_system_tenant.sql:85: ERROR:  syntax error at or near "CONFIGURE"
+line 70: psql:compatible/zone_config_system_tenant.sql:88: ERROR:  syntax error at or near "USING"
+line 73: psql:compatible/zone_config_system_tenant.sql:96: ERROR:  syntax error at or near "$"
+line 76: psql:compatible/zone_config_system_tenant.sql:104: ERROR:  syntax error at or near "$"
+line 79: psql:compatible/zone_config_system_tenant.sql:107: ERROR:  syntax error at or near "RANGE"
+line 82: psql:compatible/zone_config_system_tenant.sql:107: ERROR:  syntax error at or near "RANGE"

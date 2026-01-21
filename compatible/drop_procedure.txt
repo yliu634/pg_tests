@@ -1,0 +1,11 @@
+source: compatible/drop_procedure.expected
+pattern: psql:.* ERROR:
+matches:
+line 28: psql:compatible/drop_procedure.sql:41: ERROR:  p_test_drop() is not a function
+line 32: psql:compatible/drop_procedure.sql:56: ERROR:  could not find a procedure named "p_not_existing"
+line 35: psql:compatible/drop_procedure.sql:67: ERROR:  procedure p_test_drop() does not exist
+line 39: psql:compatible/drop_procedure.sql:80: ERROR:  p_test_drop() is not a function
+line 41: psql:compatible/drop_procedure.sql:92: ERROR:  p_test_drop() is not a function
+line 44: psql:compatible/drop_procedure.sql:107: ERROR:  procedure p_test_drop() does not exist
+line 65: psql:compatible/drop_procedure.sql:123: ERROR:  procedure public.p_test_drop(integer) does not exist
+line 82: psql:compatible/drop_procedure.sql:138: ERROR:  procedure p_test_drop(integer) does not exist

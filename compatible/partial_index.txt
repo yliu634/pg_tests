@@ -1,0 +1,116 @@
+source: compatible/partial_index.expected
+pattern: psql:.* ERROR:
+matches:
+line 9: psql:compatible/partial_index.sql:22: ERROR:  argument of WHERE must be type boolean, not type integer
+line 14: psql:compatible/partial_index.sql:30: ERROR:  column "b" does not exist
+line 19: psql:compatible/partial_index.sql:38: ERROR:  functions in index predicate must be marked IMMUTABLE
+line 22: psql:compatible/partial_index.sql:46: ERROR:  functions in index predicate must be marked IMMUTABLE
+line 25: psql:compatible/partial_index.sql:54: ERROR:  functions in index predicate must be marked IMMUTABLE
+line 28: psql:compatible/partial_index.sql:62: ERROR:  aggregate functions are not allowed in index predicates
+line 33: psql:compatible/partial_index.sql:70: ERROR:  cannot use subquery in index predicate
+line 38: psql:compatible/partial_index.sql:78: ERROR:  aggregate functions are not allowed in index predicates
+line 43: psql:compatible/partial_index.sql:86: ERROR:  window functions are not allowed in index predicates
+line 48: psql:compatible/partial_index.sql:94: ERROR:  set-returning functions are not allowed in index predicates
+line 53: psql:compatible/partial_index.sql:102: ERROR:  operator does not exist: boolean - boolean
+line 59: psql:compatible/partial_index.sql:110: ERROR:  missing FROM-clause entry for table "t1"
+line 64: psql:compatible/partial_index.sql:118: ERROR:  missing FROM-clause entry for table "unknown"
+line 69: psql:compatible/partial_index.sql:126: ERROR:  invalid reference to FROM-clause entry for table "error"
+line 77: psql:compatible/partial_index.sql:138: ERROR:  argument of WHERE must be type boolean, not type integer
+line 83: psql:compatible/partial_index.sql:151: ERROR:  argument of WHERE must be type boolean, not type integer
+line 86: psql:compatible/partial_index.sql:157: ERROR:  missing FROM-clause entry for table "t4"
+line 435: psql:compatible/partial_index.sql:464: ERROR:  could not create unique index "k_a_key"
+line 460: psql:compatible/partial_index.sql:508: ERROR:  duplicate key value violates unique constraint "u_i"
+line 463: psql:compatible/partial_index.sql:517: ERROR:  duplicate key value violates unique constraint "u_i"
+line 474: psql:compatible/partial_index.sql:532: ERROR:  duplicate key value violates unique constraint "u_i"
+line 476: psql:compatible/partial_index.sql:538: ERROR:  duplicate key value violates unique constraint "u_i"
+line 578: psql:compatible/partial_index.sql:626: ERROR:  there is no unique or exclusion constraint matching the ON CONFLICT specification
+line 595: psql:compatible/partial_index.sql:666: ERROR:  duplicate key value violates unique constraint "u_i2"
+line 598: psql:compatible/partial_index.sql:676: ERROR:  there is no unique or exclusion constraint matching the ON CONFLICT specification
+line 604: psql:compatible/partial_index.sql:726: ERROR:  syntax error at or near "INSERT"
+line 608: psql:compatible/partial_index.sql:751: ERROR:  syntax error at or near "FROM"
+line 611: psql:compatible/partial_index.sql:770: ERROR:  syntax error at or near "DROP"
+line 614: psql:compatible/partial_index.sql:786: ERROR:  syntax error at or near "INJECT"
+line 617: psql:compatible/partial_index.sql:789: ERROR:  relation "join_small" does not exist
+line 620: psql:compatible/partial_index.sql:790: ERROR:  relation "join_large" does not exist
+line 623: psql:compatible/partial_index.sql:805: ERROR:  syntax error at or near "SELECT"
+line 626: psql:compatible/partial_index.sql:810: ERROR:  syntax error at or near "WHERE"
+line 629: psql:compatible/partial_index.sql:822: ERROR:  syntax error at or near "SELECT"
+line 632: psql:compatible/partial_index.sql:823: ERROR:  relation "enum_table" does not exist
+line 635: psql:compatible/partial_index.sql:860: ERROR:  syntax error at or near "@"
+line 638: psql:compatible/partial_index.sql:861: ERROR:  table "inv" does not exist
+line 642: psql:compatible/partial_index.sql:1001: ERROR:  syntax error at or near "SELECT"
+line 645: psql:compatible/partial_index.sql:1009: ERROR:  syntax error at or near "WHERE"
+line 648: psql:compatible/partial_index.sql:1033: ERROR:  syntax error at or near "CREATE"
+line 651: psql:compatible/partial_index.sql:1049: ERROR:  syntax error at or near "SELECT"
+line 654: psql:compatible/partial_index.sql:1180: ERROR:  syntax error at or near "SELECT"
+line 657: psql:compatible/partial_index.sql:1181: ERROR:  syntax error at or near "UPSERT"
+line 660: psql:compatible/partial_index.sql:1187: ERROR:  syntax error at or near "@"
+line 663: psql:compatible/partial_index.sql:1188: ERROR:  relation "virt" does not exist
+line 666: psql:compatible/partial_index.sql:1200: ERROR:  syntax error at or near "@"
+line 669: psql:compatible/partial_index.sql:1203: ERROR:  syntax error at or near "@"
+line 672: psql:compatible/partial_index.sql:1206: ERROR:  relation "virt" does not exist
+line 676: psql:compatible/partial_index.sql:1273: ERROR:  syntax error at or near "INSERT"
+line 679: psql:compatible/partial_index.sql:1274: ERROR:  syntax error at or near "@"
+line 682: psql:compatible/partial_index.sql:1275: ERROR:  syntax error at or near "@"
+line 685: psql:compatible/partial_index.sql:1276: ERROR:  syntax error at or near "@"
+line 688: psql:compatible/partial_index.sql:1277: ERROR:  syntax error at or near "@"
+line 691: psql:compatible/partial_index.sql:1278: ERROR:  syntax error at or near "@"
+line 694: psql:compatible/partial_index.sql:1281: ERROR:  syntax error at or near "@"
+line 697: psql:compatible/partial_index.sql:1282: ERROR:  syntax error at or near "@"
+line 700: psql:compatible/partial_index.sql:1283: ERROR:  syntax error at or near "@"
+line 703: psql:compatible/partial_index.sql:1339: ERROR:  syntax error at or near "INDEX"
+line 706: psql:compatible/partial_index.sql:1340: ERROR:  relation "t55387" does not exist
+line 709: psql:compatible/partial_index.sql:1373: ERROR:  syntax error at or near "CREATE"
+line 712: psql:compatible/partial_index.sql:1379: ERROR:  syntax error at or near "WHERE"
+line 715: psql:compatible/partial_index.sql:1382: ERROR:  relation "t57085_p1" does not exist
+line 718: psql:compatible/partial_index.sql:1383: ERROR:  relation "t57085_c1" does not exist
+line 721: psql:compatible/partial_index.sql:1384: ERROR:  relation "t57085_p1" does not exist
+line 724: psql:compatible/partial_index.sql:1392: ERROR:  syntax error at or near "@"
+line 727: psql:compatible/partial_index.sql:1398: ERROR:  syntax error at or near "WHERE"
+line 730: psql:compatible/partial_index.sql:1401: ERROR:  relation "t57085_p2" does not exist
+line 733: psql:compatible/partial_index.sql:1402: ERROR:  relation "t57085_c2" does not exist
+line 736: psql:compatible/partial_index.sql:1403: ERROR:  relation "t57085_p2" does not exist
+line 739: psql:compatible/partial_index.sql:1417: ERROR:  syntax error at or near "@"
+line 742: psql:compatible/partial_index.sql:1423: ERROR:  syntax error at or near "WHERE"
+line 745: psql:compatible/partial_index.sql:1426: ERROR:  relation "t57085_p3" does not exist
+line 748: psql:compatible/partial_index.sql:1427: ERROR:  relation "t57085_c3" does not exist
+line 751: psql:compatible/partial_index.sql:1428: ERROR:  relation "t57085_p3" does not exist
+line 754: psql:compatible/partial_index.sql:1434: ERROR:  syntax error at or near "@"
+line 757: psql:compatible/partial_index.sql:1493: ERROR:  syntax error at or near "@"
+line 762: psql:compatible/partial_index.sql:1507: ERROR:  syntax error at or near "SELECT"
+line 766: psql:compatible/partial_index.sql:1511: ERROR:  relation "t79613" does not exist
+line 768: psql:compatible/partial_index.sql:1518: ERROR:  syntax error at or near "BEGIN"
+line 771: psql:compatible/partial_index.sql:1519: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+line 773: psql:compatible/partial_index.sql:1526: ERROR:  syntax error at or near "BEGIN"
+line 776: psql:compatible/partial_index.sql:1527: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+line 780: psql:compatible/partial_index.sql:1537: ERROR:  syntax error at or near "DROP"
+line 783: psql:compatible/partial_index.sql:1538: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+line 785: psql:compatible/partial_index.sql:1540: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+line 787: psql:compatible/partial_index.sql:1542: ERROR:  relation "t79613" does not exist
+line 790: psql:compatible/partial_index.sql:1545: ERROR:  table "t79613" does not exist
+line 804: psql:compatible/partial_index.sql:1562: ERROR:  syntax error at or near "WHERE"
+line 808: psql:compatible/partial_index.sql:1564: ERROR:  relation "t79613" does not exist
+line 811: psql:compatible/partial_index.sql:1567: ERROR:  table "t79613" does not exist
+line 814: psql:compatible/partial_index.sql:1573: ERROR:  syntax error at or near "WHERE"
+line 818: psql:compatible/partial_index.sql:1575: ERROR:  relation "t79613" does not exist
+line 821: psql:compatible/partial_index.sql:1578: ERROR:  table "t79613" does not exist
+line 825: psql:compatible/partial_index.sql:1678: ERROR:  syntax error at or near "PRIMARY"
+line 828: psql:compatible/partial_index.sql:1684: ERROR:  syntax error at or near "ALTER"
+line 831: psql:compatible/partial_index.sql:1687: ERROR:  relation "t97551" does not exist
+line 833: psql:compatible/partial_index.sql:1693: ERROR:  index "idx97551" does not exist
+line 836: psql:compatible/partial_index.sql:1702: ERROR:  relation "t97551" does not exist
+line 839: psql:compatible/partial_index.sql:1711: ERROR:  index "idx97551" does not exist
+line 841: psql:compatible/partial_index.sql:1715: ERROR:  type "enum97551" does not exist
+line 845: psql:compatible/partial_index.sql:1724: ERROR:  relation "t158154" does not exist
+line 848: psql:compatible/partial_index.sql:1727: ERROR:  procedure p158154() does not exist
+line 852: psql:compatible/partial_index.sql:1730: ERROR:  syntax error at or near "@"
+line 855: psql:compatible/partial_index.sql:1733: ERROR:  relation "t158154" does not exist
+line 860: psql:compatible/partial_index.sql:1739: ERROR:  could not find a procedure named "p158154"
+line 865: psql:compatible/partial_index.sql:1755: ERROR:  there is no unique or exclusion constraint matching the ON CONFLICT specification
+line 867: psql:compatible/partial_index.sql:1758: ERROR:  syntax error at or near "@"
+line 875: psql:compatible/partial_index.sql:1774: ERROR:  syntax error at or near "WHERE"
+line 878: psql:compatible/partial_index.sql:1780: ERROR:  relation "t158154" does not exist
+line 881: psql:compatible/partial_index.sql:1783: ERROR:  procedure p158154() does not exist
+line 885: psql:compatible/partial_index.sql:1786: ERROR:  syntax error at or near "@"
+line 888: psql:compatible/partial_index.sql:1789: ERROR:  relation "t158154" does not exist
+line 893: psql:compatible/partial_index.sql:1795: ERROR:  could not find a procedure named "p158154"

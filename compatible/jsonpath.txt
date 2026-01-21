@@ -1,0 +1,20 @@
+source: compatible/jsonpath.expected
+pattern: psql:.* ERROR:
+matches:
+line 12: psql:compatible/jsonpath.sql:15: ERROR:  relation "a" already exists
+line 74: psql:compatible/jsonpath.sql:59: ERROR:  invalid input syntax for type jsonpath: ""
+line 77: psql:compatible/jsonpath.sql:64: ERROR:  trailing junk after numeric literal at or near ".1a" of jsonpath input
+line 162: psql:compatible/jsonpath.sql:123: ERROR:  invalid regular expression: parentheses () not balanced
+line 165: psql:compatible/jsonpath.sql:128: ERROR:  LAST is allowed only in array subscripts
+line 168: psql:compatible/jsonpath.sql:133: ERROR:  @ is not allowed in root expressions
+line 176: psql:compatible/jsonpath.sql:141: ERROR:  syntax error at or near "(" of jsonpath input
+line 179: psql:compatible/jsonpath.sql:146: ERROR:  syntax error at or near "(" of jsonpath input
+line 182: psql:compatible/jsonpath.sql:151: ERROR:  syntax error at or near "(" of jsonpath input
+line 190: psql:compatible/jsonpath.sql:161: ERROR:  syntax error at or near "(" of jsonpath input
+line 193: psql:compatible/jsonpath.sql:166: ERROR:  syntax error at or near "(" of jsonpath input
+line 196: psql:compatible/jsonpath.sql:171: ERROR:  syntax error at or near "(" of jsonpath input
+line 204: psql:compatible/jsonpath.sql:179: ERROR:  syntax error at or near "(" of jsonpath input
+line 212: psql:compatible/jsonpath.sql:189: ERROR:  syntax error at or near "(" of jsonpath input
+line 215: psql:compatible/jsonpath.sql:194: ERROR:  syntax error at or near "(" of jsonpath input
+line 218: psql:compatible/jsonpath.sql:199: ERROR:  syntax error at or near "(" of jsonpath input
+line 221: psql:compatible/jsonpath.sql:204: ERROR:  syntax error at or near "(" of jsonpath input

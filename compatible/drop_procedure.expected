@@ -1,0 +1,127 @@
+SET
+CREATE FUNCTION
+CREATE PROCEDURE
+CREATE PROCEDURE
+CREATE SCHEMA
+CREATE PROCEDURE
+SET
+                      create_statement                      
+------------------------------------------------------------
+ CREATE OR REPLACE PROCEDURE public.p_test_drop()          +
+  LANGUAGE sql                                             +
+ AS $procedure$SELECT 1$procedure$                         +
+ 
+ CREATE OR REPLACE PROCEDURE public.p_test_drop(IN integer)+
+  LANGUAGE sql                                             +
+ AS $procedure$SELECT 1$procedure$                         +
+ 
+(2 rows)
+
+                    create_statement                     
+---------------------------------------------------------
+ CREATE OR REPLACE PROCEDURE sc1.p_test_drop(IN integer)+
+  LANGUAGE sql                                          +
+ AS $procedure$SELECT 1$procedure$                      +
+ 
+(1 row)
+
+psql:compatible/drop_procedure.sql:41: ERROR:  p_test_drop() is not a function
+psql:compatible/drop_procedure.sql:47: ERROR:  procedure name "p_test_drop" is not unique
+HINT:  Specify the argument list to select the procedure unambiguously.
+DROP PROCEDURE
+psql:compatible/drop_procedure.sql:56: ERROR:  could not find a procedure named "p_not_existing"
+BEGIN
+DROP PROCEDURE
+psql:compatible/drop_procedure.sql:67: ERROR:  procedure p_test_drop() does not exist
+ROLLBACK
+psql:compatible/drop_procedure.sql:72: WARNING:  there is no transaction in progress
+ROLLBACK
+psql:compatible/drop_procedure.sql:80: ERROR:  p_test_drop() is not a function
+psql:compatible/drop_procedure.sql:86: ERROR:  p_test_drop() is not a function
+psql:compatible/drop_procedure.sql:92: ERROR:  p_test_drop() is not a function
+psql:compatible/drop_procedure.sql:98: ERROR:  p_test_drop() is not a function
+DROP PROCEDURE
+psql:compatible/drop_procedure.sql:107: ERROR:  procedure p_test_drop() does not exist
+LINE 1: CALL p_test_drop();
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+                      create_statement                      
+------------------------------------------------------------
+ CREATE OR REPLACE PROCEDURE public.p_test_drop(IN integer)+
+  LANGUAGE sql                                             +
+ AS $procedure$SELECT 1$procedure$                         +
+ 
+(1 row)
+
+                    create_statement                     
+---------------------------------------------------------
+ CREATE OR REPLACE PROCEDURE sc1.p_test_drop(IN integer)+
+  LANGUAGE sql                                          +
+ AS $procedure$SELECT 1$procedure$                      +
+ 
+(1 row)
+
+DROP PROCEDURE
+psql:compatible/drop_procedure.sql:123: ERROR:  procedure public.p_test_drop(integer) does not exist
+LINE 1: CALL public.p_test_drop(1);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+ create_statement 
+------------------
+(0 rows)
+
+                    create_statement                     
+---------------------------------------------------------
+ CREATE OR REPLACE PROCEDURE sc1.p_test_drop(IN integer)+
+  LANGUAGE sql                                          +
+ AS $procedure$SELECT 1$procedure$                      +
+ 
+(1 row)
+
+DROP PROCEDURE
+psql:compatible/drop_procedure.sql:138: ERROR:  procedure p_test_drop(integer) does not exist
+LINE 1: CALL p_test_drop(1);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+ create_statement 
+------------------
+(0 rows)
+
+CREATE PROCEDURE
+CREATE PROCEDURE
+                 create_statement                 
+--------------------------------------------------
+ CREATE OR REPLACE PROCEDURE public.p_test_drop()+
+  LANGUAGE sql                                   +
+ AS $procedure$ SELECT 1 $procedure$             +
+ 
+(1 row)
+
+               create_statement                
+-----------------------------------------------
+ CREATE OR REPLACE PROCEDURE sc1.p_test_drop()+
+  LANGUAGE sql                                +
+ AS $procedure$ SELECT 1 $procedure$          +
+ 
+(1 row)
+
+BEGIN
+DROP PROCEDURE
+DROP PROCEDURE
+COMMIT
+ create_statement 
+------------------
+(0 rows)
+
+ create_statement 
+------------------
+(0 rows)
+
+SET
+DROP SCHEMA
+CREATE TYPE
+CREATE PROCEDURE
+DROP PROCEDURE
+CREATE PROCEDURE
+DROP PROCEDURE
+RESET

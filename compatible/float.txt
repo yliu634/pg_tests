@@ -1,0 +1,7 @@
+source: compatible/float.expected
+pattern: psql:.* ERROR:
+matches:
+line 4: psql:compatible/float.sql:14: ERROR:  duplicate key value violates unique constraint "p_f_idx"
+line 39: psql:compatible/float.sql:47: ERROR:  could not create unique index "i_f_idx"
+line 53: psql:compatible/float.sql:79: ERROR:  cannot cast type record to double precision
+line 56: psql:compatible/float.sql:85: ERROR:  cannot cast type record to double precision

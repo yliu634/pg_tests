@@ -1,0 +1,5 @@
+source: compatible/show_fingerprints.expected
+pattern: psql:.* ERROR:
+matches:
+line 50: psql:compatible/show_fingerprints.sql:160: ERROR:  index "t_b_idx1" does not exist
+line 78: psql:compatible/show_fingerprints.sql:187: ERROR:  column "e" of relation "t" does not exist

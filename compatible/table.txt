@@ -1,0 +1,17 @@
+source: compatible/table.expected
+pattern: psql:.* ERROR:
+matches:
+line 7: psql:compatible/table.sql:21: ERROR:  no schema has been selected to create in
+line 10: psql:compatible/table.sql:27: ERROR:  zero-length delimited identifier at or near """"
+line 14: psql:compatible/table.sql:36: ERROR:  relation "a" already exists
+line 16: psql:compatible/table.sql:46: ERROR:  zero-length delimited identifier at or near """"
+line 19: psql:compatible/table.sql:52: ERROR:  relation "a" already exists
+line 21: psql:compatible/table.sql:64: ERROR:  multiple primary keys for table "b" are not allowed
+line 24: psql:compatible/table.sql:70: ERROR:  column "a" appears twice in primary key constraint
+line 27: psql:compatible/table.sql:76: ERROR:  column "a" appears twice in unique constraint
+line 107: psql:compatible/table.sql:225: ERROR:  precision for type float must be at least 1 bit
+line 110: psql:compatible/table.sql:231: ERROR:  NUMERIC precision 0 must be between 1 and 1000
+line 157: psql:compatible/table.sql:325: ERROR:  relation "pk" already exists
+line 159: psql:compatible/table.sql:345: ERROR:  constraint "one" for relation "dupe_named_constraints" already exists
+line 195: psql:compatible/table.sql:438: ERROR:  invalid input syntax for type numeric: "blah"
+line 198: psql:compatible/table.sql:444: ERROR:  invalid input syntax for type numeric: "blah"

@@ -1,0 +1,4 @@
+source: compatible/grant_on_all_sequences_in_schema.expected
+pattern: psql:.* ERROR:
+matches:
+line 32: psql:pg_tests/compatible/grant_on_all_sequences_in_schema.sql:51: ERROR:  permission denied for sequence q

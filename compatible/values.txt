@@ -1,0 +1,5 @@
+source: compatible/values.expected
+pattern: psql:.* ERROR:
+matches:
+line 33: psql:compatible/values.sql:24: ERROR:  VALUES lists must all be the same length
+line 43: psql:compatible/values.sql:33: ERROR:  column "z" does not exist

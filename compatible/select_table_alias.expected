@@ -1,0 +1,97 @@
+CREATE TABLE
+INSERT 0 2
+ a | b | c 
+---+---+---
+ 1 | 2 | 3
+ 4 | 5 | 6
+(2 rows)
+
+ a | b | c 
+---+---+---
+ 1 | 2 | 3
+ 4 | 5 | 6
+(2 rows)
+
+ foo1 | b | c 
+------+---+---
+    1 | 2 | 3
+    4 | 5 | 6
+(2 rows)
+
+ foo1 | foo2 | c 
+------+------+---
+    1 |    2 | 3
+    4 |    5 | 6
+(2 rows)
+
+ foo1 | foo2 | foo3 
+------+------+------
+    1 |    2 |    3
+    4 |    5 |    6
+(2 rows)
+
+ foo1 | foo1 | b | c 
+------+------+---+---
+    1 |    1 | 2 | 3
+    4 |    4 | 5 | 6
+(2 rows)
+
+ foo1 | foo2 | c 
+------+------+---
+    1 |    2 | 3
+(1 row)
+
+ foo1 | foo2 | c 
+------+------+---
+    1 |    2 | 3
+(1 row)
+
+ foo1 | foo2 | c 
+------+------+---
+    4 |    5 | 6
+(1 row)
+
+psql:compatible/select_table_alias.sql:41: ERROR:  invalid reference to FROM-clause entry for table "abc"
+LINE 1: SELECT abc.foo1 FROM abc AS foo (foo1);
+               ^
+HINT:  Perhaps you meant to reference the table alias "foo".
+psql:compatible/select_table_alias.sql:44: ERROR:  invalid reference to FROM-clause entry for table "abc"
+LINE 1: SELECT abc.b FROM abc AS foo (foo1);
+               ^
+HINT:  Perhaps you meant to reference the table alias "foo".
+psql:compatible/select_table_alias.sql:47: ERROR:  column foo.a does not exist
+LINE 1: SELECT foo.a FROM abc AS foo (foo1);
+               ^
+psql:compatible/select_table_alias.sql:55: ERROR:  table "foo" has 3 columns available but 4 columns specified
+CREATE TABLE
+INSERT 0 3
+ foo1 | foo2 
+------+------
+    1 |    2
+    1 |    3
+    2 |    5
+(3 rows)
+
+ ctid  | ctid  
+-------+-------
+ (0,1) | (0,1)
+ (0,2) | (0,2)
+ (0,3) | (0,3)
+(3 rows)
+
+psql:compatible/select_table_alias.sql:75: ERROR:  invalid reference to FROM-clause entry for table "ab"
+LINE 1: SELECT ab.ctid FROM ab AS foo (foo1);
+               ^
+HINT:  Perhaps you meant to reference the table alias "foo".
+psql:compatible/select_table_alias.sql:80: ERROR:  table "foo" has 2 columns available but 3 columns specified
+CREATE FUNCTION
+   x   
+-------
+ three
+(1 row)
+
+   x   
+-------
+ three
+(1 row)
+

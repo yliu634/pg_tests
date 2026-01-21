@@ -1,0 +1,13 @@
+source: compatible/drop_function.expected
+pattern: psql:.* ERROR:
+matches:
+line 22: psql:compatible/drop_function.sql:42: ERROR:  could not find a procedure named "f_test_drop"
+line 26: psql:compatible/drop_function.sql:55: ERROR:  could not find a function named "f_not_existing"
+line 33: psql:compatible/drop_function.sql:75: ERROR:  could not find a procedure named "f_test_drop"
+line 35: psql:compatible/drop_function.sql:83: ERROR:  procedure f_test_drop() does not exist
+line 37: psql:compatible/drop_function.sql:91: ERROR:  function f_test_drop() does not exist
+line 99: psql:compatible/drop_function.sql:196: ERROR:  function name "f114677" is not unique
+line 118: psql:compatible/drop_function.sql:239: ERROR:  could not find a function named "f_called_by_b"
+line 123: psql:compatible/drop_function.sql:256: ERROR:  function f_called_by_b() does not exist
+line 125: psql:compatible/drop_function.sql:268: ERROR:  schema "altschema" does not exist
+line 143: psql:compatible/drop_function.sql:300: ERROR:  must be owner of function f_b

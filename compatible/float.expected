@@ -1,0 +1,79 @@
+CREATE TABLE
+CREATE INDEX
+INSERT 0 7
+psql:compatible/float.sql:14: ERROR:  duplicate key value violates unique constraint "p_f_idx"
+DETAIL:  Key (f)=(-0) already exists.
+  f  
+-----
+ NaN
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+ f  
+----
+ -0
+  0
+(2 rows)
+
+CREATE INDEX
+ f  
+----
+ -0
+  0
+(2 rows)
+
+CREATE INDEX
+ f  
+----
+ -0
+  0
+(2 rows)
+
+ f  
+----
+  0
+ -0
+(2 rows)
+
+psql:compatible/float.sql:47: ERROR:  could not create unique index "i_f_idx"
+DETAIL:  Key (f)=(0) is duplicated.
+CREATE TABLE
+INSERT 0 4
+SET
+SET
+SET
+DROP TABLE
+RESET
+      ?column?       |     ?column?      |     ?column?      
+---------------------+-------------------+-------------------
+ -0.1234567890123456 | 123456789012345.6 | 1234567.890123456
+(1 row)
+
+psql:compatible/float.sql:79: ERROR:  cannot cast type record to double precision
+LINE 1: SELECT ROW()::float8 = 'NaN'::float8;
+                    ^
+psql:compatible/float.sql:85: ERROR:  cannot cast type record to double precision
+LINE 1: SELECT ROW()::float8 <> 'NaN'::float8;
+                    ^
+ ?column? | ?column? 
+----------+----------
+ t        | f
+(1 row)
+
+ ?column? | ?column? 
+----------+----------
+ t        | f
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+     trunc      
+----------------
+        1234567
+ 12345678901234
+(2 rows)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1

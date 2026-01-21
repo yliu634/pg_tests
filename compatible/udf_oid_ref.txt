@@ -1,0 +1,9 @@
+source: compatible/udf_oid_ref.expected
+pattern: psql:.* ERROR:
+matches:
+line 32: psql:compatible/udf_oid_ref.sql:102: ERROR:  new row for relation "t1" violates check constraint "c_len"
+line 41: psql:compatible/udf_oid_ref.sql:116: ERROR:  function test.f1 expects 0 argument(s) but got 1
+line 43: psql:compatible/udf_oid_ref.sql:121: ERROR:  function test.f1 expects 0 argument(s) but got 1
+line 45: psql:compatible/udf_oid_ref.sql:126: ERROR:  function test.f1 expects 0 argument(s) but got 1
+line 48: psql:compatible/udf_oid_ref.sql:134: ERROR:  function test.f1 expects 0 argument(s) but got 1
+line 50: psql:compatible/udf_oid_ref.sql:139: ERROR:  function test.f1 expects 0 argument(s) but got 1

@@ -1,0 +1,17 @@
+source: compatible/typing.expected
+pattern: psql:.* ERROR:
+matches:
+line 11: psql:compatible/typing.sql:20: ERROR:  column "x" is of type integer but expression is of type timestamp with time zone
+line 16: psql:compatible/typing.sql:28: ERROR:  integer out of range
+line 53: psql:compatible/typing.sql:67: ERROR:  invalid input syntax for type integer: "foo"
+line 56: psql:compatible/typing.sql:72: ERROR:  invalid input syntax for type integer: "foo"
+line 59: psql:compatible/typing.sql:77: ERROR:  invalid input syntax for type integer: "foo"
+line 62: psql:compatible/typing.sql:82: ERROR:  invalid input syntax for type integer: "foo"
+line 221: psql:compatible/typing.sql:207: ERROR:  invalid input syntax for type timestamp with time zone: "Not Timestamp"
+line 224: psql:compatible/typing.sql:212: ERROR:  invalid input syntax for type timestamp with time zone: "Not Timestamp"
+line 227: psql:compatible/typing.sql:217: ERROR:  invalid input syntax for type boolean: "foo"
+line 230: psql:compatible/typing.sql:222: ERROR:  invalid input syntax for type boolean: "foo"
+line 248: psql:compatible/typing.sql:236: ERROR:  operator does not exist: integer = text
+line 252: psql:compatible/typing.sql:241: ERROR:  operator does not exist: integer = record
+line 261: psql:compatible/typing.sql:249: ERROR:  subquery has too few columns
+line 403: psql:compatible/typing.sql:415: ERROR:  value too long for type character varying(2)

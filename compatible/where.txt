@@ -1,0 +1,4 @@
+source: compatible/where.expected
+pattern: psql:.* ERROR:
+matches:
+line 44: psql:compatible/where.sql:42: ERROR:  column "nonexistent" does not exist

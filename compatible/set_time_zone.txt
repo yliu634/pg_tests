@@ -1,0 +1,5 @@
+source: compatible/set_time_zone.expected
+pattern: psql:.* ERROR:
+matches:
+line 200: psql:compatible/set_time_zone.sql:171: ERROR:  invalid value for parameter "TimeZone": "168"
+line 202: psql:compatible/set_time_zone.sql:176: ERROR:  invalid value for parameter "TimeZone": "-168"

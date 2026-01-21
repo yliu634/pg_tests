@@ -1,0 +1,6 @@
+source: compatible/grant_sequence.expected
+pattern: psql:.* ERROR:
+matches:
+line 20: psql:compatible/grant_sequence.sql:38: ERROR:  permission denied for sequence a
+line 82: psql:compatible/grant_sequence.sql:97: ERROR:  must be owner of sequence to_drop_seq
+line 91: psql:compatible/grant_sequence.sql:113: ERROR:  must be able to SET ROLE "gs_user2"

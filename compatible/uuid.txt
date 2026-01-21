@@ -1,0 +1,11 @@
+source: compatible/uuid.expected
+pattern: psql:.* ERROR:
+matches:
+line 27: psql:compatible/uuid.sql:53: ERROR:  duplicate key value violates unique constraint "u_pkey"
+line 29: psql:compatible/uuid.sql:59: ERROR:  duplicate key value violates unique constraint "i_token2"
+line 31: psql:compatible/uuid.sql:65: ERROR:  invalid input syntax for type uuid: "636166656630306464656164626565"
+line 33: psql:compatible/uuid.sql:71: ERROR:  invalid input syntax for type uuid: "6361666566303064646561646265656673"
+line 35: psql:compatible/uuid.sql:77: ERROR:  invalid input syntax for type uuid: "63616665-6630-3064-6465-61646265656"
+line 38: psql:compatible/uuid.sql:83: ERROR:  invalid input syntax for type uuid: "63616665-6630-3064-6465-6164626565620"
+line 75: psql:compatible/uuid.sql:122: ERROR:  duplicate key value violates unique constraint "u_pkey"
+line 88: psql:compatible/uuid.sql:139: ERROR:  cannot cast type uuid to integer

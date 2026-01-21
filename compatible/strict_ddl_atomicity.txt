@@ -1,0 +1,6 @@
+source: compatible/strict_ddl_atomicity.expected
+pattern: psql:.* ERROR:
+matches:
+line 9: psql:compatible/strict_ddl_atomicity.sql:23: ERROR:  could not create unique index "unique_values"
+line 32: psql:compatible/strict_ddl_atomicity.sql:54: ERROR:  could not create unique index "unique_values"
+line 40: psql:compatible/strict_ddl_atomicity.sql:67: ERROR:  could not create unique index "unique_values"

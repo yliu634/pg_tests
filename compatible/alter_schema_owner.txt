@@ -1,0 +1,5 @@
+source: compatible/alter_schema_owner.expected
+pattern: psql:.* ERROR:
+matches:
+line 19: psql:compatible/alter_schema_owner.sql:42: ERROR:  must be able to SET ROLE "aso_testuser2"
+line 25: psql:compatible/alter_schema_owner.sql:58: ERROR:  permission denied for database crdb_tests_alter_schema_owner

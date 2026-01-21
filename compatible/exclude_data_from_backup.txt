@@ -1,0 +1,5 @@
+source: compatible/exclude_data_from_backup.expected
+pattern: psql:.* ERROR:
+matches:
+line 30: psql:compatible/exclude_data_from_backup.sql:148: ERROR:  cannot set data in a temporary table to be excluded from backup
+line 33: psql:compatible/exclude_data_from_backup.sql:156: ERROR:  cannot set data in a table with inbound foreign key constraints to be excluded from backup

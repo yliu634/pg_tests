@@ -1,0 +1,4 @@
+source: compatible/skip_on_retry.expected
+pattern: psql:.* ERROR:
+matches:
+line 8: psql:compatible/skip_on_retry.sql:14: ERROR:  force_retry
