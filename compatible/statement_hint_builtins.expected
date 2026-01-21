@@ -1,0 +1,783 @@
+SET
+CREATE SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+INSERT 0 1
+ count 
+-------
+     0
+(1 row)
+
+ fingerprint 
+-------------
+(0 rows)
+
+ fingerprint 
+-------------
+(0 rows)
+
+ fingerprint 
+-------------
+(0 rows)
+
+ count 
+-------
+     0
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+ reportingID | ?column? | ?column? 
+-------------+----------+----------
+(0 rows)
+
+ ?column? 
+----------
+(0 rows)
+
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+DELETE 0
+ count 
+-------
+     0
+(1 row)
+
+BEGIN
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ fingerprint 
+-------------
+(0 rows)
+
+ count 
+-------
+     0
+(1 row)
+
+ROLLBACK
+ count 
+-------
+     0
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ await_statement_hints_cache 
+-----------------------------
+ t
+(1 row)
+
+ x | y 
+---+---
+(0 rows)
+
+ usage_count 
+-------------
+           0
+(1 row)
+
+                     QUERY PLAN                      
+-----------------------------------------------------
+ Seq Scan on xy  (cost=0.00..38.25 rows=753 width=8)
+   Filter: (x > y)
+(2 rows)
+
+ usage_count 
+-------------
+           0
+(1 row)
+
+                                          QUERY PLAN                                           
+-----------------------------------------------------------------------------------------------
+ Seq Scan on xy  (cost=0.00..38.25 rows=753 width=8) (actual time=0.001..0.001 rows=0 loops=1)
+   Filter: (x > y)
+   Rows Removed by Filter: 1
+ Planning Time: 0.005 ms
+ Execution Time: 0.003 ms
+(5 rows)
+
+ usage_count 
+-------------
+           0
+(1 row)
+
+PREPARE
+ x | y 
+---+---
+(0 rows)
+
+ usage_count 
+-------------
+           0
+(1 row)
+
+ clear_statement_hints_cache 
+-----------------------------
+ t
+(1 row)
+
+ x | y 
+---+---
+(0 rows)
+
+ usage_count 
+-------------
+           0
+(1 row)
+
+DELETE 0
+ await_statement_hints_cache 
+-----------------------------
+ t
+(1 row)
+
+ x | y 
+---+---
+(0 rows)
+
+ x | y 
+---+---
+(0 rows)
+
+ usage_count 
+-------------
+           0
+(1 row)
+
+DEALLOCATE ALL
+CREATE TABLE
+CREATE INDEX
+                               QUERY PLAN                                
+-------------------------------------------------------------------------
+ Index Only Scan using abc_pkey on abc  (cost=0.15..8.17 rows=1 width=4)
+   Index Cond: (a = 10)
+(2 rows)
+
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ await_statement_hints_cache 
+-----------------------------
+ t
+(1 row)
+
+ a 
+---
+(0 rows)
+
+                               QUERY PLAN                                
+-------------------------------------------------------------------------
+ Index Only Scan using abc_pkey on abc  (cost=0.15..8.17 rows=1 width=4)
+   Index Cond: (a = 10)
+(2 rows)
+
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ Index Only Scan using abc_pkey on abc  (cost=0.15..8.17 rows=1 width=4) (actual time=0.001..0.001 rows=0 loops=1)
+   Index Cond: (a = 10)
+   Heap Fetches: 0
+ Planning Time: 0.007 ms
+ Execution Time: 0.003 ms
+(5 rows)
+
+                                  QUERY PLAN                                  
+------------------------------------------------------------------------------
+ Nested Loop  (cost=4.39..23.19 rows=11 width=8)
+   ->  Index Scan using abc_pkey on abc  (cost=0.15..8.17 rows=1 width=8)
+         Index Cond: (a = 10)
+   ->  Bitmap Heap Scan on xy  (cost=4.24..14.91 rows=11 width=8)
+         Recheck Cond: (abc.b = y)
+         ->  Bitmap Index Scan on xy_y_idx  (cost=0.00..4.24 rows=11 width=0)
+               Index Cond: (y = abc.b)
+(7 rows)
+
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ await_statement_hints_cache 
+-----------------------------
+ t
+(1 row)
+
+ a | x 
+---+---
+(0 rows)
+
+                                  QUERY PLAN                                  
+------------------------------------------------------------------------------
+ Nested Loop  (cost=4.39..23.19 rows=11 width=8)
+   ->  Index Scan using abc_pkey on abc  (cost=0.15..8.17 rows=1 width=8)
+         Index Cond: (a = 10)
+   ->  Bitmap Heap Scan on xy  (cost=4.24..14.91 rows=11 width=8)
+         Recheck Cond: (abc.b = y)
+         ->  Bitmap Index Scan on xy_y_idx  (cost=0.00..4.24 rows=11 width=0)
+               Index Cond: (y = abc.b)
+(7 rows)
+
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Nested Loop  (cost=4.39..23.19 rows=11 width=8) (actual time=0.001..0.001 rows=0 loops=1)
+   ->  Index Scan using abc_pkey on abc  (cost=0.15..8.17 rows=1 width=8) (actual time=0.001..0.001 rows=0 loops=1)
+         Index Cond: (a = 10)
+   ->  Bitmap Heap Scan on xy  (cost=4.24..14.91 rows=11 width=8) (never executed)
+         Recheck Cond: (abc.b = y)
+         ->  Bitmap Index Scan on xy_y_idx  (cost=0.00..4.24 rows=11 width=0) (never executed)
+               Index Cond: (y = abc.b)
+ Planning Time: 0.025 ms
+ Execution Time: 0.005 ms
+(9 rows)
+
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ await_statement_hints_cache 
+-----------------------------
+ t
+(1 row)
+
+ a 
+---
+(0 rows)
+
+                               QUERY PLAN                                
+-------------------------------------------------------------------------
+ Bitmap Heap Scan on abc  (cost=4.23..14.79 rows=10 width=4)
+   Recheck Cond: (b = 10)
+   ->  Bitmap Index Scan on abc_b_idx  (cost=0.00..4.23 rows=10 width=0)
+         Index Cond: (b = 10)
+(4 rows)
+
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ Bitmap Heap Scan on abc  (cost=4.23..14.79 rows=10 width=4) (actual time=0.001..0.001 rows=0 loops=1)
+   Recheck Cond: (b = 10)
+   ->  Bitmap Index Scan on abc_b_idx  (cost=0.00..4.23 rows=10 width=0) (actual time=0.001..0.001 rows=0 loops=1)
+         Index Cond: (b = 10)
+ Planning Time: 0.007 ms
+ Execution Time: 0.003 ms
+(6 rows)
+
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ await_statement_hints_cache 
+-----------------------------
+ t
+(1 row)
+
+ ?column? 
+----------
+(0 rows)
+
+                               QUERY PLAN                                
+-------------------------------------------------------------------------
+ Index Only Scan using abc_pkey on abc  (cost=0.15..8.17 rows=1 width=4)
+   Index Cond: (a = 10)
+(2 rows)
+
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ Index Only Scan using abc_pkey on abc  (cost=0.15..8.17 rows=1 width=4) (actual time=0.001..0.001 rows=0 loops=1)
+   Index Cond: (a = 10)
+   Heap Fetches: 0
+ Planning Time: 0.007 ms
+ Execution Time: 0.003 ms
+(5 rows)
+
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ await_statement_hints_cache 
+-----------------------------
+ t
+(1 row)
+
+ c 
+---
+(0 rows)
+
+                                  QUERY PLAN                                  
+------------------------------------------------------------------------------
+ Hash Join  (cost=8.18..44.05 rows=10 width=4)
+   Hash Cond: (abc.c = xy.y)
+   ->  Seq Scan on abc  (cost=0.00..30.40 rows=2040 width=4)
+   ->  Hash  (cost=8.17..8.17 rows=1 width=4)
+         ->  Index Scan using xy_pkey on xy  (cost=0.15..8.17 rows=1 width=4)
+               Index Cond: (x = 10)
+(6 rows)
+
+                                              QUERY PLAN                                               
+-------------------------------------------------------------------------------------------------------
+ Hash Join  (cost=8.18..44.05 rows=10 width=4) (actual time=0.001..0.001 rows=0 loops=1)
+   Hash Cond: (abc.c = xy.y)
+   ->  Seq Scan on abc  (cost=0.00..30.40 rows=2040 width=4) (actual time=0.001..0.001 rows=0 loops=1)
+   ->  Hash  (cost=8.17..8.17 rows=1 width=4) (never executed)
+         ->  Index Scan using xy_pkey on xy  (cost=0.15..8.17 rows=1 width=4) (never executed)
+               Index Cond: (x = 10)
+ Planning Time: 0.029 ms
+ Execution Time: 0.005 ms
+(8 rows)
+
+ await_statement_hints_cache 
+-----------------------------
+ t
+(1 row)
+
+PREPARE
+ c 
+---
+(0 rows)
+
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Bitmap Heap Scan on abc  (cost=9.42..27.92 rows=680 width=4) (actual time=0.001..0.001 rows=0 loops=1)
+   Recheck Cond: (b > 5)
+   ->  Bitmap Index Scan on abc_b_idx  (cost=0.00..9.25 rows=680 width=0) (actual time=0.001..0.001 rows=0 loops=1)
+         Index Cond: (b > 5)
+ Planning Time: 0.009 ms
+ Execution Time: 0.003 ms
+(6 rows)
+
+PREPARE
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Bitmap Heap Scan on abc  (cost=9.42..29.62 rows=680 width=4) (actual time=0.001..0.001 rows=0 loops=1)
+   Recheck Cond: (b > 5)
+   ->  Bitmap Index Scan on abc_b_idx  (cost=0.00..9.25 rows=680 width=0) (actual time=0.000..0.001 rows=0 loops=1)
+         Index Cond: (b > 5)
+ Planning Time: 0.010 ms
+ Execution Time: 0.003 ms
+(6 rows)
+
+DELETE 0
+ await_statement_hints_cache 
+-----------------------------
+ t
+(1 row)
+
+ c 
+---
+(0 rows)
+
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ await_statement_hints_cache 
+-----------------------------
+ t
+(1 row)
+
+PREPARE
+ sum 
+-----
+    
+(1 row)
+
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Aggregate  (cost=35.52..35.53 rows=1 width=8) (actual time=0.001..0.001 rows=1 loops=1)
+   ->  Seq Scan on abc  (cost=0.00..35.50 rows=10 width=4) (actual time=0.001..0.001 rows=0 loops=1)
+         Filter: (c = 5)
+ Planning Time: 0.010 ms
+ Execution Time: 0.004 ms
+(5 rows)
+
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ await_statement_hints_cache 
+-----------------------------
+ t
+(1 row)
+
+PREPARE
+ max 
+-----
+    
+(1 row)
+
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=14.81..14.82 rows=1 width=4) (actual time=0.002..0.003 rows=1 loops=1)
+   ->  Bitmap Heap Scan on abc  (cost=4.23..14.81 rows=1 width=4) (actual time=0.002..0.002 rows=0 loops=1)
+         Recheck Cond: (b = 5)
+         Filter: (c = 6)
+         ->  Bitmap Index Scan on abc_b_idx  (cost=0.00..4.23 rows=10 width=0) (actual time=0.000..0.001 rows=0 loops=1)
+               Index Cond: (b = 5)
+ Planning Time: 0.025 ms
+ Execution Time: 0.007 ms
+(8 rows)
+
+SET
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ await_statement_hints_cache 
+-----------------------------
+ t
+(1 row)
+
+PREPARE
+ ?column? 
+----------
+(0 rows)
+
+ ?column? 
+----------
+(0 rows)
+
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Bitmap Heap Scan on abc  (cost=9.42..29.62 rows=680 width=4) (actual time=0.001..0.001 rows=0 loops=1)
+   Recheck Cond: (b > $1)
+   ->  Bitmap Index Scan on abc_b_idx  (cost=0.00..9.25 rows=680 width=0) (actual time=0.001..0.001 rows=0 loops=1)
+         Index Cond: (b > $1)
+ Planning Time: 0.001 ms
+ Execution Time: 0.003 ms
+(6 rows)
+
+SET
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ await_statement_hints_cache 
+-----------------------------
+ t
+(1 row)
+
+PREPARE
+ ?column? 
+----------
+(0 rows)
+
+ ?column? 
+----------
+(0 rows)
+
+ ?column? 
+----------
+(0 rows)
+
+ ?column? 
+----------
+(0 rows)
+
+ ?column? 
+----------
+(0 rows)
+
+ ?column? 
+----------
+(0 rows)
+
+ ?column? 
+----------
+(0 rows)
+
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ Bitmap Heap Scan on abc  (cost=4.23..14.81 rows=10 width=4) (actual time=0.001..0.001 rows=0 loops=1)
+   Recheck Cond: (b = $1)
+   ->  Bitmap Index Scan on abc_b_idx  (cost=0.00..4.23 rows=10 width=0) (actual time=0.001..0.001 rows=0 loops=1)
+         Index Cond: (b = $1)
+ Planning Time: 0.001 ms
+ Execution Time: 0.003 ms
+(6 rows)
+
+RESET
+DEALLOCATE ALL
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+                                QUERY PLAN                                
+--------------------------------------------------------------------------
+ Nested Loop  (cost=0.31..16.35 rows=1 width=4)
+   ->  Index Scan using abc_pkey on abc  (cost=0.15..8.17 rows=1 width=4)
+         Index Cond: (a = 10)
+   ->  Index Scan using xy_pkey on xy  (cost=0.15..8.17 rows=1 width=8)
+         Index Cond: (x = abc.b)
+(5 rows)
+
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ await_statement_hints_cache 
+-----------------------------
+ t
+(1 row)
+
+                                QUERY PLAN                                
+--------------------------------------------------------------------------
+ Nested Loop  (cost=0.31..16.35 rows=1 width=4)
+   ->  Index Scan using abc_pkey on abc  (cost=0.15..8.17 rows=1 width=4)
+         Index Cond: (a = 10)
+   ->  Index Scan using xy_pkey on xy  (cost=0.15..8.17 rows=1 width=8)
+         Index Cond: (x = abc.b)
+(5 rows)
+
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Nested Loop  (cost=0.31..16.35 rows=1 width=4) (actual time=0.003..0.003 rows=0 loops=1)
+   ->  Index Scan using abc_pkey on abc  (cost=0.15..8.17 rows=1 width=4) (actual time=0.003..0.003 rows=0 loops=1)
+         Index Cond: (a = 10)
+   ->  Index Scan using xy_pkey on xy  (cost=0.15..8.17 rows=1 width=8) (never executed)
+         Index Cond: (x = abc.b)
+ Planning Time: 0.024 ms
+ Execution Time: 0.009 ms
+(7 rows)
+
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ await_statement_hints_cache 
+-----------------------------
+ t
+(1 row)
+
+                                QUERY PLAN                                
+--------------------------------------------------------------------------
+ Nested Loop  (cost=0.31..16.35 rows=1 width=4)
+   ->  Index Scan using abc_pkey on abc  (cost=0.15..8.17 rows=1 width=4)
+         Index Cond: (a = 10)
+   ->  Index Scan using xy_pkey on xy  (cost=0.15..8.17 rows=1 width=8)
+         Index Cond: (x = abc.b)
+(5 rows)
+
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Nested Loop  (cost=0.31..16.35 rows=1 width=4) (actual time=0.001..0.001 rows=0 loops=1)
+   ->  Index Scan using abc_pkey on abc  (cost=0.15..8.17 rows=1 width=4) (actual time=0.001..0.001 rows=0 loops=1)
+         Index Cond: (a = 10)
+   ->  Index Scan using xy_pkey on xy  (cost=0.15..8.17 rows=1 width=8) (never executed)
+         Index Cond: (x = abc.b)
+ Planning Time: 0.025 ms
+ Execution Time: 0.004 ms
+(7 rows)
+
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ await_statement_hints_cache 
+-----------------------------
+ t
+(1 row)
+
+ y 
+---
+(0 rows)
+
+                                QUERY PLAN                                
+--------------------------------------------------------------------------
+ Nested Loop  (cost=0.31..16.35 rows=1 width=4)
+   ->  Index Scan using abc_pkey on abc  (cost=0.15..8.17 rows=1 width=4)
+         Index Cond: (a = 10)
+   ->  Index Scan using xy_pkey on xy  (cost=0.15..8.17 rows=1 width=8)
+         Index Cond: (x = abc.b)
+(5 rows)
+
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Nested Loop  (cost=0.31..16.35 rows=1 width=4) (actual time=0.001..0.001 rows=0 loops=1)
+   ->  Index Scan using abc_pkey on abc  (cost=0.15..8.17 rows=1 width=4) (actual time=0.001..0.001 rows=0 loops=1)
+         Index Cond: (a = 10)
+   ->  Index Scan using xy_pkey on xy  (cost=0.15..8.17 rows=1 width=8) (never executed)
+         Index Cond: (x = abc.b)
+ Planning Time: 0.023 ms
+ Execution Time: 0.004 ms
+(7 rows)
+
+BEGIN
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+COMMIT
+ await_statement_hints_cache 
+-----------------------------
+ t
+(1 row)
+
+                                QUERY PLAN                                
+--------------------------------------------------------------------------
+ Nested Loop  (cost=0.31..16.35 rows=1 width=4)
+   ->  Index Scan using abc_pkey on abc  (cost=0.15..8.17 rows=1 width=4)
+         Index Cond: (a = 10)
+   ->  Index Scan using xy_pkey on xy  (cost=0.15..8.17 rows=1 width=8)
+         Index Cond: (x = abc.b)
+(5 rows)
+
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Nested Loop  (cost=0.31..16.35 rows=1 width=4) (actual time=0.001..0.001 rows=0 loops=1)
+   ->  Index Scan using abc_pkey on abc  (cost=0.15..8.17 rows=1 width=4) (actual time=0.001..0.001 rows=0 loops=1)
+         Index Cond: (a = 10)
+   ->  Index Scan using xy_pkey on xy  (cost=0.15..8.17 rows=1 width=8) (never executed)
+         Index Cond: (x = abc.b)
+ Planning Time: 0.022 ms
+ Execution Time: 0.004 ms
+(7 rows)
+
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ crdb_rewrite_inline_hints 
+---------------------------
+                         0
+(1 row)
+
+ inject_hint 
+-------------
+ t
+(1 row)
+
+ await_statement_hints_cache 
+-----------------------------
+ t
+(1 row)
+
+                                  QUERY PLAN                                   
+-------------------------------------------------------------------------------
+ Nested Loop  (cost=4.23..14.90 rows=10 width=16)
+   ->  Function Scan on generate_series g  (cost=0.00..0.01 rows=1 width=4)
+   ->  Bitmap Heap Scan on abc  (cost=4.23..14.79 rows=10 width=12)
+         Recheck Cond: (b = g.i)
+         ->  Bitmap Index Scan on abc_b_idx  (cost=0.00..4.23 rows=10 width=0)
+               Index Cond: (b = g.i)
+(6 rows)
+
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ Nested Loop  (cost=4.23..14.90 rows=10 width=16) (actual time=0.007..0.007 rows=0 loops=1)
+   ->  Function Scan on generate_series g  (cost=0.00..0.01 rows=1 width=4) (actual time=0.004..0.004 rows=1 loops=1)
+   ->  Bitmap Heap Scan on abc  (cost=4.23..14.79 rows=10 width=12) (actual time=0.002..0.002 rows=0 loops=1)
+         Recheck Cond: (b = g.i)
+         ->  Bitmap Index Scan on abc_b_idx  (cost=0.00..4.23 rows=10 width=0) (actual time=0.001..0.001 rows=0 loops=1)
+               Index Cond: (b = g.i)
+ Planning Time: 0.022 ms
+ Execution Time: 0.012 ms
+(8 rows)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ y 
+---
+(0 rows)
+
+ ?column? 
+----------
+ f
+(1 row)
+
