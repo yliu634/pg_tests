@@ -1,0 +1,503 @@
+CREATE TABLE
+INSERT 0 3
+ c 
+---
+ f
+ t
+ 
+(3 rows)
+
+ c 
+---
+ f
+ t
+ 
+(3 rows)
+
+ c 
+---
+ 
+ t
+ f
+(3 rows)
+
+ a | b 
+---+---
+ 3 | 7
+ 2 | 8
+ 1 | 9
+(3 rows)
+
+ a | b 
+---+---
+ 1 | 9
+ 2 | 8
+ 3 | 7
+(3 rows)
+
+ a 
+---
+ 3
+ 2
+ 1
+(3 rows)
+
+ a | b 
+---+---
+ 1 | 9
+ 2 | 8
+(2 rows)
+
+ c | b 
+---+---
+ t | 9
+ f | 8
+(2 rows)
+
+ foo | b 
+-----+---
+   3 | 7
+   2 | 8
+   1 | 9
+(3 rows)
+
+psql:compatible/order_by.sql:46: ERROR:  ORDER BY "foo" is ambiguous
+LINE 1: SELECT a AS foo, b AS foo FROM t ORDER BY foo;
+                                                  ^
+ foo | foo 
+-----+-----
+   1 |   1
+(1 row)
+
+ foo.bar | b 
+---------+---
+       3 | 7
+       2 | 8
+       1 | 9
+(3 rows)
+
+ foo | b 
+-----+---
+   3 | 7
+   2 | 8
+   1 | 9
+(3 rows)
+
+ b 
+---
+ 7
+ 8
+ 9
+(3 rows)
+
+INSERT 0 2
+ a | b 
+---+---
+ 3 | 7
+ 4 | 7
+ 5 | 7
+(3 rows)
+
+ a | b 
+---+---
+ 5 | 7
+ 4 | 7
+ 3 | 7
+ 2 | 8
+ 1 | 9
+(5 rows)
+
+ a | b | ab 
+---+---+----
+ 5 | 7 | 12
+ 4 | 7 | 11
+ 3 | 7 | 10
+(3 rows)
+
+ a 
+---
+ 5
+ 4
+ 1
+ 2
+ 3
+(5 rows)
+
+ a 
+---
+ 1
+ 2
+ 3
+ 4
+ 5
+(5 rows)
+
+ a 
+---
+ 5
+ 4
+ 3
+ 2
+(4 rows)
+
+ a 
+---
+ 5
+ 4
+ 3
+ 2
+(4 rows)
+
+ a 
+---
+ 1
+ 2
+ 3
+ 4
+ 5
+(5 rows)
+
+psql:compatible/order_by.sql:92: ERROR:  CASE types boolean and integer cannot be matched
+LINE 1: SELECT CASE a WHEN 1 THEN b ELSE c END as val FROM t ORDER B...
+                                  ^
+psql:compatible/order_by.sql:97: ERROR:  ORDER BY position 0 is not in select list
+LINE 1: SELECT * FROM t ORDER BY 0;
+                                 ^
+psql:compatible/order_by.sql:102: ERROR:  non-integer constant in ORDER BY
+LINE 1: SELECT * FROM t ORDER BY true;
+                                 ^
+psql:compatible/order_by.sql:107: ERROR:  non-integer constant in ORDER BY
+LINE 1: SELECT * FROM t ORDER BY 'a';
+                                 ^
+psql:compatible/order_by.sql:112: ERROR:  non-integer constant in ORDER BY
+LINE 1: SELECT * FROM t ORDER BY 2.5;
+                                 ^
+psql:compatible/order_by.sql:117: ERROR:  column "foo" does not exist
+LINE 1: SELECT * FROM t ORDER BY foo;
+                                 ^
+psql:compatible/order_by.sql:122: ERROR:  missing FROM-clause entry for table "a"
+LINE 1: SELECT a FROM t ORDER BY a.b;
+                                 ^
+ generate_series | array 
+-----------------+-------
+               1 | {1}
+(1 row)
+
+ generate_series | array 
+-----------------+-------
+               1 | {1}
+(1 row)
+
+ generate_series | array 
+-----------------+-------
+               1 | {1}
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 2
+  d  
+-----
+ one
+ Two
+(2 rows)
+
+ a 
+---
+ 4
+ 1
+(2 rows)
+
+ a 
+---
+ 4
+(1 row)
+
+ a 
+---
+ 1
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+ id | baz 
+----+-----
+  0 |    
+  1 |    
+(2 rows)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 4
+ ?column? 
+----------
+        5
+        8
+        5
+        5
+(4 rows)
+
+ ?column? 
+----------
+        7
+        4
+        4
+        5
+(4 rows)
+
+CREATE TABLE
+INSERT 0 4
+  x  
+-----
+  -1
+   1
+ NaN
+ NaN
+(4 rows)
+
+CREATE TABLE
+INSERT 0 2
+ id | baz | extra 
+----+-----+-------
+  1 |     |     5
+  0 |     |    10
+(2 rows)
+
+CREATE TABLE
+CREATE INDEX
+ k | v | k | v 
+---+---+---+---
+(0 rows)
+
+ k  
+----
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+(10 rows)
+
+CREATE TABLE
+psql:compatible/order_by.sql:213: ERROR:  missing FROM-clause entry for table "kv"
+LINE 1: SELECT * FROM unrelated ORDER BY kv.k;
+                                         ^
+PREPARE
+ avg 
+-----
+(0 rows)
+
+INSERT 0 5
+ k 
+---
+ 1
+ 2
+ 3
+ 4
+ 5
+(5 rows)
+
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 3
+ a | b  |  c  
+---+----+-----
+ 1 | 30 | 500
+ 2 | 30 | 400
+ 3 | 30 | 300
+(3 rows)
+
+ a | b  |  c  
+---+----+-----
+ 3 | 30 | 300
+ 2 | 30 | 400
+ 1 | 30 | 500
+(3 rows)
+
+ a | b  |  c  
+---+----+-----
+ 3 | 30 | 300
+ 2 | 30 | 400
+ 1 | 30 | 500
+(3 rows)
+
+ a | b  |  c  
+---+----+-----
+ 1 | 30 | 500
+ 2 | 30 | 400
+ 3 | 30 | 300
+(3 rows)
+
+ a | b  |  c  
+---+----+-----
+ 1 | 30 | 500
+ 2 | 30 | 400
+ 3 | 30 | 300
+(3 rows)
+
+ a | b  |  c  
+---+----+-----
+ 3 | 30 | 300
+ 2 | 30 | 400
+ 1 | 30 | 500
+(3 rows)
+
+ a | b  |  c  
+---+----+-----
+ 3 | 30 | 300
+ 2 | 30 | 400
+ 1 | 30 | 500
+(3 rows)
+
+ a | b  |  c  
+---+----+-----
+ 3 | 30 | 300
+ 2 | 30 | 400
+ 1 | 30 | 500
+(3 rows)
+
+CREATE TABLE
+INSERT 0 4
+ x | y 
+---+---
+ 2 |  
+ 2 | 5
+   | 6
+ 4 | 8
+(4 rows)
+
+ x | y 
+---+---
+ 2 | 5
+   | 6
+ 4 | 8
+ 2 |  
+(4 rows)
+
+ x | y 
+---+---
+ 2 |  
+ 4 | 8
+   | 6
+ 2 | 5
+(4 rows)
+
+ x | y 
+---+---
+ 4 | 8
+   | 6
+ 2 | 5
+ 2 |  
+(4 rows)
+
+CREATE INDEX
+ x | y 
+---+---
+ 2 | 5
+   | 6
+ 4 | 8
+ 2 |  
+(4 rows)
+
+INSERT 0 1
+ x | y 
+---+---
+   | 6
+   |  
+ 2 | 5
+ 2 |  
+ 4 | 8
+(5 rows)
+
+ x | y 
+---+---
+ 2 |  
+ 2 | 5
+ 4 | 8
+   |  
+   | 6
+(5 rows)
+
+ x | y 
+---+---
+ 2 | 5
+ 2 |  
+ 4 | 8
+   | 6
+   |  
+(5 rows)
+
+ x | y 
+---+---
+ 2 |  
+ 2 | 5
+ 4 | 8
+   |  
+   | 6
+(5 rows)
+
+ x | y 
+---+---
+ 2 |  
+ 2 | 5
+ 4 | 8
+   |  
+   | 6
+(5 rows)
+
+ x | y 
+---+---
+   | 6
+   |  
+ 2 | 5
+ 2 |  
+ 4 | 8
+(5 rows)
+
+ x | y 
+---+---
+   |  
+   | 6
+ 2 |  
+ 2 | 5
+ 4 | 8
+(5 rows)
+
+ x | y 
+---+---
+   |  
+   | 6
+ 2 |  
+ 2 | 5
+ 4 | 8
+(5 rows)
+
+   x   | y 
+-------+---
+ (1,1) | 1
+ (1,)  | 3
+ (,)   | 4
+       | 2
+(4 rows)
+
+CREATE TABLE
+INSERT 0 5
+ a |  b  
+---+-----
+ 1 |  -1
+ 1 | 100
+ 2 |   0
+(3 rows)
+
+ a | b  
+---+----
+ 1 | -1
+(1 row)
+
