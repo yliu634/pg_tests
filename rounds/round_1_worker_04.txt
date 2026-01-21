@@ -1,0 +1,5 @@
+pg_tests/compatible/alter_table_owner.sql
+pg_tests/compatible/alter_type.sql
+pg_tests/compatible/alter_type_owner.sql
+pg_tests/compatible/alter_view_owner.sql
+pg_tests/compatible/and_or.sql

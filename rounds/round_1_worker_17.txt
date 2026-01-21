@@ -1,0 +1,5 @@
+pg_tests/compatible/distinct.sql
+pg_tests/compatible/distinct_on.sql
+pg_tests/compatible/distsql_agg.sql
+pg_tests/compatible/distsql_automatic_partial_stats.sql
+pg_tests/compatible/distsql_automatic_stats.sql
