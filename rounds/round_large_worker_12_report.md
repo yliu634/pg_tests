@@ -14,3 +14,7 @@ ADAPTED_SUCCESS: pg_tests/compatible/tuple.sql (713 lines)
 - Fixed empty-tuple/array literals: ()/(()), ARRAY[()] -> ROW()/ARRAY[ROW()] and adjusted array indexing
 - Added explicit casts to make record comparisons/orderings well-typed; cast generate_series NULLs to INT
 - Commented Cockroach-only SET/RESET optimizer settings
+
+Worker ID: 12
+Large files processed: 2
+Status: COMPLETE
