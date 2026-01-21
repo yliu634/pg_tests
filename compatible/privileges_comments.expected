@@ -1,0 +1,55 @@
+SET
+DROP DATABASE
+DROP ROLE
+CREATE ROLE
+GRANT ROLE
+CREATE DATABASE
+You are now connected to database "d45707" as user "pan".
+psql:pg_tests/compatible/privileges_comments.sql:14: NOTICE:  table "t45707" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+GRANT
+GRANT
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+SET
+psql:pg_tests/compatible/privileges_comments.sql:32: ERROR:  must be owner of database d45707
+psql:pg_tests/compatible/privileges_comments.sql:41: ERROR:  must be owner of table t45707
+psql:pg_tests/compatible/privileges_comments.sql:47: ERROR:  must be owner of relation t45707
+psql:pg_tests/compatible/privileges_comments.sql:53: ERROR:  must be owner of index t45707_pkey
+ shobj_description 
+-------------------
+ d45707
+(1 row)
+
+ col_description 
+-----------------
+ x45707
+(1 row)
+
+ obj_description 
+-----------------
+ t45707
+(1 row)
+
+ obj_description 
+-----------------
+ p45707
+(1 row)
+
+RESET
+GRANT
+GRANT
+ALTER DATABASE
+ALTER TABLE
+SET
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+RESET
+You are now connected to database "postgres" as user "pan".
+DROP DATABASE
+RESET
