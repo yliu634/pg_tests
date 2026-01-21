@@ -1,0 +1,5 @@
+pg_tests/compatible/drop_index.sql
+pg_tests/compatible/drop_owned_by.sql
+pg_tests/compatible/drop_procedure.sql
+pg_tests/compatible/drop_role_with_default_privileges.sql
+pg_tests/compatible/drop_role_with_default_privileges_in_schema.sql

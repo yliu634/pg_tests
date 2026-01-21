@@ -1,0 +1,5 @@
+pg_tests/compatible/explain.sql
+pg_tests/compatible/explain_analyze.sql
+pg_tests/compatible/export.sql
+pg_tests/compatible/expression_index.sql
+pg_tests/compatible/external_connection_privileges.sql

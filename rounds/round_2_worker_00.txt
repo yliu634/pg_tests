@@ -1,0 +1,5 @@
+pg_tests/compatible/distsql_numtables.sql
+pg_tests/compatible/distsql_srfs.sql
+pg_tests/compatible/distsql_stats.sql
+pg_tests/compatible/distsql_subquery.sql
+pg_tests/compatible/distsql_tenant.sql

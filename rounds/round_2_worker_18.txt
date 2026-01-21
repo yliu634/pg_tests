@@ -1,0 +1,5 @@
+pg_tests/compatible/inverted_join_geospatial_bbox.sql
+pg_tests/compatible/inverted_join_geospatial_dist.sql
+pg_tests/compatible/inverted_join_json_array.sql
+pg_tests/compatible/inverted_join_multi_column.sql
+pg_tests/compatible/jobs.sql

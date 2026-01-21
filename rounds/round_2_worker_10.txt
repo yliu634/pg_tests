@@ -1,0 +1,5 @@
+pg_tests/compatible/geospatial_meta.sql
+pg_tests/compatible/geospatial_regression.sql
+pg_tests/compatible/geospatial_zm.sql
+pg_tests/compatible/grant_database.sql
+pg_tests/compatible/grant_in_txn.sql

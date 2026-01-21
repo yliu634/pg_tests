@@ -1,0 +1,5 @@
+pg_tests/compatible/impure.sql
+pg_tests/compatible/index_join.sql
+pg_tests/compatible/index_recommendations.sql
+pg_tests/compatible/inet.sql
+pg_tests/compatible/inflight_trace_spans.sql

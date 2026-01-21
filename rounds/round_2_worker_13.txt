@@ -1,0 +1,5 @@
+pg_tests/compatible/guardrails.sql
+pg_tests/compatible/hash_join.sql
+pg_tests/compatible/hash_join_dist.sql
+pg_tests/compatible/hash_sharded_index.sql
+pg_tests/compatible/hidden_columns.sql

@@ -1,0 +1,5 @@
+pg_tests/compatible/drop_user.sql
+pg_tests/compatible/drop_view.sql
+pg_tests/compatible/edge.sql
+pg_tests/compatible/enums.sql
+pg_tests/compatible/errors.sql
