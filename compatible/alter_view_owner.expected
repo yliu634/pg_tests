@@ -1,0 +1,53 @@
+SET
+RESET
+DROP SCHEMA
+DROP VIEW
+DROP MATERIALIZED VIEW
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE SCHEMA
+CREATE VIEW
+CREATE VIEW
+SELECT 1
+CREATE ROLE
+GRANT
+psql:compatible/alter_view_owner.sql:27: ERROR:  role "fake_user" does not exist
+ALTER VIEW
+ALTER VIEW
+ALTER VIEW
+GRANT
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+psql:compatible/alter_view_owner.sql:53: ERROR:  "vx" is not a sequence
+psql:compatible/alter_view_owner.sql:58: ERROR:  "vx" is not a materialized view
+psql:compatible/alter_view_owner.sql:63: ERROR:  "mvx" is not a view
+ALTER VIEW
+ALTER MATERIALIZED VIEW
+ALTER VIEW
+ALTER VIEW
+ALTER MATERIALIZED VIEW
+ALTER VIEW
+ALTER VIEW
+ALTER MATERIALIZED VIEW
+ALTER VIEW
+ALTER MATERIALIZED VIEW
+RESET
+SET
+psql:compatible/alter_view_owner.sql:92: ERROR:  must be able to SET ROLE "testuser2"
+psql:compatible/alter_view_owner.sql:97: ERROR:  must be able to SET ROLE "testuser2"
+RESET
+GRANT ROLE
+SET
+ALTER VIEW
+ALTER MATERIALIZED VIEW
+RESET
+ viewowner 
+-----------
+ testuser2
+(1 row)
+
+RESET
