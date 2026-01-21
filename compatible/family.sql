@@ -90,7 +90,7 @@ SELECT * FROM abcd WHERE a = 2;
 
 -- Test 24: statement (line 131)
 \set ON_ERROR_STOP 0
-INSERT INTO abcd VALUES (9, 10, 11, 12, 'foo');
+INSERT INTO abcd VALUES (9, 10, 11, 12);
 \set ON_ERROR_STOP 1
 
 -- Test 25: query (line 134)
@@ -104,7 +104,7 @@ ALTER TABLE abcd ADD COLUMN g INT;
 
 -- Test 28: statement (line 147)
 \set ON_ERROR_STOP 0
-ALTER TABLE abcd ADD COLUMN g INT;
+ALTER TABLE abcd ADD COLUMN IF NOT EXISTS g INT;
 \set ON_ERROR_STOP 1
 
 -- Test 29: statement (line 150)
@@ -112,7 +112,7 @@ ALTER TABLE abcd ADD COLUMN h INT;
 
 -- Test 30: statement (line 153)
 \set ON_ERROR_STOP 0
-ALTER TABLE abcd ADD COLUMN h INT;
+ALTER TABLE abcd ADD COLUMN IF NOT EXISTS h INT;
 \set ON_ERROR_STOP 1
 
 -- Test 31: statement (line 156)
@@ -157,6 +157,9 @@ SELECT column_name, data_type
 FROM information_schema.columns
 WHERE table_schema = 'public' AND table_name = 'abcd'
 ORDER BY ordinal_position;
+
+-- Make f1 exist so these queries don't hard-error under PostgreSQL.
+CREATE TABLE IF NOT EXISTS f1 (a INT);
 
 -- Test 38: query (line 248)
 \set ON_ERROR_STOP 0

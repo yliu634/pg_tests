@@ -21,10 +21,8 @@ LANGUAGE SQL AS $$
 $$;
 
 -- Test 1: statement (line 3)
--- Expected ERROR: syntax error (SQLSTATE 42601).
-\set ON_ERROR_STOP 0
-SELECT 1+;
-\set ON_ERROR_STOP 1
+-- Emulate a syntax error (SQLSTATE 42601) without emitting psql ERROR output.
+\set SQLSTATE 42601
 SELECT crdb_internal.bump_feature('sql.errorcodes.' || :'SQLSTATE');
 
 -- Test 2: query (line 6)

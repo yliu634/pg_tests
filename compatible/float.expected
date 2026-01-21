@@ -1,0 +1,81 @@
+CREATE TABLE
+CREATE INDEX
+INSERT 0 7
+INSERT 0 1
+  f  
+-----
+ NaN
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+ f  
+----
+ -0
+  0
+(2 rows)
+
+CREATE INDEX
+ f  
+----
+ -0
+  0
+(2 rows)
+
+CREATE INDEX
+ f  
+----
+ -0
+  0
+(2 rows)
+
+ f  
+----
+  0
+ -0
+(2 rows)
+
+CREATE INDEX
+CREATE TABLE
+INSERT 0 4
+SET
+SET
+SET
+DROP TABLE
+RESET
+      ?column?       |     ?column?      |     ?column?      
+---------------------+-------------------+-------------------
+ -0.1234567890123456 | 123456789012345.6 | 1234567.890123456
+(1 row)
+
+ pg_typeof 
+-----------
+ record
+(1 row)
+
+ pg_typeof 
+-----------
+ record
+(1 row)
+
+ ?column? | ?column? 
+----------+----------
+ t        | f
+(1 row)
+
+ ?column? | ?column? 
+----------+----------
+ t        | f
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+     trunc      
+----------------
+        1234567
+ 12345678901234
+(2 rows)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
