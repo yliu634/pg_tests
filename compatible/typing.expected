@@ -1,0 +1,419 @@
+SET
+CREATE TABLE
+INSERT 0 2
+ x 
+---
+ 1
+ 1
+(2 rows)
+
+CREATE TABLE
+psql:compatible/typing.sql:20: ERROR:  column "x" is of type integer but expression is of type timestamp with time zone
+LINE 1: INSERT INTO i(x) VALUES ('1970-01-01'::timestamptz);
+                                 ^
+HINT:  You will need to rewrite or cast the expression.
+INSERT 0 1
+psql:compatible/typing.sql:28: ERROR:  integer out of range
+ x 
+---
+ 2
+(1 row)
+
+CREATE TABLE
+INSERT 0 3
+  x  
+-----
+   0
+ 2.0
+ 7.0
+(3 rows)
+
+UPDATE 2
+  x  
+-----
+   0
+ 3.0
+ 8.0
+(3 rows)
+
+CREATE TABLE
+ x 
+---
+(0 rows)
+
+INSERT 0 2
+INSERT 0 1
+ length |    encode    
+--------+--------------
+      3 | qwe
+      8 | startend
+      3 | \377\376\375
+(3 rows)
+
+psql:compatible/typing.sql:67: ERROR:  invalid input syntax for type integer: "foo"
+LINE 1: INSERT INTO s VALUES (COALESCE(1, 'foo'));
+                                          ^
+psql:compatible/typing.sql:72: ERROR:  invalid input syntax for type integer: "foo"
+LINE 1: INSERT INTO i VALUES (COALESCE(1, 'foo'));
+                                          ^
+psql:compatible/typing.sql:77: ERROR:  invalid input syntax for type integer: "foo"
+LINE 1: SELECT COALESCE(1, 'foo');
+                           ^
+psql:compatible/typing.sql:82: ERROR:  invalid input syntax for type integer: "foo"
+LINE 1: SELECT COALESCE(1::INT, 'foo');
+                                ^
+ greatest  
+-----------
+ 123456789
+(1 row)
+
+ greatest  
+-----------
+ 123456789
+(1 row)
+
+      greatest       
+---------------------
+ 2010-09-29 00:00:00
+(1 row)
+
+ greatest 
+----------
+ 12:02:00
+(1 row)
+
+   greatest    
+---------------
+ 123456789.321
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+ b | n  |  f  |  e   |     d      |          ts           |            tz            |    i     
+---+----+-----+------+------------+-----------------------+--------------------------+----------
+ f | 42 | 4.2 | 4.20 | 2010-09-28 | 2010-09-28 12:00:00.1 | 2010-09-29 12:00:00.1+00 | 12:02:00
+(1 row)
+
+          ts           
+-----------------------
+ 2010-09-28 12:00:00.1
+(1 row)
+
+ int4 | int8 | text | float4 
+------+------+------+--------
+    1 |    1 | aa   |    4.2
+(1 row)
+
+ varchar | bpchar | varchar 
+---------+--------+---------
+ foo     | ba     | c
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+PREPARE
+ ?column? 
+----------
+ t
+(1 row)
+
+DEALLOCATE
+PREPARE
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+   bp   | length 
+--------+--------
+ foo    |      3
+(1 row)
+
+DEALLOCATE
+PREPARE
+   bp   | length 
+--------+--------
+ foo    |      3
+(1 row)
+
+          c           | length 
+----------------------+--------
+ bar                  |      3
+(1 row)
+
+DEALLOCATE
+PREPARE
+          c           | length 
+----------------------+--------
+ bar                  |      3
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+psql:compatible/typing.sql:207: ERROR:  invalid input syntax for type timestamp with time zone: "Not Timestamp"
+LINE 1: ...ABLE t15050a (c DECIMAL DEFAULT CASE WHEN now() < 'Not Times...
+                                                             ^
+psql:compatible/typing.sql:212: ERROR:  invalid input syntax for type timestamp with time zone: "Not Timestamp"
+LINE 1: ...ABLE t15050b (c DECIMAL DEFAULT CASE WHEN now() < 'Not Times...
+                                                             ^
+psql:compatible/typing.sql:217: ERROR:  invalid input syntax for type boolean: "foo"
+LINE 1: SELECT COALESCE('foo', false);
+                        ^
+psql:compatible/typing.sql:222: ERROR:  invalid input syntax for type boolean: "foo"
+LINE 1: SELECT COALESCE(true, 'foo');
+                              ^
+ coalesce 
+----------
+ f
+(1 row)
+
+ coalesce 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+psql:compatible/typing.sql:236: ERROR:  operator does not exist: integer = text
+LINE 1: SELECT 1 IN (SELECT 'a');
+                 ^
+HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+psql:compatible/typing.sql:241: ERROR:  operator does not exist: integer = record
+LINE 1: SELECT 1 IN (SELECT (1, 2));
+                 ^
+HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+ ?column? 
+----------
+ t
+(1 row)
+
+psql:compatible/typing.sql:249: ERROR:  subquery has too few columns
+LINE 1: SELECT (1, 2) IN (SELECT (1, 2));
+                      ^
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+     a      |           b            
+------------+------------------------
+ 2018-01-01 | 2018-01-01 00:00:00+00
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+         
+(1 row)
+
+ ?column? 
+----------
+         
+(1 row)
+
+ ?column? 
+----------
+        0
+(1 row)
+
+ max 
+-----
+ 
+(1 row)
+
+ max 
+-----
+ 
+(1 row)
+
+ coalesce 
+----------
+     1234
+(1 row)
+
+ case 
+------
+ 
+ t
+(2 rows)
+
+ case 
+------
+ 
+ t
+(2 rows)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+ t 
+---
+(0 rows)
+
+ t 
+---
+(0 rows)
+
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+ c  
+----
+ tt
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+ v 
+---
+(0 rows)
+
+ v 
+---
+(0 rows)
+
+ v 
+---
+(0 rows)
+
+ v 
+---
+(0 rows)
+
+ case 
+------
+ 11
+(1 row)
+
+ b  
+----
+ 11
+(1 row)
+
+ case 
+------
+ 11
+(1 row)
+
+ b  
+----
+ 11
+(1 row)
+
+CREATE DOMAIN
+CREATE TABLE
+INSERT 0 1
+  c  
+-----
+ bar
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+psql:compatible/typing.sql:415: ERROR:  value too long for type character varying(2)
+      json_agg      
+--------------------
+ [" c", "c ", "cc"]
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+                 json_agg                 
+------------------------------------------
+ [" c    ", "c     ", "cc    ", "ccc   "]
+(1 row)
+
+RESET

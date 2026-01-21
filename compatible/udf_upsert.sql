@@ -26,10 +26,10 @@ SELECT f_ocdn(1,2,1);
 SELECT f_ocdn(1,1,1), f_ocdn(3,2,2), f_ocdn(6,6,2), f_ocdn(2,1,1);
 
 -- Test 8: query (line 37)
-SELECT f_ocdn(x, y, z) FROM (VALUES (1, 1, 1), (2, 2, 1), (3, 3, 3), (3, 4, 4), (5, 5, 5)) v(x, y, z)
+SELECT f_ocdn(x, y, z) FROM (VALUES (1, 1, 1), (2, 2, 1), (3, 3, 3), (3, 4, 4), (5, 5, 5)) v(x, y, z);
 
 -- Test 9: query (line 46)
-SELECT * FROM t_ocdn
+SELECT * FROM t_ocdn;
 
 -- Test 10: statement (line 55)
 CREATE FUNCTION f_ocdn_2vals(i INT, j INT, k INT, m INT, n INT, o INT) RETURNS RECORD AS
@@ -52,13 +52,13 @@ $$
 $$ LANGUAGE SQL;
 
 -- Test 14: query (line 81)
-SELECT f_multi_ins(1, 1, 1, 1, 1, 1), f_multi_ins(1, 1, 1, 1, 1, 1)
+SELECT f_multi_ins(1, 1, 1, 1, 1, 1), f_multi_ins(1, 1, 1, 1, 1, 1);
 
 -- Test 15: query (line 86)
-SELECT f_multi_ins(2, 2, 2, 3, 3, 3), f_multi_ins(3, 3, 3, 4, 4, 4)
+SELECT f_multi_ins(2, 2, 2, 3, 3, 3), f_multi_ins(3, 3, 3, 4, 4, 4);
 
 -- Test 16: query (line 91)
-SELECT * FROM t_ocdn
+SELECT * FROM t_ocdn;
 
 -- Test 17: statement (line 105)
 CREATE TABLE t_ocdu (a INT PRIMARY KEY, b INT UNIQUE, c INT);
@@ -79,7 +79,9 @@ SELECT f_ocdu(1,1,8);
 SELECT f_ocdu(1,4,6);
 
 -- Test 22: statement (line 129)
+\set ON_ERROR_STOP 0
 SELECT f_ocdu(2,4,6);
+\set ON_ERROR_STOP 1
 
 -- Test 23: statement (line 137)
 CREATE TABLE t_upsert (a INT PRIMARY KEY, b INT);
@@ -87,7 +89,9 @@ CREATE TABLE t_upsert (a INT PRIMARY KEY, b INT);
 -- Test 24: statement (line 141)
 CREATE FUNCTION f_upsert(i INT, j INT) RETURNS RECORD AS
 $$
-  UPSERT INTO t_upsert VALUES (i, j) RETURNING *;
+  INSERT INTO t_upsert VALUES (i, j)
+    ON CONFLICT (a) DO UPDATE SET b = EXCLUDED.b
+    RETURNING *;
 $$ LANGUAGE SQL;
 
 -- Test 25: query (line 147)
@@ -99,7 +103,9 @@ SELECT f_upsert(1,4);
 -- Test 27: statement (line 157)
 CREATE FUNCTION f_upsert_2vals(i INT, j INT, m INT, n INT) RETURNS SETOF RECORD AS
 $$
-  UPSERT INTO t_upsert VALUES (i, j), (m, n) RETURNING *;
+  INSERT INTO t_upsert VALUES (i, j), (m, n)
+    ON CONFLICT (a) DO UPDATE SET b = EXCLUDED.b
+    RETURNING *;
 $$ LANGUAGE SQL;
 
 -- Test 28: query (line 163)
@@ -111,32 +117,40 @@ CREATE TABLE t_check1(a INT NULL CHECK(a IS NOT NULL), b CHAR(4) CHECK(length(b)
 -- Test 30: statement (line 177)
 CREATE FUNCTION f_check_null() RETURNS RECORD AS
 $$
-  UPSERT INTO t_check1(a) VALUES (NULL) RETURNING *;
+  INSERT INTO t_check1(a) VALUES (NULL) RETURNING *;
 $$ LANGUAGE SQL;
 
 -- Test 31: statement (line 183)
+\set ON_ERROR_STOP 0
 SELECT f_check_null();
+\set ON_ERROR_STOP 1
 
 -- Test 32: statement (line 186)
 CREATE FUNCTION f_check_len() RETURNS RECORD AS
 $$
-  UPSERT INTO t_check1(b) VALUES ('abcd') RETURNING *;
+  INSERT INTO t_check1(b) VALUES ('abcd') RETURNING *;
 $$ LANGUAGE SQL;
 
 -- Test 33: statement (line 192)
-SELECT f_check_len()
+\set ON_ERROR_STOP 0
+SELECT f_check_len();
+\set ON_ERROR_STOP 1
 
 -- Test 34: statement (line 195)
 CREATE FUNCTION f_check_vals(i INT, j CHAR(4)) RETURNS RECORD AS
 $$
-  UPSERT INTO t_check1(b,a) VALUES (j,i) RETURNING *;
+  INSERT INTO t_check1(b,a) VALUES (j,i) RETURNING *;
 $$ LANGUAGE SQL;
 
 -- Test 35: statement (line 201)
+\set ON_ERROR_STOP 0
 SELECT f_check_vals(NULL, 'ab');
+\set ON_ERROR_STOP 1
 
 -- Test 36: statement (line 204)
+\set ON_ERROR_STOP 0
 SELECT f_check_vals(3, 'abcd');
+\set ON_ERROR_STOP 1
 
 -- Test 37: statement (line 207)
 CREATE TABLE t_check2(a INT NOT NULL CHECK(a IS NOT NULL), b CHAR(3) CHECK(length(b) < 4));
@@ -144,42 +158,50 @@ CREATE TABLE t_check2(a INT NOT NULL CHECK(a IS NOT NULL), b CHAR(3) CHECK(lengt
 -- Test 38: statement (line 210)
 CREATE FUNCTION f_check_colerr_null() RETURNS RECORD AS
 $$
-  UPSERT INTO t_check2(a) VALUES (NULL) RETURNING *;
+  INSERT INTO t_check2(a) VALUES (NULL) RETURNING *;
 $$ LANGUAGE SQL;
 
 -- Test 39: statement (line 216)
+\set ON_ERROR_STOP 0
 SELECT f_check_colerr_null();
+\set ON_ERROR_STOP 1
 
 -- Test 40: statement (line 219)
 CREATE FUNCTION f_check_colerr_len() RETURNS RECORD AS
 $$
-  UPSERT INTO t_check2(b) VALUES ('abcd') RETURNING *;
+  INSERT INTO t_check2(b) VALUES ('abcd') RETURNING *;
 $$ LANGUAGE SQL;
 
 -- Test 41: statement (line 225)
-SELECT f_check_colerr_len()
+\set ON_ERROR_STOP 0
+SELECT f_check_colerr_len();
+\set ON_ERROR_STOP 1
 
 -- Test 42: statement (line 228)
 CREATE FUNCTION f_check_colerr_vals(i INT, j CHAR(4)) RETURNS RECORD AS
 $$
-  UPSERT INTO t_check2(a,b) VALUES (i,j) RETURNING *;
+  INSERT INTO t_check2(a,b) VALUES (i,j) RETURNING *;
 $$ LANGUAGE SQL;
 
 -- Test 43: statement (line 234)
-SELECT f_check_colerr_vals(NULL, 'ab')
+\set ON_ERROR_STOP 0
+SELECT f_check_colerr_vals(NULL, 'ab');
+\set ON_ERROR_STOP 1
 
 -- Test 44: statement (line 237)
-SELECT f_check_colerr_vals(NULL, 'abcd')
+\set ON_ERROR_STOP 0
+SELECT f_check_colerr_vals(NULL, 'abcd');
+\set ON_ERROR_STOP 1
 
 -- Test 45: statement (line 244)
 CREATE TABLE t146414 (
   a INT NOT NULL,
-  b INT AS (a + 1) VIRTUAL
-)
+  b INT GENERATED ALWAYS AS (a + 1) STORED
+);
 
 -- Test 46: statement (line 250)
 CREATE FUNCTION f146414() RETURNS INT LANGUAGE SQL AS $$
-  UPSERT INTO t146414 (a) VALUES (100) RETURNING b;
+  INSERT INTO t146414 (a) VALUES (100) RETURNING b;
   SELECT 1;
 $$;
 
@@ -187,23 +209,24 @@ $$;
 ALTER TABLE t146414 DROP COLUMN b;
 
 -- Test 48: statement (line 259)
-SELECT f146414()
+\set ON_ERROR_STOP 0
+SELECT f146414();
+\set ON_ERROR_STOP 1
 
 -- Test 49: statement (line 267)
 CREATE TABLE table_drop (
   a INT NOT NULL,
   b INT NOT NULL,
   c INT NOT NULL,
-  d INT AS (a + b) STORED,
-  -- Hash-sharded indexes generate a hidden computed column.
-  INDEX i (b ASC) USING HASH
+  d INT GENERATED ALWAYS AS (a + b) STORED
 );
+CREATE INDEX i ON table_drop (b);
 INSERT INTO table_drop VALUES (1,2,3), (4,5,6), (7,8,9);
 
 -- Test 50: statement (line 278)
-DROP FUNCTION f_upsert;
+DROP FUNCTION f_upsert(INT, INT);
 CREATE FUNCTION f_upsert() RETURNS INT LANGUAGE SQL AS $$
-  UPSERT INTO table_drop (a, b) VALUES (100, 200);
+  INSERT INTO table_drop (a, b) VALUES (100, 200);
   SELECT 1;
 $$;
 
@@ -221,4 +244,3 @@ ALTER TABLE table_drop DROP COLUMN b;
 
 -- Test 55: statement (line 297)
 ALTER TABLE table_drop DROP COLUMN a;
-

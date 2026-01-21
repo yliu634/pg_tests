@@ -1,0 +1,53 @@
+CREATE COLLATION
+CREATE TABLE
+INSERT 0 1
+psql:compatible/collatedstring_constraint.sql:19: ERROR:  duplicate key value violates unique constraint "p_pkey"
+DETAIL:  Key (a)=(A) already exists.
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+ a 
+---
+ a
+ b
+(2 rows)
+
+ a 
+---
+ A
+ b
+ p
+(3 rows)
+
+   b    
+--------
+ apple
+ banana
+ pear
+(3 rows)
+
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+psql:compatible/collatedstring_constraint.sql:62: ERROR:  insert or update on table "c2" violates foreign key constraint "fk_p"
+DETAIL:  Key (a)=(p) is not present in table "p".
+ a 
+---
+ a
+ b
+(2 rows)
+
+ a 
+---
+ A
+ b
+(2 rows)
+
+   b    
+--------
+ apple
+ banana
+(2 rows)
+

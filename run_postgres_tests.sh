@@ -144,7 +144,7 @@ run_test() {
     }
 
     # 执行 SQL
-    if psql -h "$PG_HOST" -p "$PG_PORT" -U "$PG_USER" -d "$test_db" \
+    if psql -X -v ON_ERROR_STOP=1 -h "$PG_HOST" -p "$PG_PORT" -U "$PG_USER" -d "$test_db" \
             -f "$sql_file" > "$output" 2>&1; then
         exit_code=0
     else

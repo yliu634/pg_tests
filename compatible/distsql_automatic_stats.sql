@@ -1,88 +1,203 @@
 -- PostgreSQL compatible tests from distsql_automatic_stats
--- 23 tests
+--
+-- CockroachDB has automatic statistics collection and SHOW STATISTICS. PostgreSQL
+-- does not expose the same surface area, so this file re-implements a tiny,
+-- deterministic "SHOW STATISTICS" analogue for this test only.
 
--- Test 1: statement (line 4)
-SET CLUSTER SETTING jobs.registry.interval.adopt = '10ms'
+SET client_min_messages = warning;
 
--- Test 2: statement (line 8)
-CREATE TABLE data (a INT, b INT, c FLOAT, d DECIMAL, PRIMARY KEY (a, b, c), INDEX d_idx (d)) WITH (sql_stats_automatic_collection_enabled = true)
+-- Minimal stats store + toggle for "automatic stats collection".
+CREATE TABLE pg_tests_auto_stats (
+  table_oid oid PRIMARY KEY,
+  enabled boolean NOT NULL
+);
 
--- Test 3: statement (line 12)
-INSERT INTO data SELECT a, b, c::FLOAT, NULL FROM
-   generate_series(1, 10) AS a(a),
-   generate_series(1, 10) AS b(b),
-   generate_series(1, 10) AS c(c)
+CREATE TABLE pg_tests_stats_history (
+  seq bigserial PRIMARY KEY,
+  table_oid oid NOT NULL,
+  statistics_name text NOT NULL,
+  column_names text[] NOT NULL,
+  row_count bigint NOT NULL,
+  distinct_count bigint NOT NULL,
+  null_count bigint NOT NULL,
+  created timestamptz NOT NULL DEFAULT clock_timestamp()
+);
 
--- Test 4: query (line 22)
+CREATE OR REPLACE PROCEDURE pg_tests_set_auto_stats(p_table regclass, p_enabled boolean)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  INSERT INTO pg_tests_auto_stats(table_oid, enabled)
+  VALUES (p_table::oid, p_enabled)
+  ON CONFLICT (table_oid) DO UPDATE SET enabled = EXCLUDED.enabled;
+END;
+$$;
+
+CREATE OR REPLACE PROCEDURE pg_tests_collect_stats(p_table regclass, p_statistics_name text)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  col record;
+  row_count bigint;
+  distinct_count bigint;
+  null_count bigint;
+BEGIN
+  EXECUTE format('SELECT count(*)::bigint FROM %s', p_table) INTO row_count;
+
+  FOR col IN
+    SELECT attname
+    FROM pg_attribute
+    WHERE attrelid = p_table::oid
+      AND attnum > 0
+      AND NOT attisdropped
+    ORDER BY attnum
+  LOOP
+    EXECUTE format(
+      'SELECT count(DISTINCT %I)::bigint, (count(*) - count(%I))::bigint FROM %s',
+      col.attname, col.attname, p_table
+    )
+    INTO distinct_count, null_count;
+
+    INSERT INTO pg_tests_stats_history(
+      table_oid, statistics_name, column_names, row_count, distinct_count, null_count
+    )
+    VALUES (
+      p_table::oid, p_statistics_name, ARRAY[col.attname], row_count, distinct_count, null_count
+    );
+  END LOOP;
+END;
+$$;
+
+CREATE OR REPLACE PROCEDURE pg_tests_maybe_collect_stats(
+  p_table regclass,
+  p_statistics_name text DEFAULT 'auto'
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  IF EXISTS (
+    SELECT 1 FROM pg_tests_auto_stats WHERE table_oid = p_table::oid AND enabled
+  ) THEN
+    CALL pg_tests_collect_stats(p_table, p_statistics_name);
+  END IF;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION pg_tests_show_statistics(p_table regclass)
+RETURNS TABLE(
+  seq bigint,
+  statistics_name text,
+  column_names text[],
+  row_count bigint,
+  distinct_count bigint,
+  null_count bigint,
+  created timestamptz
+)
+LANGUAGE SQL
+STABLE
+AS $$
+  SELECT seq, statistics_name, column_names, row_count, distinct_count, null_count, created
+  FROM pg_tests_stats_history
+  WHERE table_oid = p_table::oid
+$$;
+
+-- Table 'data' starts with automatic stats enabled.
+CREATE TABLE data (
+  a int,
+  b int,
+  c double precision,
+  d numeric,
+  PRIMARY KEY (a, b, c)
+);
+CREATE INDEX d_idx ON data (d);
+CALL pg_tests_set_auto_stats('data'::regclass, true);
+
+INSERT INTO data
+SELECT a, b, c::double precision, NULL::numeric
+FROM generate_series(1, 10) AS a(a),
+     generate_series(1, 10) AS b(b),
+     generate_series(1, 10) AS c(c);
+CALL pg_tests_maybe_collect_stats('data'::regclass);
+
 SELECT DISTINCT ON (column_names) statistics_name, column_names, row_count, distinct_count, null_count
-FROM [SHOW STATISTICS FOR TABLE data] ORDER BY column_names, created DESC
+FROM pg_tests_show_statistics('data'::regclass)
+ORDER BY column_names, created DESC, seq DESC;
 
--- Test 5: statement (line 35)
-ALTER TABLE data SET (sql_stats_automatic_collection_enabled = false)
+-- Disable automatic collection: stats should not update after the UPDATE.
+CALL pg_tests_set_auto_stats('data'::regclass, false);
 
--- Test 6: statement (line 39)
-UPDATE data SET d = 10 WHERE (a = 1 OR a = 2 OR a = 3) AND b > 1
+UPDATE data SET d = 10 WHERE (a = 1 OR a = 2 OR a = 3) AND b > 1;
+CALL pg_tests_maybe_collect_stats('data'::regclass);
 
--- Test 7: query (line 43)
 SELECT DISTINCT ON (column_names) statistics_name, column_names, row_count, distinct_count, null_count
-FROM [SHOW STATISTICS FOR TABLE data] ORDER BY column_names ASC, created DESC
+FROM pg_tests_show_statistics('data'::regclass)
+ORDER BY column_names ASC, created DESC, seq DESC;
 
--- Test 8: statement (line 56)
-ALTER TABLE data SET (sql_stats_automatic_collection_enabled = true)
+-- Re-enable automatic collection.
+CALL pg_tests_set_auto_stats('data'::regclass, true);
 
--- Test 9: statement (line 60)
-UPDATE data SET d = 12 WHERE d = 10
+UPDATE data SET d = 12 WHERE d = 10;
+CALL pg_tests_maybe_collect_stats('data'::regclass);
 
--- Test 10: query (line 76)
 SELECT DISTINCT ON (column_names) statistics_name, column_names, row_count, distinct_count, null_count
-FROM [SHOW STATISTICS FOR TABLE data] ORDER BY column_names ASC, created DESC
+FROM pg_tests_show_statistics('data'::regclass)
+ORDER BY column_names ASC, created DESC, seq DESC;
 
--- Test 11: statement (line 89)
-UPSERT INTO data SELECT a, b, c::FLOAT, 1 FROM
-generate_series(1, 11) AS a(a),
-generate_series(1, 10) AS b(b),
-generate_series(1, 5) AS c(c)
+-- Cockroach UPSERT -> INSERT ... ON CONFLICT in Postgres.
+INSERT INTO data (a, b, c, d)
+SELECT a, b, c::double precision, 1::numeric
+FROM generate_series(1, 11) AS a(a),
+     generate_series(1, 10) AS b(b),
+     generate_series(1, 5) AS c(c)
+ON CONFLICT (a, b, c) DO UPDATE SET d = EXCLUDED.d;
+CALL pg_tests_maybe_collect_stats('data'::regclass);
 
--- Test 12: query (line 95)
 SELECT DISTINCT ON (column_names) statistics_name, column_names, row_count, distinct_count, null_count
-FROM [SHOW STATISTICS FOR TABLE data] ORDER BY column_names ASC, created DESC
+FROM pg_tests_show_statistics('data'::regclass)
+ORDER BY column_names ASC, created DESC, seq DESC;
 
--- Test 13: statement (line 108)
-DELETE FROM data WHERE c > 5
+DELETE FROM data WHERE c > 5;
+CALL pg_tests_maybe_collect_stats('data'::regclass);
 
--- Test 14: query (line 111)
 SELECT DISTINCT ON (column_names) statistics_name, column_names, row_count, distinct_count, null_count
-FROM [SHOW STATISTICS FOR TABLE data] ORDER BY column_names ASC, created DESC
+FROM pg_tests_show_statistics('data'::regclass)
+ORDER BY column_names ASC, created DESC, seq DESC;
 
--- Test 15: statement (line 124)
-CREATE TABLE copy WITH (sql_stats_automatic_collection_enabled = true) AS SELECT * FROM data
+-- Tables created with "auto stats enabled".
+CREATE TABLE copy AS SELECT * FROM data;
+CALL pg_tests_set_auto_stats('copy'::regclass, true);
+CALL pg_tests_maybe_collect_stats('copy'::regclass);
 
--- Test 16: query (line 129)
 SELECT DISTINCT ON (column_names) statistics_name, column_names, row_count, null_count
-FROM [SHOW STATISTICS FOR TABLE copy] ORDER BY column_names ASC, created DESC
+FROM pg_tests_show_statistics('copy'::regclass)
+ORDER BY column_names ASC, created DESC, seq DESC;
 
--- Test 17: statement (line 140)
-CREATE TABLE test_create (x INT PRIMARY KEY, y CHAR) WITH (sql_stats_automatic_collection_enabled = true)
+CREATE TABLE test_create (x int PRIMARY KEY, y char);
+CALL pg_tests_set_auto_stats('test_create'::regclass, true);
+CALL pg_tests_maybe_collect_stats('test_create'::regclass);
 
--- Test 18: query (line 143)
 SELECT DISTINCT ON (column_names) statistics_name, column_names, row_count, distinct_count, null_count
-FROM [SHOW STATISTICS FOR TABLE test_create] ORDER BY column_names ASC, created DESC
+FROM pg_tests_show_statistics('test_create'::regclass)
+ORDER BY column_names ASC, created DESC, seq DESC;
 
--- Test 19: statement (line 152)
-DELETE FROM copy WHERE true
+DELETE FROM copy WHERE true;
+CALL pg_tests_maybe_collect_stats('copy'::regclass);
 
--- Test 20: query (line 155)
 SELECT DISTINCT ON (column_names) statistics_name, column_names, row_count, null_count
-FROM [SHOW STATISTICS FOR TABLE copy] ORDER BY column_names ASC, created DESC
+FROM pg_tests_show_statistics('copy'::regclass)
+ORDER BY column_names ASC, created DESC, seq DESC;
 
--- Test 21: statement (line 175)
-ALTER TABLE my_schema.my_table SET (sql_stats_automatic_collection_enabled = true)
+-- Schema-qualified table.
+CREATE SCHEMA my_schema;
+CREATE TABLE my_schema.my_table (k int, v int);
+CALL pg_tests_set_auto_stats('my_schema.my_table'::regclass, true);
 
--- Test 22: statement (line 179)
-INSERT INTO my_schema.my_table SELECT k, NULL FROM
-   generate_series(1, 10) AS k(k)
+INSERT INTO my_schema.my_table
+SELECT k, NULL::int FROM generate_series(1, 10) AS k(k);
+CALL pg_tests_maybe_collect_stats('my_schema.my_table'::regclass);
 
--- Test 23: query (line 183)
 SELECT DISTINCT ON (column_names) statistics_name, column_names, row_count, distinct_count, null_count
-FROM [SHOW STATISTICS FOR TABLE my_schema.my_table] ORDER BY column_names ASC, created DESC
+FROM pg_tests_show_statistics('my_schema.my_table'::regclass)
+ORDER BY column_names ASC, created DESC, seq DESC;
 
+RESET client_min_messages;

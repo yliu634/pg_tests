@@ -1,191 +1,144 @@
 -- PostgreSQL compatible tests from grant_sequence
 -- 62 tests
 
--- Test 1: statement (line 3)
-CREATE SEQUENCE a START 1 INCREMENT BY 2
+-- CockroachDB has additional sequence privilege types (e.g. DROP) and uses
+-- SHOW GRANTS. This file is rewritten as pure PostgreSQL SQL/psql while keeping
+-- the same semantic focus: GRANT/REVOKE on sequences (USAGE/SELECT/UPDATE),
+-- grant options, and the fact that "DROP privilege" is modeled via ownership.
 
--- Test 2: statement (line 6)
-CREATE USER readwrite
+SET client_min_messages = warning;
 
--- Test 3: statement (line 9)
-SET ROLE readwrite
+DROP TABLE IF EXISTS mix_tab;
+DROP SEQUENCE IF EXISTS mix_seq;
+DROP SEQUENCE IF EXISTS to_drop_seq;
+DROP SEQUENCE IF EXISTS a;
 
--- Test 4: statement (line 12)
-SELECT * FROM a;
+DROP SCHEMA IF EXISTS gs_seq_schema CASCADE;
+DROP SCHEMA IF EXISTS gs_main CASCADE;
 
--- Test 5: statement (line 15)
-SELECT nextval('a')
+-- Use file-scoped role names to avoid cross-test collisions.
+DROP ROLE IF EXISTS gs_mix_u;
+DROP ROLE IF EXISTS gs_user2;
+DROP ROLE IF EXISTS gs_user1;
+DROP ROLE IF EXISTS gs_readwrite;
 
--- Test 6: statement (line 18)
-SET ROLE root
+CREATE ROLE gs_readwrite;
+CREATE ROLE gs_user1;
+CREATE ROLE gs_user2;
+CREATE ROLE gs_mix_u;
 
--- Test 7: statement (line 21)
-GRANT USAGE ON SEQUENCE a TO readwrite
+CREATE SCHEMA gs_main;
+GRANT USAGE, CREATE ON SCHEMA gs_main TO gs_readwrite, gs_user1, gs_user2, gs_mix_u;
 
--- Test 8: statement (line 24)
-SET ROLE readwrite
+-- Test 1: basic sequence usage + permission errors.
+CREATE SEQUENCE gs_main.a START 1 INCREMENT BY 2;
 
--- Test 9: query (line 27)
-SELECT nextval('a')
+SET ROLE gs_readwrite;
+\set ON_ERROR_STOP 0
+SELECT last_value, is_called FROM gs_main.a;
+SELECT nextval('gs_main.a');
+\set ON_ERROR_STOP 1
+RESET ROLE;
 
--- Test 10: query (line 32)
-SELECT currval('a')
+GRANT USAGE ON SEQUENCE gs_main.a TO gs_readwrite;
 
--- Test 11: statement (line 37)
-SET ROLE root
+SET ROLE gs_readwrite;
+SELECT nextval('gs_main.a');
+SELECT currval('gs_main.a');
+RESET ROLE;
 
--- Test 12: statement (line 40)
-GRANT ALL ON SEQUENCE a TO readwrite WITH GRANT OPTION
+-- Test 2: grant ALL with grant option, then inspect grant options.
+GRANT ALL ON SEQUENCE gs_main.a TO gs_readwrite WITH GRANT OPTION;
 
--- Test 13: query (line 43)
-SHOW GRANTS ON SEQUENCE a
+SELECT
+  has_sequence_privilege('gs_readwrite', 'gs_main.a', 'USAGE') AS usage,
+  has_sequence_privilege('gs_readwrite', 'gs_main.a', 'SELECT') AS select_p,
+  has_sequence_privilege('gs_readwrite', 'gs_main.a', 'UPDATE') AS update_p,
+  has_sequence_privilege('gs_readwrite', 'gs_main.a', 'USAGE WITH GRANT OPTION') AS usage_go,
+  has_sequence_privilege('gs_readwrite', 'gs_main.a', 'SELECT WITH GRANT OPTION') AS select_go,
+  has_sequence_privilege('gs_readwrite', 'gs_main.a', 'UPDATE WITH GRANT OPTION') AS update_go;
 
--- Test 14: statement (line 51)
-REVOKE UPDATE ON SEQUENCE a FROM readwrite
+REVOKE UPDATE ON SEQUENCE gs_main.a FROM gs_readwrite;
 
--- Test 15: query (line 54)
-SHOW GRANTS ON SEQUENCE a
+SELECT
+  has_sequence_privilege('gs_readwrite', 'gs_main.a', 'UPDATE') AS update_after_revoke,
+  has_sequence_privilege('gs_readwrite', 'gs_main.a', 'UPDATE WITH GRANT OPTION') AS update_go_after_revoke;
 
--- Test 16: statement (line 69)
-GRANT UPDATE ON SEQUENCE a TO readwrite
+GRANT UPDATE ON SEQUENCE gs_main.a TO gs_readwrite;
 
--- Test 17: statement (line 72)
-SET ROLE readwrite
+SET ROLE gs_readwrite;
+SELECT last_value, is_called FROM gs_main.a;
+SELECT nextval('gs_main.a');
+SELECT nextval('gs_main.a');
+RESET ROLE;
 
--- Test 18: query (line 75)
-SELECT * FROM a;
+-- Test 3: GRANT/REVOKE on ALL SEQUENCES in a schema.
+CREATE SCHEMA gs_seq_schema;
+CREATE SEQUENCE gs_seq_schema.b START 1 INCREMENT BY 2;
 
--- Test 19: query (line 80)
-SELECT nextval('a')
+GRANT ALL ON ALL SEQUENCES IN SCHEMA gs_seq_schema TO gs_readwrite WITH GRANT OPTION;
 
--- Test 20: query (line 85)
-SELECT nextval('a')
+SELECT
+  has_sequence_privilege('gs_readwrite', 'gs_seq_schema.b', 'USAGE WITH GRANT OPTION') AS b_usage_go,
+  has_sequence_privilege('gs_readwrite', 'gs_seq_schema.b', 'SELECT WITH GRANT OPTION') AS b_select_go,
+  has_sequence_privilege('gs_readwrite', 'gs_seq_schema.b', 'UPDATE WITH GRANT OPTION') AS b_update_go;
 
--- Test 21: statement (line 90)
-SET ROLE root
+REVOKE SELECT ON ALL SEQUENCES IN SCHEMA gs_seq_schema FROM gs_readwrite;
 
--- Test 22: query (line 93)
-GRANT CREATE, DROP, USAGE, UPDATE ON SEQUENCE a TO readwrite WITH GRANT OPTION
+SELECT
+  has_sequence_privilege('gs_readwrite', 'gs_seq_schema.b', 'SELECT') AS b_select_after_revoke,
+  has_sequence_privilege('gs_readwrite', 'gs_seq_schema.b', 'SELECT WITH GRANT OPTION') AS b_select_go_after_revoke;
 
--- Test 23: query (line 98)
-SELECT * FROM information_schema.table_privileges WHERE grantee = 'readwrite';
+-- Test 4: "DROP privilege" is modeled by ownership in PostgreSQL.
+CREATE SEQUENCE gs_main.to_drop_seq;
 
--- Test 24: statement (line 111)
-REVOKE SELECT,DROP,CREATE ON SEQUENCE a FROM readwrite
+SET ROLE gs_user1;
+\set ON_ERROR_STOP 0
+DROP SEQUENCE gs_main.to_drop_seq;
+\set ON_ERROR_STOP 1
+RESET ROLE;
 
--- Test 25: query (line 114)
-SELECT * FROM information_schema.table_privileges WHERE grantee = 'readwrite';
+ALTER SEQUENCE gs_main.to_drop_seq OWNER TO gs_user1;
 
--- Test 26: statement (line 124)
-CREATE SEQUENCE b START 1 INCREMENT BY 2
+SET ROLE gs_user1;
+DROP SEQUENCE gs_main.to_drop_seq;
+RESET ROLE;
 
--- Test 27: statement (line 127)
-GRANT ALL ON ALL SEQUENCES IN SCHEMA test.public TO readwrite WITH GRANT OPTION;
+-- Ownership transfer requires being a member of the new owner role.
+CREATE SEQUENCE gs_main.to_drop_seq;
+ALTER SEQUENCE gs_main.to_drop_seq OWNER TO gs_user1;
 
--- Test 28: query (line 130)
-SELECT * FROM information_schema.table_privileges WHERE grantee = 'readwrite';
+SET ROLE gs_user1;
+\set ON_ERROR_STOP 0
+ALTER SEQUENCE gs_main.to_drop_seq OWNER TO gs_user2;
+\set ON_ERROR_STOP 1
+RESET ROLE;
 
--- Test 29: statement (line 136)
-REVOKE SELECT ON ALL SEQUENCES IN SCHEMA test.public FROM readwrite;
+GRANT gs_user2 TO gs_user1;
 
--- Test 30: query (line 139)
-SELECT * FROM information_schema.table_privileges WHERE grantee = 'readwrite';
+SET ROLE gs_user1;
+ALTER SEQUENCE gs_main.to_drop_seq OWNER TO gs_user2;
+RESET ROLE;
 
--- Test 31: statement (line 161)
-SET ROLE root
+SET ROLE gs_user2;
+DROP SEQUENCE gs_main.to_drop_seq;
+RESET ROLE;
 
--- Test 32: statement (line 164)
-CREATE SEQUENCE to_drop_seq
+-- Test 5: mixing sequence + table privileges, and grant options.
+CREATE SEQUENCE gs_main.mix_seq;
+CREATE TABLE gs_main.mix_tab (x INT);
 
--- Test 33: statement (line 167)
-CREATE ROLE user1
+GRANT USAGE ON SEQUENCE gs_main.mix_seq TO gs_mix_u WITH GRANT OPTION;
 
--- Test 34: statement (line 170)
-SET ROLE user1
+SELECT has_sequence_privilege('gs_mix_u', 'gs_main.mix_seq', 'USAGE WITH GRANT OPTION');
 
--- Test 35: statement (line 173)
-DROP SEQUENCE to_drop_seq
+GRANT SELECT, UPDATE ON gs_main.mix_seq, gs_main.mix_tab TO gs_mix_u WITH GRANT OPTION;
 
--- Test 36: statement (line 176)
-SET ROLE root
+SELECT
+  has_sequence_privilege('gs_mix_u', 'gs_main.mix_seq', 'USAGE WITH GRANT OPTION') AS usage_go,
+  has_sequence_privilege('gs_mix_u', 'gs_main.mix_seq', 'SELECT WITH GRANT OPTION') AS select_go,
+  has_sequence_privilege('gs_mix_u', 'gs_main.mix_seq', 'UPDATE WITH GRANT OPTION') AS update_go,
+  has_table_privilege('gs_mix_u', 'gs_main.mix_tab', 'SELECT WITH GRANT OPTION') AS tab_select_go,
+  has_table_privilege('gs_mix_u', 'gs_main.mix_tab', 'UPDATE WITH GRANT OPTION') AS tab_update_go;
 
--- Test 37: statement (line 179)
-GRANT DROP ON SEQUENCE to_drop_seq TO user1
-
--- Test 38: statement (line 182)
-SET ROLE user1
-
--- Test 39: statement (line 185)
-DROP SEQUENCE to_drop_seq
-
--- Test 40: statement (line 191)
-SET ROLE root
-
--- Test 41: statement (line 194)
-CREATE SEQUENCE to_drop_seq
-
--- Test 42: statement (line 197)
-GRANT DROP ON SEQUENCE to_drop_seq TO user1
-
--- Test 43: statement (line 200)
-CREATE ROLE user2
-
--- Test 44: statement (line 203)
-SET ROLE user1
-
--- Test 45: statement (line 206)
-GRANT DROP ON SEQUENCE to_drop_seq TO user2
-
--- Test 46: statement (line 209)
-SET ROLE root
-
--- Test 47: statement (line 212)
-GRANT DROP ON SEQUENCE to_drop_seq TO user1 WITH GRANT OPTION
-
--- Test 48: statement (line 215)
-SET ROLE user1
-
--- Test 49: statement (line 218)
-GRANT DROP ON SEQUENCE to_drop_seq TO user2
-
--- Test 50: statement (line 221)
-SET ROLE user2
-
--- Test 51: statement (line 224)
-DROP SEQUENCE to_drop_seq
-
--- Test 52: statement (line 227)
-SET ROLE root
-
--- Test 53: statement (line 232)
-CREATE SEQUENCE mix_seq
-
--- Test 54: statement (line 235)
-CREATE TABLE mix_tab (x int)
-
--- Test 55: statement (line 238)
-CREATE ROLE mix_u
-
--- Test 56: statement (line 241)
-GRANT USAGE ON mix_seq TO mix_u WITH GRANT OPTION
-
--- Test 57: query (line 244)
-SELECT * FROM information_schema.table_privileges WHERE grantee = 'mix_u';
-
--- Test 58: query (line 249)
-SELECT has_sequence_privilege('mix_u', 'mix_seq', 'USAGE WITH GRANT OPTION')
-
--- Test 59: statement (line 254)
-GRANT SELECT, UPDATE ON mix_seq, mix_tab TO mix_u WITH GRANT OPTION
-
--- Test 60: statement (line 257)
-GRANT USAGE ON mix_seq, mix_tab TO mix_u WITH GRANT OPTION
-
--- Test 61: query (line 260)
-SELECT * FROM information_schema.table_privileges WHERE grantee = 'mix_u';
-
--- Test 62: query (line 269)
-SELECT has_sequence_privilege('mix_u', 'mix_seq', 'USAGE WITH GRANT OPTION'),
-       has_sequence_privilege('mix_u', 'mix_seq', 'SELECT WITH GRANT OPTION'),
-       has_sequence_privilege('mix_u', 'mix_seq', 'UPDATE WITH GRANT OPTION')
-
+RESET client_min_messages;

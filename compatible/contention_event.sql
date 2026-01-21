@@ -1,71 +1,52 @@
 -- PostgreSQL compatible tests from contention_event
 -- 13 tests
 
--- Test 1: statement (line 8)
-GRANT CREATE ON DATABASE test TO testuser
+-- NOTE: The upstream CockroachDB test for contention events relies on:
+-- - multi-session / multi-node directives (e.g. "user ... nodeidx=...")
+-- - crdb_internal tracing tables and payload decoding
+-- PostgreSQL does not provide equivalents for that telemetry. Below is a
+-- PostgreSQL-native approximation that validates we can observe lock
+-- contention via pg_stat_activity.
 
--- Test 2: statement (line 15)
-GRANT INSERT ON TABLE kv TO testuser
+SET client_min_messages = warning;
 
--- Test 3: statement (line 18)
-GRANT SYSTEM VIEWACTIVITYREDACTED TO testuser
+DROP TABLE IF EXISTS kv;
+CREATE TABLE kv (k TEXT PRIMARY KEY, v TEXT);
+INSERT INTO kv VALUES ('k', 'v');
 
--- Test 4: query (line 21)
-SELECT * FROM kv
+-- Use current connection details for the background psql process.
+SELECT current_database() AS dbname, current_user AS dbuser \gset
+\setenv PGDATABASE :dbname
+\setenv PGUSER :dbuser
+\setenv PGHOST /var/run/postgresql
+\setenv PGPORT 5432
+\setenv PIDFILE /tmp/pg_tests_contention_event.pid
+\setenv OUTFILE /tmp/pg_tests_contention_event.out
 
--- Test 5: statement (line 27)
-BEGIN
-
--- Test 6: statement (line 30)
-INSERT INTO kv VALUES('k', 'v')
-
-user root
-
--- Test 7: statement (line 42)
 BEGIN;
-SET TRANSACTION PRIORITY HIGH;
-SELECT * FROM kv ORDER BY k ASC
+UPDATE kv SET v = 'v1' WHERE k = 'k';
 
-user testuser nodeidx=3
+-- Start a second session that will block on the same row lock.
+\! sh -c "rm -f $PIDFILE"
+\! sh -c "rm -f $OUTFILE"
+\! sh -c "psql -X -v ON_ERROR_STOP=1 -c \"SET application_name = 'contention_event_bg'; BEGIN; UPDATE kv SET v = 'v2' WHERE k = 'k'; COMMIT;\" >$OUTFILE 2>&1 & echo $! > $PIDFILE"
 
--- Test 8: statement (line 49)
-ROLLBACK
+SELECT pg_sleep(0.5);
 
--- Test 9: query (line 67)
-WITH spans AS (
-  SELECT span_id
-  FROM crdb_internal.node_inflight_trace_spans
-  WHERE trace_id = crdb_internal.trace_id()
-), payloads AS (
-  SELECT *
-  FROM spans, LATERAL crdb_internal.payloads_for_span(spans.span_id)
-) SELECT count(*) > 0
-  FROM payloads
-  WHERE payload_type = 'roachpb.ContentionEvent'
-  AND crdb_internal.pretty_key(decode(payload_jsonb->>'key', 'base64'), 1) LIKE '/1/"k"/%'
+-- Confirm there is at least one backend waiting on a lock.
+SELECT count(*) > 0
+FROM pg_stat_activity
+WHERE application_name = 'contention_event_bg'
+  AND wait_event_type = 'Lock';
 
--- Test 10: query (line 83)
-WITH payloads AS (
-  SELECT *
-  FROM crdb_internal.payloads_for_trace(crdb_internal.trace_id())
-) SELECT count(*) > 0
-  FROM payloads
-  WHERE payload_type = 'roachpb.ContentionEvent'
-  AND crdb_internal.pretty_key(decode(payload_jsonb->>'key', 'base64'), 1) LIKE '/1/"k"/%'
+COMMIT;
 
--- Test 11: query (line 95)
-WITH payloads AS (
-  SELECT *
-  FROM crdb_internal.payloads_for_trace(crdb_internal.trace_id())
-) SELECT count(*) > 0
-  FROM payloads
-  WHERE payload_type = 'roachpb.ContentionEvent'
-  AND crdb_internal.pretty_key(decode(payload_jsonb->>'key', 'base64'), 1) LIKE '/1/"k"/%'
-  AND (payload_jsonb->'txnMeta'->>'coordinatorNodeId')::INTEGER = 4
+-- Wait for the background process to finish after the lock is released.
+\! sh -c "while [ -f $PIDFILE ] && kill -0 $(cat $PIDFILE) 2>/dev/null; do sleep 0.05; done"
+\! sh -c "cat $OUTFILE"
+\! sh -c "rm -f $PIDFILE"
+\! sh -c "rm -f $OUTFILE"
 
--- Test 12: query (line 109)
-SELECT count(*) > 0 FROM crdb_internal.cluster_contention_events WHERE table_id = 'kv'::REGCLASS::INT
+SELECT * FROM kv ORDER BY k;
 
--- Test 13: query (line 114)
-SELECT count(*) > 0 FROM crdb_internal.node_contention_events WHERE table_id = 'kv'::REGCLASS::INT
-
+RESET client_min_messages;

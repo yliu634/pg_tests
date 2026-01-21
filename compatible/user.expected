@@ -1,0 +1,222 @@
+SET
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+ is_superuser 
+--------------
+ t
+(1 row)
+
+ username |                options                | member_of 
+----------+---------------------------------------+-----------
+ foo☂     | {LOGIN}                               | {}
+ pan      | {SUPERUSER,CREATEROLE,CREATEDB,LOGIN} | {}
+ postgres | {SUPERUSER,CREATEROLE,CREATEDB,LOGIN} | {}
+ testuser | {LOGIN}                               | {}
+(4 rows)
+
+CREATE ROLE
+ username |                options                | member_of 
+----------+---------------------------------------+-----------
+ foo☂     | {LOGIN}                               | {}
+ pan      | {SUPERUSER,CREATEROLE,CREATEDB,LOGIN} | {}
+ postgres | {SUPERUSER,CREATEROLE,CREATEDB,LOGIN} | {}
+ testuser | {LOGIN}                               | {}
+ user1    | {LOGIN}                               | {}
+(5 rows)
+
+ username |                options                | member_of 
+----------+---------------------------------------+-----------
+ foo☂     | {LOGIN}                               | {}
+ pan      | {SUPERUSER,CREATEROLE,CREATEDB,LOGIN} | {}
+ postgres | {SUPERUSER,CREATEROLE,CREATEDB,LOGIN} | {}
+ testuser | {LOGIN}                               | {}
+ user1    | {LOGIN}                               | {}
+(5 rows)
+
+CREATE ROLE
+DO
+psql:compatible/user.sql:115: ERROR:  role "user1" already exists
+DO
+psql:compatible/user.sql:129: ERROR:  role "user1" already exists
+CREATE ROLE
+CREATE ROLE
+psql:compatible/user.sql:140: ERROR:  role name "public" is reserved
+LINE 1: CREATE USER public;
+                    ^
+psql:compatible/user.sql:145: ERROR:  role name "none" is reserved
+LINE 1: CREATE USER "none";
+                    ^
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+psql:compatible/user.sql:159: ERROR:  role "foo☂" already exists
+CREATE ROLE
+psql:compatible/user.sql:167: ERROR:  syntax error at or near "-"
+LINE 1: CREATE USER foo-bar;
+                       ^
+CREATE ROLE
+CREATE ROLE
+ALTER ROLE
+ALTER ROLE
+psql:compatible/user.sql:187: ERROR:  role "blix" does not exist
+ username |                options                | member_of 
+----------+---------------------------------------+-----------
+ -foo     | {LOGIN}                               | {}
+ admin    | {LOGIN}                               | {}
+ foo      | {LOGIN}                               | {}
+ foo-bar  | {LOGIN}                               | {}
+ foo☂     | {LOGIN}                               | {}
+ node     | {LOGIN}                               | {}
+ pan      | {SUPERUSER,CREATEROLE,CREATEDB,LOGIN} | {}
+ postgres | {SUPERUSER,CREATEROLE,CREATEDB,LOGIN} | {}
+ test     | {LOGIN}                               | {}
+ testuser | {LOGIN}                               | {}
+ user1    | {LOGIN}                               | {}
+ user2    | {LOGIN}                               | {}
+ user3    | {LOGIN}                               | {}
+ Ομηρος   | {LOGIN}                               | {}
+(14 rows)
+
+psql:compatible/user.sql:212: ERROR:  zero-length delimited identifier at or near """"
+LINE 1: CREATE USER "";
+                    ^
+ current_user | session_user | user 
+--------------+--------------+------
+ pan          | pan          | pan
+(1 row)
+
+CREATE ROLE
+GRANT ROLE
+SET
+ is_superuser 
+--------------
+ t
+(1 row)
+
+ is_superuser 
+--------------
+ t
+(1 row)
+
+psql:compatible/user.sql:248: ERROR:  permission denied to create role
+DETAIL:  Only roles with the CREATEROLE attribute may create roles.
+psql:compatible/user.sql:253: ERROR:  permission denied to alter role
+DETAIL:  To change another role's password, the current user must have the CREATEROLE attribute and the ADMIN option on the role.
+ username  |                options                | member_of 
+-----------+---------------------------------------+-----------
+ -foo      | {LOGIN}                               | {}
+ admin     | {LOGIN}                               | {}
+ foo       | {LOGIN}                               | {}
+ foo-bar   | {LOGIN}                               | {}
+ foo☂      | {LOGIN}                               | {}
+ node      | {LOGIN}                               | {}
+ pan       | {SUPERUSER,CREATEROLE,CREATEDB,LOGIN} | {}
+ postgres  | {SUPERUSER,CREATEROLE,CREATEDB,LOGIN} | {}
+ test      | {LOGIN}                               | {}
+ testuser  | {LOGIN}                               | {}
+ testuser2 | {LOGIN}                               | {admin}
+ user1     | {LOGIN}                               | {}
+ user2     | {LOGIN}                               | {}
+ user3     | {LOGIN}                               | {}
+ Ομηρος    | {LOGIN}                               | {}
+(15 rows)
+
+ current_user | session_user |   user    
+--------------+--------------+-----------
+ testuser2    | testuser2    | testuser2
+(1 row)
+
+SET
+ session_user 
+--------------
+ pan
+(1 row)
+
+SET
+ session_user 
+--------------
+ pan
+(1 row)
+
+ALTER ROLE
+SET
+CREATE ROLE
+CREATE ROLE
+SET
+ username |   option   | value 
+----------+------------+-------
+ pan      | CREATEROLE | true
+ postgres | CREATEROLE | true
+ testuser | CREATEROLE | true
+ user4    | CREATEROLE | true
+(4 rows)
+
+ is_superuser 
+--------------
+ t
+(1 row)
+
+DROP ROLE
+DROP ROLE
+ min_password_length 
+---------------------
+                  12
+(1 row)
+
+psql:compatible/user.sql:341: ERROR:  password is too short
+CONTEXT:  PL/pgSQL function inline_code_block line 4 at RAISE
+psql:compatible/user.sql:353: ERROR:  password is too short
+CONTEXT:  PL/pgSQL function inline_code_block line 4 at RAISE
+CREATE ROLE
+ALTER ROLE
+DROP ROLE
+DROP ROLE
+psql:compatible/user.sql:372: ERROR:  role "testuser" does not exist
+ session_user 
+--------------
+ pan
+(1 row)
+
+SET
+DO
+ session_user 
+--------------
+ pan
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+SET
+REVOKE ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET

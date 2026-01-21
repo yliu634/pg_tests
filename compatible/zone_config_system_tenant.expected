@@ -1,0 +1,85 @@
+SET
+CREATE TABLE
+psql:compatible/zone_config_system_tenant.sql:11: ERROR:  syntax error at or near "CONFIGURE"
+LINE 1: ALTER TABLE t CONFIGURE ZONE USING num_replicas = 5;
+                      ^
+psql:compatible/zone_config_system_tenant.sql:14: ERROR:  syntax error at or near "SETTING"
+LINE 1: SET CLUSTER SETTING sql.virtual_cluster.feature_access.zone_...
+                    ^
+psql:compatible/zone_config_system_tenant.sql:17: ERROR:  syntax error at or near "CONFIGURE"
+LINE 1: ALTER TABLE t CONFIGURE ZONE USING num_replicas = 3;
+                      ^
+CREATE TABLE
+psql:compatible/zone_config_system_tenant.sql:23: ERROR:  syntax error at or near "CONFIGURE"
+LINE 1: ALTER TABLE a CONFIGURE ZONE USING global_reads = true;
+                      ^
+psql:compatible/zone_config_system_tenant.sql:26: ERROR:  relation "crdb_internal.zones" does not exist
+LINE 1: SELECT zone_id, target FROM crdb_internal.zones ORDER BY 1;
+                                    ^
+psql:compatible/zone_config_system_tenant.sql:29: ERROR:  syntax error at or near "RANGE"
+LINE 1: ALTER RANGE liveness CONFIGURE ZONE USING num_replicas=3;
+              ^
+psql:compatible/zone_config_system_tenant.sql:32: ERROR:  syntax error at or near "RANGE"
+LINE 1: ALTER RANGE liveness CONFIGURE ZONE DISCARD;
+              ^
+psql:compatible/zone_config_system_tenant.sql:35: ERROR:  syntax error at or near "RANGE"
+LINE 1: ALTER RANGE meta CONFIGURE ZONE USING num_replicas=3;
+              ^
+psql:compatible/zone_config_system_tenant.sql:38: ERROR:  syntax error at or near "RANGE"
+LINE 1: ALTER RANGE meta CONFIGURE ZONE DISCARD;
+              ^
+psql:compatible/zone_config_system_tenant.sql:41: ERROR:  syntax error at or near "RANGE"
+LINE 1: ALTER RANGE timeseries CONFIGURE ZONE USING num_replicas=3;
+              ^
+psql:compatible/zone_config_system_tenant.sql:44: ERROR:  syntax error at or near "RANGE"
+LINE 1: ALTER RANGE timeseries CONFIGURE ZONE DISCARD;
+              ^
+psql:compatible/zone_config_system_tenant.sql:47: ERROR:  syntax error at or near "RANGE"
+LINE 1: ALTER RANGE system CONFIGURE ZONE USING num_replicas=3;
+              ^
+psql:compatible/zone_config_system_tenant.sql:50: ERROR:  syntax error at or near "RANGE"
+LINE 1: ALTER RANGE system CONFIGURE ZONE DISCARD;
+              ^
+psql:compatible/zone_config_system_tenant.sql:53: ERROR:  syntax error at or near "RANGE"
+LINE 1: ALTER RANGE default CONFIGURE ZONE USING num_replicas=3;
+              ^
+psql:compatible/zone_config_system_tenant.sql:56: ERROR:  syntax error at or near "RANGE"
+LINE 1: ALTER RANGE default CONFIGURE ZONE DISCARD;
+              ^
+psql:compatible/zone_config_system_tenant.sql:60: ERROR:  schema "db2" does not exist
+LINE 1: CREATE TABLE db2.t (i INT PRIMARY KEY);
+                     ^
+BEGIN
+psql:compatible/zone_config_system_tenant.sql:67: ERROR:  syntax error at or near "CONFIGURE"
+LINE 1: ALTER TABLE db2.t CONFIGURE ZONE USING range_max_bytes = 64<...
+                          ^
+psql:compatible/zone_config_system_tenant.sql:68: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:compatible/zone_config_system_tenant.sql:74: ERROR:  syntax error at or near "$"
+LINE 3: WHERE end_key > (SELECT crdb_internal.table_span($t_id)[1]);
+                                                         ^
+psql:compatible/zone_config_system_tenant.sql:79: ERROR:  syntax error at or near "$"
+LINE 3: WHERE end_key > (SELECT crdb_internal.table_span($t_id)[1]);
+                                                         ^
+psql:compatible/zone_config_system_tenant.sql:82: ERROR:  schema "db2" does not exist
+LINE 1: CREATE TABLE db2.t2 (i INT PRIMARY KEY);
+                     ^
+psql:compatible/zone_config_system_tenant.sql:85: ERROR:  syntax error at or near "CONFIGURE"
+LINE 1: ALTER TABLE db2.t2 CONFIGURE ZONE USING range_max_bytes = 1<...
+                           ^
+psql:compatible/zone_config_system_tenant.sql:88: ERROR:  syntax error at or near "USING"
+LINE 1: ALTER DATABASE db2 CONFIGURE ZONE USING gc.ttlseconds = 9000...
+                                          ^
+psql:compatible/zone_config_system_tenant.sql:96: ERROR:  syntax error at or near "$"
+LINE 5: WHERE end_key > (SELECT crdb_internal.table_span($t_id)[1])
+                                                         ^
+psql:compatible/zone_config_system_tenant.sql:104: ERROR:  syntax error at or near "$"
+LINE 5: WHERE end_key > (SELECT crdb_internal.table_span($t_id)[1])
+                                                         ^
+psql:compatible/zone_config_system_tenant.sql:107: ERROR:  syntax error at or near "RANGE"
+LINE 1: ALTER RANGE meta CONFIGURE ZONE DISCARD;
+              ^
+psql:compatible/zone_config_system_tenant.sql:107: ERROR:  syntax error at or near "RANGE"
+LINE 1: ALTER RANGE meta CONFIGURE ZONE DISCARD;
+              ^
+RESET
