@@ -1,0 +1,5 @@
+pg_tests/compatible/check_constraints.sql
+pg_tests/compatible/citext.sql
+pg_tests/compatible/cluster_locks.sql
+pg_tests/compatible/cluster_locks_write_buffering.sql
+pg_tests/compatible/cluster_settings.sql

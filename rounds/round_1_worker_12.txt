@@ -1,0 +1,5 @@
+pg_tests/compatible/contention_event.sql
+pg_tests/compatible/crdb_internal.sql
+pg_tests/compatible/crdb_internal_catalog.sql
+pg_tests/compatible/crdb_internal_default_privileges.sql
+pg_tests/compatible/create_as.sql
