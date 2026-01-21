@@ -1,210 +1,120 @@
 -- PostgreSQL compatible tests from udf_in_index
--- 45 tests
+--
+-- This file adapts the CockroachDB logic-test coverage for UDF dependencies in:
+-- - expression indexes
+-- - partial index predicates
+--
+-- In PostgreSQL, dependencies are tracked via pg_depend and will prevent
+-- dropping a function while an index depends on it.
 
--- Test 1: statement (line 4)
-CREATE VIEW v_col_fn_ids AS
+SET client_min_messages = warning;
+
+-- Keep manual reruns tidy (regen_expected runs in a fresh DB already).
+DROP TABLE IF EXISTS test_tbl_t CASCADE;
+DROP FUNCTION IF EXISTS test_tbl_f();
+DROP FUNCTION IF EXISTS test_tbl_partial_f(int);
+
+-- List indexes on a table along with any expression / predicate.
+CREATE OR REPLACE VIEW v_table_indexes AS
 SELECT
-id,
-(json_array_elements(
-  crdb_internal.pb_to_json(
-    'cockroach.sql.sqlbase.Descriptor',
-    descriptor,
-    false
-  )->'table'->'columns'
-)->'id')::INT as col_id,
-json_array_elements(
-  crdb_internal.pb_to_json(
-    'cockroach.sql.sqlbase.Descriptor',
-    descriptor,
-    false
-  )->'table'->'columns'
-)->'computeExpr' as compute_expr,
-json_array_elements(
-  crdb_internal.pb_to_json(
-    'cockroach.sql.sqlbase.Descriptor',
-    descriptor,
-    false
-  )->'table'->'columns'
-)->'usesFunctionIds' as uses_fn_ids
-FROM system.descriptor
+  i.indrelid,
+  c.relname AS index_name,
+  pg_get_expr(i.indexprs, i.indrelid) AS index_exprs,
+  pg_get_expr(i.indpred, i.indrelid) AS predicate
+FROM pg_index i
+JOIN pg_class c ON c.oid = i.indexrelid
+WHERE c.relkind = 'i';
 
--- Test 2: statement (line 31)
-CREATE FUNCTION get_col_fn_ids(table_id INT) RETURNS SETOF v_col_fn_ids
+CREATE OR REPLACE FUNCTION get_table_indexes(p_table regclass)
+RETURNS TABLE(index_name text, index_exprs text, predicate text)
 LANGUAGE SQL
 AS $$
-  SELECT *
-  FROM v_col_fn_ids
-  WHERE id = table_id
+  SELECT index_name, index_exprs, predicate
+  FROM v_table_indexes
+  WHERE indrelid = p_table::oid
+  ORDER BY 1;
 $$;
 
--- Test 3: statement (line 40)
-CREATE VIEW v_idx_fn_ids AS
-SELECT
-id,
-(json_array_elements(
-  crdb_internal.pb_to_json(
-    'cockroach.sql.sqlbase.Descriptor',
-    descriptor,
-    false
-  )->'table'->'indexes'
-)->'id')::INT as idx_id,
-json_array_elements(
-  crdb_internal.pb_to_json(
-    'cockroach.sql.sqlbase.Descriptor',
-    descriptor,
-    false
-  )->'table'->'indexes'
-)->'predicate' as predicate_expr
-FROM system.descriptor
-
--- Test 4: statement (line 60)
-CREATE FUNCTION get_idx_fn_ids(table_id INT) RETURNS SETOF v_idx_fn_ids
+-- List index dependencies for a function.
+CREATE OR REPLACE FUNCTION get_fn_depended_on_by(p_fn regproc)
+RETURNS TABLE(dependent_index text)
 LANGUAGE SQL
 AS $$
-  SELECT *
-  FROM v_idx_fn_ids
-  WHERE id = table_id
+  SELECT c.relname
+  FROM pg_depend d
+  JOIN pg_class c ON c.oid = d.objid
+  WHERE d.classid = 'pg_class'::regclass
+    AND c.relkind = 'i'
+    AND d.refclassid = 'pg_proc'::regclass
+    AND d.refobjid = p_fn::oid
+    AND d.deptype = 'n'
+  ORDER BY 1;
 $$;
 
--- Test 5: statement (line 69)
-CREATE VIEW v_fn_depended_on_by AS
-SELECT
-     id,
-     jsonb_pretty(
-       crdb_internal.pb_to_json(
-         'cockroach.sql.sqlbase.Descriptor',
-         descriptor,
-         false
-       )->'function'->'dependedOnBy'
-     ) as depended_on_by
-FROM system.descriptor
+-- Expression index depends on an immutable SQL UDF.
+CREATE FUNCTION test_tbl_f() RETURNS int IMMUTABLE LANGUAGE SQL AS $$ SELECT 1 $$;
 
--- Test 6: statement (line 91)
-CREATE FUNCTION test_tbl_f() RETURNS INT IMMUTABLE LANGUAGE SQL AS $$ SELECT 1 $$;
+CREATE TABLE test_tbl_t (
+  a int PRIMARY KEY,
+  b int
+);
 
--- Test 7: statement (line 95)
-CREATE TABLE test_tbl_t (a INT PRIMARY KEY, b INT, INDEX idx_b((1 + test_tbl_f())));
+CREATE INDEX idx_b ON test_tbl_t ((1 + test_tbl_f()));
 
-let $tbl_id
-SELECT id FROM system.namespace WHERE name = 'test_tbl_t';
+SELECT * FROM get_table_indexes('test_tbl_t'::regclass);
+SELECT * FROM get_fn_depended_on_by('test_tbl_f'::regproc);
 
-let $fn_id
-SELECT oid::int - 100000 FROM pg_catalog.pg_proc WHERE proname = 'test_tbl_f';
+CREATE INDEX t_idx ON test_tbl_t ((2 + test_tbl_f()));
 
--- Test 8: query (line 104)
-SELECT * FROM get_col_fn_ids($tbl_id) ORDER BY 1, 2;
+SELECT * FROM get_table_indexes('test_tbl_t'::regclass);
+SELECT * FROM get_fn_depended_on_by('test_tbl_f'::regproc);
 
--- Test 9: query (line 112)
-SELECT get_fn_depended_on_by($fn_id)
+-- Partial index predicate depends on its own UDF too.
+CREATE FUNCTION test_tbl_partial_f(b int) RETURNS int IMMUTABLE LANGUAGE SQL AS $$ SELECT b $$;
+CREATE INDEX t_idx2 ON test_tbl_t (b) WHERE test_tbl_partial_f(b) > 0;
 
--- Test 10: statement (line 125)
-CREATE INDEX t_idx ON test_tbl_t((2 + test_tbl_f()));
+SELECT * FROM get_table_indexes('test_tbl_t'::regclass);
+SELECT * FROM get_fn_depended_on_by('test_tbl_partial_f'::regproc);
 
--- Test 11: query (line 128)
-SELECT * FROM get_col_fn_ids($tbl_id) ORDER BY 1, 2;
-
--- Test 12: query (line 137)
-SELECT get_fn_depended_on_by($fn_id)
-
--- Test 13: statement (line 151)
-CREATE FUNCTION test_tbl_partial_f(b INT) RETURNS INT IMMUTABLE LANGUAGE SQL AS $$ SELECT b $$;
-
-let $partial_fn_id
-SELECT oid::int - 100000 FROM pg_catalog.pg_proc WHERE proname = 'test_tbl_partial_f';
-
--- Test 14: statement (line 157)
-CREATE INDEX t_idx2 ON test_tbl_t(b) WHERE test_tbl_partial_f(b) > 0;
-
--- Test 15: query (line 160)
-SELECT * FROM get_col_fn_ids($tbl_id) ORDER BY 1, 2;
-
--- Test 16: query (line 169)
-SELECT * FROM get_idx_fn_ids($tbl_id) ORDER BY 1, 2;
-
--- Test 17: query (line 177)
-SELECT get_fn_depended_on_by($partial_fn_id)
-
--- Test 18: statement (line 189)
 INSERT INTO test_tbl_t VALUES (1, 1), (2, -2), (3, 3);
+SELECT * FROM test_tbl_t WHERE test_tbl_partial_f(b) > 0 ORDER BY 1, 2;
 
--- Test 19: query (line 193)
-SELECT * FROM test_tbl_t@t_idx2 WHERE test_tbl_partial_f(b) > 0 ORDER BY 1, 2;
+-- Dropping a function used by a partial index should error while the index exists.
+\set ON_ERROR_STOP 0
+DROP FUNCTION test_tbl_partial_f(int);
+\set ON_ERROR_STOP 1
 
--- Test 20: statement (line 199)
-SELECT * FROM test_tbl_t@t_idx2;
+SELECT * FROM get_fn_depended_on_by('test_tbl_partial_f'::regproc);
 
--- Test 21: statement (line 202)
-DROP FUNCTION test_tbl_partial_f;
-
--- Test 22: statement (line 205)
 DELETE FROM test_tbl_t WHERE true;
 
--- Test 23: statement (line 209)
-CREATE INDEX t_idx3 ON test_tbl_t((b + test_tbl_f()));
+-- More expression indexes referencing test_tbl_f.
+CREATE INDEX t_idx3 ON test_tbl_t ((b + test_tbl_f()));
+CREATE INDEX t_idx4 ON test_tbl_t (test_tbl_f(), b, (test_tbl_f() + 1));
 
--- Test 24: query (line 212)
-SELECT * FROM get_col_fn_ids($tbl_id) ORDER BY 1, 2;
+SELECT * FROM get_fn_depended_on_by('test_tbl_f'::regproc);
 
--- Test 25: query (line 222)
-SELECT get_fn_depended_on_by($fn_id)
+-- Dropping test_tbl_f should error until all dependent indexes are removed.
+\set ON_ERROR_STOP 0
+DROP FUNCTION test_tbl_f();
+\set ON_ERROR_STOP 1
 
--- Test 26: statement (line 237)
-CREATE INDEX t_idx4 ON test_tbl_t(test_tbl_f(), b, (test_tbl_f() + 1));
-
--- Test 27: query (line 240)
-SELECT * FROM get_col_fn_ids($tbl_id) ORDER BY 1, 2;
-
--- Test 28: query (line 252)
-SELECT get_fn_depended_on_by($fn_id)
-
--- Test 29: statement (line 269)
 DROP INDEX t_idx;
+SELECT * FROM get_fn_depended_on_by('test_tbl_f'::regproc);
 
--- Test 30: query (line 272)
-SELECT * FROM get_col_fn_ids($tbl_id) ORDER BY 1, 2;
-
--- Test 31: query (line 283)
-SELECT get_fn_depended_on_by($fn_id)
-
--- Test 32: statement (line 299)
-DROP FUNCTION test_tbl_f;
-
--- Test 33: statement (line 303)
 DROP INDEX t_idx2;
+SELECT * FROM get_fn_depended_on_by('test_tbl_partial_f'::regproc);
 
--- Test 34: query (line 306)
-SELECT * FROM get_col_fn_ids($tbl_id) ORDER BY 1, 2;
-
--- Test 35: query (line 317)
-SELECT get_fn_depended_on_by($fn_id)
-
--- Test 36: statement (line 332)
 DROP INDEX t_idx3;
+SELECT * FROM get_fn_depended_on_by('test_tbl_f'::regproc);
 
--- Test 37: query (line 335)
-SELECT * FROM get_col_fn_ids($tbl_id) ORDER BY 1, 2;
-
--- Test 38: query (line 345)
-SELECT get_fn_depended_on_by($fn_id)
-
--- Test 39: statement (line 359)
 DROP INDEX t_idx4;
+SELECT * FROM get_fn_depended_on_by('test_tbl_f'::regproc);
 
--- Test 40: query (line 362)
-SELECT * FROM get_col_fn_ids($tbl_id) ORDER BY 1, 2;
-
--- Test 41: query (line 370)
-SELECT get_fn_depended_on_by($fn_id)
-
--- Test 42: statement (line 382)
 DROP INDEX idx_b;
+SELECT * FROM get_fn_depended_on_by('test_tbl_f'::regproc);
 
--- Test 43: query (line 385)
-SELECT * FROM get_col_fn_ids($tbl_id) ORDER BY 1, 2;
+DROP FUNCTION test_tbl_partial_f(int);
+DROP FUNCTION test_tbl_f();
 
--- Test 44: query (line 392)
-SELECT get_fn_depended_on_by($fn_id)
-
--- Test 45: statement (line 398)
-DROP FUNCTION test_tbl_f;
-
+RESET client_min_messages;
