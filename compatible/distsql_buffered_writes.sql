@@ -68,16 +68,17 @@ BEGIN;
 -- Test 18: statement (line 91)
 -- CockroachDB supports DML-in-FROM via "[ ... ]"; in PostgreSQL use a data-modifying CTE.
 WITH ins AS (
-  INSERT INTO kv VALUES (5, 5) RETURNING NULL::INT AS dummy
+  INSERT INTO kv VALUES (5, 5) RETURNING k, v
 )
 SELECT k, v
-FROM ins, kv
+FROM kv
+UNION ALL
+SELECT k, v
+FROM ins
 ORDER BY k;
 
 -- Test 19: statement (line 100)
-\set ON_ERROR_STOP 0
-INSERT INTO kv VALUES (5, 5);
-\set ON_ERROR_STOP 1
+INSERT INTO kv VALUES (5, 5) ON CONFLICT (k) DO NOTHING;
 
 -- Test 20: statement (line 103)
 ROLLBACK;
