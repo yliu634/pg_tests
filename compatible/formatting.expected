@@ -1,0 +1,58 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+DROP VIEW
+CREATE VIEW
+   pg_get_viewdef    
+---------------------
+  SELECT col1,      +
+     col2           +
+    FROM test_table;
+(1 row)
+
+ col1 | col2 | col3 
+------+------+------
+ r1c1 | r1  +| r1c3
+      | c2   | 
+ r2c1 | r2  +| r2c3
+      | c2   | 
+ r3c1 | r3  +| r3c3
+      | c2   | 
+(3 rows)
+
+ col1 | col2 
+------+------
+ r1c1 | r1  +
+      | c2
+ r2c1 | r2  +
+      | c2
+ r3c1 | r3  +
+      | c2
+(3 rows)
+
+ col2 
+------
+ r1  +
+ c2
+ r2  +
+ c2
+ r3  +
+ c2
+(3 rows)
+
+ col2 | col1 | col3 
+------+------+------
+ r1  +| r1c1 | r1c3
+ c2   |      | 
+ r2  +| r2c1 | r2c3
+ c2   |      | 
+ r3  +| r3c1 | r3c3
+ c2   |      | 
+(3 rows)
+
+    json    
+------------
+ "abc\n123"
+(1 row)
+

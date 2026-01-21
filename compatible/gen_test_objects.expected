@@ -1,0 +1,245 @@
+SET
+DROP SCHEMA
+CREATE SCHEMA
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE FUNCTION
+CREATE FUNCTION
+ count 
+-------
+     2
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+ ?column?  
+-----------
+ [2, 3, 5]
+(1 row)
+
+ count 
+-------
+     2
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+ ?column?  
+-----------
+ [2, 2, 2]
+(1 row)
+
+ quote_ident | quote_ident | quote_ident 
+-------------+-------------+-------------
+(0 rows)
+
+ ?column?  
+-----------
+ [2, 2, 2]
+(1 row)
+
+ quote_ident | quote_ident | quote_ident 
+-------------+-------------+-------------
+(0 rows)
+
+ ?column? 
+----------
+ [3]
+(1 row)
+
+ quote_ident | quote_ident 
+-------------+-------------
+(0 rows)
+
+ ?column? 
+----------
+ [10]
+(1 row)
+
+ quote_ident | quote_ident | data_type 
+-------------+-------------+-----------
+(0 rows)
+
+ quote_ident | quote_ident 
+-------------+-------------
+(0 rows)
+
+DROP SCHEMA
+CREATE SCHEMA
+SET
+ ?column? 
+----------
+ [10]
+(1 row)
+
+ ?column? 
+----------
+ [1]
+(1 row)
+
+ table_name 
+------------
+(0 rows)
+
+ quote_ident | quote_ident | data_type 
+-------------+-------------+-----------
+(0 rows)
+
+ ?column?  
+-----------
+ [3, 0, 3]
+(1 row)
+
+ quote_ident | quote_ident | quote_ident 
+-------------+-------------+-------------
+(0 rows)
+
+SET
+                 ?column?                  
+-------------------------------------------
+ {"dry_run": true, "generated_counts": []}
+(1 row)
+
+            ?column?            
+--------------------------------
+ {"seed": 123, "dry_run": true}
+(1 row)
+
+                           ?column?                           
+--------------------------------------------------------------
+ {"seed": 123, "dry_run": true, "name_gen": {"noise": false}}
+(1 row)
+
+                           ?column?                            
+---------------------------------------------------------------
+ {"seed": 123, "dry_run": true, "name_gen": {"suffix": false}}
+(1 row)
+
+                                   ?column?                                    
+-------------------------------------------------------------------------------
+ {"seed": 123, "dry_run": true, "name_gen": {"noise": false, "suffix": false}}
+(1 row)
+
+                                         ?column?                                          
+-------------------------------------------------------------------------------------------
+ {"seed": 123, "dry_run": true, "name_gen": {"noise": false, "quote": 1, "suffix": false}}
+(1 row)
+
+                                  ?column?                                   
+-----------------------------------------------------------------------------
+ {"seed": 123, "dry_run": true, "name_gen": {"noise": false, "zalgo": true}}
+(1 row)
+
+                                  ?column?                                  
+----------------------------------------------------------------------------
+ {"seed": 123, "dry_run": true, "name_gen": {"noise": true, "zalgo": true}}
+(1 row)
+
+  ?column?   
+-------------
+ [0, 10, 20]
+(1 row)
+
+  ?column?  
+------------
+ [2, 0, 10]
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+ ?column?  
+-----------
+ [1, 1, 0]
+(1 row)
+
+  schema_name  
+---------------
+ crdb_internal
+ newdb2
+ public
+(3 rows)
+
+ count 
+-------
+     0
+(1 row)
+
+CREATE SCHEMA
+ ?column? 
+----------
+ [2]
+(1 row)
+
+ schema_name | table_name 
+-------------+------------
+(0 rows)
+
+ ?column? 
+----------
+ [0, 2]
+(1 row)
+
+ ?column? 
+----------
+ [0]
+(1 row)
+
+ ?column? 
+----------
+ [2, 0]
+(1 row)
+
+ schema_name 
+-------------
+(0 rows)
+
+ count 
+-------
+     0
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+CREATE SCHEMA
+SET
+ ?column? 
+----------
+ [2]
+(1 row)
+
+ schema_name | table_name 
+-------------+------------
+(0 rows)
+
+RESET
+ ?column?  
+-----------
+ [1, 0, 2]
+(1 row)
+
+ schema_name | table_name 
+-------------+------------
+(0 rows)
+
+ table_name 
+------------
+(0 rows)
+

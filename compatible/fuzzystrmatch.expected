@@ -1,0 +1,118 @@
+SET
+CREATE EXTENSION
+CREATE TABLE
+INSERT 0 13
+ levenshtein 
+-------------
+         256
+(1 row)
+
+ levenshtein 
+-------------
+         768
+(1 row)
+
+     a     |     b      | levenshtein | levenshtein 
+-----------+------------+-------------+-------------
+ apple     | banana     |           5 |          18
+           | pear       |           4 |           8
+ 😄        | 🐯         |           1 |           4
+           | a          |             |            
+ a         |            |             |            
+           |            |             |            
+ apple     | apple      |           0 |           0
+ a         | abcd       |           3 |           6
+           |            |           0 |           0
+           | abc        |           3 |           6
+ xyz       |            |           3 |           9
+ extensive | exhaustive |           4 |          14
+ 🌞        | a          |           1 |           4
+(13 rows)
+
+ levenshtein_less_equal 
+------------------------
+                    256
+(1 row)
+
+ levenshtein_less_equal 
+------------------------
+                    512
+(1 row)
+
+ levenshtein_less_equal 
+------------------------
+                    256
+(1 row)
+
+ levenshtein_less_equal 
+------------------------
+                    256
+(1 row)
+
+     a     |     b      | levenshtein_less_equal | levenshtein_less_equal 
+-----------+------------+------------------------+------------------------
+ apple     | banana     |                      4 |                     13
+           | pear       |                      4 |                      8
+ 😄        | 🐯         |                      1 |                      4
+           | a          |                        |                       
+ a         |            |                        |                       
+           |            |                        |                       
+ apple     | apple      |                      0 |                      0
+ a         | abcd       |                      3 |                      6
+           |            |                      0 |                      0
+           | abc        |                      3 |                      6
+ xyz       |            |                      3 |                      9
+ extensive | exhaustive |                      4 |                     13
+ 🌞        | a          |                      1 |                      4
+(13 rows)
+
+ levenshtein_less_equal 
+------------------------
+                      3
+(1 row)
+
+ levenshtein_less_equal 
+------------------------
+                      4
+(1 row)
+
+ levenshtein_less_equal 
+------------------------
+                      4
+(1 row)
+
+ soundex 
+---------
+ H464
+(1 row)
+
+ soundex | soundex | difference 
+---------+---------+------------
+ A500    | A500    |          4
+(1 row)
+
+ soundex | soundex | difference 
+---------+---------+------------
+ A500    | A536    |          2
+(1 row)
+
+ soundex | soundex | difference 
+---------+---------+------------
+ A500    | M626    |          0
+(1 row)
+
+ soundex | soundex | difference | difference 
+---------+---------+------------+------------
+ A500    |         |            |           
+(1 row)
+
+ metaphone | metaphone 
+-----------+-----------
+ KM        | 
+(1 row)
+
+ metaphone | metaphone | metaphone 
+-----------+-----------+-----------
+ NFT       | NFT       | NFS
+(1 row)
+
