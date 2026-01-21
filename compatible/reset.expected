@@ -1,0 +1,72 @@
+SET
+psql:pg_tests/compatible/reset.sql:7: ERROR:  unrecognized configuration parameter "foo"
+SET
+ search_path 
+-------------
+ foo
+(1 row)
+
+RESET
+   search_path   
+-----------------
+ "$user", public
+(1 row)
+
+psql:pg_tests/compatible/reset.sql:24: ERROR:  parameter "server_version" cannot be changed
+psql:pg_tests/compatible/reset.sql:27: ERROR:  parameter "server_version_num" cannot be changed
+SET
+ search_path 
+-------------
+ foo
+(1 row)
+
+RESET
+   search_path   
+-----------------
+ "$user", public
+(1 row)
+
+RESET
+psql:pg_tests/compatible/reset.sql:45: ERROR:  unrecognized configuration parameter "names"
+SET
+     TimeZone     
+------------------
+ Europe/Amsterdam
+(1 row)
+
+RESET
+ TimeZone 
+----------
+ Etc/UTC
+(1 row)
+
+SET
+     TimeZone     
+------------------
+ Europe/Amsterdam
+(1 row)
+
+RESET
+ TimeZone 
+----------
+ Etc/UTC
+(1 row)
+
+BEGIN
+ transaction_read_only 
+-----------------------
+ on
+(1 row)
+
+RESET
+ transaction_read_only 
+-----------------------
+ on
+(1 row)
+
+COMMIT
+psql:pg_tests/compatible/reset.sql:81: ERROR:  unrecognized configuration parameter "default_transaction_use_follower_reads"
+psql:pg_tests/compatible/reset.sql:84: ERROR:  unrecognized configuration parameter "default_transaction_use_follower_reads"
+RESET
+psql:pg_tests/compatible/reset.sql:90: ERROR:  unrecognized configuration parameter "default_transaction_use_follower_reads"
+RESET
