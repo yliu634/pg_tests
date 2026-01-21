@@ -1,0 +1,56 @@
+SET
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+DROP SCHEMA
+CREATE SCHEMA
+CREATE VIEW
+GRANT
+CREATE TYPE
+GRANT
+CREATE TYPE
+GRANT
+CREATE TYPE
+GRANT
+   udt_schema   | udt_name |   grantee   | privilege_type | is_grantable 
+----------------+----------+-------------+----------------+--------------
+ gtype_schema_a | enum_b   | gtype_user1 | USAGE          | NO
+ public         | enum_a   | gtype_user1 | USAGE          | NO
+ public         | enum_a+b | gtype_user1 | USAGE          | NO
+(3 rows)
+
+ enum_a_usage | enum_a_plus_b_usage | enum_b_usage 
+--------------+---------------------+--------------
+ t            | t                   | t
+(1 row)
+
+CREATE TYPE
+GRANT
+ udt_schema |      udt_name      |      grantee      | privilege_type | is_grantable 
+------------+--------------------+-------------------+----------------+--------------
+ public     | owner_grant_option | gtype_owner_child | USAGE          | YES
+(1 row)
+
+ALTER TYPE
+ udt_schema |      udt_name      |      grantee      | privilege_type | is_grantable 
+------------+--------------------+-------------------+----------------+--------------
+ public     | owner_grant_option | gtype_owner_child | USAGE          | YES
+(1 row)
+
+CREATE TYPE
+CREATE TYPE
+CREATE TYPE
+GRANT
+ udt_schema |   udt_name   |   grantee   | privilege_type | is_grantable 
+------------+--------------+-------------+----------------+--------------
+ public     | custom_type1 | gtype_roach | USAGE          | NO
+ public     | custom_type2 | gtype_roach | USAGE          | NO
+ public     | custom_type3 | gtype_roach | USAGE          | NO
+(3 rows)
+
+RESET

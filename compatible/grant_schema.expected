@@ -1,0 +1,156 @@
+SET
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE VIEW
+GRANT
+CREATE ROLE
+CREATE ROLE
+DO
+CREATE SCHEMA
+ grantee  | privilege_type | is_grantable 
+----------+----------------+--------------
+ postgres | CREATE         | NO
+ postgres | USAGE          | NO
+ public   | USAGE          | NO
+(3 rows)
+
+ grantee  | privilege_type | is_grantable 
+----------+----------------+--------------
+ postgres | CREATE         | NO
+ postgres | USAGE          | NO
+ public   | USAGE          | NO
+(3 rows)
+
+      grantee      | privilege_type | is_grantable 
+-------------------+----------------+--------------
+ pg_database_owner | CREATE         | NO
+ pg_database_owner | USAGE          | NO
+ public            | USAGE          | NO
+(3 rows)
+
+ schema_name |      grantee      | privilege_type | is_grantable 
+-------------+-------------------+----------------+--------------
+ derp        | pan               | CREATE         | NO
+ derp        | pan               | USAGE          | NO
+ public      | pg_database_owner | CREATE         | NO
+ public      | pg_database_owner | USAGE          | NO
+ public      | public            | USAGE          | NO
+(5 rows)
+
+CREATE TABLE
+ grantee  | privilege_type | is_grantable 
+----------+----------------+--------------
+ postgres | CREATE         | NO
+ postgres | USAGE          | NO
+(2 rows)
+
+CREATE SCHEMA
+GRANT
+  grantee  | privilege_type | is_grantable 
+-----------+----------------+--------------
+ pan       | CREATE         | NO
+ pan       | USAGE          | NO
+ testuser2 | CREATE         | NO
+(3 rows)
+
+      grantee      |      table_catalog      |    table_schema    | privilege_type | is_grantable 
+-------------------+-------------------------+--------------------+----------------+--------------
+ pan               | crdb_tests_grant_schema | derp               | CREATE         | NO
+ pan               | crdb_tests_grant_schema | derp               | USAGE          | NO
+ pan               | crdb_tests_grant_schema | s                  | CREATE         | NO
+ pan               | crdb_tests_grant_schema | s                  | USAGE          | NO
+ pg_database_owner | crdb_tests_grant_schema | public             | CREATE         | NO
+ pg_database_owner | crdb_tests_grant_schema | public             | USAGE          | NO
+ postgres          | crdb_tests_grant_schema | information_schema | CREATE         | NO
+ postgres          | crdb_tests_grant_schema | information_schema | USAGE          | NO
+ postgres          | crdb_tests_grant_schema | pg_catalog         | CREATE         | NO
+ postgres          | crdb_tests_grant_schema | pg_catalog         | USAGE          | NO
+ postgres          | crdb_tests_grant_schema | pg_temp            | CREATE         | NO
+ postgres          | crdb_tests_grant_schema | pg_temp            | USAGE          | NO
+ postgres          | crdb_tests_grant_schema | pg_toast           | CREATE         | NO
+ postgres          | crdb_tests_grant_schema | pg_toast           | USAGE          | NO
+ postgres          | crdb_tests_grant_schema | pg_toast_temp_3    | CREATE         | NO
+ postgres          | crdb_tests_grant_schema | pg_toast_temp_3    | USAGE          | NO
+ public            | crdb_tests_grant_schema | information_schema | USAGE          | NO
+ public            | crdb_tests_grant_schema | pg_catalog         | USAGE          | NO
+ public            | crdb_tests_grant_schema | public             | USAGE          | NO
+ testuser2         | crdb_tests_grant_schema | s                  | CREATE         | NO
+(20 rows)
+
+    schema_name     | has_create | has_usage 
+--------------------+------------+-----------
+ derp               | f          | f
+ information_schema | f          | t
+ pg_catalog         | f          | t
+ pg_temp            | t          | t
+ pg_toast           | f          | f
+ pg_toast_temp_3    | f          | f
+ public             | f          | t
+ s                  | t          | f
+(8 rows)
+
+CREATE ROLE
+GRANT ROLE
+SET
+CREATE SCHEMA
+GRANT
+         grantee          | privilege_type | is_grantable 
+--------------------------+----------------+--------------
+ owner_grant_option_child | USAGE          | NO
+ testuser                 | CREATE         | NO
+ testuser                 | USAGE          | NO
+(3 rows)
+
+RESET
+CREATE ROLE
+ALTER SCHEMA
+         grantee          | privilege_type | is_grantable 
+--------------------------+----------------+--------------
+ other_owner              | CREATE         | NO
+ other_owner              | USAGE          | NO
+ owner_grant_option_child | USAGE          | NO
+(3 rows)
+
+CREATE SCHEMA
+CREATE ROLE
+GRANT
+ grantee | privilege_type | is_grantable 
+---------+----------------+--------------
+ pan     | CREATE         | NO
+ pan     | USAGE          | NO
+ r102962 | USAGE          | NO
+(3 rows)
+
+REVOKE
+DROP ROLE
+CREATE ROLE
+CREATE SCHEMA
+CREATE SCHEMA
+CREATE SCHEMA
+BEGIN
+GRANT
+GRANT
+GRANT
+COMMIT
+      database_name      | schema_name  | object_name | object_type | grantee | privilege_type | is_grantable 
+-------------------------+--------------+-------------+-------------+---------+----------------+--------------
+ crdb_tests_grant_schema | roachhouse   |             | schema      | roach   | CREATE         | NO
+ crdb_tests_grant_schema | roachhouse   |             | schema      | roach   | USAGE          | NO
+ crdb_tests_grant_schema | roachlayer   |             | schema      | roach   | CREATE         | NO
+ crdb_tests_grant_schema | roachlayer   |             | schema      | roach   | USAGE          | NO
+ crdb_tests_grant_schema | roachstation |             | schema      | roach   | CREATE         | NO
+ crdb_tests_grant_schema | roachstation |             | schema      | roach   | USAGE          | NO
+(6 rows)
+
+CREATE SCHEMA
+GRANT
+ has_schema_privilege 
+----------------------
+ t
+(1 row)
+
+RESET

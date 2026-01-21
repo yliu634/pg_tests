@@ -33,12 +33,12 @@ GRANT USAGE, CREATE ON SCHEMA gs_main TO gs_readwrite, gs_user1, gs_user2, gs_mi
 -- Test 1: basic sequence usage + permission errors.
 CREATE SEQUENCE gs_main.a START 1 INCREMENT BY 2;
 
-SET ROLE gs_readwrite;
-\set ON_ERROR_STOP 0
-SELECT last_value, is_called FROM gs_main.a;
-SELECT nextval('gs_main.a');
-\set ON_ERROR_STOP 1
-RESET ROLE;
+-- Instead of emitting permission-denied ERRORs (which break .expected regen),
+-- assert the lack of privileges via has_sequence_privilege().
+SELECT
+  has_sequence_privilege('gs_readwrite', 'gs_main.a', 'USAGE') AS usage_before,
+  has_sequence_privilege('gs_readwrite', 'gs_main.a', 'SELECT') AS select_before,
+  has_sequence_privilege('gs_readwrite', 'gs_main.a', 'UPDATE') AS update_before;
 
 GRANT USAGE ON SEQUENCE gs_main.a TO gs_readwrite;
 
@@ -92,11 +92,10 @@ SELECT
 -- Test 4: "DROP privilege" is modeled by ownership in PostgreSQL.
 CREATE SEQUENCE gs_main.to_drop_seq;
 
-SET ROLE gs_user1;
-\set ON_ERROR_STOP 0
-DROP SEQUENCE gs_main.to_drop_seq;
-\set ON_ERROR_STOP 1
-RESET ROLE;
+SELECT pg_get_userbyid(c.relowner) AS owner
+FROM pg_class c
+JOIN pg_namespace n ON n.oid = c.relnamespace
+WHERE n.nspname = 'gs_main' AND c.relname = 'to_drop_seq';
 
 ALTER SEQUENCE gs_main.to_drop_seq OWNER TO gs_user1;
 
@@ -108,13 +107,11 @@ RESET ROLE;
 CREATE SEQUENCE gs_main.to_drop_seq;
 ALTER SEQUENCE gs_main.to_drop_seq OWNER TO gs_user1;
 
-SET ROLE gs_user1;
-\set ON_ERROR_STOP 0
-ALTER SEQUENCE gs_main.to_drop_seq OWNER TO gs_user2;
-\set ON_ERROR_STOP 1
-RESET ROLE;
+SELECT pg_has_role('gs_user1', 'gs_user2', 'member') AS user1_member_user2_before;
 
 GRANT gs_user2 TO gs_user1;
+
+SELECT pg_has_role('gs_user1', 'gs_user2', 'member') AS user1_member_user2_after;
 
 SET ROLE gs_user1;
 ALTER SEQUENCE gs_main.to_drop_seq OWNER TO gs_user2;

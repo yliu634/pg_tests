@@ -1,0 +1,124 @@
+SET
+DROP TABLE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SCHEMA
+DROP SCHEMA
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE SCHEMA
+GRANT
+CREATE SEQUENCE
+ usage_before | select_before | update_before 
+--------------+---------------+---------------
+ f            | f             | f
+(1 row)
+
+GRANT
+SET
+ nextval 
+---------
+       1
+(1 row)
+
+ currval 
+---------
+       1
+(1 row)
+
+RESET
+GRANT
+ usage | select_p | update_p | usage_go | select_go | update_go 
+-------+----------+----------+----------+-----------+-----------
+ t     | t        | t        | t        | t         | t
+(1 row)
+
+REVOKE
+ update_after_revoke | update_go_after_revoke 
+---------------------+------------------------
+ f                   | f
+(1 row)
+
+GRANT
+SET
+ last_value | is_called 
+------------+-----------
+          1 | t
+(1 row)
+
+ nextval 
+---------
+       3
+(1 row)
+
+ nextval 
+---------
+       5
+(1 row)
+
+RESET
+CREATE SCHEMA
+CREATE SEQUENCE
+GRANT
+ b_usage_go | b_select_go | b_update_go 
+------------+-------------+-------------
+ t          | t           | t
+(1 row)
+
+REVOKE
+ b_select_after_revoke | b_select_go_after_revoke 
+-----------------------+--------------------------
+ f                     | f
+(1 row)
+
+CREATE SEQUENCE
+ owner 
+-------
+ pan
+(1 row)
+
+ALTER SEQUENCE
+SET
+DROP SEQUENCE
+RESET
+CREATE SEQUENCE
+ALTER SEQUENCE
+ user1_member_user2_before 
+---------------------------
+ f
+(1 row)
+
+GRANT ROLE
+ user1_member_user2_after 
+--------------------------
+ t
+(1 row)
+
+SET
+ALTER SEQUENCE
+RESET
+SET
+DROP SEQUENCE
+RESET
+CREATE SEQUENCE
+CREATE TABLE
+GRANT
+ has_sequence_privilege 
+------------------------
+ t
+(1 row)
+
+GRANT
+ usage_go | select_go | update_go | tab_select_go | tab_update_go 
+----------+-----------+-----------+---------------+---------------
+ t        | t         | t         | t             | t
+(1 row)
+
+RESET
