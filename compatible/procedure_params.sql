@@ -1,8 +1,13 @@
 -- PostgreSQL compatible tests from procedure_params
 -- 185 tests
 
+-- Many statements below are expected to error (invalid signatures, defaults,
+-- and CRDB-only behaviors). Allow the file to continue so we can capture the
+-- output in the matching .expected file.
+\set ON_ERROR_STOP 0
+
 -- Test 1: statement (line 3)
-CREATE PROCEDURE p(OUT param INT) RETURNS FLOAT AS $$ SELECT 1; $$ LANGUAGE SQL;
+CREATE PROCEDURE p(OUT param INT) AS $$ SELECT 1; $$ LANGUAGE SQL;
 
 -- Test 2: statement (line 6)
 CREATE PROCEDURE p(IN param1 INT, OUT param2 INT) AS $$ SELECT param1; $$ LANGUAGE SQL;
@@ -104,7 +109,7 @@ CALL p();
 CREATE PROCEDURE p(OUT param1 INT, OUT param2 INT) AS $$ SELECT (1, 2); $$ LANGUAGE SQL;
 
 -- Test 35: query (line 129)
-CALL p(1 // 0);
+CALL p(1 / 0);
 
 -- Test 36: statement (line 135)
 DROP PROCEDURE p;
@@ -113,10 +118,10 @@ DROP PROCEDURE p;
 CREATE PROCEDURE p(IN INT, INOUT a INT) AS $$ SELECT 1; $$ LANGUAGE SQL;
 
 -- Test 38: statement (line 142)
-CALL p(1 // 0, 1);
+CALL p(1 / 0, 1);
 
 -- Test 39: statement (line 145)
-CALL p(1, 1 // 0);
+CALL p(1, 1 / 0);
 
 -- Test 40: statement (line 148)
 DROP PROCEDURE p;
@@ -125,7 +130,7 @@ DROP PROCEDURE p;
 CREATE PROCEDURE p(IN param1 INT, INOUT param2 INT, OUT param3 INT) AS $$ SELECT 1, 2; $$ LANGUAGE SQL;
 
 -- Test 42: statement (line 154)
-CALL p(1, 2)
+CALL p(1, 2);
 
 -- Test 43: query (line 157)
 CALL p(3, 4, NULL);
@@ -176,12 +181,18 @@ DROP PROCEDURE p(INT);
 DROP PROCEDURE p;
 
 -- Test 59: statement (line 216)
-CREATE PROCEDURE p(IN p1 INT, INOUT p2 INT, IN OUT p3 INT, OUT p4 INT) AS $$
+CREATE PROCEDURE p(IN p1 INT, INOUT p2 INT, INOUT p3 INT, OUT p4 INT) AS $$
 SELECT p2, p3, p1;
 $$ LANGUAGE SQL;
 
 -- Test 60: query (line 221)
-SELECT create_statement FROM [SHOW CREATE PROCEDURE p];
+SELECT pg_get_functiondef(proc.oid) AS create_statement
+FROM pg_proc AS proc
+JOIN pg_namespace AS n ON n.oid = proc.pronamespace
+WHERE n.nspname = 'public'
+  AND proc.proname = 'p'
+  AND proc.prokind = 'p'
+ORDER BY proc.oid;
 
 -- Test 61: statement (line 231)
 DROP PROCEDURE p;
@@ -192,7 +203,13 @@ SELECT 1;
 $$ LANGUAGE SQL;
 
 -- Test 63: query (line 239)
-SELECT create_statement FROM [SHOW CREATE PROCEDURE p];
+SELECT pg_get_functiondef(proc.oid) AS create_statement
+FROM pg_proc AS proc
+JOIN pg_namespace AS n ON n.oid = proc.pronamespace
+WHERE n.nspname = 'public'
+  AND proc.proname = 'p'
+  AND proc.prokind = 'p'
+ORDER BY proc.oid;
 
 -- Test 64: statement (line 249)
 DROP PROCEDURE p;
@@ -279,7 +296,13 @@ CALL p_3_in_2_out(2, 2, 2, NULL, NULL);
 CREATE OR REPLACE PROCEDURE p_3_in_2_out(IN param1 INT, OUT param1 INT, IN param2 INT, IN param3 INT, OUT param2 INT) AS $$ SELECT (param1, param2 + param3); $$ LANGUAGE SQL;
 
 -- Test 92: query (line 368)
-SELECT create_statement FROM [SHOW CREATE PROCEDURE p_3_in_2_out];
+SELECT pg_get_functiondef(proc.oid) AS create_statement
+FROM pg_proc AS proc
+JOIN pg_namespace AS n ON n.oid = proc.pronamespace
+WHERE n.nspname = 'public'
+  AND proc.proname = 'p_3_in_2_out'
+  AND proc.prokind = 'p'
+ORDER BY proc.oid;
 
 -- Test 93: query (line 378)
 CALL p_3_in_2_out(2, NULL, 2, 2, NULL);
@@ -291,7 +314,13 @@ CREATE OR REPLACE PROCEDURE p_3_in_2_out(INOUT param1 INT, IN param2 INT, INOUT 
 CREATE OR REPLACE PROCEDURE p_3_in_2_out(INOUT param1 INT, INOUT param2 INT, IN param3 INT) AS $$ SELECT (param1, param2 + param3); $$ LANGUAGE SQL;
 
 -- Test 96: query (line 391)
-SELECT create_statement FROM [SHOW CREATE PROCEDURE p_3_in_2_out];
+SELECT pg_get_functiondef(proc.oid) AS create_statement
+FROM pg_proc AS proc
+JOIN pg_namespace AS n ON n.oid = proc.pronamespace
+WHERE n.nspname = 'public'
+  AND proc.proname = 'p_3_in_2_out'
+  AND proc.prokind = 'p'
+ORDER BY proc.oid;
 
 -- Test 97: query (line 401)
 CALL p_3_in_2_out(2, 2, 2);
@@ -300,7 +329,13 @@ CALL p_3_in_2_out(2, 2, 2);
 CREATE PROCEDURE p_default_names(OUT INT, OUT param2 INT, IN INT, OUT INT) AS $$ SELECT (1, 2, 3); $$ LANGUAGE SQL;
 
 -- Test 99: query (line 417)
-SELECT create_statement FROM [SHOW CREATE PROCEDURE p_default_names];
+SELECT pg_get_functiondef(proc.oid) AS create_statement
+FROM pg_proc AS proc
+JOIN pg_namespace AS n ON n.oid = proc.pronamespace
+WHERE n.nspname = 'public'
+  AND proc.proname = 'p_default_names'
+  AND proc.prokind = 'p'
+ORDER BY proc.oid;
 
 -- Test 100: query (line 427)
 CALL p_default_names(NULL, NULL, 3, NULL);
@@ -312,7 +347,13 @@ CREATE OR REPLACE PROCEDURE p_default_names(OUT INT, OUT param2 INT, IN INT, OUT
 CREATE OR REPLACE PROCEDURE p_default_names(OUT INT, OUT param2 INT, IN INT, OUT column3 INT) AS $$ SELECT (1, 2, 3); $$ LANGUAGE SQL;
 
 -- Test 103: query (line 442)
-SELECT create_statement FROM [SHOW CREATE PROCEDURE p_default_names];
+SELECT pg_get_functiondef(proc.oid) AS create_statement
+FROM pg_proc AS proc
+JOIN pg_namespace AS n ON n.oid = proc.pronamespace
+WHERE n.nspname = 'public'
+  AND proc.proname = 'p_default_names'
+  AND proc.prokind = 'p'
+ORDER BY proc.oid;
 
 -- Test 104: query (line 452)
 CALL p_default_names(NULL, NULL, 3, NULL);
@@ -321,7 +362,13 @@ CALL p_default_names(NULL, NULL, 3, NULL);
 CREATE OR REPLACE PROCEDURE p_default_names(OUT INT, OUT param2 INT, IN INT, OUT INT) AS $$ SELECT (1, 2, 3); $$ LANGUAGE SQL;
 
 -- Test 106: query (line 462)
-SELECT create_statement FROM [SHOW CREATE PROCEDURE p_default_names];
+SELECT pg_get_functiondef(proc.oid) AS create_statement
+FROM pg_proc AS proc
+JOIN pg_namespace AS n ON n.oid = proc.pronamespace
+WHERE n.nspname = 'public'
+  AND proc.proname = 'p_default_names'
+  AND proc.prokind = 'p'
+ORDER BY proc.oid;
 
 -- Test 107: query (line 472)
 CALL p_default_names(NULL, NULL, 3, NULL);
@@ -330,7 +377,13 @@ CALL p_default_names(NULL, NULL, 3, NULL);
 CREATE OR REPLACE PROCEDURE p_default_names(OUT INT, OUT param2 INT, IN in_param INT, OUT INT) AS $$ SELECT (in_param, 2, 3); $$ LANGUAGE SQL;
 
 -- Test 109: query (line 482)
-SELECT create_statement FROM [SHOW CREATE PROCEDURE p_default_names];
+SELECT pg_get_functiondef(proc.oid) AS create_statement
+FROM pg_proc AS proc
+JOIN pg_namespace AS n ON n.oid = proc.pronamespace
+WHERE n.nspname = 'public'
+  AND proc.proname = 'p_default_names'
+  AND proc.prokind = 'p'
+ORDER BY proc.oid;
 
 -- Test 110: query (line 492)
 CALL p_default_names(NULL, NULL, 3, NULL);
@@ -553,15 +606,16 @@ DROP PROCEDURE p;
 DROP SEQUENCE seq;
 
 -- Test 183: statement (line 771)
-CREATE PROCEDURE p (s STRING(1) DEFAULT NULL, d DECIMAL(1, 1) DEFAULT NULL) AS $$
+CREATE PROCEDURE p (s VARCHAR(1) DEFAULT NULL, d DECIMAL(1, 1) DEFAULT NULL) AS $$
   SELECT 1;
 $$ LANGUAGE SQL;
 
 -- Test 184: statement (line 776)
-CREATE OR REPLACE PROCEDURE p (s STRING(2) DEFAULT NULL, d DECIMAL(2, 2) DEFAULT NULL) AS $$
+CREATE OR REPLACE PROCEDURE p (s VARCHAR(2) DEFAULT NULL, d DECIMAL(2, 2) DEFAULT NULL) AS $$
   SELECT 1;
 $$ LANGUAGE SQL;
 
 -- Test 185: statement (line 781)
 DROP PROCEDURE p;
 
+\set ON_ERROR_STOP 1
