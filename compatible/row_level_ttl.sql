@@ -1,6 +1,26 @@
 -- PostgreSQL compatible tests from row_level_ttl
 -- 211 tests
 
+-- NOTE: CockroachDB row-level TTL and schedules are not supported in PostgreSQL.
+-- The original CockroachDB-derived tests are preserved below for reference, but
+-- are not executed under PostgreSQL.
+SET client_min_messages = warning;
+
+DROP TABLE IF EXISTS row_level_ttl_smoke;
+CREATE TABLE row_level_ttl_smoke (
+  id INT PRIMARY KEY,
+  expire_at TIMESTAMPTZ NOT NULL
+);
+INSERT INTO row_level_ttl_smoke (id, expire_at) VALUES
+  (1, TIMESTAMPTZ '2000-01-01 00:00:00+00'),
+  (2, TIMESTAMPTZ '2100-01-01 00:00:00+00');
+DELETE FROM row_level_ttl_smoke WHERE expire_at < TIMESTAMPTZ '2050-01-01 00:00:00+00';
+SELECT id FROM row_level_ttl_smoke ORDER BY id;
+
+RESET client_min_messages;
+
+/*
+
 -- Test 1: statement (line 4)
 CREATE TABLE tbl (id INT PRIMARY KEY) WITH (ttl_expire_after = ' xx invalid interval xx')
 
@@ -875,3 +895,4 @@ EXECUTE SCHEDULE $schedule_id_1
 -- Test 211: statement (line 1850)
 RESUME SCHEDULE $schedule_id_1
 
+*/
