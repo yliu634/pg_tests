@@ -1,0 +1,1350 @@
+SET
+CREATE SCHEMA
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE TABLE
+CREATE TABLE
+ generate_series 
+-----------------
+(0 rows)
+
+ generate_series 
+-----------------
+               1
+               2
+               3
+(3 rows)
+
+   generate_series   
+---------------------
+ 2017-11-11 00:00:00
+ 2017-11-11 01:00:00
+ 2017-11-11 02:00:00
+ 2017-11-11 03:00:00
+(4 rows)
+
+   generate_series   
+---------------------
+ 2017-11-11 03:00:00
+ 2017-11-11 02:00:00
+ 2017-11-11 01:00:00
+ 2017-11-11 00:00:00
+(4 rows)
+
+   generate_series   
+---------------------
+ 2017-11-11 03:00:00
+ 2017-11-12 03:00:00
+ 2017-11-13 03:00:00
+ 2017-11-14 03:00:00
+(4 rows)
+
+   generate_series   
+---------------------
+ 2017-01-15 03:00:00
+ 2017-02-15 03:00:00
+ 2017-03-15 03:00:00
+ 2017-04-15 03:00:00
+ 2017-05-15 03:00:00
+ 2017-06-15 03:00:00
+ 2017-07-15 03:00:00
+ 2017-08-15 03:00:00
+ 2017-09-15 03:00:00
+ 2017-10-15 03:00:00
+ 2017-11-15 03:00:00
+(11 rows)
+
+   generate_series   
+---------------------
+ 2016-01-31 03:00:00
+ 2016-02-29 03:00:00
+ 2016-03-29 03:00:00
+ 2016-04-29 03:00:00
+ 2016-05-29 03:00:00
+ 2016-06-29 03:00:00
+ 2016-07-29 03:00:00
+ 2016-08-29 03:00:00
+ 2016-09-29 03:00:00
+ 2016-10-29 03:00:00
+ 2016-11-29 03:00:00
+ 2016-12-29 03:00:00
+(12 rows)
+
+   generate_series   
+---------------------
+ 2016-01-31 03:00:00
+ 2016-03-31 03:00:00
+ 2016-05-31 03:00:00
+ 2016-07-31 03:00:00
+ 2016-09-30 03:00:00
+ 2016-11-30 03:00:00
+(6 rows)
+
+   generate_series   
+---------------------
+ 2016-01-30 22:00:00
+ 2016-03-01 23:00:00
+ 2016-04-03 00:00:00
+ 2016-05-04 01:00:00
+ 2016-06-05 02:00:00
+ 2016-07-06 03:00:00
+ 2016-08-07 04:00:00
+ 2016-09-08 05:00:00
+ 2016-10-09 06:00:00
+ 2016-11-10 07:00:00
+ 2016-12-11 08:00:00
+(11 rows)
+
+   generate_series   
+---------------------
+ 1996-02-29 22:00:00
+ 2000-02-29 22:00:00
+ 2004-02-29 22:00:00
+(3 rows)
+
+ generate_series 
+-----------------
+(0 rows)
+
+ a | b 
+---+---
+ 1 | 1
+ 1 | 2
+ 2 | 1
+ 2 | 2
+(4 rows)
+
+ generate_series 
+-----------------
+               3
+               2
+               1
+(3 rows)
+
+ generate_series 
+-----------------
+(0 rows)
+
+psql:pg_tests/compatible/srfs.sql:68: ERROR:  step size cannot equal zero
+ generate_series 
+-----------------
+               1
+               2
+               3
+(3 rows)
+
+ x 
+---
+ 1
+(1 row)
+
+ generate_series | ordinality 
+-----------------+------------
+               1 |          1
+(1 row)
+
+ x | y 
+---+---
+ 1 | 1
+(1 row)
+
+psql:pg_tests/compatible/srfs.sql:83: ERROR:  set-returning functions are not allowed in LIMIT
+LINE 1: SELECT * FROM (VALUES (1)) LIMIT generate_series(1, 3);
+                                         ^
+ generate_series 
+-----------------
+               1
+               2
+(2 rows)
+
+ generate_series | generate_series 
+-----------------+-----------------
+               1 |               3
+               2 |               4
+(2 rows)
+
+ generate_series | generate_series 
+-----------------+-----------------
+               1 |               3
+               2 |               4
+(2 rows)
+
+INSERT 0 1
+INSERT 0 1
+  x  |  x   | generate_series | generate_series 
+-----+------+-----------------+-----------------
+ cat | bird |               1 |               3
+ cat | bird |               2 |               4
+(2 rows)
+
+  x  |  x   | a | b 
+-----+------+---+---
+ cat | bird | 1 | 3
+ cat | bird | 1 | 4
+ cat | bird | 2 | 3
+ cat | bird | 2 | 4
+(4 rows)
+
+ r 
+---
+ 4
+ 5
+(2 rows)
+
+ r 
+---
+ 4
+ 5
+(2 rows)
+
+ r  
+----
+  6
+  9
+ 12
+(3 rows)
+
+CREATE TABLE
+INSERT 0 2
+ x | generate_series 
+---+-----------------
+ 0 |               0
+ 0 |               1
+ 0 |               2
+ 0 |               3
+ 1 |               1
+ 1 |               2
+ 1 |               3
+(7 rows)
+
+ unnest 
+--------
+(0 rows)
+
+ unnest 
+--------
+(0 rows)
+
+ unnest 
+--------
+      1
+      2
+(2 rows)
+
+ unnest | unnest 
+--------+--------
+      1 | a
+      2 | b
+(2 rows)
+
+ r 
+---
+ 1
+ 2
+(2 rows)
+
+ r | t 
+---+---
+ 1 | 1
+ 2 | 3
+(2 rows)
+
+ ?column? | ?column? 
+----------+----------
+        1 |        1
+        2 |        3
+(2 rows)
+
+ ascii 
+-------
+    97
+    98
+    99
+(3 rows)
+
+ generate_series 
+-----------------
+               1
+               2
+               3
+               2
+               3
+               3
+(6 rows)
+
+ ?column? 
+----------
+        2
+        4
+        6
+(3 rows)
+
+psql:pg_tests/compatible/srfs.sql:153: ERROR:  column "generate_series" does not exist
+LINE 1: SELECT generate_series(1, 3) FROM t WHERE generate_series > ...
+                                                  ^
+ generate_series 
+-----------------
+(0 rows)
+
+ unnest 
+--------
+(0 rows)
+
+ _pg_expandarray 
+-----------------
+(0 rows)
+
+psql:pg_tests/compatible/srfs.sql:168: ERROR:  integer out of range
+  word   | catcode | barelabel |                   catdesc                    |     baredesc      
+---------+---------+-----------+----------------------------------------------+-------------------
+ alter   | U       | t         | unreserved                                   | can be bare label
+ and     | R       | t         | reserved                                     | can be bare label
+ between | C       | t         | unreserved (cannot be function or type name) | can be bare label
+ cross   | T       | t         | reserved (can be function or type name)      | can be bare label
+(4 rows)
+
+ a | b | word | catcode | barelabel | catdesc | baredesc 
+---+---+------+---------+-----------+---------+----------
+(0 rows)
+
+ generate_series 
+-----------------
+               1
+               2
+(2 rows)
+
+ unnest 
+--------
+      1
+(1 row)
+
+ colalias 
+----------
+        1
+(1 row)
+
+ filter_id2 | filter_id 
+------------+-----------
+          1 |         1
+(1 row)
+
+ a |              pg_get_keywords               | c 
+---+--------------------------------------------+---
+ a | (abort,U,t,unreserved,"can be bare label") | c
+(1 row)
+
+ a |                     b                      | c 
+---+--------------------------------------------+---
+ a | (abort,U,t,unreserved,"can be bare label") | c
+(1 row)
+
+ a | b | c 
+---+---+---
+ a | 1 | c
+(1 row)
+
+ upper 
+-------
+ ABC
+(1 row)
+
+   b    | ordinality 
+--------+------------
+ public |          1
+(1 row)
+
+psql:pg_tests/compatible/srfs.sql:208: ERROR:  function information_schema._pg_expandarray() does not exist
+LINE 1: SELECT information_schema._pg_expandarray();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/srfs.sql:211: ERROR:  function information_schema._pg_expandarray() does not exist
+LINE 1: SELECT * FROM information_schema._pg_expandarray();
+                      ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/srfs.sql:214: ERROR:  cannot determine type of empty array
+LINE 1: SELECT information_schema._pg_expandarray(ARRAY[]);
+                                                  ^
+HINT:  Explicitly cast to the desired type, for example ARRAY[]::integer[].
+psql:pg_tests/compatible/srfs.sql:217: ERROR:  cannot determine type of empty array
+LINE 1: SELECT * FROM information_schema._pg_expandarray(ARRAY[]);
+                                                         ^
+HINT:  Explicitly cast to the desired type, for example ARRAY[]::integer[].
+psql:pg_tests/compatible/srfs.sql:220: ERROR:  could not determine polymorphic type because input has type unknown
+psql:pg_tests/compatible/srfs.sql:223: ERROR:  could not determine polymorphic type because input has type unknown
+ _pg_expandarray 
+-----------------
+(0 rows)
+
+ x | n 
+---+---
+(0 rows)
+
+ _pg_expandarray 
+-----------------
+ (100,1)
+(1 row)
+
+  x  | n 
+-----+---
+ 100 | 1
+(1 row)
+
+ _pg_expandarray 
+-----------------
+ (2,1)
+ (1,2)
+(2 rows)
+
+ x | n 
+---+---
+ 2 | 1
+ 1 | 2
+(2 rows)
+
+ _pg_expandarray 
+-----------------
+ (3,1)
+ (2,2)
+ (1,3)
+(3 rows)
+
+ x | n 
+---+---
+ 3 | 1
+ 2 | 2
+ 1 | 3
+(3 rows)
+
+ _pg_expandarray 
+-----------------
+ (a,1)
+(1 row)
+
+ x | n 
+---+---
+ a | 1
+(1 row)
+
+ _pg_expandarray 
+-----------------
+ (b,1)
+ (a,2)
+(2 rows)
+
+ x | n 
+---+---
+ b | 1
+ a | 2
+(2 rows)
+
+ _pg_expandarray 
+-----------------
+ (c,1)
+ (b,2)
+ (a,3)
+(3 rows)
+
+ x | n 
+---+---
+ c | 1
+ b | 2
+ a | 3
+(3 rows)
+
+ x 
+---
+ c
+ b
+ a
+(3 rows)
+
+ n 
+---
+ 1
+ 2
+ 3
+(3 rows)
+
+psql:pg_tests/compatible/srfs.sql:274: ERROR:  could not identify column "other" in record data type
+LINE 1: SELECT (information_schema._pg_expandarray(ARRAY['c', 'b', '...
+                ^
+ x 
+---
+ c
+ b
+ a
+(3 rows)
+
+ n 
+---
+ 1
+ 2
+ 3
+(3 rows)
+
+psql:pg_tests/compatible/srfs.sql:283: ERROR:  column temp.other does not exist
+LINE 1: SELECT temp.other from information_schema._pg_expandarray(ar...
+               ^
+ x | n 
+---+---
+ c | 1
+ b | 2
+ a | 3
+(3 rows)
+
+ x | n 
+---+---
+ c | 1
+ b | 2
+ a | 3
+(3 rows)
+
+ n 
+---
+ 1
+ 2
+ 3
+(3 rows)
+
+ x | n 
+---+---
+ 3 | 1
+ 2 | 2
+ 1 | 3
+(3 rows)
+
+    row    
+-----------
+ (3,1,123)
+ (2,2,123)
+ (1,3,123)
+(3 rows)
+
+ generate_subscripts 
+---------------------
+                   1
+                   2
+                   3
+(3 rows)
+
+ generate_subscripts 
+---------------------
+                   1
+                   2
+                   3
+(3 rows)
+
+ generate_subscripts 
+---------------------
+                   1
+                   2
+                   3
+(3 rows)
+
+ generate_subscripts 
+---------------------
+                   3
+                   2
+                   1
+(3 rows)
+
+ s 
+---
+ 1
+ 2
+ 3
+ 4
+(4 rows)
+
+ s 
+---
+ 4
+ 3
+ 2
+ 1
+(4 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+                   1
+(1 row)
+
+ generate_subscripts 
+---------------------
+                   1
+(1 row)
+
+ generate_subscripts 
+---------------------
+                   1
+(1 row)
+
+ generate_subscripts 
+---------------------
+                   1
+(1 row)
+
+  x  
+-----
+ cat
+ cat
+ cat
+(3 rows)
+
+psql:pg_tests/compatible/srfs.sql:376: ERROR:  set-returning functions are not allowed in WHERE
+LINE 1: SELECT * FROM t WHERE generate_series(1, 3) < 3;
+                              ^
+psql:pg_tests/compatible/srfs.sql:379: ERROR:  set-returning functions are not allowed in HAVING
+LINE 1: SELECT * FROM t HAVING generate_series(1, 3) < 3;
+                               ^
+psql:pg_tests/compatible/srfs.sql:382: ERROR:  set-returning functions are not allowed in LIMIT
+LINE 1: SELECT * FROM t LIMIT generate_series(1, 3);
+                              ^
+psql:pg_tests/compatible/srfs.sql:385: ERROR:  set-returning functions are not allowed in OFFSET
+LINE 1: SELECT * FROM t OFFSET generate_series(1, 3);
+                               ^
+psql:pg_tests/compatible/srfs.sql:388: ERROR:  set-returning functions are not allowed in VALUES
+LINE 1: VALUES (generate_series(1,3));
+                ^
+psql:pg_tests/compatible/srfs.sql:391: ERROR:  set-returning functions are not allowed in DEFAULT expressions
+LINE 1: CREATE TABLE uu (x INT DEFAULT generate_series(1, 3));
+                                       ^
+psql:pg_tests/compatible/srfs.sql:394: ERROR:  set-returning functions are not allowed in check constraints
+LINE 1: CREATE TABLE uu (x INT CHECK (generate_series(1, 3) < 3));
+                                      ^
+psql:pg_tests/compatible/srfs.sql:397: ERROR:  set-returning functions are not allowed in column generation expressions
+LINE 1: CREATE TABLE uu (x INT GENERATED ALWAYS AS (generate_series(...
+                                                    ^
+CREATE TABLE
+CREATE INDEX
+ALTER TABLE
+ALTER TABLE
+CREATE INDEX
+INSERT 0 3
+ x | generate_series | generate_series 
+---+-----------------+-----------------
+ 3 |               1 |               1
+ 3 |               2 |               2
+ 3 |               3 |                
+ 5 |               1 |               1
+ 5 |               2 |               2
+ 5 |               3 |                
+ 5 |               4 |                
+ 5 |               5 |                
+   |                 |               1
+   |                 |               2
+(10 rows)
+
+ generate_series 
+-----------------
+               1
+               2
+               3
+               1
+               2
+               3
+               4
+               5
+(8 rows)
+
+ count 
+-------
+     8
+(1 row)
+
+         relname          | unnest 
+--------------------------+--------
+ ordered_t                |      1
+ pg_aggregate             |      1
+ pg_am                    |      1
+ pg_am                    |      2
+ pg_amop                  |      1
+ pg_amop                  |      2
+ pg_amop                  |      2
+ pg_amop                  |      3
+ pg_amop                  |      4
+ pg_amop                  |      5
+ pg_amop                  |      6
+ pg_amop                  |      7
+ pg_amproc                |      1
+ pg_amproc                |      2
+ pg_amproc                |      3
+ pg_amproc                |      4
+ pg_amproc                |      5
+ pg_attrdef               |      1
+ pg_attrdef               |      2
+ pg_attrdef               |      3
+ pg_attribute             |      1
+ pg_attribute             |      1
+ pg_attribute             |      2
+ pg_attribute             |      5
+ pg_auth_members          |      1
+ pg_auth_members          |      2
+ pg_auth_members          |      2
+ pg_auth_members          |      3
+ pg_auth_members          |      3
+ pg_auth_members          |      4
+ pg_auth_members          |      4
+ pg_auth_members          |      4
+ pg_authid                |      1
+ pg_authid                |      2
+ pg_cast                  |      1
+ pg_cast                  |      2
+ pg_cast                  |      3
+ pg_class                 |      1
+ pg_class                 |      2
+ pg_class                 |      3
+ pg_class                 |      8
+ pg_class                 |      9
+ pg_collation             |      1
+ pg_collation             |      2
+ pg_collation             |      3
+ pg_collation             |      7
+ pg_constraint            |      1
+ pg_constraint            |      2
+ pg_constraint            |      2
+ pg_constraint            |      3
+ pg_constraint            |      8
+ pg_constraint            |      9
+ pg_constraint            |      9
+ pg_constraint            |     11
+ pg_conversion            |      1
+ pg_conversion            |      1
+ pg_conversion            |      2
+ pg_conversion            |      3
+ pg_conversion            |      3
+ pg_conversion            |      5
+ pg_conversion            |      6
+ pg_database              |      1
+ pg_database              |      2
+ pg_db_role_setting       |      1
+ pg_db_role_setting       |      2
+ pg_default_acl           |      1
+ pg_default_acl           |      2
+ pg_default_acl           |      3
+ pg_default_acl           |      4
+ pg_depend                |      1
+ pg_depend                |      2
+ pg_depend                |      3
+ pg_depend                |      4
+ pg_depend                |      5
+ pg_depend                |      6
+ pg_description           |      1
+ pg_description           |      2
+ pg_description           |      3
+ pg_enum                  |      1
+ pg_enum                  |      2
+ pg_enum                  |      2
+ pg_enum                  |      3
+ pg_enum                  |      4
+ pg_event_trigger         |      1
+ pg_event_trigger         |      2
+ pg_extension             |      1
+ pg_extension             |      2
+ pg_foreign_data_wrapper  |      1
+ pg_foreign_data_wrapper  |      2
+ pg_foreign_server        |      1
+ pg_foreign_server        |      2
+ pg_foreign_table         |      1
+ pg_index                 |      1
+ pg_index                 |      2
+ pg_inherits              |      1
+ pg_inherits              |      2
+ pg_inherits              |      3
+ pg_init_privs            |      1
+ pg_init_privs            |      2
+ pg_init_privs            |      3
+ pg_language              |      1
+ pg_language              |      2
+ pg_largeobject           |      1
+ pg_largeobject           |      2
+ pg_largeobject_metadata  |      1
+ pg_namespace             |      1
+ pg_namespace             |      2
+ pg_opclass               |      1
+ pg_opclass               |      2
+ pg_opclass               |      3
+ pg_opclass               |      4
+ pg_operator              |      1
+ pg_operator              |      2
+ pg_operator              |      3
+ pg_operator              |      8
+ pg_operator              |      9
+ pg_opfamily              |      1
+ pg_opfamily              |      2
+ pg_opfamily              |      3
+ pg_opfamily              |      4
+ pg_parameter_acl         |      1
+ pg_parameter_acl         |      2
+ pg_partitioned_table     |      1
+ pg_policy                |      1
+ pg_policy                |      2
+ pg_policy                |      3
+ pg_proc                  |      1
+ pg_proc                  |      2
+ pg_proc                  |      3
+ pg_proc                  |     20
+ pg_publication           |      1
+ pg_publication           |      2
+ pg_publication_namespace |      1
+ pg_publication_namespace |      2
+ pg_publication_namespace |      3
+ pg_publication_rel       |      1
+ pg_publication_rel       |      2
+ pg_publication_rel       |      2
+ pg_publication_rel       |      3
+ pg_range                 |      1
+ pg_range                 |      3
+ pg_replication_origin    |      1
+ pg_replication_origin    |      2
+ pg_rewrite               |      1
+ pg_rewrite               |      2
+ pg_rewrite               |      3
+ pg_seclabel              |      1
+ pg_seclabel              |      2
+ pg_seclabel              |      3
+ pg_seclabel              |      4
+ pg_sequence              |      1
+ pg_shdepend              |      1
+ pg_shdepend              |      2
+ pg_shdepend              |      3
+ pg_shdepend              |      4
+ pg_shdepend              |      5
+ pg_shdepend              |      6
+ pg_shdescription         |      1
+ pg_shdescription         |      2
+ pg_shseclabel            |      1
+ pg_shseclabel            |      2
+ pg_shseclabel            |      3
+ pg_statistic             |      1
+ pg_statistic             |      2
+ pg_statistic             |      3
+ pg_statistic_ext         |      1
+ pg_statistic_ext         |      2
+ pg_statistic_ext         |      3
+ pg_statistic_ext         |      4
+ pg_statistic_ext_data    |      1
+ pg_statistic_ext_data    |      2
+ pg_subscription          |      1
+ pg_subscription          |      2
+ pg_subscription          |      4
+ pg_subscription_rel      |      1
+ pg_subscription_rel      |      2
+ pg_tablespace            |      1
+ pg_tablespace            |      2
+ pg_toast_1213            |      1
+ pg_toast_1213            |      2
+ pg_toast_1247            |      1
+ pg_toast_1247            |      2
+ pg_toast_1255            |      1
+ pg_toast_1255            |      2
+ pg_toast_1260            |      1
+ pg_toast_1260            |      2
+ pg_toast_1262            |      1
+ pg_toast_1262            |      2
+ pg_toast_13440           |      1
+ pg_toast_13440           |      2
+ pg_toast_13445           |      1
+ pg_toast_13445           |      2
+ pg_toast_13450           |      1
+ pg_toast_13450           |      2
+ pg_toast_13455           |      1
+ pg_toast_13455           |      2
+ pg_toast_1417            |      1
+ pg_toast_1417            |      2
+ pg_toast_1418            |      1
+ pg_toast_1418            |      2
+ pg_toast_2328            |      1
+ pg_toast_2328            |      2
+ pg_toast_2396            |      1
+ pg_toast_2396            |      2
+ pg_toast_24696           |      1
+ pg_toast_24696           |      2
+ pg_toast_24701           |      1
+ pg_toast_24701           |      2
+ pg_toast_2600            |      1
+ pg_toast_2600            |      2
+ pg_toast_2604            |      1
+ pg_toast_2604            |      2
+ pg_toast_2606            |      1
+ pg_toast_2606            |      2
+ pg_toast_2609            |      1
+ pg_toast_2609            |      2
+ pg_toast_2612            |      1
+ pg_toast_2612            |      2
+ pg_toast_2615            |      1
+ pg_toast_2615            |      2
+ pg_toast_2618            |      1
+ pg_toast_2618            |      2
+ pg_toast_2619            |      1
+ pg_toast_2619            |      2
+ pg_toast_2620            |      1
+ pg_toast_2620            |      2
+ pg_toast_2964            |      1
+ pg_toast_2964            |      2
+ pg_toast_3079            |      1
+ pg_toast_3079            |      2
+ pg_toast_3118            |      1
+ pg_toast_3118            |      2
+ pg_toast_3256            |      1
+ pg_toast_3256            |      2
+ pg_toast_3350            |      1
+ pg_toast_3350            |      2
+ pg_toast_3381            |      1
+ pg_toast_3381            |      2
+ pg_toast_3394            |      1
+ pg_toast_3394            |      2
+ pg_toast_3429            |      1
+ pg_toast_3429            |      2
+ pg_toast_3456            |      1
+ pg_toast_3456            |      2
+ pg_toast_3466            |      1
+ pg_toast_3466            |      2
+ pg_toast_3592            |      1
+ pg_toast_3592            |      2
+ pg_toast_3596            |      1
+ pg_toast_3596            |      2
+ pg_toast_3600            |      1
+ pg_toast_3600            |      2
+ pg_toast_6000            |      1
+ pg_toast_6000            |      2
+ pg_toast_6100            |      1
+ pg_toast_6100            |      2
+ pg_toast_6106            |      1
+ pg_toast_6106            |      2
+ pg_toast_6243            |      1
+ pg_toast_6243            |      2
+ pg_toast_826             |      1
+ pg_toast_826             |      2
+ pg_transform             |      1
+ pg_transform             |      2
+ pg_transform             |      3
+ pg_trigger               |      1
+ pg_trigger               |      2
+ pg_trigger               |      4
+ pg_trigger               |     11
+ pg_ts_config             |      1
+ pg_ts_config             |      2
+ pg_ts_config             |      3
+ pg_ts_config_map         |      1
+ pg_ts_config_map         |      2
+ pg_ts_config_map         |      3
+ pg_ts_dict               |      1
+ pg_ts_dict               |      2
+ pg_ts_dict               |      3
+ pg_ts_parser             |      1
+ pg_ts_parser             |      2
+ pg_ts_parser             |      3
+ pg_ts_template           |      1
+ pg_ts_template           |      2
+ pg_ts_template           |      3
+ pg_type                  |      1
+ pg_type                  |      2
+ pg_type                  |      3
+ pg_user_mapping          |      1
+ pg_user_mapping          |      2
+ pg_user_mapping          |      3
+ vals                     |      1
+ vals                     |      3
+(292 rows)
+
+psql:pg_tests/compatible/srfs.sql:434: ERROR:  column "x" does not exist
+LINE 1: ....oid = pg_index.indrelid ORDER BY relname, indexrelid, x, n;
+                                                                  ^
+CREATE TABLE
+INSERT 0 2
+ x | ?column? 
+---+----------
+ 1 | 123
+ 1 | 456
+ 2 | 111
+ 2 | 222
+(4 rows)
+
+ tbl  | idx | n 
+------+-----+---
+ vals | woo | 1
+ vals | woo | 2
+(2 rows)
+
+ attname | atttypid | atttypmod 
+---------+----------+-----------
+ x       |       23 |        -1
+(1 row)
+
+ table_cat | table_schem | table_name | column_name | key_seq | pk_name 
+-----------+-------------+------------+-------------+---------+---------
+           | public      | j          | x           |       1 | j_pkey
+(1 row)
+
+ unnest 
+--------
+ (1,2)
+ (3,4)
+(2 rows)
+
+psql:pg_tests/compatible/srfs.sql:492: ERROR:  record type has not been registered
+ a | b 
+---+---
+ 1 | 2
+ 3 | 4
+(2 rows)
+
+ a | b 
+---+---
+ 1 | 2
+ 3 | 4
+(2 rows)
+
+ i | s 
+---+---
+ 1 | a
+ 2 | b
+(2 rows)
+
+ i | s |  f  
+---+---+-----
+ 1 | a | 1.1
+ 2 |   | 2.2
+   |   | 3.3
+(3 rows)
+
+ unnest | unnest 
+--------+--------
+      1 | a
+      2 | b
+(2 rows)
+
+ unnest | unnest | unnest 
+--------+--------+--------
+      1 | a      |    1.1
+      2 |        |    2.2
+        |        |    3.3
+(3 rows)
+
+ a | b 
+---+---
+ 1 | 3
+ 2 | 4
+   | 5
+(3 rows)
+
+ unnest 
+--------
+      1
+      2
+      3
+      1
+      2
+      3
+      1
+      2
+      3
+(9 rows)
+
+ unnest 
+--------
+       
+      2
+      3
+       
+      2
+      3
+       
+      2
+      3
+(9 rows)
+
+ unnest 
+--------
+      1
+      2
+       
+      1
+      2
+       
+      1
+      2
+       
+(9 rows)
+
+ unnest 
+--------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+(9 rows)
+
+CREATE TABLE
+INSERT 0 5
+ x | y 
+---+---
+ 1 | 1
+ 2 | 2
+ 3 | 4
+ 4 | 8
+ 5 |  
+(5 rows)
+
+ x | y 
+---+---
+ 1 | 1
+ 2 | 2
+ 3 | 4
+(3 rows)
+
+ unnest | unnest 
+--------+--------
+      1 | one
+      2 | two
+      3 | 
+      4 | 
+(4 rows)
+
+psql:pg_tests/compatible/srfs.sql:549: ERROR:  cannot cast type integer to bit varying
+LINE 1: SELECT unnest(ARRAY[1,2,3::varbit(3)]);
+                                 ^
+psql:pg_tests/compatible/srfs.sql:552: ERROR:  cannot cast type integer to bit varying
+LINE 1: SELECT unnest(ARRAY[NULL,2,3::varbit(3)]);
+                                    ^
+psql:pg_tests/compatible/srfs.sql:555: ERROR:  function unnest(unknown, unknown) does not exist
+LINE 1: SELECT unnest(NULL, NULL);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/srfs.sql:558: ERROR:  function unnest(integer[], unknown) does not exist
+LINE 1: SELECT unnest(ARRAY[1,2], NULL);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/srfs.sql:561: ERROR:  function pg_catalog.unnest(unknown) is not unique
+LINE 1: SELECT * FROM unnest(NULL, NULL);
+                      ^
+HINT:  Could not choose a best candidate function. You might need to add explicit type casts.
+psql:pg_tests/compatible/srfs.sql:564: ERROR:  column reference "unnest" is ambiguous
+LINE 1: SELECT unnest FROM unnest(array[1,2], array[3,4,5]);
+               ^
+CREATE TABLE
+INSERT 0 3
+ unnest 
+--------
+ (1,2)
+ (3,4)
+ (5,6)
+(3 rows)
+
+ a | b 
+---+---
+ 1 | 2
+ 3 | 4
+ 5 | 6
+(3 rows)
+
+SET
+CREATE TABLE
+INSERT 0 1
+     c1      | hostmask | hostmask | ordinality 
+-------------+----------+----------+------------
+ 192.168.0.1 | 0.0.0.0  | 0.0.0.0  |          1
+(1 row)
+
+CREATE FUNCTION
+     c1      | f95615 | f95615 | ordinality 
+-------------+--------+--------+------------
+ 192.168.0.1 |    1.1 |    1.1 |          1
+(1 row)
+
+RESET
+CREATE TABLE
+INSERT 0 4
+ ?column? | c1 | c2 
+----------+----+----
+        1 |  3 |  6
+        1 |  4 |  7
+(2 rows)
+
+psql:pg_tests/compatible/srfs.sql:611: ERROR:  set-returning functions are not allowed in CASE
+LINE 1: SELECT CASE generate_series(1, 3) WHEN 3 THEN 0 ELSE 1 END;
+                    ^
+HINT:  You might be able to move the set-returning function into a LATERAL FROM item.
+psql:pg_tests/compatible/srfs.sql:614: ERROR:  set-returning functions are not allowed in CASE
+LINE 1: SELECT CASE WHEN true THEN generate_series(1, 3) ELSE 1 END;
+                                   ^
+HINT:  You might be able to move the set-returning function into a LATERAL FROM item.
+psql:pg_tests/compatible/srfs.sql:617: ERROR:  set-returning functions are not allowed in CASE
+LINE 1: SELECT CASE WHEN false THEN 1 ELSE generate_series(1, 3) END...
+                                           ^
+HINT:  You might be able to move the set-returning function into a LATERAL FROM item.
+psql:pg_tests/compatible/srfs.sql:620: ERROR:  set-returning functions are not allowed in COALESCE
+LINE 1: SELECT COALESCE(generate_series(1, 10));
+                        ^
+HINT:  You might be able to move the set-returning function into a LATERAL FROM item.
+ case 
+------
+    1
+(1 row)
+
+ coalesce 
+----------
+        1
+(1 row)
+
+ case 
+------
+   15
+(1 row)
+
+ coalesce 
+----------
+       15
+(1 row)
+
+ case 
+------
+   15
+   15
+   15
+   15
+   15
+(5 rows)
+
+ coalesce 
+----------
+       15
+       15
+       15
+       15
+       15
+(5 rows)
+
+psql:pg_tests/compatible/srfs.sql:641: ERROR:  set-returning functions are not allowed in CASE
+LINE 1: SELECT CASE WHEN x > y THEN generate_series(1, 3) ELSE 0 END...
+                                    ^
+HINT:  You might be able to move the set-returning function into a LATERAL FROM item.
+psql:pg_tests/compatible/srfs.sql:644: ERROR:  set-returning functions are not allowed in COALESCE
+LINE 1: SELECT COALESCE(1, generate_series(1, 2));
+                           ^
+HINT:  You might be able to move the set-returning function into a LATERAL FROM item.
+ nullif 
+--------
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+      4
+       
+       
+       
+      4
+      5
+(18 rows)
+
+psql:pg_tests/compatible/srfs.sql:650: ERROR:  function unnest(unknown) is not unique
+LINE 1: SELECT unnest('{}');
+               ^
+HINT:  Could not choose a best candidate function. You might need to add explicit type casts.
+psql:pg_tests/compatible/srfs.sql:653: ERROR:  function unnest(unknown, unknown, unknown) does not exist
+LINE 1: SELECT unnest('{}', '{}', '{}');
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/srfs.sql:656: ERROR:  function unnest(integer) does not exist
+LINE 1: SELECT unnest(1);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/srfs.sql:659: ERROR:  function unnest(integer, integer, integer) does not exist
+LINE 1: SELECT unnest(1, 2, 3);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ unnest 
+--------
+(0 rows)
+
+psql:pg_tests/compatible/srfs.sql:665: ERROR:  function unnest(unknown, unknown, unknown) does not exist
+LINE 1: SELECT unnest(NULL, NULL, NULL);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/srfs.sql:668: ERROR:  could not determine polymorphic type because input has type unknown
+psql:pg_tests/compatible/srfs.sql:671: ERROR:  function unnest(integer[], unknown, unknown) does not exist
+LINE 1: SELECT unnest('{1}'::int[], '{2}', '{3}');
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/srfs.sql:674: ERROR:  function unnest(integer[], unknown, unknown) does not exist
+LINE 1: SELECT unnest('{1}'::int[], '{}', '{}');
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/srfs.sql:677: ERROR:  function unnest(unknown, unknown, integer[]) does not exist
+LINE 1: SELECT unnest('{1}', '{2}', '{3}'::int[]);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/srfs.sql:680: ERROR:  function unnest(unknown, unknown, integer[]) does not exist
+LINE 1: SELECT unnest('{}', '{}', '{3}'::int[]);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.

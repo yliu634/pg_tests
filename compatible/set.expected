@@ -1,0 +1,476 @@
+psql:pg_tests/compatible/set.sql:8: ERROR:  unrecognized configuration parameter "foo"
+psql:pg_tests/compatible/set.sql:11: ERROR:  unrecognized configuration parameter "foo"
+SET
+ table_name 
+------------
+(0 rows)
+
+CREATE SCHEMA
+SET
+CREATE TABLE
+ table_name 
+------------
+ bar
+(1 row)
+
+SET
+ database 
+----------
+ public
+(1 row)
+
+ table_name 
+------------
+(0 rows)
+
+ table_name 
+------------
+ bar
+(1 row)
+
+SET
+psql:pg_tests/compatible/set.sql:61: ERROR:  relation "bar" already exists
+ database 
+----------
+ foo
+(1 row)
+
+ table_name 
+------------
+ bar
+(1 row)
+
+psql:pg_tests/compatible/set.sql:74: ERROR:  syntax error at or near "("
+LINE 1: SET ROW (1, TRUE, NULL);
+                ^
+SET
+ application_name 
+------------------
+ helloworld
+(1 row)
+
+ session_user 
+--------------
+ postgres
+(1 row)
+
+psql:pg_tests/compatible/set.sql:86: ERROR:  unrecognized configuration parameter "distsql"
+psql:pg_tests/compatible/set.sql:89: ERROR:  unrecognized configuration parameter "distsql"
+psql:pg_tests/compatible/set.sql:92: ERROR:  unrecognized configuration parameter "distsql"
+psql:pg_tests/compatible/set.sql:95: ERROR:  unrecognized configuration parameter "distsql"
+SET
+SET
+psql:pg_tests/compatible/set.sql:104: ERROR:  123 is outside the valid range for parameter "extra_float_digits" (-15 .. 3)
+SET
+SET
+SET
+SET
+SET
+SET
+psql:pg_tests/compatible/set.sql:125: ERROR:  invalid value for parameter "client_encoding": "other"
+psql:pg_tests/compatible/set.sql:128: ERROR:  parameter "server_encoding" cannot be changed
+psql:pg_tests/compatible/set.sql:131: ERROR:  parameter "server_encoding" cannot be changed
+ ssl 
+-----
+ on
+(1 row)
+
+psql:pg_tests/compatible/set.sql:137: ERROR:  parameter "ssl" cannot be changed now
+psql:pg_tests/compatible/set.sql:140: ERROR:  unrecognized configuration parameter "authentication_method"
+psql:pg_tests/compatible/set.sql:143: ERROR:  unrecognized configuration parameter "authentication_method"
+SET
+SET
+SET
+ DateStyle 
+-----------
+ ISO, MDY
+(1 row)
+
+SET
+ DateStyle 
+-----------
+ ISO, MDY
+(1 row)
+
+SET
+ DateStyle 
+-----------
+ ISO, MDY
+(1 row)
+
+SET
+ DateStyle 
+-----------
+ ISO, YMD
+(1 row)
+
+SET
+ DateStyle 
+-----------
+ ISO, DMY
+(1 row)
+
+SET
+SET
+SET
+psql:pg_tests/compatible/set.sql:191: ERROR:  invalid value for parameter "DateStyle": "other"
+DETAIL:  Unrecognized key word: "other".
+SET
+SET
+SET
+psql:pg_tests/compatible/set.sql:203: ERROR:  invalid value for parameter "intervalstyle": "other"
+HINT:  Available values: postgres, postgres_verbose, sql_standard, iso_8601.
+SET
+psql:pg_tests/compatible/set.sql:209: ERROR:  unrecognized configuration parameter "distsql"
+psql:pg_tests/compatible/set.sql:212: ERROR:  unrecognized configuration parameter "distsql"
+psql:pg_tests/compatible/set.sql:215: ERROR:  unrecognized configuration parameter "distsql"
+psql:pg_tests/compatible/set.sql:218: ERROR:  unrecognized configuration parameter "distsql"
+psql:pg_tests/compatible/set.sql:221: ERROR:  unrecognized configuration parameter "vectorize"
+psql:pg_tests/compatible/set.sql:224: ERROR:  unrecognized configuration parameter "vectorize"
+psql:pg_tests/compatible/set.sql:227: ERROR:  unrecognized configuration parameter "vectorize"
+psql:pg_tests/compatible/set.sql:230: ERROR:  unrecognized configuration parameter "optimizer"
+psql:pg_tests/compatible/set.sql:233: ERROR:  unrecognized configuration parameter "optimizer"
+psql:pg_tests/compatible/set.sql:236: ERROR:  unrecognized configuration parameter "optimizer"
+psql:pg_tests/compatible/set.sql:239: ERROR:  unrecognized configuration parameter "optimizer"
+SET
+SET
+psql:pg_tests/compatible/set.sql:248: ERROR:  invalid value for parameter "bytea_output": "bogus"
+HINT:  Available values: escape, hex.
+SET
+psql:pg_tests/compatible/set.sql:254: ERROR:  invalid value for parameter "default_tablespace": "bleepis"
+DETAIL:  Tablespace "bleepis" does not exist.
+            server_version             
+---------------------------------------
+ 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+(1 row)
+
+ server_version_num 
+--------------------
+ 160011
+(1 row)
+
+ log_timezone 
+--------------
+ Etc/UTC
+(1 row)
+
+psql:pg_tests/compatible/set.sql:266: ERROR:  parameter "max_index_keys" cannot be changed
+psql:pg_tests/compatible/set.sql:269: ERROR:  unrecognized configuration parameter "node_id"
+psql:pg_tests/compatible/set.sql:272: ERROR:  parameter "log_timezone" cannot be changed now
+psql:pg_tests/compatible/set.sql:275: DEBUG:  relation "system.settings" does not exist
+LINE 1: SELECT name, value FROM system.settings WHERE name = 'testin...
+                                ^
+psql:pg_tests/compatible/set.sql:275: ERROR:  relation "system.settings" does not exist
+LINE 1: SELECT name, value FROM system.settings WHERE name = 'testin...
+                                ^
+SET
+SET
+ TimeZone 
+----------
+ UTC
+(1 row)
+
+SET
+ TimeZone 
+----------
+ UTC
+(1 row)
+
+SET
+ TimeZone 
+----------
+ UTC
+(1 row)
+
+SET
+psql:pg_tests/compatible/set.sql:302: ERROR:  canceling statement due to statement timeout
+SET
+SET
+ statement_timeout 
+-------------------
+ 10s
+(1 row)
+
+SET
+ statement_timeout 
+-------------------
+ 0
+(1 row)
+
+SET
+ statement_timeout 
+-------------------
+ 0
+(1 row)
+
+SET
+ lock_timeout 
+--------------
+ 1ms
+(1 row)
+
+SET
+ lock_timeout 
+--------------
+ 0
+(1 row)
+
+SET
+ deadlock_timeout 
+------------------
+ 1ms
+(1 row)
+
+psql:pg_tests/compatible/set.sql:344: ERROR:  0 ms is outside the valid range for parameter "deadlock_timeout" (1 .. 2147483647)
+ deadlock_timeout 
+------------------
+ 1ms
+(1 row)
+
+psql:pg_tests/compatible/set.sql:350: ERROR:  unrecognized configuration parameter "idle_in_session_timeout"
+psql:pg_tests/compatible/set.sql:353: ERROR:  unrecognized configuration parameter "idle_in_session_timeout"
+ idle_session_timeout 
+----------------------
+ 0
+(1 row)
+
+SET
+psql:pg_tests/compatible/set.sql:362: ERROR:  unrecognized configuration parameter "idle_in_session_timeout"
+ idle_session_timeout 
+----------------------
+ 100s
+(1 row)
+
+psql:pg_tests/compatible/set.sql:368: ERROR:  unrecognized configuration parameter "idle_in_session_timeout"
+SET
+ idle_in_transaction_session_timeout 
+-------------------------------------
+ 123456ms
+(1 row)
+
+SET
+psql:pg_tests/compatible/set.sql:378: ERROR:  123 is outside the valid range for parameter "ssl_renegotiation_limit" (0 .. 0)
+psql:pg_tests/compatible/set.sql:381: ERROR:  unrecognized configuration parameter "tracing"
+psql:pg_tests/compatible/set.sql:384: ERROR:  unrecognized configuration parameter "tracing"
+SET
+SET
+SET
+SET
+SET
+SET
+SET
+SET
+psql:pg_tests/compatible/set.sql:397: ERROR:  syntax error at or near "EXISTS"
+LINE 1: SET SESSION SCHEMA EXISTS ( TABLE ( ( ( ( ( ( ( ( TABLE erro...
+                           ^
+psql:pg_tests/compatible/set.sql:400: ERROR:  syntax error at or near "USE"
+LINE 1: USE EXISTS ( TABLE error ) IS NULL;
+        ^
+psql:pg_tests/compatible/set.sql:403: ERROR:  syntax error at or near "USE"
+LINE 1: PREPARE a AS USE EXISTS ( TABLE error ) IS NULL;
+                     ^
+psql:pg_tests/compatible/set.sql:406: ERROR:  unrecognized configuration parameter "enable_zigzag_join"
+psql:pg_tests/compatible/set.sql:407: ERROR:  unrecognized configuration parameter "enable_zigzag_join"
+psql:pg_tests/compatible/set.sql:408: ERROR:  unrecognized configuration parameter "enable_zigzag_join"
+psql:pg_tests/compatible/set.sql:409: ERROR:  unrecognized configuration parameter "enable_zigzag_join"
+psql:pg_tests/compatible/set.sql:410: ERROR:  unrecognized configuration parameter "enable_zigzag_join"
+psql:pg_tests/compatible/set.sql:411: ERROR:  unrecognized configuration parameter "enable_zigzag_join"
+psql:pg_tests/compatible/set.sql:412: ERROR:  unrecognized configuration parameter "enable_zigzag_join"
+psql:pg_tests/compatible/set.sql:413: ERROR:  unrecognized configuration parameter "enable_zigzag_join"
+psql:pg_tests/compatible/set.sql:414: ERROR:  unrecognized configuration parameter "enable_zigzag_join"
+psql:pg_tests/compatible/set.sql:415: ERROR:  unrecognized configuration parameter "enable_zigzag_join"
+psql:pg_tests/compatible/set.sql:416: ERROR:  unrecognized configuration parameter "enable_zigzag_join"
+psql:pg_tests/compatible/set.sql:417: ERROR:  unrecognized configuration parameter "enable_zigzag_join"
+psql:pg_tests/compatible/set.sql:420: ERROR:  unrecognized configuration parameter "enable_zigzag_join"
+SET
+SET
+ synchronous_commit 
+--------------------
+ off
+(1 row)
+
+ enable_seqscan 
+----------------
+ off
+(1 row)
+
+SET
+SET
+ synchronous_commit 
+--------------------
+ on
+(1 row)
+
+ enable_seqscan 
+----------------
+ on
+(1 row)
+
+BEGIN
+SET
+SET
+ROLLBACK
+SET
+SET
+SET
+ default_table_access_method 
+-----------------------------
+ heap
+(1 row)
+
+SET
+ default_table_access_method 
+-----------------------------
+ heap
+(1 row)
+
+psql:pg_tests/compatible/set.sql:471: ERROR:  invalid value for parameter "default_table_access_method": "not-heap"
+DETAIL:  Table access method "not-heap" does not exist.
+ default_with_oids 
+-------------------
+ off
+(1 row)
+
+SET
+ default_with_oids 
+-------------------
+ off
+(1 row)
+
+psql:pg_tests/compatible/set.sql:483: ERROR:  tables declared WITH OIDS are not supported
+ xmloption 
+-----------
+ content
+(1 row)
+
+SET
+ xmloption 
+-----------
+ content
+(1 row)
+
+SET
+SET
+SET
+SET
+psql:pg_tests/compatible/set.sql:507: ERROR:  invalid value for parameter "backslash_quote": "123"
+HINT:  Available values: safe_encoding, on, off.
+psql:pg_tests/compatible/set.sql:510: ERROR:  syntax error at or near "setting"
+LINE 1: SET cluster setting sql.trace.txn.enable_threshold='1s';
+                    ^
+psql:pg_tests/compatible/set.sql:513: ERROR:  syntax error at or near "setting"
+LINE 1: SET cluster setting sql.trace.txn.enable_threshold='0s';
+                    ^
+psql:pg_tests/compatible/set.sql:516: ERROR:  unrecognized configuration parameter "disable_plan_gists"
+psql:pg_tests/compatible/set.sql:519: ERROR:  unrecognized configuration parameter "disable_plan_gists"
+psql:pg_tests/compatible/set.sql:522: ERROR:  unrecognized configuration parameter "index_recommendations_enabled"
+psql:pg_tests/compatible/set.sql:525: ERROR:  unrecognized configuration parameter "index_recommendations_enabled"
+psql:pg_tests/compatible/set.sql:528: ERROR:  unrecognized configuration parameter "lc_collate"
+psql:pg_tests/compatible/set.sql:531: ERROR:  unrecognized configuration parameter "lc_ctype"
+ lc_messages 
+-------------
+ C.UTF-8
+(1 row)
+
+ lc_monetary 
+-------------
+ C.UTF-8
+(1 row)
+
+ lc_numeric 
+------------
+ C.UTF-8
+(1 row)
+
+ lc_time 
+---------
+ C.UTF-8
+(1 row)
+
+psql:pg_tests/compatible/set.sql:546: ERROR:  unrecognized configuration parameter "lc_collate"
+psql:pg_tests/compatible/set.sql:549: ERROR:  unrecognized configuration parameter "lc_ctype"
+SET
+SET
+SET
+SET
+psql:pg_tests/compatible/set.sql:564: ERROR:  invalid value for parameter "lc_messages": "en_US.UTF-8"
+psql:pg_tests/compatible/set.sql:567: ERROR:  invalid value for parameter "lc_monetary": "en_US.UTF-8"
+psql:pg_tests/compatible/set.sql:570: ERROR:  invalid value for parameter "lc_numeric": "en_US.UTF-8"
+psql:pg_tests/compatible/set.sql:573: ERROR:  invalid value for parameter "lc_time": "en_US.UTF-8"
+SET
+ check_function_bodies 
+-----------------------
+ on
+(1 row)
+
+SET
+ check_function_bodies 
+-----------------------
+ off
+(1 row)
+
+psql:pg_tests/compatible/set.sql:588: ERROR:  unrecognized configuration parameter "custom_option.set_sql"
+psql:pg_tests/compatible/set.sql:591: ERROR:  unrecognized configuration parameter "custom_option.set_config"
+psql:pg_tests/compatible/set.sql:594: ERROR:  unrecognized configuration parameter "custom_option.use_default"
+RESET
+ custom_option.set_config 
+--------------------------
+ 
+(1 row)
+
+psql:pg_tests/compatible/set.sql:603: ERROR:  syntax error at or near "["
+LINE 1: SELECT variable FROM [SHOW ALL] WHERE variable LIKE 'custom_...
+                             ^
+ name 
+------
+(0 rows)
+
+psql:pg_tests/compatible/set.sql:609: ERROR:  unrecognized configuration parameter "tracing"
+psql:pg_tests/compatible/set.sql:612: ERROR:  unrecognized configuration parameter "tracing.custom"
+SET
+RESET
+psql:pg_tests/compatible/set.sql:621: ERROR:  unrecognized configuration parameter "tracing.custom"
+psql:pg_tests/compatible/set.sql:624: ERROR:  unrecognized configuration parameter "custom_option.set_sql"
+psql:pg_tests/compatible/set.sql:627: ERROR:  unrecognized configuration parameter "custom_option.does_not_yet_exist"
+psql:pg_tests/compatible/set.sql:630: ERROR:  unrecognized configuration parameter "join_reader_ordering_strategy_batch_size"
+psql:pg_tests/compatible/set.sql:633: ERROR:  unrecognized configuration parameter "join_reader_ordering_strategy_batch_size"
+psql:pg_tests/compatible/set.sql:636: ERROR:  unrecognized configuration parameter "parallelize_multi_key_lookup_joins_enabled"
+psql:pg_tests/compatible/set.sql:639: ERROR:  unrecognized configuration parameter "parallelize_multi_key_lookup_joins_enabled"
+psql:pg_tests/compatible/set.sql:642: ERROR:  unrecognized configuration parameter "opt_split_scan_limit"
+psql:pg_tests/compatible/set.sql:645: ERROR:  unrecognized configuration parameter "opt_split_scan_limit"
+psql:pg_tests/compatible/set.sql:648: ERROR:  unrecognized configuration parameter "opt_split_scan_limit"
+psql:pg_tests/compatible/set.sql:651: ERROR:  unrecognized configuration parameter "opt_split_scan_limit"
+psql:pg_tests/compatible/set.sql:654: ERROR:  unrecognized configuration parameter "opt_split_scan_limit"
+psql:pg_tests/compatible/set.sql:657: ERROR:  unrecognized configuration parameter "opt_split_scan_limit"
+psql:pg_tests/compatible/set.sql:660: ERROR:  unrecognized configuration parameter "opt_split_scan_limit"
+psql:pg_tests/compatible/set.sql:663: ERROR:  unrecognized configuration parameter "enable_auto_rehoming"
+psql:pg_tests/compatible/set.sql:666: ERROR:  unrecognized configuration parameter "enable_auto_rehoming"
+psql:pg_tests/compatible/set.sql:669: ERROR:  unrecognized configuration parameter "enable_auto_rehoming"
+psql:pg_tests/compatible/set.sql:672: ERROR:  unrecognized configuration parameter "enable_auto_rehoming"
+psql:pg_tests/compatible/set.sql:675: ERROR:  unrecognized configuration parameter "enable_auto_rehoming"
+psql:pg_tests/compatible/set.sql:678: ERROR:  unrecognized configuration parameter "max_retries_for_read_committed"
+psql:pg_tests/compatible/set.sql:681: ERROR:  unrecognized configuration parameter "max_retries_for_read_committed"
+psql:pg_tests/compatible/set.sql:684: ERROR:  unrecognized configuration parameter "max_retries_for_read_committed"
+psql:pg_tests/compatible/set.sql:687: ERROR:  unrecognized configuration parameter "max_retries_for_read_committed"
+ application_name 
+------------------
+ psql
+(1 row)
+
+SET
+  application_name  
+--------------------
+ \xf0\x9f\xa5\xaddb
+(1 row)
+
+  application_name  
+--------------------
+ \xf0\x9f\xa5\xaddb
+(1 row)
+
+psql:pg_tests/compatible/set.sql:702: ERROR:  unrecognized configuration parameter "copy_num_retries_per_batch"
+psql:pg_tests/compatible/set.sql:705: ERROR:  unrecognized configuration parameter "distsql_workmem"
+psql:pg_tests/compatible/set.sql:708: ERROR:  unrecognized configuration parameter "distsql_workmem"
+psql:pg_tests/compatible/set.sql:711: ERROR:  unrecognized configuration parameter "distsql_workmem"
+psql:pg_tests/compatible/set.sql:714: ERROR:  unrecognized configuration parameter "distsql_workmem"
+psql:pg_tests/compatible/set.sql:717: ERROR:  unrecognized configuration parameter "distsql_workmem"
