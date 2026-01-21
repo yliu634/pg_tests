@@ -1,0 +1,7 @@
+SET
+                                                    notice                                                    
+--------------------------------------------------------------------------------------------------------------
+ skipped: new_schema_changer requires CockroachDB declarative schema changer and cross-database DDL semantics
+(1 row)
+
+RESET
