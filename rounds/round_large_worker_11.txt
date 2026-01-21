@@ -1,0 +1,2 @@
+pg_tests/compatible/subquery_correlated.sql
+pg_tests/compatible/table.sql
