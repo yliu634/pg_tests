@@ -1,0 +1,301 @@
+SET
+CREATE SCHEMA
+SET
+DROP SEQUENCE
+DROP SEQUENCE
+CREATE SEQUENCE
+CREATE SEQUENCE
+ nextval 
+---------
+       1
+(1 row)
+
+ lastval 
+---------
+       1
+(1 row)
+
+ nextval 
+---------
+      10
+(1 row)
+
+ lastval 
+---------
+      10
+(1 row)
+
+ nextval 
+---------
+       2
+(1 row)
+
+ lastval 
+---------
+       2
+(1 row)
+
+ currval 
+---------
+       2
+(1 row)
+
+ nextval 
+---------
+       3
+(1 row)
+
+ nextval 
+---------
+      11
+(1 row)
+
+DROP SEQUENCE
+CREATE SEQUENCE
+ nextval 
+---------
+       1
+(1 row)
+
+ nextval 
+---------
+       6
+(1 row)
+
+       pg_sequence_parameters       
+------------------------------------
+ (1,1,9223372036854775807,5,f,1,20)
+(1 row)
+
+DROP SEQUENCE
+CREATE SEQUENCE
+ nextval 
+---------
+       2
+(1 row)
+
+ nextval 
+---------
+       7
+(1 row)
+
+ nextval 
+---------
+      12
+(1 row)
+
+       pg_sequence_parameters       
+------------------------------------
+ (2,1,9223372036854775807,5,f,1,20)
+(1 row)
+
+DROP SEQUENCE
+CREATE SEQUENCE
+ nextval 
+---------
+      -5
+(1 row)
+
+ nextval 
+---------
+      -6
+(1 row)
+
+ nextval 
+---------
+      -7
+(1 row)
+
+         pg_sequence_parameters         
+----------------------------------------
+ (-5,-9223372036854775808,-1,-1,f,1,20)
+(1 row)
+
+DROP SEQUENCE
+CREATE SEQUENCE
+ nextval 
+---------
+       9
+(1 row)
+
+ nextval 
+---------
+      10
+(1 row)
+
+ nextval 
+---------
+      11
+(1 row)
+
+ nextval 
+---------
+      12
+(1 row)
+
+ currval 
+---------
+      12
+(1 row)
+
+DROP SEQUENCE
+CREATE SEQUENCE
+ nextval 
+---------
+       1
+(1 row)
+
+ nextval 
+---------
+       2
+(1 row)
+
+ nextval 
+---------
+       3
+(1 row)
+
+ nextval 
+---------
+       1
+(1 row)
+
+DROP SEQUENCE
+CREATE SEQUENCE
+ nextval 
+---------
+       1
+(1 row)
+
+ nextval 
+---------
+       2
+(1 row)
+
+ setval 
+--------
+     10
+(1 row)
+
+ currval 
+---------
+       2
+(1 row)
+
+ lastval 
+---------
+       2
+(1 row)
+
+ nextval 
+---------
+      10
+(1 row)
+
+ currval 
+---------
+      10
+(1 row)
+
+ lastval 
+---------
+      10
+(1 row)
+
+ setval 
+--------
+     20
+(1 row)
+
+ currval 
+---------
+      20
+(1 row)
+
+ lastval 
+---------
+      20
+(1 row)
+
+ nextval 
+---------
+      21
+(1 row)
+
+DROP SEQUENCE
+CREATE SEQUENCE
+ nextval 
+---------
+       1
+(1 row)
+
+CREATE SCHEMA
+DROP SEQUENCE
+CREATE SEQUENCE
+ nextval 
+---------
+       1
+(1 row)
+
+CREATE SCHEMA
+DROP SEQUENCE
+CREATE SEQUENCE
+ nextval 
+---------
+       1
+(1 row)
+
+  schemaname  |  sequencename  | start_value | increment_by |      min_value       |      max_value      | cycle 
+--------------+----------------+-------------+--------------+----------------------+---------------------+-------
+ foo          | x              |           1 |            1 |                    1 | 9223372036854775807 | f
+ other_schema | seq            |           1 |            1 |                    1 | 9223372036854775807 | f
+ test         | bar            |           1 |            5 |                    1 | 9223372036854775807 | f
+ test         | baz            |           2 |            5 |                    1 | 9223372036854775807 | f
+ test         | cycle_test     |           1 |            1 |                    1 |                   3 | t
+ test         | down_test      |          -5 |           -1 | -9223372036854775808 |                  -1 | f
+ test         | lastval_test   |           1 |            1 |                    1 | 9223372036854775807 | f
+ test         | lastval_test_2 |          10 |            1 |                    1 | 9223372036854775807 | f
+ test         | limit_test     |           9 |            1 |                    1 |                  12 | f
+ test         | setval_test    |           1 |            1 |                    1 | 9223372036854775807 | f
+ test         | spécial        |           1 |            1 |                    1 | 9223372036854775807 | f
+(11 rows)
+
+DROP TABLE
+DROP SEQUENCE
+CREATE SEQUENCE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+ id | title 
+----+-------
+  1 | foo
+  2 | bar
+(2 rows)
+
+BEGIN
+INSERT 0 1
+ROLLBACK
+ last_value | is_called 
+------------+-----------
+          3 | t
+(1 row)
+
+DROP TABLE
+DROP SEQUENCE
+CREATE TABLE
+CREATE SEQUENCE
+ sequence_name | table_name | column_name 
+---------------+------------+-------------
+ owned_seq     | owner      | owner_col
+(1 row)
+
+ALTER SEQUENCE
+ owned_by_deps_after_none 
+--------------------------
+                        1
+(1 row)
+
+DROP TABLE
+DROP SEQUENCE
+RESET
+RESET
