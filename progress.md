@@ -17,3 +17,9 @@
 - Added expected files (with matching sql) from other origin branches: 38
 - Remaining Round 1 manifest expected missing: 4 (see failures.txt)
 
+## Round 2 Complete
+- Date: Wed Jan 21 12:50:37 UTC 2026
+- Workers: 20
+- New expected files: 63
+- Remaining in todo.txt: 200
+
