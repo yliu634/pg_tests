@@ -1,0 +1,667 @@
+SET
+CREATE TABLE
+ALTER TABLE
+INSERT 0 1
+ i | j 
+---+---
+ 1 | 1
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+BEGIN
+ALTER TABLE
+ALTER TABLE
+COMMIT
+INSERT 0 1
+ i | j | k 
+---+---+---
+ 1 | 2 | 3
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+ i 
+---
+ 0
+(1 row)
+
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+ i | j 
+---+---
+ 0 | 1
+ 1 | 1
+ 2 | 1
+(3 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+psql:compatible/new_schema_changer.sql:92: ERROR:  syntax error at or near "AS"
+LINE 1: ALTER TABLE foo ADD COLUMN j INT AS (i+1) STORED;
+                                         ^
+INSERT 0 1
+ i 
+---
+ 0
+ 1
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+psql:compatible/new_schema_changer.sql:107: ERROR:  syntax error at or near "CREATE"
+LINE 1: ALTER TABLE foo ADD COLUMN j INT CREATE FAMILY f2;
+                                         ^
+psql:compatible/new_schema_changer.sql:110: ERROR:  syntax error at or near "FAMILY"
+LINE 1: ALTER TABLE foo ADD COLUMN k INT FAMILY f2;
+                                         ^
+psql:compatible/new_schema_changer.sql:113: ERROR:  INSERT has more expressions than target columns
+LINE 1: INSERT INTO foo VALUES (1, 2, 3);
+                                   ^
+ i 
+---
+(0 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+BEGIN
+ALTER TABLE
+ALTER TABLE
+COMMIT
+INSERT 0 1
+ i | a 
+---+---
+ 1 | 2
+(1 row)
+
+INSERT 0 1
+ j | b 
+---+---
+ 3 | 4
+(1 row)
+
+DROP TABLE
+CREATE SEQUENCE
+CREATE TABLE
+CREATE TABLE
+DROP SEQUENCE
+DROP TABLE
+DROP TABLE
+CREATE TYPE
+DROP TYPE
+psql:compatible/new_schema_changer.sql:189: ERROR:  view "v" does not exist
+psql:compatible/new_schema_changer.sql:192: ERROR:  type "typ" does not exist
+LINE 1: CREATE VIEW v AS (WITH r AS (SELECT 'a'::typ < 'a'::typ AS k...
+                                                 ^
+psql:compatible/new_schema_changer.sql:195: ERROR:  type "typ" does not exist
+psql:compatible/new_schema_changer.sql:198: ERROR:  view "v" does not exist
+psql:compatible/new_schema_changer.sql:201: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW v AS (SELECT i FROM t);
+                                        ^
+psql:compatible/new_schema_changer.sql:204: ERROR:  type "typ" does not exist
+psql:compatible/new_schema_changer.sql:207: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW v_dep AS (SELECT k FROM t);
+                                            ^
+psql:compatible/new_schema_changer.sql:210: ERROR:  type "typ" does not exist
+CREATE TYPE
+DROP TYPE
+CREATE VIEW
+psql:compatible/new_schema_changer.sql:222: ERROR:  type "typ2" does not exist
+CREATE TYPE
+DROP TYPE
+psql:compatible/new_schema_changer.sql:231: ERROR:  type "typ2" does not exist
+psql:compatible/new_schema_changer.sql:234: ERROR:  type "typ3" does not exist
+CREATE TYPE
+CREATE TABLE
+CREATE VIEW
+psql:compatible/new_schema_changer.sql:246: ERROR:  cannot drop type typ4 because other objects depend on it
+DETAIL:  column j of table t4 depends on type typ4
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ALTER TABLE
+DROP TYPE
+CREATE TYPE
+ALTER TABLE
+CREATE VIEW
+psql:compatible/new_schema_changer.sql:264: ERROR:  cannot drop type typ4 because other objects depend on it
+DETAIL:  column j of table t4 depends on type typ4
+view v4_dep depends on column j of table t4
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+CREATE TYPE
+psql:compatible/new_schema_changer.sql:270: ERROR:  relation "t5" does not exist
+LINE 1: CREATE VIEW v5 AS (SELECT i FROM t5);
+                                         ^
+DROP TYPE
+psql:compatible/new_schema_changer.sql:276: ERROR:  relation "t5" does not exist
+LINE 1: CREATE VIEW v5_dep AS (SELECT j FROM t5);
+                                             ^
+psql:compatible/new_schema_changer.sql:279: ERROR:  type "typ5" does not exist
+CREATE VIEW
+psql:compatible/new_schema_changer.sql:285: ERROR:  cannot drop type typ4 because other objects depend on it
+DETAIL:  column j of table t4 depends on type typ4
+view v4_dep depends on column j of table t4
+view v6 depends on column j of view v4_dep
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+CREATE TYPE
+CREATE TABLE
+CREATE INDEX
+CREATE VIEW
+psql:compatible/new_schema_changer.sql:296: ERROR:  cannot drop type typ6 because other objects depend on it
+DETAIL:  column k of table t6 depends on type typ6
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+psql:compatible/new_schema_changer.sql:299: ERROR:  syntax error at or near "@"
+LINE 1: CREATE VIEW v7_dep AS (SELECT i FROM t6@idx WHERE k < 'a'::t...
+                                               ^
+psql:compatible/new_schema_changer.sql:302: ERROR:  cannot drop type typ6 because other objects depend on it
+DETAIL:  column k of table t6 depends on type typ6
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+CREATE TABLE
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+psql:compatible/new_schema_changer.sql:323: ERROR:  cannot drop view v1dep because other objects depend on it
+DETAIL:  view v2dep depends on view v1dep
+view v4dep depends on view v2dep
+view v3dep depends on view v1dep
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+psql:compatible/new_schema_changer.sql:326: ERROR:  "v1dep" is not a materialized view
+HINT:  Use DROP VIEW to remove a view.
+DROP VIEW
+psql:compatible/new_schema_changer.sql:332: ERROR:  relation "v4dep" does not exist
+LINE 1: SELECT * FROM v4Dep;
+                      ^
+psql:compatible/new_schema_changer.sql:335: ERROR:  relation "v3dep" does not exist
+LINE 1: SELECT * FROM v3Dep;
+                      ^
+psql:compatible/new_schema_changer.sql:338: ERROR:  relation "v2dep" does not exist
+LINE 1: SELECT * FROM v2Dep;
+                      ^
+psql:compatible/new_schema_changer.sql:341: ERROR:  relation "v1dep" does not exist
+LINE 1: SELECT * FROM v1Dep;
+                      ^
+SELECT 0
+psql:compatible/new_schema_changer.sql:347: ERROR:  "mv" is not a view
+HINT:  Use DROP MATERIALIZED VIEW to remove a materialized view.
+DROP MATERIALIZED VIEW
+psql:compatible/new_schema_changer.sql:358: ERROR:  syntax error at or near "("
+LINE 5:     INDEX (customer)
+                  ^
+psql:compatible/new_schema_changer.sql:361: ERROR:  schema "defaultdb" does not exist
+psql:compatible/new_schema_changer.sql:364: ERROR:  schema "defaultdb" does not exist
+psql:compatible/new_schema_changer.sql:367: ERROR:  schema "defaultdb" does not exist
+psql:compatible/new_schema_changer.sql:372: ERROR:  schema "defaultdb" does not exist
+LINE 1: CREATE TABLE defaultdb.sq1dep (
+                     ^
+psql:compatible/new_schema_changer.sql:375: ERROR:  schema "defaultdb" does not exist
+psql:compatible/new_schema_changer.sql:378: ERROR:  schema "defaultdb" does not exist
+psql:compatible/new_schema_changer.sql:379: ERROR:  schema "defaultdb" does not exist
+psql:compatible/new_schema_changer.sql:382: ERROR:  relation "defaultdb.shipments" does not exist
+LINE 1: ...defaultdb.v1 as (select customer_id, carrier from defaultdb....
+                                                             ^
+psql:compatible/new_schema_changer.sql:385: ERROR:  schema "defaultdb" does not exist
+psql:compatible/new_schema_changer.sql:388: ERROR:  schema "defaultdb" does not exist
+psql:compatible/new_schema_changer.sql:391: ERROR:  schema "defaultdb" does not exist
+CREATE TYPE
+DROP TYPE
+CREATE TYPE
+CREATE TABLE
+psql:compatible/new_schema_changer.sql:410: ERROR:  cannot drop type typ8 because other objects depend on it
+DETAIL:  column x of table t8 depends on type typ8
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ALTER TABLE
+psql:compatible/new_schema_changer.sql:416: ERROR:  cannot drop type typ8 because other objects depend on it
+DETAIL:  column y of table t8 depends on type typ8
+column x of table t8 depends on type typ8
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ALTER TABLE
+psql:compatible/new_schema_changer.sql:422: ERROR:  cannot drop type typ8 because other objects depend on it
+DETAIL:  column y of table t8 depends on type typ8
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ALTER TABLE
+DROP TYPE
+CREATE TYPE
+ALTER TABLE
+psql:compatible/new_schema_changer.sql:435: ERROR:  cannot drop type typ8 because other objects depend on it
+DETAIL:  column x of table t8 depends on type typ8[]
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ALTER TABLE
+DROP TYPE
+psql:compatible/new_schema_changer.sql:444: ERROR:  schema "defaultdb" does not exist
+psql:compatible/new_schema_changer.sql:447: ERROR:  schema "defaultdb" does not exist
+LINE 1: CREATE TABLE defaultdb.ttyp (id INT PRIMARY KEY, name varcha...
+                     ^
+BEGIN
+psql:compatible/new_schema_changer.sql:453: ERROR:  schema "defaultdb" does not exist
+psql:compatible/new_schema_changer.sql:456: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:compatible/new_schema_changer.sql:462: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:compatible/new_schema_changer.sql:469: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+CREATE DATABASE
+psql:compatible/new_schema_changer.sql:478: ERROR:  syntax error at or near "."
+LINE 1: CREATE SCHEMA db1.sc1;
+                         ^
+psql:compatible/new_schema_changer.sql:481: ERROR:  cross-database references are not implemented: "db1.sc1.sq1"
+psql:compatible/new_schema_changer.sql:484: ERROR:  cross-database references are not implemented: "db1.sc1.t1"
+LINE 1: CREATE TABLE db1.sc1.t1 (id INT PRIMARY KEY, name varchar(25...
+                     ^
+psql:compatible/new_schema_changer.sql:487: ERROR:  cross-database references are not implemented: "db1.sc1.t1"
+LINE 1: CREATE VIEW db1.sc1.v1 AS (SELECT name FROM db1.sc1.t1);
+                                                    ^
+psql:compatible/new_schema_changer.sql:490: ERROR:  cross-database references are not implemented: "db1.sc1.v1"
+LINE 1: ...db1.sc1.v2 AS (SELECT name AS n1, name AS n2 FROM db1.sc1.v1...
+                                                             ^
+psql:compatible/new_schema_changer.sql:493: ERROR:  cross-database references are not implemented: "db1.sc1.v1"
+LINE 1: CREATE VIEW db1.sc1.v3 AS (SELECT name, n1 FROM db1.sc1.v1, ...
+                                                        ^
+psql:compatible/new_schema_changer.sql:496: ERROR:  cross-database references are not implemented: "db1.sc1.v2"
+LINE 1: CREATE VIEW db1.sc1.v4 AS (SELECT n2, n1 FROM db1.sc1.v2);
+                                                      ^
+psql:compatible/new_schema_changer.sql:499: ERROR:  cross-database references are not implemented: db1.sc1.typ
+CREATE SCHEMA
+CREATE TYPE
+psql:compatible/new_schema_changer.sql:508: ERROR:  syntax error at or near "."
+LINE 1: DROP SCHEMA db1.sc1 CASCADE;
+                       ^
+DROP SCHEMA
+psql:compatible/new_schema_changer.sql:514: ERROR:  syntax error at or near "CASCADE"
+LINE 1: DROP DATABASE db1 CASCADE;
+                          ^
+CREATE ROLE
+psql:compatible/new_schema_changer.sql:520: ERROR:  database "db1" already exists
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+psql:compatible/new_schema_changer.sql:530: ERROR:  syntax error at or near "."
+LINE 1: CREATE SCHEMA db1.sc1;
+                         ^
+psql:compatible/new_schema_changer.sql:533: ERROR:  cross-database references are not implemented: "db1.public.sq1"
+psql:compatible/new_schema_changer.sql:536: ERROR:  cross-database references are not implemented: "db1.sc1.sq1"
+psql:compatible/new_schema_changer.sql:539: ERROR:  cross-database references are not implemented: "db1.sc1.t1"
+LINE 1: CREATE TABLE db1.sc1.t1 (id INT PRIMARY KEY, name varchar(25...
+                     ^
+psql:compatible/new_schema_changer.sql:542: ERROR:  cross-database references are not implemented: "db1.public.t1"
+LINE 1: CREATE TABLE db1.public.t1 (id INT PRIMARY KEY, name varchar...
+                     ^
+psql:compatible/new_schema_changer.sql:545: ERROR:  cross-database references are not implemented: "db1.sc1.t1"
+LINE 1: CREATE VIEW db1.sc1.v1 AS (SELECT name FROM db1.sc1.t1);
+                                                    ^
+psql:compatible/new_schema_changer.sql:548: ERROR:  cross-database references are not implemented: "db1.sc1.v1"
+LINE 1: ...db1.sc1.v2 AS (SELECT name AS n1, name AS n2 FROM db1.sc1.v1...
+                                                             ^
+psql:compatible/new_schema_changer.sql:551: ERROR:  cross-database references are not implemented: "db1.sc1.v1"
+LINE 1: CREATE VIEW db1.sc1.v3 AS (SELECT name, n1 FROM db1.sc1.v1, ...
+                                                        ^
+psql:compatible/new_schema_changer.sql:554: ERROR:  cross-database references are not implemented: "db1.sc1.v2"
+LINE 1: CREATE VIEW db1.sc1.v4 AS (SELECT n2, n1 FROM db1.sc1.v2);
+                                                      ^
+psql:compatible/new_schema_changer.sql:557: ERROR:  cross-database references are not implemented: "db1.sc1.t1"
+psql:compatible/new_schema_changer.sql:560: ERROR:  syntax error at or near "use"
+LINE 1: use db1;
+        ^
+COMMENT
+psql:compatible/new_schema_changer.sql:564: ERROR:  schema "sc1" does not exist
+psql:compatible/new_schema_changer.sql:565: ERROR:  cross-database references are not implemented: "db1.sc1.t1"
+psql:compatible/new_schema_changer.sql:566: ERROR:  cross-database references are not implemented: "db1.sc1.t1"
+psql:compatible/new_schema_changer.sql:567: ERROR:  cross-database references are not implemented: "db1.sc1.tmp_idx"
+psql:compatible/new_schema_changer.sql:568: ERROR:  syntax error at or near "use"
+LINE 1: use test;
+        ^
+psql:compatible/new_schema_changer.sql:571: ERROR:  cross-database references are not implemented: db1.sc1.typ
+CREATE SCHEMA
+CREATE TYPE
+psql:compatible/new_schema_changer.sql:580: ERROR:  relation "system.comments" does not exist
+LINE 1: SELECT comment FROM system.comments ORDER BY comment ASC;
+                            ^
+psql:compatible/new_schema_changer.sql:586: ERROR:  relation "system.database_role_settings" does not exist
+LINE 2:     FROM system.database_role_settings
+                 ^
+psql:compatible/new_schema_changer.sql:589: ERROR:  syntax error at or near "."
+LINE 1: DROP SCHEMA db1.sc1;
+                       ^
+psql:compatible/new_schema_changer.sql:592: ERROR:  syntax error at or near "RESTRICT"
+LINE 1: DROP DATABASE db1 RESTRICT;
+                          ^
+BEGIN
+psql:compatible/new_schema_changer.sql:601: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:compatible/new_schema_changer.sql:604: ERROR:  syntax error at or near "CASCADE"
+LINE 1: DROP DATABASE db1 CASCADE;
+                          ^
+psql:compatible/new_schema_changer.sql:607: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:compatible/new_schema_changer.sql:613: ERROR:  cross-database references are not implemented: "db1.sc1.v1"
+LINE 1: SELECT * from db1.sc1.v1;
+                      ^
+psql:compatible/new_schema_changer.sql:616: ERROR:  cross-database references are not implemented: "db1.sc1.t1"
+LINE 1: SELECT * from db1.sc1.t1;
+                      ^
+psql:compatible/new_schema_changer.sql:619: ERROR:  cross-database references are not implemented: "db1.sc1.sq1"
+LINE 1: SELECT * from db1.sc1.sq1;
+                      ^
+psql:compatible/new_schema_changer.sql:625: ERROR:  syntax error at or near "let"
+LINE 1: let $db1_id
+        ^
+psql:compatible/new_schema_changer.sql:628: ERROR:  syntax error at or near "CASCADE"
+LINE 1: DROP DATABASE db1 CASCADE;
+                          ^
+DROP SCHEMA
+psql:compatible/new_schema_changer.sql:634: ERROR:  relation "system.comments" does not exist
+LINE 1: SELECT comment FROM system.comments ORDER BY comment ASC;
+                            ^
+psql:compatible/new_schema_changer.sql:637: ERROR:  relation "system.database_role_settings" does not exist
+LINE 1: SELECT database_id, role_name, settings FROM system.database...
+                                                     ^
+psql:compatible/new_schema_changer.sql:640: ERROR:  syntax error at or near "$"
+LINE 1: select $desc_count_pre_drop-$desc_count_post_drop;
+               ^
+psql:compatible/new_schema_changer.sql:643: ERROR:  syntax error at or near "("
+LINE 1: ... trewrite(k INT PRIMARY KEY, ts TIMESTAMPTZ, FAMILY (k,ts));
+                                                               ^
+psql:compatible/new_schema_changer.sql:646: ERROR:  syntax error at or near "["
+LINE 1: SELECT create_statement FROM [SHOW CREATE TABLE trewrite];
+                                     ^
+psql:compatible/new_schema_changer.sql:649: ERROR:  syntax error at or near "["
+LINE 1: SELECT create_statement FROM [SHOW CREATE TABLE trewrite];
+                                     ^
+psql:compatible/new_schema_changer.sql:657: ERROR:  syntax error at or near "("
+LINE 4:   FAMILY (a),
+                 ^
+psql:compatible/new_schema_changer.sql:660: ERROR:  relation "tindex" does not exist
+LINE 1: INSERT INTO tIndex VALUES (1,1);
+                    ^
+psql:compatible/new_schema_changer.sql:662: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:compatible/new_schema_changer.sql:665: ERROR:  relation "tindex" does not exist
+psql:compatible/new_schema_changer.sql:668: ERROR:  relation "tindex" does not exist
+psql:compatible/new_schema_changer.sql:671: ERROR:  relation "tindex" does not exist
+psql:compatible/new_schema_changer.sql:674: ERROR:  relation "tindex" does not exist
+psql:compatible/new_schema_changer.sql:677: ERROR:  relation "tindex" does not exist
+psql:compatible/new_schema_changer.sql:680: ERROR:  relation "tindex" does not exist
+psql:compatible/new_schema_changer.sql:683: ERROR:  relation "tindex" does not exist
+psql:compatible/new_schema_changer.sql:686: ERROR:  syntax error at or near "INVERTED"
+LINE 1: CREATE INVERTED INDEX bar4 ON tIndex ((ARRAY[a,b]));
+               ^
+psql:compatible/new_schema_changer.sql:689: ERROR:  syntax error at or near "("
+LINE 1: ...EATE TABLE tIndx2 (a INT PRIMARY KEY, b INT, INDEX ((a+b)));
+                                                              ^
+psql:compatible/new_schema_changer.sql:692: ERROR:  type "index" does not exist
+LINE 1: ... TABLE tIndx3 (a INT PRIMARY KEY, b INT, INVERTED INDEX ((AR...
+                                                             ^
+psql:compatible/new_schema_changer.sql:695: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW INDEXES FROM tIndex;
+                     ^
+psql:compatible/new_schema_changer.sql:698: ERROR:  relation "tindex" does not exist
+LINE 1: INSERT INTO tIndex VALUES (2,1);
+                    ^
+psql:compatible/new_schema_changer.sql:701: ERROR:  relation "tindex" does not exist
+LINE 1: INSERT INTO tIndex VALUES (20000,10000);
+                    ^
+psql:compatible/new_schema_changer.sql:704: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW INDEXES FROM tIndex;
+                     ^
+psql:compatible/new_schema_changer.sql:707: ERROR:  table "tindex" does not exist
+CREATE TABLE
+INSERT 0 2
+CREATE INDEX
+CREATE INDEX
+psql:compatible/new_schema_changer.sql:726: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW INDEXES FROM tIndx;
+                     ^
+psql:compatible/new_schema_changer.sql:729: ERROR:  relation "foo" does not exist
+CREATE VIEW
+psql:compatible/new_schema_changer.sql:735: ERROR:  cannot create index on relation "vindx"
+DETAIL:  This operation is not supported for views.
+CREATE TABLE
+psql:compatible/new_schema_changer.sql:740: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:compatible/new_schema_changer.sql:742: ERROR:  syntax error at or near "skipif"
+LINE 1: skipif config local-legacy-schema-changer;
+        ^
+CREATE INDEX
+psql:compatible/new_schema_changer.sql:747: ERROR:  syntax error at or near "onlyif"
+LINE 1: onlyif config local-legacy-schema-changer;
+        ^
+psql:compatible/new_schema_changer.sql:750: ERROR:  relation "foo" already exists
+psql:compatible/new_schema_changer.sql:752: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:compatible/new_schema_changer.sql:755: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW INDEXES FROM privs;
+                     ^
+psql:compatible/new_schema_changer.sql:758: ERROR:  role "testuser" does not exist
+psql:compatible/new_schema_changer.sql:760: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:compatible/new_schema_changer.sql:763: ERROR:  relation "foo" already exists
+psql:compatible/new_schema_changer.sql:766: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW INDEXES FROM privs;
+                     ^
+CREATE TABLE
+CREATE TABLE
+BEGIN
+ALTER TABLE
+psql:compatible/new_schema_changer.sql:782: ERROR:  column "c1" does not exist
+ROLLBACK
+DROP TABLE
+CREATE TABLE
+CREATE VIEW
+CREATE SEQUENCE
+psql:compatible/new_schema_changer.sql:800: ERROR:  "t1dr" is not a view
+HINT:  Use DROP TABLE to remove a table.
+psql:compatible/new_schema_changer.sql:803: ERROR:  "t1dr" is not a sequence
+HINT:  Use DROP TABLE to remove a table.
+psql:compatible/new_schema_changer.sql:806: ERROR:  "v1dr" is not a table
+HINT:  Use DROP VIEW to remove a view.
+psql:compatible/new_schema_changer.sql:809: ERROR:  "v1dr" is not a sequence
+HINT:  Use DROP VIEW to remove a view.
+psql:compatible/new_schema_changer.sql:812: ERROR:  "s1dr" is not a view
+HINT:  Use DROP SEQUENCE to remove a sequence.
+psql:compatible/new_schema_changer.sql:815: ERROR:  "s1dr" is not a table
+HINT:  Use DROP SEQUENCE to remove a sequence.
+psql:compatible/new_schema_changer.sql:821: ERROR:  unrecognized configuration parameter "sql_safe_updates"
+CREATE TABLE
+CREATE TABLE
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+psql:compatible/new_schema_changer.sql:842: ERROR:  relation "system.eventlog" does not exist
+LINE 1: DELETE FROM system.eventlog;
+                    ^
+DROP VIEW
+psql:compatible/new_schema_changer.sql:850: ERROR:  relation "system.eventlog" does not exist
+LINE 2: FROM system.eventlog
+             ^
+psql:compatible/new_schema_changer.sql:854: ERROR:  relation "system.eventlog" does not exist
+LINE 1: ...lesce((info::JSONB->'LatencyNanos')::INT, 0) FROM system.eve...
+                                                             ^
+CREATE VIEW
+CREATE VIEW
+psql:compatible/new_schema_changer.sql:863: ERROR:  relation "system.eventlog" does not exist
+LINE 1: DELETE FROM system.eventlog;
+                    ^
+DROP TABLE
+psql:compatible/new_schema_changer.sql:871: ERROR:  relation "system.eventlog" does not exist
+LINE 2: FROM system.eventlog
+             ^
+CREATE TABLE
+psql:compatible/new_schema_changer.sql:877: ERROR:  relation "system.eventlog" does not exist
+LINE 1: DELETE FROM system.eventlog;
+                    ^
+ALTER TABLE
+psql:compatible/new_schema_changer.sql:885: ERROR:  relation "system.eventlog" does not exist
+LINE 2: FROM system.eventlog
+             ^
+CREATE DATABASE
+psql:compatible/new_schema_changer.sql:891: ERROR:  syntax error at or near "."
+LINE 1: CREATE SCHEMA "'db1-a'".sc1;
+                               ^
+psql:compatible/new_schema_changer.sql:894: ERROR:  syntax error at or near "."
+LINE 1: CREATE SCHEMA "'db1-a'".sc2;
+                               ^
+CREATE DATABASE
+psql:compatible/new_schema_changer.sql:900: ERROR:  syntax error at or near "."
+LINE 1: CREATE SCHEMA db2.sc3;
+                         ^
+psql:compatible/new_schema_changer.sql:903: ERROR:  schema "'db1-a'" does not exist
+LINE 1: CREATE TABLE "'db1-a'"."'t1-esc'"(name int);
+                     ^
+psql:compatible/new_schema_changer.sql:906: ERROR:  schema "'db1-a'" does not exist
+psql:compatible/new_schema_changer.sql:909: ERROR:  schema "'db1-a'" does not exist
+psql:compatible/new_schema_changer.sql:912: ERROR:  relation "system.eventlog" does not exist
+LINE 1: delete from system.eventlog;
+                    ^
+psql:compatible/new_schema_changer.sql:915: ERROR:  syntax error at or near "cascade"
+LINE 1: DROP DATABASE "'db1-a'" cascade;
+                                ^
+psql:compatible/new_schema_changer.sql:918: ERROR:  syntax error at or near "cascade"
+LINE 1: DROP DATABASE db2 cascade;
+                          ^
+psql:compatible/new_schema_changer.sql:923: ERROR:  relation "system.eventlog" does not exist
+LINE 2: FROM system.eventlog
+             ^
+CREATE TABLE
+CREATE TABLE
+CREATE VIEW
+CREATE VIEW
+CREATE SEQUENCE
+DROP VIEW
+DROP TABLE
+DROP SEQUENCE
+CREATE SEQUENCE
+CREATE TABLE
+CREATE VIEW
+INSERT 0 1
+ nextval 
+---------
+       2
+(1 row)
+
+DROP SEQUENCE
+psql:compatible/new_schema_changer.sql:962: ERROR:  null value in column "value" of relation "sbt1" violates not-null constraint
+DETAIL:  Failing row contains (1, null).
+psql:compatible/new_schema_changer.sql:965: ERROR:  relation "sbv1" does not exist
+LINE 1: select * from sbv1;
+                      ^
+psql:compatible/new_schema_changer.sql:973: ERROR:  syntax error at or near "("
+LINE 5:     INDEX (customer)
+                  ^
+psql:compatible/new_schema_changer.sql:976: ERROR:  schema "defaultdb" does not exist
+CREATE TABLE
+DROP TABLE
+CREATE SCHEMA
+CREATE SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE VIEW
+CREATE VIEW
+DROP SCHEMA
+CREATE TABLE
+CREATE SEQUENCE
+DROP SEQUENCE
+DROP TABLE
+psql:compatible/new_schema_changer.sql:1013: ERROR:  type "d_tc" does not exist
+psql:compatible/new_schema_changer.sql:1016: ERROR:  table "ttc1" does not exist
+psql:compatible/new_schema_changer.sql:1019: ERROR:  type "d_tc" does not exist
+psql:compatible/new_schema_changer.sql:1022: ERROR:  table "ttc2" does not exist
+psql:compatible/new_schema_changer.sql:1025: ERROR:  type "d_tc" does not exist
+psql:compatible/new_schema_changer.sql:1028: ERROR:  table "ttc3" does not exist
+psql:compatible/new_schema_changer.sql:1031: ERROR:  type "d_tc" does not exist
+psql:compatible/new_schema_changer.sql:1034: ERROR:  zero-length delimited identifier at or near """"
+LINE 1: DROP DATABASE "";
+                      ^
+CREATE SCHEMA
+psql:compatible/new_schema_changer.sql:1040: ERROR:  database "db1" already exists
+psql:compatible/new_schema_changer.sql:1042: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+DROP SCHEMA
+DROP DATABASE
+psql:compatible/new_schema_changer.sql:1054: ERROR:  relation "parent" does not exist
+psql:compatible/new_schema_changer.sql:1057: ERROR:  syntax error at or near "@"
+LINE 1: CREATE VIEW child AS SELECT count(*) FROM parent@idx;
+                                                        ^
+psql:compatible/new_schema_changer.sql:1063: ERROR:  syntax error at or near "@"
+LINE 1: DROP INDEX parent@idx;
+                         ^
+psql:compatible/new_schema_changer.sql:1072: ERROR:  syntax error at or near "CASCADE"
+LINE 1: DROP DATABASE test CASCADE;
+                           ^
+CREATE DATABASE
+psql:compatible/new_schema_changer.sql:1076: ERROR:  syntax error at or near "USE"
+LINE 1: USE test;
+        ^
+CREATE TABLE
+INSERT 0 3
+BEGIN
+psql:compatible/new_schema_changer.sql:1089: ERROR:  syntax error at or near "AS"
+LINE 1: ALTER TABLE t ADD COLUMN k INT AS (i + 3) STORED NOT NULL UN...
+                                       ^
+psql:compatible/new_schema_changer.sql:1090: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:compatible/new_schema_changer.sql:1095: ERROR:  syntax error at or near "onlyif"
+LINE 1: onlyif config schema-locked-disabled;
+        ^
+psql:compatible/new_schema_changer.sql:1098: ERROR:  syntax error at or near "["
+LINE 1: SELECT create_statement FROM [SHOW CREATE TABLE t];
+                                     ^
+psql:compatible/new_schema_changer.sql:1101: ERROR:  syntax error at or near "["
+LINE 1: SELECT create_statement FROM [SHOW CREATE TABLE t];
+                                     ^
+ i 
+---
+ 1
+ 2
+ 3
+(3 rows)
+
+BEGIN
+CREATE SCHEMA
+psql:compatible/new_schema_changer.sql:1113: ERROR:  unrecognized configuration parameter "schemas"
+psql:compatible/new_schema_changer.sql:1116: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:compatible/new_schema_changer.sql:1119: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:compatible/new_schema_changer.sql:1128: ERROR:  syntax error at or near "SETTING"
+LINE 1: SET CLUSTER SETTING sql.schema.force_declarative_statements=...
+                    ^
+psql:compatible/new_schema_changer.sql:1131: ERROR:  unrecognized parameter "schema_locked"
+psql:compatible/new_schema_changer.sql:1137: ERROR:  relation "stmt_ctrl" does not exist
+psql:compatible/new_schema_changer.sql:1140: ERROR:  syntax error at or near "SETTING"
+LINE 1: SET CLUSTER SETTING sql.schema.force_declarative_statements=...
+                    ^
+psql:compatible/new_schema_changer.sql:1146: ERROR:  syntax error at or near "SETTING"
+LINE 1: SET CLUSTER SETTING sql.schema.force_declarative_statements=...
+                    ^
+psql:compatible/new_schema_changer.sql:1152: ERROR:  syntax error at or near "SETTING"
+LINE 1: SET CLUSTER SETTING sql.schema.force_declarative_statements=...
+                    ^
+psql:compatible/new_schema_changer.sql:1155: ERROR:  unrecognized parameter "schema_locked"
+psql:compatible/new_schema_changer.sql:1161: ERROR:  relation "stmt_ctrl_sub" does not exist
+psql:compatible/new_schema_changer.sql:1167: ERROR:  syntax error at or near "SETTING"
+LINE 1: SET CLUSTER SETTING sql.schema.force_declarative_statements=...
+                    ^
+psql:compatible/new_schema_changer.sql:1173: ERROR:  relation "stmt_ctrl_sub" does not exist
+psql:compatible/new_schema_changer.sql:1179: ERROR:  syntax error at or near "SETTING"
+LINE 1: SET CLUSTER SETTING sql.schema.force_declarative_statements=...
+                    ^
+psql:compatible/new_schema_changer.sql:1185: ERROR:  syntax error at or near "SETTING"
+LINE 1: SET CLUSTER SETTING sql.schema.force_declarative_statements=...
+                    ^
+psql:compatible/new_schema_changer.sql:1188: ERROR:  syntax error at or near "SETTING"
+LINE 1: SET CLUSTER SETTING sql.schema.force_declarative_statements=...
+                    ^
+psql:compatible/new_schema_changer.sql:1191: ERROR:  table "stmt_ctrl_sub" does not exist
+CREATE TABLE
+psql:compatible/new_schema_changer.sql:1196: ERROR:  syntax error at or near "let"
+LINE 1: let $use_decl_sc;
+        ^
+psql:compatible/new_schema_changer.sql:1203: ERROR:  multiple primary keys for table "multiple_pk_attempt" are not allowed
