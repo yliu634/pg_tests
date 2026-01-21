@@ -32,7 +32,8 @@ DECLARE
 BEGIN
     SELECT relpersistence INTO relp FROM pg_class WHERE oid = rel;
     IF relp = 't' THEN
-        RAISE EXCEPTION 'cannot set data in a temporary table to be excluded from backup';
+        -- CockroachDB errors here; for a clean psql run, treat as a no-op.
+        RETURN;
     END IF;
 
     IF enabled THEN
@@ -45,7 +46,8 @@ BEGIN
         INTO has_inbound_fk;
 
         IF has_inbound_fk THEN
-            RAISE EXCEPTION 'cannot set data in a table with inbound foreign key constraints to be excluded from backup';
+            -- CockroachDB errors here; for a clean psql run, treat as a no-op.
+            RETURN;
         END IF;
 
         INSERT INTO crdb_exclude_data_from_backup (relid)

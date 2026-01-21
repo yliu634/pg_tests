@@ -1,0 +1,44 @@
+SET
+DROP SCHEMA
+CREATE SCHEMA
+CREATE SEQUENCE
+CREATE TABLE
+DROP TABLE
+CREATE TABLE
+CREATE PROCEDURE
+CREATE FUNCTION
+CREATE TABLE
+INSERT 0 1
+ id  
+-----
+ 106
+(1 row)
+
+CALL
+ table_name |                                                   create_statement                                                    
+------------+-----------------------------------------------------------------------------------------------------------------------
+ t          | CREATE TABLE public.t (x integer NOT NULL, CONSTRAINT t_pkey PRIMARY KEY (x)) WITH (exclude_data_from_backup = true);
+(1 row)
+
+CALL
+ table_name |                                create_statement                                
+------------+--------------------------------------------------------------------------------
+ t          | CREATE TABLE public.t (x integer NOT NULL, CONSTRAINT t_pkey PRIMARY KEY (x));
+(1 row)
+
+CREATE TABLE
+CALL
+CREATE TABLE
+CALL
+CALL
+ table_name |                                                                  create_statement                                                                  
+------------+----------------------------------------------------------------------------------------------------------------------------------------------------
+ t2         | CREATE TABLE public.t2 (x integer, CONSTRAINT t2_x_fkey FOREIGN KEY (x) REFERENCES t(x) ON DELETE CASCADE) WITH (exclude_data_from_backup = true);
+(1 row)
+
+CALL
+ table_name |                                              create_statement                                               
+------------+-------------------------------------------------------------------------------------------------------------
+ t2         | CREATE TABLE public.t2 (x integer, CONSTRAINT t2_x_fkey FOREIGN KEY (x) REFERENCES t(x) ON DELETE CASCADE);
+(1 row)
+
