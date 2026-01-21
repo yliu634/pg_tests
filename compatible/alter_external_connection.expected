@@ -1,0 +1,65 @@
+SET
+DROP PROCEDURE
+DROP PROCEDURE
+DROP PROCEDURE
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+DROP TABLE
+DROP TABLE
+DROP ROLE
+CREATE ROLE
+CREATE TABLE
+CREATE TABLE
+CREATE PROCEDURE
+CREATE PROCEDURE
+CREATE PROCEDURE
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CALL
+CALL
+ connection_name |    connection_uri    | connection_type 
+-----------------+----------------------+-----------------
+ conn_1          | nodelocal://1/conn_1 | STORAGE
+ conn_2          | nodelocal://1/conn_2 | STORAGE
+(2 rows)
+
+SET
+ can_update 
+------------
+ f
+(1 row)
+
+RESET
+CALL
+CALL
+SET
+CALL
+ connection_name |              connection_uri              | connection_type 
+-----------------+------------------------------------------+-----------------
+ conn_1          | nodelocal://1/conn_update_with_privilege | STORAGE
+(1 row)
+
+ can_update 
+------------
+ f
+(1 row)
+
+RESET
+CALL
+CALL
+SET
+ can_update 
+------------
+ f
+(1 row)
+
+CALL
+ connection_name |          connection_uri          | connection_type 
+-----------------+----------------------------------+-----------------
+ conn_2          | nodelocal://1/connection_2_alter | STORAGE
+(1 row)
+
+RESET
+RESET

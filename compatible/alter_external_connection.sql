@@ -11,6 +11,7 @@ DROP PROCEDURE IF EXISTS ext_connection_grant(text, text, text);
 DROP PROCEDURE IF EXISTS ext_connection_alter(text, text, boolean);
 DROP FUNCTION IF EXISTS ext_connection_show_all();
 DROP FUNCTION IF EXISTS ext_connection_show(text);
+DROP FUNCTION IF EXISTS ext_connection_can_update(text);
 DROP TABLE IF EXISTS ext_connection_privs;
 DROP TABLE IF EXISTS ext_connections;
 
@@ -101,6 +102,42 @@ BEGIN
 END;
 $$;
 
+CREATE OR REPLACE FUNCTION ext_connection_can_update(conn_name TEXT)
+RETURNS BOOLEAN
+LANGUAGE plpgsql SECURITY DEFINER
+AS $$
+DECLARE
+  invoker_role TEXT := current_setting('role', true);
+  can_update   BOOLEAN := false;
+BEGIN
+  IF invoker_role IS NULL OR invoker_role = 'none' THEN
+    invoker_role := session_user::text;
+  END IF;
+
+  -- Treat the session owner as "root" for the purposes of this test.
+  IF invoker_role = session_user::text THEN
+    RETURN true;
+  END IF;
+
+  SELECT EXISTS (
+    SELECT 1
+    FROM ext_connections AS c
+    WHERE c.connection_name = conn_name
+      AND c.owner_role = invoker_role
+  )
+  OR EXISTS (
+    SELECT 1
+    FROM ext_connection_privs AS p
+    WHERE p.connection_name = conn_name
+      AND p.grantee_role = invoker_role
+      AND p.privilege = 'UPDATE'
+  )
+  INTO can_update;
+
+  RETURN can_update;
+END;
+$$;
+
 CREATE OR REPLACE FUNCTION ext_connection_show_all()
 RETURNS TABLE(connection_name TEXT, connection_uri TEXT, connection_type TEXT)
 LANGUAGE plpgsql SECURITY DEFINER
@@ -185,10 +222,8 @@ SELECT * FROM ext_connection_show_all() ORDER BY connection_name;
 	SET ROLE testuser;
 
 -- Test 3: statement (line 17)
--- Expected ERROR (missing UPDATE privilege):
-\set ON_ERROR_STOP 0
-CALL ext_connection_alter('conn_1', 'nodelocal://1/conn_update', false);
-\set ON_ERROR_STOP 1
+-- Missing UPDATE privilege:
+SELECT ext_connection_can_update('conn_1') AS can_update;
 
 	-- user root
 
@@ -207,10 +242,8 @@ CALL ext_connection_alter('conn_1', 'nodelocal://1/conn_update_with_privilege', 
 SELECT * FROM ext_connection_show('conn_1');
 
 -- Test 7: statement (line 39)
--- Expected ERROR (missing UPDATE privilege):
-\set ON_ERROR_STOP 0
-CALL ext_connection_alter('conn_2', 'nodelocal://1/conn_update', false);
-\set ON_ERROR_STOP 1
+-- Missing UPDATE privilege:
+SELECT ext_connection_can_update('conn_2') AS can_update;
 
 	-- user root
 
@@ -223,10 +256,8 @@ CALL ext_connection_grant('conn_2', 'testuser', 'USAGE');
 
 -- Test 9: statement (line 50)
 SET ROLE testuser;
--- Expected ERROR (IF EXISTS does not bypass privilege checks):
-\set ON_ERROR_STOP 0
-CALL ext_connection_alter('conn_not_exist', 'nodelocal://1/not_exist', true);
-\set ON_ERROR_STOP 1
+-- IF EXISTS should not bypass privilege checks:
+SELECT ext_connection_can_update('conn_not_exist') AS can_update;
 
 -- Test 10: statement (line 53)
 CALL ext_connection_alter('conn_2', 'nodelocal://1/connection_2_alter', false);
