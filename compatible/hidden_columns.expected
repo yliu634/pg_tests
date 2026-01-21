@@ -1,0 +1,92 @@
+SET
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+ column_name | data_type 
+-------------+-----------
+ x           | integer
+(1 row)
+
+ column_name | data_type 
+-------------+-----------
+ x           | integer
+(1 row)
+
+ ?column? |  x  
+----------+-----
+       42 | 123
+       42 | 123
+(2 rows)
+
+ ?column? |  k  |  v  
+----------+-----+-----
+       42 | 123 | 456
+       42 | 111 | 222
+(2 rows)
+
+ ?column? |  x  
+----------+-----
+       42 | 123
+       42 | 123
+(2 rows)
+
+ALTER TABLE
+  x  
+-----
+ 123
+ 123
+(2 rows)
+
+CREATE INDEX
+ALTER TABLE
+psql:compatible/hidden_columns.sql:69: ERROR:  column "x" does not exist
+LINE 1: SELECT x FROM kv;
+               ^
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+ constraint_name | constraint_type | column_name 
+-----------------+-----------------+-------------
+ t2_pkey         | PRIMARY KEY     | d
+(1 row)
+
+ALTER TABLE
+ constraint_name | constraint_type | column_name | foreign_table_name | foreign_column_name 
+-----------------+-----------------+-------------+--------------------+---------------------
+ t2_b_fkey       | FOREIGN KEY     | b           | t2                 | d
+ t2_pkey         | PRIMARY KEY     | d           |                    | 
+(2 rows)
+
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ constraint_name | constraint_type | column_name | foreign_table_name | foreign_column_name 
+-----------------+-----------------+-------------+--------------------+---------------------
+ t3_c_key        | UNIQUE          | c           |                    | 
+ t3_pkey         | PRIMARY KEY     | b           |                    | 
+(2 rows)
+
+ constraint_name | constraint_type | column_name | foreign_table_name | foreign_column_name 
+-----------------+-----------------+-------------+--------------------+---------------------
+ t4_pkey         | PRIMARY KEY     | d           |                    | 
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ constraint_name | constraint_type | column_name | foreign_table_name | foreign_column_name 
+-----------------+-----------------+-------------+--------------------+---------------------
+ t4_d_key        | UNIQUE          | d           |                    | 
+ t4_pkey         | PRIMARY KEY     | e           |                    | 
+(2 rows)
+
+RESET
