@@ -2,13 +2,14 @@
 -- 10 tests
 
 -- Test 1: query (line 1)
-SELECT |/ -1.0::float
+-- Expected ERROR (cannot take square root of a negative number):
+\set ON_ERROR_STOP 0
+SELECT |/ -1.0::float;
+SELECT |/ -1.0::decimal;
+\set ON_ERROR_STOP 1
 
-query error cannot take square root of a negative number
-SELECT |/ -1.0::decimal
-
-query I
-SELECT ~-1;
+-- query I
+SELECT ~ -1;
 
 -- Test 2: query (line 12)
 SELECT ~0;
@@ -26,14 +27,22 @@ SELECT ~B'0';
 SELECT ~B'1';
 
 -- Test 7: statement (line 37)
+-- Expected ERROR (invalid bit string literal):
+\set ON_ERROR_STOP 0
 SELECT ~B'2';
+\set ON_ERROR_STOP 1
 
 -- Test 8: statement (line 40)
+-- Expected ERROR (no unary ~ operator for text):
+\set ON_ERROR_STOP 0
 SELECT ~'0';
+\set ON_ERROR_STOP 1
 
 -- Test 9: statement (line 43)
+-- Expected ERROR (no unary ~ operator for text):
+\set ON_ERROR_STOP 0
 SELECT ~'1';
+\set ON_ERROR_STOP 1
 
 -- Test 10: query (line 46)
 SELECT ~2;
-
