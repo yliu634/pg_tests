@@ -1,0 +1,82 @@
+SET
+DROP TABLE
+SET
+CREATE TABLE
+INSERT 0 1
+ column_name | data_type 
+-------------+-----------
+ x           | integer
+ y           | integer
+(2 rows)
+
+ALTER TABLE
+ column_name | data_type 
+-------------+-----------
+ x           | integer
+ y           | integer
+(2 rows)
+
+SET
+ x | y 
+---+---
+ 1 | 1
+(1 row)
+
+ x | y 
+---+---
+ 1 | 1
+(1 row)
+
+SET
+ x | y 
+---+---
+ 1 | 1
+(1 row)
+
+SET
+PREPARE
+ x | y 
+---+---
+ 1 | 1
+(1 row)
+
+PREPARE
+ x | y 
+---+---
+ 1 | 1
+(1 row)
+
+SET
+DEALLOCATE ALL
+DISCARD PLANS
+PREPARE
+PREPARE
+PREPARE
+PREPARE
+SET
+PREPARE
+PREPARE
+PREPARE
+PREPARE
+SET
+ x | y 
+---+---
+ 1 | 1
+(1 row)
+
+ x | y 
+---+---
+ 1 | 1
+(1 row)
+
+ x | y 
+---+---
+ 1 | 1
+(1 row)
+
+ x | y 
+---+---
+ 1 | 1
+(1 row)
+
+RESET

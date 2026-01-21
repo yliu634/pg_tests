@@ -1,0 +1,118 @@
+SET
+DROP TABLE
+RESET
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:26: ERROR:  syntax error at or near "ln"
+LINE 3: SELECT ln(7.682705743584112e-48::DECIMAL)
+               ^
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:35: ERROR:  syntax error at or near "pow"
+LINE 3: SELECT pow(1e-10::DECIMAL, 2)
+               ^
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:47: ERROR:  syntax error at or near "CREATE"
+LINE 3: CREATE TABLE t (d decimal, v decimal(3, 1))
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:63: ERROR:  syntax error at or near "INSERT"
+LINE 3: INSERT INTO t2 VALUES
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:72: ERROR:  syntax error at or near "INSERT"
+LINE 3: INSERT INTO t2 VALUES (0, 0)
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:75: ERROR:  syntax error at or near "NaN"
+LINE 1: SELECT * FROM t2 WHERE d IS NaN and v IS NaN;
+                                    ^
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:78: ERROR:  relation "t2" does not exist
+LINE 1: SELECT * FROM t2 WHERE d = 'Infinity' and v = 'Infinity';
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:81: ERROR:  relation "t2" does not exist
+LINE 1: SELECT * FROM t2 WHERE d = '-Infinity' and v = '-Infinity';
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:106: ERROR:  syntax error at or near "("
+LINE 1: CREATE TABLE s (d decimal null, index (d))
+                                              ^
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:109: ERROR:  syntax error at or near "NAN"
+LINE 1: SELECT * FROM s WHERE d IS NAN;
+                                   ^
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:112: ERROR:  relation "s" does not exist
+LINE 1: SELECT * FROM s WHERE d = 'inf'::decimal;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:115: ERROR:  relation "s" does not exist
+LINE 1: SELECT * FROM s WHERE d = 'NaN';
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:118: ERROR:  relation "s" does not exist
+LINE 1: SELECT d FROM s ORDER BY d, d::TEXT;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:124: ERROR:  syntax error at or near "SELECT"
+LINE 3: SELECT * FROM s WHERE d = 0;
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:137: ERROR:  syntax error at or near "SELECT"
+LINE 10: SELECT * FROM s WHERE d = 10;
+         ^
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:140: ERROR:  relation "s" does not exist
+LINE 1: SELECT * FROM s WHERE d = 10;
+                      ^
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:155: ERROR:  syntax error at or near "101.00"
+LINE 3: SELECT 101.00::decimal(6,4)
+               ^
+ ?column? 
+----------
+      NaN
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:161: ERROR:  relation "a" does not exist
+LINE 1: SELECT 1.0 / 'Infinity' + 2 FROM a;
+                                         ^
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ?column?                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 2.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:213: ERROR:  syntax error at or near "stddev_pop"
+LINE 3: SELECT stddev_pop('inf'::numeric), stddev_samp('inf'::numeri...
+               ^
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:216: ERROR:  division by zero
+ ?column? 
+----------
+      NaN
+(1 row)
+
+ numeric  
+----------
+ Infinity
+(1 row)
+
+  numeric  
+-----------
+ -Infinity
+(1 row)
+
+ float8 
+--------
+    NaN
+(1 row)
+
+  float8  
+----------
+ Infinity
+(1 row)
+
+  float8   
+-----------
+ -Infinity
+(1 row)
+
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:237: ERROR:  cannot convert NaN to smallint
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:240: ERROR:  cannot convert infinity to bigint
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:264: ERROR:  syntax error at or near "width_bucket"
+LINE 3: SELECT width_bucket(2.0, 3.0, '-inf', 888)
+               ^
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:273: ERROR:  syntax error at or near "INSERT"
+LINE 3: INSERT INTO t86790 VALUES (-4429772553778622992)
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:279: ERROR:  syntax error at or near "SELECT"
+LINE 3: SELECT (x / 1)::DECIMAL FROM t86790;
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:285: ERROR:  syntax error at or near "CREATE"
+LINE 3: CREATE TABLE regression_40929 AS SELECT g FROM (VALUES (1)) ...
+        ^
+psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:297: ERROR:  syntax error at or near "SELECT"
+LINE 9: SELECT 0::DECIMAL / 'infinity'::DECIMAL;
+        ^

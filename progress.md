@@ -12,3 +12,8 @@
 - New expected files generated: 21
 - Remaining in todo queue: 357
 
+## Round 1 Merge Update
+- Date: Wed Jan 21 11:02:00 UTC 2026
+- Added expected files (with matching sql) from other origin branches: 38
+- Remaining Round 1 manifest expected missing: 4 (see failures.txt)
+

@@ -1,0 +1,85 @@
+SET
+DROP SCHEMA
+DROP SCHEMA
+CREATE SCHEMA
+CREATE SCHEMA
+ table_schema | table_name 
+--------------+------------
+(0 rows)
+
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+ table_schema | table_name 
+--------------+------------
+ d            | A
+ d            | a
+(2 rows)
+
+ x 
+---
+ 1
+(1 row)
+
+ x 
+---
+ 2
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+ x | x | y  | y  | Y  
+---+---+----+----+----
+ 1 | 1 | 10 | 10 | 20
+(1 row)
+
+ Y  
+----
+ 20
+(1 row)
+
+DROP VIEW
+DROP VIEW
+CREATE VIEW
+CREATE VIEW
+ view_name |       def        
+-----------+------------------
+ csn_xv    |  SELECT x,      +
+           |     "Y"         +
+           |    FROM csn_foo;
+(1 row)
+
+ view_name | def 
+-----------+-----
+ CSN_XV    | 
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+ indexname 
+-----------
+ CSN_I
+ csn_i
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+ column_name 
+-------------
+ Amélie
+ Amélie
+(2 rows)
+
+ len | len2 
+-----+------
+   3 |    3
+(1 row)
+
+RESET

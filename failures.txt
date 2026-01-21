@@ -1,2 +1,4 @@
-pg_tests/compatible/alter_primary_key.sql
-pg_tests/compatible/alter_table.sql
+pg_tests/compatible/array.sql
+pg_tests/compatible/builtin_function.sql
+pg_tests/compatible/cascade.sql
+pg_tests/compatible/cast.sql
