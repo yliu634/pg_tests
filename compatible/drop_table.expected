@@ -1,0 +1,72 @@
+SET
+DROP ROLE
+CREATE ROLE
+CREATE TABLE
+CREATE TABLE
+ table_name 
+------------
+ a
+ b
+(2 rows)
+
+INSERT 0 3
+ id 
+----
+  2
+  3
+  7
+(3 rows)
+
+DROP TABLE
+ table_name 
+------------
+ b
+(1 row)
+
+psql:pg_tests/compatible/drop_table.sql:44: ERROR:  relation "a" does not exist
+LINE 1: SELECT * FROM a;
+                      ^
+ regclass 
+----------
+ 24896
+(1 row)
+
+psql:pg_tests/compatible/drop_table.sql:56: ERROR:  table "a" does not exist
+DROP TABLE
+CREATE TABLE
+ id 
+----
+(0 rows)
+
+GRANT
+SET
+CREATE SCHEMA
+RESET
+CREATE TABLE
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+BEGIN
+ALTER TABLE
+DROP TABLE
+COMMIT
+psql:pg_tests/compatible/drop_table.sql:106: ERROR:  table "to_drop" does not exist
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE SEQUENCE
+ALTER TABLE
+ALTER TABLE
+DROP TABLE
+DROP SEQUENCE
+INSERT 0 1
+DROP SCHEMA
+REVOKE
+DROP ROLE
+RESET
