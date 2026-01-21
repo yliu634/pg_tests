@@ -1,44 +1,48 @@
 -- PostgreSQL compatible tests from vectorize_unsupported
 -- 12 tests
 
+SET client_min_messages = warning;
+
 -- Test 1: statement (line 4)
 CREATE TABLE a (a INT, b INT, c INT4, PRIMARY KEY (a, b));
-INSERT INTO a SELECT g//2, g, g FROM generate_series(0,2000) g(g)
+INSERT INTO a SELECT g/2, g, g FROM generate_series(0,2000) g(g);
 
 -- Test 2: query (line 10)
-SELECT (a + 1.0::DECIMAL)::INT FROM a LIMIT 1
+SELECT (a + 1.0::DECIMAL)::INT FROM a LIMIT 1;
 
 -- Test 3: statement (line 17)
 CREATE TABLE intdecfloat (a INT, b DECIMAL, c INT4, d INT2, e FLOAT8);
-INSERT INTO intdecfloat VALUES (1, 2.0, 3, 4, 3.5)
+INSERT INTO intdecfloat VALUES (1, 2.0, 3, 4, 3.5);
 
 -- Test 4: query (line 21)
-SELECT (a + b)::INT FROM intdecfloat
+SELECT (a + b)::INT FROM intdecfloat;
 
 -- Test 5: statement (line 27)
 CREATE TABLE t39417 (x int8);
-INSERT INTO t39417 VALUES (10)
+INSERT INTO t39417 VALUES (10);
 
 -- Test 6: query (line 31)
-select (x/1) from t39417
+SELECT (x/1) FROM t39417;
 
 -- Test 7: query (line 40)
-SELECT * FROM t44624 ORDER BY CASE WHEN c1 IS NULL THEN c0 WHEN true THEN c0 END
+CREATE TABLE t44624 (c0 INT, c1 INT);
+INSERT INTO t44624 VALUES (1, NULL), (2, 1), (3, NULL);
+SELECT * FROM t44624 ORDER BY CASE WHEN c1 IS NULL THEN c0 WHEN true THEN c0 END;
 
 -- Test 8: statement (line 47)
 CREATE TABLE mixed_type_a (a INT, b TIMESTAMPTZ);
 CREATE TABLE mixed_type_b (a INT, b INTERVAL, c TIMESTAMP);
-INSERT INTO mixed_type_a VALUES (0, 0::TIMESTAMPTZ);
-INSERT INTO mixed_type_b VALUES (0, INTERVAL '0 days', 0::TIMESTAMP)
+INSERT INTO mixed_type_a VALUES (0, 'epoch'::TIMESTAMPTZ);
+INSERT INTO mixed_type_b VALUES (0, INTERVAL '0 days', 'epoch'::TIMESTAMP);
 
 -- Test 9: query (line 53)
-SELECT b > now() - interval '1 day'  FROM mixed_type_a
+SELECT b > now() - interval '1 day' FROM mixed_type_a;
 
 -- Test 10: query (line 59)
-SELECT * FROM mixed_type_a AS a INNER MERGE JOIN mixed_type_b AS b ON a.a = b.a AND a.b < (now() - b.b)
+SELECT * FROM mixed_type_a AS a INNER JOIN mixed_type_b AS b ON a.a = b.a AND a.b < (now() - b.b);
 
 -- Test 11: query (line 65)
-SELECT * FROM mixed_type_a AS a JOIN mixed_type_b AS b ON a.a = b.a AND a.b < (now() - b.b)
+SELECT * FROM mixed_type_a AS a JOIN mixed_type_b AS b ON a.a = b.a AND a.b < (now() - b.b);
 
 -- Test 12: query (line 76)
 WITH
@@ -47,56 +51,56 @@ WITH
             SELECT
                 *
             FROM
-                (
-                    VALUES
-                        (('-28 years -2 mons -677 days -11:53:30.528699':::INTERVAL::INTERVAL + '11:55:41.419498':::TIME::TIME)::TIME + '1973-01-24':::DATE::DATE),
-                        ('1970-01-11 01:38:09.000155+00:00':::TIMESTAMP),
-                        ('1970-01-09 07:04:13.000247+00:00':::TIMESTAMP),
-                        ('1970-01-07 14:19:52.000951+00:00':::TIMESTAMP),
-                        (NULL)
-                )
-                    AS tab_240443 (col_1548014)
+	                (
+	                    VALUES
+	                        (('-28 years -2 mons -677 days -11:53:30.528699'::INTERVAL + '11:55:41.419498'::TIME)::TIME + '1973-01-24'::DATE),
+	                        ('1970-01-11 01:38:09.000155+00:00'::TIMESTAMP),
+	                        ('1970-01-09 07:04:13.000247+00:00'::TIMESTAMP),
+	                        ('1970-01-07 14:19:52.000951+00:00'::TIMESTAMP),
+	                        (NULL)
+	                )
+	                    AS tab_240443 (col_1548014)
         ),
     with_194016 (col_1548015, col_1548016, col_1548017)
         AS (
             SELECT
                 *
             FROM
-                (
-                    VALUES
-                        (
-                            '160.182.25.199/22':::INET::INET << 'c2af:30cb:5db8:bb79:4d11:2d0:1de8:bcea/59':::INET::INET,
-                            '09:14:05.761109':::TIME::TIME + '4 years 7 mons 345 days 23:43:13.325036':::INTERVAL::INTERVAL,
-                            B'0101010110101011101001111010100011001111001110001000101100011001101'
-                        ),
-                        (false, '14:36:41.282187':::TIME, B'011111111011001100000001101101011111110110010011110100110111100')
-                )
-                    AS tab_240444 (col_1548015, col_1548016, col_1548017)
-        ),
-    with_194017 (col_1548018)
-        AS (SELECT * FROM (VALUES ('43a30bc5-e412-426d-b99a-65783a7ed445':::UUID), (NULL), (crdb_internal.cluster_id()::UUID)) AS tab_240445 (col_1548018))
-SELECT
-    CASE
-    WHEN false THEN age('1970-01-09 08:48:24.000568+00:00':::TIMESTAMPTZ::TIMESTAMPTZ, '1970-01-07 08:40:45.000483+00:00':::TIMESTAMPTZ::TIMESTAMPTZ)::INTERVAL
-    ELSE (
-        (
-            (-0.02805450661234963150):::DECIMAL::DECIMAL
-            * array_position(
-                    (gen_random_uuid()::UUID::UUID || (NULL::UUID || NULL::UUID[])::UUID[])::UUID[],
-                    '5f29920d-7db1-4efc-b1cc-d1a7d0bcf145':::UUID::UUID
-                )::INT8::INT8
-        )::DECIMAL
-        * age('1970-01-04 07:17:45.000268+00:00':::TIMESTAMPTZ::TIMESTAMPTZ, NULL::TIMESTAMPTZ)::INTERVAL::INTERVAL
-    )
-    END::INTERVAL
-    + '-21 years -10 mons -289 days -13:27:05.205069':::INTERVAL::INTERVAL
-        AS col_1548019,
-    '1984-01-07':::DATE AS col_1548020,
-    'f96fd19a-d2a9-4d98-81dd-97e3fc2a45d2':::UUID AS col_1548022
-FROM
-    with_194015
-ORDER BY
-    with_194015.col_1548014 DESC
-LIMIT
-    4:::INT8;
+	                (
+	                    VALUES
+	                        (
+	                            '160.182.25.199/22'::INET << 'c2af:30cb:5db8:bb79:4d11:2d0:1de8:bcea/59'::INET,
+	                            '09:14:05.761109'::TIME + '4 years 7 mons 345 days 23:43:13.325036'::INTERVAL,
+	                            B'0101010110101011101001111010100011001111001110001000101100011001101'
+	                        ),
+	                        (false, '14:36:41.282187'::TIME, B'011111111011001100000001101101011111110110010011110100110111100')
+	                )
+	                    AS tab_240444 (col_1548015, col_1548016, col_1548017)
+	        ),
+	    with_194017 (col_1548018)
+	        AS (SELECT * FROM (VALUES ('43a30bc5-e412-426d-b99a-65783a7ed445'::UUID), (NULL), ('00000000-0000-0000-0000-000000000000'::UUID)) AS tab_240445 (col_1548018))
+	SELECT
+	    CASE
+	    WHEN false THEN age('1970-01-09 08:48:24.000568+00:00'::TIMESTAMPTZ, '1970-01-07 08:40:45.000483+00:00'::TIMESTAMPTZ)::INTERVAL
+	    ELSE (
+	        (
+	            (-0.02805450661234963150)::DECIMAL
+	            * array_position(
+	                    ARRAY['00000000-0000-0000-0000-000000000000'::UUID, NULL::UUID],
+	                    '5f29920d-7db1-4efc-b1cc-d1a7d0bcf145'::UUID
+	                )::BIGINT
+	        )::DECIMAL
+	        * age('1970-01-04 07:17:45.000268+00:00'::TIMESTAMPTZ, NULL::TIMESTAMPTZ)::INTERVAL
+	    )
+	    END::INTERVAL
+	    + '-21 years -10 mons -289 days -13:27:05.205069'::INTERVAL
+	        AS col_1548019,
+	    '1984-01-07'::DATE AS col_1548020,
+	    'f96fd19a-d2a9-4d98-81dd-97e3fc2a45d2'::UUID AS col_1548022
+	FROM
+	    with_194015
+	ORDER BY
+	    with_194015.col_1548014 DESC
+	LIMIT 4;
 
+RESET client_min_messages;
