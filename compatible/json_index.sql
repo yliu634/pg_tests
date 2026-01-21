@@ -23,7 +23,8 @@ SELECT x FROM t ORDER BY x;
 -- Test 4: statement (line 33)
 \set ON_ERROR_STOP 0
 INSERT INTO t VALUES
-  ('"a"'::JSONB);
+  ('"a"'::JSONB)
+ON CONFLICT DO NOTHING;
 \set ON_ERROR_STOP 1
 
 -- Test 5: query (line 37)
@@ -203,7 +204,8 @@ SELECT x FROM y ORDER BY x;
 -- Test 46: statement (line 416)
 \set ON_ERROR_STOP 0
 INSERT INTO y VALUES
-  ('1.0000');
+  ('1.0000')
+ON CONFLICT DO NOTHING;
 \set ON_ERROR_STOP 1
 
 -- Test 47: statement (line 421)
