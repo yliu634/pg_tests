@@ -64,10 +64,15 @@ CREATE INDEX ON kv(x);
 ALTER TABLE kv DROP COLUMN x;
 
 -- Test 16: statement (line 87)
--- Expected ERROR after dropping the column.
-\set ON_ERROR_STOP 0
-SELECT x FROM kv;
-\set ON_ERROR_STOP 1
+-- After dropping the column, referencing it should fail. Wrap in DO/EXCEPTION so
+-- this test file remains ERROR-free under psql.
+DO $$
+BEGIN
+  EXECUTE 'SELECT x FROM kv';
+EXCEPTION
+  WHEN undefined_column THEN
+    RAISE NOTICE 'expected undefined_column';
+END $$;
 
 -- Test 17: statement (line 92)
 CREATE TABLE t1(

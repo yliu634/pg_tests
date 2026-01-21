@@ -1,0 +1,43 @@
+SET
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 3
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+     tablename     |          indexname           |                                       indexdef                                       
+-------------------+------------------------------+--------------------------------------------------------------------------------------
+ sharded_primary   | sharded_primary_a_hash_idx   | CREATE INDEX sharded_primary_a_hash_idx ON public.sharded_primary USING hash (a)
+ sharded_primary   | sharded_primary_pkey         | CREATE UNIQUE INDEX sharded_primary_pkey ON public.sharded_primary USING btree (a)
+ sharded_secondary | sharded_secondary_a_hash_idx | CREATE INDEX sharded_secondary_a_hash_idx ON public.sharded_secondary USING hash (a)
+ sharded_secondary | sharded_secondary_b_hash_idx | CREATE INDEX sharded_secondary_b_hash_idx ON public.sharded_secondary USING hash (b)
+(4 rows)
+
+ count 
+-------
+     3
+(1 row)
+
+ a |   b   
+---+-------
+ 1 | one
+ 3 | three
+(2 rows)
+
+ a | b  | c 
+---+----+---
+ 1 | 10 | x
+ 1 | 11 | y
+(2 rows)
+
+DROP INDEX
+CREATE INDEX
+     tablename     |          indexname           
+-------------------+------------------------------
+ sharded_secondary | sharded_secondary_a_hash_idx
+ sharded_secondary | sharded_secondary_b_hash_idx
+(2 rows)
+
