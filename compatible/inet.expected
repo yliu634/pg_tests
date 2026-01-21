@@ -1,0 +1,781 @@
+      inet      
+----------------
+ 192.168.1.2/24
+(1 row)
+
+    inet     
+-------------
+ 192.168.1.2
+(1 row)
+
+    inet     
+-------------
+ 192.168.1.2
+(1 row)
+
+      inet      
+----------------
+ 192.168.1.2/24
+(1 row)
+
+  inet   
+---------
+ 0.0.0.0
+(1 row)
+
+ inet 
+------
+ ::/0
+(1 row)
+
+        inet        
+--------------------
+ ::ffff:192.168.1.2
+(1 row)
+
+          inet          
+------------------------
+ ::ffff:192.168.1.2/120
+(1 row)
+
+  inet  
+--------
+ ::ffff
+(1 row)
+
+                 inet                 
+--------------------------------------
+ 2001:4f8:3:ba:2e0:81ff:fe22:d1f1/120
+(1 row)
+
+               inet               
+----------------------------------
+ 2001:4f8:3:ba:2e0:81ff:fe22:d1f1
+(1 row)
+
+      inet      
+----------------
+ 192.168.1.2/24
+(1 row)
+
+       inet       
+------------------
+ 192.168.1.200/10
+(1 row)
+
+      inet      
+----------------
+ 192.168.1.0/10
+(1 row)
+
+      inet      
+----------------
+ 192.168.0.0/10
+(1 row)
+
+     inet     
+--------------
+ 192.0.0.0/10
+(1 row)
+
+     inet     
+--------------
+ 255.0.0.0/10
+(1 row)
+
+psql:compatible/inet.sql:59: ERROR:  invalid input syntax for type inet: "192"
+LINE 1: SELECT '192'::INET;
+               ^
+psql:compatible/inet.sql:62: ERROR:  invalid input syntax for type inet: "19.0"
+LINE 1: SELECT '19.0'::INET;
+               ^
+psql:compatible/inet.sql:65: ERROR:  invalid input syntax for type inet: "19.0/32"
+LINE 1: SELECT '19.0/32'::INET;
+               ^
+psql:compatible/inet.sql:68: ERROR:  invalid input syntax for type inet: "19/32"
+LINE 1: SELECT '19/32'::INET;
+               ^
+psql:compatible/inet.sql:71: ERROR:  invalid input syntax for type inet: "19/16"
+LINE 1: SELECT '19/16'::INET;
+               ^
+    inet     
+-------------
+ 19.0.0.0/15
+(1 row)
+
+psql:compatible/inet.sql:77: ERROR:  invalid input syntax for type inet: "192.168/24/1"
+LINE 1: SELECT '192.168/24/1'::INET;
+               ^
+psql:compatible/inet.sql:80: ERROR:  invalid input syntax for type inet: ""
+LINE 1: SELECT ''::INET;
+               ^
+psql:compatible/inet.sql:83: ERROR:  invalid input syntax for type inet: "0"
+LINE 1: SELECT '0'::INET;
+               ^
+  inet   
+---------
+ 0.0.0.0
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+     ?column?     
+------------------
+ 63.87.254.253/10
+(1 row)
+
+    ?column?     
+-----------------
+ 63.87.254.253/0
+(1 row)
+
+                  ?column?                  
+--------------------------------------------
+ dffe:fb07:fffc:ff45:ffff:ffff:ffff:ffff/64
+(1 row)
+
+  ?column?  
+------------
+ 0.5.0.0/17
+(1 row)
+
+       ?column?        
+-----------------------
+ 0:564:0:aab::60:5/123
+(1 row)
+
+    ?column?    
+----------------
+ 192.168.1.3/17
+(1 row)
+
+                ?column?                 
+-----------------------------------------
+ ef3e:9a67:7fbb:f9ee:8ef7:bfff:dfff:5efd
+(1 row)
+
+psql:compatible/inet.sql:245: ERROR:  cannot AND inet values of different sizes
+psql:compatible/inet.sql:248: ERROR:  cannot OR inet values of different sizes
+    ?column?    
+----------------
+ 203.172.98.118
+(1 row)
+
+ ?column? 
+----------
+ 0.0.0.0
+(1 row)
+
+    ?column?    
+----------------
+ 192.168.1.2/23
+(1 row)
+
+ ?column? 
+----------
+ 0.0.0.10
+(1 row)
+
+      ?column?      
+--------------------
+ ::ffff:192.168.1.2
+(1 row)
+
+        ?column?        
+------------------------
+ ::ffff:192.168.1.2/121
+(1 row)
+
+         ?column?          
+---------------------------
+ ::4104:4066:5de7:b1fc/101
+(1 row)
+
+ ?column? 
+----------
+ ::7
+(1 row)
+
+ ?column?  
+-----------
+ 184836468
+(1 row)
+
+      ?column?       
+---------------------
+ 4684658846864486648
+(1 row)
+
+psql:compatible/inet.sql:281: ERROR:  result is out of range
+psql:compatible/inet.sql:284: ERROR:  result is out of range
+psql:compatible/inet.sql:287: ERROR:  result is out of range
+psql:compatible/inet.sql:290: ERROR:  result is out of range
+  inet   
+---------
+ 0.0.0.0
+(1 row)
+
+psql:compatible/inet.sql:296: ERROR:  invalid input syntax for type inet: ".0.0.0.0."
+LINE 1: SELECT '.0.0.0.0.'::INET;
+               ^
+psql:compatible/inet.sql:299: ERROR:  invalid input syntax for type inet: "0.0.0.0.0"
+LINE 1: SELECT '0.0.0.0.0'::INET;
+               ^
+psql:compatible/inet.sql:333: ERROR:  syntax error at or near "INSERT"
+LINE 4: INSERT INTO u VALUES ('192.168.0.1', '192.168.0.1')
+        ^
+psql:compatible/inet.sql:345: ERROR:  syntax error at or near "INSERT"
+LINE 3: INSERT INTO arrays VALUES
+        ^
+   abbrev    
+-------------
+ 10.1.0.0/16
+(1 row)
+
+     abbrev     
+----------------
+ 192.168.0.1/16
+(1 row)
+
+   abbrev    
+-------------
+ 192.168.0.1
+(1 row)
+
+   abbrev    
+-------------
+ 192.168.0.1
+(1 row)
+
+   abbrev    
+-------------
+ 10.0.0.0/16
+(1 row)
+
+       abbrev       
+--------------------
+ ::ffff:192.168.0.1
+(1 row)
+
+        abbrev         
+-----------------------
+ ::ffff:192.168.0.1/24
+(1 row)
+
+    broadcast    
+-----------------
+ 10.1.255.255/16
+(1 row)
+
+     broadcast      
+--------------------
+ 192.168.255.255/16
+(1 row)
+
+  broadcast  
+-------------
+ 192.168.0.1
+(1 row)
+
+  broadcast  
+-------------
+ 192.168.0.1
+(1 row)
+
+     broadcast      
+--------------------
+ ::ffff:192.168.0.1
+(1 row)
+
+               broadcast                
+----------------------------------------
+ 0:fff:ffff:ffff:ffff:ffff:ffff:ffff/20
+(1 row)
+
+              broadcast               
+--------------------------------------
+ 2001:4f8:3:ba:ffff:ffff:ffff:ffff/64
+(1 row)
+
+ family 
+--------
+      4
+(1 row)
+
+ family 
+--------
+      4
+(1 row)
+
+ family 
+--------
+      4
+(1 row)
+
+ family 
+--------
+      6
+(1 row)
+
+ family 
+--------
+      6
+(1 row)
+
+ family 
+--------
+      6
+(1 row)
+
+   host   
+----------
+ 10.1.0.0
+(1 row)
+
+    host     
+-------------
+ 192.168.0.1
+(1 row)
+
+    host     
+-------------
+ 192.168.0.1
+(1 row)
+
+    host     
+-------------
+ 192.168.0.1
+(1 row)
+
+        host        
+--------------------
+ ::ffff:192.168.0.1
+(1 row)
+
+        host        
+--------------------
+ ::ffff:192.168.0.1
+(1 row)
+
+ hostmask 
+----------
+ 0.0.0.0
+(1 row)
+
+  hostmask   
+-------------
+ 0.0.255.255
+(1 row)
+
+   hostmask   
+--------------
+ 0.63.255.255
+(1 row)
+
+       hostmask        
+-----------------------
+ ::ffff:ffff:ffff:ffff
+(1 row)
+
+ masklen 
+---------
+      32
+(1 row)
+
+ masklen 
+---------
+      16
+(1 row)
+
+ masklen 
+---------
+      10
+(1 row)
+
+ masklen 
+---------
+      64
+(1 row)
+
+ masklen 
+---------
+     128
+(1 row)
+
+     netmask     
+-----------------
+ 255.255.255.255
+(1 row)
+
+   netmask   
+-------------
+ 255.255.0.0
+(1 row)
+
+   netmask   
+-------------
+ 255.192.0.0
+(1 row)
+
+ netmask 
+---------
+ 0.0.0.0
+(1 row)
+
+        netmask        
+-----------------------
+ ffff:ffff:ffff:ffff::
+(1 row)
+
+ netmask 
+---------
+ ::
+(1 row)
+
+                 netmask                 
+-----------------------------------------
+ ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
+(1 row)
+
+                 netmask                 
+-----------------------------------------
+ ffff:ffff:ffff:ffff:ffff:ffff:ffff:ff00
+(1 row)
+
+   netmask   
+-------------
+ ffff:f000::
+(1 row)
+
+ set_masklen 
+-------------
+ 10.1.0.0/10
+(1 row)
+
+ set_masklen 
+-------------
+ 192.168.0.1
+(1 row)
+
+psql:compatible/inet.sql:486: ERROR:  invalid mask length: 100
+psql:compatible/inet.sql:489: ERROR:  invalid mask length: 33
+ set_masklen 
+-------------
+ 192.168.0.1
+(1 row)
+
+  set_masklen  
+---------------
+ 192.168.0.1/0
+(1 row)
+
+      set_masklen       
+------------------------
+ ::ffff:192.168.0.1/100
+(1 row)
+
+    set_masklen     
+--------------------
+ ::ffff:192.168.0.1
+(1 row)
+
+psql:compatible/inet.sql:504: ERROR:  invalid mask length: 129
+     set_masklen      
+----------------------
+ ::ffff:192.168.0.1/0
+(1 row)
+
+    text     
+-------------
+ 10.1.0.0/16
+(1 row)
+
+      text      
+----------------
+ 192.168.0.1/32
+(1 row)
+
+      text      
+----------------
+ 192.168.0.1/16
+(1 row)
+
+      text      
+----------------
+ 192.168.0.1/16
+(1 row)
+
+      text      
+----------------
+ 192.168.0.1/32
+(1 row)
+
+      text      
+----------------
+ 192.168.0.1/32
+(1 row)
+
+          text          
+------------------------
+ ::ffff:192.168.0.1/128
+(1 row)
+
+         text          
+-----------------------
+ ::ffff:192.168.0.1/24
+(1 row)
+
+         text          
+-----------------------
+ ::ffff:192.168.0.1/24
+(1 row)
+
+    host     
+-------------
+ 192.168.0.2
+(1 row)
+
+   inet    |     inet     |   inet   
+-----------+--------------+----------
+ 127.1.2.3 | 127.1.2.3/16 | 10.1.2.3
+(1 row)
+
+psql:compatible/inet.sql:543: ERROR:  invalid input syntax for type inet: "some_invalid_value"
+LINE 1: SELECT inet('some_invalid_value');
+                    ^
+psql:compatible/inet.sql:546: ERROR:  syntax error at or near "query"
+LINE 1: query T
+        ^
+    inet     
+-------------
+ 192.168.0.2
+(1 row)
+
+         inet          
+-----------------------
+ ::ffff:192.168.0.1/24
+(1 row)
+
