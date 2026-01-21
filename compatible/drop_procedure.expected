@@ -1,0 +1,115 @@
+SET
+CREATE FUNCTION
+CREATE PROCEDURE
+CREATE PROCEDURE
+CREATE SCHEMA
+CREATE PROCEDURE
+SET
+                      create_statement                      
+------------------------------------------------------------
+ CREATE OR REPLACE PROCEDURE public.p_test_drop()          +
+  LANGUAGE sql                                             +
+ AS $procedure$SELECT 1$procedure$                         +
+ 
+ CREATE OR REPLACE PROCEDURE public.p_test_drop(IN integer)+
+  LANGUAGE sql                                             +
+ AS $procedure$SELECT 1$procedure$                         +
+ 
+(2 rows)
+
+                    create_statement                     
+---------------------------------------------------------
+ CREATE OR REPLACE PROCEDURE sc1.p_test_drop(IN integer)+
+  LANGUAGE sql                                          +
+ AS $procedure$SELECT 1$procedure$                      +
+ 
+(1 row)
+
+DO
+DO
+DROP PROCEDURE
+DO
+BEGIN
+DROP PROCEDURE
+DO
+COMMIT
+DO
+DO
+DO
+DO
+DROP PROCEDURE
+DO
+                      create_statement                      
+------------------------------------------------------------
+ CREATE OR REPLACE PROCEDURE public.p_test_drop(IN integer)+
+  LANGUAGE sql                                             +
+ AS $procedure$SELECT 1$procedure$                         +
+ 
+(1 row)
+
+                    create_statement                     
+---------------------------------------------------------
+ CREATE OR REPLACE PROCEDURE sc1.p_test_drop(IN integer)+
+  LANGUAGE sql                                          +
+ AS $procedure$SELECT 1$procedure$                      +
+ 
+(1 row)
+
+DROP PROCEDURE
+DO
+ create_statement 
+------------------
+(0 rows)
+
+                    create_statement                     
+---------------------------------------------------------
+ CREATE OR REPLACE PROCEDURE sc1.p_test_drop(IN integer)+
+  LANGUAGE sql                                          +
+ AS $procedure$SELECT 1$procedure$                      +
+ 
+(1 row)
+
+DROP PROCEDURE
+DO
+ create_statement 
+------------------
+(0 rows)
+
+CREATE PROCEDURE
+CREATE PROCEDURE
+                 create_statement                 
+--------------------------------------------------
+ CREATE OR REPLACE PROCEDURE public.p_test_drop()+
+  LANGUAGE sql                                   +
+ AS $procedure$ SELECT 1 $procedure$             +
+ 
+(1 row)
+
+               create_statement                
+-----------------------------------------------
+ CREATE OR REPLACE PROCEDURE sc1.p_test_drop()+
+  LANGUAGE sql                                +
+ AS $procedure$ SELECT 1 $procedure$          +
+ 
+(1 row)
+
+BEGIN
+DROP PROCEDURE
+DROP PROCEDURE
+COMMIT
+ create_statement 
+------------------
+(0 rows)
+
+ create_statement 
+------------------
+(0 rows)
+
+SET
+DROP SCHEMA
+CREATE TYPE
+CREATE PROCEDURE
+DROP PROCEDURE
+CREATE PROCEDURE
+DROP PROCEDURE
+RESET

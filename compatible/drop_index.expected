@@ -1,0 +1,99 @@
+SET
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+CREATE INDEX
+DROP INDEX
+DROP TABLE
+DROP INDEX
+INSERT 0 2
+ indexname  
+------------
+ bar
+ foo
+ users_pkey
+(3 rows)
+
+DROP INDEX
+DROP INDEX
+ indexname  
+------------
+ bar
+ users_pkey
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE INDEX
+DROP INDEX
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+ALTER TABLE
+DO
+    conname    |             constraint_def             
+---------------+----------------------------------------
+ t1_96731_pkey | PRIMARY KEY (i)
+ t1_j_fk       | FOREIGN KEY (j) REFERENCES t2_96731(j)
+(2 rows)
+
+DROP INDEX
+    conname    | constraint_def  
+---------------+-----------------
+ t1_96731_pkey | PRIMARY KEY (i)
+(1 row)
+
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+DO
+      conname      | contype |  constraint_def  
+-------------------+---------+------------------
+ drop_primary_pkey | p       | PRIMARY KEY (id)
+(1 row)
+
+ALTER TABLE
+ conname | contype | constraint_def 
+---------+---------+----------------
+(0 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+ indexname 
+-----------
+ expr_idx
+(1 row)
+
+DROP INDEX
+ indexname 
+-----------
+(0 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE PROCEDURE
+CALL
+DROP INDEX
+DROP PROCEDURE
+    indexname    
+-----------------
+ tab_145100_pkey
+(1 row)
+
+DROP TABLE
+RESET
