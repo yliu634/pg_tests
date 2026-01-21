@@ -1,0 +1,32 @@
+SET
+RESET
+DROP ROLE
+CREATE ROLE
+ database | role | setconfig 
+----------+------+-----------
+(0 rows)
+
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+         database          |     role      |                  setconfig                   
+---------------------------+---------------+----------------------------------------------
+ <all dbs>                 | test_set_role | {application_name=a,custom_option.setting=e}
+ crdb_tests_alter_role_set | test_set_role | {application_name=b}
+(2 rows)
+
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+         database          |     role      |                        setconfig                        
+---------------------------+---------------+---------------------------------------------------------
+ <all dbs>                 | test_set_role | {custom_option.setting=e,backslash_quote=safe_encoding}
+ crdb_tests_alter_role_set | test_set_role | {application_name=b}
+(2 rows)
+
+ALTER ROLE
+DROP ROLE
+RESET
