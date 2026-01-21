@@ -1,0 +1,13 @@
+psql:pg_tests/compatible/errors.sql:8: ERROR:  relation "fake1" does not exist
+psql:pg_tests/compatible/errors.sql:11: ERROR:  relation "fake2" does not exist
+psql:pg_tests/compatible/errors.sql:15: ERROR:  index "i" does not exist
+psql:pg_tests/compatible/errors.sql:18: ERROR:  table "fake4" does not exist
+psql:pg_tests/compatible/errors.sql:23: ERROR:  relation "fake5" does not exist
+LINE 1: SELECT * FROM fake5 LIMIT 0;
+                      ^
+psql:pg_tests/compatible/errors.sql:26: ERROR:  relation "fake6" does not exist
+LINE 1: INSERT INTO fake6 VALUES (1, 2);
+                    ^
+psql:pg_tests/compatible/errors.sql:29: ERROR:  relation "fake7" does not exist
+LINE 1: SELECT * FROM fake7;
+                      ^

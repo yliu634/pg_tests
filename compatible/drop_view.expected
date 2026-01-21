@@ -1,0 +1,125 @@
+SET
+DROP DATABASE
+DROP ROLE
+CREATE ROLE
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+CREATE VIEW
+CREATE VIEW
+ table_name | table_type 
+------------+------------
+ a          | BASE TABLE
+ b          | VIEW
+ c          | VIEW
+(3 rows)
+
+psql:pg_tests/compatible/drop_view.sql:47: ERROR:  cannot drop table a because other objects depend on it
+DETAIL:  view b depends on table a
+view c depends on view b
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+psql:pg_tests/compatible/drop_view.sql:53: ERROR:  "b" is not a table
+HINT:  Use DROP VIEW to remove a view.
+psql:pg_tests/compatible/drop_view.sql:59: ERROR:  cannot drop view b because other objects depend on it
+DETAIL:  view c depends on view b
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+CREATE VIEW
+CREATE VIEW
+psql:pg_tests/compatible/drop_view.sql:71: ERROR:  cannot drop view d because other objects depend on it
+DETAIL:  view diamond depends on view d
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+GRANT
+ table_name | table_type 
+------------+------------
+ a          | BASE TABLE
+ b          | VIEW
+ c          | VIEW
+ d          | VIEW
+ diamond    | VIEW
+(5 rows)
+
+DROP VIEW
+DROP VIEW
+RESET
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+GRANT
+GRANT
+GRANT
+ table_name | table_type 
+------------+------------
+ a          | BASE TABLE
+ b          | VIEW
+ c          | VIEW
+ testuser1  | VIEW
+ testuser2  | VIEW
+ testuser3  | VIEW
+(6 rows)
+
+REVOKE
+SET
+psql:pg_tests/compatible/drop_view.sql:126: ERROR:  must be owner of view testuser3
+ table_name | table_type 
+------------+------------
+ testuser1  | VIEW
+ testuser2  | VIEW
+ testuser3  | VIEW
+(3 rows)
+
+psql:pg_tests/compatible/drop_view.sql:138: ERROR:  must be owner of view testuser1
+psql:pg_tests/compatible/drop_view.sql:144: ERROR:  must be owner of view testuser1
+psql:pg_tests/compatible/drop_view.sql:150: ERROR:  must be owner of view testuser1
+ table_name | table_type 
+------------+------------
+ testuser1  | VIEW
+ testuser2  | VIEW
+ testuser3  | VIEW
+(3 rows)
+
+psql:pg_tests/compatible/drop_view.sql:162: ERROR:  must be owner of view testuser2
+RESET
+GRANT
+GRANT
+GRANT
+psql:pg_tests/compatible/drop_view.sql:179: ERROR:  relation "d" does not exist
+SET
+psql:pg_tests/compatible/drop_view.sql:188: ERROR:  must be owner of table a
+RESET
+DROP TABLE
+ table_name | table_type 
+------------+------------
+(0 rows)
+
+CREATE VIEW
+CREATE VIEW
+psql:pg_tests/compatible/drop_view.sql:212: ERROR:  cannot drop view x because other objects depend on it
+DETAIL:  view y depends on view x
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+DROP VIEW
+CREATE VIEW
+CREATE VIEW
+psql:pg_tests/compatible/drop_view.sql:227: ERROR:  cannot drop view x because other objects depend on it
+DETAIL:  view y depends on view x
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+DROP VIEW
+CREATE DATABASE
+You are now connected to database "a" as user "pan".
+CREATE TABLE
+CREATE TABLE
+CREATE VIEW
+CREATE VIEW
+You are now connected to database "crdb_tests_drop_view" as user "pan".
+DROP DATABASE
+RESET

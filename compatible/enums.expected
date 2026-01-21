@@ -1,0 +1,1037 @@
+SET
+CREATE TYPE
+psql:pg_tests/compatible/enums.sql:12: ERROR:  relation "t" does not exist
+LINE 1: SELECT * FROM t;
+                      ^
+psql:pg_tests/compatible/enums.sql:15: ERROR:  type "t" already exists
+HINT:  A relation has an associated type of the same name, so you must use a name that doesn't conflict with any existing type.
+psql:pg_tests/compatible/enums.sql:18: ERROR:  type "t" already exists
+CREATE TABLE
+psql:pg_tests/compatible/enums.sql:24: ERROR:  type "t" already exists
+CREATE SCHEMA
+CREATE TYPE
+psql:pg_tests/compatible/enums.sql:31: ERROR:  relation "db2.t" does not exist
+LINE 1: SELECT * FROM db2.t;
+                      ^
+psql:pg_tests/compatible/enums.sql:34: ERROR:  type "t" already exists
+psql:pg_tests/compatible/enums.sql:37: ERROR:  table "t" does not exist
+psql:pg_tests/compatible/enums.sql:40: ERROR:  duplicate key value violates unique constraint "pg_enum_typid_label_index"
+DETAIL:  Key (enumtypid, enumlabel)=(24847, dup) already exists.
+CREATE TYPE
+CREATE TYPE
+psql:pg_tests/compatible/enums.sql:49: ERROR:  invalid input syntax for type integer: "Z"
+LINE 1: SELECT 'Z'::int;
+               ^
+ int 
+-----
+ Z
+(1 row)
+
+CREATE TYPE
+psql:pg_tests/compatible/enums.sql:58: ERROR:  type "pg_catalog.greeting" does not exist
+LINE 1: SELECT 'hello'::pg_catalog.greeting;
+                        ^
+ greeting 
+----------
+ hello
+(1 row)
+
+ greeting | greeting | greeting 
+----------+----------+----------
+ hello    | howdy    | hi
+(1 row)
+
+ greeting | greeting | greeting 
+----------+----------+----------
+ hello    | howdy    | hi
+(1 row)
+
+psql:pg_tests/compatible/enums.sql:70: ERROR:  invalid input value for enum greeting: "goodbye"
+LINE 1: SELECT 'goodbye'::greeting;
+               ^
+ ?column? | ?column? | ?column? | ?column? | ?column? | ?column? | ?column? | ?column? | ?column? | ?column? | ?column? 
+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------
+ t        | t        | t        | f        | t        |          |          | t        | t        | f        | t
+(1 row)
+
+CREATE TYPE
+psql:pg_tests/compatible/enums.sql:89: ERROR:  operator does not exist: greeting = farewell
+LINE 1: SELECT 'hello'::greeting = 'bye'::farewell;
+                                 ^
+HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/enums.sql:92: ERROR:  operator does not exist: greeting < farewell
+LINE 1: SELECT 'hello'::greeting < 'bye'::farewell;
+                                 ^
+HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/enums.sql:95: ERROR:  operator does not exist: greeting <= farewell
+LINE 1: SELECT 'hello'::greeting <= 'bye'::farewell;
+                                 ^
+HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+ greeting 
+----------
+ hello
+(1 row)
+
+CREATE TYPE
+psql:pg_tests/compatible/enums.sql:104: ERROR:  cannot cast type greeting to greeting2
+LINE 1: SELECT 'hello'::greeting::greeting2;
+                                ^
+ ?column? | ?column? 
+----------+----------
+ t        | t
+(1 row)
+
+psql:pg_tests/compatible/enums.sql:110: ERROR:  invalid input value for enum greeting: "notagreeting"
+LINE 1: SELECT 'hello'::greeting = 'notagreeting';
+                                   ^
+CREATE TYPE
+ enum_first | enum_last 
+------------+-----------
+ postgres   | cockroach
+(1 row)
+
+ enum_first 
+------------
+ postgres
+(1 row)
+
+ enum_first 
+------------
+ postgres
+ postgres
+ postgres
+ postgres
+ postgres
+(5 rows)
+
+psql:pg_tests/compatible/enums.sql:125: ERROR:  function enum_first(unknown) does not exist
+LINE 1: SELECT enum_first(null);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+             enum_range             
+------------------------------------
+ {postgres,mysql,spanner,cockroach}
+(1 row)
+
+    enum_range    |     enum_range      
+------------------+---------------------
+ {postgres,mysql} | {spanner,cockroach}
+(1 row)
+
+        enum_range        |     enum_range      
+--------------------------+---------------------
+ {postgres,mysql,spanner} | {spanner,cockroach}
+(1 row)
+
+ enum_range  
+-------------
+ {cockroach}
+(1 row)
+
+ enum_range 
+------------
+ {}
+(1 row)
+
+             enum_range             
+------------------------------------
+ {postgres,mysql,spanner,cockroach}
+(1 row)
+
+psql:pg_tests/compatible/enums.sql:146: ERROR:  function enum_range(dbs, greeting) does not exist
+LINE 1: SELECT enum_range('cockroach'::dbs, 'hello'::greeting);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+CREATE TABLE
+psql:pg_tests/compatible/enums.sql:153: ERROR:  invalid input value for enum greeting: "bye"
+LINE 1: INSERT INTO greeting_table VALUES ('bye', 'hi');
+                                           ^
+INSERT 0 1
+ x1 |  x2   
+----+-------
+ hi | hello
+(1 row)
+
+ greeting | x1 
+----------+----
+ hello    | hi
+(1 row)
+
+ x1 | ?column? 
+----+----------
+ hi | f
+(1 row)
+
+ x1 | enum_first 
+----+------------
+ hi | hello
+(1 row)
+
+psql:pg_tests/compatible/enums.sql:171: ERROR:  type "i" does not exist
+LINE 1: CREATE TABLE t1 (x greeting, INDEX i (x));
+                                           ^
+psql:pg_tests/compatible/enums.sql:174: ERROR:  type "i" does not exist
+LINE 1: CREATE TABLE t2 (x greeting, INDEX i (x));
+                                           ^
+psql:pg_tests/compatible/enums.sql:175: ERROR:  relation "t1" does not exist
+LINE 1: INSERT INTO t1 VALUES ('hello');
+                    ^
+psql:pg_tests/compatible/enums.sql:176: ERROR:  relation "t2" does not exist
+LINE 1: INSERT INTO t2 VALUES ('hello');
+                    ^
+psql:pg_tests/compatible/enums.sql:179: ERROR:  relation "t1" does not exist
+LINE 1: SELECT * FROM t1 INNER JOIN t2 ON t1.x = t2.x;
+                      ^
+psql:pg_tests/compatible/enums.sql:182: ERROR:  relation "t1" does not exist
+LINE 1: SELECT * FROM t1 INNER JOIN t2 ON t1.x = t2.x;
+                      ^
+psql:pg_tests/compatible/enums.sql:185: ERROR:  relation "t1" does not exist
+LINE 1: SELECT * FROM t1 INNER JOIN t2 ON t1.x = t2.x;
+                      ^
+psql:pg_tests/compatible/enums.sql:188: ERROR:  relation "t2" does not exist
+LINE 1: INSERT INTO t2 VALUES ('hello'), ('hello'), ('howdy'), ('hi'...
+                    ^
+psql:pg_tests/compatible/enums.sql:191: ERROR:  relation "t2" does not exist
+LINE 1: SELECT DISTINCT x FROM t2;
+                               ^
+psql:pg_tests/compatible/enums.sql:194: ERROR:  relation "t2" does not exist
+LINE 1: SELECT DISTINCT x FROM t2 ORDER BY x DESC;
+                               ^
+psql:pg_tests/compatible/enums.sql:197: ERROR:  relation "t2" does not exist
+LINE 1: SELECT x FROM t2 WHERE x > (SELECT x FROM t1 ORDER BY x LIMI...
+                      ^
+psql:pg_tests/compatible/enums.sql:200: ERROR:  syntax error at or near "WITH"
+LINE 1: SELECT * FROM t2 WITH ORDINALITY ORDER BY x;
+                         ^
+psql:pg_tests/compatible/enums.sql:203: ERROR:  relation "t1" does not exist
+LINE 1: INSERT INTO t1 VALUES ('hi'), ('hello'), ('howdy'), ('howdy'...
+                    ^
+psql:pg_tests/compatible/enums.sql:206: ERROR:  relation "t1" does not exist
+LINE 1: SELECT x FROM t1 ORDER BY x DESC;
+                      ^
+psql:pg_tests/compatible/enums.sql:209: ERROR:  relation "t1" does not exist
+LINE 1: SELECT x FROM t1 ORDER BY x ASC;
+                      ^
+psql:pg_tests/compatible/enums.sql:212: ERROR:  relation "t1" does not exist
+LINE 1: SELECT x FROM t1 ORDER BY x ASC LIMIT 3;
+                      ^
+psql:pg_tests/compatible/enums.sql:215: ERROR:  relation "t1" does not exist
+LINE 1: SELECT x FROM t1 ORDER BY x DESC LIMIT 3;
+                      ^
+psql:pg_tests/compatible/enums.sql:218: ERROR:  relation "t1" does not exist
+LINE 1: (SELECT * FROM t1) UNION (SELECT * FROM t2);
+                       ^
+CREATE TABLE
+INSERT 0 6
+   x   | max | sum | min 
+-------+-----+-----+-----
+ hi    |  10 |  10 |  10
+ hello |   3 |   4 |   1
+ howdy |   5 |   6 |   0
+(3 rows)
+
+ max |  min  
+-----+-------
+ hi  | hello
+(1 row)
+
+CREATE TYPE
+CREATE TABLE
+ max | min 
+-----+-----
+     | 
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/enums.sql:246: ERROR:  syntax error at or near "FROM"
+LINE 1: CREATE STATISTICS s FROM greeting_stats;
+                            ^
+ x  
+----
+ hi
+(1 row)
+
+CREATE TYPE
+psql:pg_tests/compatible/enums.sql:255: ERROR:  "\" is not a valid binary digit
+LINE 1: SELECT b'\x80'::as_bytes, b'\x80'::as_bytes;
+               ^
+psql:pg_tests/compatible/enums.sql:258: ERROR:  "\" is not a valid binary digit
+LINE 1: SELECT b'\xFF'::as_bytes;
+               ^
+psql:pg_tests/compatible/enums.sql:264: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE t1;
+             ^
+psql:pg_tests/compatible/enums.sql:267: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE t1;
+             ^
+psql:pg_tests/compatible/enums.sql:270: ERROR:  relation "crdb_internal.create_statements" does not exist
+LINE 1: SELECT create_statement FROM crdb_internal.create_statements...
+                                     ^
+psql:pg_tests/compatible/enums.sql:273: ERROR:  relation "crdb_internal.create_statements" does not exist
+LINE 1: SELECT create_statement FROM crdb_internal.create_statements...
+                                     ^
+  array  |  array  
+---------+---------
+ {hello} | {hello}
+(1 row)
+
+psql:pg_tests/compatible/enums.sql:279: ERROR:  ARRAY could not convert type dbs to greeting
+LINE 1: SELECT ARRAY['hello'::greeting, 'cockroach'::dbs];
+                                        ^
+CREATE TABLE
+psql:pg_tests/compatible/enums.sql:283: ERROR:  column "x" is of type greeting[] but expression is of type text[]
+LINE 1: INSERT INTO enum_array VALUES (ARRAY['hello'], ARRAY['hello'...
+                                       ^
+HINT:  You will need to rewrite or cast the expression.
+ x | y 
+---+---
+(0 rows)
+
+ pg_typeof | pg_typeof | pg_typeof 
+-----------+-----------+-----------
+(0 rows)
+
+CREATE TYPE
+CREATE TYPE
+   typname   |  oid  | typelem | typarray 
+-------------+-------+---------+----------
+ _collision  | 24917 |       0 |    24916
+ __collision | 24916 |   24917 |        0
+ collision   | 24919 |       0 |    24918
+(3 rows)
+
+psql:pg_tests/compatible/enums.sql:309: ERROR:  relation "crdb_internal.table_columns" does not exist
+LINE 4:   crdb_internal.table_columns
+          ^
+psql:pg_tests/compatible/enums.sql:317: ERROR:  syntax error at or near "OF"
+LINE 4:   z BOOL DEFAULT ('hello'::greeting IS OF (greeting, greetin...
+                                               ^
+psql:pg_tests/compatible/enums.sql:318: ERROR:  relation "enum_default" does not exist
+LINE 1: INSERT INTO enum_default VALUES (1), (2);
+                    ^
+psql:pg_tests/compatible/enums.sql:321: ERROR:  relation "enum_default" does not exist
+LINE 1: SELECT * FROM enum_default;
+                      ^
+psql:pg_tests/compatible/enums.sql:335: ERROR:  relation "enum_default" does not exist
+LINE 10:   a.attrelid = 'enum_default'::REGCLASS
+                        ^
+psql:pg_tests/compatible/enums.sql:338: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE enum_default;
+             ^
+psql:pg_tests/compatible/enums.sql:341: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE enum_default;
+             ^
+psql:pg_tests/compatible/enums.sql:351: ERROR:  relation "crdb_internal.table_columns" does not exist
+LINE 4:   crdb_internal.table_columns
+          ^
+ column_name | column_default 
+-------------+----------------
+(0 rows)
+
+psql:pg_tests/compatible/enums.sql:370: ERROR:  syntax error at or near "AS"
+LINE 3:   y greeting AS ('hello') STORED,
+                     ^
+psql:pg_tests/compatible/enums.sql:371: ERROR:  relation "enum_computed" does not exist
+LINE 1: INSERT INTO enum_computed (x, w) VALUES (1, 'hello'), (2, 'h...
+                    ^
+psql:pg_tests/compatible/enums.sql:374: ERROR:  relation "enum_computed" does not exist
+LINE 1: SELECT * FROM enum_computed;
+                      ^
+psql:pg_tests/compatible/enums.sql:377: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE enum_computed;
+             ^
+psql:pg_tests/compatible/enums.sql:380: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE enum_computed;
+             ^
+ column_name | generation_expression 
+-------------+-----------------------
+(0 rows)
+
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/enums.sql:405: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE enum_checks;
+             ^
+psql:pg_tests/compatible/enums.sql:408: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE enum_checks;
+             ^
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+ALTER TABLE
+psql:pg_tests/compatible/enums.sql:419: ERROR:  new row for relation "enum_checks" violates check constraint "enum_checks_x_check"
+DETAIL:  Failing row contains (hello).
+psql:pg_tests/compatible/enums.sql:422: ERROR:  check constraint "enum_checks_x_check1" of relation "enum_checks" is violated by some row
+DROP TABLE
+BEGIN
+psql:pg_tests/compatible/enums.sql:429: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/enums.sql:430: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:431: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:432: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:435: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+BEGIN
+psql:pg_tests/compatible/enums.sql:442: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/enums.sql:443: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:444: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:447: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+CREATE SCHEMA
+CREATE TYPE
+CREATE TABLE
+CREATE TABLE
+psql:pg_tests/compatible/enums.sql:463: ERROR:  relation "cross_error" already exists
+psql:pg_tests/compatible/enums.sql:466: ERROR:  syntax error at or near "AS"
+LINE 1: CREATE TABLE cross_error (x BOOL AS ('other'::other.t = 'oth...
+                                         ^
+psql:pg_tests/compatible/enums.sql:469: ERROR:  relation "cross_error" already exists
+psql:pg_tests/compatible/enums.sql:472: ERROR:  relation "cross_error" already exists
+ALTER TABLE
+psql:pg_tests/compatible/enums.sql:478: ERROR:  column "y" of relation "cross_error" already exists
+psql:pg_tests/compatible/enums.sql:481: ERROR:  syntax error at or near "AS"
+LINE 1: ALTER TABLE cross_error ADD COLUMN y BOOL AS ('other'::other...
+                                                  ^
+ALTER TABLE
+CREATE TABLE
+INSERT 0 3
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+psql:pg_tests/compatible/enums.sql:496: ERROR:  syntax error at or near "@"
+LINE 1: SELECT x FROM sc@i1;
+                        ^
+psql:pg_tests/compatible/enums.sql:499: ERROR:  syntax error at or near "@"
+LINE 1: SELECT x, y FROM sc@i3;
+                           ^
+psql:pg_tests/compatible/enums.sql:502: ERROR:  syntax error at or near "@"
+LINE 1: DROP INDEX sc@i1;
+                     ^
+psql:pg_tests/compatible/enums.sql:503: ERROR:  syntax error at or near "@"
+LINE 1: DROP INDEX sc@i2;
+                     ^
+psql:pg_tests/compatible/enums.sql:504: ERROR:  syntax error at or near "@"
+LINE 1: DROP INDEX sc@i3;
+                     ^
+DROP TABLE
+BEGIN
+psql:pg_tests/compatible/enums.sql:511: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/enums.sql:512: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:513: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:514: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:515: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:516: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:519: ERROR:  syntax error at or near "@"
+LINE 1: SELECT x FROM sc@i1;
+                        ^
+psql:pg_tests/compatible/enums.sql:522: ERROR:  syntax error at or near "@"
+LINE 1: SELECT x, y FROM sc@i3;
+                           ^
+psql:pg_tests/compatible/enums.sql:525: ERROR:  syntax error at or near "@"
+LINE 1: DROP INDEX sc@i1;
+                     ^
+psql:pg_tests/compatible/enums.sql:526: ERROR:  syntax error at or near "@"
+LINE 1: DROP INDEX sc@i2;
+                     ^
+psql:pg_tests/compatible/enums.sql:527: ERROR:  syntax error at or near "@"
+LINE 1: DROP INDEX sc@i3;
+                     ^
+ROLLBACK
+BEGIN
+psql:pg_tests/compatible/enums.sql:532: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/enums.sql:533: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:534: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:535: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:536: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:539: ERROR:  syntax error at or near "@"
+LINE 1: SELECT * FROM tbl_in_txn@i;
+                                ^
+ROLLBACK
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/enums.sql:547: ERROR:  syntax error at or near "PRIMARY"
+LINE 1: ALTER TABLE enum_not_pk ALTER PRIMARY KEY USING COLUMNS (y);
+                                      ^
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/enums.sql:553: ERROR:  syntax error at or near "PRIMARY"
+LINE 1: ALTER TABLE enum_pk ALTER PRIMARY KEY USING COLUMNS (y);
+                                  ^
+DROP TABLE
+BEGIN
+psql:pg_tests/compatible/enums.sql:558: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/enums.sql:559: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:560: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:561: ERROR:  syntax error at or near "PRIMARY"
+LINE 1: ALTER TABLE enum_not_pk ALTER PRIMARY KEY USING COLUMNS (y);
+                                      ^
+ROLLBACK
+BEGIN
+psql:pg_tests/compatible/enums.sql:566: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/enums.sql:567: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:568: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:569: ERROR:  syntax error at or near "PRIMARY"
+LINE 1: ALTER TABLE enum_pk ALTER PRIMARY KEY USING COLUMNS (y);
+                                  ^
+ROLLBACK
+CREATE TABLE
+psql:pg_tests/compatible/enums.sql:574: ERROR:  column "z" is of type greeting[] but expression is of type text[]
+LINE 1: INSERT INTO enum_ctas_base VALUES ('hi', 'howdy', ARRAY['hel...
+                                                          ^
+HINT:  You will need to rewrite or cast the expression.
+SELECT 0
+ x | y | z 
+---+---+---
+(0 rows)
+
+DROP TABLE
+BEGIN
+psql:pg_tests/compatible/enums.sql:585: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/enums.sql:586: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:589: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+SELECT 0
+ x | enum_first | z | enum_range 
+---+------------+---+------------
+(0 rows)
+
+DROP TABLE
+BEGIN
+psql:pg_tests/compatible/enums.sql:605: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/enums.sql:606: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:609: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+SELECT 1
+ column1 | column2 |  column3  
+---------+---------+-----------
+ howdy   | howdy   | cockroach
+(1 row)
+
+DROP TABLE
+BEGIN
+psql:pg_tests/compatible/enums.sql:625: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/enums.sql:626: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:629: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+CREATE TABLE
+INSERT 0 1
+ALTER TABLE
+   x   | y 
+-------+---
+ hello | 1
+(1 row)
+
+ALTER TABLE
+   x   | y |   z   
+-------+---+-------
+ hello | 1 | howdy
+(1 row)
+
+psql:pg_tests/compatible/enums.sql:651: ERROR:  syntax error at or near "AS"
+LINE 1: ALTER TABLE column_add ADD COLUMN w greeting AS ('hi') STORE...
+                                                     ^
+   x   | y |   z   
+-------+---+-------
+ hello | 1 | howdy
+(1 row)
+
+psql:pg_tests/compatible/enums.sql:657: ERROR:  syntax error at or near "AS"
+LINE 1: ALTER TABLE column_add ADD COLUMN v BOOL AS (z < 'hi' AND x ...
+                                                 ^
+   x   | y |   z   
+-------+---+-------
+ hello | 1 | howdy
+(1 row)
+
+DROP TABLE
+BEGIN
+psql:pg_tests/compatible/enums.sql:667: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/enums.sql:668: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:669: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:670: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:671: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:672: ERROR:  syntax error at or near "AS"
+LINE 1: ALTER TABLE column_add ADD COLUMN w greeting AS ('hi') STORE...
+                                                     ^
+psql:pg_tests/compatible/enums.sql:673: ERROR:  syntax error at or near "AS"
+LINE 1: ALTER TABLE column_add ADD COLUMN v BOOL AS (z < 'hi' AND x ...
+                                                 ^
+psql:pg_tests/compatible/enums.sql:676: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+BEGIN
+psql:pg_tests/compatible/enums.sql:683: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/enums.sql:684: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:685: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:686: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:687: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:690: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+ALTER TABLE
+psql:pg_tests/compatible/enums.sql:703: ERROR:  insert or update on table "enum_origin" violates foreign key constraint "enum_origin_x_fkey"
+DETAIL:  Key (x)=(howdy) is not present in table "enum_referenced".
+DROP TABLE
+psql:pg_tests/compatible/enums.sql:709: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+BEGIN
+psql:pg_tests/compatible/enums.sql:713: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/enums.sql:714: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:715: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:716: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:717: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:718: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:721: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/enums.sql:727: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/enums.sql:736: ERROR:  insert or update on table "enum_origin" violates foreign key constraint "enum_origin_x_fkey"
+DETAIL:  Key (x)=(hello) is not present in table "enum_referenced".
+psql:pg_tests/compatible/enums.sql:739: ERROR:  relation "enum_data_type" does not exist
+psql:pg_tests/compatible/enums.sql:742: ERROR:  relation "enum_data_type" does not exist
+psql:pg_tests/compatible/enums.sql:745: ERROR:  relation "enum_data_type" does not exist
+psql:pg_tests/compatible/enums.sql:750: ERROR:  relation "enum_data_type" does not exist
+psql:pg_tests/compatible/enums.sql:753: ERROR:  relation "enum_data_type" does not exist
+LINE 1: INSERT INTO enum_data_type VALUES ('hi');
+                    ^
+psql:pg_tests/compatible/enums.sql:756: ERROR:  relation "enum_data_type" does not exist
+LINE 1: SELECT x FROM enum_data_type;
+                      ^
+psql:pg_tests/compatible/enums.sql:759: ERROR:  table "enum_data_type" does not exist
+CREATE TABLE
+INSERT 0 2
+ALTER TABLE
+   x   
+-------
+ hello
+ howdy
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+psql:pg_tests/compatible/enums.sql:782: ERROR:  result of USING clause for column "x" cannot be cast automatically to type dbs
+HINT:  You might need to add an explicit cast.
+   x   
+-------
+ hello
+ hi
+(2 rows)
+
+DROP TABLE
+psql:pg_tests/compatible/enums.sql:793: ERROR:  relation "enum_data_type" does not exist
+psql:pg_tests/compatible/enums.sql:799: ERROR:  relation "enum_data_type" does not exist
+psql:pg_tests/compatible/enums.sql:804: ERROR:  relation "enum_data_type" does not exist
+LINE 1: SELECT * FROM enum_data_type;
+                      ^
+ to_json 
+---------
+ "hello"
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+   x   
+-------
+ hello
+ howdy
+(2 rows)
+
+BEGIN
+psql:pg_tests/compatible/enums.sql:818: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/enums.sql:819: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:820: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:821: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:824: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [EXPLAIN SELECT * FROM local_table] LIMIT 1;
+                      ^
+ROLLBACK
+BEGIN
+psql:pg_tests/compatible/enums.sql:831: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/enums.sql:832: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:833: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:834: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:837: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [EXPLAIN SELECT * FROM local_table] LIMIT 1;
+                      ^
+ROLLBACK
+BEGIN
+psql:pg_tests/compatible/enums.sql:844: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/enums.sql:845: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:846: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:847: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:850: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/enums.sql:856: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [SHOW ENUMS] ORDER BY name;
+                      ^
+psql:pg_tests/compatible/enums.sql:859: ERROR:  unrecognized configuration parameter "types"
+CREATE SCHEMA
+CREATE TYPE
+psql:pg_tests/compatible/enums.sql:866: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [SHOW ENUMS] ORDER BY name;
+                      ^
+psql:pg_tests/compatible/enums.sql:869: ERROR:  schema "fakedb" does not exist
+CREATE TYPE
+psql:pg_tests/compatible/enums.sql:875: ERROR:  unrecognized parameter "schema_locked"
+BEGIN
+psql:pg_tests/compatible/enums.sql:879: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/enums.sql:882: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:885: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/enums.sql:888: ERROR:  table "table_with_not_null_enum" does not exist
+DROP TYPE
+CREATE TYPE
+psql:pg_tests/compatible/enums.sql:894: ERROR:  unrecognized parameter "schema_locked"
+BEGIN
+psql:pg_tests/compatible/enums.sql:898: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/enums.sql:901: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:904: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/enums.sql:907: ERROR:  table "table_with_not_null_enum_no_vals" does not exist
+DROP TYPE
+CREATE SCHEMA
+SET
+CREATE TYPE
+CREATE TABLE
+SET
+DROP SCHEMA
+psql:pg_tests/compatible/enums.sql:918: ERROR:  relation "crdb_internal.tables" does not exist
+LINE 1: SELECT * FROM crdb_internal.tables;
+                      ^
+CREATE SCHEMA
+psql:pg_tests/compatible/enums.sql:922: ERROR:  syntax error at or near "."
+LINE 1: CREATE SCHEMA test_57196.sc;
+                                ^
+psql:pg_tests/compatible/enums.sql:923: ERROR:  cross-database references are not implemented: test_57196.public.greeting
+psql:pg_tests/compatible/enums.sql:924: ERROR:  cross-database references are not implemented: test_57196.sc.greeting
+psql:pg_tests/compatible/enums.sql:927: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW ENUMS FROM test_57196.public;
+                   ^
+psql:pg_tests/compatible/enums.sql:930: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW ENUMS FROM test_57196.sc;
+                   ^
+psql:pg_tests/compatible/enums.sql:933: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW ENUMS FROM test_57196;
+                   ^
+SET
+psql:pg_tests/compatible/enums.sql:938: ERROR:  unrecognized configuration parameter "enums"
+psql:pg_tests/compatible/enums.sql:941: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW ENUMS FROM public;
+                   ^
+psql:pg_tests/compatible/enums.sql:944: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW ENUMS FROM sc;
+                   ^
+CREATE TYPE
+psql:pg_tests/compatible/enums.sql:950: ERROR:  type "ifne" already exists
+psql:pg_tests/compatible/enums.sql:953: ERROR:  syntax error at or near "NOT"
+LINE 1: CREATE TYPE IF NOT EXISTS ifne AS ENUM ('hi');
+                       ^
+CREATE TABLE
+psql:pg_tests/compatible/enums.sql:959: ERROR:  syntax error at or near "NOT"
+LINE 1: CREATE TYPE IF NOT EXISTS table_ifne AS ENUM ('hi');
+                       ^
+CREATE TYPE
+psql:pg_tests/compatible/enums.sql:965: ERROR:  relation "arr_t" does not exist
+LINE 1: INSERT INTO arr_t VALUES (default);
+                    ^
+psql:pg_tests/compatible/enums.sql:968: ERROR:  relation "arr_t" does not exist
+LINE 1: SELECT * FROM arr_t;
+                      ^
+CREATE TABLE
+INSERT 0 1
+ i 
+---
+ b
+(1 row)
+
+psql:pg_tests/compatible/enums.sql:980: ERROR:  relation "arr_t3" does not exist
+LINE 1: INSERT INTO arr_t3 VALUES (default);
+                    ^
+psql:pg_tests/compatible/enums.sql:983: ERROR:  relation "arr_t3" does not exist
+LINE 1: SELECT * FROM arr_t3;
+                      ^
+psql:pg_tests/compatible/enums.sql:986: ERROR:  syntax error at or near "["
+LINE 1: CREATE TABLE arr_t4 (i typ DEFAULT ARRAY['a'::typ][1], j typ...
+                                                          ^
+psql:pg_tests/compatible/enums.sql:989: ERROR:  relation "arr_t4" does not exist
+LINE 1: INSERT INTO arr_t4 VALUES (default, default);
+                    ^
+psql:pg_tests/compatible/enums.sql:992: ERROR:  relation "arr_t4" does not exist
+LINE 1: SELECT * from arr_t4;
+                      ^
+CREATE TABLE
+INSERT 0 1
+   i   
+-------
+ {a,b}
+(1 row)
+
+CREATE TYPE
+CREATE TYPE
+CREATE TABLE
+psql:pg_tests/compatible/enums.sql:1013: ERROR:  syntax error at or near "VALUE"
+LINE 1: ALTER TYPE default_abc DROP VALUE 'a';
+                                    ^
+psql:pg_tests/compatible/enums.sql:1016: ERROR:  syntax error at or near "VALUE"
+LINE 1: ALTER TYPE default_abc2 DROP VALUE 'a';
+                                     ^
+psql:pg_tests/compatible/enums.sql:1019: ERROR:  syntax error at or near "VALUE"
+LINE 1: ALTER TYPE default_abc DROP VALUE 'b';
+                                    ^
+psql:pg_tests/compatible/enums.sql:1022: ERROR:  syntax error at or near "VALUE"
+LINE 1: ALTER TYPE default_abc DROP VALUE 'c';
+                                    ^
+psql:pg_tests/compatible/enums.sql:1025: ERROR:  syntax error at or near "VALUE"
+LINE 1: ALTER TYPE default_abc2 DROP VALUE 'b';
+                                     ^
+psql:pg_tests/compatible/enums.sql:1028: ERROR:  syntax error at or near "VALUE"
+LINE 1: ALTER TYPE default_abc2 DROP VALUE 'c';
+                                     ^
+CREATE TYPE
+psql:pg_tests/compatible/enums.sql:1034: ERROR:  syntax error at or near "VALUE"
+LINE 1: ALTER TYPE default_abc3 DROP VALUE 'a';
+                                     ^
+psql:pg_tests/compatible/enums.sql:1037: ERROR:  syntax error at or near "VALUE"
+LINE 1: ALTER TYPE default_abc3 DROP VALUE 'b';
+                                     ^
+psql:pg_tests/compatible/enums.sql:1040: ERROR:  syntax error at or near "VALUE"
+LINE 1: ALTER TYPE default_abc3 DROP VALUE 'c';
+                                     ^
+CREATE TYPE
+CREATE TYPE
+psql:pg_tests/compatible/enums.sql:1049: ERROR:  syntax error at or near "AS"
+LINE 1: ...REATE TABLE t5 (k INT PRIMARY KEY, y computed_abc AS ('a') S...
+                                                             ^
+psql:pg_tests/compatible/enums.sql:1052: ERROR:  syntax error at or near "VALUE"
+LINE 1: ALTER TYPE computed_abc DROP VALUE 'a';
+                                     ^
+psql:pg_tests/compatible/enums.sql:1055: ERROR:  syntax error at or near "VALUE"
+LINE 1: ALTER TYPE computed_abc DROP VALUE 'b';
+                                     ^
+psql:pg_tests/compatible/enums.sql:1058: ERROR:  syntax error at or near "VALUE"
+LINE 1: ALTER TYPE computed_abc DROP VALUE 'c';
+                                     ^
+psql:pg_tests/compatible/enums.sql:1061: ERROR:  syntax error at or near "AS"
+LINE 1: CREATE TABLE t7 (x _computed_abc2 AS (ARRAY['a'::computed_ab...
+                                          ^
+psql:pg_tests/compatible/enums.sql:1064: ERROR:  syntax error at or near "VALUE"
+LINE 1: ALTER TYPE computed_abc2 DROP VALUE 'a';
+                                      ^
+psql:pg_tests/compatible/enums.sql:1067: ERROR:  syntax error at or near "VALUE"
+LINE 1: ALTER TYPE computed_abc2 DROP VALUE 'b';
+                                      ^
+CREATE TYPE
+psql:pg_tests/compatible/enums.sql:1077: ERROR:  syntax error at or near "["
+LINE 3:   j arr_typ DEFAULT ARRAY['b'::arr_typ][1],
+                                               ^
+ALTER TYPE
+psql:pg_tests/compatible/enums.sql:1083: ERROR:  relation "arr_t6" does not exist
+LINE 1: INSERT INTO arr_t6 VALUES (default, default, default);
+                    ^
+psql:pg_tests/compatible/enums.sql:1088: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE arr_t6;
+             ^
+psql:pg_tests/compatible/enums.sql:1091: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE arr_t6;
+             ^
+CREATE TYPE
+CREATE TABLE
+CREATE INDEX
+psql:pg_tests/compatible/enums.sql:1103: ERROR:  syntax error at or near "$"
+LINE 1: SELECT typname FROM pg_type WHERE oid = $oid;
+                                                ^
+DROP TYPE
+CREATE TYPE
+psql:pg_tests/compatible/enums.sql:1108: ERROR:  syntax error at or near "("
+LINE 1: ...e (i INT PRIMARY KEY, t enum_for_predicate, INDEX (t) WHERE ...
+                                                             ^
+psql:pg_tests/compatible/enums.sql:1111: ERROR:  syntax error at or near "VALUE"
+LINE 1: ALTER TYPE enum_for_predicate DROP VALUE 'a';
+                                           ^
+CREATE TYPE
+CREATE TABLE
+INSERT 0 2
+CREATE TABLE
+psql:pg_tests/compatible/enums.sql:1126: ERROR:  column "elems" is of type enum_test[] but expression is of type text[]
+LINE 1: INSERT INTO enum_array_table (elems) VALUES (array['a']), (a...
+                                                     ^
+HINT:  You will need to rewrite or cast the expression.
+ elem | ?column? 
+------+----------
+ a    | t
+ b    | f
+(2 rows)
+
+ elems | ?column? 
+-------+----------
+(0 rows)
+
+ elems | elems | ?column? | ?column? | ?column? | ?column? 
+-------+-------+----------+----------+----------+----------
+(0 rows)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+DROP TABLE
+CREATE TYPE
+CREATE TABLE
+PREPARE
+INSERT 0 1
+ a 
+---
+ a
+(1 row)
+
+ALTER TYPE
+INSERT 0 1
+ a 
+---
+ a
+ c
+(2 rows)
+
+DROP TYPE
+CREATE TYPE
+SELECT 5
+   col1   | col2 
+----------+------
+ (,hello) |    1
+ (2,hi)   |    1
+ (,hello) |    2
+ (2,hi)   |    2
+ (,hello) |    3
+ (2,hi)   |    3
+ (,hello) |    4
+ (2,hi)   |    4
+ (,hello) |    5
+ (2,hi)   |    5
+(10 rows)
+
+psql:pg_tests/compatible/enums.sql:1199: ERROR:  relation "t58889" does not exist
+LINE 1: SELECT _enum FROM t58889 WHERE _enum::greeting58889 IN (NULL...
+                          ^
+CREATE TYPE
+psql:pg_tests/compatible/enums.sql:1205: ERROR:  type "bytes" does not exist
+LINE 1: SELECT 'foo'::myenum::bytes;
+                              ^
+psql:pg_tests/compatible/enums.sql:1208: ERROR:  cannot cast type myenum to bytea
+LINE 1: SELECT 'foo'::myenum::bytea;
+                            ^
+psql:pg_tests/compatible/enums.sql:1211: ERROR:  type "blob" does not exist
+LINE 1: SELECT 'foo'::myenum::blob;
+                              ^
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/enums.sql:1222: ERROR:  unrecognized parameter "schema_locked"
+BEGIN
+psql:pg_tests/compatible/enums.sql:1226: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/enums.sql:1229: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:1232: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/enums.sql:1235: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/enums.sql:1243: ERROR:  unrecognized parameter "schema_locked"
+DROP TABLE
+CREATE TABLE
+CREATE TYPE
+CREATE TYPE
+ALTER TABLE
+psql:pg_tests/compatible/enums.sql:1255: ERROR:  syntax error at or near "ON"
+LINE 1: ...COLUMN "🙏" "Emoji 😉" DEFAULT ('😊'::"Emoji 😉") ON UPDATE ...
+                                                             ^
+DROP TABLE
+psql:pg_tests/compatible/enums.sql:1261: ERROR:  syntax error at or near "ON"
+LINE 1: ...BLE t ("🙏" "Emoji 😉" DEFAULT ('😊'::"Emoji 😉") ON UPDATE ...
+                                                             ^
+CREATE FUNCTION
+ 🙏 |  🙏   
+----+-------
+    | mixed
+(1 row)
+
+CREATE SCHEMA
+SET
+CREATE SCHEMA
+CREATE TABLE
+CREATE TYPE
+CREATE TYPE
+ALTER TABLE
+psql:pg_tests/compatible/enums.sql:1286: ERROR:  syntax error at or near "ON"
+LINE 1: ...ji 😉" DEFAULT ('😊'::"DB➕➕".public."Emoji 😉") ON UPDATE ...
+                                                             ^
+psql:pg_tests/compatible/enums.sql:1291: ERROR:  syntax error at or near "["
+LINE 1: SELECT create_statement FROM [SHOW CREATE TABLE t];
+                                     ^
+psql:pg_tests/compatible/enums.sql:1294: ERROR:  syntax error at or near "["
+LINE 1: SELECT create_statement FROM [SHOW CREATE TABLE t];
+                                     ^
+CREATE SCHEMA
+CREATE TYPE
+CREATE TABLE
+psql:pg_tests/compatible/enums.sql:1306: ERROR:  syntax error at or near "["
+LINE 1: SELECT create_statement FROM [SHOW CREATE TABLE db1.public.t...
+                                     ^
+psql:pg_tests/compatible/enums.sql:1309: ERROR:  syntax error at or near "["
+LINE 1: SELECT create_statement FROM [SHOW CREATE TABLE db1.public.t...
+                                     ^
+SET
+psql:pg_tests/compatible/enums.sql:1314: ERROR:  no schema has been selected to create in
+psql:pg_tests/compatible/enums.sql:1317: ERROR:  syntax error at or near "("
+LINE 1: CREATE TABLE t154461 (a e154461, INDEX (a)) WITH (sql_stats_...
+                                               ^
+psql:pg_tests/compatible/enums.sql:1320: ERROR:  relation "t154461" does not exist
+LINE 1: INSERT INTO t154461 VALUES ('e'), ('e'), ('f'), ('g'), ('g')...
+                    ^
+psql:pg_tests/compatible/enums.sql:1323: ERROR:  syntax error at or near "FROM"
+LINE 1: CREATE STATISTICS s FROM t154461;
+                            ^
+psql:pg_tests/compatible/enums.sql:1326: ERROR:  relation "t154461" does not exist
+LINE 1: SELECT * FROM t154461 WHERE a != 'g' ORDER BY a;
+                      ^
+psql:pg_tests/compatible/enums.sql:1329: ERROR:  syntax error at or near "$"
+LINE 1: SHOW HISTOGRAM $hist_id_1;
+                       ^
+psql:pg_tests/compatible/enums.sql:1337: ERROR:  syntax error at or near "["
+LINE 4:   FROM [SHOW STATISTICS USING JSON FOR TABLE t154461]
+               ^
+psql:pg_tests/compatible/enums.sql:1340: ERROR:  relation "t154461" does not exist
+LINE 1: DELETE FROM t154461 WHERE a = 'e';
+                    ^
+psql:pg_tests/compatible/enums.sql:1343: ERROR:  syntax error at or near "VALUE"
+LINE 1: ALTER TYPE e154461 DROP VALUE 'e';
+                                ^
+psql:pg_tests/compatible/enums.sql:1346: ERROR:  relation "t154461" does not exist
+LINE 1: SELECT * FROM t154461 WHERE a != 'g' ORDER BY a;
+                      ^
+psql:pg_tests/compatible/enums.sql:1349: ERROR:  syntax error at or near "$"
+LINE 1: SHOW HISTOGRAM $hist_id_1;
+                       ^
+psql:pg_tests/compatible/enums.sql:1357: ERROR:  syntax error at or near "["
+LINE 4:   FROM [SHOW STATISTICS USING JSON FOR TABLE t154461]
+               ^
+psql:pg_tests/compatible/enums.sql:1360: ERROR:  no schema has been selected to create in
+psql:pg_tests/compatible/enums.sql:1363: ERROR:  no schema has been selected to create in
+LINE 1: CREATE TABLE t158154 (a INT, b typ158154);
+                     ^
+psql:pg_tests/compatible/enums.sql:1369: ERROR:  no schema has been selected to create in
+psql:pg_tests/compatible/enums.sql:1372: ERROR:  procedure p158154() does not exist
+LINE 1: CALL p158154();
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/enums.sql:1375: ERROR:  relation "t158154" does not exist
+psql:pg_tests/compatible/enums.sql:1378: ERROR:  procedure p158154() does not exist
+LINE 1: CALL p158154();
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/enums.sql:1381: ERROR:  could not find a procedure named "p158154"
+psql:pg_tests/compatible/enums.sql:1382: ERROR:  table "t158154" does not exist
+psql:pg_tests/compatible/enums.sql:1383: ERROR:  type "typ158154" does not exist
+RESET

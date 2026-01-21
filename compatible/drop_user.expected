@@ -1,0 +1,123 @@
+SET
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+ username | options | member_of 
+----------+---------+-----------
+ user1    | LOGIN   | {}
+(1 row)
+
+DROP ROLE
+ username | options | member_of 
+----------+---------+-----------
+(0 rows)
+
+CREATE ROLE
+ username | options | member_of 
+----------+---------+-----------
+ user1    | LOGIN   | {}
+(1 row)
+
+DROP ROLE
+ username | options | member_of 
+----------+---------+-----------
+(0 rows)
+
+psql:pg_tests/compatible/drop_user.sql:61: ERROR:  role "user1" does not exist
+psql:pg_tests/compatible/drop_user.sql:66: ERROR:  role "user1" does not exist
+DROP ROLE
+psql:pg_tests/compatible/drop_user.sql:74: ERROR:  role "node" does not exist
+psql:pg_tests/compatible/drop_user.sql:79: ERROR:  cannot use special role specifier in DROP ROLE
+psql:pg_tests/compatible/drop_user.sql:84: ERROR:  role name "none" is reserved
+LINE 1: DROP USER "none";
+                  ^
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+ username | options | member_of 
+----------+---------+-----------
+ user1    | LOGIN   | {}
+ user2    | LOGIN   | {}
+ user3    | LOGIN   | {}
+ user4    | LOGIN   | {}
+(4 rows)
+
+DROP ROLE
+ username | options | member_of 
+----------+---------+-----------
+ user3    | LOGIN   | {}
+ user4    | LOGIN   | {}
+(2 rows)
+
+psql:pg_tests/compatible/drop_user.sql:131: ERROR:  role "user1" does not exist
+ username | options | member_of 
+----------+---------+-----------
+ user3    | LOGIN   | {}
+ user4    | LOGIN   | {}
+(2 rows)
+
+CREATE ROLE
+CREATE TABLE
+GRANT
+GRANT
+psql:pg_tests/compatible/drop_user.sql:153: ERROR:  role "user1" cannot be dropped because some objects depend on it
+DETAIL:  privileges for database crdb_tests_drop_user
+REVOKE
+psql:pg_tests/compatible/drop_user.sql:161: ERROR:  role "user1" cannot be dropped because some objects depend on it
+DETAIL:  privileges for database crdb_tests_drop_user
+REVOKE
+DROP ROLE
+DROP ROLE
+ username | options | member_of 
+----------+---------+-----------
+(0 rows)
+
+psql:pg_tests/compatible/drop_user.sql:186: ERROR:  role "user2" does not exist
+psql:pg_tests/compatible/drop_user.sql:193: ERROR:  role "root" does not exist
+psql:pg_tests/compatible/drop_user.sql:198: ERROR:  role "admin" does not exist
+CREATE ROLE
+DROP ROLE
+CREATE ROLE
+GRANT
+GRANT ROLE
+SET
+CREATE SCHEMA
+CREATE SCHEMA
+RESET
+DROP OWNED
+DROP ROLE
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+DROP OWNED
+DROP ROLE
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+DROP OWNED
+DROP ROLE
+psql:pg_tests/compatible/drop_user.sql:279: ERROR:  role "default_priv_user" does not exist
+psql:pg_tests/compatible/drop_user.sql:284: ERROR:  role "default_priv_user" does not exist
+psql:pg_tests/compatible/drop_user.sql:289: ERROR:  role "default_priv_user2" does not exist
+psql:pg_tests/compatible/drop_user.sql:294: ERROR:  role "default_priv_user2" does not exist
+psql:pg_tests/compatible/drop_user.sql:299: ERROR:  role "default_priv_user2" does not exist
+DROP ROLE
+DROP ROLE
+ database_name | schema_name | obj_name | error 
+---------------+-------------+----------+-------
+(0 rows)
+
+RESET

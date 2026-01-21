@@ -1,6 +1,19 @@
 -- PostgreSQL compatible tests from edge
 -- 26 tests
 
+SET client_min_messages = warning;
+
+DROP TABLE IF EXISTS t;
+CREATE TABLE t (
+  key     TEXT PRIMARY KEY,
+  _date   DATE,
+  _float4 REAL,
+  _float8 DOUBLE PRECISION,
+  _int2   SMALLINT,
+  _int4   INT,
+  _int8   BIGINT
+);
+
 -- Test 1: statement (line 28)
 INSERT
 INTO
@@ -15,15 +28,16 @@ VALUES
         -2147483648,
         -9223372036854775808
     ),
-    (
-        'max',
-        '5874897-12-31',
-        3.40282346638528859811704183484516925440e+38,
-        1.7976931348623e+308,
-        32767,
-        2147483647,
-        9223372036854775807
-    )
+	    (
+	        'max',
+	        '5874897-12-31',
+	        3.40282346638528859811704183484516925440e+38,
+	        1.7976931348623e+308,
+	        32767,
+	        2147483647,
+	        9223372036854775807
+	    )
+;
 
 -- Test 2: statement (line 52)
 INSERT
@@ -31,18 +45,19 @@ INTO
     t (key, _date)
 VALUES
     ('+inf', 'infinity'), ('-inf', '-infinity')
+;
 
 -- Test 3: query (line 61)
-SELECT _date, _date + 1 FROM t WHERE key = 'min'
+SELECT _date, _date + 1 FROM t WHERE key = 'min';
 
 -- Test 4: query (line 66)
 SELECT
     _int2,
-    _int2 + 1:::INT2,
+    _int2 + 1::INT2,
     _int4,
-    _int4 + 1:::INT4,
+    _int4 + 1::INT4,
     _int8,
-    _int8 + 1:::INT8,
+    _int8 + 1::INT8,
     _float4,
     _float4 + 1,
     _float8,
@@ -51,33 +66,49 @@ FROM
     t
 WHERE
     key = 'min'
+;
 
 -- Test 5: statement (line 87)
-SELECT _date - 1 FROM t WHERE key = 'min'
+-- Expected ERROR (date underflow).
+\set ON_ERROR_STOP 0
+SELECT _date - 1 FROM t WHERE key = 'min';
+\set ON_ERROR_STOP 1
 
 -- Test 6: query (line 91)
-SELECT _int2 - 1:::INT2 FROM t WHERE key = 'min'
+-- Expected ERROR (int2 underflow).
+\set ON_ERROR_STOP 0
+SELECT _int2 - 1::INT2 FROM t WHERE key = 'min';
+\set ON_ERROR_STOP 1
 
 -- Test 7: query (line 97)
-SELECT _int4 - 1:::INT4 FROM t WHERE key = 'min'
+-- Expected ERROR (int4 underflow).
+\set ON_ERROR_STOP 0
+SELECT _int4 - 1::INT4 FROM t WHERE key = 'min';
+\set ON_ERROR_STOP 1
 
 -- Test 8: statement (line 102)
-SELECT _int8 - 1:::INT8 FROM t WHERE key = 'min'
+-- Expected ERROR (int8 underflow).
+\set ON_ERROR_STOP 0
+SELECT _int8 - 1::INT8 FROM t WHERE key = 'min';
+\set ON_ERROR_STOP 1
 
 -- Test 9: query (line 105)
-SELECT _float8 - 1e300 FROM t WHERE key = 'min'
+-- Expected ERROR (float8 underflow/overflow at extremes).
+\set ON_ERROR_STOP 0
+SELECT _float8 - 1e300 FROM t WHERE key = 'min';
+\set ON_ERROR_STOP 1
 
 -- Test 10: query (line 112)
-SELECT _date, _date - 1 FROM t WHERE key = 'max'
+SELECT _date, _date - 1 FROM t WHERE key = 'max';
 
 -- Test 11: query (line 117)
 SELECT
     _int2,
-    _int2 - 1:::INT2,
+    _int2 - 1::INT2,
     _int4,
-    _int4 - 1:::INT4,
+    _int4 - 1::INT4,
     _int8,
-    _int8 - 1:::INT8,
+    _int8 - 1::INT8,
     _float4,
     _float4 - 1,
     _float8,
@@ -86,27 +117,43 @@ FROM
     t
 WHERE
     key = 'max'
+;
 
 -- Test 12: statement (line 138)
-SELECT _date + 1 FROM t WHERE key = 'max'
+-- Expected ERROR (date overflow).
+\set ON_ERROR_STOP 0
+SELECT _date + 1 FROM t WHERE key = 'max';
+\set ON_ERROR_STOP 1
 
 -- Test 13: query (line 142)
-SELECT _int2 + 1:::INT2 FROM t WHERE key = 'max'
+-- Expected ERROR (int2 overflow).
+\set ON_ERROR_STOP 0
+SELECT _int2 + 1::INT2 FROM t WHERE key = 'max';
+\set ON_ERROR_STOP 1
 
 -- Test 14: query (line 148)
-SELECT _int4 + 1:::INT4 FROM t WHERE key = 'max'
+-- Expected ERROR (int4 overflow).
+\set ON_ERROR_STOP 0
+SELECT _int4 + 1::INT4 FROM t WHERE key = 'max';
+\set ON_ERROR_STOP 1
 
 -- Test 15: statement (line 153)
-SELECT _int8 + 1:::INT8 FROM t WHERE key = 'max'
+-- Expected ERROR (int8 overflow).
+\set ON_ERROR_STOP 0
+SELECT _int8 + 1::INT8 FROM t WHERE key = 'max';
+\set ON_ERROR_STOP 1
 
 -- Test 16: query (line 156)
-SELECT _float8 + 1e300 FROM t WHERE key = 'max'
+-- Expected ERROR (float8 overflow at extremes).
+\set ON_ERROR_STOP 0
+SELECT _float8 + 1e300 FROM t WHERE key = 'max';
+\set ON_ERROR_STOP 1
 
 -- Test 17: query (line 163)
-SELECT _date, _date + 1, _date - 1 FROM t WHERE key = '+inf'
+SELECT _date, _date + 1, _date - 1 FROM t WHERE key = '+inf';
 
 -- Test 18: query (line 168)
-SELECT _date, _date + 1, _date - 1 FROM t WHERE key = '-inf'
+SELECT _date, _date + 1, _date - 1 FROM t WHERE key = '-inf';
 
 -- Test 19: query (line 175)
 SELECT
@@ -120,19 +167,22 @@ FROM
     t, t AS u
 WHERE
     t.key = 'max'
+;
 
 -- Test 20: query (line 190)
 SELECT
-    sum_int(t._int2), sum_int(t._int4)
+    sum(t._int2), sum(t._int4)
 FROM
     t, t AS u
 WHERE
     t.key = 'max'
+;
 
 -- Test 21: statement (line 200)
-SELECT sum_int(t._int8) FROM t, t AS u WHERE t.key = 'max'
+SELECT sum(t._int8) FROM t, t AS u WHERE t.key = 'max';
 
 -- Test 22: query (line 203)
+\set ON_ERROR_STOP 0
 SELECT
     sum(t._int2),
     sum(t._int4),
@@ -148,19 +198,23 @@ FROM
     t, t AS u
 WHERE
     t.key = 'min'
+;
+\set ON_ERROR_STOP 1
 
 -- Test 23: query (line 222)
 SELECT
-    sum_int(t._int2), sum_int(t._int4)
+    sum(t._int2), sum(t._int4)
 FROM
     t, t AS u
 WHERE
     t.key = 'min'
+;
 
 -- Test 24: statement (line 232)
-SELECT sum_int(t._int8) FROM t, t AS u WHERE t.key = 'min'
+SELECT sum(t._int8) FROM t, t AS u WHERE t.key = 'min';
 
 -- Test 25: query (line 235)
+\set ON_ERROR_STOP 0
 SELECT
     sum(t._int2),
     sum(t._int4),
@@ -174,10 +228,14 @@ SELECT
     avg(t._float8)
 FROM
     t
+;
+\set ON_ERROR_STOP 1
 
 -- Test 26: query (line 252)
 SELECT
-    sum_int(t._int2), sum_int(t._int4), sum_int(t._int8)
+    sum(t._int2), sum(t._int4), sum(t._int8)
 FROM
     t
+;
 
+RESET client_min_messages;
