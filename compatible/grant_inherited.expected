@@ -1,0 +1,97 @@
+SET
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+GRANT ROLE
+GRANT ROLE
+GRANT ROLE
+  role   | member  | admin_option 
+---------+---------+--------------
+ meeter  | alice   | f
+ meeter  | bob     | f
+ meeter  | chuck   | f
+ meeter  | dave    | f
+ meeter  | granter | f
+ greeter | alice   | t
+ granter | alice   | f
+ granter | bob     | f
+ granter | chuck   | f
+ granter | dave    | f
+(10 rows)
+
+  role   | member  | admin_option 
+---------+---------+--------------
+ meeter  | granter | f
+ greeter | alice   | t
+ granter | alice   | f
+ granter | bob     | f
+ granter | chuck   | f
+ granter | dave    | f
+(6 rows)
+
+GRANT
+ alice_connect | alice_connect_go | alice_create | alice_create_go | alice_temp | alice_temp_go 
+---------------+------------------+--------------+-----------------+------------+---------------
+ t             | t                | t            | t               | t          | t
+(1 row)
+
+CREATE SCHEMA
+GRANT
+ alice_usage_sc | alice_usage_sc_go | alice_create_sc | alice_create_sc_go 
+----------------+-------------------+-----------------+--------------------
+ t              | t                 | t               | t
+(1 row)
+
+CREATE SEQUENCE
+GRANT
+ alice_usage_sq | alice_usage_sq_go | alice_select_sq | alice_select_sq_go 
+----------------+-------------------+-----------------+--------------------
+ t              | t                 | t               | t
+(1 row)
+
+CREATE TABLE
+GRANT
+ alice_select_tbl | alice_select_tbl_go | alice_insert_tbl | alice_insert_tbl_go 
+------------------+---------------------+------------------+---------------------
+ t                | t                   | t                | t
+(1 row)
+
+CREATE TYPE
+GRANT
+ alice_usage_typ | alice_usage_typ_go 
+-----------------+--------------------
+ t               | t
+(1 row)
+
+CREATE FUNCTION
+GRANT
+ alice_exec_fn | alice_exec_fn_go 
+---------------+------------------
+ t             | t
+(1 row)
+
+CREATE ROLE
+CREATE ROLE
+GRANT ROLE
+CREATE SCHEMA
+GRANT
+GRANT
+ child_create_test_schema | child_create_test_schema_go 
+--------------------------+-----------------------------
+ t                        | f
+(1 row)
+
+RESET

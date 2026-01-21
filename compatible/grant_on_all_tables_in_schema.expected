@@ -1,0 +1,117 @@
+SET
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+GRANT ROLE
+GRANT ROLE
+CREATE SCHEMA
+CREATE SCHEMA
+GRANT
+ table_schema | table_name | grantee | privilege_type | is_grantable 
+--------------+------------+---------+----------------+--------------
+(0 rows)
+
+CREATE TABLE
+CREATE TABLE
+GRANT
+ table_schema | table_name | grantee  | privilege_type | is_grantable 
+--------------+------------+----------+----------------+--------------
+ s            | t          | testuser | SELECT         | NO
+(1 row)
+
+GRANT
+ table_schema | table_name |  grantee  | privilege_type | is_grantable 
+--------------+------------+-----------+----------------+--------------
+ s            | t          | testuser  | SELECT         | NO
+ s            | t          | testuser2 | SELECT         | NO
+ s2           | t          | testuser  | SELECT         | NO
+ s2           | t          | testuser2 | SELECT         | NO
+(4 rows)
+
+GRANT
+ table_schema | table_name |  grantee  | privilege_type | is_grantable 
+--------------+------------+-----------+----------------+--------------
+ s            | t          | testuser  | DELETE         | NO
+ s            | t          | testuser  | INSERT         | NO
+ s            | t          | testuser  | REFERENCES     | NO
+ s            | t          | testuser  | SELECT         | NO
+ s            | t          | testuser  | TRIGGER        | NO
+ s            | t          | testuser  | TRUNCATE       | NO
+ s            | t          | testuser  | UPDATE         | NO
+ s            | t          | testuser2 | DELETE         | NO
+ s            | t          | testuser2 | INSERT         | NO
+ s            | t          | testuser2 | REFERENCES     | NO
+ s            | t          | testuser2 | SELECT         | NO
+ s            | t          | testuser2 | TRIGGER        | NO
+ s            | t          | testuser2 | TRUNCATE       | NO
+ s            | t          | testuser2 | UPDATE         | NO
+ s2           | t          | testuser  | DELETE         | NO
+ s2           | t          | testuser  | INSERT         | NO
+ s2           | t          | testuser  | REFERENCES     | NO
+ s2           | t          | testuser  | SELECT         | NO
+ s2           | t          | testuser  | TRIGGER        | NO
+ s2           | t          | testuser  | TRUNCATE       | NO
+ s2           | t          | testuser  | UPDATE         | NO
+ s2           | t          | testuser2 | DELETE         | NO
+ s2           | t          | testuser2 | INSERT         | NO
+ s2           | t          | testuser2 | REFERENCES     | NO
+ s2           | t          | testuser2 | SELECT         | NO
+ s2           | t          | testuser2 | TRIGGER        | NO
+ s2           | t          | testuser2 | TRUNCATE       | NO
+ s2           | t          | testuser2 | UPDATE         | NO
+(28 rows)
+
+REVOKE
+ table_schema | table_name |  grantee  | privilege_type | is_grantable 
+--------------+------------+-----------+----------------+--------------
+ s            | t          | testuser  | DELETE         | NO
+ s            | t          | testuser  | INSERT         | NO
+ s            | t          | testuser  | REFERENCES     | NO
+ s            | t          | testuser  | TRIGGER        | NO
+ s            | t          | testuser  | TRUNCATE       | NO
+ s            | t          | testuser  | UPDATE         | NO
+ s            | t          | testuser2 | DELETE         | NO
+ s            | t          | testuser2 | INSERT         | NO
+ s            | t          | testuser2 | REFERENCES     | NO
+ s            | t          | testuser2 | TRIGGER        | NO
+ s            | t          | testuser2 | TRUNCATE       | NO
+ s            | t          | testuser2 | UPDATE         | NO
+ s2           | t          | testuser  | DELETE         | NO
+ s2           | t          | testuser  | INSERT         | NO
+ s2           | t          | testuser  | REFERENCES     | NO
+ s2           | t          | testuser  | TRIGGER        | NO
+ s2           | t          | testuser  | TRUNCATE       | NO
+ s2           | t          | testuser  | UPDATE         | NO
+ s2           | t          | testuser2 | DELETE         | NO
+ s2           | t          | testuser2 | INSERT         | NO
+ s2           | t          | testuser2 | REFERENCES     | NO
+ s2           | t          | testuser2 | TRIGGER        | NO
+ s2           | t          | testuser2 | TRUNCATE       | NO
+ s2           | t          | testuser2 | UPDATE         | NO
+(24 rows)
+
+REVOKE
+ table_schema | table_name | grantee | privilege_type | is_grantable 
+--------------+------------+---------+----------------+--------------
+(0 rows)
+
+CREATE SCHEMA
+CREATE TABLE
+GRANT
+  table_schema  | table_name | grantee  | privilege_type | is_grantable 
+----------------+------------+----------+----------------+--------------
+ otherdb_public | tbl        | pan      | DELETE         | YES
+ otherdb_public | tbl        | pan      | INSERT         | YES
+ otherdb_public | tbl        | pan      | REFERENCES     | YES
+ otherdb_public | tbl        | pan      | SELECT         | YES
+ otherdb_public | tbl        | pan      | TRIGGER        | YES
+ otherdb_public | tbl        | pan      | TRUNCATE       | YES
+ otherdb_public | tbl        | pan      | UPDATE         | YES
+ otherdb_public | tbl        | testuser | SELECT         | NO
+(8 rows)
+
+CREATE TABLE
+GRANT
+psql:pg_tests/compatible/grant_on_all_tables_in_schema.sql:112: ERROR:  invalid privilege type CREATE for sequence
+RESET
