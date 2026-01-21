@@ -1,0 +1,5 @@
+pg_tests/compatible/collatedstring.sql
+pg_tests/compatible/collatedstring_constraint.sql
+pg_tests/compatible/collatedstring_index1.sql
+pg_tests/compatible/collatedstring_index2.sql
+pg_tests/compatible/collatedstring_normalization.sql

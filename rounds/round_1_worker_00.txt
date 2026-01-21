@@ -1,0 +1,5 @@
+pg_tests/compatible/aggregate.sql
+pg_tests/compatible/alias_types.sql
+pg_tests/compatible/alter_column_type.sql
+pg_tests/compatible/alter_database_convert_to_schema.sql
+pg_tests/compatible/alter_database_owner.sql

@@ -1,0 +1,5 @@
+pg_tests/compatible/composite_types.sql
+pg_tests/compatible/computed.sql
+pg_tests/compatible/conditional.sql
+pg_tests/compatible/connect_privilege.sql
+pg_tests/compatible/constrained_stats.sql

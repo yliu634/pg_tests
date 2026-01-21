@@ -1,0 +1,5 @@
+pg_tests/compatible/distsql_buffered_writes.sql
+pg_tests/compatible/distsql_builtin.sql
+pg_tests/compatible/distsql_crdb_internal.sql
+pg_tests/compatible/distsql_datetime.sql
+pg_tests/compatible/distsql_distinct_on.sql

@@ -1,0 +1,5 @@
+pg_tests/compatible/datetime.sql
+pg_tests/compatible/decimal.sql
+pg_tests/compatible/default.sql
+pg_tests/compatible/delete.sql
+pg_tests/compatible/delete_batch.sql

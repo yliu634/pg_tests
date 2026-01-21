@@ -1,0 +1,5 @@
+pg_tests/compatible/create_as_non_metamorphic.sql
+pg_tests/compatible/create_index.sql
+pg_tests/compatible/create_statements.sql
+pg_tests/compatible/create_table.sql
+pg_tests/compatible/cross_join.sql

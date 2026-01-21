@@ -1,0 +1,5 @@
+pg_tests/compatible/bpchar.sql
+pg_tests/compatible/buffered_writes.sql
+pg_tests/compatible/builtin_function.sql
+pg_tests/compatible/builtin_function_notenant.sql
+pg_tests/compatible/bytes.sql

@@ -1,0 +1,5 @@
+pg_tests/compatible/collatedstring_nullinindex.sql
+pg_tests/compatible/collatedstring_uniqueindex1.sql
+pg_tests/compatible/collatedstring_uniqueindex2.sql
+pg_tests/compatible/column_families.sql
+pg_tests/compatible/comment_on.sql

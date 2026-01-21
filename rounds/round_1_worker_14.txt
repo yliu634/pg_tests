@@ -1,0 +1,5 @@
+pg_tests/compatible/cross_version_tenant_backup.sql
+pg_tests/compatible/cursor.sql
+pg_tests/compatible/custom_escape_character.sql
+pg_tests/compatible/dangerous_statements.sql
+pg_tests/compatible/database.sql
