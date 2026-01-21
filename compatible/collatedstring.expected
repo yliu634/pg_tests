@@ -1,0 +1,522 @@
+SET
+CREATE COLLATION
+CREATE COLLATION
+CREATE COLLATION
+CREATE COLLATION
+CREATE COLLATION
+CREATE COLLATION
+CREATE COLLATION
+CREATE COLLATION
+CREATE COLLATION
+CREATE COLLATION
+psql:pg_tests/compatible/collatedstring.sql:35: ERROR:  collation "bad_locale" for encoding "UTF8" does not exist
+LINE 1: SELECT 'a' COLLATE bad_locale;
+                   ^
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ A
+(1 row)
+
+ ?column? 
+----------
+ A
+(1 row)
+
+ name 
+------
+ A
+(1 row)
+
+ name 
+------
+ A
+(1 row)
+
+ ?column? 
+----------
+ 
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+psql:pg_tests/compatible/collatedstring.sql:164: ERROR:  collations are not supported by type integer
+LINE 2:   a INT COLLATE en
+                ^
+CREATE TABLE
+ column_name | collation_name 
+-------------+----------------
+ a           | en
+(1 row)
+
+ column_name | collation_name 
+-------------+----------------
+ a           | en
+(1 row)
+
+INSERT 0 6
+INSERT 0 2
+ a 
+---
+ a
+ A
+ b
+ B
+ ü
+ x
+ X
+ y
+(8 rows)
+
+ a 
+---
+ a
+ A
+ b
+ B
+ x
+ X
+ y
+ ü
+(8 rows)
+
+ a 
+---
+ A
+(1 row)
+
+ varchar 
+---------
+ a🐛b
+(1 row)
+
+ bool 
+------
+ t
+(1 row)
+
+ int4 
+------
+   42
+(1 row)
+
+ float8 
+--------
+     42
+(1 row)
+
+ numeric 
+---------
+    42.0
+(1 row)
+
+ bytea 
+-------
+ \x61
+(1 row)
+
+         timestamp          
+----------------------------
+ 2017-01-10 16:05:50.734049
+(1 row)
+
+          timestamptz          
+-------------------------------
+ 2017-01-10 16:05:50.734049+00
+(1 row)
+
+ interval 
+----------
+ 40 days
+(1 row)
+
+CREATE TABLE
+PREPARE
+ a 
+---
+ 
+(1 row)
+
+INSERT 0 1
+ a 
+---
+ 
+(1 row)
+
+INSERT 0 1
+  a   
+------
+ aBcD
+(1 row)
+
+  a   
+------
+ aBcD
+(1 row)
+
+CREATE TABLE
+ column_name |  collation_name   
+-------------+-------------------
+ a           | en-US-u-ks-level2
+(1 row)
+
+ column_name |  collation_name   
+-------------+-------------------
+ a           | en-US-u-ks-level2
+(1 row)
+
+CREATE TABLE
+INSERT 0 3
+CREATE TABLE
+      column_name       | collation 
+------------------------+-----------
+ cmax                   | 
+ cmin                   | 
+ collated_str           | en
+ ctid                   | 
+ default_collation      | default
+ no_collation_str       | default
+ no_collation_str_array | default
+ tableoid               | 
+ xmax                   | 
+ xmin                   | 
+(10 rows)
+
+ ?column? | ?column? | ?column? 
+----------+----------+----------
+ t        | t        | t
+(1 row)
+
+INSERT 0 1
+ ?column? | ?column? 
+----------+----------
+ t        | t
+(1 row)
+
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+  s  
+-----
+ Bbb
+(1 row)
+
+  s  
+-----
+ Bbb
+(1 row)
+
+  s  
+-----
+ Bbb
+(1 row)
+
+ column_name |  collation_name   
+-------------+-------------------
+ s           | en-US-u-ks-level2
+(1 row)
+
+ column_name |  collation_name   
+-------------+-------------------
+ s           | en-US-u-ks-level2
+(1 row)
+
+psql:pg_tests/compatible/collatedstring.sql:339: ERROR:  collation "en-us-u-ks-l"evel2" for encoding "UTF8" does not exist
+LINE 1: SELECT s FROM nocase_strings WHERE s = ('bbb' COLLATE "en-us...
+                                                      ^
+INSERT 0 2
+  s  
+-----
+ Bbb
+(1 row)
+
+  s  
+-----
+ Bbb
+(1 row)
+
+  s  
+-----
+ Bbb
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+  a  |  b  
+-----+-----
+ abc | abc
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+ id 
+----
+  1
+(1 row)
+
+INSERT 0 3
+ string_field 
+--------------
+ Bar
+(1 row)
+
+ string_field 
+--------------
+ Bar
+ Baz
+(2 rows)
+
+ string_field  
+---------------
+ sTR_cOLLATE_1
+ Foo
+(2 rows)
+
+ string_field  
+---------------
+ sTR_cOLLATE_1
+ Foo
+ Baz
+(3 rows)
+
+ ?column? 
+----------
+ 
+(1 row)
+
+ array 
+-------
+ {a}
+(1 row)
+
+ array  
+--------
+ {NULL}
+(1 row)
+
+  array   
+----------
+ {a,NULL}
+(1 row)
+
+ array 
+-------
+ {a}
+(1 row)
+
+   array    
+------------
+ {a,b,NULL}
+(1 row)
+
+ array 
+-------
+ {{a}}
+(1 row)
+
+ array 
+-------
+ {{a}}
+(1 row)
+
+ array 
+-------
+ {{a}}
+(1 row)
+
+ string_to_array 
+-----------------
+ {a,b,c}
+(1 row)
+
+CREATE TABLE
+INSERT 0 3
+    a    
+---------
+ {d,e,f}
+ {h,i,j}
+ 
+(3 rows)
+
+ b 
+---
+ d
+ h
+ 
+(3 rows)
+

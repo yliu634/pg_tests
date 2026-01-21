@@ -13,6 +13,10 @@ CREATE ROLE aso_root LOGIN SUPERUSER;
 CREATE ROLE aso_testuser LOGIN;
 CREATE ROLE aso_testuser2 LOGIN;
 
+-- Grant privileges needed for non-superuser role ownership/DDL in the temp DB.
+SELECT format('GRANT CREATE ON DATABASE %I TO aso_testuser, aso_testuser2', current_database()) \gexec
+GRANT aso_testuser2 TO aso_testuser;
+
 -- user root
 SET SESSION AUTHORIZATION aso_root;
 
@@ -47,7 +51,6 @@ RESET SESSION AUTHORIZATION;
 SET SESSION AUTHORIZATION aso_root;
 
 -- Test 8: statement (line 35)
-GRANT aso_testuser2 TO aso_testuser;
 
 -- user testuser
 RESET SESSION AUTHORIZATION;
@@ -92,7 +95,7 @@ SELECT pg_get_userbyid(nspowner) FROM pg_namespace WHERE nspname = 's';
 
 -- Cleanup (roles are cluster-wide, so remove them to keep the suite isolated).
 RESET SESSION AUTHORIZATION;
-SELECT format('REVOKE CREATE ON DATABASE %I FROM aso_testuser', current_database()) \gexec
+SELECT format('REVOKE CREATE ON DATABASE %I FROM aso_testuser, aso_testuser2', current_database()) \gexec
 DROP SCHEMA IF EXISTS s CASCADE;
 DROP ROLE IF EXISTS aso_testuser;
 DROP ROLE IF EXISTS aso_testuser2;

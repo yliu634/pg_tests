@@ -1,0 +1,513 @@
+SET
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+GRANT
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+GRANT
+SET
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+DO
+CREATE ROLE
+GRANT
+GRANT ROLE
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantee  | privilege_type | is_grantable 
+----------+----------------+--------------
+ root     | DELETE         | YES
+ root     | INSERT         | YES
+ root     | REFERENCES     | YES
+ root     | SELECT         | YES
+ root     | TRIGGER        | YES
+ root     | TRUNCATE       | YES
+ root     | UPDATE         | YES
+ testuser | SELECT         | NO
+ who      | SELECT         | YES
+(9 rows)
+
+--
+(0 rows)
+
+GRANT
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+SET
+ grantee  | privilege_type | is_grantable 
+----------+----------------+--------------
+ testuser | SELECT         | NO
+(1 row)
+
+ grantee  | privilege_type | is_grantable 
+----------+----------------+--------------
+ testuser | INSERT         | YES
+ testuser | SELECT         | YES
+(2 rows)
+
+psql:pg_tests/compatible/alter_default_privileges_with_grant_option.sql:118: WARNING:  no privileges were granted for "t1"
+GRANT
+GRANT
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantee  | privilege_type | is_grantable 
+----------+----------------+--------------
+ root     | DELETE         | YES
+ root     | INSERT         | YES
+ root     | REFERENCES     | YES
+ root     | SELECT         | YES
+ root     | TRIGGER        | YES
+ root     | TRUNCATE       | YES
+ root     | UPDATE         | YES
+ testuser | DELETE         | YES
+ testuser | INSERT         | YES
+ testuser | REFERENCES     | YES
+ testuser | SELECT         | YES
+ testuser | TRIGGER        | YES
+ testuser | TRUNCATE       | YES
+ testuser | UPDATE         | YES
+ who      | SELECT         | YES
+(15 rows)
+
+GRANT
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantee  | privilege_type | is_grantable 
+----------+----------------+--------------
+ root     | DELETE         | YES
+ root     | INSERT         | YES
+ root     | REFERENCES     | YES
+ root     | SELECT         | YES
+ root     | TRIGGER        | YES
+ root     | TRUNCATE       | YES
+ root     | UPDATE         | YES
+ testuser | DELETE         | NO
+ testuser | INSERT         | NO
+ testuser | REFERENCES     | YES
+ testuser | SELECT         | YES
+ testuser | TRIGGER        | YES
+ testuser | TRUNCATE       | YES
+ testuser | UPDATE         | YES
+ who      | SELECT         | YES
+(15 rows)
+
+GRANT
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantee  | privilege_type | is_grantable 
+----------+----------------+--------------
+ root     | DELETE         | YES
+ root     | INSERT         | YES
+ root     | REFERENCES     | YES
+ root     | SELECT         | YES
+ root     | TRIGGER        | YES
+ root     | TRUNCATE       | YES
+ root     | UPDATE         | YES
+ testuser | DELETE         | NO
+ testuser | INSERT         | NO
+ testuser | REFERENCES     | NO
+ testuser | SELECT         | NO
+ testuser | TRIGGER        | NO
+ testuser | TRUNCATE       | NO
+ testuser | UPDATE         | NO
+ who      | SELECT         | YES
+(15 rows)
+
+GRANT
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantee | privilege_type | is_grantable 
+---------+----------------+--------------
+ root    | DELETE         | YES
+ root    | INSERT         | YES
+ root    | REFERENCES     | YES
+ root    | SELECT         | YES
+ root    | TRIGGER        | YES
+ root    | TRUNCATE       | YES
+ root    | UPDATE         | YES
+ who     | SELECT         | YES
+(8 rows)
+
+CREATE TABLE
+ grantee | privilege_type | is_grantable 
+---------+----------------+--------------
+ root    | DELETE         | YES
+ root    | INSERT         | YES
+ root    | REFERENCES     | YES
+ root    | SELECT         | YES
+ root    | TRIGGER        | YES
+ root    | TRUNCATE       | YES
+ root    | UPDATE         | YES
+ who     | SELECT         | YES
+(8 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantee  | privilege_type | is_grantable 
+----------+----------------+--------------
+ root     | DELETE         | YES
+ root     | INSERT         | YES
+ root     | REFERENCES     | YES
+ root     | SELECT         | YES
+ root     | TRIGGER        | YES
+ root     | TRUNCATE       | YES
+ root     | UPDATE         | YES
+ testuser | DELETE         | YES
+ testuser | INSERT         | YES
+ testuser | REFERENCES     | YES
+ testuser | SELECT         | YES
+ testuser | TRIGGER        | YES
+ testuser | TRUNCATE       | YES
+ testuser | UPDATE         | YES
+ who      | SELECT         | YES
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantee  | privilege_type | is_grantable 
+----------+----------------+--------------
+ root     | DELETE         | YES
+ root     | INSERT         | YES
+ root     | REFERENCES     | YES
+ root     | SELECT         | YES
+ root     | TRIGGER        | YES
+ root     | TRUNCATE       | YES
+ root     | UPDATE         | YES
+ testuser | DELETE         | YES
+ testuser | INSERT         | YES
+ testuser | REFERENCES     | YES
+ testuser | SELECT         | YES
+ testuser | TRIGGER        | YES
+ testuser | TRUNCATE       | YES
+ testuser | UPDATE         | YES
+ who      | SELECT         | YES
+(15 rows)
+
+GRANT
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+GRANT
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantee  | privilege_type | is_grantable 
+----------+----------------+--------------
+ root     | DELETE         | YES
+ root     | INSERT         | YES
+ root     | REFERENCES     | YES
+ root     | SELECT         | YES
+ root     | TRIGGER        | YES
+ root     | TRUNCATE       | YES
+ root     | UPDATE         | YES
+ testuser | DELETE         | NO
+ testuser | INSERT         | NO
+ testuser | REFERENCES     | NO
+ testuser | SELECT         | NO
+ testuser | TRIGGER        | NO
+ testuser | TRUNCATE       | NO
+ testuser | UPDATE         | NO
+ who      | SELECT         | YES
+(15 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantee | privilege_type | is_grantable 
+---------+----------------+--------------
+ root    | DELETE         | YES
+ root    | INSERT         | YES
+ root    | REFERENCES     | YES
+ root    | SELECT         | YES
+ root    | TRIGGER        | YES
+ root    | TRUNCATE       | YES
+ root    | UPDATE         | YES
+ who     | SELECT         | YES
+(8 rows)
+
+GRANT
+ grantee  | privilege_type | is_grantable 
+----------+----------------+--------------
+ root     | DELETE         | YES
+ root     | INSERT         | YES
+ root     | REFERENCES     | YES
+ root     | SELECT         | YES
+ root     | TRIGGER        | YES
+ root     | TRUNCATE       | YES
+ root     | UPDATE         | YES
+ testuser | DELETE         | NO
+ testuser | INSERT         | NO
+ testuser | REFERENCES     | NO
+ testuser | SELECT         | NO
+ testuser | TRIGGER        | NO
+ testuser | TRUNCATE       | NO
+ testuser | UPDATE         | NO
+ who      | SELECT         | YES
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+SET
+ALTER DEFAULT PRIVILEGES
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantee  | privilege_type | is_grantable 
+----------+----------------+--------------
+ testuser | DELETE         | YES
+ testuser | INSERT         | YES
+ testuser | REFERENCES     | YES
+ testuser | SELECT         | YES
+ testuser | TRIGGER        | YES
+ testuser | TRUNCATE       | YES
+ testuser | UPDATE         | YES
+ who      | SELECT         | YES
+(8 rows)
+
+psql:pg_tests/compatible/alter_default_privileges_with_grant_option.sql:310: WARNING:  no privileges were granted for "t12"
+GRANT
+ALTER DEFAULT PRIVILEGES
+SET
+ has_select | has_select_with_grant_option 
+------------+------------------------------
+ f          | f
+(1 row)
+
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+  grantee  | privilege_type | is_grantable 
+-----------+----------------+--------------
+ testuser  | DELETE         | YES
+ testuser  | INSERT         | YES
+ testuser  | REFERENCES     | YES
+ testuser  | SELECT         | YES
+ testuser  | TRIGGER        | YES
+ testuser  | TRUNCATE       | YES
+ testuser  | UPDATE         | YES
+ testuser2 | SELECT         | YES
+ who       | SELECT         | YES
+(9 rows)
+
+GRANT
+GRANT
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+  grantee  | privilege_type | is_grantable 
+-----------+----------------+--------------
+ testuser  | DELETE         | YES
+ testuser  | INSERT         | YES
+ testuser  | REFERENCES     | YES
+ testuser  | SELECT         | YES
+ testuser  | TRIGGER        | YES
+ testuser  | TRUNCATE       | YES
+ testuser  | UPDATE         | YES
+ testuser2 | DELETE         | YES
+ testuser2 | INSERT         | YES
+ testuser2 | REFERENCES     | YES
+ testuser2 | SELECT         | YES
+ testuser2 | TRIGGER        | YES
+ testuser2 | TRUNCATE       | YES
+ testuser2 | UPDATE         | YES
+ who       | SELECT         | YES
+(15 rows)
+
+GRANT
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+  grantee  | privilege_type | is_grantable 
+-----------+----------------+--------------
+ testuser  | DELETE         | YES
+ testuser  | INSERT         | YES
+ testuser  | REFERENCES     | YES
+ testuser  | SELECT         | YES
+ testuser  | TRIGGER        | YES
+ testuser  | TRUNCATE       | YES
+ testuser  | UPDATE         | YES
+ testuser2 | DELETE         | YES
+ testuser2 | INSERT         | NO
+ testuser2 | REFERENCES     | YES
+ testuser2 | SELECT         | NO
+ testuser2 | TRIGGER        | YES
+ testuser2 | TRUNCATE       | YES
+ testuser2 | UPDATE         | YES
+ who       | SELECT         | YES
+(15 rows)
+
+GRANT
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+  grantee  | privilege_type | is_grantable 
+-----------+----------------+--------------
+ testuser  | DELETE         | YES
+ testuser  | INSERT         | YES
+ testuser  | REFERENCES     | YES
+ testuser  | SELECT         | YES
+ testuser  | TRIGGER        | YES
+ testuser  | TRUNCATE       | YES
+ testuser  | UPDATE         | YES
+ testuser2 | DELETE         | NO
+ testuser2 | INSERT         | NO
+ testuser2 | REFERENCES     | NO
+ testuser2 | SELECT         | NO
+ testuser2 | TRIGGER        | NO
+ testuser2 | TRUNCATE       | NO
+ testuser2 | UPDATE         | NO
+ who       | SELECT         | YES
+(15 rows)
+
+GRANT
+SET
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantee  | privilege_type | is_grantable 
+----------+----------------+--------------
+ testuser | DELETE         | YES
+ testuser | INSERT         | YES
+ testuser | REFERENCES     | YES
+ testuser | SELECT         | YES
+ testuser | TRIGGER        | YES
+ testuser | TRUNCATE       | YES
+ testuser | UPDATE         | YES
+ who      | SELECT         | YES
+(8 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE SCHEMA
+  grantee  | privilege_type | is_grantable 
+-----------+----------------+--------------
+ testuser  | CREATE         | YES
+ testuser  | USAGE          | YES
+ testuser2 | CREATE         | YES
+ testuser2 | USAGE          | YES
+(4 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE SCHEMA
+  grantee  | privilege_type | is_grantable 
+-----------+----------------+--------------
+ testuser  | CREATE         | NO
+ testuser  | USAGE          | NO
+ testuser2 | CREATE         | NO
+ testuser2 | USAGE          | NO
+(4 rows)
+
+GRANT
+GRANT
+GRANT
+GRANT
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+ grantee  | privilege_type | is_grantable 
+----------+----------------+--------------
+ testuser | DELETE         | YES
+ testuser | INSERT         | YES
+ testuser | REFERENCES     | YES
+ testuser | SELECT         | YES
+ testuser | TRIGGER        | YES
+ testuser | TRUNCATE       | YES
+ testuser | UPDATE         | YES
+ who      | SELECT         | YES
+(8 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+GRANT
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE SEQUENCE
+ grantee | privilege_type | is_grantable 
+---------+----------------+--------------
+(0 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE TYPE
+ grantee | privilege_type | is_grantable 
+---------+----------------+--------------
+(0 rows)
+
+GRANT
+GRANT
+SET
+GRANT
+ALTER DEFAULT PRIVILEGES
+SET
+ALTER DEFAULT PRIVILEGES
+SET
+GRANT ROLE
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+SET
+CREATE TABLE
+  grantee  | privilege_type | is_grantable 
+-----------+----------------+--------------
+ testuser  | DELETE         | YES
+ testuser  | INSERT         | YES
+ testuser  | REFERENCES     | YES
+ testuser  | SELECT         | YES
+ testuser  | TRIGGER        | YES
+ testuser  | TRUNCATE       | YES
+ testuser  | UPDATE         | YES
+ testuser2 | DELETE         | YES
+ testuser2 | INSERT         | YES
+ testuser2 | REFERENCES     | YES
+ testuser2 | SELECT         | YES
+ testuser2 | TRIGGER        | YES
+ testuser2 | TRUNCATE       | YES
+ testuser2 | UPDATE         | YES
+ who       | SELECT         | YES
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+SET
+CREATE TABLE
+  grantee  | privilege_type | is_grantable 
+-----------+----------------+--------------
+ testuser  | DELETE         | YES
+ testuser  | INSERT         | YES
+ testuser  | REFERENCES     | YES
+ testuser  | SELECT         | YES
+ testuser  | TRIGGER        | YES
+ testuser  | TRUNCATE       | YES
+ testuser  | UPDATE         | YES
+ testuser2 | DELETE         | NO
+ testuser2 | INSERT         | NO
+ testuser2 | REFERENCES     | NO
+ testuser2 | SELECT         | NO
+ testuser2 | TRIGGER        | NO
+ testuser2 | TRUNCATE       | NO
+ testuser2 | UPDATE         | NO
+ who       | SELECT         | YES
+(15 rows)
+
+GRANT
+GRANT
+RESET
+RESET

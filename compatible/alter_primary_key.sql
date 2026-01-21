@@ -2,13 +2,13 @@
 -- 427 tests
 
 -- Test 1: statement (line 5)
-CREATE TABLE t (x INT PRIMARY KEY, y INT NOT NULL, z INT NOT NULL, w INT, INDEX i (x), INDEX i2 (z))
+CREATE TABLE t (x INT PRIMARY KEY, y INT NOT NULL, z INT NOT NULL, w INT, INDEX i (x), INDEX i2 (z));
 
 -- Test 2: statement (line 8)
-INSERT INTO t VALUES (1, 2, 3, 4), (5, 6, 7, 8)
+INSERT INTO t VALUES (1, 2, 3, 4), (5, 6, 7, 8);
 
 -- Test 3: statement (line 11)
-ALTER TABLE t ALTER PRIMARY KEY USING COLUMNS (y, y)
+ALTER TABLE t ALTER PRIMARY KEY USING COLUMNS (y, y);
 
 -- Test 4: statement (line 14)
 ALTER TABLE t ALTER PRIMARY KEY USING COLUMNS (y, z)
@@ -1435,4 +1435,3 @@ SELECT create_statement FROM [SHOW CREATE TABLE public.table_w0_66]
 
 -- Test 427: query (line 2399)
 SELECT create_statement FROM [SHOW CREATE TABLE public.table_w0_66]
-
