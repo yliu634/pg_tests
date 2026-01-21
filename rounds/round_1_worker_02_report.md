@@ -7,9 +7,9 @@ NEEDS_ADAPTATION: pg_tests/compatible/alter_default_privileges_with_grant_option
 ADAPTED_SUCCESS: pg_tests/compatible/alter_default_privileges_with_grant_option.sql
 NEEDS_ADAPTATION: pg_tests/compatible/alter_external_connection.sql
 ADAPTED_SUCCESS: pg_tests/compatible/alter_external_connection.sql
-SKIP: pg_tests/compatible/alter_role.sql (already in baseline)
 NEEDS_ADAPTATION: pg_tests/compatible/alter_primary_key.sql
 FAILED: pg_tests/compatible/alter_primary_key.sql
+SKIP: pg_tests/compatible/alter_role.sql (already in baseline)
 
 ## Summary
 
