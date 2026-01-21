@@ -1,0 +1,242 @@
+SET
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+DROP PROCEDURE
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+DROP SCHEMA
+DROP FUNCTION
+DROP TYPE
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP FUNCTION
+DROP SCHEMA
+DROP FUNCTION
+DROP TABLE
+CREATE TYPE
+CREATE FUNCTION
+                       create_statement                        
+---------------------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.f_test_alter_opt(i integer)+
+  RETURNS integer                                             +
+  LANGUAGE sql                                                +
+ AS $function$ SELECT 1 $function$                            +
+ 
+(1 row)
+
+ALTER FUNCTION
+psql:compatible/udf_schema_change.sql:49: ERROR:  only superuser can define a leakproof function
+psql:compatible/udf_schema_change.sql:54: ERROR:  only superuser can define a leakproof function
+ALTER FUNCTION
+                       create_statement                        
+---------------------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.f_test_alter_opt(i integer)+
+  RETURNS integer                                             +
+  LANGUAGE sql                                                +
+  IMMUTABLE STRICT                                            +
+ AS $function$ SELECT 1 $function$                            +
+ 
+(1 row)
+
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE PROCEDURE
+                        create_statement                        
+----------------------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.f_test_alter_name(i integer)+
+  RETURNS integer                                              +
+  LANGUAGE sql                                                 +
+ AS $function$ SELECT 1 $function$                             +
+ 
+(1 row)
+
+psql:compatible/udf_schema_change.sql:81: ERROR:  function f_test_alter_name(integer) already exists in schema "public"
+psql:compatible/udf_schema_change.sql:87: ERROR:  function f_test_alter_name_same_in(integer) already exists in schema "public"
+psql:compatible/udf_schema_change.sql:93: ERROR:  function p(integer) already exists in schema "public"
+psql:compatible/udf_schema_change.sql:99: ERROR:  f_test_alter_name(integer) is not a procedure
+ALTER FUNCTION
+psql:compatible/udf_schema_change.sql:108: ERROR:  function "f_test_alter_name(integer)" does not exist
+LINE 1: SELECT pg_get_functiondef('f_test_alter_name(integer)'::regp...
+                                  ^
+                          create_statement                          
+--------------------------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.f_test_alter_name_new(i integer)+
+  RETURNS integer                                                  +
+  LANGUAGE sql                                                     +
+ AS $function$ SELECT 1 $function$                                 +
+ 
+(1 row)
+
+ALTER FUNCTION
+psql:compatible/udf_schema_change.sql:120: ERROR:  function "f_test_alter_name_new(integer)" does not exist
+LINE 1: SELECT pg_get_functiondef('f_test_alter_name_new(integer)'::...
+                                  ^
+                            create_statement                            
+------------------------------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.f_test_alter_name_diff_in()         +
+  RETURNS integer                                                      +
+  LANGUAGE sql                                                         +
+ AS $function$ SELECT 1 $function$                                     +
+ 
+ CREATE OR REPLACE FUNCTION public.f_test_alter_name_diff_in(i integer)+
+  RETURNS integer                                                      +
+  LANGUAGE sql                                                         +
+ AS $function$ SELECT 1 $function$                                     +
+ 
+(2 rows)
+
+DROP PROCEDURE
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE SCHEMA
+CREATE FUNCTION
+    schema     |  proname  |   args    
+---------------+-----------+-----------
+ public        | f_test_sc | 
+ public        | f_test_sc | i integer
+ test_alter_sc | f_test_sc | 
+(3 rows)
+
+psql:compatible/udf_schema_change.sql:155: ERROR:  permission denied for schema pg_catalog
+psql:compatible/udf_schema_change.sql:161: ERROR:  function f_test_sc() already exists in schema "test_alter_sc"
+psql:compatible/udf_schema_change.sql:167: ERROR:  f_test_sc(integer) is not a procedure
+ALTER FUNCTION
+    schema     |  proname  |   args    
+---------------+-----------+-----------
+ public        | f_test_sc | 
+ test_alter_sc | f_test_sc | 
+ test_alter_sc | f_test_sc | i integer
+(3 rows)
+
+               create_statement                
+-----------------------------------------------
+ CREATE OR REPLACE FUNCTION public.f_test_sc()+
+  RETURNS integer                             +
+  LANGUAGE sql                                +
+ AS $function$ SELECT 1 $function$            +
+ 
+(1 row)
+
+psql:compatible/udf_schema_change.sql:186: ERROR:  function f_test_sc(integer) does not exist
+                       create_statement                        
+---------------------------------------------------------------
+ CREATE OR REPLACE FUNCTION test_alter_sc.f_test_sc(i integer)+
+  RETURNS integer                                             +
+  LANGUAGE sql                                                +
+ AS $function$ SELECT 2 $function$                            +
+ 
+(1 row)
+
+                   create_statement                   
+------------------------------------------------------
+ CREATE OR REPLACE FUNCTION test_alter_sc.f_test_sc()+
+  RETURNS integer                                    +
+  LANGUAGE sql                                       +
+ AS $function$ SELECT 3 $function$                   +
+ 
+(1 row)
+
+                   create_statement                   
+------------------------------------------------------
+ CREATE OR REPLACE FUNCTION test_alter_sc.f_test_sc()+
+  RETURNS integer                                    +
+  LANGUAGE sql                                       +
+ AS $function$ SELECT 3 $function$                   +
+ 
+(1 row)
+
+CREATE FUNCTION
+                 create_statement                  
+---------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.f_udt_rewrite()+
+  RETURNS notmyworkday                            +
+  LANGUAGE plpgsql                                +
+ AS $function$                                    +
+ BEGIN                                            +
+   RETURN 'Monday';                               +
+ END                                              +
+ $function$                                       +
+ 
+(1 row)
+
+ f_udt_rewrite 
+---------------
+ Monday
+(1 row)
+
+ALTER TYPE
+ f_udt_rewrite 
+---------------
+ Monday
+(1 row)
+
+ALTER TYPE
+ f_udt_rewrite 
+---------------
+ Monday
+(1 row)
+
+CREATE SCHEMA
+CREATE SCHEMA
+CREATE TYPE
+CREATE FUNCTION
+CREATE FUNCTION
+ f_type 
+--------
+ Mon
+(1 row)
+
+ f_type 
+--------
+ Mon
+(1 row)
+
+ALTER SCHEMA
+psql:compatible/udf_schema_change.sql:255: ERROR:  schema "sc1" does not exist
+LINE 1: SELECT sc1.f_type();
+               ^
+ f_type 
+--------
+ Mon
+(1 row)
+
+ f_type 
+--------
+ Mon
+(1 row)
+
+CREATE TABLE
+CREATE FUNCTION
+    f_rtbl    
+--------------
+ (1,foobar,2)
+(1 row)
+
+ALTER TABLE
+psql:compatible/udf_schema_change.sql:278: ERROR:  return type mismatch in function declared to return t_alter
+DETAIL:  Final statement returns too many columns.
+CONTEXT:  SQL function "f_rtbl" during startup
+ALTER TABLE
+    f_rtbl    
+--------------
+ (1,foobar,2)
+(1 row)
+
+ALTER TABLE
+psql:compatible/udf_schema_change.sql:290: ERROR:  return type mismatch in function declared to return t_alter
+DETAIL:  Final statement returns too few columns.
+CONTEXT:  SQL function "f_rtbl"
+CREATE FUNCTION
+     f_rtbl     
+----------------
+ (1,foobar,2,3)
+(1 row)
+
+RESET

@@ -1,0 +1,4 @@
+source: compatible/kv_builtin_functions.expected
+pattern: psql:.* ERROR:
+matches:
+line 49: psql:pg_tests/compatible/kv_builtin_functions.sql:70: ERROR:  pq: unknown queue "non-existent"

@@ -1,0 +1,13 @@
+source: compatible/udf_upsert.expected
+pattern: psql:.* ERROR:
+matches:
+line 98: psql:compatible/udf_upsert.sql:83: ERROR:  duplicate key value violates unique constraint "t_ocdu_b_key"
+line 122: psql:compatible/udf_upsert.sql:125: ERROR:  new row for relation "t_check1" violates check constraint "t_check1_a_check"
+line 126: psql:compatible/udf_upsert.sql:136: ERROR:  new row for relation "t_check1" violates check constraint "t_check1_a_check"
+line 130: psql:compatible/udf_upsert.sql:147: ERROR:  new row for relation "t_check1" violates check constraint "t_check1_a_check"
+line 133: psql:compatible/udf_upsert.sql:152: ERROR:  new row for relation "t_check1" violates check constraint "t_check1_b_check"
+line 138: psql:compatible/udf_upsert.sql:166: ERROR:  null value in column "a" of relation "t_check2" violates not-null constraint
+line 142: psql:compatible/udf_upsert.sql:177: ERROR:  value too long for type character(3)
+line 145: psql:compatible/udf_upsert.sql:188: ERROR:  null value in column "a" of relation "t_check2" violates not-null constraint
+line 148: psql:compatible/udf_upsert.sql:193: ERROR:  value too long for type character(3)
+line 153: psql:compatible/udf_upsert.sql:213: ERROR:  column "b" does not exist

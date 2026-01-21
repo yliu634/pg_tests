@@ -1,0 +1,4 @@
+source: compatible/show_create_all_tables_builtin.expected
+pattern: psql:.* ERROR:
+matches:
+line 4: psql:compatible/show_create_all_tables_builtin.sql:50: ERROR:  schema group \"d\" not found

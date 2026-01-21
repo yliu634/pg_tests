@@ -1,0 +1,4 @@
+source: compatible/retry.expected
+pattern: psql:.* ERROR:
+matches:
+line 9: psql:compatible/retry.sql:27: ERROR:  wrong

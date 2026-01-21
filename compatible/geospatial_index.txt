@@ -1,0 +1,6 @@
+source: compatible/geospatial_index.expected
+pattern: psql:.* ERROR:
+matches:
+line 5: psql:compatible/geospatial_index.sql:23: ERROR:  unrecognized parameter "s2_max_cells"
+line 7: psql:compatible/geospatial_index.sql:29: ERROR:  unrecognized parameter "s2_max_level"
+line 9: psql:compatible/geospatial_index.sql:35: ERROR:  unrecognized parameter "geometry_min_x"

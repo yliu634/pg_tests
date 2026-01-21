@@ -1,0 +1,5 @@
+source: compatible/statement_statistics.expected
+pattern: psql:.* ERROR:
+matches:
+line 82: psql:pg_tests/compatible/statement_statistics.sql:128: ERROR:  cannot take square root of a negative number
+line 132: psql:pg_tests/compatible/statement_statistics.sql:162: ERROR:  division by zero

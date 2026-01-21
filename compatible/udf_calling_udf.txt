@@ -1,0 +1,8 @@
+source: compatible/udf_calling_udf.expected
+pattern: psql:.* ERROR:
+matches:
+line 66: psql:compatible/udf_calling_udf.sql:122: ERROR:  duplicate key value violates unique constraint "ab_pkey"
+line 70: psql:compatible/udf_calling_udf.sql:129: ERROR:  cannot drop table ab because other objects depend on it
+line 74: psql:compatible/udf_calling_udf.sql:139: ERROR:  cannot drop function ins_ab(integer,integer) because other objects depend on it
+line 110: psql:compatible/udf_calling_udf.sql:222: ERROR:  cannot drop function f2(integer) because other objects depend on it
+line 113: psql:compatible/udf_calling_udf.sql:223: ERROR:  cannot drop function f1(integer) because other objects depend on it

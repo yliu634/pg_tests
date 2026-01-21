@@ -1,0 +1,7 @@
+source: compatible/proc_invokes_proc.expected
+pattern: psql:.* ERROR:
+matches:
+line 6: psql:compatible/proc_invokes_proc.sql:25: ERROR:  procedure a() does not exist
+line 13: psql:compatible/proc_invokes_proc.sql:48: ERROR:  type "e" does not exist
+line 19: psql:compatible/proc_invokes_proc.sql:77: ERROR:  duplicate key value violates unique constraint "ab_pkey"
+line 33: psql:compatible/proc_invokes_proc.sql:89: ERROR:  procedure ins_ab(integer, integer) does not exist

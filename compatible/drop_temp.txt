@@ -1,0 +1,4 @@
+source: compatible/drop_temp.expected
+pattern: psql:.* ERROR:
+matches:
+line 10: psql:compatible/drop_temp.sql:24: ERROR:  must be owner of table t_tmp

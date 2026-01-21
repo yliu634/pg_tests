@@ -1,0 +1,8 @@
+source: compatible/reset.expected
+pattern: psql:.* ERROR:
+matches:
+line 2: psql:pg_tests/compatible/reset.sql:7: ERROR:  unrecognized configuration parameter "foo"
+line 15: psql:pg_tests/compatible/reset.sql:24: ERROR:  parameter "server_version" cannot be changed
+line 30: psql:pg_tests/compatible/reset.sql:45: ERROR:  unrecognized configuration parameter "names"
+line 68: psql:pg_tests/compatible/reset.sql:81: ERROR:  unrecognized configuration parameter "default_transaction_use_follower_reads"
+line 71: psql:pg_tests/compatible/reset.sql:90: ERROR:  unrecognized configuration parameter "default_transaction_use_follower_reads"

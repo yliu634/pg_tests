@@ -1,0 +1,6 @@
+source: compatible/geospatial_bbox.expected
+pattern: psql:.* ERROR:
+matches:
+line 9: psql:compatible/geospatial_bbox.sql:25: ERROR:  BOX2D_construct: arguments must be points
+line 11: psql:compatible/geospatial_bbox.sql:37: ERROR:  BOX2D_construct: args can not be empty points
+line 13: psql:compatible/geospatial_bbox.sql:49: ERROR:  BOX2D_construct: Operation on mixed SRID geometries (Point, 4326) != (Point, 3857)

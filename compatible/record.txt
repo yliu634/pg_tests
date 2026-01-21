@@ -1,0 +1,8 @@
+source: compatible/record.expected
+pattern: psql:.* ERROR:
+matches:
+line 17: psql:compatible/record.sql:27: ERROR:  invalid input syntax for type integer: "blah"
+line 57: psql:compatible/record.sql:49: ERROR:  cannot drop type rec_a because table rec_a requires it
+line 92: psql:compatible/record.sql:67: ERROR:  malformed record literal: "()"
+line 96: psql:compatible/record.sql:68: ERROR:  input of anonymous composite types is not implemented
+line 100: psql:compatible/record.sql:70: ERROR:  input of anonymous composite types is not implemented

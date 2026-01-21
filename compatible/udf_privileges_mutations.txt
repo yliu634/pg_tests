@@ -1,0 +1,11 @@
+source: compatible/udf_privileges_mutations.expected
+pattern: psql:.* ERROR:
+matches:
+line 10: psql:compatible/udf_privileges_mutations.sql:20: ERROR:  permission denied for table t
+line 12: psql:compatible/udf_privileges_mutations.sql:23: ERROR:  permission denied for table t
+line 14: psql:compatible/udf_privileges_mutations.sql:26: ERROR:  permission denied for table t
+line 16: psql:compatible/udf_privileges_mutations.sql:29: ERROR:  permission denied for table t
+line 53: psql:compatible/udf_privileges_mutations.sql:70: ERROR:  permission denied for table t
+line 55: psql:compatible/udf_privileges_mutations.sql:73: ERROR:  permission denied for table t
+line 57: psql:compatible/udf_privileges_mutations.sql:76: ERROR:  permission denied for table t
+line 59: psql:compatible/udf_privileges_mutations.sql:79: ERROR:  permission denied for table t

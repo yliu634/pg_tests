@@ -1,0 +1,23 @@
+source: compatible/join.expected
+pattern: psql:.* ERROR:
+matches:
+line 17: psql:compatible/join.sql:14: ERROR:  column reference "x" is ambiguous
+line 52: psql:compatible/join.sql:32: ERROR:  ORDER BY "x" is ambiguous
+line 377: psql:compatible/join.sql:200: ERROR:  column "y" specified in USING clause does not exist in left table
+line 380: psql:compatible/join.sql:209: ERROR:  operator does not exist: integer = text
+line 382: psql:compatible/join.sql:212: ERROR:  table name "onecolumn" specified more than once
+line 402: psql:compatible/join.sql:225: ERROR:  column reference "x" is ambiguous
+line 405: psql:compatible/join.sql:228: ERROR:  column reference "x" is ambiguous
+line 408: psql:compatible/join.sql:231: ERROR:  column a.y does not exist
+line 583: psql:compatible/join.sql:392: ERROR:  relation "str1" does not exist
+line 586: psql:compatible/join.sql:395: ERROR:  relation "str2" does not exist
+line 589: psql:compatible/join.sql:398: ERROR:  relation "str1" does not exist
+line 592: psql:compatible/join.sql:401: ERROR:  relation "str1" does not exist
+line 595: psql:compatible/join.sql:404: ERROR:  relation "str1" does not exist
+line 598: psql:compatible/join.sql:407: ERROR:  relation "str1" does not exist
+line 801: psql:compatible/join.sql:548: ERROR:  operator does not exist: text = integer
+line 803: psql:compatible/join.sql:551: ERROR:  set-returning functions are not allowed in JOIN conditions
+line 806: psql:compatible/join.sql:554: ERROR:  aggregate functions are not allowed in JOIN conditions
+line 817: psql:compatible/join.sql:568: ERROR:  invalid regular expression: parentheses () not balanced
+line 889: psql:compatible/join.sql:666: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+line 899: psql:compatible/join.sql:682: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"

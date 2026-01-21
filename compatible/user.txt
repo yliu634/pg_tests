@@ -1,0 +1,16 @@
+source: compatible/user.expected
+pattern: psql:.* ERROR:
+matches:
+line 53: psql:compatible/user.sql:115: ERROR:  role "user1" already exists
+line 55: psql:compatible/user.sql:129: ERROR:  role "user1" already exists
+line 58: psql:compatible/user.sql:140: ERROR:  role name "public" is reserved
+line 61: psql:compatible/user.sql:145: ERROR:  role name "none" is reserved
+line 67: psql:compatible/user.sql:159: ERROR:  role "foo☂" already exists
+line 69: psql:compatible/user.sql:167: ERROR:  syntax error at or near "-"
+line 76: psql:compatible/user.sql:187: ERROR:  role "blix" does not exist
+line 95: psql:compatible/user.sql:212: ERROR:  zero-length delimited identifier at or near """"
+line 116: psql:compatible/user.sql:248: ERROR:  permission denied to create role
+line 118: psql:compatible/user.sql:253: ERROR:  permission denied to alter role
+line 181: psql:compatible/user.sql:341: ERROR:  password is too short
+line 183: psql:compatible/user.sql:353: ERROR:  password is too short
+line 189: psql:compatible/user.sql:372: ERROR:  role "testuser" does not exist

@@ -1,0 +1,7 @@
+source: compatible/delete_batch.expected
+pattern: psql:.* ERROR:
+matches:
+line 1: psql:compatible/delete_batch.sql:7: ERROR:  syntax error at or near "BATCH"
+line 4: psql:compatible/delete_batch.sql:12: ERROR:  syntax error at or near "BATCH"
+line 7: psql:compatible/delete_batch.sql:17: ERROR:  syntax error at or near "BATCH"
+line 10: psql:compatible/delete_batch.sql:22: ERROR:  syntax error at or near "BATCH"

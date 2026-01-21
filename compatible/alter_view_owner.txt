@@ -1,0 +1,7 @@
+source: compatible/alter_view_owner.expected
+pattern: psql:.* ERROR:
+matches:
+line 17: psql:compatible/alter_view_owner.sql:27: ERROR:  role "fake_user" does not exist
+line 25: psql:compatible/alter_view_owner.sql:53: ERROR:  "vx" is not a sequence
+line 27: psql:compatible/alter_view_owner.sql:63: ERROR:  "mvx" is not a view
+line 40: psql:compatible/alter_view_owner.sql:92: ERROR:  must be able to SET ROLE "testuser2"

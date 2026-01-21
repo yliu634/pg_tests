@@ -1,0 +1,4 @@
+source: compatible/sequences_distsql.expected
+pattern: psql:.* ERROR:
+matches:
+line 4: psql:compatible/sequences_distsql.sql:15: ERROR:  lastval is not yet defined in this session

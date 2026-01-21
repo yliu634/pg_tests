@@ -1,0 +1,19 @@
+SET
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+SET
+CREATE TABLE
+CREATE SEQUENCE
+CREATE ROLE
+SET
+psql:compatible/drop_temp.sql:24: ERROR:  must be owner of table t_tmp
+psql:compatible/drop_temp.sql:27: ERROR:  must be owner of sequence s_tmp
+SET
+ALTER TABLE
+ALTER SEQUENCE
+SET
+DROP TABLE
+DROP SEQUENCE
+SET
+RESET

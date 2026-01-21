@@ -1,0 +1,4 @@
+source: compatible/jsonb_path_query_first.expected
+pattern: psql:.* ERROR:
+matches:
+line 21: psql:compatible/jsonb_path_query_first.sql:19: ERROR:  JSON object does not contain key "a"

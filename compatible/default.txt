@@ -1,0 +1,8 @@
+source: compatible/default.expected
+pattern: psql:.* ERROR:
+matches:
+line 2: psql:compatible/default.sql:8: ERROR:  column "a" is of type integer but default expression is of type boolean
+line 4: psql:compatible/default.sql:13: ERROR:  cannot use subquery in DEFAULT expression
+line 7: psql:compatible/default.sql:18: ERROR:  cannot use column reference in DEFAULT expression
+line 12: psql:compatible/default.sql:27: ERROR:  aggregate functions are not allowed in DEFAULT expressions
+line 15: psql:compatible/default.sql:32: ERROR:  window functions are not allowed in DEFAULT expressions

@@ -1,0 +1,6 @@
+source: compatible/cluster_settings.expected
+pattern: psql:.* ERROR:
+matches:
+line 8: psql:compatible/cluster_settings.sql:21: ERROR:  invalid value for parameter "log_min_duration_statement": "true"
+line 10: psql:compatible/cluster_settings.sql:28: ERROR:  0 kB is outside the valid range for parameter "work_mem" (64 .. 2147483647)
+line 39: psql:compatible/cluster_settings.sql:74: ERROR:  permission denied to set parameter "log_min_duration_statement"

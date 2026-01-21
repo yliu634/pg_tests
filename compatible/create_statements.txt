@@ -1,0 +1,6 @@
+source: compatible/create_statements.expected
+pattern: psql:.* ERROR:
+matches:
+line 41: psql:compatible/create_statements.sql:162: ERROR:  unrecognized parameter "foo"
+line 43: psql:compatible/create_statements.sql:172: ERROR:  value 100 out of bounds for option "toast_tuple_target"
+line 52: psql:compatible/create_statements.sql:198: ERROR:  invalid value for boolean option "autovacuum_enabled": 11

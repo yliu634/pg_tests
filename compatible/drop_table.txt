@@ -1,0 +1,6 @@
+source: compatible/drop_table.expected
+pattern: psql:.* ERROR:
+matches:
+line 30: psql:compatible/drop_table.sql:44: ERROR:  relation "a" does not exist
+line 38: psql:compatible/drop_table.sql:56: ERROR:  table "a" does not exist
+line 58: psql:compatible/drop_table.sql:106: ERROR:  table "to_drop" does not exist

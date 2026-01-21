@@ -1,0 +1,23 @@
+source: compatible/udf_deps.expected
+pattern: psql:.* ERROR:
+matches:
+line 4: psql:compatible/udf_deps.sql:31: ERROR:  cannot drop table t because other objects depend on it
+line 15: psql:compatible/udf_deps.sql:53: ERROR:  function sel() does not exist
+line 20: psql:compatible/udf_deps.sql:65: ERROR:  cannot drop table t because other objects depend on it
+line 26: psql:compatible/udf_deps.sql:80: ERROR:  cannot drop column b of table t because other objects depend on it
+line 29: psql:compatible/udf_deps.sql:85: ERROR:  cannot drop column def of table t because other objects depend on it
+line 46: psql:compatible/udf_deps.sql:112: ERROR:  cannot drop table t because other objects depend on it
+line 52: psql:compatible/udf_deps.sql:127: ERROR:  cannot drop column b of table t because other objects depend on it
+line 55: psql:compatible/udf_deps.sql:132: ERROR:  cannot drop column def of table t because other objects depend on it
+line 72: psql:compatible/udf_deps.sql:152: ERROR:  function ins2() does not exist
+line 77: psql:compatible/udf_deps.sql:164: ERROR:  cannot drop table t because other objects depend on it
+line 83: psql:compatible/udf_deps.sql:179: ERROR:  cannot drop column b of table t because other objects depend on it
+line 86: psql:compatible/udf_deps.sql:184: ERROR:  cannot drop column def of table t because other objects depend on it
+line 105: psql:compatible/udf_deps.sql:211: ERROR:  cannot drop table t because other objects depend on it
+line 111: psql:compatible/udf_deps.sql:226: ERROR:  cannot drop column b of table t because other objects depend on it
+line 114: psql:compatible/udf_deps.sql:231: ERROR:  cannot drop column def of table t because other objects depend on it
+line 133: psql:compatible/udf_deps.sql:251: ERROR:  function ups2() does not exist
+line 138: psql:compatible/udf_deps.sql:263: ERROR:  cannot drop table t because other objects depend on it
+line 160: psql:compatible/udf_deps.sql:293: ERROR:  function up() does not exist
+line 165: psql:compatible/udf_deps.sql:305: ERROR:  cannot drop table t because other objects depend on it
+line 187: psql:compatible/udf_deps.sql:335: ERROR:  function del() does not exist

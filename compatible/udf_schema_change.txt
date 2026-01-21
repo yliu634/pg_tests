@@ -1,0 +1,14 @@
+source: compatible/udf_schema_change.expected
+pattern: psql:.* ERROR:
+matches:
+line 34: psql:compatible/udf_schema_change.sql:49: ERROR:  only superuser can define a leakproof function
+line 60: psql:compatible/udf_schema_change.sql:81: ERROR:  function f_test_alter_name(integer) already exists in schema "public"
+line 62: psql:compatible/udf_schema_change.sql:93: ERROR:  function p(integer) already exists in schema "public"
+line 65: psql:compatible/udf_schema_change.sql:108: ERROR:  function "f_test_alter_name(integer)" does not exist
+line 78: psql:compatible/udf_schema_change.sql:120: ERROR:  function "f_test_alter_name_new(integer)" does not exist
+line 107: psql:compatible/udf_schema_change.sql:155: ERROR:  permission denied for schema pg_catalog
+line 109: psql:compatible/udf_schema_change.sql:167: ERROR:  f_test_sc(integer) is not a procedure
+line 127: psql:compatible/udf_schema_change.sql:186: ERROR:  function f_test_sc(integer) does not exist
+line 202: psql:compatible/udf_schema_change.sql:255: ERROR:  schema "sc1" does not exist
+line 223: psql:compatible/udf_schema_change.sql:278: ERROR:  return type mismatch in function declared to return t_alter
+line 233: psql:compatible/udf_schema_change.sql:290: ERROR:  return type mismatch in function declared to return t_alter

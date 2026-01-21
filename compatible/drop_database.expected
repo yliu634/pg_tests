@@ -1,0 +1,193 @@
+SET
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+DROP SCHEMA
+CREATE SCHEMA
+ database_name 
+---------------
+ foo-bar
+(1 row)
+
+CREATE TABLE
+psql:compatible/drop_database.sql:33: ERROR:  cannot drop schema foo-bar because other objects depend on it
+DETAIL:  table "foo-bar".t depends on schema foo-bar
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+DROP SCHEMA
+ name | schema_name 
+------+-------------
+(0 rows)
+
+ database_name 
+---------------
+(0 rows)
+
+DROP SCHEMA
+CREATE SCHEMA
+ database_name 
+---------------
+ foo bar
+(1 row)
+
+DROP SCHEMA
+ database_name 
+---------------
+(0 rows)
+
+DROP SCHEMA
+DROP SCHEMA
+CREATE SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+SET
+psql:compatible/drop_database.sql:110: ERROR:  must be owner of schema d1
+RESET
+ k | v  
+---+----
+ 1 | 10
+ 2 | 20
+(2 rows)
+
+ k |  v  
+---+-----
+ 1 | 100
+ 3 | 300
+(2 rows)
+
+ k | v  
+---+----
+ 1 | 10
+ 2 | 20
+(2 rows)
+
+ k | v  
+---+----
+ 1 | 10
+ 2 | 20
+(2 rows)
+
+ count 
+-------
+     1
+(1 row)
+
+ database_name 
+---------------
+ d1
+ d2
+(2 rows)
+
+DROP SCHEMA
+ database_name 
+---------------
+ d2
+(1 row)
+
+psql:compatible/drop_database.sql:142: ERROR:  relation "d1.v2" does not exist
+LINE 1: SELECT * FROM d1.v2;
+                      ^
+psql:compatible/drop_database.sql:143: ERROR:  relation "d2.v2" does not exist
+LINE 1: SELECT * FROM d2.v2;
+                      ^
+psql:compatible/drop_database.sql:144: ERROR:  relation "d2.v3" does not exist
+LINE 1: SELECT * FROM d2.v3;
+                      ^
+psql:compatible/drop_database.sql:145: ERROR:  relation "d2.v4" does not exist
+LINE 1: SELECT * FROM d2.v4;
+                      ^
+ k |  v  
+---+-----
+ 1 | 100
+ 3 | 300
+(2 rows)
+
+DROP SCHEMA
+ database_name 
+---------------
+(0 rows)
+
+psql:compatible/drop_database.sql:162: ERROR:  relation "d2.v1" does not exist
+LINE 1: SELECT * FROM d2.v1;
+                      ^
+DROP SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+DROP SCHEMA
+ database_name 
+---------------
+(0 rows)
+
+DROP SCHEMA
+CREATE SCHEMA
+CREATE SEQUENCE
+CREATE SEQUENCE
+CREATE TABLE
+CREATE TABLE
+DROP SCHEMA
+ count 
+-------
+     0
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+DROP SCHEMA
+CREATE SCHEMA
+CREATE SEQUENCE
+CREATE TABLE
+DROP SCHEMA
+ count 
+-------
+     1
+(1 row)
+
+DROP SCHEMA
+CREATE SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+CREATE VIEW
+CREATE VIEW
+DROP SCHEMA
+ count 
+-------
+     0
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+DROP SCHEMA
+GRANT
+SET
+CREATE SCHEMA
+DROP SCHEMA
+RESET
+REVOKE
+DROP ROLE
+DROP ROLE
+RESET

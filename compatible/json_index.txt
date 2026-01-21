@@ -1,0 +1,5 @@
+source: compatible/json_index.expected
+pattern: psql:.* ERROR:
+matches:
+line 16: psql:compatible/json_index.sql:26: ERROR:  duplicate key value violates unique constraint "t_pkey"
+line 314: psql:compatible/json_index.sql:206: ERROR:  duplicate key value violates unique constraint "y_pkey"

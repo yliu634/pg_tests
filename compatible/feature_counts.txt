@@ -1,0 +1,4 @@
+source: compatible/feature_counts.expected
+pattern: psql:.* ERROR:
+matches:
+line 4: psql:compatible/feature_counts.sql:26: ERROR:  syntax error at or near ";"

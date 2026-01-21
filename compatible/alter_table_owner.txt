@@ -1,0 +1,5 @@
+source: compatible/alter_table_owner.expected
+pattern: psql:.* ERROR:
+matches:
+line 10: psql:compatible/alter_table_owner.sql:19: ERROR:  role "fake_user" does not exist
+line 22: psql:compatible/alter_table_owner.sql:51: ERROR:  must be able to SET ROLE "testuser2"

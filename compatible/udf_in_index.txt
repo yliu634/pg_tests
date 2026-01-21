@@ -1,0 +1,5 @@
+source: compatible/udf_in_index.expected
+pattern: psql:.* ERROR:
+matches:
+line 58: psql:compatible/udf_in_index.sql:84: ERROR:  cannot drop function test_tbl_partial_f(integer) because other objects depend on it
+line 77: psql:compatible/udf_in_index.sql:99: ERROR:  cannot drop function test_tbl_f() because other objects depend on it

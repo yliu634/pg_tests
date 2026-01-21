@@ -1,0 +1,12 @@
+source: compatible/order_by.expected
+pattern: psql:.* ERROR:
+matches:
+line 64: psql:compatible/order_by.sql:46: ERROR:  ORDER BY "foo" is ambiguous
+line 160: psql:compatible/order_by.sql:92: ERROR:  CASE types boolean and integer cannot be matched
+line 163: psql:compatible/order_by.sql:97: ERROR:  ORDER BY position 0 is not in select list
+line 166: psql:compatible/order_by.sql:102: ERROR:  non-integer constant in ORDER BY
+line 169: psql:compatible/order_by.sql:107: ERROR:  non-integer constant in ORDER BY
+line 172: psql:compatible/order_by.sql:112: ERROR:  non-integer constant in ORDER BY
+line 175: psql:compatible/order_by.sql:117: ERROR:  column "foo" does not exist
+line 178: psql:compatible/order_by.sql:122: ERROR:  missing FROM-clause entry for table "a"
+line 288: psql:compatible/order_by.sql:213: ERROR:  missing FROM-clause entry for table "kv"

@@ -1,0 +1,7 @@
+source: compatible/operator.expected
+pattern: psql:.* ERROR:
+matches:
+line 1: psql:compatible/operator.sql:7: ERROR:  cannot take square root of a negative number
+line 33: psql:compatible/operator.sql:32: ERROR:  "2" is not a valid binary digit
+line 36: psql:compatible/operator.sql:38: ERROR:  operator is not unique: ~ unknown
+line 40: psql:compatible/operator.sql:44: ERROR:  operator is not unique: ~ unknown

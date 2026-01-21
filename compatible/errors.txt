@@ -1,0 +1,8 @@
+source: compatible/errors.expected
+pattern: psql:.* ERROR:
+matches:
+line 1: psql:compatible/errors.sql:8: ERROR:  relation "fake1" does not exist
+line 3: psql:compatible/errors.sql:15: ERROR:  index "i" does not exist
+line 5: psql:compatible/errors.sql:23: ERROR:  relation "fake5" does not exist
+line 8: psql:compatible/errors.sql:26: ERROR:  relation "fake6" does not exist
+line 11: psql:compatible/errors.sql:29: ERROR:  relation "fake7" does not exist

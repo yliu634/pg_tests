@@ -1,0 +1,4 @@
+source: compatible/hidden_columns.expected
+pattern: psql:.* ERROR:
+matches:
+line 46: psql:compatible/hidden_columns.sql:69: ERROR:  column "x" does not exist

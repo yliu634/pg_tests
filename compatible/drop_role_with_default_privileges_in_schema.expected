@@ -1,0 +1,47 @@
+SET
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP SCHEMA
+CREATE ROLE
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+psql:compatible/drop_role_with_default_privileges_in_schema.sql:26: ERROR:  role "dpdp_test1" cannot be dropped because some objects depend on it
+DETAIL:  owner of default privileges on new relations belonging to role dpdp_test1 in schema public
+psql:compatible/drop_role_with_default_privileges_in_schema.sql:27: ERROR:  role "dpdp_test2" cannot be dropped because some objects depend on it
+DETAIL:  privileges for default privileges on new relations belonging to role dpdp_test1 in schema public
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+psql:compatible/drop_role_with_default_privileges_in_schema.sql:44: ERROR:  role "dpdp_test2" cannot be dropped because some objects depend on it
+DETAIL:  privileges for default privileges on new relations belonging to role pan in schema public
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+psql:compatible/drop_role_with_default_privileges_in_schema.sql:51: ERROR:  role "dpdp_test2" cannot be dropped because some objects depend on it
+DETAIL:  privileges for default privileges on new types belonging to role pan in schema public
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+psql:compatible/drop_role_with_default_privileges_in_schema.sql:58: ERROR:  role "dpdp_test2" cannot be dropped because some objects depend on it
+DETAIL:  privileges for default privileges on new sequences belonging to role pan in schema public
+ALTER DEFAULT PRIVILEGES
+DROP ROLE
+CREATE SCHEMA
+CREATE ROLE
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+psql:compatible/drop_role_with_default_privileges_in_schema.sql:74: ERROR:  role "dpdp_test3" cannot be dropped because some objects depend on it
+DETAIL:  owner of default privileges on new relations belonging to role dpdp_test3 in schema dpdp_s
+psql:compatible/drop_role_with_default_privileges_in_schema.sql:75: ERROR:  role "dpdp_test4" cannot be dropped because some objects depend on it
+DETAIL:  privileges for default privileges on new relations belonging to role dpdp_test3 in schema dpdp_s
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+DROP ROLE
+DROP ROLE
+DROP SCHEMA
+RESET

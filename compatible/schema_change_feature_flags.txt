@@ -1,0 +1,30 @@
+source: compatible/schema_change_feature_flags.expected
+pattern: psql:.* ERROR:
+matches:
+line 9: psql:compatible/schema_change_feature_flags.sql:19: ERROR:  syntax error at or near "SETTING"
+line 12: psql:compatible/schema_change_feature_flags.sql:25: ERROR:  relation "t" already exists
+line 14: psql:compatible/schema_change_feature_flags.sql:31: ERROR:  type "typ" already exists
+line 16: psql:compatible/schema_change_feature_flags.sql:37: ERROR:  relation "seq" already exists
+line 18: psql:compatible/schema_change_feature_flags.sql:61: ERROR:  syntax error at or near "PARTITION"
+line 25: psql:compatible/schema_change_feature_flags.sql:76: ERROR:  column "a" of relation "t1" does not exist
+line 27: psql:compatible/schema_change_feature_flags.sql:82: ERROR:  syntax error at or near "STORED"
+line 30: psql:compatible/schema_change_feature_flags.sql:85: ERROR:  syntax error at or near "CONFIGURE"
+line 34: psql:compatible/schema_change_feature_flags.sql:91: ERROR:  relation "t" does not exist
+line 38: psql:compatible/schema_change_feature_flags.sql:97: ERROR:  syntax error at or near "UNSPLIT"
+line 41: psql:compatible/schema_change_feature_flags.sql:100: ERROR:  column "a" does not exist
+line 45: psql:compatible/schema_change_feature_flags.sql:106: ERROR:  syntax error at or near "@"
+line 48: psql:compatible/schema_change_feature_flags.sql:109: ERROR:  syntax error at or near "@"
+line 52: psql:compatible/schema_change_feature_flags.sql:115: ERROR:  role "testuser" does not exist
+line 54: psql:compatible/schema_change_feature_flags.sql:121: ERROR:  schema "s" does not exist
+line 56: psql:compatible/schema_change_feature_flags.sql:127: ERROR:  schema "s" does not exist
+line 58: psql:compatible/schema_change_feature_flags.sql:133: ERROR:  relation "seq" does not exist
+line 60: psql:compatible/schema_change_feature_flags.sql:139: ERROR:  role "root" does not exist
+line 62: psql:compatible/schema_change_feature_flags.sql:148: ERROR:  schema "s" does not exist
+line 64: psql:compatible/schema_change_feature_flags.sql:154: ERROR:  table "t" does not exist
+line 66: psql:compatible/schema_change_feature_flags.sql:160: ERROR:  schema "s" does not exist
+line 68: psql:compatible/schema_change_feature_flags.sql:166: ERROR:  syntax error at or near "@"
+line 71: psql:compatible/schema_change_feature_flags.sql:169: ERROR:  relation "t" does not exist
+line 75: psql:compatible/schema_change_feature_flags.sql:178: ERROR:  relation "t" does not exist
+line 79: psql:compatible/schema_change_feature_flags.sql:190: ERROR:  function f() does not exist
+line 81: psql:compatible/schema_change_feature_flags.sql:196: ERROR:  role "new_owner" does not exist
+line 83: psql:compatible/schema_change_feature_flags.sql:202: ERROR:  syntax error at or near "SETTING"

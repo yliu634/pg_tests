@@ -1,0 +1,6 @@
+source: compatible/udf_star.expected
+pattern: psql:.* ERROR:
+matches:
+line 17: psql:compatible/udf_star.sql:89: ERROR:  column reference "a" is ambiguous
+line 98: psql:compatible/udf_star.sql:116: ERROR:  return type mismatch in function declared to return integer
+line 138: psql:compatible/udf_star.sql:166: ERROR:  cannot drop column b of table t_twocol_prime because other objects depend on it

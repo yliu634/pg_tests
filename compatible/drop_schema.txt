@@ -1,0 +1,7 @@
+source: compatible/drop_schema.expected
+pattern: psql:.* ERROR:
+matches:
+line 29: psql:compatible/drop_schema.sql:63: ERROR:  cannot drop schema public because other objects depend on it
+line 35: psql:compatible/drop_schema.sql:71: ERROR:  cannot drop schema pg_catalog because it is required by the database system
+line 40: psql:compatible/drop_schema.sql:82: ERROR:  must be owner of schema public
+line 44: psql:compatible/drop_schema.sql:90: ERROR:  must be owner of schema crdb_internal

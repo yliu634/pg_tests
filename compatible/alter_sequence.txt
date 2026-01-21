@@ -1,0 +1,15 @@
+source: compatible/alter_sequence.expected
+pattern: psql:.* ERROR:
+matches:
+line 83: psql:pg_tests/compatible/alter_sequence.sql:100: ERROR:  MAXVALUE (99999) is out of range for sequence data type smallint
+line 96: psql:pg_tests/compatible/alter_sequence.sql:117: ERROR:  MINVALUE (99999) is out of range for sequence data type smallint
+line 104: psql:pg_tests/compatible/alter_sequence.sql:131: ERROR:  START value (99999) cannot be greater than MAXVALUE (32767)
+line 117: psql:pg_tests/compatible/alter_sequence.sql:148: ERROR:  MINVALUE (-99999) is out of range for sequence data type smallint
+line 130: psql:pg_tests/compatible/alter_sequence.sql:165: ERROR:  MAXVALUE (99999) is out of range for sequence data type smallint
+line 143: psql:pg_tests/compatible/alter_sequence.sql:182: ERROR:  MINVALUE (-99999) is out of range for sequence data type smallint
+line 194: psql:pg_tests/compatible/alter_sequence.sql:239: ERROR:  RESTART value (0) cannot be less than MINVALUE (1)
+line 196: psql:pg_tests/compatible/alter_sequence.sql:247: ERROR:  RESTART value (1000) cannot be greater than MAXVALUE (100)
+line 203: psql:pg_tests/compatible/alter_sequence.sql:258: ERROR:  nextval: reached maximum value of sequence "set_no_maxvalue" (3)
+line 216: psql:pg_tests/compatible/alter_sequence.sql:275: ERROR:  nextval: reached minimum value of sequence "set_no_minvalue" (-3)
+line 271: psql:pg_tests/compatible/alter_sequence.sql:344: ERROR:  nextval: reached maximum value of sequence "test_52552_asc" (12)
+line 286: psql:pg_tests/compatible/alter_sequence.sql:367: ERROR:  nextval: reached minimum value of sequence "test_52552_desc" (1)

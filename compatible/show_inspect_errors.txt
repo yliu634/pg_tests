@@ -1,0 +1,5 @@
+source: compatible/show_inspect_errors.expected
+pattern: psql:.* ERROR:
+matches:
+line 16: psql:compatible/show_inspect_errors.sql:61: ERROR:  relation "bad_table" does not exist
+line 72: psql:compatible/show_inspect_errors.sql:158: ERROR:  cross-database references are not implemented: "test.public.bar"

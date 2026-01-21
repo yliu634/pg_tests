@@ -1,0 +1,7 @@
+source: compatible/void.expected
+pattern: psql:.* ERROR:
+matches:
+line 4: psql:compatible/void.sql:15: ERROR:  column "col" has pseudo-type void
+line 127: psql:compatible/void.sql:134: ERROR:  could not find array type for data type void
+line 130: psql:compatible/void.sql:140: ERROR:  could not find array type for data type void
+line 133: psql:compatible/void.sql:146: ERROR:  relation "t84224" does not exist

@@ -1,0 +1,7 @@
+source: compatible/rename_constraint.expected
+pattern: psql:.* ERROR:
+matches:
+line 49: psql:compatible/rename_constraint.sql:65: ERROR:  constraint "cf2" for relation "t" already exists
+line 51: psql:compatible/rename_constraint.sql:77: ERROR:  constraint "cu2" for relation "t" already exists
+line 53: psql:compatible/rename_constraint.sql:89: ERROR:  constraint "cf2" for relation "t" already exists
+line 89: psql:compatible/rename_constraint.sql:133: ERROR:  constraint "something_else" for relation "implicit" already exists
