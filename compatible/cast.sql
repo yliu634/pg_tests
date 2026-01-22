@@ -1,23 +1,23 @@
 -- PostgreSQL compatible tests from cast
 -- 352 tests
 
+-- Many statements in this file are expected to error (assignment cast behavior).
 \set ON_ERROR_STOP 0
 
-DROP TABLE IF EXISTS assn_cast;
 CREATE TABLE assn_cast (
-  c TEXT,
-  vc TEXT,
-  qc TEXT,
-  b TEXT,
+  c CHAR,
+  vc VARCHAR(1),
+  qc "char",
+  b BIT,
   i INT,
-  i2 BIGINT,
-  f4 REAL,
-  t TEXT,
-  d NUMERIC,
-  a NUMERIC[],
-  s INT,
-  ca TEXT[],
-  vba BIT VARYING[]
+  i2 INT2,
+  f4 FLOAT4,
+  t TIMESTAMP,
+  d DECIMAL(10, 0),
+  a DECIMAL(10, 0)[],
+  s TEXT,
+  ca CHAR[],
+  vba VARBIT(1)[]
 );
 
 -- Test 1: statement (line 23)
@@ -235,7 +235,7 @@ EXECUTE insert_vba(ARRAY[B'1', B'11']);
 
 -- Test 72: statement (line 297)
 CREATE TABLE assn_cast_int_default (
-  k INT,
+  k INT,;
   -- TODO(mgartner): This should not cause the CREATE TABLE statement to fail.
   -- See #74090.
   -- i1 INT2 DEFAULT 9999999,
@@ -1213,11 +1213,11 @@ SELECT f::INT FROM t112515;
 -- Test 350: statement (line 1556)
 CREATE TABLE t128294 (r REGCLASS);
 
--- let $table_id
+let $table_id
 SELECT 't128294'::REGCLASS::OID;
 
 -- Test 351: statement (line 1562)
-INSERT INTO t128294 (r) VALUES ('t128294'::REGCLASS::OID);
+INSERT INTO t128294 (r) VALUES ($table_id);
 
 -- Test 352: query (line 1565)
 SELECT (SELECT r FROM t128294) FROM t128294;

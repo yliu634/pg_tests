@@ -1,6 +1,7 @@
 -- PostgreSQL compatible tests from cascade
 -- 481 tests
 
+-- Many statements in this file are expected to error (FK checks, SET NULL/DEFAULT, etc).
 \set ON_ERROR_STOP 0
 
 -- Test 1: statement (line 5)
@@ -50,17 +51,17 @@ INSERT INTO grandchild VALUES (100, 10), (101, 10), (110, 11);
 DELETE FROM parent WHERE p = 2;
 
 -- Test 14: statement (line 61)
--- NOTE: This delete would fail due to grandchild rows referencing child rows.
--- (The original Cockroach test expects an error here.)
--- DELETE FROM parent WHERE p = 1;
+\set ON_ERROR_STOP 0
+DELETE FROM parent WHERE p = 1;
+\set ON_ERROR_STOP 0
 
 -- Test 15: statement (line 64)
 DELETE FROM grandchild WHERE c = 10;
 
 -- Test 16: statement (line 67)
--- NOTE: This delete would fail due to remaining grandchild rows referencing child rows.
--- (The original Cockroach test expects an error here.)
--- DELETE FROM parent WHERE p = 1;
+\set ON_ERROR_STOP 0
+DELETE FROM parent WHERE p = 1;
+\set ON_ERROR_STOP 0
 
 -- Test 17: statement (line 70)
 DELETE FROM grandchild WHERE c = 11;
@@ -211,13 +212,13 @@ INSERT INTO self VALUES (1, NULL);
 INSERT INTO self SELECT x, x-1 FROM generate_series(2, 20) AS g(x);
 
 -- Test 60: statement (line 273)
--- SET foreign_key_cascades_limit = 10
+SET crdb.foreign_key_cascades_limit = 10;
 
 -- Test 61: statement (line 276)
 DELETE FROM self WHERE a = 1;
 
 -- Test 62: statement (line 279)
--- RESET foreign_key_cascades_limit
+RESET crdb.foreign_key_cascades_limit;
 
 -- Test 63: statement (line 282)
 DROP TABLE self;
@@ -249,20 +250,24 @@ INSERT INTO b VALUES (1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 SELECT * FROM b;
 
 -- Test 68: statement (line 320)
--- NOTE: This delete would fail due to ON DELETE NO ACTION.
--- DELETE FROM a WHERE id = 1;
+\set ON_ERROR_STOP 0
+DELETE FROM a WHERE id = 1;
+\set ON_ERROR_STOP 0
 
 -- Test 69: statement (line 324)
--- NOTE: This update would fail due to ON UPDATE NO ACTION.
--- UPDATE a SET id = 1000 WHERE id = 2;
+\set ON_ERROR_STOP 0
+UPDATE a SET id = 1000 WHERE id = 2;
+\set ON_ERROR_STOP 0
 
 -- Test 70: statement (line 328)
--- NOTE: This delete would fail due to ON DELETE RESTRICT.
--- DELETE FROM a WHERE id = 3;
+\set ON_ERROR_STOP 0
+DELETE FROM a WHERE id = 3;
+\set ON_ERROR_STOP 0
 
 -- Test 71: statement (line 332)
--- NOTE: This update would fail due to ON UPDATE RESTRICT.
--- UPDATE a SET id = 1000 WHERE id = 4;
+\set ON_ERROR_STOP 0
+UPDATE a SET id = 1000 WHERE id = 4;
+\set ON_ERROR_STOP 0
 
 -- Test 72: statement (line 336)
 DELETE FROM a WHERE id = 5;
@@ -281,8 +286,9 @@ UPDATE a SET id = 1006 WHERE id = 6;
 SELECT * FROM b;
 
 -- Test 77: statement (line 358)
--- NOTE: This update would fail due to PK conflict (id=1 already exists).
--- UPDATE a SET id = 1 WHERE id = 1006;
+\set ON_ERROR_STOP 0
+UPDATE a SET id = 1 WHERE id = 1006;
+\set ON_ERROR_STOP 0
 
 -- Test 78: statement (line 362)
 DELETE FROM a WHERE id = 7;
@@ -311,14 +317,31 @@ SELECT * FROM b;
 -- Test 86: statement (line 398)
 DROP TABLE b, a;
 
--- Test 87: statement (line 443)
-CREATE TABLE a (id TEXT PRIMARY KEY);
-CREATE TABLE b1 (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id) ON DELETE CASCADE);
-CREATE TABLE b2 (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id) ON DELETE CASCADE);
-CREATE TABLE c1 (id TEXT PRIMARY KEY, b1_id TEXT REFERENCES b1(id) ON DELETE CASCADE);
-CREATE TABLE c2 (id TEXT PRIMARY KEY, b1_id TEXT REFERENCES b1(id) ON DELETE CASCADE);
-CREATE TABLE c3 (id TEXT PRIMARY KEY REFERENCES b2(id) ON DELETE CASCADE);
+-- DeleteCascade_Basic: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
+CREATE TABLE b1 (
+  id TEXT PRIMARY KEY
+ ,delete_cascade TEXT NOT NULL REFERENCES a ON DELETE CASCADE
+);
+CREATE TABLE b2 (
+  id TEXT PRIMARY KEY
+ ,delete_cascade TEXT NOT NULL REFERENCES a ON DELETE CASCADE
+);
+CREATE TABLE c1 (
+  id TEXT PRIMARY KEY
+ ,delete_cascade TEXT NOT NULL REFERENCES b1 ON DELETE CASCADE
+);
+CREATE TABLE c2 (
+  id TEXT PRIMARY KEY
+ ,delete_cascade TEXT NOT NULL REFERENCES b1 ON DELETE CASCADE
+);
+CREATE TABLE c3 (
+  id TEXT PRIMARY KEY REFERENCES b2 ON DELETE CASCADE
+);
 
+-- Test 87: statement (line 443)
 INSERT INTO a VALUES ('a-pk1');
 INSERT INTO b1 VALUES ('b1-pk1', 'a-pk1'), ('b1-pk2', 'a-pk1');
 INSERT INTO b2 VALUES ('b2-pk1', 'a-pk1'), ('b2-pk2', 'a-pk1');
@@ -352,13 +375,24 @@ SELECT
 -- Test 90: statement (line 478)
 DROP TABLE c3, c2, c1, b2, b1, a;
 
--- Test 91: statement (line 514)
-CREATE TABLE a (id TEXT PRIMARY KEY);
-CREATE TABLE b1 (id TEXT PRIMARY KEY REFERENCES a(id) ON DELETE CASCADE);
-CREATE TABLE b2 (id TEXT PRIMARY KEY REFERENCES a(id) ON DELETE CASCADE);
-CREATE TABLE c1 (id TEXT PRIMARY KEY REFERENCES b1(id) ON DELETE CASCADE);
-CREATE TABLE c2 (id TEXT PRIMARY KEY REFERENCES b2(id) ON DELETE CASCADE);
+-- DeleteCascade_PrimaryKeys: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
+CREATE TABLE b1 (
+  id TEXT PRIMARY KEY REFERENCES a ON DELETE CASCADE
+);
+CREATE TABLE b2 (
+  id TEXT PRIMARY KEY REFERENCES a ON DELETE CASCADE
+);
+CREATE TABLE c1 (
+  id TEXT PRIMARY KEY REFERENCES b1 ON DELETE CASCADE
+);
+CREATE TABLE c2 (
+  id TEXT PRIMARY KEY REFERENCES b1 ON DELETE CASCADE
+);
 
+-- Test 91: statement (line 514)
 INSERT INTO a VALUES ('pk1');
 INSERT INTO b1 VALUES ('pk1');
 INSERT INTO b2 VALUES ('pk1');
@@ -380,13 +414,42 @@ SELECT
 -- Test 94: statement (line 537)
 DROP TABLE c2, c1, b2, b1, a;
 
--- Test 95: statement (line 593)
-CREATE TABLE a (id TEXT PRIMARY KEY, v INT);
-CREATE TABLE b1 (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id) ON DELETE CASCADE, v INT, seq INT);
-CREATE TABLE b2 (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id) ON DELETE CASCADE, v INT, seq INT);
-CREATE TABLE c1 (id TEXT PRIMARY KEY, b1_id TEXT REFERENCES b1(id) ON DELETE CASCADE, v INT);
-CREATE TABLE c2 (id TEXT PRIMARY KEY, b1_id TEXT REFERENCES b1(id) ON DELETE CASCADE, v INT);
+-- DeleteCascade_CompositeFKs_MatchSimple: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+ ,x INT
+ ,UNIQUE (id, x)
+);
+CREATE TABLE b1 (
+  id TEXT PRIMARY KEY
+ ,a_id TEXT
+ ,x INT
+ ,y INT
+ ,FOREIGN KEY (a_id, x) REFERENCES a (id, x) ON DELETE CASCADE
+ ,UNIQUE (id, x)
+);
+CREATE TABLE b2 (
+  id TEXT PRIMARY KEY
+ ,a_id TEXT
+ ,x INT
+ ,y INT
+ ,FOREIGN KEY (a_id, x) REFERENCES a (id, x) ON DELETE CASCADE
+ ,UNIQUE (id, x)
+);
+CREATE TABLE c1 (
+  id TEXT PRIMARY KEY
+ ,b_id TEXT
+ ,x INT
+ ,FOREIGN KEY (b_id, x) REFERENCES b1 (id, x) ON DELETE CASCADE
+);
+CREATE TABLE c2 (
+  id TEXT PRIMARY KEY
+ ,b_id TEXT
+ ,x INT
+ ,FOREIGN KEY (b_id, x) REFERENCES b1 (id, x) ON DELETE CASCADE
+);
 
+-- Test 95: statement (line 593)
 INSERT INTO a VALUES ('a-pk1', 1);
 INSERT INTO b1 VALUES ('b1-pk1', 'a-pk1', 1, 1), ('b1-pk2', 'a-pk1', 1, 2);
 INSERT INTO b2 VALUES ('b2-pk1', 'a-pk1', 1, 1), ('b2-pk2', 'a-pk1', 1, 2);
@@ -418,13 +481,42 @@ SELECT
 -- Test 98: statement (line 626)
 DROP TABLE c2, c1, b2, b1, a;
 
--- Test 99: statement (line 682)
-CREATE TABLE a (id TEXT PRIMARY KEY, v INT);
-CREATE TABLE b1 (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id) ON DELETE CASCADE, v INT, seq INT);
-CREATE TABLE b2 (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id) ON DELETE CASCADE, v INT, seq INT);
-CREATE TABLE c1 (id TEXT PRIMARY KEY, b1_id TEXT REFERENCES b1(id) ON DELETE CASCADE, v INT);
-CREATE TABLE c2 (id TEXT PRIMARY KEY, b1_id TEXT REFERENCES b1(id) ON DELETE CASCADE, v INT);
+-- DeleteCascade_CompositeFKs_MatchFull: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+ ,x INT
+ ,UNIQUE (id, x)
+);
+CREATE TABLE b1 (
+  id TEXT PRIMARY KEY
+ ,a_id TEXT
+ ,x INT
+ ,y INT
+ ,FOREIGN KEY (a_id, x) REFERENCES a (id, x) MATCH FULL ON DELETE CASCADE
+ ,UNIQUE (id, x)
+);
+CREATE TABLE b2 (
+  id TEXT PRIMARY KEY
+ ,a_id TEXT
+ ,x INT
+ ,y INT
+ ,FOREIGN KEY (a_id, x) REFERENCES a (id, x) MATCH FULL ON DELETE CASCADE
+ ,UNIQUE (id, x)
+);
+CREATE TABLE c1 (
+  id TEXT PRIMARY KEY
+ ,b_id TEXT
+ ,x INT
+ ,FOREIGN KEY (b_id, x) REFERENCES b1 (id, x) MATCH FULL ON DELETE CASCADE
+);
+CREATE TABLE c2 (
+  id TEXT PRIMARY KEY
+ ,b_id TEXT
+ ,x INT
+ ,FOREIGN KEY (b_id, x) REFERENCES b1 (id, x) MATCH FULL ON DELETE CASCADE
+);
 
+-- Test 99: statement (line 682)
 INSERT INTO a VALUES ('a-pk1', 1);
 INSERT INTO b1 VALUES ('b1-pk1', 'a-pk1', 1, 1), ('b1-pk2', 'a-pk1', 1, 2);
 INSERT INTO b2 VALUES ('b2-pk1', 'a-pk1', 1, 1), ('b2-pk2', 'a-pk1', 1, 2);
@@ -456,14 +548,32 @@ SELECT
 -- Test 102: statement (line 715)
 DROP TABLE c2, c1, b2, b1, a;
 
--- Test 103: statement (line 763)
-CREATE TABLE a (id TEXT PRIMARY KEY);
-CREATE TABLE b1 (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id) ON DELETE CASCADE);
-CREATE TABLE b2 (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id) ON DELETE CASCADE);
-CREATE TABLE c1 (id TEXT PRIMARY KEY, b1_id TEXT REFERENCES b1(id) ON DELETE CASCADE);
-CREATE TABLE c2 (id TEXT PRIMARY KEY, b1_id TEXT REFERENCES b1(id) ON DELETE CASCADE);
-CREATE TABLE d (id TEXT PRIMARY KEY, c2_id TEXT REFERENCES c2(id) ON DELETE CASCADE);
+-- DeleteCascade_Restrict: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
+CREATE TABLE b1 (
+  id TEXT PRIMARY KEY
+ ,delete_cascade TEXT NOT NULL REFERENCES a ON DELETE CASCADE
+);
+CREATE TABLE b2 (
+  id TEXT PRIMARY KEY
+ ,delete_cascade TEXT NOT NULL REFERENCES a ON DELETE CASCADE
+);
+CREATE TABLE c1 (
+  id TEXT PRIMARY KEY
+ ,delete_cascade TEXT NOT NULL REFERENCES b1 ON DELETE CASCADE
+);
+CREATE TABLE c2 (
+  id TEXT PRIMARY KEY
+ ,delete_cascade TEXT NOT NULL REFERENCES b1 ON DELETE CASCADE
+);
+CREATE TABLE d (
+  id TEXT PRIMARY KEY
+ ,delete_restrict TEXT NOT NULL REFERENCES c2 ON DELETE RESTRICT
+);
 
+-- Test 103: statement (line 763)
 INSERT INTO a VALUES ('a-pk1');
 INSERT INTO b1 VALUES ('b1-pk1', 'a-pk1'), ('b1-pk2', 'a-pk1');
 INSERT INTO b2 VALUES ('b2-pk1', 'a-pk1'), ('b2-pk2', 'a-pk1');
@@ -482,7 +592,9 @@ INSERT INTO c2 VALUES
 INSERT INTO d VALUES ('d-pk1-c2-pk4-b1-pk2', 'c2-pk4-b1-pk2');
 
 -- Test 104: statement (line 782)
+\set ON_ERROR_STOP 0
 DELETE FROM a WHERE id = 'a-pk1';
+\set ON_ERROR_STOP 0
 
 -- Test 105: statement (line 786)
 DROP TABLE d, c2, c1, b2, b1, a;
@@ -532,13 +644,17 @@ SELECT count(*) FROM self;
 -- Test 116: statement (line 845)
 DROP TABLE self;
 
--- Test 117: statement (line 866)
-CREATE TABLE loop_a (id TEXT PRIMARY KEY, cascade_delete TEXT);
+-- DeleteCascade_TwoTableLoop: missing schema setup from CRDB logic tests.
+CREATE TABLE loop_a (
+  id TEXT PRIMARY KEY
+ ,cascade_delete TEXT
+);
 CREATE TABLE loop_b (
-  id TEXT PRIMARY KEY,
-  cascade_delete TEXT REFERENCES loop_a(id) ON DELETE CASCADE
+  id TEXT PRIMARY KEY
+ ,cascade_delete TEXT REFERENCES loop_a ON DELETE CASCADE
 );
 
+-- Test 117: statement (line 866)
 ALTER TABLE loop_a ADD CONSTRAINT cascade_delete_constraint
   FOREIGN KEY (cascade_delete) REFERENCES loop_b (id)
   ON DELETE CASCADE;
@@ -566,13 +682,17 @@ SELECT
 -- Test 122: statement (line 894)
 DROP TABLE loop_a, loop_b;
 
--- Test 123: statement (line 915)
-CREATE TABLE loop_a (id TEXT PRIMARY KEY, cascade_delete TEXT);
+-- DeleteCascade_TwoTableLoopCycle: missing schema setup from CRDB logic tests.
+CREATE TABLE loop_a (
+  id TEXT PRIMARY KEY
+ ,cascade_delete TEXT
+);
 CREATE TABLE loop_b (
-  id TEXT PRIMARY KEY,
-  cascade_delete TEXT REFERENCES loop_a(id) ON DELETE CASCADE
+  id TEXT PRIMARY KEY
+ ,cascade_delete TEXT REFERENCES loop_a ON DELETE CASCADE
 );
 
+-- Test 123: statement (line 915)
 ALTER TABLE loop_a ADD CONSTRAINT cascade_delete_constraint
   FOREIGN KEY (cascade_delete) REFERENCES loop_b (id)
   ON DELETE CASCADE;
@@ -597,13 +717,14 @@ SELECT
 -- Test 127: statement (line 940)
 DROP TABLE loop_a, loop_b;
 
--- Test 128: statement (line 955)
+-- DeleteCascade_DoubleSelfReference: missing schema setup from CRDB logic tests.
 CREATE TABLE self_x2 (
-  x TEXT PRIMARY KEY,
-  y TEXT REFERENCES self_x2(x) ON DELETE CASCADE,
-  z TEXT REFERENCES self_x2(x) ON DELETE CASCADE
+  x TEXT PRIMARY KEY
+ ,y TEXT UNIQUE REFERENCES self_x2(x) ON DELETE CASCADE
+ ,z TEXT REFERENCES self_x2(y) ON DELETE CASCADE
 );
 
+-- Test 128: statement (line 955)
 INSERT INTO self_x2 (x, y, z) VALUES ('pk1', NULL, NULL);
 INSERT INTO self_x2 (x, y, z) VALUES ('pk2', 'pk1', NULL);
 INSERT INTO self_x2 (x, y, z) VALUES ('pk3', 'pk2', 'pk1');
@@ -617,17 +738,29 @@ SELECT count(*) FROM self_x2;
 -- Test 131: statement (line 969)
 DROP TABLE self_x2;
 
--- Test 132: statement (line 1011)
-CREATE TABLE a (id TEXT PRIMARY KEY);
-CREATE TABLE b (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id) ON DELETE CASCADE);
-CREATE TABLE c (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id) ON DELETE CASCADE);
-CREATE TABLE d (id TEXT PRIMARY KEY, c_id TEXT REFERENCES c(id) ON DELETE CASCADE);
+-- DeleteCascade_Race: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
+CREATE TABLE b (
+  id TEXT PRIMARY KEY
+ ,a_id TEXT REFERENCES a ON DELETE CASCADE
+);
+CREATE TABLE c (
+  id TEXT PRIMARY KEY
+ ,a_id TEXT REFERENCES a ON DELETE CASCADE
+);
+CREATE TABLE d (
+  id TEXT PRIMARY KEY
+ ,c_id TEXT REFERENCES c ON DELETE CASCADE
+);
 CREATE TABLE e (
-  id TEXT PRIMARY KEY,
-  b_id TEXT REFERENCES b(id) ON DELETE CASCADE,
-  d_id TEXT REFERENCES d(id) ON DELETE CASCADE
+  id TEXT PRIMARY KEY
+ ,b_id TEXT REFERENCES b ON DELETE CASCADE
+ ,d_id TEXT REFERENCES d ON DELETE CASCADE
 );
 
+-- Test 132: statement (line 1011)
 INSERT INTO a (id) VALUES ('a1');
 INSERT INTO b (id, a_id) VALUES ('b1', 'a1');
 INSERT INTO c (id, a_id) VALUES ('c1', 'a1');
@@ -671,14 +804,31 @@ SELECT id, a_id FROM b;
 -- Test 140: statement (line 1062)
 DROP TABLE b, a;
 
--- Test 141: statement (line 1107)
-CREATE TABLE a (id TEXT PRIMARY KEY);
-CREATE TABLE b1 (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id) ON DELETE CASCADE ON UPDATE CASCADE);
-CREATE TABLE b2 (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id) ON DELETE CASCADE ON UPDATE CASCADE);
-CREATE TABLE c1 (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id) ON DELETE CASCADE ON UPDATE CASCADE);
-CREATE TABLE c2 (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id) ON DELETE CASCADE ON UPDATE CASCADE);
-CREATE TABLE c3 (id TEXT PRIMARY KEY REFERENCES a(id) ON DELETE CASCADE ON UPDATE CASCADE);
+-- UpdateCascade_Basic: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
+CREATE TABLE b1 (
+  id TEXT PRIMARY KEY
+ ,update_cascade TEXT NOT NULL UNIQUE REFERENCES a ON UPDATE CASCADE
+);
+CREATE TABLE b2 (
+  id TEXT PRIMARY KEY
+ ,update_cascade TEXT NOT NULL UNIQUE REFERENCES a ON UPDATE CASCADE
+);
+CREATE TABLE c1 (
+  id TEXT PRIMARY KEY
+ ,update_cascade TEXT NOT NULL REFERENCES b1 (update_cascade) ON UPDATE CASCADE
+);
+CREATE TABLE c2 (
+  id TEXT PRIMARY KEY
+ ,update_cascade TEXT NOT NULL REFERENCES b1 (update_cascade) ON UPDATE CASCADE
+);
+CREATE TABLE c3 (
+  id TEXT PRIMARY KEY REFERENCES b2(update_cascade) ON UPDATE CASCADE
+);
 
+-- Test 141: statement (line 1107)
 INSERT INTO a VALUES ('original');
 INSERT INTO b1 VALUES ('b1-pk1', 'original');
 INSERT INTO b2 VALUES ('b2-pk1', 'original');
@@ -717,13 +867,24 @@ SELECT * FROM c2;
 -- Test 148: statement (line 1161)
 DROP TABLE c3, c2, c1, b2, b1, a;
 
--- Test 149: statement (line 1197)
-CREATE TABLE a (id TEXT PRIMARY KEY);
-CREATE TABLE b1 (id TEXT PRIMARY KEY REFERENCES a(id) ON DELETE CASCADE ON UPDATE CASCADE);
-CREATE TABLE b2 (id TEXT PRIMARY KEY REFERENCES a(id) ON DELETE CASCADE ON UPDATE CASCADE);
-CREATE TABLE c1 (id TEXT PRIMARY KEY REFERENCES b1(id) ON DELETE CASCADE ON UPDATE CASCADE);
-CREATE TABLE c2 (id TEXT PRIMARY KEY REFERENCES b2(id) ON DELETE CASCADE ON UPDATE CASCADE);
+-- UpdateCascade_PrimaryKeys: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
+CREATE TABLE b1 (
+  id TEXT PRIMARY KEY REFERENCES a ON UPDATE CASCADE
+);
+CREATE TABLE b2 (
+  id TEXT PRIMARY KEY REFERENCES a ON UPDATE CASCADE
+);
+CREATE TABLE c1 (
+  id TEXT PRIMARY KEY REFERENCES b1 ON UPDATE CASCADE
+);
+CREATE TABLE c2 (
+  id TEXT PRIMARY KEY REFERENCES b1 ON UPDATE CASCADE
+);
 
+-- Test 149: statement (line 1197)
 INSERT INTO a VALUES ('original');
 INSERT INTO b1 VALUES ('original');
 INSERT INTO b2 VALUES ('original');
@@ -745,43 +906,42 @@ SELECT
 -- Test 152: statement (line 1220)
 DROP TABLE c2, c1, b2, b1, a;
 
--- Test 153: statement (line 1276)
+-- UpdateCascade_CompositeFKs_MatchSimple: missing schema setup from CRDB logic tests.
 CREATE TABLE a (
-  id TEXT,
-  x INT,
-  PRIMARY KEY (id, x)
+  id TEXT PRIMARY KEY
+ ,x INT
+ ,UNIQUE (id, x)
 );
 CREATE TABLE b1 (
-  id TEXT,
-  a_id TEXT,
-  x INT,
-  y INT,
-  PRIMARY KEY (id, x),
-  FOREIGN KEY (a_id, x) REFERENCES a(id, x) ON DELETE CASCADE ON UPDATE CASCADE
+  id TEXT PRIMARY KEY
+ ,a_id TEXT
+ ,x INT
+ ,y INT
+ ,FOREIGN KEY (a_id, x) REFERENCES a (id, x) ON UPDATE CASCADE
+ ,UNIQUE (id, x)
 );
 CREATE TABLE b2 (
-  id TEXT,
-  a_id TEXT,
-  x INT,
-  y INT,
-  PRIMARY KEY (id, x),
-  FOREIGN KEY (a_id, x) REFERENCES a(id, x) ON DELETE CASCADE ON UPDATE CASCADE
+  id TEXT PRIMARY KEY
+ ,a_id TEXT
+ ,x INT
+ ,y INT
+ ,FOREIGN KEY (a_id, x) REFERENCES a (id, x) ON UPDATE CASCADE
+ ,UNIQUE (id, x)
 );
 CREATE TABLE c1 (
-  id TEXT,
-  b1_id TEXT,
-  x INT,
-  PRIMARY KEY (id, x),
-  FOREIGN KEY (b1_id, x) REFERENCES b1(id, x) ON DELETE CASCADE ON UPDATE CASCADE
+  id TEXT PRIMARY KEY
+ ,b_id TEXT
+ ,x INT
+ ,FOREIGN KEY (b_id, x) REFERENCES b1 (id, x) ON UPDATE CASCADE
 );
 CREATE TABLE c2 (
-  id TEXT,
-  b1_id TEXT,
-  x INT,
-  PRIMARY KEY (id, x),
-  FOREIGN KEY (b1_id, x) REFERENCES b1(id, x) ON DELETE CASCADE ON UPDATE CASCADE
+  id TEXT PRIMARY KEY
+ ,b_id TEXT
+ ,x INT
+ ,FOREIGN KEY (b_id, x) REFERENCES b1 (id, x) ON UPDATE CASCADE
 );
 
+-- Test 153: statement (line 1276)
 INSERT INTO a VALUES ('a-pk1', 1);
 INSERT INTO b1 VALUES ('b1-pk1', 'a-pk1', 1, 1), ('b1-pk2', 'a-pk1', 1, 2);
 INSERT INTO b2 VALUES ('b2-pk1', 'a-pk1', 1, 1), ('b2-pk2', 'a-pk1', 1, 2);
@@ -819,43 +979,42 @@ SELECT * FROM c2;
 -- Test 160: statement (line 1331)
 DROP TABLE c2, c1, b2, b1, a;
 
--- Test 161: statement (line 1387)
+-- UpdateCascade_CompositeFKs_MatchFull: missing schema setup from CRDB logic tests.
 CREATE TABLE a (
-  id TEXT,
-  x INT,
-  PRIMARY KEY (id, x)
+  id TEXT PRIMARY KEY
+ ,x INT
+ ,UNIQUE (id, x)
 );
 CREATE TABLE b1 (
-  id TEXT,
-  a_id TEXT,
-  x INT,
-  y INT,
-  PRIMARY KEY (id, x),
-  FOREIGN KEY (a_id, x) REFERENCES a(id, x) ON DELETE CASCADE ON UPDATE CASCADE
+  id TEXT PRIMARY KEY
+ ,a_id TEXT
+ ,x INT
+ ,y INT
+ ,FOREIGN KEY (a_id, x) REFERENCES a (id, x) MATCH FULL ON UPDATE CASCADE
+ ,UNIQUE (id, x)
 );
 CREATE TABLE b2 (
-  id TEXT,
-  a_id TEXT,
-  x INT,
-  y INT,
-  PRIMARY KEY (id, x),
-  FOREIGN KEY (a_id, x) REFERENCES a(id, x) ON DELETE CASCADE ON UPDATE CASCADE
+  id TEXT PRIMARY KEY
+ ,a_id TEXT
+ ,x INT
+ ,y INT
+ ,FOREIGN KEY (a_id, x) REFERENCES a (id, x) MATCH FULL ON UPDATE CASCADE
+ ,UNIQUE (id, x)
 );
 CREATE TABLE c1 (
-  id TEXT,
-  b1_id TEXT,
-  x INT,
-  PRIMARY KEY (id, x),
-  FOREIGN KEY (b1_id, x) REFERENCES b1(id, x) ON DELETE CASCADE ON UPDATE CASCADE
+  id TEXT PRIMARY KEY
+ ,b_id TEXT
+ ,x INT
+ ,FOREIGN KEY (b_id, x) REFERENCES b1 (id, x) MATCH FULL ON UPDATE CASCADE
 );
 CREATE TABLE c2 (
-  id TEXT,
-  b1_id TEXT,
-  x INT,
-  PRIMARY KEY (id, x),
-  FOREIGN KEY (b1_id, x) REFERENCES b1(id, x) ON DELETE CASCADE ON UPDATE CASCADE
+  id TEXT PRIMARY KEY
+ ,b_id TEXT
+ ,x INT
+ ,FOREIGN KEY (b_id, x) REFERENCES b1 (id, x) MATCH FULL ON UPDATE CASCADE
 );
 
+-- Test 161: statement (line 1387)
 INSERT INTO a VALUES ('a-pk1', 1);
 INSERT INTO b1 VALUES ('b1-pk1', 'a-pk1', 1, 1), ('b1-pk2', 'a-pk1', 1, 2);
 INSERT INTO b2 VALUES ('b2-pk1', 'a-pk1', 1, 1), ('b2-pk2', 'a-pk1', 1, 2);
@@ -893,16 +1052,38 @@ SELECT * FROM c2;
 -- Test 168: statement (line 1442)
 DROP TABLE c2, c1, b2, b1, a;
 
--- Test 169: statement (line 1503)
-CREATE TABLE a (id TEXT PRIMARY KEY);
-CREATE TABLE b1 (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id) ON DELETE CASCADE ON UPDATE CASCADE);
-CREATE TABLE b2 (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id) ON DELETE CASCADE ON UPDATE CASCADE);
-CREATE TABLE c1 (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id) ON DELETE CASCADE ON UPDATE CASCADE);
-CREATE TABLE c2 (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id) ON DELETE CASCADE ON UPDATE CASCADE);
-CREATE TABLE c3 (id TEXT PRIMARY KEY REFERENCES a(id) ON DELETE CASCADE ON UPDATE CASCADE);
-CREATE TABLE d1 (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id) ON DELETE CASCADE ON UPDATE CASCADE);
-CREATE TABLE d2 (id TEXT PRIMARY KEY);
+-- UpdateCascade_Restrict: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
+CREATE TABLE b1 (
+  id TEXT PRIMARY KEY
+ ,update_cascade TEXT NOT NULL UNIQUE REFERENCES a ON UPDATE CASCADE
+);
+CREATE TABLE b2 (
+  id TEXT PRIMARY KEY
+ ,update_cascade TEXT NOT NULL UNIQUE REFERENCES a ON UPDATE CASCADE
+);
+CREATE TABLE c1 (
+  id TEXT PRIMARY KEY
+ ,update_cascade TEXT NOT NULL REFERENCES b1 (update_cascade) ON UPDATE CASCADE
+);
+CREATE TABLE c2 (
+  id TEXT PRIMARY KEY
+ ,update_cascade TEXT NOT NULL UNIQUE REFERENCES b1 (update_cascade) ON UPDATE CASCADE
+);
+CREATE TABLE c3 (
+  id TEXT PRIMARY KEY REFERENCES b2(update_cascade) ON UPDATE CASCADE
+);
+CREATE TABLE d1 (
+  id TEXT PRIMARY KEY
+ ,update_restrict TEXT NOT NULL REFERENCES c2 (update_cascade) ON UPDATE RESTRICT
+);
+CREATE TABLE d2 (
+  id TEXT PRIMARY KEY REFERENCES c3 ON UPDATE RESTRICT
+);
 
+-- Test 169: statement (line 1503)
 INSERT INTO a VALUES ('original');
 INSERT INTO b1 VALUES ('b1-pk1', 'original');
 INSERT INTO b2 VALUES ('b2-pk1', 'original');
@@ -919,7 +1100,9 @@ INSERT INTO c3 VALUES ('original');
 INSERT INTO d1 VALUES ('d1-pk1', 'original');
 
 -- Test 171: statement (line 1521)
+\set ON_ERROR_STOP 0
 UPDATE a SET id = 'updated' WHERE id = 'original';
+\set ON_ERROR_STOP 0
 
 -- Test 172: statement (line 1524)
 DELETE FROM d1 WHERE id = 'd1-pk1';
@@ -928,7 +1111,9 @@ DELETE FROM d1 WHERE id = 'd1-pk1';
 INSERT INTO d2 VALUES ('original');
 
 -- Test 174: statement (line 1532)
+\set ON_ERROR_STOP 0
 UPDATE a SET id = 'updated' WHERE id = 'original';
+\set ON_ERROR_STOP 0
 
 -- Test 175: statement (line 1536)
 DROP TABLE d2, d1, c3, c2, c1, b2, b1, a;
@@ -956,10 +1141,15 @@ SELECT * FROM self;
 -- Test 181: statement (line 1572)
 DROP TABLE self;
 
--- Test 182: statement (line 1590)
-CREATE TABLE loop_a (id TEXT PRIMARY KEY);
-CREATE TABLE loop_b (id TEXT PRIMARY KEY REFERENCES loop_a(id) ON UPDATE CASCADE);
+-- UpdateCascade_TwoTableLoop: missing schema setup from CRDB logic tests.
+CREATE TABLE loop_a (
+  id TEXT PRIMARY KEY
+);
+CREATE TABLE loop_b (
+  id TEXT PRIMARY KEY REFERENCES loop_a ON UPDATE CASCADE
+);
 
+-- Test 182: statement (line 1590)
 INSERT INTO loop_a VALUES ('original');
 INSERT INTO loop_b VALUES ('original');
 
@@ -995,13 +1185,14 @@ SELECT
 -- Test 189: statement (line 1630)
 DROP TABLE loop_a, loop_b;
 
--- Test 190: statement (line 1645)
+-- UpdateCascade_DoubleSelfReference: missing schema setup from CRDB logic tests.
 CREATE TABLE self_x2 (
-  x TEXT PRIMARY KEY,
-  y TEXT REFERENCES self_x2(x) ON DELETE CASCADE ON UPDATE CASCADE,
-  z TEXT REFERENCES self_x2(x) ON DELETE CASCADE ON UPDATE CASCADE
+  x TEXT PRIMARY KEY
+ ,y TEXT UNIQUE REFERENCES self_x2(x) ON UPDATE CASCADE
+ ,z TEXT REFERENCES self_x2(y) ON UPDATE CASCADE
 );
 
+-- Test 190: statement (line 1645)
 INSERT INTO self_x2 (x, y, z) VALUES ('pk1', NULL, NULL);
 INSERT INTO self_x2 (x, y, z) VALUES ('pk2', 'pk1', NULL);
 INSERT INTO self_x2 (x, y, z) VALUES ('pk3', 'pk2', 'pk1');
@@ -1021,23 +1212,29 @@ SELECT * FROM self_x2;
 -- Test 195: statement (line 1668)
 DROP TABLE self_x2;
 
--- Test 196: statement (line 1715)
-CREATE TABLE a (id TEXT PRIMARY KEY);
-CREATE TABLE b (id TEXT PRIMARY KEY REFERENCES a(id) ON DELETE CASCADE ON UPDATE CASCADE);
-CREATE TABLE c (id TEXT PRIMARY KEY REFERENCES a(id) ON DELETE CASCADE ON UPDATE CASCADE);
-CREATE TABLE d (id TEXT PRIMARY KEY REFERENCES a(id) ON DELETE CASCADE ON UPDATE CASCADE);
+-- UpdateCascade_TwoUpdates: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
+CREATE TABLE b (
+  id TEXT PRIMARY KEY REFERENCES a ON UPDATE CASCADE
+);
+CREATE TABLE c (
+  id TEXT PRIMARY KEY REFERENCES a ON UPDATE CASCADE
+);
+CREATE TABLE d (
+  id TEXT PRIMARY KEY REFERENCES c ON UPDATE CASCADE
+);
 CREATE TABLE e (
-  b_id TEXT REFERENCES b(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  d_id TEXT REFERENCES d(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  PRIMARY KEY (b_id, d_id)
+  b_id TEXT PRIMARY KEY REFERENCES b ON UPDATE CASCADE
+ ,d_id TEXT UNIQUE REFERENCES d ON UPDATE CASCADE
 );
 CREATE TABLE f (
-  e_b_id TEXT,
-  e_d_id TEXT,
-  PRIMARY KEY (e_b_id, e_d_id),
-  FOREIGN KEY (e_b_id, e_d_id) REFERENCES e(b_id, d_id) ON DELETE CASCADE ON UPDATE CASCADE
+  e_b_id TEXT PRIMARY KEY REFERENCES e (b_id) ON UPDATE CASCADE
+ ,e_d_id TEXT REFERENCES e (d_id) ON UPDATE CASCADE
 );
 
+-- Test 196: statement (line 1715)
 INSERT INTO a (id) VALUES ('original');
 INSERT INTO b (id) VALUES ('original');
 INSERT INTO c (id) VALUES ('original');
@@ -1065,23 +1262,29 @@ SELECT * FROM f;
 -- Test 201: statement (line 1747)
 DROP TABLE f, e, d, c, b, a;
 
--- Test 202: statement (line 1796)
-CREATE TABLE a (id TEXT PRIMARY KEY);
-CREATE TABLE b (id TEXT PRIMARY KEY REFERENCES a(id) ON DELETE CASCADE ON UPDATE CASCADE);
-CREATE TABLE c (id TEXT PRIMARY KEY REFERENCES a(id) ON DELETE CASCADE ON UPDATE CASCADE);
-CREATE TABLE d (id TEXT PRIMARY KEY REFERENCES a(id) ON DELETE CASCADE ON UPDATE CASCADE);
+-- UpdateCascade_TwoUpdatesReverse: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
+CREATE TABLE b (
+  id TEXT PRIMARY KEY REFERENCES a ON UPDATE CASCADE
+);
+CREATE TABLE c (
+  id TEXT PRIMARY KEY REFERENCES a ON UPDATE CASCADE
+);
+CREATE TABLE d (
+  id TEXT PRIMARY KEY REFERENCES b ON UPDATE CASCADE
+);
 CREATE TABLE e (
-  d_id TEXT REFERENCES d(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  c_id TEXT REFERENCES c(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  PRIMARY KEY (d_id, c_id)
+  d_id TEXT PRIMARY KEY REFERENCES d ON UPDATE CASCADE
+ ,c_id TEXT UNIQUE REFERENCES c ON UPDATE CASCADE
 );
 CREATE TABLE f (
-  e_d_id TEXT,
-  e_c_id TEXT,
-  PRIMARY KEY (e_d_id, e_c_id),
-  FOREIGN KEY (e_d_id, e_c_id) REFERENCES e(d_id, c_id) ON DELETE CASCADE ON UPDATE CASCADE
+  e_d_id TEXT PRIMARY KEY REFERENCES e (d_id) ON UPDATE CASCADE
+ ,e_c_id TEXT REFERENCES e (c_id) ON UPDATE CASCADE
 );
 
+-- Test 202: statement (line 1796)
 INSERT INTO a (id) VALUES ('original');
 INSERT INTO b (id) VALUES ('original');
 INSERT INTO c (id) VALUES ('original');
@@ -1165,32 +1368,33 @@ ORDER BY name, id
 ;
 
 -- Test 217: statement (line 1913)
--- NOTE: This update would violate the CHECK constraints after cascading updates.
--- UPDATE a SET id = id*10;
+\set ON_ERROR_STOP 0
+UPDATE a SET id = id*10;
+\set ON_ERROR_STOP 0
 
 -- Test 218: statement (line 1918)
--- NOTE: This update would violate the CHECK constraints after cascading updates.
--- UPDATE a SET id = id*1000;
+\set ON_ERROR_STOP 0
+UPDATE a SET id = id*1000;
+\set ON_ERROR_STOP 0
 
 -- Test 219: statement (line 1922)
--- NOTE: This update would violate the CHECK constraints after cascading updates.
--- UPDATE a SET id = id*1000 WHERE id > 10;
+\set ON_ERROR_STOP 0
+UPDATE a SET id = id*1000 WHERE id > 10;
+\set ON_ERROR_STOP 0
 
 -- Test 220: statement (line 1926)
--- NOTE: This update would violate the CHECK constraints after cascading updates.
--- UPDATE a SET id = 99 WHERE id = 10;
+\set ON_ERROR_STOP 0
+UPDATE a SET id = 99 WHERE id = 10;
+\set ON_ERROR_STOP 0
 
 -- Test 221: statement (line 1931)
--- NOTE: This update would violate the CHECK constraints after cascading updates.
--- UPDATE a SET id = 99 WHERE id = 20;
+UPDATE a SET id = 99 WHERE id = 20;
 
 -- Test 222: statement (line 1935)
--- NOTE: This update would violate the CHECK constraints after cascading updates.
--- UPDATE a SET id = 999 WHERE id = 99;
+UPDATE a SET id = 999 WHERE id = 99;
 
 -- Test 223: statement (line 1939)
--- NOTE: This update would violate the CHECK constraints after cascading updates.
--- UPDATE a SET id = 100000 WHERE id = 30;
+UPDATE a SET id = 100000 WHERE id = 30;
 
 -- Test 224: query (line 1942)
 SELECT name, id FROM (
@@ -1229,7 +1433,8 @@ INSERT INTO c VALUES (2, 1), (1, 2);
 -- Test 228: statement (line 1994)
 UPDATE a SET id = id*10;
 
--- skipif config #112488 weak-iso-level-configs
+-- CockroachDB logic test directive (no-op in PostgreSQL).
+-- skipif config #112488 weak-iso-level-configs;
 
 -- Test 229: query (line 1998)
 SELECT name, id1, id2 FROM (
@@ -1242,37 +1447,56 @@ UNION ALL
 ;
 
 -- Test 230: statement (line 2021)
--- NOTE: This update would violate the CHECK constraints after cascading updates.
--- UPDATE a SET id = id*10;
+\set ON_ERROR_STOP 0
+UPDATE a SET id = id*10;
+\set ON_ERROR_STOP 0
 
 -- Test 231: statement (line 2026)
--- NOTE: This update would violate the CHECK constraints after cascading updates.
--- UPDATE a SET id = id*10;
+\set ON_ERROR_STOP 0
+UPDATE a SET id = id*10;
+\set ON_ERROR_STOP 0
 
 -- Test 232: statement (line 2031)
--- NOTE: This update would violate the CHECK constraints after cascading updates.
--- UPDATE a SET id = 1000 WHERE id = 30;
+\set ON_ERROR_STOP 0
+UPDATE a SET id = 1000 WHERE id = 30;
+\set ON_ERROR_STOP 0
 
--- skipif config #112488 weak-iso-level-configs
+-- CockroachDB logic test directive (no-op in PostgreSQL).
+-- skipif config #112488 weak-iso-level-configs;
 
 -- Test 233: statement (line 2035)
--- NOTE: This update would violate the CHECK constraints after cascading updates.
--- UPDATE a SET id = 1000 WHERE id = 40;
+\set ON_ERROR_STOP 0
+UPDATE a SET id = 1000 WHERE id = 40;
+\set ON_ERROR_STOP 0
 
 -- Test 234: statement (line 2040)
--- NOTE: This update would violate the CHECK constraints after cascading updates.
--- UPDATE a SET id = 100000 WHERE id = 50;
+UPDATE a SET id = 100000 WHERE id = 50;
 
 -- Test 235: statement (line 2044)
 DROP TABLE c, b, a;
 
--- Test 236: statement (line 2075)
-CREATE TABLE a (id TEXT PRIMARY KEY);
-CREATE TABLE b1 (id TEXT PRIMARY KEY, delete_set_null TEXT REFERENCES a(id) ON DELETE SET NULL);
-CREATE TABLE b2 (id TEXT PRIMARY KEY, delete_set_null TEXT REFERENCES a(id) ON DELETE SET NULL);
-CREATE TABLE b3 (id TEXT PRIMARY KEY, delete_set_null TEXT REFERENCES a(id) ON DELETE SET NULL);
-CREATE TABLE b4 (id TEXT PRIMARY KEY, delete_set_null TEXT REFERENCES a(id) ON DELETE SET NULL);
+-- DeleteSetNull_Basic1: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
+CREATE TABLE b1 (
+  id TEXT PRIMARY KEY
+ ,delete_set_null TEXT REFERENCES a ON DELETE SET NULL
+);
+CREATE TABLE b2 (
+  id TEXT PRIMARY KEY
+ ,delete_set_null TEXT REFERENCES a ON DELETE SET NULL
+);
+CREATE TABLE b3 (
+  id TEXT PRIMARY KEY
+ ,delete_set_null TEXT REFERENCES a ON DELETE SET NULL
+);
+CREATE TABLE b4 (
+  id TEXT PRIMARY KEY
+ ,delete_set_null TEXT REFERENCES a ON DELETE SET NULL
+);
 
+-- Test 236: statement (line 2075)
 INSERT INTO a VALUES ('delete_me'), ('untouched');
 INSERT INTO b1 VALUES ('b1-pk1', 'untouched'), ('b1-pk2', 'untouched');
 INSERT INTO b2 VALUES ('b2-pk1', 'untouched'), ('b2-pk2', 'delete_me');
@@ -1295,14 +1519,32 @@ UNION ALL
 -- Test 239: statement (line 2106)
 DROP TABLE b4, b3, b2, b1, a;
 
--- Test 240: statement (line 2142)
-CREATE TABLE a (id TEXT PRIMARY KEY);
-CREATE TABLE b1 (id TEXT PRIMARY KEY, delete_cascade TEXT REFERENCES a(id) ON DELETE CASCADE);
-CREATE TABLE b2 (id TEXT PRIMARY KEY, delete_cascade TEXT REFERENCES a(id) ON DELETE CASCADE);
-CREATE TABLE c1 (id TEXT PRIMARY KEY, delete_set_null TEXT REFERENCES b1(id) ON DELETE SET NULL);
-CREATE TABLE c2 (id TEXT PRIMARY KEY, delete_set_null TEXT REFERENCES b1(id) ON DELETE SET NULL);
-CREATE TABLE c3 (id TEXT PRIMARY KEY, delete_set_null TEXT REFERENCES b2(id) ON DELETE SET NULL);
+-- DeleteSetNull_Basic2: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
+CREATE TABLE b1 (
+  id TEXT PRIMARY KEY
+ ,delete_cascade TEXT NOT NULL REFERENCES a ON DELETE CASCADE
+);
+CREATE TABLE b2 (
+  id TEXT PRIMARY KEY
+ ,delete_cascade TEXT NOT NULL REFERENCES a ON DELETE CASCADE
+);
+CREATE TABLE c1 (
+  id TEXT PRIMARY KEY
+ ,delete_set_null TEXT REFERENCES b1 ON DELETE SET NULL
+);
+CREATE TABLE c2 (
+  id TEXT PRIMARY KEY
+ ,delete_set_null TEXT REFERENCES b1 ON DELETE SET NULL
+);
+CREATE TABLE c3 (
+  id TEXT PRIMARY KEY
+ ,delete_set_null TEXT REFERENCES b2 ON DELETE SET NULL
+);
 
+-- Test 240: statement (line 2142)
 INSERT INTO a VALUES ('a-pk1');
 INSERT INTO b1 VALUES ('b1-pk1', 'a-pk1'), ('b1-pk2', 'a-pk1');
 INSERT INTO b2 VALUES ('b2-pk1', 'a-pk1'), ('b2-pk2', 'a-pk1');
@@ -1343,52 +1585,61 @@ UNION ALL
 ;
 
 -- Test 243: statement (line 2197)
--- ALTER TABLE c3 SET (schema_locked=false)
+-- CockroachDB-only: ALTER TABLE c3 SET (schema_locked=false);
 
 -- Test 244: statement (line 2200)
--- ALTER TABLE c2 SET (schema_locked=false)
+-- CockroachDB-only: ALTER TABLE c2 SET (schema_locked=false);
 
 -- Test 245: statement (line 2203)
--- ALTER TABLE c1 SET (schema_locked=false)
+-- CockroachDB-only: ALTER TABLE c1 SET (schema_locked=false);
 
 -- Test 246: statement (line 2206)
--- ALTER TABLE b2 SET (schema_locked=false)
+-- CockroachDB-only: ALTER TABLE b2 SET (schema_locked=false);
 
 -- Test 247: statement (line 2209)
--- ALTER TABLE b1 SET (schema_locked=false)
+-- CockroachDB-only: ALTER TABLE b1 SET (schema_locked=false);
 
 -- Test 248: statement (line 2212)
--- ALTER TABLE a SET (schema_locked=false)
+-- CockroachDB-only: ALTER TABLE a SET (schema_locked=false);
 
 -- Test 249: statement (line 2215)
 TRUNCATE c3, c2, c1, b2, b1, a;
 
 -- Test 250: statement (line 2218)
--- ALTER TABLE c3 RESET (schema_locked)
+-- CockroachDB-only: ALTER TABLE c3 RESET (schema_locked);
 
 -- Test 251: statement (line 2221)
--- ALTER TABLE c2 RESET (schema_locked)
+-- CockroachDB-only: ALTER TABLE c2 RESET (schema_locked);
 
 -- Test 252: statement (line 2224)
--- ALTER TABLE c1 RESET (schema_locked)
+-- CockroachDB-only: ALTER TABLE c1 RESET (schema_locked);
 
 -- Test 253: statement (line 2227)
--- ALTER TABLE b2 RESET (schema_locked)
+-- CockroachDB-only: ALTER TABLE b2 RESET (schema_locked);
 
 -- Test 254: statement (line 2230)
--- ALTER TABLE b1 RESET (schema_locked)
+-- CockroachDB-only: ALTER TABLE b1 RESET (schema_locked);
 
 -- Test 255: statement (line 2233)
--- ALTER TABLE a RESET (schema_locked)
+-- CockroachDB-only: ALTER TABLE a RESET (schema_locked);
 
 -- Test 256: statement (line 2237)
 DROP TABLE c3, c2, c1, b2, b1, a;
 
--- Test 257: statement (line 2262)
-CREATE TABLE a (id TEXT PRIMARY KEY);
-CREATE TABLE b (id TEXT PRIMARY KEY, a_id TEXT UNIQUE REFERENCES a(id) ON DELETE SET NULL);
-CREATE TABLE c (id TEXT PRIMARY KEY, b_a_id TEXT REFERENCES b(a_id) ON UPDATE CASCADE);
+-- DeleteSetNull_ToUpdateCascade: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
+CREATE TABLE b (
+  id TEXT PRIMARY KEY
+ ,a_id TEXT UNIQUE REFERENCES a ON DELETE SET NULL
+);
+CREATE TABLE c (
+  id TEXT PRIMARY KEY
+ ,b_a_id TEXT REFERENCES b(a_id) ON UPDATE CASCADE
+);
 
+-- Test 257: statement (line 2262)
 INSERT INTO a VALUES ('delete-me'), ('untouched');
 INSERT INTO b VALUES ('b1', 'delete-me'), ('b2', 'untouched');
 INSERT INTO c VALUES
@@ -1413,11 +1664,20 @@ UNION ALL
 -- Test 261: statement (line 2294)
 DROP TABLE c, b, a;
 
--- Test 262: statement (line 2319)
-CREATE TABLE a (id TEXT PRIMARY KEY);
-CREATE TABLE b (id TEXT PRIMARY KEY, a_id TEXT UNIQUE REFERENCES a(id) ON DELETE SET NULL);
-CREATE TABLE c (id TEXT PRIMARY KEY, b_a_id TEXT REFERENCES b(a_id) ON UPDATE CASCADE);
+-- DeleteSetNull_ToUpdateCascadeNotNull: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
+CREATE TABLE b (
+  id TEXT PRIMARY KEY
+ ,a_id TEXT UNIQUE REFERENCES a ON DELETE SET NULL
+);
+CREATE TABLE c (
+  id TEXT PRIMARY KEY
+ ,b_a_id TEXT NOT NULL REFERENCES b(a_id) ON UPDATE CASCADE
+);
 
+-- Test 262: statement (line 2319)
 INSERT INTO a VALUES ('delete-me'), ('untouched');
 INSERT INTO b VALUES ('b1', 'delete-me'), ('b2', 'untouched');
 INSERT INTO c VALUES
@@ -1428,23 +1688,40 @@ INSERT INTO c VALUES
 ;
 
 -- Test 263: statement (line 2329)
+\set ON_ERROR_STOP 0
 DELETE FROM a WHERE id = 'delete-me';
+\set ON_ERROR_STOP 0
 
 -- Test 264: statement (line 2333)
 DROP TABLE c, b, a;
 
--- Test 265: statement (line 2364)
-CREATE TABLE a (id TEXT PRIMARY KEY);
-CREATE TABLE b1 (id TEXT PRIMARY KEY, update_set_null TEXT REFERENCES a(id) ON UPDATE SET NULL);
-CREATE TABLE b2 (id TEXT PRIMARY KEY, update_set_null TEXT REFERENCES a(id) ON UPDATE SET NULL);
-CREATE TABLE b3 (id TEXT PRIMARY KEY, update_set_null TEXT REFERENCES a(id) ON UPDATE SET NULL);
-CREATE TABLE b4 (id TEXT PRIMARY KEY, update_set_null TEXT REFERENCES a(id) ON UPDATE SET NULL);
+-- UpdateSetNull_Basic1: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
+CREATE TABLE b1 (
+  id TEXT PRIMARY KEY
+ ,update_set_null TEXT REFERENCES a ON UPDATE SET NULL
+);
+CREATE TABLE b2 (
+  id TEXT PRIMARY KEY
+ ,update_set_null TEXT REFERENCES a ON UPDATE SET NULL
+);
+CREATE TABLE b3 (
+  id TEXT PRIMARY KEY
+ ,update_set_null TEXT REFERENCES a ON UPDATE SET NULL
+);
+CREATE TABLE b4 (
+  id TEXT PRIMARY KEY
+ ,update_set_null TEXT REFERENCES a ON UPDATE SET NULL
+);
 
+-- Test 265: statement (line 2364)
 INSERT INTO a VALUES ('original'), ('untouched');
 INSERT INTO b1 VALUES ('b1-pk1', 'untouched'), ('b1-pk2', 'untouched');
 INSERT INTO b2 VALUES ('b2-pk1', 'untouched'), ('b2-pk2', 'original');
 INSERT INTO b3 VALUES ('b3-pk1', 'original'), ('b3-pk2', 'untouched');
-INSERT INTO b4 VALUES ('b4-pk1', 'original'), ('b4-pk2', 'original');
+INSERT INTO b3 VALUES ('b4-pk1', 'original'), ('b4-pk2', 'original');
 
 -- Test 266: statement (line 2372)
 UPDATE a SET id = 'updated' WHERE id = 'original';
@@ -1462,14 +1739,32 @@ UNION ALL
 -- Test 268: statement (line 2395)
 DROP TABLE b4, b3, b2, b1, a;
 
--- Test 269: statement (line 2431)
-CREATE TABLE a (id TEXT PRIMARY KEY);
-CREATE TABLE b1 (id TEXT PRIMARY KEY, update_cascade TEXT REFERENCES a(id) ON UPDATE CASCADE);
-CREATE TABLE b2 (id TEXT PRIMARY KEY, update_cascade TEXT REFERENCES a(id) ON UPDATE CASCADE);
-CREATE TABLE c1 (id TEXT PRIMARY KEY, update_set_null TEXT REFERENCES a(id) ON UPDATE SET NULL);
-CREATE TABLE c2 (id TEXT PRIMARY KEY, update_set_null TEXT REFERENCES a(id) ON UPDATE SET NULL);
-CREATE TABLE c3 (id TEXT PRIMARY KEY, update_set_null TEXT REFERENCES a(id) ON UPDATE SET NULL);
+-- UpdateSetNull_Basic2: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
+CREATE TABLE b1 (
+  id TEXT PRIMARY KEY
+ ,update_cascade TEXT UNIQUE NOT NULL REFERENCES a ON UPDATE CASCADE
+);
+CREATE TABLE b2 (
+  id TEXT PRIMARY KEY
+ ,update_cascade TEXT UNIQUE NOT NULL REFERENCES a ON UPDATE CASCADE
+);
+CREATE TABLE c1 (
+  id TEXT PRIMARY KEY
+ ,update_set_null TEXT REFERENCES b1(update_cascade) ON UPDATE SET NULL
+);
+CREATE TABLE c2 (
+  id TEXT PRIMARY KEY
+ ,update_set_null TEXT REFERENCES b1(update_cascade) ON UPDATE SET NULL
+);
+CREATE TABLE c3 (
+  id TEXT PRIMARY KEY
+ ,update_set_null TEXT REFERENCES b2(update_cascade) ON UPDATE SET NULL
+);
 
+-- Test 269: statement (line 2431)
 INSERT INTO a VALUES ('original'), ('untouched');
 INSERT INTO b1 VALUES ('b1-pk1', 'original'), ('b1-pk2', 'untouched');
 INSERT INTO b2 VALUES ('b2-pk1', 'original'), ('b2-pk2', 'untouched');
@@ -1510,11 +1805,20 @@ UNION ALL
 -- Test 272: statement (line 2488)
 DROP TABLE c3, c2, c1, b2, b1, a;
 
--- Test 273: statement (line 2513)
-CREATE TABLE a (id TEXT PRIMARY KEY);
-CREATE TABLE b (id TEXT PRIMARY KEY, a_id TEXT UNIQUE REFERENCES a(id) ON UPDATE CASCADE);
-CREATE TABLE c (id TEXT PRIMARY KEY, b_a_id TEXT REFERENCES b(a_id) ON UPDATE CASCADE);
+-- UpdateSetNull_ToUpdateCascade: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
+CREATE TABLE b (
+  id TEXT PRIMARY KEY
+ ,a_id TEXT UNIQUE REFERENCES a ON UPDATE SET NULL
+);
+CREATE TABLE c (
+  id TEXT PRIMARY KEY
+ ,b_a_id TEXT REFERENCES b(a_id) ON UPDATE CASCADE
+);
 
+-- Test 273: statement (line 2513)
 INSERT INTO a VALUES ('original'), ('untouched');
 INSERT INTO b VALUES ('b1', 'original'), ('b2', 'untouched');
 INSERT INTO c VALUES
@@ -1535,11 +1839,20 @@ UNION ALL
 -- Test 276: statement (line 2539)
 DROP TABLE c, b, a;
 
--- Test 277: statement (line 2564)
-CREATE TABLE a (id TEXT PRIMARY KEY);
-CREATE TABLE b (id TEXT PRIMARY KEY, a_id TEXT UNIQUE REFERENCES a(id) ON UPDATE CASCADE);
-CREATE TABLE c (id TEXT PRIMARY KEY, b_a_id TEXT REFERENCES b(a_id) ON UPDATE CASCADE);
+-- UpdateSetNull_ToUpdateCascadeNotNull: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
+CREATE TABLE b (
+  id TEXT PRIMARY KEY
+ ,a_id TEXT UNIQUE REFERENCES a ON UPDATE SET NULL
+);
+CREATE TABLE c (
+  id TEXT PRIMARY KEY
+ ,b_a_id TEXT NOT NULL REFERENCES b(a_id) ON UPDATE CASCADE
+);
 
+-- Test 277: statement (line 2564)
 INSERT INTO a VALUES ('original'), ('untouched');
 INSERT INTO b VALUES ('b1', 'original'), ('b2', 'untouched');
 INSERT INTO c VALUES
@@ -1550,30 +1863,35 @@ INSERT INTO c VALUES
 ;
 
 -- Test 278: statement (line 2574)
+\set ON_ERROR_STOP 0
 UPDATE a SET id = 'updated' WHERE id = 'original';
+\set ON_ERROR_STOP 0
 
 -- Test 279: statement (line 2578)
 DROP TABLE c, b, a;
 
--- Test 280: statement (line 2611)
-CREATE TABLE a (id TEXT PRIMARY KEY);
+-- DeleteSetDefault_Basic1: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
 CREATE TABLE b1 (
-  id TEXT PRIMARY KEY,
-  delete_set_default TEXT DEFAULT 'b1-default' REFERENCES a(id) ON DELETE SET DEFAULT
+  id TEXT PRIMARY KEY
+ ,delete_set_default TEXT DEFAULT 'b1-default' REFERENCES a ON DELETE SET DEFAULT
 );
 CREATE TABLE b2 (
-  id TEXT PRIMARY KEY,
-  delete_set_default TEXT DEFAULT 'b2-default' REFERENCES a(id) ON DELETE SET DEFAULT
+  id TEXT PRIMARY KEY
+ ,delete_set_default TEXT DEFAULT 'b2-default' REFERENCES a ON DELETE SET DEFAULT
 );
 CREATE TABLE b3 (
-  id TEXT PRIMARY KEY,
-  delete_set_default TEXT DEFAULT 'b3-default' REFERENCES a(id) ON DELETE SET DEFAULT
+  id TEXT PRIMARY KEY
+ ,delete_set_default TEXT DEFAULT 'b3-default' REFERENCES a ON DELETE SET DEFAULT
 );
 CREATE TABLE b4 (
-  id TEXT PRIMARY KEY,
-  delete_set_default TEXT DEFAULT 'b4-default' REFERENCES a(id) ON DELETE SET DEFAULT
+  id TEXT PRIMARY KEY
+ ,delete_set_default TEXT DEFAULT 'b4-default' REFERENCES a ON DELETE SET DEFAULT
 );
 
+-- Test 280: statement (line 2611)
 INSERT INTO a VALUES ('delete_me'), ('untouched'), ('b1-default'), ('b2-default'), ('b3-default'), ('b4-default');
 INSERT INTO b1 VALUES ('b1-pk1', 'untouched'), ('b1-pk2', 'untouched');
 INSERT INTO b2 VALUES ('b2-pk1', 'untouched'), ('b2-pk2', 'delete_me');
@@ -1596,25 +1914,28 @@ UNION ALL
 -- Test 283: statement (line 2642)
 DROP TABLE b4, b3, b2, b1, a;
 
--- Test 284: statement (line 2674)
-CREATE TABLE a (id TEXT PRIMARY KEY);
+-- DeleteSetDefault_Basic1_WrongDefault: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
 CREATE TABLE b1 (
-  id TEXT PRIMARY KEY,
-  delete_set_default TEXT DEFAULT 'b1-def' REFERENCES a(id) ON DELETE SET DEFAULT
+  id TEXT PRIMARY KEY
+ ,delete_set_default TEXT DEFAULT 'b1-def' REFERENCES a ON DELETE SET DEFAULT
 );
 CREATE TABLE b2 (
-  id TEXT PRIMARY KEY,
-  delete_set_default TEXT DEFAULT 'b2-def' REFERENCES a(id) ON DELETE SET DEFAULT
+  id TEXT PRIMARY KEY
+ ,delete_set_default TEXT DEFAULT 'b2-def' REFERENCES a ON DELETE SET DEFAULT
 );
 CREATE TABLE b3 (
-  id TEXT PRIMARY KEY,
-  delete_set_default TEXT DEFAULT 'b3-def' REFERENCES a(id) ON DELETE SET DEFAULT
+  id TEXT PRIMARY KEY
+ ,delete_set_default TEXT DEFAULT 'missing' REFERENCES a ON DELETE SET DEFAULT
 );
 CREATE TABLE b4 (
-  id TEXT PRIMARY KEY,
-  delete_set_default TEXT DEFAULT 'b4-def' REFERENCES a(id) ON DELETE SET DEFAULT
+  id TEXT PRIMARY KEY
+ ,delete_set_default TEXT DEFAULT 'b4-def' REFERENCES a ON DELETE SET DEFAULT
 );
 
+-- Test 284: statement (line 2674)
 INSERT INTO a VALUES ('delete_me'), ('untouched'), ('b1-def'), ('b2-def'), ('b3-def'), ('b4-def');
 INSERT INTO b1 VALUES ('b1-pk1', 'untouched'), ('b1-pk2', 'untouched');
 INSERT INTO b2 VALUES ('b2-pk1', 'untouched'), ('b2-pk2', 'delete_me');
@@ -1622,28 +1943,39 @@ INSERT INTO b3 VALUES ('b3-pk1', 'delete_me'), ('b3-pk2', 'untouched');
 INSERT INTO b4 VALUES ('b4-pk1', 'delete_me'), ('b4-pk2', 'delete_me');
 
 -- Test 285: statement (line 2682)
+\set ON_ERROR_STOP 0
 DELETE FROM a WHERE id = 'delete_me';
+\set ON_ERROR_STOP 0
 
 -- Test 286: statement (line 2686)
 DROP TABLE b4, b3, b2, b1, a;
 
--- Test 287: statement (line 2722)
-CREATE TABLE a (id TEXT PRIMARY KEY);
-CREATE TABLE b1 (id TEXT PRIMARY KEY, delete_cascade TEXT REFERENCES a(id) ON DELETE CASCADE);
-CREATE TABLE b2 (id TEXT PRIMARY KEY, delete_cascade TEXT REFERENCES a(id) ON DELETE CASCADE);
+-- DeleteSetDefault_Basic2: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
+CREATE TABLE b1 (
+  id TEXT PRIMARY KEY
+ ,delete_cascade TEXT NOT NULL REFERENCES a ON DELETE CASCADE
+);
+CREATE TABLE b2 (
+  id TEXT PRIMARY KEY
+ ,delete_cascade TEXT NOT NULL REFERENCES a ON DELETE CASCADE
+);
 CREATE TABLE c1 (
-  id TEXT PRIMARY KEY,
-  delete_set_default TEXT DEFAULT 'b1-default' REFERENCES b1(id) ON DELETE SET DEFAULT
+  id TEXT PRIMARY KEY
+ ,delete_set_default TEXT DEFAULT 'b1-default' REFERENCES b1 ON DELETE SET DEFAULT
 );
 CREATE TABLE c2 (
-  id TEXT PRIMARY KEY,
-  delete_set_default TEXT DEFAULT 'b1-default' REFERENCES b1(id) ON DELETE SET DEFAULT
+  id TEXT PRIMARY KEY
+ ,delete_set_default TEXT DEFAULT 'b1-default' REFERENCES b1 ON DELETE SET DEFAULT
 );
 CREATE TABLE c3 (
-  id TEXT PRIMARY KEY,
-  delete_set_default TEXT DEFAULT 'b2-default' REFERENCES b2(id) ON DELETE SET DEFAULT
+  id TEXT PRIMARY KEY
+ ,delete_set_default TEXT DEFAULT 'b2-default' REFERENCES b2 ON DELETE SET DEFAULT
 );
 
+-- Test 287: statement (line 2722)
 INSERT INTO a VALUES ('a-pk1'), ('a-default');
 INSERT INTO b1 VALUES ('b1-pk1', 'a-pk1'), ('b1-pk2', 'a-pk1'), ('b1-default', 'a-default');
 INSERT INTO b2 VALUES ('b2-pk1', 'a-pk1'), ('b2-pk2', 'a-pk1'), ('b2-default', 'a-default');
@@ -1687,64 +2019,73 @@ UNION ALL
 
 
 -- Test 291: statement (line 2782)
--- ALTER TABLE c3 SET (schema_locked=false)
+-- CockroachDB-only: ALTER TABLE c3 SET (schema_locked=false);
 
 -- Test 292: statement (line 2785)
--- ALTER TABLE c2 SET (schema_locked=false)
+-- CockroachDB-only: ALTER TABLE c2 SET (schema_locked=false);
 
 -- Test 293: statement (line 2788)
--- ALTER TABLE c1 SET (schema_locked=false)
+-- CockroachDB-only: ALTER TABLE c1 SET (schema_locked=false);
 
 -- Test 294: statement (line 2791)
--- ALTER TABLE b2 SET (schema_locked=false)
+-- CockroachDB-only: ALTER TABLE b2 SET (schema_locked=false);
 
 -- Test 295: statement (line 2794)
--- ALTER TABLE b1 SET (schema_locked=false)
+-- CockroachDB-only: ALTER TABLE b1 SET (schema_locked=false);
 
 -- Test 296: statement (line 2797)
--- ALTER TABLE a SET (schema_locked=false)
+-- CockroachDB-only: ALTER TABLE a SET (schema_locked=false);
 
 -- Test 297: statement (line 2800)
 TRUNCATE c3, c2, c1, b2, b1, a;
 
 -- Test 298: statement (line 2803)
--- ALTER TABLE c3 RESET (schema_locked)
+-- CockroachDB-only: ALTER TABLE c3 RESET (schema_locked);
 
 -- Test 299: statement (line 2806)
--- ALTER TABLE c2 RESET (schema_locked)
+-- CockroachDB-only: ALTER TABLE c2 RESET (schema_locked);
 
 -- Test 300: statement (line 2809)
--- ALTER TABLE c1 RESET (schema_locked)
+-- CockroachDB-only: ALTER TABLE c1 RESET (schema_locked);
 
 -- Test 301: statement (line 2812)
--- ALTER TABLE b2 RESET (schema_locked)
+-- CockroachDB-only: ALTER TABLE b2 RESET (schema_locked);
 
 -- Test 302: statement (line 2815)
--- ALTER TABLE b1 RESET (schema_locked)
+-- CockroachDB-only: ALTER TABLE b1 RESET (schema_locked);
 
 -- Test 303: statement (line 2818)
--- ALTER TABLE a RESET (schema_locked)
+-- CockroachDB-only: ALTER TABLE a RESET (schema_locked);
 
 -- Test 304: statement (line 2822)
 DROP TABLE c3, c2, c1, b2, b1, a;
 
--- Test 305: statement (line 2859)
-CREATE TABLE a (id TEXT PRIMARY KEY);
-CREATE TABLE b1 (id TEXT PRIMARY KEY, delete_cascade TEXT REFERENCES a(id) ON DELETE CASCADE);
-CREATE TABLE b2 (id TEXT PRIMARY KEY, delete_cascade TEXT REFERENCES a(id) ON DELETE CASCADE);
+-- DeleteSetDefault_Basic2_WrongDefault: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
+CREATE TABLE b1 (
+  id TEXT PRIMARY KEY
+ ,delete_cascade TEXT NOT NULL REFERENCES a ON DELETE CASCADE
+);
+CREATE TABLE b2 (
+  id TEXT PRIMARY KEY
+ ,delete_cascade TEXT NOT NULL REFERENCES a ON DELETE CASCADE
+);
 CREATE TABLE c1 (
-  id TEXT PRIMARY KEY,
-  delete_set_default TEXT DEFAULT 'b1-default' REFERENCES b1(id) ON DELETE SET DEFAULT
+  id TEXT PRIMARY KEY
+ ,delete_set_default TEXT DEFAULT 'b1-default' REFERENCES b1 ON DELETE SET DEFAULT
 );
 CREATE TABLE c2 (
-  id TEXT PRIMARY KEY,
-  delete_set_default TEXT DEFAULT 'b1-default' REFERENCES b1(id) ON DELETE SET DEFAULT
+  id TEXT PRIMARY KEY
+ ,delete_set_default TEXT DEFAULT 'missing' REFERENCES b1 ON DELETE SET DEFAULT
 );
 CREATE TABLE c3 (
-  id TEXT PRIMARY KEY,
-  delete_set_default TEXT DEFAULT 'b2-default' REFERENCES b2(id) ON DELETE SET DEFAULT
+  id TEXT PRIMARY KEY
+ ,delete_set_default TEXT DEFAULT 'b2-default' REFERENCES b2 ON DELETE SET DEFAULT
 );
 
+-- Test 305: statement (line 2859)
 INSERT INTO a VALUES ('a-pk1'), ('a-default');
 INSERT INTO b1 VALUES ('b1-pk1', 'a-pk1'), ('b1-pk2', 'a-pk1'), ('b1-default', 'a-default');
 INSERT INTO b2 VALUES ('b2-pk1', 'a-pk1'), ('b2-pk2', 'a-pk1'), ('b2-default', 'a-default');
@@ -1768,22 +2109,27 @@ INSERT INTO c3 VALUES
 ;
 
 -- Test 306: statement (line 2885)
+\set ON_ERROR_STOP 0
 DELETE FROM a WHERE id = 'a-pk1';
+\set ON_ERROR_STOP 0
 
 -- Test 307: statement (line 2889)
 DROP TABLE c3, c2, c1, b2, b1, a;
 
--- Test 308: statement (line 2914)
-CREATE TABLE a (id TEXT PRIMARY KEY);
+-- DeleteSetDefault_ToUpdateCascade: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
 CREATE TABLE b (
-  id TEXT PRIMARY KEY,
-  a_id TEXT DEFAULT 'default' REFERENCES a(id) ON DELETE SET DEFAULT
+  id TEXT PRIMARY KEY
+ ,a_id TEXT DEFAULT 'default' UNIQUE REFERENCES a ON DELETE SET DEFAULT
 );
 CREATE TABLE c (
-  id TEXT PRIMARY KEY,
-  b_a_id TEXT DEFAULT 'default' REFERENCES a(id) ON DELETE SET DEFAULT
+  id TEXT PRIMARY KEY
+ ,b_a_id TEXT REFERENCES b(a_id) ON UPDATE CASCADE
 );
 
+-- Test 308: statement (line 2914)
 INSERT INTO a VALUES ('delete-me'), ('untouched'), ('default');
 INSERT INTO b VALUES ('b1', 'delete-me'), ('b2', 'untouched');
 INSERT INTO c VALUES
@@ -1808,11 +2154,20 @@ UNION ALL
 -- Test 312: statement (line 2947)
 DROP TABLE c, b, a;
 
--- Test 313: statement (line 2972)
-CREATE TABLE a (id TEXT PRIMARY KEY);
-CREATE TABLE b (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id) ON DELETE SET NULL);
-CREATE TABLE c (id TEXT PRIMARY KEY, b_a_id TEXT REFERENCES a(id) ON DELETE SET NULL);
+-- DeleteSetDefault_ToUpdateCascade (NULL default): missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
+CREATE TABLE b (
+  id TEXT PRIMARY KEY
+ ,a_id TEXT DEFAULT NULL UNIQUE REFERENCES a ON DELETE SET DEFAULT
+);
+CREATE TABLE c (
+  id TEXT PRIMARY KEY
+ ,b_a_id TEXT REFERENCES b(a_id) ON UPDATE CASCADE
+);
 
+-- Test 313: statement (line 2972)
 INSERT INTO a VALUES ('delete-me'), ('untouched');
 INSERT INTO b VALUES ('b1', 'delete-me'), ('b2', 'untouched');
 INSERT INTO c VALUES
@@ -1834,11 +2189,20 @@ UNION ALL
 -- Test 316: statement (line 3000)
 DROP TABLE c, b, a;
 
--- Test 317: statement (line 3025)
-CREATE TABLE a (id TEXT PRIMARY KEY);
-CREATE TABLE b (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id) ON DELETE CASCADE);
-CREATE TABLE c (id TEXT PRIMARY KEY, b_a_id TEXT REFERENCES a(id) ON DELETE CASCADE);
+-- DeleteSetDefault_ToUpdateCascadeNotNull: missing schema setup from CRDB logic tests.
+CREATE TABLE a (
+  id TEXT PRIMARY KEY
+);
+CREATE TABLE b (
+  id TEXT PRIMARY KEY
+ ,a_id TEXT DEFAULT NULL UNIQUE REFERENCES a ON DELETE SET DEFAULT
+);
+CREATE TABLE c (
+  id TEXT PRIMARY KEY
+ ,b_a_id TEXT NOT NULL REFERENCES b(a_id) ON UPDATE CASCADE
+);
 
+-- Test 317: statement (line 3025)
 INSERT INTO a VALUES ('delete-me'), ('untouched');
 INSERT INTO b VALUES ('b1', 'delete-me'), ('b2', 'untouched');
 INSERT INTO c VALUES
@@ -1849,7 +2213,9 @@ INSERT INTO c VALUES
 ;
 
 -- Test 318: statement (line 3037)
+\set ON_ERROR_STOP 0
 DELETE FROM a WHERE id = 'delete-me';
+\set ON_ERROR_STOP 0
 
 -- Test 319: statement (line 3041)
 DROP TABLE c, b, a;
@@ -2048,6 +2414,7 @@ CREATE TABLE a (
 CREATE TABLE b (
   x INT
  ,y INT
+ ,INDEX (x, y)
  ,FOREIGN KEY (x, y) REFERENCES a (x, y) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -2068,10 +2435,10 @@ SELECT * FROM b ORDER BY x, y;
 SELECT * FROM a ORDER BY x;
 
 -- Test 359: statement (line 3531)
--- ALTER TABLE b SET (schema_locked=false);
+-- CockroachDB-only: ALTER TABLE b SET (schema_locked=false);
 
 -- Test 360: statement (line 3534)
--- ALTER TABLE a SET (schema_locked=false);
+-- CockroachDB-only: ALTER TABLE a SET (schema_locked=false);
 
 -- Test 361: statement (line 3538)
 TRUNCATE b, a;
@@ -2079,10 +2446,10 @@ INSERT INTO a VALUES (NULL, NULL), (NULL, 4), (5, NULL), (6, 6);
 INSERT INTO b VALUES (NULL, NULL), (NULL, 4), (5, NULL), (6, 6);
 
 -- Test 362: statement (line 3543)
--- ALTER TABLE b RESET (schema_locked);
+-- CockroachDB-only: ALTER TABLE b RESET (schema_locked);
 
 -- Test 363: statement (line 3546)
--- ALTER TABLE a RESET (schema_locked);
+-- CockroachDB-only: ALTER TABLE a RESET (schema_locked);
 
 -- Test 364: statement (line 3550)
 UPDATE a SET y = y*10 WHERE y > 0;
@@ -2105,6 +2472,7 @@ CREATE TABLE a (
 CREATE TABLE b (
   x INT
  ,y INT
+ ,INDEX (x, y)
  ,FOREIGN KEY (x, y) REFERENCES a (x, y) MATCH FULL ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -2125,10 +2493,10 @@ SELECT * FROM b ORDER BY x, y;
 SELECT * FROM a ORDER BY x;
 
 -- Test 374: statement (line 3614)
--- ALTER TABLE b SET (schema_locked=false);
+-- CockroachDB-only: ALTER TABLE b SET (schema_locked=false);
 
 -- Test 375: statement (line 3617)
--- ALTER TABLE a SET (schema_locked=false);
+-- CockroachDB-only: ALTER TABLE a SET (schema_locked=false);
 
 -- Test 376: statement (line 3621)
 TRUNCATE b, a;
@@ -2136,10 +2504,10 @@ INSERT INTO a VALUES (NULL, NULL), (NULL, 4), (5, NULL), (6, 6);
 INSERT INTO b VALUES (NULL, NULL), (6, 6);
 
 -- Test 377: statement (line 3626)
--- ALTER TABLE b RESET (schema_locked);
+-- CockroachDB-only: ALTER TABLE b RESET (schema_locked);
 
 -- Test 378: statement (line 3629)
--- ALTER TABLE a RESET (schema_locked);
+-- CockroachDB-only: ALTER TABLE a RESET (schema_locked);
 
 -- Test 379: statement (line 3633)
 UPDATE a SET y = y*10 WHERE y > 0;
@@ -2240,7 +2608,8 @@ DROP TABLE c, b, a;
 -- Test 400: statement (line 3757)
 CREATE TABLE self_ab (
   a INT UNIQUE,
-  b INT DEFAULT 1 CHECK (b != 1)
+  b INT DEFAULT 1 CHECK (b != 1),
+  INDEX (b)
 );
 
 -- Test 401: statement (line 3764)
@@ -2273,7 +2642,9 @@ CREATE TABLE self_abcd (
   b INT DEFAULT 2,
   c INT DEFAULT 2,
   d INT DEFAULT 2,
-  PRIMARY KEY (a)
+  INDEX (c),
+  INDEX (d),
+  PRIMARY KEY (a), FAMILY (a, b, c, d)
 );
 
 -- Test 410: statement (line 3806)
@@ -2303,7 +2674,7 @@ INSERT INTO parent VALUES (1, 1), (2, 2);
 INSERT INTO child VALUES (1, 1), (2, 1), (3, 2), (4, 2);
 
 -- Test 418: statement (line 3840)
-INSERT INTO parent VALUES (2, 20), (3, 3) ON CONFLICT (pk) DO UPDATE SET p = EXCLUDED.p;
+UPSERT INTO parent VALUES (2, 20), (3, 3);
 
 -- Test 419: query (line 3843)
 SELECT * FROM child;
@@ -2334,19 +2705,19 @@ INSERT INTO parent VALUES (1, 1, 1), (2, 2, 2);
 INSERT INTO child VALUES (1, 1, 1), (2, 1, 1), (3, 2, 2), (4, 2, 2);
 
 -- Test 428: statement (line 3888)
-INSERT INTO parent(pk, p) VALUES (1, 1) ON CONFLICT (pk) DO UPDATE SET p = EXCLUDED.p, q = EXCLUDED.q;
+UPSERT INTO parent(pk, p) VALUES (1, 1);
 
 -- Test 429: query (line 3891)
 SELECT * FROM child;
 
 -- Test 430: statement (line 3899)
-INSERT INTO parent(pk, q) VALUES (2, 20) ON CONFLICT (pk) DO UPDATE SET p = EXCLUDED.p, q = EXCLUDED.q;
+UPSERT INTO parent(pk, q) VALUES (2, 20);
 
 -- Test 431: query (line 3902)
 SELECT * FROM child;
 
 -- Test 432: statement (line 3910)
-INSERT INTO parent VALUES (1, 10, 10) ON CONFLICT (pk) DO UPDATE SET p = EXCLUDED.p, q = EXCLUDED.q;
+UPSERT INTO parent VALUES (1, 10, 10);
 
 -- Test 433: query (line 3913)
 SELECT * FROM child;
@@ -2365,19 +2736,19 @@ INSERT INTO parent VALUES (1, 1), (2, 2);
 INSERT INTO child VALUES (1, 1), (2, 1), (3, 2), (4, 2);
 
 -- Test 438: statement (line 3936)
-INSERT INTO parent VALUES (2, 20), (3, 3) ON CONFLICT (pk) DO UPDATE SET p = EXCLUDED.p;
+UPSERT INTO parent VALUES (2, 20), (3, 3);
 
 -- Test 439: query (line 3939)
 SELECT * FROM child;
 
 -- Test 440: statement (line 3948)
-INSERT INTO parent VALUES (1, 1) ON CONFLICT (pk) DO UPDATE SET p = EXCLUDED.p;
+UPSERT INTO parent VALUES (1, 1);
 
 -- Test 441: query (line 3951)
 SELECT * FROM child;
 
 -- Test 442: statement (line 3961)
-INSERT INTO parent(pk) VALUES (1) ON CONFLICT (pk) DO UPDATE SET p = EXCLUDED.p;
+UPSERT INTO parent(pk) VALUES (1);
 
 -- Test 443: query (line 3964)
 SELECT * FROM child;
@@ -2402,19 +2773,19 @@ INSERT INTO parent VALUES (1, 1), (2, 2);
 INSERT INTO child VALUES (1, 1), (2, 1), (3, 2), (4, 2);
 
 -- Test 450: statement (line 3999)
-INSERT INTO parent VALUES (2, 2) ON CONFLICT (pk) DO UPDATE SET p = EXCLUDED.p;
+UPSERT INTO parent VALUES (2, 2);
 
 -- Test 451: query (line 4002)
 SELECT * FROM child;
 
 -- Test 452: statement (line 4012)
-INSERT INTO parent(pk) VALUES (2) ON CONFLICT (pk) DO UPDATE SET p = EXCLUDED.p;
+UPSERT INTO parent(pk) VALUES (2);
 
 -- Test 453: query (line 4015)
 SELECT * FROM child;
 
 -- Test 454: statement (line 4023)
-INSERT INTO parent VALUES (2, 20), (3, 3) ON CONFLICT (pk) DO UPDATE SET p = EXCLUDED.p;
+UPSERT INTO parent VALUES (2, 20), (3, 3);
 
 -- Test 455: query (line 4026)
 SELECT * FROM child;
@@ -2426,7 +2797,7 @@ INSERT INTO parent VALUES (100, 1) ON CONFLICT(p) DO UPDATE SET p = 50;
 DROP TABLE child, parent;
 
 -- Test 458: statement (line 4043)
--- SET autocommit_before_ddl = false
+SET autocommit_before_ddl = false;
 
 -- Test 459: statement (line 4046)
 BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
@@ -2454,7 +2825,7 @@ INSERT INTO child VALUES
 COMMIT;
 
 -- Test 460: statement (line 4071)
--- RESET autocommit_before_ddl
+RESET autocommit_before_ddl;
 
 -- Test 461: statement (line 4074)
 DELETE FROM parent WHERE p = 1;
@@ -2478,7 +2849,7 @@ SELECT * FROM child;
 DROP TABLE child, parent;
 
 -- Test 468: statement (line 4130)
--- SET autocommit_before_ddl = false
+SET autocommit_before_ddl = false;
 
 -- Test 469: statement (line 4133)
 BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
@@ -2489,7 +2860,7 @@ INSERT INTO child VALUES (1, 1), (3, 3);
 COMMIT;
 
 -- Test 470: statement (line 4141)
--- RESET autocommit_before_ddl
+RESET autocommit_before_ddl;
 
 -- Test 471: statement (line 4144)
 PREPARE del AS DELETE FROM parent WHERE a = $1;
@@ -2514,7 +2885,7 @@ CREATE TABLE b (b INT, FOREIGN KEY (b) REFERENCES a (a) ON DELETE CASCADE);
 DELETE FROM a WHERE EXISTS (SELECT a FROM a);
 
 -- Test 478: statement (line 4172)
--- SET autocommit_before_ddl = false
+SET autocommit_before_ddl = false;
 
 -- Test 479: statement (line 4176)
 BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
@@ -2536,7 +2907,7 @@ INSERT INTO posts (user_id, region, post_id) VALUES (1, '00000000-0000-0000-0000
 COMMIT;
 
 -- Test 480: statement (line 4195)
--- RESET autocommit_before_ddl
+RESET autocommit_before_ddl;
 
 -- Test 481: statement (line 4198)
 UPDATE users SET region = '00000000-0000-0000-0000-000000000002' WHERE user_id = 1;

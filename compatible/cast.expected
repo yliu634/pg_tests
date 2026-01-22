@@ -1,19 +1,17 @@
-psql:pg_tests/compatible/cast.sql:6: NOTICE:  table "assn_cast" does not exist, skipping
-DROP TABLE
 CREATE TABLE
 INSERT 0 1
 INSERT 0 2
-INSERT 0 1
+psql:pg_tests/compatible/cast.sql:30: ERROR:  value too long for type character(1)
  c 
 ---
  1
 (1 row)
 
 INSERT 0 1
-INSERT 0 1
+psql:pg_tests/compatible/cast.sql:36: ERROR:  value too long for type character(1)
 PREPARE
-INSERT 0 1
-DELETE 7
+psql:pg_tests/compatible/cast.sql:42: ERROR:  value too long for type character(1)
+DELETE 4
 INSERT 0 1
  concat 
 --------
@@ -22,48 +20,52 @@ INSERT 0 1
 
 INSERT 0 1
 INSERT 0 2
-INSERT 0 1
+psql:pg_tests/compatible/cast.sql:60: ERROR:  value too long for type character varying(1)
  vc 
 ----
  1
 (1 row)
 
 INSERT 0 1
-INSERT 0 1
+psql:pg_tests/compatible/cast.sql:66: ERROR:  value too long for type character varying(1)
 INSERT 0 1
 INSERT 0 2
- qc  
------
- abc
+ qc 
+----
+ a
 (1 row)
 
 INSERT 0 1
- qc  
------
- 123
-(1 row)
-
-INSERT 0 1
-INSERT 0 1
+psql:pg_tests/compatible/cast.sql:78: ERROR:  column "qc" is of type "char" but expression is of type integer
+LINE 1: INSERT INTO assn_cast(qc) VALUES (123) RETURNING qc;
+                                          ^
+HINT:  You will need to rewrite or cast the expression.
+psql:pg_tests/compatible/cast.sql:81: ERROR:  column "qc" is of type "char" but expression is of type integer
+LINE 1: INSERT INTO assn_cast(qc) VALUES (1234);
+                                          ^
+HINT:  You will need to rewrite or cast the expression.
 PREPARE
-DELETE 13
+DELETE 9
 INSERT 0 1
- qc  
------
- foo
+ qc 
+----
+ f
 (1 row)
 
 INSERT 0 1
 INSERT 0 2
-INSERT 0 1
-INSERT 0 1
+psql:pg_tests/compatible/cast.sql:102: ERROR:  bit string length 2 does not match type bit(1)
+psql:pg_tests/compatible/cast.sql:105: ERROR:  column "b" is of type bit but expression is of type integer
+LINE 1: INSERT into assn_cast(b) VALUES (1);
+                                         ^
+HINT:  You will need to rewrite or cast the expression.
 INSERT 0 1
 INSERT 0 2
 PREPARE
 INSERT 0 1
-INSERT 0 1
+psql:pg_tests/compatible/cast.sql:120: ERROR:  smallint out of range
 PREPARE
-INSERT 0 1
+psql:pg_tests/compatible/cast.sql:126: ERROR:  smallint out of range
 INSERT 0 1
 PREPARE
 INSERT 0 1
@@ -81,16 +83,16 @@ PREPARE
 INSERT 0 1
 PREPARE
 INSERT 0 1
-   d    
---------
-  11.22
-  88.99
-     22
-  99.11
-     33
-     44
- 123.45
-  67.89
+  d  
+-----
+  11
+  89
+  22
+  99
+  33
+  44
+ 123
+  68
 (8 rows)
 
 psql:pg_tests/compatible/cast.sql:168: ERROR:  cannot determine type of empty array
@@ -114,14 +116,14 @@ HINT:  You will need to rewrite or cast the expression.
 psql:pg_tests/compatible/cast.sql:195: ERROR:  prepared statement "insert_a2" does not exist
 PREPARE
 INSERT 0 1
-         a         
--------------------
- {1.1}
- {2.88,NULL,15}
- {3.99,NULL,16.00}
- {5.55,6.66}
- {7.77,8.88}
- {30.12,30.9,32.1}
+      a      
+-------------
+ {1}
+ {3,NULL,15}
+ {4,NULL,16}
+ {6,7}
+ {8,9}
+ {30,31,32}
 (6 rows)
 
 INSERT 0 1
@@ -133,14 +135,18 @@ INSERT 0 1
  2
 (2 rows)
 
-INSERT 0 1
+psql:pg_tests/compatible/cast.sql:219: ERROR:  value too long for type character(1)
 PREPARE
-INSERT 0 1
-INSERT 0 1
+psql:pg_tests/compatible/cast.sql:225: ERROR:  value too long for type character(1)
+psql:pg_tests/compatible/cast.sql:228: ERROR:  bit string too long for type bit varying(1)
 PREPARE
-INSERT 0 1
-CREATE TABLE
-psql:pg_tests/compatible/cast.sql:246: ERROR:  smallint out of range
+psql:pg_tests/compatible/cast.sql:234: ERROR:  bit string too long for type bit varying(1)
+psql:pg_tests/compatible/cast.sql:243: ERROR:  syntax error at or near ";"
+LINE 2:   k INT,;
+                ^
+psql:pg_tests/compatible/cast.sql:246: ERROR:  relation "assn_cast_int_default" does not exist
+LINE 1: INSERT INTO assn_cast_int_default(k) VALUES (1);
+                    ^
 CREATE TABLE
 psql:pg_tests/compatible/cast.sql:256: ERROR:  value too long for type character(1)
 psql:pg_tests/compatible/cast.sql:259: ERROR:  value too long for type character(2)
@@ -157,19 +163,19 @@ INSERT 0 1
  1 | 2 | 1.6
 (1 row)
 
-DELETE 35
+DELETE 27
 INSERT 0 1
-UPDATE 1
+psql:pg_tests/compatible/cast.sql:287: ERROR:  value too long for type character(1)
  c 
 ---
  1
 (1 row)
 
 UPDATE 1
-UPDATE 1
+psql:pg_tests/compatible/cast.sql:293: ERROR:  value too long for type character(1)
 UPDATE 1
 PREPARE
-UPDATE 1
+psql:pg_tests/compatible/cast.sql:302: ERROR:  value too long for type character(1)
 UPDATE 1
  concat 
 --------
@@ -182,34 +188,37 @@ UPDATE 1
 (1 row)
 
 UPDATE 1
- qc  
------
- abc
+ qc 
+----
+ a
 (1 row)
 
 UPDATE 1
-UPDATE 1
+psql:pg_tests/compatible/cast.sql:320: ERROR:  column "qc" is of type "char" but expression is of type integer
+LINE 1: UPDATE assn_cast SET qc = 1234;
+                                  ^
+HINT:  You will need to rewrite or cast the expression.
 PREPARE
 UPDATE 1
- qc  
------
- foo
+ qc 
+----
+ f
 (1 row)
 
- qc  
------
- foo
+ qc 
+----
+ f
 (1 row)
 
 UPDATE 1
 PREPARE
 UPDATE 1
-UPDATE 1
+psql:pg_tests/compatible/cast.sql:344: ERROR:  smallint out of range
 PREPARE
-UPDATE 1
-   d   
--------
- 11.22
+psql:pg_tests/compatible/cast.sql:350: ERROR:  smallint out of range
+ d  
+----
+ 11
 (1 row)
 
 UPDATE 1
@@ -219,24 +228,24 @@ UPDATE 1
 (1 row)
 
 UPDATE 1
-   d   
--------
- 11.22
+ d  
+----
+ 11
 (1 row)
 
 UPDATE 1
 PREPARE
 UPDATE 1
-   d    
---------
- 123.45
+  d  
+-----
+ 123
 (1 row)
 
 PREPARE
 UPDATE 1
-   d   
--------
- 67.89
+ d  
+----
+ 68
 (1 row)
 
 psql:pg_tests/compatible/cast.sql:380: ERROR:  cannot determine type of empty array
@@ -247,35 +256,35 @@ psql:pg_tests/compatible/cast.sql:383: ERROR:  column "a" is of type numeric[] b
 LINE 1: UPDATE assn_cast SET a = ARRAY[NULL] RETURNING a;
                                  ^
 HINT:  You will need to rewrite or cast the expression.
-   a   
--------
- {1.1}
-(1 row)
-
-UPDATE 1
-       a        
-----------------
- {2.88,NULL,15}
-(1 row)
-
-UPDATE 1
-         a         
--------------------
- {3.99,NULL,16.00}
+  a  
+-----
+ {1}
 (1 row)
 
 UPDATE 1
       a      
 -------------
- {5.55,6.66}
+ {3,NULL,15}
+(1 row)
+
+UPDATE 1
+      a      
+-------------
+ {4,NULL,16}
+(1 row)
+
+UPDATE 1
+   a   
+-------
+ {6,7}
 (1 row)
 
 UPDATE 1
 PREPARE
 UPDATE 1
-      a      
--------------
- {7.77,8.88}
+   a   
+-------
+ {8,9}
 (1 row)
 
 psql:pg_tests/compatible/cast.sql:407: ERROR:  column "a" is of type numeric[] but expression is of type text[]
@@ -283,21 +292,30 @@ LINE 1: PREPARE update_a2 AS UPDATE assn_cast SET a = ARRAY[$1];
                                                       ^
 HINT:  You will need to rewrite or cast the expression.
 psql:pg_tests/compatible/cast.sql:410: ERROR:  prepared statement "update_a2" does not exist
-      a      
--------------
- {7.77,8.88}
+   a   
+-------
+ {8,9}
 (1 row)
 
 PREPARE
 UPDATE 1
-         a         
--------------------
- {30.12,30.9,32.1}
+     a      
+------------
+ {30,31,32}
 (1 row)
 
-UPDATE 1
-UPDATE 1
-UPDATE 1
+psql:pg_tests/compatible/cast.sql:425: ERROR:  column "t" is of type timestamp without time zone but expression is of type record
+LINE 1: UPDATE assn_cast SET t = (SELECT (10, 11));
+                                 ^
+HINT:  You will need to rewrite or cast the expression.
+psql:pg_tests/compatible/cast.sql:428: ERROR:  column "t" is of type timestamp without time zone but expression is of type numeric
+LINE 1: UPDATE assn_cast SET t = 3.2;
+                                 ^
+HINT:  You will need to rewrite or cast the expression.
+psql:pg_tests/compatible/cast.sql:431: ERROR:  column "t" is of type timestamp without time zone but expression is of type numeric
+LINE 1: UPDATE assn_cast SET (i, t) = (1, 3.2);
+                                          ^
+HINT:  You will need to rewrite or cast the expression.
 CREATE TABLE
 psql:pg_tests/compatible/cast.sql:444: ERROR:  syntax error at or near "UPSERT"
 LINE 1: UPSERT INTO assn_cast_upsert (k, c) VALUES (1, 'abc');
@@ -916,14 +934,13 @@ INSERT 0 5
 (5 rows)
 
 CREATE TABLE
-  oid  
--------
- 49886
-(1 row)
-
-INSERT 0 1
-    r    
----------
- t128294
-(1 row)
+psql:pg_tests/compatible/cast.sql:1217: ERROR:  syntax error at or near "let"
+LINE 1: let $table_id
+        ^
+psql:pg_tests/compatible/cast.sql:1220: ERROR:  syntax error at or near "$"
+LINE 1: INSERT INTO t128294 (r) VALUES ($table_id);
+                                        ^
+ r 
+---
+(0 rows)
 
