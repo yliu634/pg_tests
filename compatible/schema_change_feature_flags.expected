@@ -1,0 +1,7 @@
+SET
+                                                             notice                                                              
+---------------------------------------------------------------------------------------------------------------------------------
+ skipped: schema_change_feature_flags (CockroachDB cluster setting/schema changer feature flags are not supported in PostgreSQL)
+(1 row)
+
+RESET

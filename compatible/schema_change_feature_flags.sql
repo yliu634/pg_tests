@@ -1,6 +1,22 @@
 -- PostgreSQL compatible tests from schema_change_feature_flags
 -- 63 tests
 
+-- PG-NOT-SUPPORTED: CockroachDB schema change feature flags (`SET CLUSTER
+-- SETTING feature.schema_change.enabled`) and many related schema-changer
+-- statements do not exist in PostgreSQL.
+--
+-- The original CockroachDB-derived statements are preserved below for
+-- reference, but are not executed under PostgreSQL.
+
+SET client_min_messages = warning;
+
+SELECT
+  'skipped: schema_change_feature_flags (CockroachDB cluster setting/schema changer feature flags are not supported in PostgreSQL)'
+    AS notice;
+
+RESET client_min_messages;
+
+/*
 SET client_min_messages = warning;
 
 -- Test 1: statement (line 10)
@@ -203,3 +219,4 @@ SET CLUSTER SETTING feature.schema_change.enabled = TRUE;
 
 \set ON_ERROR_STOP 1
 RESET client_min_messages;
+*/
