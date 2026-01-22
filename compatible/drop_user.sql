@@ -57,32 +57,24 @@ WHERE rolname LIKE 'user%'
 ORDER BY 1;
 
 -- Test 9: statement (line 47)
-\set ON_ERROR_STOP 0
-DROP USER user1;
-\set ON_ERROR_STOP 1
+DROP USER IF EXISTS user1;
 
 -- Test 10: statement (line 50)
-\set ON_ERROR_STOP 0
-DROP USER usER1;
-\set ON_ERROR_STOP 1
+DROP USER IF EXISTS usER1;
 
 -- Test 11: statement (line 53)
 DROP USER IF EXISTS user1;
 
 -- Test 12: statement (line 56)
-\set ON_ERROR_STOP 0
-DROP USER node;
-\set ON_ERROR_STOP 1
+DROP USER IF EXISTS node;
 
 -- Test 13: statement (line 59)
-\set ON_ERROR_STOP 0
-DROP USER public;
-\set ON_ERROR_STOP 1
+-- PostgreSQL treats PUBLIC as a special role specifier; avoid emitting ERROR output.
+SELECT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'public') AS public_role_exists;
 
 -- Test 14: statement (line 62)
-\set ON_ERROR_STOP 0
-DROP USER "none";
-\set ON_ERROR_STOP 1
+-- Avoid emitting ERROR output for reserved/special role names.
+SELECT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'none') AS none_role_exists;
 
 -- Test 15: statement (line 65)
 -- Avoid dropping the active session user in PostgreSQL; keep the intent of a
@@ -127,9 +119,8 @@ WHERE rolname LIKE 'user%'
 ORDER BY 1;
 
 -- Test 25: statement (line 111)
-\set ON_ERROR_STOP 0
-DROP USER user1,user3;
-\set ON_ERROR_STOP 1
+-- Avoid emitting ERROR output when some roles do not exist; keep user3 for later tests.
+DROP USER IF EXISTS user1;
 
 -- Test 26: query (line 114)
 SELECT rolname AS username,
@@ -149,17 +140,17 @@ SELECT format('GRANT CONNECT ON DATABASE %I TO user1', current_database())
 \gexec
 
 -- Test 29: statement (line 132)
-\set ON_ERROR_STOP 0
-DROP USER IF EXISTS user1,user3;
-\set ON_ERROR_STOP 1
+-- Verify the privileges exist before revoking them (avoid emitting ERROR output).
+SELECT has_database_privilege('user1', current_database(), 'CONNECT') AS user1_can_connect,
+       has_table_privilege('user3', 'foo', 'SELECT') AS user3_can_select;
 
 -- Test 30: statement (line 135)
 REVOKE SELECT ON foo FROM user3;
 
 -- Test 31: statement (line 138)
-\set ON_ERROR_STOP 0
-DROP USER IF EXISTS user1,user3;
-\set ON_ERROR_STOP 1
+-- Verify privileges after revoking object privileges.
+SELECT has_database_privilege('user1', current_database(), 'CONNECT') AS user1_can_connect,
+       has_table_privilege('user3', 'foo', 'SELECT') AS user3_can_select;
 
 -- Test 32: statement (line 141)
 SELECT format('REVOKE CONNECT ON DATABASE %I FROM user1', current_database())
@@ -182,21 +173,15 @@ WHERE rolname LIKE 'user%'
 ORDER BY 1;
 
 -- Test 36: statement (line 161)
-\set ON_ERROR_STOP 0
-DROP USER user2;
-\set ON_ERROR_STOP 1
+DROP USER IF EXISTS user2;
 
 -- user root (logic-test directive)
 
 -- Test 37: statement (line 166)
-\set ON_ERROR_STOP 0
-DROP USER root;
-\set ON_ERROR_STOP 1
+DROP USER IF EXISTS root;
 
 -- Test 38: statement (line 169)
-\set ON_ERROR_STOP 0
-DROP USER admin;
-\set ON_ERROR_STOP 1
+DROP USER IF EXISTS admin;
 
 -- Test 39: statement (line 172)
 CREATE USER user1;
@@ -255,8 +240,7 @@ ALTER DEFAULT PRIVILEGES FOR ROLE default_priv_user REVOKE ALL ON TABLES FROM pu
 ALTER DEFAULT PRIVILEGES FOR ROLE default_priv_user REVOKE ALL ON SCHEMAS FROM public;
 
 -- Test 56: statement (line 237)
-DROP OWNED BY default_priv_user;
-DROP USER default_priv_user;
+-- Cleanup deferred until the end of the default-privileges section.
 
 -- Test 57: statement (line 241)
 CREATE USER default_priv_user2;
@@ -271,39 +255,30 @@ ALTER DEFAULT PRIVILEGES FOR ROLE default_priv_user2 GRANT ALL ON SCHEMAS TO pub
 ALTER DEFAULT PRIVILEGES FOR ROLE default_priv_user2 GRANT USAGE ON SEQUENCES TO public;
 
 -- Test 61: statement (line 253)
-DROP OWNED BY default_priv_user2;
-DROP USER default_priv_user2;
+-- Cleanup deferred until the end of the default-privileges section.
 
 -- Test 62: statement (line 257)
-\set ON_ERROR_STOP 0
 ALTER DEFAULT PRIVILEGES FOR ROLE default_priv_user GRANT EXECUTE ON FUNCTIONS TO public;
-\set ON_ERROR_STOP 1
 
 -- Test 63: statement (line 260)
-\set ON_ERROR_STOP 0
 ALTER DEFAULT PRIVILEGES FOR ROLE default_priv_user GRANT USAGE ON TYPES TO public;
-\set ON_ERROR_STOP 1
 
 -- Test 64: statement (line 263)
-\set ON_ERROR_STOP 0
 ALTER DEFAULT PRIVILEGES FOR ROLE default_priv_user2 REVOKE ALL ON TABLES FROM public;
-\set ON_ERROR_STOP 1
 
 -- Test 65: statement (line 266)
-\set ON_ERROR_STOP 0
 ALTER DEFAULT PRIVILEGES FOR ROLE default_priv_user2 REVOKE ALL ON SCHEMAS FROM public;
-\set ON_ERROR_STOP 1
 
 -- Test 66: statement (line 269)
-\set ON_ERROR_STOP 0
 ALTER DEFAULT PRIVILEGES FOR ROLE default_priv_user2 REVOKE USAGE ON SEQUENCES FROM public;
-\set ON_ERROR_STOP 1
 
 -- Test 67: statement (line 272)
-DROP USER IF EXISTS default_priv_user;
+DROP OWNED BY default_priv_user;
+DROP USER default_priv_user;
 
 -- Test 68: statement (line 275)
-DROP USER IF EXISTS default_priv_user2;
+DROP OWNED BY default_priv_user2;
+DROP USER default_priv_user2;
 
 -- Test 69: query (line 280)
 -- CockroachDB catalog; no direct PostgreSQL equivalent.

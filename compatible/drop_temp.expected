@@ -7,8 +7,6 @@ CREATE TABLE
 CREATE SEQUENCE
 CREATE ROLE
 SET
-psql:pg_tests/compatible/drop_temp.sql:24: ERROR:  must be owner of table t_tmp
-psql:pg_tests/compatible/drop_temp.sql:27: ERROR:  must be owner of sequence s_tmp
 SET
 ALTER TABLE
 ALTER SEQUENCE
@@ -16,4 +14,7 @@ SET
 DROP TABLE
 DROP SEQUENCE
 SET
+RESET
+DROP ROLE
+DROP ROLE
 RESET

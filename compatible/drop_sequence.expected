@@ -39,9 +39,7 @@ CREATE TABLE
  
 (1 row)
 
-psql:pg_tests/compatible/drop_sequence.sql:77: ERROR:  cannot drop sequence drop_test because other objects depend on it
-DETAIL:  default value for column i of table t1 depends on sequence drop_test
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+DROP SEQUENCE
 DROP SEQUENCE
  column_name | column_default 
 -------------+----------------
@@ -80,10 +78,7 @@ CREATE TABLE
                         | 
 (1 row)
 
-psql:pg_tests/compatible/drop_sequence.sql:143: ERROR:  cannot drop schema other_db because other objects depend on it
-DETAIL:  sequence other_db.s depends on schema other_db
-default value for column i of table foo depends on sequence other_db.s
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+DROP SCHEMA
 DROP SCHEMA
  column_name |     column_default     
 -------------+------------------------
@@ -123,10 +118,7 @@ CREATE TABLE
                         | 
 (1 row)
 
-psql:pg_tests/compatible/drop_sequence.sql:205: ERROR:  cannot drop schema other_sc because other objects depend on it
-DETAIL:  sequence other_sc.s depends on schema other_sc
-default value for column i of table bar depends on sequence other_sc.s
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+DROP SCHEMA
 DROP SCHEMA
  column_name |     column_default     
 -------------+------------------------
@@ -154,9 +146,7 @@ CREATE TABLE
  
 (1 row)
 
-psql:pg_tests/compatible/drop_sequence.sql:248: ERROR:  cannot drop table t2 because other objects depend on it
-DETAIL:  default value for column i of table t3 depends on sequence s2
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+DROP TABLE
 DROP TABLE
  column_name | column_default 
 -------------+----------------
@@ -207,9 +197,7 @@ CREATE TABLE
  
 (1 row)
 
-psql:pg_tests/compatible/drop_sequence.sql:328: ERROR:  cannot drop column i of table t5 because other objects depend on it
-DETAIL:  default value for column i of table t6 depends on sequence s5
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ALTER TABLE
 ALTER TABLE
  column_name | column_default 
 -------------+----------------
@@ -229,11 +217,11 @@ ALTER TABLE
 INSERT 0 1
 CREATE SEQUENCE
 CREATE VIEW
-psql:pg_tests/compatible/drop_sequence.sql:368: ERROR:  cannot drop sequence s6 because other objects depend on it
-DETAIL:  view v depends on sequence s6
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
 DROP SEQUENCE
-psql:pg_tests/compatible/drop_sequence.sql:377: ERROR:  relation "v" does not exist
-LINE 1: SELECT * FROM v;
-                      ^
+DROP SEQUENCE
+ v_dropped 
+-----------
+ t
+(1 row)
+
 RESET

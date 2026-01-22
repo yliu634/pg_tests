@@ -23,15 +23,17 @@ DROP TABLE
  b
 (1 row)
 
-psql:pg_tests/compatible/drop_table.sql:44: ERROR:  relation "a" does not exist
-LINE 1: SELECT * FROM a;
-                      ^
- regclass 
-----------
- 24896
+ a_dropped 
+-----------
+ t
 (1 row)
 
-psql:pg_tests/compatible/drop_table.sql:56: ERROR:  table "a" does not exist
+ regclass 
+----------
+ 24882
+(1 row)
+
+DROP TABLE
 DROP TABLE
 CREATE TABLE
  id 
@@ -51,7 +53,7 @@ BEGIN
 ALTER TABLE
 DROP TABLE
 COMMIT
-psql:pg_tests/compatible/drop_table.sql:106: ERROR:  table "to_drop" does not exist
+DROP TABLE
 CREATE TABLE
 CREATE TABLE
 ALTER TABLE

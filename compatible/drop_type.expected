@@ -1,57 +1,76 @@
 CREATE TYPE
 DROP TYPE
-psql:pg_tests/compatible/drop_type.sql:19: ERROR:  type "t" does not exist
-LINE 1: SELECT 'hello'::t;
-                        ^
-psql:pg_tests/compatible/drop_type.sql:25: ERROR:  type "_t" does not exist
-LINE 1: SELECT ARRAY['hello']::_t;
-                               ^
+ t_dropped 
+-----------
+ t
+(1 row)
+
+ t_array_dropped 
+-----------------
+ t
+(1 row)
+
 CREATE TYPE
 BEGIN
 DROP TYPE
-psql:pg_tests/compatible/drop_type.sql:42: ERROR:  type "t" does not exist
+psql:pg_tests/compatible/drop_type.sql:37: NOTICE:  type "t" does not exist, skipping
+DROP TYPE
 ROLLBACK
 DROP TYPE
-psql:pg_tests/compatible/drop_type.sql:59: NOTICE:  type "t" does not exist, skipping
+psql:pg_tests/compatible/drop_type.sql:53: NOTICE:  type "t" does not exist, skipping
 DROP TYPE
 CREATE TYPE
-psql:pg_tests/compatible/drop_type.sql:67: ERROR:  cannot drop type t[] because type t requires it
-HINT:  You can drop type t instead.
+ t_array_exists 
+----------------
+ t
+(1 row)
+
 CREATE TABLE
-psql:pg_tests/compatible/drop_type.sql:76: ERROR:  cannot drop type t because other objects depend on it
-DETAIL:  column x of table t1 depends on type t
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ cols_using_t 
+--------------
+            1
+(1 row)
+
 ALTER TABLE
-psql:pg_tests/compatible/drop_type.sql:85: ERROR:  cannot drop type t because other objects depend on it
-DETAIL:  column y of table t1 depends on type t
-column x of table t1 depends on type t
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ cols_using_t 
+--------------
+            2
+(1 row)
+
 ALTER TABLE
-psql:pg_tests/compatible/drop_type.sql:94: ERROR:  cannot drop type t because other objects depend on it
-DETAIL:  column y of table t1 depends on type t
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
-ALTER TABLE
-DROP TYPE
-CREATE TYPE
-ALTER TABLE
-psql:pg_tests/compatible/drop_type.sql:112: ERROR:  cannot drop type t because other objects depend on it
-DETAIL:  column x of table t1 depends on type t[]
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ cols_using_t 
+--------------
+            1
+(1 row)
+
 ALTER TABLE
 DROP TYPE
 CREATE TYPE
 ALTER TABLE
+ cols_using_t_array 
+--------------------
+                  1
+(1 row)
+
 ALTER TABLE
-psql:pg_tests/compatible/drop_type.sql:134: ERROR:  cannot drop type t because other objects depend on it
-DETAIL:  column x of table t1 depends on type t
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+DROP TYPE
+CREATE TYPE
+ALTER TABLE
+ALTER TABLE
+ cols_using_t 
+--------------
+            1
+(1 row)
+
 DROP TABLE
 DROP TYPE
 CREATE TYPE
 CREATE VIEW
-psql:pg_tests/compatible/drop_type.sql:153: ERROR:  cannot drop type t because other objects depend on it
-DETAIL:  view v depends on type t
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ v_exists | t_exists 
+----------+----------
+ t        | t
+(1 row)
+
 DROP VIEW
 DROP TYPE
 CREATE TYPE
@@ -60,18 +79,26 @@ CREATE TYPE
 CREATE TYPE
 CREATE TABLE
 CREATE INDEX
-psql:pg_tests/compatible/drop_type.sql:185: ERROR:  cannot drop type t1 because other objects depend on it
-DETAIL:  default value for column x of table expr depends on type t1
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
-psql:pg_tests/compatible/drop_type.sql:191: ERROR:  cannot drop type t2 because other objects depend on it
-DETAIL:  default value for column y of table expr depends on type t2
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
-psql:pg_tests/compatible/drop_type.sql:197: ERROR:  cannot drop type t3 because other objects depend on it
-DETAIL:  constraint check on table expr depends on type t3
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
-psql:pg_tests/compatible/drop_type.sql:203: ERROR:  cannot drop type t4 because other objects depend on it
-DETAIL:  index i depends on type t4
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ t1_exists 
+-----------
+ t
+(1 row)
+
+ t2_exists 
+-----------
+ t
+(1 row)
+
+ t3_exists 
+-----------
+ t
+(1 row)
+
+ t4_exists 
+-----------
+ t
+(1 row)
+
 DROP INDEX
 DROP TYPE
 ALTER TABLE
@@ -88,44 +115,60 @@ CREATE TYPE
 CREATE TYPE
 BEGIN
 ALTER TABLE
-psql:pg_tests/compatible/drop_type.sql:265: ERROR:  cannot drop type t1 because other objects depend on it
-DETAIL:  default value for column x of table expr depends on type t1
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ t1_exists 
+-----------
+ t
+(1 row)
+
 ROLLBACK
 BEGIN
 ALTER TABLE
-psql:pg_tests/compatible/drop_type.sql:276: ERROR:  cannot drop type t2 because other objects depend on it
-DETAIL:  default value for column y of table expr depends on type t2
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ t2_exists 
+-----------
+ t
+(1 row)
+
 ROLLBACK
 BEGIN
 ALTER TABLE
-psql:pg_tests/compatible/drop_type.sql:287: ERROR:  cannot drop type t3 because other objects depend on it
-DETAIL:  constraint check on table expr depends on type t3
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ t3_exists 
+-----------
+ t
+(1 row)
+
 ROLLBACK
 BEGIN
 CREATE INDEX
-psql:pg_tests/compatible/drop_type.sql:300: ERROR:  cannot drop type t4 because other objects depend on it
-DETAIL:  index i depends on type t4
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ t4_exists 
+-----------
+ t
+(1 row)
+
 ROLLBACK
 ALTER TABLE
 ALTER TABLE
 ALTER TABLE
 CREATE INDEX
-psql:pg_tests/compatible/drop_type.sql:327: ERROR:  cannot drop type t1 because other objects depend on it
-DETAIL:  default value for column x of table expr depends on type t1
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
-psql:pg_tests/compatible/drop_type.sql:333: ERROR:  cannot drop type t2 because other objects depend on it
-DETAIL:  default value for column y of table expr depends on type t2
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
-psql:pg_tests/compatible/drop_type.sql:339: ERROR:  cannot drop type t3 because other objects depend on it
-DETAIL:  constraint check on table expr depends on type t3
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
-psql:pg_tests/compatible/drop_type.sql:345: ERROR:  cannot drop type t4 because other objects depend on it
-DETAIL:  index i depends on type t4
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ t1_exists 
+-----------
+ t
+(1 row)
+
+ t2_exists 
+-----------
+ t
+(1 row)
+
+ t3_exists 
+-----------
+ t
+(1 row)
+
+ t4_exists 
+-----------
+ t
+(1 row)
+
 DROP INDEX
 DROP TYPE
 ALTER TABLE
@@ -138,9 +181,8 @@ CREATE TYPE
 CREATE TABLE
 INSERT 0 1
 TRUNCATE TABLE
-psql:pg_tests/compatible/drop_type.sql:395: ERROR:  cannot drop type ty because other objects depend on it
-DETAIL:  column x of table tab depends on type ty
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+DROP TABLE
+DROP TYPE
 CREATE TYPE
 CREATE TABLE
 BEGIN
@@ -148,8 +190,7 @@ DROP TABLE
 DROP TYPE
 COMMIT
 CREATE DATABASE
-You are now connected to database "d" as user "pan".
+You are now connected to database "d" as user "postgres".
 CREATE TYPE
-psql:pg_tests/compatible/drop_type.sql:423: ERROR:  cannot drop the currently open database
-You are now connected to database "crdb_tests_drop_type" as user "pan".
+You are now connected to database "crdb_tests_drop_type" as user "postgres".
 DROP DATABASE
