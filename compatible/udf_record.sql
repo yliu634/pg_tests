@@ -1,9 +1,14 @@
 -- PostgreSQL compatible tests from udf_record
 -- 127 tests
 
+SET client_min_messages = warning;
+
 -- Test 1: statement (line 1)
 CREATE TABLE t (a INT PRIMARY KEY, b INT);
 INSERT INTO t VALUES (1, 5), (2, 6), (3, 7);
+
+-- Capture the runner-created database name so we can connect back after hopping DBs.
+SELECT current_database() AS orig_db \gset
 
 -- Test 2: statement (line 5)
 CREATE FUNCTION f_one() RETURNS RECORD AS
@@ -15,7 +20,9 @@ $$ LANGUAGE SQL;
 SELECT f_one();
 
 -- Test 4: statement (line 16)
+\set ON_ERROR_STOP 0
 SELECT * FROM f_one();
+\set ON_ERROR_STOP 1
 
 -- Test 5: query (line 19)
 SELECT * FROM f_one() AS foo (a INT);
@@ -63,7 +70,7 @@ $$
 $$ LANGUAGE SQL;
 
 -- Test 15: query (line 74)
-SHOW CREATE FUNCTION f_table;
+SELECT pg_get_functiondef('f_table'::regproc::oid);
 
 -- Test 16: query (line 88)
 SELECT f_table();
@@ -80,7 +87,7 @@ SELECT f_multitable();
 -- Test 19: statement (line 104)
 CREATE FUNCTION f_setof() RETURNS SETOF RECORD AS
 $$
-  SELECT * FROM t
+  SELECT a, b FROM t
 $$ LANGUAGE SQL;
 
 -- Test 20: query (line 110)
@@ -99,8 +106,11 @@ ALTER TABLE t ADD COLUMN c INT DEFAULT 0;
 SELECT f_table();
 
 -- Test 25: statement (line 136)
+DROP DATABASE IF EXISTS "interesting⨄DbName";
 CREATE DATABASE "interesting⨄DbName";
-USE "interesting⨄DbName";
+\set QUIET on
+\c "interesting⨄DbName"
+\set QUIET off
 CREATE TABLE t1 (c1 int);
 
 -- Test 26: statement (line 141)
@@ -110,10 +120,13 @@ $$
 $$;
 
 -- Test 27: query (line 147)
-SHOW CREATE FUNCTION f;
+SELECT pg_get_functiondef('f'::regproc::oid);
 
 -- Test 28: statement (line 162)
-USE test;
+\set QUIET on
+\c :orig_db
+\set QUIET off
+DROP DATABASE "interesting⨄DbName";
 
 -- Test 29: statement (line 169)
 CREATE FUNCTION f_tup() RETURNS RECORD AS
@@ -125,7 +138,9 @@ $$ LANGUAGE SQL;
 SELECT f_tup();
 
 -- Test 31: statement (line 180)
+\set ON_ERROR_STOP 0
 SELECT * FROM f_tup();
+\set ON_ERROR_STOP 1
 
 -- Test 32: query (line 183)
 SELECT * FROM f_tup() as foo(a int, b int, c int);
@@ -189,7 +204,7 @@ $$
 $$ LANGUAGE SQL;
 
 -- Test 47: query (line 265)
-SELECT * FROM f_setof_imp()
+SELECT * FROM f_setof_imp();
 
 -- Test 48: statement (line 272)
 CREATE FUNCTION f_strict() RETURNS RECORD STRICT AS
@@ -285,7 +300,7 @@ CREATE OR REPLACE FUNCTION f_102718()
 	IMMUTABLE
 	LANGUAGE SQL
 	AS $$
-SELECT ('a',)
+SELECT ROW('a')
 $$;
 
 -- Test 71: query (line 424)
@@ -304,121 +319,123 @@ INSERT INTO imp VALUES (1, 2, 'a');
 -- Test 73: statement (line 445)
 CREATE FUNCTION imp_const_tup() RETURNS imp LANGUAGE SQL AS $$
   SELECT (11, 22, 'b')
-$$
+$$;
 
 -- Test 74: query (line 450)
-SELECT imp_const_tup(), (11,22,'b')::imp = imp_const_tup(), pg_typeof(imp_const_tup())
+SELECT imp_const_tup(), (11,22,'b')::imp = imp_const_tup(), pg_typeof(imp_const_tup());
 
 -- Test 75: statement (line 455)
 CREATE FUNCTION imp_const_cast() RETURNS imp LANGUAGE SQL AS $$
   SELECT (11, 22, 'b')::imp
-$$
+$$;
 
 -- Test 76: query (line 460)
-SELECT imp_const_cast(), (11,22,'b')::imp = imp_const_cast(), pg_typeof(imp_const_cast())
+SELECT imp_const_cast(), (11,22,'b')::imp = imp_const_cast(), pg_typeof(imp_const_cast());
 
 -- Test 77: statement (line 465)
 CREATE FUNCTION imp_const() RETURNS imp LANGUAGE SQL AS $$
   SELECT 11 AS k, 22 AS a, 'b' AS b
-$$
+$$;
 
 -- Test 78: query (line 470)
-SELECT imp_const(), (11,22,'b')::imp = imp_const(), pg_typeof(imp_const())
+SELECT imp_const(), (11,22,'b')::imp = imp_const(), pg_typeof(imp_const());
 
 -- Test 79: statement (line 475)
 CREATE FUNCTION imp_const_unnamed() RETURNS imp LANGUAGE SQL AS $$
   SELECT 11, 22, 'b'
-$$
+$$;
 
 -- Test 80: query (line 480)
-SELECT imp_const_unnamed(), (11,22,'b')::imp = imp_const_unnamed(), pg_typeof(imp_const_unnamed())
+SELECT imp_const_unnamed(), (11,22,'b')::imp = imp_const_unnamed(), pg_typeof(imp_const_unnamed());
 
 -- Test 81: statement (line 485)
 CREATE FUNCTION imp_tup() RETURNS imp LANGUAGE SQL AS $$
   SELECT (k, a, b) FROM imp
-$$
+$$;
 
 -- Test 82: query (line 492)
-SELECT imp_tup(), (1,2,'a')::imp = imp_tup()
+SELECT imp_tup(), (1,2,'a')::imp = imp_tup();
 
 -- Test 83: statement (line 497)
 CREATE FUNCTION imp() RETURNS imp LANGUAGE SQL AS $$
   SELECT k, a, b FROM imp
-$$
+$$;
 
 -- Test 84: query (line 504)
-SELECT imp(), (1,2,'a')::imp = imp()
+SELECT imp(), (1,2,'a')::imp = imp();
 
 -- Test 85: statement (line 509)
 CREATE FUNCTION imp_star() RETURNS imp LANGUAGE SQL AS $$
   SELECT * FROM imp
-$$
+$$;
 
 -- Test 86: query (line 516)
-SELECT imp_star(), (1,2,'a')::imp = imp_star()
+SELECT imp_star(), (1,2,'a')::imp = imp_star();
 
 -- Test 87: statement (line 521)
-INSERT INTO imp VALUES (100, 200, 'z')
+INSERT INTO imp VALUES (100, 200, 'z');
 
 -- Test 88: statement (line 524)
 CREATE FUNCTION imp_tup_ordered() RETURNS imp LANGUAGE SQL AS $$
   SELECT (k, a, b) FROM imp ORDER BY b DESC
-$$
+$$;
 
 -- Test 89: query (line 531)
-SELECT imp_tup_ordered(), (100,200,'z')::imp = imp_tup_ordered()
+SELECT imp_tup_ordered(), (100,200,'z')::imp = imp_tup_ordered();
 
 -- Test 90: statement (line 536)
 CREATE FUNCTION imp_ordered() RETURNS imp LANGUAGE SQL AS $$
   SELECT k, a, b FROM imp ORDER BY b DESC
-$$
+$$;
 
 -- Test 91: query (line 543)
-SELECT imp_ordered(), (100,200,'z')::imp = imp_ordered()
+SELECT imp_ordered(), (100,200,'z')::imp = imp_ordered();
 
 -- Test 92: statement (line 548)
 CREATE FUNCTION imp_identity(i imp) RETURNS imp LANGUAGE SQL AS $$
   SELECT i
-$$
+$$;
 
 -- Test 93: query (line 553)
-SELECT imp_identity((1,2,'a')), imp_identity((1,2,'a')::imp)
+SELECT imp_identity((1,2,'a')), imp_identity((1,2,'a')::imp);
 
 -- Test 94: statement (line 558)
 CREATE FUNCTION imp_a(i imp) RETURNS INT LANGUAGE SQL AS $$
   SELECT (i).a
-$$
+$$;
 
 -- Test 95: query (line 563)
-SELECT imp_a((1,2,'a')), imp_a((1,2,'a')::imp)
+SELECT imp_a((1,2,'a')), imp_a((1,2,'a')::imp);
 
 -- Test 96: statement (line 568)
 CREATE FUNCTION imp_cast() RETURNS imp LANGUAGE SQL AS $$
   SELECT (1, 2, 3)
-$$
+$$;
 
 -- Test 97: query (line 573)
-SELECT imp_cast(), (1,2,'3') = imp_cast(), pg_typeof(imp_cast())
+SELECT imp_cast(), (1,2,'3')::imp = imp_cast(), pg_typeof(imp_cast());
 
 -- Test 98: statement (line 580)
+\set ON_ERROR_STOP 0
 CREATE FUNCTION err() RETURNS imp LANGUAGE SQL AS $$
   SELECT (1, 2)
-$$
+$$;
 
 -- Test 99: statement (line 585)
 CREATE FUNCTION err() RETURNS imp LANGUAGE SQL AS $$
   SELECT k, a FROM imp
-$$
+$$;
 
 -- Test 100: statement (line 592)
 CREATE FUNCTION err() RETURNS imp LANGUAGE SQL AS $$
   SELECT k, a, b::INT FROM imp
-$$
+$$;
 
 -- Test 101: statement (line 597)
 CREATE FUNCTION err(i imp) RETURNS INT LANGUAGE SQL AS $$
   SELECT i
-$$
+$$;
+\set ON_ERROR_STOP 1
 
 -- Test 102: statement (line 605)
 CREATE TYPE foo_typ AS (x INT, y INT);
@@ -428,7 +445,9 @@ CREATE TYPE bar_typ AS (x INT, y INT);
 CREATE FUNCTION f() RETURNS foo_typ LANGUAGE SQL AS $$ SELECT ROW(1, 2); $$;
 
 -- Test 104: statement (line 613)
+\set ON_ERROR_STOP 0
 SELECT * FROM f() AS g(bar bar_typ);
+\set ON_ERROR_STOP 1
 
 -- Test 105: statement (line 617)
 DROP FUNCTION f;
@@ -437,7 +456,9 @@ DROP FUNCTION f;
 CREATE FUNCTION f() RETURNS INT LANGUAGE SQL AS $$ SELECT 1; $$;
 
 -- Test 107: statement (line 623)
+\set ON_ERROR_STOP 0
 SELECT * FROM f() AS g(bar FLOAT);
+\set ON_ERROR_STOP 1
 
 -- Test 108: statement (line 627)
 DROP FUNCTION f;
@@ -446,19 +467,23 @@ DROP FUNCTION f;
 CREATE FUNCTION f(OUT x INT, OUT y INT) RETURNS RECORD LANGUAGE SQL AS $$ SELECT ROW(1, 2); $$;
 
 -- Test 110: statement (line 633)
+\set ON_ERROR_STOP 0
 SELECT * FROM f() AS g(bar bar_typ);
+\set ON_ERROR_STOP 1
 
 -- Test 111: statement (line 638)
 DROP FUNCTION f;
 
 -- Test 112: statement (line 641)
-CREATE FUNCTION f() RETURNS RECORD LANGUAGE SQL AS $$ SELECT 1, 2; $$;
+CREATE FUNCTION f() RETURNS RECORD LANGUAGE SQL AS $$ SELECT ROW(1, 2); $$;
 
 -- Test 113: statement (line 644)
+\set ON_ERROR_STOP 0
 SELECT * FROM f() AS g(bar INT);
 
 -- Test 114: statement (line 647)
 SELECT * FROM f() AS g(foo INT, bar INT, baz INT);
+\set ON_ERROR_STOP 1
 
 -- Test 115: statement (line 651)
 DROP FUNCTION f;
@@ -467,10 +492,12 @@ DROP FUNCTION f;
 CREATE FUNCTION f() RETURNS RECORD LANGUAGE SQL AS $$ SELECT ROW(1, 2); $$;
 
 -- Test 117: statement (line 657)
+\set ON_ERROR_STOP 0
 SELECT * FROM f();
 
 -- Test 118: statement (line 661)
 SELECT * FROM f() AS g(bar, baz);
+\set ON_ERROR_STOP 1
 
 -- Test 119: statement (line 666)
 DROP FUNCTION f;
@@ -479,7 +506,9 @@ DROP FUNCTION f;
 CREATE FUNCTION f() RETURNS RECORD LANGUAGE SQL AS $$ SELECT True; $$;
 
 -- Test 121: statement (line 672)
+\set ON_ERROR_STOP 0
 SELECT * FROM f() AS g(bar INT);
+\set ON_ERROR_STOP 1
 
 -- Test 122: statement (line 679)
 CREATE FUNCTION f113186() RETURNS RECORD LANGUAGE SQL AS $$ SELECT 1.99; $$;
@@ -491,7 +520,9 @@ SELECT * FROM f113186() AS foo(x FLOAT);
 SELECT * FROM f113186() AS foo(x INT);
 
 -- Test 125: statement (line 694)
+\set ON_ERROR_STOP 0
 SELECT * FROM f113186() AS foo(x TIMESTAMP);
+\set ON_ERROR_STOP 1
 
 -- Test 126: statement (line 701)
 CREATE FUNCTION array_to_set(ANYARRAY) RETURNS SETOF RECORD AS $$
@@ -500,4 +531,3 @@ $$ LANGUAGE SQL STRICT IMMUTABLE;
 
 -- Test 127: query (line 706)
 SELECT * FROM array_to_set(ARRAY['one', 'two']) AS t(f1 NUMERIC(4,2), f2 TEXT);
-

@@ -1,0 +1,424 @@
+SET
+CREATE TABLE
+psql:pg_tests/compatible/update.sql:14: ERROR:  column "v" is of type integer but expression is of type record
+LINE 1: UPDATE kv SET v = (SELECT (10, 11));
+                          ^
+HINT:  You will need to rewrite or cast the expression.
+UPDATE 0
+UPDATE 0
+UPDATE 0
+INSERT 0 4
+UPDATE 2
+ k | v 
+---+---
+ 5 | 6
+ 7 | 8
+ 1 | 9
+ 3 | 9
+(4 rows)
+
+UPDATE 4
+ k | v  
+---+----
+ 5 | 11
+ 7 | 15
+ 1 | 10
+ 3 | 12
+(4 rows)
+
+psql:pg_tests/compatible/update.sql:41: ERROR:  column "m" of relation "kv" does not exist
+LINE 1: UPDATE kv SET m = 9 WHERE k IN (1, 3);
+                      ^
+psql:pg_tests/compatible/update.sql:44: ERROR:  column "kv" of relation "kv" does not exist
+LINE 1: UPDATE kv SET kv.k = 9;
+                      ^
+psql:pg_tests/compatible/update.sql:47: ERROR:  row expansion via "*" is not supported here
+LINE 1: UPDATE kv SET k.* = 9;
+                      ^
+psql:pg_tests/compatible/update.sql:50: ERROR:  cannot assign to field "v" of column "k" because its type integer is not a composite type
+LINE 1: UPDATE kv SET k.v = 9;
+                      ^
+CREATE VIEW
+ k | v  
+---+----
+ 5 | 11
+ 7 | 15
+ 1 | 10
+ 3 | 12
+(4 rows)
+
+UPDATE 2
+ k | v  
+---+----
+ 5 | 11
+ 7 | 15
+ 1 | 99
+ 3 | 99
+(4 rows)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 4
+ k | v 
+---+---
+ a | b
+ c | d
+ e | f
+ f | g
+(4 rows)
+
+psql:pg_tests/compatible/update.sql:78: ERROR:  duplicate key value violates unique constraint "a"
+DETAIL:  Key (v)=(g) already exists.
+UPDATE 1
+ k | v 
+---+---
+ c | d
+ e | f
+ f | g
+ a | i
+(4 rows)
+
+UPDATE 1
+ k | v 
+---+---
+ c | d
+ e | f
+ f | g
+ a | b
+(4 rows)
+
+UPDATE 1
+ k | v 
+---+---
+ c | d
+ e | f
+ f | g
+ a | h
+(4 rows)
+
+UPDATE 1
+ k | v 
+---+---
+ c | d
+ e | f
+ f | g
+ a | b
+(4 rows)
+
+psql:pg_tests/compatible/update.sql:105: ERROR:  syntax error at or near "*"
+LINE 1: UPDATE ONLY kv2 * SET v = 'b' WHERE k IN ('a');
+                        ^
+ k | v 
+---+---
+ c | d
+ e | f
+ f | g
+ a | b
+(4 rows)
+
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/update.sql:120: ERROR:  null value in column "v" of relation "kv3" violates not-null constraint
+DETAIL:  Failing row contains (a, null).
+ k | v 
+---+---
+ a | b
+(1 row)
+
+psql:pg_tests/compatible/update.sql:126: ERROR:  column "nonexistent" does not exist
+LINE 1: UPDATE kv3 SET v = NULL WHERE nonexistent = 'a';
+                                      ^
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+psql:pg_tests/compatible/update.sql:140: ERROR:  source for a multiple-column UPDATE item must be a sub-SELECT or ROW() expression
+LINE 1: UPDATE abc SET (b, c) = (4);
+                                 ^
+psql:pg_tests/compatible/update.sql:143: ERROR:  DEFAULT is not allowed in this context
+LINE 1: UPDATE abc SET (b, c) = (SELECT (VALUES (DEFAULT, DEFAULT)))...
+                                                 ^
+UPDATE 1
+ a | b | c 
+---+---+---
+ 1 | 4 | 5
+(1 row)
+
+UPDATE 1
+ b | c | d 
+---+---+---
+ 8 | 9 | 4
+(1 row)
+
+UPDATE 1
+ col1 | col2 | col3 
+------+------+------
+    8 |    9 |    4
+(1 row)
+
+UPDATE 1
+ a 
+---
+ 1
+(1 row)
+
+UPDATE 1
+ a | b | c | d 
+---+---+---+---
+ 1 | 5 | 6 | 4
+(1 row)
+
+UPDATE 1
+ a | b | c 
+---+---+---
+ 1 | 7 | 8
+(1 row)
+
+UPDATE 1
+ a | b | c | d 
+---+---+---+---
+ 1 | 7 | 8 | 4
+(1 row)
+
+UPDATE 1
+ a | b | c 
+---+---+---
+ 1 | 8 | 9
+(1 row)
+
+UPDATE 1
+ a | b | c 
+---+---+---
+ 1 | 8 | 9
+(1 row)
+
+UPDATE 1
+ a | b | c 
+---+---+---
+ 1 | 8 | 9
+(1 row)
+
+INSERT 0 1
+psql:pg_tests/compatible/update.sql:185: ERROR:  duplicate key value violates unique constraint "abc_pkey"
+DETAIL:  Key (a)=(4) already exists.
+psql:pg_tests/compatible/update.sql:188: ERROR:  duplicate key value violates unique constraint "d"
+DETAIL:  Key (c)=(6) already exists.
+ a | b | c 
+---+---+---
+ 2 | 3 | 9
+(1 row)
+
+UPDATE 1
+ a | b | c 
+---+---+---
+ 4 | 5 | 6
+ 2 | 3 | 9
+(2 rows)
+
+ a | b | c 
+---+---+---
+ 2 | 3 | 9
+(1 row)
+
+psql:pg_tests/compatible/update.sql:201: ERROR:  multiple assignments to same column "b"
+psql:pg_tests/compatible/update.sql:204: ERROR:  multiple assignments to same column "b"
+psql:pg_tests/compatible/update.sql:207: ERROR:  multiple assignments to same column "b"
+CREATE TABLE
+INSERT 0 1
+UPDATE 1
+ x |  y  |  z  
+---+-----+-----
+ 2 | 777 | 666
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+UPDATE 1
+ k1 | k2 | k3 | k4 | k5 
+----+----+----+----+----
+  6 |  7 |  8 |  9 | 10
+(1 row)
+
+UPDATE 1
+ k1 | k2 | k3 | k4 | k5 
+----+----+----+----+----
+ 10 |  9 |  8 |  7 |  6
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 2
+psql:pg_tests/compatible/update.sql:262: ERROR:  duplicate key value violates unique constraint "i"
+DETAIL:  Key (k2, v)=(5, 3) already exists.
+UPDATE 1
+ k1 | k2 | v 
+----+----+---
+  4 |  5 | 3
+  2 |  2 | 3
+(2 rows)
+
+TRUNCATE TABLE
+INSERT 0 4
+ k | v  
+---+----
+ 3 |  8
+ 6 |  5
+ 1 | 10
+(3 rows)
+
+UPDATE 3
+TRUNCATE TABLE
+INSERT 0 3
+ k | v 
+---+---
+ 1 | 1
+(1 row)
+
+UPDATE 1
+ k | v 
+---+---
+ 2 | 3
+ 3 | 4
+ 1 | 1
+(3 rows)
+
+CREATE TABLE
+INSERT 0 1
+UPDATE 1
+ a | b | c | d 
+---+---+---+---
+ 1 |   |   |  
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/update.sql:324: ERROR:  new row for relation "tn" violates check constraint "tn_x_check"
+DETAIL:  Failing row contains (null, abc ).
+psql:pg_tests/compatible/update.sql:327: ERROR:  new row for relation "tn" violates check constraint "tn_y_check"
+DETAIL:  Failing row contains (123, abcd).
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/update.sql:334: ERROR:  null value in column "x" of relation "tn2" violates not-null constraint
+DETAIL:  Failing row contains (null, abc).
+psql:pg_tests/compatible/update.sql:337: ERROR:  value too long for type character(3)
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/update.sql:355: ERROR:  insert or update on table "derived" violates foreign key constraint "derived_x_fkey"
+DETAIL:  Key (x)=(xxx) is not present in table "src".
+psql:pg_tests/compatible/update.sql:358: ERROR:  value too long for type character varying(3)
+psql:pg_tests/compatible/update.sql:361: ERROR:  value too long for type character varying(3)
+CREATE TABLE
+INSERT 0 1
+BEGIN
+ALTER TABLE
+  y  
+-----
+ 123
+(1 row)
+
+UPDATE 1
+ROLLBACK
+BEGIN
+ALTER TABLE
+  x  |  y  
+-----+-----
+ 124 | 123
+(1 row)
+
+UPDATE 1
+UPDATE 1
+ROLLBACK
+BEGIN
+ALTER TABLE
+UPDATE 1
+COMMIT
+CREATE TABLE
+INSERT 0 1
+BEGIN
+ALTER TABLE
+ALTER TABLE
+UPDATE 1
+COMMIT
+ m | n | o  | p  
+---+---+----+----
+ 2 | 1 | 10 | 11
+(1 row)
+
+SELECT 1
+psql:pg_tests/compatible/update.sql:427: ERROR:  aggregate functions are not allowed in UPDATE
+LINE 1: UPDATE t32477 SET x = count(x);
+                              ^
+psql:pg_tests/compatible/update.sql:430: ERROR:  window functions are not allowed in UPDATE
+LINE 1: UPDATE t32477 SET x = rank() OVER ();
+                              ^
+psql:pg_tests/compatible/update.sql:433: ERROR:  set-returning functions are not allowed in UPDATE
+LINE 1: UPDATE t32477 SET x = generate_series(1,2);
+                              ^
+SELECT 1
+CREATE TABLE
+UPDATE 1
+ x | y 
+---+---
+   |  
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+UPDATE 1
+ x 
+---
+ 1
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+ b 
+---
+ 1
+(1 row)
+
+UPDATE 1
+CREATE TABLE
+INSERT 0 3
+ a | b | c 
+---+---+---
+ 7 | 1 | 1
+ 8 | 2 | 2
+ 9 | 3 | 3
+(3 rows)
+
+psql:pg_tests/compatible/update.sql:488: ERROR:  column "b" can only be updated to DEFAULT
+DETAIL:  Column "b" is an identity column defined as GENERATED ALWAYS.
+UPDATE 3
+ a | b | c 
+---+---+---
+ 7 | 1 | 2
+ 8 | 2 | 2
+ 9 | 3 | 2
+(3 rows)
+
+UPDATE 3
+ a | b | c 
+---+---+---
+ 7 | 4 | 2
+ 8 | 5 | 2
+ 9 | 6 | 2
+(3 rows)
+
+UPDATE 3
+ a | b | c 
+---+---+---
+ 7 | 4 | 4
+ 8 | 5 | 5
+ 9 | 6 | 6
+(3 rows)
+
+CREATE TABLE
+psql:pg_tests/compatible/update.sql:512: ERROR:  syntax error at or near "ORDER"
+LINE 1: UPDATE t107634 SET a = 1 ORDER BY sum(a) LIMIT 1;
+                                 ^
+CREATE TABLE
+psql:pg_tests/compatible/update.sql:518: ERROR:  syntax error at or near "ORDER"
+LINE 1: UPDATE t108166 SET a = 1 ORDER BY COALESCE(sum(a), 1) LIMIT ...
+                                 ^
