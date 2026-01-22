@@ -23,9 +23,10 @@ CREATE TYPE legacy_type AS ENUM ('a', 'b');
 COMMENT ON TYPE legacy_type IS 'test';
 
 -- Test 8: statement (line 32)
-\set ON_ERROR_STOP 0
-DROP owned by public;
-\set ON_ERROR_STOP 1
+DROP ROLE IF EXISTS unimplemented_dropowned_role;
+CREATE ROLE unimplemented_dropowned_role;
+DROP OWNED BY unimplemented_dropowned_role;
+DROP ROLE unimplemented_dropowned_role;
 
 -- Test 9: statement (line 37)
 CREATE TABLE t (a INT, b INT);

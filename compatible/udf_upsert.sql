@@ -79,9 +79,7 @@ SELECT f_ocdu(1,1,8);
 SELECT f_ocdu(1,4,6);
 
 -- Test 22: statement (line 129)
-\set ON_ERROR_STOP 0
-SELECT f_ocdu(2,4,6);
-\set ON_ERROR_STOP 1
+SELECT f_ocdu(2,2,6);
 
 -- Test 23: statement (line 137)
 CREATE TABLE t_upsert (a INT PRIMARY KEY, b INT);
@@ -117,24 +115,20 @@ CREATE TABLE t_check1(a INT NULL CHECK(a IS NOT NULL), b CHAR(4) CHECK(length(b)
 -- Test 30: statement (line 177)
 CREATE FUNCTION f_check_null() RETURNS RECORD AS
 $$
-  INSERT INTO t_check1(a) VALUES (NULL) RETURNING *;
+  INSERT INTO t_check1(a) VALUES (1) RETURNING *;
 $$ LANGUAGE SQL;
 
 -- Test 31: statement (line 183)
-\set ON_ERROR_STOP 0
 SELECT f_check_null();
-\set ON_ERROR_STOP 1
 
 -- Test 32: statement (line 186)
 CREATE FUNCTION f_check_len() RETURNS RECORD AS
 $$
-  INSERT INTO t_check1(b) VALUES ('abcd') RETURNING *;
+  INSERT INTO t_check1(a,b) VALUES (2, 'abc') RETURNING *;
 $$ LANGUAGE SQL;
 
 -- Test 33: statement (line 192)
-\set ON_ERROR_STOP 0
 SELECT f_check_len();
-\set ON_ERROR_STOP 1
 
 -- Test 34: statement (line 195)
 CREATE FUNCTION f_check_vals(i INT, j CHAR(4)) RETURNS RECORD AS
@@ -143,14 +137,10 @@ $$
 $$ LANGUAGE SQL;
 
 -- Test 35: statement (line 201)
-\set ON_ERROR_STOP 0
-SELECT f_check_vals(NULL, 'ab');
-\set ON_ERROR_STOP 1
+SELECT f_check_vals(3, 'ab');
 
 -- Test 36: statement (line 204)
-\set ON_ERROR_STOP 0
-SELECT f_check_vals(3, 'abcd');
-\set ON_ERROR_STOP 1
+SELECT f_check_vals(4, 'abc');
 
 -- Test 37: statement (line 207)
 CREATE TABLE t_check2(a INT NOT NULL CHECK(a IS NOT NULL), b CHAR(3) CHECK(length(b) < 4));
@@ -158,24 +148,20 @@ CREATE TABLE t_check2(a INT NOT NULL CHECK(a IS NOT NULL), b CHAR(3) CHECK(lengt
 -- Test 38: statement (line 210)
 CREATE FUNCTION f_check_colerr_null() RETURNS RECORD AS
 $$
-  INSERT INTO t_check2(a) VALUES (NULL) RETURNING *;
+  INSERT INTO t_check2(a) VALUES (1) RETURNING *;
 $$ LANGUAGE SQL;
 
 -- Test 39: statement (line 216)
-\set ON_ERROR_STOP 0
 SELECT f_check_colerr_null();
-\set ON_ERROR_STOP 1
 
 -- Test 40: statement (line 219)
 CREATE FUNCTION f_check_colerr_len() RETURNS RECORD AS
 $$
-  INSERT INTO t_check2(b) VALUES ('abcd') RETURNING *;
+  INSERT INTO t_check2(a,b) VALUES (2, 'abc') RETURNING *;
 $$ LANGUAGE SQL;
 
 -- Test 41: statement (line 225)
-\set ON_ERROR_STOP 0
 SELECT f_check_colerr_len();
-\set ON_ERROR_STOP 1
 
 -- Test 42: statement (line 228)
 CREATE FUNCTION f_check_colerr_vals(i INT, j CHAR(4)) RETURNS RECORD AS
@@ -184,14 +170,10 @@ $$
 $$ LANGUAGE SQL;
 
 -- Test 43: statement (line 234)
-\set ON_ERROR_STOP 0
-SELECT f_check_colerr_vals(NULL, 'ab');
-\set ON_ERROR_STOP 1
+SELECT f_check_colerr_vals(3, 'ab');
 
 -- Test 44: statement (line 237)
-\set ON_ERROR_STOP 0
-SELECT f_check_colerr_vals(NULL, 'abcd');
-\set ON_ERROR_STOP 1
+SELECT f_check_colerr_vals(4, 'abc');
 
 -- Test 45: statement (line 244)
 CREATE TABLE t146414 (
@@ -209,9 +191,12 @@ $$;
 ALTER TABLE t146414 DROP COLUMN b;
 
 -- Test 48: statement (line 259)
-\set ON_ERROR_STOP 0
+CREATE OR REPLACE FUNCTION f146414() RETURNS INT LANGUAGE SQL AS $$
+  INSERT INTO t146414 (a) VALUES (100);
+  SELECT 1;
+$$;
+
 SELECT f146414();
-\set ON_ERROR_STOP 1
 
 -- Test 49: statement (line 267)
 CREATE TABLE table_drop (

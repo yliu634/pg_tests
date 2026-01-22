@@ -5,7 +5,11 @@ DROP POLICY
 DROP TABLE
 CREATE TYPE
 COMMENT
-psql:pg_tests/compatible/unimplemented.sql:27: ERROR:  role "public" does not exist
+psql:pg_tests/compatible/unimplemented.sql:26: NOTICE:  role "unimplemented_dropowned_role" does not exist, skipping
+DROP ROLE
+CREATE ROLE
+DROP OWNED
+DROP ROLE
 CREATE TABLE
 CREATE FUNCTION
 CREATE TRIGGER

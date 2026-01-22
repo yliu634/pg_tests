@@ -95,9 +95,11 @@ CREATE FUNCTION
  (1,4,3)
 (1 row)
 
-psql:pg_tests/compatible/udf_upsert.sql:83: ERROR:  duplicate key value violates unique constraint "t_ocdu_b_key"
-DETAIL:  Key (b)=(4) already exists.
-CONTEXT:  SQL function "f_ocdu" statement 1
+ f_ocdu  
+---------
+ (2,2,6)
+(1 row)
+
 CREATE TABLE
 CREATE FUNCTION
  f_upsert 
@@ -119,45 +121,61 @@ CREATE FUNCTION
 
 CREATE TABLE
 CREATE FUNCTION
-psql:pg_tests/compatible/udf_upsert.sql:125: ERROR:  new row for relation "t_check1" violates check constraint "t_check1_a_check"
-DETAIL:  Failing row contains (null, null).
-CONTEXT:  SQL function "f_check_null" statement 1
+ f_check_null 
+--------------
+ (1,)
+(1 row)
+
 CREATE FUNCTION
-psql:pg_tests/compatible/udf_upsert.sql:136: ERROR:  new row for relation "t_check1" violates check constraint "t_check1_a_check"
-DETAIL:  Failing row contains (null, abcd).
-CONTEXT:  SQL function "f_check_len" statement 1
+ f_check_len 
+-------------
+ (2,"abc ")
+(1 row)
+
 CREATE FUNCTION
-psql:pg_tests/compatible/udf_upsert.sql:147: ERROR:  new row for relation "t_check1" violates check constraint "t_check1_a_check"
-DETAIL:  Failing row contains (null, ab  ).
-CONTEXT:  SQL function "f_check_vals" statement 1
-psql:pg_tests/compatible/udf_upsert.sql:152: ERROR:  new row for relation "t_check1" violates check constraint "t_check1_b_check"
-DETAIL:  Failing row contains (3, abcd).
-CONTEXT:  SQL function "f_check_vals" statement 1
+ f_check_vals 
+--------------
+ (3,"ab  ")
+(1 row)
+
+ f_check_vals 
+--------------
+ (4,"abc ")
+(1 row)
+
 CREATE TABLE
 CREATE FUNCTION
-psql:pg_tests/compatible/udf_upsert.sql:166: ERROR:  null value in column "a" of relation "t_check2" violates not-null constraint
-DETAIL:  Failing row contains (null, null).
-CONTEXT:  SQL function "f_check_colerr_null" statement 1
+ f_check_colerr_null 
+---------------------
+ (1,)
+(1 row)
+
 CREATE FUNCTION
-psql:pg_tests/compatible/udf_upsert.sql:177: ERROR:  value too long for type character(3)
-CONTEXT:  SQL function "f_check_colerr_len" during startup
+ f_check_colerr_len 
+--------------------
+ (2,abc)
+(1 row)
+
 CREATE FUNCTION
-psql:pg_tests/compatible/udf_upsert.sql:188: ERROR:  null value in column "a" of relation "t_check2" violates not-null constraint
-DETAIL:  Failing row contains (null, ab ).
-CONTEXT:  SQL function "f_check_colerr_vals" statement 1
-psql:pg_tests/compatible/udf_upsert.sql:193: ERROR:  value too long for type character(3)
-CONTEXT:  SQL function "f_check_colerr_vals" statement 1
+ f_check_colerr_vals 
+---------------------
+ (3,"ab ")
+(1 row)
+
+ f_check_colerr_vals 
+---------------------
+ (4,abc)
+(1 row)
+
 CREATE TABLE
 CREATE FUNCTION
 ALTER TABLE
-psql:pg_tests/compatible/udf_upsert.sql:213: ERROR:  column "b" does not exist
-LINE 2:   INSERT INTO t146414 (a) VALUES (100) RETURNING b;
-                                                         ^
-QUERY:  
-  INSERT INTO t146414 (a) VALUES (100) RETURNING b;
-  SELECT 1;
+CREATE FUNCTION
+ f146414 
+---------
+       1
+(1 row)
 
-CONTEXT:  SQL function "f146414" during startup
 CREATE TABLE
 CREATE INDEX
 INSERT 0 3

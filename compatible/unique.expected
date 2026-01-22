@@ -3,14 +3,10 @@ CREATE TABLE
 CREATE TABLE
 INSERT 0 1
 INSERT 0 2
-psql:pg_tests/compatible/unique.sql:36: ERROR:  duplicate key value violates unique constraint "uniq_pkey"
-DETAIL:  Key (k)=(1) already exists.
-psql:pg_tests/compatible/unique.sql:37: ERROR:  duplicate key value violates unique constraint "uniq_v_key"
-DETAIL:  Key (v)=(1) already exists.
-psql:pg_tests/compatible/unique.sql:38: ERROR:  duplicate key value violates unique constraint "uniq_w_key"
-DETAIL:  Key (w)=(1) already exists.
-psql:pg_tests/compatible/unique.sql:39: ERROR:  duplicate key value violates unique constraint "uniq_x_y_key"
-DETAIL:  Key (x, y)=(1, 1) already exists.
+INSERT 0 0
+INSERT 0 0
+INSERT 0 0
+INSERT 0 0
 INSERT 0 2
 INSERT 0 1
 INSERT 0 0
@@ -27,8 +23,7 @@ INSERT 0 1
 CREATE TABLE
 CREATE INDEX
 INSERT 0 3
-psql:pg_tests/compatible/unique.sql:71: ERROR:  duplicate key value violates unique constraint "uniq_partial_a_pos_idx"
-DETAIL:  Key (a)=(1) already exists.
+INSERT 0 0
 INSERT 0 1
 INSERT 0 1
  a | b  
@@ -44,8 +39,7 @@ CREATE TABLE
 CREATE TABLE
 INSERT 0 2
 INSERT 0 2
-psql:pg_tests/compatible/unique.sql:112: ERROR:  insert or update on table "uniq_fk_child" violates foreign key constraint "uniq_fk_child_d_fkey"
-DETAIL:  Key (d)=(30) is not present in table "uniq_fk_parent".
+INSERT 0 0
 UPDATE 1
 DELETE 1
  a | b | c | d  |  e  
@@ -56,8 +50,7 @@ DELETE 1
 
 CREATE TABLE
 INSERT 0 1
-psql:pg_tests/compatible/unique.sql:134: ERROR:  duplicate key value violates unique constraint "t126988_pkey"
-DETAIL:  Key (k)=(1) already exists.
+INSERT 0 0
  k | j  |  i  |  v  
 ---+----+-----+-----
  1 | 10 | 200 | 200

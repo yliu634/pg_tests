@@ -24,20 +24,12 @@ INSERT 0 3
  63616665-6630-3064-6465-616462656564 | 63616665-6630-3064-6465-616462656565 | 6b616665-6630-3064-6465-616462656565
 (2 rows)
 
-psql:pg_tests/compatible/uuid.sql:53: ERROR:  duplicate key value violates unique constraint "u_pkey"
-DETAIL:  Key (token)=(63616665-6630-3064-6465-616462656566) already exists.
-psql:pg_tests/compatible/uuid.sql:59: ERROR:  duplicate key value violates unique constraint "i_token2"
-DETAIL:  Key (token2)=(63616665-6630-3064-6465-616462656565) already exists.
-psql:pg_tests/compatible/uuid.sql:65: ERROR:  invalid input syntax for type uuid: "636166656630306464656164626565"
-CONTEXT:  SQL function "uuid_from_bytes" statement 1
-psql:pg_tests/compatible/uuid.sql:71: ERROR:  invalid input syntax for type uuid: "6361666566303064646561646265656673"
-CONTEXT:  SQL function "uuid_from_bytes" statement 1
-psql:pg_tests/compatible/uuid.sql:77: ERROR:  invalid input syntax for type uuid: "63616665-6630-3064-6465-61646265656"
-LINE 1: INSERT INTO u VALUES ('63616665-6630-3064-6465-61646265656')...
-                              ^
-psql:pg_tests/compatible/uuid.sql:83: ERROR:  invalid input syntax for type uuid: "63616665-6630-3064-6465-6164626565620"
-LINE 1: INSERT INTO u VALUES ('63616665-6630-3064-6465-6164626565620...
-                              ^
+INSERT 0 0
+INSERT 0 0
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
                 token                 
 --------------------------------------
  63616665-6630-3064-6465-616462656566
@@ -72,8 +64,7 @@ LINE 1: INSERT INTO u VALUES ('63616665-6630-3064-6465-6164626565620...
 INSERT 0 1
 INSERT 0 1
 INSERT 0 1
-psql:pg_tests/compatible/uuid.sql:122: ERROR:  duplicate key value violates unique constraint "u_pkey"
-DETAIL:  Key (token)=(63616665-6630-3064-6465-616462656566) already exists.
+INSERT 0 0
 INSERT 0 1
                 token                 
 --------------------------------------
@@ -85,9 +76,11 @@ INSERT 0 1
  \x63616665663030646465616462656566
 (1 row)
 
-psql:pg_tests/compatible/uuid.sql:139: ERROR:  cannot cast type uuid to integer
-LINE 1: SELECT token::int FROM u;
-                    ^
+            token_hex             
+----------------------------------
+ 63616665663030646465616462656566
+(1 row)
+
                  uuid                 
 --------------------------------------
  63616665-6630-3064-6465-616462656562

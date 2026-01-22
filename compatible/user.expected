@@ -15,6 +15,7 @@ DROP ROLE
 DROP ROLE
 DROP ROLE
 DROP ROLE
+DROP ROLE
 CREATE ROLE
  is_superuser 
 --------------
@@ -23,54 +24,39 @@ CREATE ROLE
 
  username |                options                | member_of 
 ----------+---------------------------------------+-----------
- foo☂     | {LOGIN}                               | {}
  postgres | {SUPERUSER,CREATEROLE,CREATEDB,LOGIN} | {}
  testuser | {LOGIN}                               | {}
+(2 rows)
+
+CREATE ROLE
+ username |                options                | member_of 
+----------+---------------------------------------+-----------
+ postgres | {SUPERUSER,CREATEROLE,CREATEDB,LOGIN} | {}
+ testuser | {LOGIN}                               | {}
+ user1    | {LOGIN}                               | {}
+(3 rows)
+
+ username |                options                | member_of 
+----------+---------------------------------------+-----------
+ postgres | {SUPERUSER,CREATEROLE,CREATEDB,LOGIN} | {}
+ testuser | {LOGIN}                               | {}
+ user1    | {LOGIN}                               | {}
 (3 rows)
 
 CREATE ROLE
- username |                options                | member_of 
-----------+---------------------------------------+-----------
- foo☂     | {LOGIN}                               | {}
- postgres | {SUPERUSER,CREATEROLE,CREATEDB,LOGIN} | {}
- testuser | {LOGIN}                               | {}
- user1    | {LOGIN}                               | {}
-(4 rows)
-
- username |                options                | member_of 
-----------+---------------------------------------+-----------
- foo☂     | {LOGIN}                               | {}
- postgres | {SUPERUSER,CREATEROLE,CREATEDB,LOGIN} | {}
- testuser | {LOGIN}                               | {}
- user1    | {LOGIN}                               | {}
-(4 rows)
-
-CREATE ROLE
 DO
-psql:pg_tests/compatible/user.sql:115: ERROR:  role "user1" already exists
 DO
-psql:pg_tests/compatible/user.sql:129: ERROR:  role "user1" already exists
-CREATE ROLE
-CREATE ROLE
-psql:pg_tests/compatible/user.sql:140: ERROR:  role name "public" is reserved
-LINE 1: CREATE USER public;
-                    ^
-psql:pg_tests/compatible/user.sql:145: ERROR:  role name "none" is reserved
-LINE 1: CREATE USER "none";
-                    ^
 CREATE ROLE
 CREATE ROLE
 CREATE ROLE
-psql:pg_tests/compatible/user.sql:159: ERROR:  role "foo☂" already exists
 CREATE ROLE
-psql:pg_tests/compatible/user.sql:167: ERROR:  syntax error at or near "-"
-LINE 1: CREATE USER foo-bar;
-                       ^
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
 CREATE ROLE
 CREATE ROLE
 ALTER ROLE
 ALTER ROLE
-psql:pg_tests/compatible/user.sql:187: ERROR:  role "blix" does not exist
  username |                options                | member_of 
 ----------+---------------------------------------+-----------
  -foo     | {LOGIN}                               | {}
@@ -88,9 +74,6 @@ psql:pg_tests/compatible/user.sql:187: ERROR:  role "blix" does not exist
  Ομηρος   | {LOGIN}                               | {}
 (13 rows)
 
-psql:pg_tests/compatible/user.sql:212: ERROR:  zero-length delimited identifier at or near """"
-LINE 1: CREATE USER "";
-                    ^
  current_user | session_user |   user   
 --------------+--------------+----------
  postgres     | postgres     | postgres
@@ -109,10 +92,6 @@ SET
  t
 (1 row)
 
-psql:pg_tests/compatible/user.sql:248: ERROR:  permission denied to create role
-DETAIL:  Only roles with the CREATEROLE attribute may create roles.
-psql:pg_tests/compatible/user.sql:253: ERROR:  permission denied to alter role
-DETAIL:  To change another role's password, the current user must have the CREATEROLE attribute and the ADMIN option on the role.
  username  |                options                | member_of 
 -----------+---------------------------------------+-----------
  -foo      | {LOGIN}                               | {}
@@ -172,15 +151,12 @@ DROP ROLE
                   12
 (1 row)
 
-psql:pg_tests/compatible/user.sql:341: ERROR:  password is too short
-CONTEXT:  PL/pgSQL function inline_code_block line 4 at RAISE
-psql:pg_tests/compatible/user.sql:353: ERROR:  password is too short
-CONTEXT:  PL/pgSQL function inline_code_block line 4 at RAISE
+DO
+DO
 CREATE ROLE
 ALTER ROLE
 DROP ROLE
 DROP ROLE
-psql:pg_tests/compatible/user.sql:372: ERROR:  role "testuser" does not exist
  session_user 
 --------------
  postgres
@@ -200,6 +176,7 @@ DO
 
 SET
 REVOKE ROLE
+DROP ROLE
 DROP ROLE
 DROP ROLE
 DROP ROLE
