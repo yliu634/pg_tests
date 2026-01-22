@@ -1,0 +1,154 @@
+SET
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+CREATE FUNCTION
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+               index_rec               | sorted_fp 
+---------------------------------------+-----------
+ creation : CREATE INDEX t1_k ON t1(k) | {1}
+(1 row)
+
+               index_rec               | sorted_fp 
+---------------------------------------+-----------
+ creation : CREATE INDEX t1_k ON t1(k) | {1}
+(1 row)
+
+CREATE INDEX
+INSERT 0 1
+                                index_rec                                | sorted_fp 
+-------------------------------------------------------------------------+-----------
+ creation : CREATE INDEX t1_k ON t1(k)                                   | {1}
+ replacement : CREATE INDEX t1_i2 ON t1(i) storing (k); DROP INDEX t1_i; | {2}
+(2 rows)
+
+               index_rec               | sorted_fp 
+---------------------------------------+-----------
+ creation : CREATE INDEX t1_k ON t1(k) | {1}
+(1 row)
+
+INSERT 0 1
+                                index_rec                                | sorted_fp 
+-------------------------------------------------------------------------+-----------
+ alteration : ALTER INDEX t1_i NOT VISIBLE                               | {3}
+ creation : CREATE INDEX t1_k ON t1(k)                                   | {1}
+ replacement : CREATE INDEX t1_i2 ON t1(i) storing (k); DROP INDEX t1_i; | {2}
+(3 rows)
+
+                 index_rec                 | sorted_fp 
+-------------------------------------------+-----------
+ alteration : ALTER INDEX t1_i NOT VISIBLE | {3}
+ creation : CREATE INDEX t1_k ON t1(k)     | {1}
+(2 rows)
+
+INSERT 0 1
+                                index_rec                                | sorted_fp 
+-------------------------------------------------------------------------+-----------
+ alteration : ALTER INDEX t1_i NOT VISIBLE                               | {3}
+ creation : CREATE INDEX t1_k ON t1(k)                                   | {1}
+ creation : CREATE INDEX t1_k_i ON t1(k, i)                              | {4}
+ replacement : CREATE INDEX t1_i2 ON t1(i) storing (k); DROP INDEX t1_i; | {2}
+(4 rows)
+
+                 index_rec                  | sorted_fp 
+--------------------------------------------+-----------
+ alteration : ALTER INDEX t1_i NOT VISIBLE  | {3}
+ creation : CREATE INDEX t1_k ON t1(k)      | {1}
+ creation : CREATE INDEX t1_k_i ON t1(k, i) | {4}
+(3 rows)
+
+INSERT 0 1
+                                index_rec                                | sorted_fp 
+-------------------------------------------------------------------------+-----------
+ alteration : ALTER INDEX t1_i NOT VISIBLE                               | {3}
+ creation : CREATE INDEX t1_k ON t1(k)                                   | {1}
+ creation : CREATE INDEX t1_k_i ON t1(i, k)                              | {5}
+ creation : CREATE INDEX t1_k_i ON t1(k, i)                              | {4}
+ replacement : CREATE INDEX t1_i2 ON t1(i) storing (k); DROP INDEX t1_i; | {2}
+(5 rows)
+
+                 index_rec                  | sorted_fp 
+--------------------------------------------+-----------
+ alteration : ALTER INDEX t1_i NOT VISIBLE  | {3}
+ creation : CREATE INDEX t1_k ON t1(k)      | {1}
+ creation : CREATE INDEX t1_k_i ON t1(i, k) | {5}
+ creation : CREATE INDEX t1_k_i ON t1(k, i) | {4}
+(4 rows)
+
+INSERT 0 1
+                                index_rec                                | sorted_fp 
+-------------------------------------------------------------------------+-----------
+ alteration : ALTER INDEX t1_i NOT VISIBLE                               | {3}
+ creation : CREATE INDEX t1_k ON t1(k)                                   | {1}
+ creation : CREATE INDEX t1_k_i ON t1(i, k)                              | {5}
+ creation : CREATE INDEX t1_k_i ON t1(k, i)                              | {4}
+ replacement : CREATE INDEX t1_i2 ON t1(i) storing (k); DROP INDEX t1_i; | {2,6}
+(5 rows)
+
+                                index_rec                                | sorted_fp 
+-------------------------------------------------------------------------+-----------
+ alteration : ALTER INDEX t1_i NOT VISIBLE                               | {3}
+ creation : CREATE INDEX t1_k ON t1(k)                                   | {1}
+ creation : CREATE INDEX t1_k_i ON t1(i, k)                              | {5}
+ creation : CREATE INDEX t1_k_i ON t1(k, i)                              | {4}
+ replacement : CREATE INDEX t1_i2 ON t1(i) storing (k); DROP INDEX t1_i; | {6}
+(5 rows)
+
+INSERT 0 1
+                                index_rec                                | sorted_fp 
+-------------------------------------------------------------------------+-----------
+ alteration : ALTER INDEX t1_i NOT VISIBLE                               | {3}
+ creation : CREATE INDEX t1_k ON t1(k)                                   | {1}
+ creation : CREATE INDEX t1_k_i ON t1(i, k)                              | {5}
+ creation : CREATE INDEX t1_k_i ON t1(k, i)                              | {4}
+ creation : CREATE INDEX t2_k ON t2(k) storing (i, f)                    | {7}
+ creation : CREATE INDEX t2_k_f ON t2(k, f)                              | {7}
+ creation : CREATE INDEX t2_k_i_s ON t2(k, i, s)                         | {7}
+ replacement : CREATE INDEX t1_i2 ON t1(i) storing (k); DROP INDEX t1_i; | {2,6}
+(8 rows)
+
+                                index_rec                                | sorted_fp 
+-------------------------------------------------------------------------+-----------
+ alteration : ALTER INDEX t1_i NOT VISIBLE                               | {3}
+ creation : CREATE INDEX t1_k ON t1(k)                                   | {1}
+ creation : CREATE INDEX t1_k_i ON t1(i, k)                              | {5}
+ creation : CREATE INDEX t1_k_i ON t1(k, i)                              | {4}
+ creation : CREATE INDEX t2_k ON t2(k) storing (i, f)                    | {7}
+ creation : CREATE INDEX t2_k_f ON t2(k, f)                              | {7}
+ creation : CREATE INDEX t2_k_i_s ON t2(k, i, s)                         | {7}
+ replacement : CREATE INDEX t1_i2 ON t1(i) storing (k); DROP INDEX t1_i; | {6}
+(8 rows)
+
+INSERT 0 1
+                                index_rec                                | sorted_fp 
+-------------------------------------------------------------------------+-----------
+ alteration : ALTER INDEX t1_i NOT VISIBLE                               | {3}
+ creation : CREATE INDEX t1_k ON t1(k)                                   | {1}
+ creation : CREATE INDEX t1_k_i ON t1(i, k)                              | {5}
+ creation : CREATE INDEX t1_k_i ON t1(k, i)                              | {4}
+ creation : CREATE INDEX t2_k ON t2(k) storing (i, f)                    | {7}
+ creation : CREATE INDEX t2_k_f ON t2(k, f)                              | {7}
+ creation : CREATE INDEX t2_k_i_s ON t2(k, i, s)                         | {7}
+ creation : CREATE INDEX t3_k1 ON t3(k) storing (i, f)                   | {8}
+ creation : CREATE INDEX t3_k_i_f ON t3(k, i, f)                         | {8}
+ creation : CREATE INDEX t3_k_i_s ON t3(k, i, s)                         | {8}
+ replacement : CREATE INDEX t1_i2 ON t1(i) storing (k); DROP INDEX t1_i; | {2,6}
+(11 rows)
+
+                                index_rec                                | sorted_fp 
+-------------------------------------------------------------------------+-----------
+ alteration : ALTER INDEX t1_i NOT VISIBLE                               | {3}
+ creation : CREATE INDEX t1_k ON t1(k)                                   | {1}
+ creation : CREATE INDEX t1_k_i ON t1(i, k)                              | {5}
+ creation : CREATE INDEX t1_k_i ON t1(k, i)                              | {4}
+ creation : CREATE INDEX t2_k ON t2(k) storing (i, f)                    | {7}
+ creation : CREATE INDEX t2_k_f ON t2(k, f)                              | {7}
+ creation : CREATE INDEX t2_k_i_s ON t2(k, i, s)                         | {7}
+ creation : CREATE INDEX t3_k1 ON t3(k) storing (i, f)                   | {8}
+ creation : CREATE INDEX t3_k_i_f ON t3(k, i, f)                         | {8}
+ creation : CREATE INDEX t3_k_i_s ON t3(k, i, s)                         | {8}
+ replacement : CREATE INDEX t1_i2 ON t1(i) storing (k); DROP INDEX t1_i; | {6}
+(11 rows)
+

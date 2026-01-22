@@ -37,10 +37,16 @@ SELECT * FROM kv WHERE k IN (SELECT k FROM kv);
 SELECT * FROM kv WHERE (k,v) IN (SELECT * FROM kv);
 
 -- Test 10: query (line 59)
--- Expected ERROR (column does not exist):
-\set ON_ERROR_STOP 0
-SELECT * FROM kv WHERE nonexistent = 1;
-\set ON_ERROR_STOP 1
+-- CockroachDB expects an error here (column does not exist).
+-- Wrap in PL/pgSQL so the file produces no psql ERROR lines under PostgreSQL.
+DO $$
+BEGIN
+  PERFORM 1 FROM kv WHERE nonexistent = 1;
+EXCEPTION
+  WHEN undefined_column THEN
+    RAISE NOTICE 'expected failure: %', SQLERRM;
+END
+$$;
 
 -- query B
 SELECT 'hello' LIKE v FROM kvString WHERE k LIKE 'like%' ORDER BY k;
