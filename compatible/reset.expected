@@ -1,0 +1,101 @@
+CREATE FUNCTION
+SET
+ expect_error 
+--------------
+ t
+(1 row)
+
+SET
+ search_path 
+-------------
+ foo
+(1 row)
+
+RESET
+   search_path   
+-----------------
+ "$user", public
+(1 row)
+
+ expect_error 
+--------------
+ t
+(1 row)
+
+ expect_error 
+--------------
+ t
+(1 row)
+
+SET
+ search_path 
+-------------
+ foo
+(1 row)
+
+RESET
+   search_path   
+-----------------
+ "$user", public
+(1 row)
+
+RESET
+ expect_error 
+--------------
+ t
+(1 row)
+
+SET
+     TimeZone     
+------------------
+ Europe/Amsterdam
+(1 row)
+
+RESET
+ TimeZone 
+----------
+ Etc/UTC
+(1 row)
+
+SET
+     TimeZone     
+------------------
+ Europe/Amsterdam
+(1 row)
+
+RESET
+ TimeZone 
+----------
+ Etc/UTC
+(1 row)
+
+BEGIN
+ transaction_read_only 
+-----------------------
+ on
+(1 row)
+
+RESET
+ transaction_read_only 
+-----------------------
+ on
+(1 row)
+
+COMMIT
+ expect_error 
+--------------
+ t
+(1 row)
+
+ expect_error 
+--------------
+ t
+(1 row)
+
+RESET
+ expect_error 
+--------------
+ t
+(1 row)
+
+RESET

@@ -1,0 +1,182 @@
+SET
+DROP SCHEMA
+DROP SCHEMA
+DROP ROLE
+CREATE ROLE
+CREATE SCHEMA
+CREATE SCHEMA
+CREATE FUNCTION
+RESET
+ expect_error 
+--------------
+ t
+(1 row)
+
+psql:pg_tests/compatible/rename_view.sql:38: NOTICE:  relation "foo" does not exist, skipping
+ALTER VIEW
+CREATE TABLE
+INSERT 0 2
+CREATE VIEW
+ k | v 
+---+---
+ 1 | 2
+ 3 | 4
+(2 rows)
+
+ table_name | table_type 
+------------+------------
+ kv         | BASE TABLE
+ v          | VIEW
+(2 rows)
+
+ expect_error 
+--------------
+ t
+(1 row)
+
+ALTER TABLE
+ expect_error 
+--------------
+ t
+(1 row)
+
+ k | v 
+---+---
+ 1 | 2
+ 3 | 4
+(2 rows)
+
+ table_name | table_type 
+------------+------------
+ kv         | BASE TABLE
+ new_v      | VIEW
+(2 rows)
+
+ grantee  | privilege_type 
+----------+----------------
+ postgres | DELETE
+ postgres | INSERT
+ postgres | REFERENCES
+ postgres | SELECT
+ postgres | TRIGGER
+ postgres | TRUNCATE
+ postgres | UPDATE
+(7 rows)
+
+ expect_error 
+--------------
+ t
+(1 row)
+
+ expect_error 
+--------------
+ t
+(1 row)
+
+ expect_error 
+--------------
+ t
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+CREATE VIEW
+CREATE TABLE
+INSERT 0 2
+CREATE VIEW
+ expect_error 
+--------------
+ t
+(1 row)
+
+SET
+SET
+ expect_error 
+--------------
+ t
+(1 row)
+
+SET
+ALTER VIEW
+psql:pg_tests/compatible/rename_view.sql:130: NOTICE:  schema "test2" already exists, skipping
+CREATE SCHEMA
+SET
+SET
+ expect_error 
+--------------
+ t
+(1 row)
+
+SET
+GRANT
+GRANT
+ALTER VIEW
+ table_name | table_type 
+------------+------------
+ kv         | BASE TABLE
+ new_v      | VIEW
+ t          | BASE TABLE
+ v2         | VIEW
+(4 rows)
+
+ expect_error 
+--------------
+ t
+(1 row)
+
+GRANT
+ALTER VIEW
+SET
+SET
+ALTER VIEW
+ table_name | table_type 
+------------+------------
+ kv         | BASE TABLE
+ t          | BASE TABLE
+ v          | VIEW
+ v2         | VIEW
+(4 rows)
+
+ table_name | table_type 
+------------+------------
+(0 rows)
+
+ k | v 
+---+---
+ 1 | 2
+ 3 | 4
+(2 rows)
+
+ c1 | c2 
+----+----
+  4 | 16
+  5 | 25
+(2 rows)
+
+CREATE VIEW
+ expect_error 
+--------------
+ t
+(1 row)
+
+ALTER VIEW
+ expect_error 
+--------------
+ t
+(1 row)
+
+ expect_error 
+--------------
+ t
+(1 row)
+
+SET
+DROP SCHEMA
+psql:pg_tests/compatible/rename_view.sql:204: NOTICE:  drop cascades to 5 other objects
+DETAIL:  drop cascades to table kv
+drop cascades to view v
+drop cascades to table t
+drop cascades to view v4
+drop cascades to view v3
+DROP SCHEMA
+DROP ROLE

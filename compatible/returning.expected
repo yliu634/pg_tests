@@ -1,0 +1,25 @@
+CREATE TABLE
+ a | b 
+---+---
+ 1 | 2
+(1 row)
+
+INSERT 0 1
+ a | b 
+---+---
+ 1 | 1
+(1 row)
+
+UPDATE 1
+ a | b 
+---+---
+ 1 | 1
+(1 row)
+
+UPDATE 1
+ a | b 
+---+---
+ 1 | 1
+(1 row)
+
+DELETE 1

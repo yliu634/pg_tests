@@ -1,11 +1,22 @@
 -- PostgreSQL compatible tests from reset
 -- 25 tests
 
+-- Helper: run a statement that is expected to error without emitting psql ERROR output.
+-- Returns true if the statement errored, false otherwise.
+CREATE OR REPLACE FUNCTION pg_temp.expect_error(sql text) RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  EXECUTE sql;
+  RETURN false;
+EXCEPTION WHEN OTHERS THEN
+  RETURN true;
+END;
+$$;
+
 -- Test 1: statement (line 2)
 SET client_min_messages = warning;
-\set ON_ERROR_STOP 0
-RESET FOO;
-\set ON_ERROR_STOP 1
+SELECT pg_temp.expect_error($sql$RESET FOO$sql$);
 
 -- Test 2: statement (line 5)
 SET search_path = foo;
@@ -20,12 +31,10 @@ RESET search_path;
 SHOW search_path;
 
 -- Test 6: statement (line 21)
-\set ON_ERROR_STOP 0
-RESET server_version;
+SELECT pg_temp.expect_error($sql$RESET server_version$sql$);
 
 -- Test 7: statement (line 24)
-RESET server_version_num;
-\set ON_ERROR_STOP 1
+SELECT pg_temp.expect_error($sql$RESET server_version_num$sql$);
 
 -- Test 8: statement (line 29)
 SET search_path = foo;
@@ -41,9 +50,7 @@ SHOW search_path;
 
 -- Test 12: statement (line 45)
 RESET client_encoding;
-\set ON_ERROR_STOP 0
-RESET NAMES;
-\set ON_ERROR_STOP 1
+SELECT pg_temp.expect_error($sql$RESET NAMES$sql$);
 
 -- Test 13: query (line 48)
 SET timezone = 'Europe/Amsterdam';
@@ -77,17 +84,15 @@ SHOW transaction_read_only;
 COMMIT;
 
 -- Test 22: statement (line 91)
-\set ON_ERROR_STOP 0
-SET default_transaction_use_follower_reads = on;
+SELECT pg_temp.expect_error($sql$SET default_transaction_use_follower_reads = on$sql$);
 
 -- Test 23: query (line 94)
-SHOW default_transaction_use_follower_reads;
+SELECT pg_temp.expect_error($sql$SHOW default_transaction_use_follower_reads$sql$);
 
 -- Test 24: statement (line 99)
 RESET ALL;
 
 -- Test 25: query (line 102)
-SHOW default_transaction_use_follower_reads;
-\set ON_ERROR_STOP 1
+SELECT pg_temp.expect_error($sql$SHOW default_transaction_use_follower_reads$sql$);
 
 RESET client_min_messages;
