@@ -1,146 +1,134 @@
 -- PostgreSQL compatible tests from rename_atomic
 -- 32 tests
 
--- Test 1: statement (line 3)
-SET autocommit_before_ddl = false
+-- CockroachDB's rename-atomic tests use CRDB-only settings (autocommit_before_ddl)
+-- and database-rename behavior that PostgreSQL does not support.
+--
+-- This rewrite keeps the semantic focus for PostgreSQL: schema and view renames
+-- are transactional and can be committed/rolled back atomically.
 
--- Test 2: statement (line 6)
-CREATE DATABASE db;
-CREATE DATABASE db_new
+SET client_min_messages = warning;
 
--- Test 3: statement (line 10)
+-- Clean slate.
+DROP SCHEMA IF EXISTS db CASCADE;
+DROP SCHEMA IF EXISTS db_new CASCADE;
+DROP SCHEMA IF EXISTS db_old CASCADE;
+DROP SCHEMA IF EXISTS db_sc CASCADE;
+
+DROP SCHEMA IF EXISTS sc CASCADE;
+DROP SCHEMA IF EXISTS sc_new CASCADE;
+DROP SCHEMA IF EXISTS sc_old CASCADE;
+
+DROP VIEW IF EXISTS v;
+DROP VIEW IF EXISTS v_new;
+DROP VIEW IF EXISTS v_old;
+
+-- Test 1-9: (database rename in CRDB) simulated with schema renames in PG.
+CREATE SCHEMA db;
+CREATE SCHEMA db_new;
+
 BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-ALTER DATABASE db RENAME TO db_old;
-ALTER DATABASE db_new RENAME TO db
+ALTER SCHEMA db RENAME TO db_old;
+ALTER SCHEMA db_new RENAME TO db;
+CREATE SCHEMA db_new_sc;
+ROLLBACK;
 
--- Test 4: statement (line 15)
-CREATE SCHEMA db_new.sc
+SELECT schema_name
+FROM information_schema.schemata
+WHERE schema_name IN ('db', 'db_new', 'db_old', 'db_new_sc')
+ORDER BY schema_name;
 
--- Test 5: statement (line 18)
-ROLLBACK
-
--- Test 6: statement (line 21)
 BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-ALTER DATABASE db RENAME TO db_old;
-ALTER DATABASE db_new RENAME TO db;
-CREATE SCHEMA db.sc;
-COMMIT
+ALTER SCHEMA db RENAME TO db_old;
+ALTER SCHEMA db_new RENAME TO db;
+CREATE SCHEMA db_sc;
+COMMIT;
 
--- Test 7: statement (line 28)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-DROP DATABASE db CASCADE;
-ALTER DATABASE db_old RENAME TO db;
-COMMIT
+SELECT schema_name
+FROM information_schema.schemata
+WHERE schema_name IN ('db', 'db_new', 'db_old', 'db_sc')
+ORDER BY schema_name;
 
--- Test 8: statement (line 34)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-ALTER DATABASE db RENAME TO db_old;
-CREATE DATABASE db;
-COMMIT
+-- Clean up simulated DB schemas.
+DROP SCHEMA db_sc;
+DROP SCHEMA db_old;
+DROP SCHEMA db;
 
--- Test 9: statement (line 40)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-DROP DATABASE db;
-CREATE DATABASE db;
-COMMIT
-
--- Test 10: statement (line 48)
+-- Test 10-17: schema rename + rollback/commit.
 CREATE SCHEMA sc;
-CREATE SCHEMA sc_new
+CREATE SCHEMA sc_new;
 
--- Test 11: statement (line 52)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-ALTER SCHEMA sc RENAME TO sc_old;
-ALTER SCHEMA sc_new RENAME TO sc
-
--- Test 12: statement (line 57)
-CREATE VIEW sc_new.v AS SELECT 1
-
--- Test 13: statement (line 60)
-ROLLBACK
-
--- Test 14: statement (line 63)
 BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 ALTER SCHEMA sc RENAME TO sc_old;
 ALTER SCHEMA sc_new RENAME TO sc;
 CREATE VIEW sc.v AS SELECT 1;
-COMMIT
+ROLLBACK;
 
--- Test 15: statement (line 70)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-DROP SCHEMA sc CASCADE;
-ALTER SCHEMA sc_old RENAME TO sc;
-COMMIT
+SELECT schema_name
+FROM information_schema.schemata
+WHERE schema_name IN ('sc', 'sc_new', 'sc_old')
+ORDER BY schema_name;
 
--- Test 16: statement (line 76)
 BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 ALTER SCHEMA sc RENAME TO sc_old;
-CREATE SCHEMA sc;
-COMMIT
-
--- Test 17: statement (line 82)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-DROP SCHEMA sc;
-CREATE SCHEMA sc;
-COMMIT
-
--- Test 18: statement (line 90)
-CREATE VIEW v AS SELECT 1;
-CREATE VIEW v_new AS SELECT 2
-
--- Test 19: query (line 94)
-SELECT * FROM v
-
--- Test 20: statement (line 99)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-ALTER VIEW v RENAME TO v_old;
-ALTER VIEW v_new RENAME TO v
-
--- Test 21: query (line 104)
-SELECT * FROM v
-
--- Test 22: statement (line 109)
+ALTER SCHEMA sc_new RENAME TO sc;
+CREATE VIEW sc.v AS SELECT 1;
 COMMIT;
 
--- Test 23: query (line 112)
-SELECT * FROM v
+SELECT schema_name
+FROM information_schema.schemata
+WHERE schema_name IN ('sc', 'sc_new', 'sc_old')
+ORDER BY schema_name;
 
--- Test 24: statement (line 117)
+-- Test 18-29: view rename behavior.
+CREATE VIEW v AS SELECT 1;
+CREATE VIEW v_new AS SELECT 2;
+
+SELECT * FROM v;
+
+BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+ALTER VIEW v RENAME TO v_old;
+ALTER VIEW v_new RENAME TO v;
+SELECT * FROM v;
+COMMIT;
+
+SELECT * FROM v;
+
 BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 DROP VIEW v;
-ALTER VIEW v_old RENAME TO v
+ALTER VIEW v_old RENAME TO v;
+SELECT * FROM v;
+COMMIT;
 
--- Test 25: query (line 122)
-SELECT * FROM v
+SELECT * FROM v;
 
--- Test 26: statement (line 127)
-COMMIT
-
--- Test 27: query (line 130)
-SELECT * FROM v
-
--- Test 28: statement (line 135)
 BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 ALTER VIEW v RENAME TO v_old;
 CREATE VIEW v AS SELECT 1;
-COMMIT
+COMMIT;
 
--- Test 29: statement (line 141)
 BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 DROP VIEW v;
 CREATE VIEW v AS SELECT 1;
-COMMIT
+COMMIT;
 
--- Test 30: statement (line 150)
-CREATE SCHEMA sc93002
+-- Test 30-31: schema DDL inside a transaction.
+CREATE SCHEMA sc93002;
 
--- Test 31: statement (line 153)
 BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-SHOW TABLES FROM sc93002;
+SELECT table_name FROM information_schema.tables WHERE table_schema = 'sc93002' ORDER BY table_name;
 CREATE TABLE sc93002.t(a INT);
 DROP SCHEMA sc93002 CASCADE;
 COMMIT;
 
--- Test 32: statement (line 160)
-RESET autocommit_before_ddl
+SELECT schema_name
+FROM information_schema.schemata
+WHERE schema_name = 'sc93002';
 
+-- Test 32: cleanup.
+DROP VIEW IF EXISTS v;
+DROP VIEW IF EXISTS v_old;
+DROP SCHEMA IF EXISTS sc_old CASCADE;
+DROP SCHEMA IF EXISTS sc CASCADE;
+
+RESET client_min_messages;

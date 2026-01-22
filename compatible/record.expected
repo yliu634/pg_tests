@@ -1,0 +1,93 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+   t   | a | b | a | b 
+-------+---+---+---+---
+ (1,2) | 1 | 2 | 1 | 2
+(1 row)
+
+   row   |  b  
+---------+-----
+ (1,foo) | foo
+(1 row)
+
+DO
+   row   
+---------
+ (1,foo)
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+ a |   b   |     x     
+---+-------+-----------
+ 1 | hello | (1,hello)
+(1 row)
+
+ regtype | regclass 
+---------+----------
+ rec_a   | rec_a
+(1 row)
+
+ pg_typeof 
+-----------
+ rec_a
+(1 row)
+
+       array       
+-------------------
+ {"(1,3)","(1,2)"}
+(1 row)
+
+ pg_typeof 
+-----------
+ rec_a[]
+(1 row)
+
+ pg_typeof 
+-----------
+ rec_a[]
+(1 row)
+
+DO
+ coalesce  
+-----------
+ {"(1,2)"}
+(1 row)
+
+ coalesce 
+----------
+ {}
+(1 row)
+
+            rec_a            
+-----------------------------
+ {"(1,\" 3\")","(1,\" 2\")"}
+(1 row)
+
+          coalesce           
+-----------------------------
+ {"(1,\" 3\")","(1,\" 2\")"}
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+   s   |   s   
+-------+-------
+ (1,2) | (1,2)
+ (5,6) | (5,6)
+(2 rows)
+
+  rec_a   
+----------
+ (1," 2")
+(1 row)
+
+DO
+DO
+DO
+DO
+RESET

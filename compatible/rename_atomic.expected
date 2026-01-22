@@ -1,0 +1,124 @@
+SET
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP VIEW
+DROP VIEW
+DROP VIEW
+CREATE SCHEMA
+CREATE SCHEMA
+BEGIN
+ALTER SCHEMA
+ALTER SCHEMA
+CREATE SCHEMA
+ROLLBACK
+ schema_name 
+-------------
+ db
+ db_new
+(2 rows)
+
+BEGIN
+ALTER SCHEMA
+ALTER SCHEMA
+CREATE SCHEMA
+COMMIT
+ schema_name 
+-------------
+ db
+ db_old
+ db_sc
+(3 rows)
+
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+CREATE SCHEMA
+CREATE SCHEMA
+BEGIN
+ALTER SCHEMA
+ALTER SCHEMA
+CREATE VIEW
+ROLLBACK
+ schema_name 
+-------------
+ sc
+ sc_new
+(2 rows)
+
+BEGIN
+ALTER SCHEMA
+ALTER SCHEMA
+CREATE VIEW
+COMMIT
+ schema_name 
+-------------
+ sc
+ sc_old
+(2 rows)
+
+CREATE VIEW
+CREATE VIEW
+ ?column? 
+----------
+        1
+(1 row)
+
+BEGIN
+ALTER VIEW
+ALTER VIEW
+ ?column? 
+----------
+        2
+(1 row)
+
+COMMIT
+ ?column? 
+----------
+        2
+(1 row)
+
+BEGIN
+DROP VIEW
+ALTER VIEW
+ ?column? 
+----------
+        1
+(1 row)
+
+COMMIT
+ ?column? 
+----------
+        1
+(1 row)
+
+BEGIN
+ALTER VIEW
+CREATE VIEW
+COMMIT
+BEGIN
+DROP VIEW
+CREATE VIEW
+COMMIT
+CREATE SCHEMA
+BEGIN
+ table_name 
+------------
+(0 rows)
+
+CREATE TABLE
+DROP SCHEMA
+COMMIT
+ schema_name 
+-------------
+(0 rows)
+
+DROP VIEW
+DROP VIEW
+DROP SCHEMA
+DROP SCHEMA
+RESET
