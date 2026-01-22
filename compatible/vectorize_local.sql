@@ -7,5 +7,7 @@ CREATE TABLE t111474_1 (c0 INT);
 INSERT INTO t111474_0 (c0) VALUES (1);
 
 -- Test 2: query (line 13)
+-- query error: character number must be positive
+\set ON_ERROR_STOP 0
 SELECT * FROM t111474_0, t111474_1 WHERE chr(-1) > '';
-
+\set ON_ERROR_STOP 1

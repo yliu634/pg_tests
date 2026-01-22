@@ -1,0 +1,4 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/vectorize_local.sql:12: ERROR:  character number must be positive
