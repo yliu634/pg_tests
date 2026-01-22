@@ -1,0 +1,152 @@
+CREATE TABLE
+INSERT 0 6
+CREATE TABLE
+INSERT 0 3
+CREATE FUNCTION
+ a | sub_max_odd 
+---+-------------
+ 5 |           5
+(1 row)
+
+ a 
+---
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+(6 rows)
+
+CREATE FUNCTION
+ sub_max_odd_with_order_by 
+---------------------------
+                         5
+(1 row)
+
+CREATE FUNCTION
+ a | sub_prev_odd 
+---+--------------
+ 1 |             
+ 2 |            1
+ 3 |            1
+ 4 |            3
+ 5 |            3
+ 6 |            5
+(6 rows)
+
+CREATE FUNCTION
+ a | sub_is_odd 
+---+------------
+ 1 | t
+ 2 | 
+ 3 | t
+ 4 | 
+ 5 | t
+ 6 | 
+(6 rows)
+
+CREATE FUNCTION
+ sub_first | a 
+-----------+---
+         1 | 1
+         1 | 2
+         1 | 3
+         1 | 4
+         1 | 5
+         1 | 6
+(6 rows)
+
+CREATE FUNCTION
+ a | sub_two 
+---+---------
+ 1 |       2
+ 2 |       2
+ 3 |       2
+ 4 |       2
+ 5 |       2
+ 6 |       2
+(6 rows)
+
+CREATE TABLE
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+ any_fn | any_fn | any_fn 
+--------+--------+--------
+ f      | f      | f
+(1 row)
+
+ any_fn_lt | any_fn_lt | any_fn_lt 
+-----------+-----------+-----------
+ f         | f         | f
+(1 row)
+
+ any_fn_tuple | any_fn_tuple | any_fn_tuple 
+--------------+--------------+--------------
+ f            | f            | f
+(1 row)
+
+INSERT 0 2
+ any_fn | any_fn | any_fn 
+--------+--------+--------
+ t      | f      | 
+(1 row)
+
+ any_fn_lt | any_fn_lt | any_fn_lt 
+-----------+-----------+-----------
+ t         | f         | 
+(1 row)
+
+ any_fn_tuple | any_fn_tuple | any_fn_tuple 
+--------------+--------------+--------------
+ t            | f            | 
+(1 row)
+
+INSERT 0 1
+ any_fn | any_fn | any_fn 
+--------+--------+--------
+ t      |        | 
+(1 row)
+
+ any_fn_lt | any_fn_lt | any_fn_lt 
+-----------+-----------+-----------
+ t         |           | 
+(1 row)
+
+ any_fn_tuple | any_fn_tuple | any_fn_tuple 
+--------------+--------------+--------------
+ t            |              | 
+(1 row)
+
+CREATE FUNCTION
+ any_fn2 
+---------
+       1
+(1 row)
+
+ any_fn2 
+---------
+       3
+       1
+(2 rows)
+
+CREATE TABLE
+CREATE FUNCTION
+ all_fn | all_fn | all_fn 
+--------+--------+--------
+ t      | t      | t
+(1 row)
+
+INSERT 0 2
+ all_fn | all_fn | all_fn 
+--------+--------+--------
+ t      | f      | 
+(1 row)
+
+INSERT 0 1
+ all_fn | all_fn | all_fn 
+--------+--------+--------
+        | f      | 
+(1 row)
+
