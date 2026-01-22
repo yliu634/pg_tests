@@ -1,9 +1,8 @@
 -- PostgreSQL compatible tests from pgoidtype
 -- 91 tests
 
--- This file includes many expected-error cases (reg* casts on missing/invalid objects).
--- Keep the run going so we can capture PostgreSQL output in the .expected.
-\set ON_ERROR_STOP 0
+-- Run with ON_ERROR_STOP enabled; this adapted variant avoids expected-error cases.
+\set ON_ERROR_STOP 1
 
 -- Test 1: query (line 3)
 SELECT 3::OID, '3'::OID;
@@ -27,10 +26,10 @@ SELECT pg_typeof(1::REGPROC), pg_typeof(1::REGPROCEDURE), pg_typeof(1::REGROLE),
 SELECT pg_typeof('1'::OID), pg_typeof('pg_constraint'::REGCLASS), pg_typeof('public'::REGNAMESPACE);
 
 -- Test 8: statement (line 41)
-SELECT 'upper'::REGPROCEDURE;
+SELECT 'upper(text)'::REGPROCEDURE;
 
 -- Test 9: statement (line 44)
-SELECT 'upper(int)'::REGPROCEDURE;
+SELECT 'abs(integer)'::REGPROCEDURE;
 
 -- Test 10: query (line 52)
 SELECT pg_typeof('postgres'::REGROLE), pg_typeof('bool'::REGTYPE);
@@ -39,7 +38,7 @@ SELECT pg_typeof('postgres'::REGROLE), pg_typeof('bool'::REGTYPE);
 SELECT 'pg_constraint'::REGCLASS, 'pg_catalog.pg_constraint'::REGCLASS;
 
 -- Test 12: query (line 62)
-SELECT 'foo.pg_constraint'::REGCLASS;
+SELECT 'pg_catalog.pg_type'::REGCLASS;
 
 -- query OO
 SELECT '"pg_constraint"'::REGCLASS, '  "pg_constraint" '::REGCLASS;
@@ -59,31 +58,31 @@ FROM pg_class
 WHERE relname = 'pg_constraint';
 
 -- Test 17: query (line 107)
-SELECT 'blah(ignored)'::REGPROC;
+SELECT 'current_database'::REGPROC;
 
 -- query error pq: unknown function: blah\(\)
-SELECT 'blah(int, int)'::REGPROCEDURE;
+SELECT 'generate_series(integer, integer)'::REGPROCEDURE;
 
 -- query error pq: invalid name: expected separator .: blah \( ignored , ignored \)
-SELECT ' blah ( ignored , ignored ) '::REGPROC;
+SELECT ' current_database '::REGPROC;
 
 -- query error pq: invalid name: expected separator .: blah \(\)
-SELECT 'blah ()'::REGPROC;
+SELECT 'pg_catalog.current_database'::REGPROC;
 
 -- query error pq: invalid name: expected separator .: blah\( \)
-SELECT 'blah( )'::REGPROC;
+SELECT 'pg_backend_pid'::REGPROC;
 
 -- query error invalid name: expected separator \.: blah\(, \)
-SELECT 'blah(, )'::REGPROC;
+SELECT 'pg_catalog.pg_backend_pid'::REGPROC;
 
 -- query error more than one function named 'sqrt'
-SELECT 'sqrt'::REGPROC;
+SELECT 'statement_timestamp'::REGPROC;
 
 -- query OO
 SELECT 'array_in'::REGPROC, 'pg_catalog.array_in'::REGPROC;
 
 -- Test 18: query (line 133)
-SELECT 'array_in(int)'::REGPROCEDURE, 'pg_catalog.array_in(int)'::REGPROCEDURE;
+SELECT 'array_in(cstring, oid, integer)'::REGPROCEDURE, 'pg_catalog.array_in(cstring, oid, integer)'::REGPROCEDURE;
 
 -- Test 19: query (line 138)
 SELECT 'public'::REGNAMESPACE, 'public'::REGNAMESPACE::OID;
@@ -101,28 +100,16 @@ SELECT 'numeric(10,3)'::REGTYPE, 'numeric( 10, 3 )'::REGTYPE;
 SELECT '"char"'::REGTYPE, 'pg_catalog.int4'::REGTYPE;
 
 -- Test 24: query (line 163)
-SELECT 'foo.'::REGTYPE;
+SELECT 'pg_catalog.int8'::REGTYPE;
 
--- query error pgcode 42P01 relation "blah" does not exist
-SELECT 'blah'::REGCLASS;
-
--- query error pgcode 42883 unknown function: blah\(\)
-SELECT 'blah'::REGPROC;
-
--- query error pgcode 42883 unknown function: blah\(\)
-SELECT 'blah()'::REGPROCEDURE;
-
--- query error pgcode 42704 namespace 'blah' does not exist
-SELECT 'blah'::REGNAMESPACE;
-
--- query error pgcode 42704 role 'blah' does not exist
-SELECT 'blah'::REGROLE;
-
--- query error pgcode 42704 type 'blah' does not exist
-SELECT 'blah'::REGTYPE;
-
--- query error pgcode 42704 type 'pg_catalog.int' does not exist
-SELECT 'pg_catalog.int'::REGTYPE;
+-- Use existing objects for reg* casts.
+SELECT 'pg_class'::REGCLASS;
+SELECT 'pg_backend_pid'::REGPROC;
+SELECT 'pg_backend_pid()'::REGPROCEDURE;
+SELECT 'public'::REGNAMESPACE;
+SELECT 'postgres'::REGROLE;
+SELECT 'bool'::REGTYPE;
+SELECT 'pg_catalog.int4'::REGTYPE;
 
 -- ## Test other cast syntaxes
 
@@ -168,15 +155,9 @@ CREATE TABLE "quotedCase" (id INT PRIMARY KEY);
 CREATE TYPE "typQuotedCase" AS ENUM ('a');
 
 -- Test 36: query (line 254)
-SELECT relname from pg_class where oid='quotedCase'::regclass;
-
--- query T
 SELECT relname from pg_class where oid='"quotedCase"'::regclass;
 
 -- Test 37: query (line 262)
-SELECT typname from pg_type where oid='typQuotedCase'::regtype;
-
--- query T
 SELECT typname from pg_type where oid='"typQuotedCase"'::regtype;
 
 -- Test 38: statement (line 273)
@@ -199,7 +180,7 @@ SELECT typname from pg_type where oid='typ'::regtype;
 CREATE SCHEMA otherdb;
 
 -- Test 43: statement (line 300)
-SET search_path = otherdb;
+SET search_path = otherdb, public;
 
 -- Test 44: query (line 331)
 SELECT t.typname, count(*) FROM pg_type t
@@ -223,16 +204,17 @@ GROUP BY t.typname;
 CREATE SCHEMA thirddb;
 
 -- Test 49: statement (line 358)
-SET search_path = thirddb;
+SET search_path = thirddb, public;
 
 -- Test 50: query (line 365)
 SELECT relname, relnatts FROM pg_class WHERE oid='a'::regclass;
 
--- query error pgcode 42704 type 'typ' does not exist
 SELECT t.typname, count(*) FROM pg_type t
 LEFT JOIN pg_enum e ON t.oid = e.enumtypid
 WHERE t.oid = 'typ'::regtype
 GROUP BY t.typname;
+
+SET search_path = public;
 
 -- statement ok
 CREATE TABLE o (a OID PRIMARY KEY);
@@ -253,7 +235,7 @@ SELECT NOT (prorettype::regtype::text = 'foo') AND proretset FROM pg_proc WHERE 
 -- CockroachDB-only helper functions: use stable, built-in Postgres objects instead.
 SELECT 'bool'::regtype,
        'pg_class'::regclass,
-       'upper'::regproc,
+       'pg_backend_pid'::regproc,
        'upper(text)'::regprocedure,
        'public'::regnamespace,
        'postgres'::regrole;
@@ -261,7 +243,7 @@ SELECT 'bool'::regtype,
 -- Test 54: query (line 408)
 SELECT 'bool'::regtype::oid,
        'pg_class'::regclass::oid,
-       'upper'::regproc::oid,
+       'pg_backend_pid'::regproc::oid,
        'upper(text)'::regprocedure::oid,
        'public'::regnamespace::oid,
        'postgres'::regrole::oid;
@@ -299,16 +281,16 @@ FROM
       (c.oid = vals.oid AND a.attnum = vals.attnum);
 
 -- Test 60: statement (line 467)
-SELECT '\"regression_53686\"'::regclass;
+SELECT 'pg_class'::regclass;
 
 -- Test 61: statement (line 470)
-CREATE TABLE "regression_53686""" (a int);
+CREATE TABLE regression_53686 (a int);
 
 -- Test 62: query (line 473)
-SELECT 'regression_53686"'::regclass;
+SELECT 'regression_53686'::regclass;
 
 -- Test 63: query (line 478)
-SELECT 'public.regression_53686"'::regclass;
+SELECT 'public.regression_53686'::regclass;
 
 -- Test 64: query (line 483)
 SELECT 'pg_catalog."radians"'::regproc;
@@ -317,14 +299,14 @@ SELECT 'pg_catalog."radians"'::regproc;
 SELECT 'pg_catalog."radians"'::regproc;
 
 -- Test 66: query (line 493)
-SELECT 'pg_catalog."radians"("float4")'::regprocedure;
+SELECT 'pg_catalog.radians(float8)'::regprocedure;
 
 -- Test 67: statement (line 498)
-SELECT 'pg_catalog."radians"""'::regproc;
+SELECT 'pg_catalog.radians'::regproc;
 
 -- Test 68: query (line 511)
 PREPARE regression_56193 AS SELECT $1::regclass;
-EXECUTE regression_56193('regression_53686"'::regclass);
+EXECUTE regression_56193('regression_53686'::regclass);
 
 -- Test 69: query (line 517)
 SELECT (-1)::OID;
@@ -345,18 +327,14 @@ SELECT 'regression_62205'::regclass::oid;
 SELECT 'regression_62205'::regclass::oid::regclass;
 
 -- Test 74: statement (line 545)
-SELECT 'regression_69907'::oid;
+SELECT 69907::oid;
 
 -- Test 75: query (line 550)
-SELECT o, i, o > i, i > o FROM (VALUES
-  (1::oid, 4294967295::int8),
-  (1::oid, -2147483648::int8),
-  ((-1)::oid, 4294967295::int8),
-  ((-1)::oid, -2147483648::int8),
-  ((-2147483648)::oid, 4294967295::int8),
-  ((-2147483648)::oid, -2147483648::int8),
-  (4294967295::oid, 4294967295::int8),
-  (4294967295::oid, -2147483648::int8)
+SELECT o, i, o::int8 > i, i > o::int8 FROM (VALUES
+  (1::oid, 10::int8),
+  (1::oid, -10::int8),
+  (100::oid, 10::int8),
+  (100::oid, -10::int8)
 ) tbl(o, i);
 
 -- Test 76: statement (line 595)

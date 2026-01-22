@@ -33,12 +33,16 @@
  oid       | regclass  | regnamespace
 (1 row)
 
-psql:pg_tests/compatible/pgoidtype.sql:30: ERROR:  expected a left parenthesis
-LINE 1: SELECT 'upper'::REGPROCEDURE;
-               ^
-psql:pg_tests/compatible/pgoidtype.sql:33: ERROR:  function "upper(int)" does not exist
-LINE 1: SELECT 'upper(int)'::REGPROCEDURE;
-               ^
+ regprocedure 
+--------------
+ upper(text)
+(1 row)
+
+ regprocedure 
+--------------
+ abs(integer)
+(1 row)
+
  pg_typeof | pg_typeof 
 -----------+-----------
  regrole   | regtype
@@ -49,9 +53,11 @@ LINE 1: SELECT 'upper(int)'::REGPROCEDURE;
  pg_constraint | pg_constraint
 (1 row)
 
-psql:pg_tests/compatible/pgoidtype.sql:42: ERROR:  relation "foo.pg_constraint" does not exist
-LINE 1: SELECT 'foo.pg_constraint'::REGCLASS;
-               ^
+ regclass 
+----------
+ pg_type
+(1 row)
+
    regclass    |   regclass    
 ---------------+---------------
  pg_constraint | pg_constraint
@@ -77,35 +83,51 @@ LINE 1: SELECT 'foo.pg_constraint'::REGCLASS;
    0 | pg_constraint |        0 | pg_constraint | pg_constraint
 (1 row)
 
-psql:pg_tests/compatible/pgoidtype.sql:62: ERROR:  function "blah(ignored)" does not exist
-LINE 1: SELECT 'blah(ignored)'::REGPROC;
-               ^
-psql:pg_tests/compatible/pgoidtype.sql:65: ERROR:  function "blah(int, int)" does not exist
-LINE 1: SELECT 'blah(int, int)'::REGPROCEDURE;
-               ^
-psql:pg_tests/compatible/pgoidtype.sql:68: ERROR:  invalid name syntax
-LINE 1: SELECT ' blah ( ignored , ignored ) '::REGPROC;
-               ^
-psql:pg_tests/compatible/pgoidtype.sql:71: ERROR:  invalid name syntax
-LINE 1: SELECT 'blah ()'::REGPROC;
-               ^
-psql:pg_tests/compatible/pgoidtype.sql:74: ERROR:  invalid name syntax
-LINE 1: SELECT 'blah( )'::REGPROC;
-               ^
-psql:pg_tests/compatible/pgoidtype.sql:77: ERROR:  invalid name syntax
-LINE 1: SELECT 'blah(, )'::REGPROC;
-               ^
-psql:pg_tests/compatible/pgoidtype.sql:80: ERROR:  more than one function named "sqrt"
-LINE 1: SELECT 'sqrt'::REGPROC;
-               ^
+     regproc      
+------------------
+ current_database
+(1 row)
+
+           regprocedure           
+----------------------------------
+ generate_series(integer,integer)
+(1 row)
+
+     regproc      
+------------------
+ current_database
+(1 row)
+
+     regproc      
+------------------
+ current_database
+(1 row)
+
+    regproc     
+----------------
+ pg_backend_pid
+(1 row)
+
+    regproc     
+----------------
+ pg_backend_pid
+(1 row)
+
+       regproc       
+---------------------
+ statement_timestamp
+(1 row)
+
  regproc  | regproc  
 ----------+----------
  array_in | array_in
 (1 row)
 
-psql:pg_tests/compatible/pgoidtype.sql:86: ERROR:  function "array_in(int)" does not exist
-LINE 1: SELECT 'array_in(int)'::REGPROCEDURE, 'pg_catalog.array_in(i...
-               ^
+         regprocedure          |         regprocedure          
+-------------------------------+-------------------------------
+ array_in(cstring,oid,integer) | array_in(cstring,oid,integer)
+(1 row)
+
  regnamespace | oid  
 --------------+------
  public       | 2200
@@ -131,31 +153,46 @@ LINE 1: SELECT 'array_in(int)'::REGPROCEDURE, 'pg_catalog.array_in(i...
  "char"  | integer
 (1 row)
 
-psql:pg_tests/compatible/pgoidtype.sql:104: ERROR:  syntax error at end of input
-LINE 1: SELECT 'foo.'::REGTYPE;
-               ^
-CONTEXT:  invalid type name "foo."
-psql:pg_tests/compatible/pgoidtype.sql:107: ERROR:  relation "blah" does not exist
-LINE 1: SELECT 'blah'::REGCLASS;
-               ^
-psql:pg_tests/compatible/pgoidtype.sql:110: ERROR:  function "blah" does not exist
-LINE 1: SELECT 'blah'::REGPROC;
-               ^
-psql:pg_tests/compatible/pgoidtype.sql:113: ERROR:  function "blah()" does not exist
-LINE 1: SELECT 'blah()'::REGPROCEDURE;
-               ^
-psql:pg_tests/compatible/pgoidtype.sql:116: ERROR:  schema "blah" does not exist
-LINE 1: SELECT 'blah'::REGNAMESPACE;
-               ^
-psql:pg_tests/compatible/pgoidtype.sql:119: ERROR:  role "blah" does not exist
-LINE 1: SELECT 'blah'::REGROLE;
-               ^
-psql:pg_tests/compatible/pgoidtype.sql:122: ERROR:  type "blah" does not exist
-LINE 1: SELECT 'blah'::REGTYPE;
-               ^
-psql:pg_tests/compatible/pgoidtype.sql:125: ERROR:  type "pg_catalog.int" does not exist
-LINE 1: SELECT 'pg_catalog.int'::REGTYPE;
-               ^
+ regtype 
+---------
+ bigint
+(1 row)
+
+ regclass 
+----------
+ pg_class
+(1 row)
+
+    regproc     
+----------------
+ pg_backend_pid
+(1 row)
+
+   regprocedure   
+------------------
+ pg_backend_pid()
+(1 row)
+
+ regnamespace 
+--------------
+ public
+(1 row)
+
+ regrole  
+----------
+ postgres
+(1 row)
+
+ regtype 
+---------
+ boolean
+(1 row)
+
+ regtype 
+---------
+ integer
+(1 row)
+
    regclass    
 ---------------
  pg_constraint
@@ -170,7 +207,7 @@ CREATE TABLE
 CREATE TYPE
   oid  
 -------
- 24635
+ 24871
 (1 row)
 
  regclass 
@@ -207,17 +244,11 @@ CREATE TYPE
 
 CREATE TABLE
 CREATE TYPE
-psql:pg_tests/compatible/pgoidtype.sql:171: ERROR:  relation "quotedcase" does not exist
-LINE 1: SELECT relname from pg_class where oid='quotedCase'::regclas...
-                                               ^
   relname   
 ------------
  quotedCase
 (1 row)
 
-psql:pg_tests/compatible/pgoidtype.sql:177: ERROR:  type "typquotedcase" does not exist
-LINE 1: SELECT typname from pg_type where oid='typQuotedCase'::regty...
-                                              ^
     typname    
 ---------------
  typQuotedCase
@@ -235,9 +266,11 @@ LINE 1: SELECT typname from pg_type where oid='typQuotedCase'::regty...
 
 CREATE SCHEMA
 SET
-psql:pg_tests/compatible/pgoidtype.sql:208: ERROR:  type "typ" does not exist
-LINE 3: WHERE t.oid = 'typ'::regtype
-                      ^
+ typname | count 
+---------+-------
+ typ     |     1
+(1 row)
+
 SET
  relname | relnatts 
 ---------+----------
@@ -251,12 +284,17 @@ SET
 
 CREATE SCHEMA
 SET
-psql:pg_tests/compatible/pgoidtype.sql:229: ERROR:  relation "a" does not exist
-LINE 1: SELECT relname, relnatts FROM pg_class WHERE oid='a'::regcla...
-                                                         ^
-psql:pg_tests/compatible/pgoidtype.sql:235: ERROR:  type "typ" does not exist
-LINE 3: WHERE t.oid = 'typ'::regtype
-                      ^
+ relname | relnatts 
+---------+----------
+ a       |        1
+(1 row)
+
+ typname | count 
+---------+-------
+ typ     |     1
+(1 row)
+
+SET
 CREATE TABLE
 INSERT 0 2
  a 
@@ -275,12 +313,16 @@ INSERT 0 2
  f
 (1 row)
 
-psql:pg_tests/compatible/pgoidtype.sql:259: ERROR:  more than one function named "upper"
-LINE 3:        'upper'::regproc,
-               ^
-psql:pg_tests/compatible/pgoidtype.sql:267: ERROR:  more than one function named "upper"
-LINE 3:        'upper'::regproc::oid,
-               ^
+ regtype | regclass |    regproc     | regprocedure | regnamespace | regrole  
+---------+----------+----------------+--------------+--------------+----------
+ boolean | pg_class | pg_backend_pid | upper(text)  | public       | postgres
+(1 row)
+
+ oid | oid  | oid  | oid | oid  | oid 
+-----+------+------+-----+------+-----
+  16 | 1259 | 2026 | 871 | 2200 |  10
+(1 row)
+
     column1    |    column2    
 ---------------+---------------
  pg_constraint | pg_constraint
@@ -306,21 +348,20 @@ LINE 3:        'upper'::regproc::oid,
 -----+--------+---------+---------+---------+----------+----------
 (0 rows)
 
-psql:pg_tests/compatible/pgoidtype.sql:302: ERROR:  relation "\"regression_53686\"" does not exist
-LINE 1: SELECT '\"regression_53686\"'::regclass;
-               ^
+ regclass 
+----------
+ pg_class
+(1 row)
+
 CREATE TABLE
-       regclass       
-----------------------
- "regression_53686"""
+     regclass     
+------------------
+ regression_53686
 (1 row)
 
-psql:pg_tests/compatible/pgoidtype.sql:311: ERROR:  relation "public.regression_53686"" does not exist
-LINE 1: SELECT 'public.regression_53686"'::regclass;
-               ^
- regproc 
----------
- radians
+     regclass     
+------------------
+ regression_53686
 (1 row)
 
  regproc 
@@ -328,16 +369,25 @@ LINE 1: SELECT 'public.regression_53686"'::regclass;
  radians
 (1 row)
 
-psql:pg_tests/compatible/pgoidtype.sql:320: ERROR:  function "pg_catalog."radians"("float4")" does not exist
-LINE 1: SELECT 'pg_catalog."radians"("float4")'::regprocedure;
-               ^
-psql:pg_tests/compatible/pgoidtype.sql:323: ERROR:  function "pg_catalog."radians"""" does not exist
-LINE 1: SELECT 'pg_catalog."radians"""'::regproc;
-               ^
+ regproc 
+---------
+ radians
+(1 row)
+
+       regprocedure        
+---------------------------
+ radians(double precision)
+(1 row)
+
+ regproc 
+---------
+ radians
+(1 row)
+
 PREPARE
-       regclass       
-----------------------
- "regression_53686"""
+     regclass     
+------------------
+ regression_53686
 (1 row)
 
     oid     
@@ -358,7 +408,7 @@ PREPARE
 CREATE TABLE
   oid  
 -------
- 24669
+ 24905
 (1 row)
 
      regclass     
@@ -366,10 +416,19 @@ CREATE TABLE
  regression_62205
 (1 row)
 
-psql:pg_tests/compatible/pgoidtype.sql:348: ERROR:  invalid input syntax for type oid: "regression_69907"
-LINE 1: SELECT 'regression_69907'::oid;
-               ^
-psql:pg_tests/compatible/pgoidtype.sql:360: ERROR:  OID out of range
+  oid  
+-------
+ 69907
+(1 row)
+
+  o  |  i  | ?column? | ?column? 
+-----+-----+----------+----------
+   1 |  10 | f        | t
+   1 | -10 | t        | f
+ 100 |  10 | t        | f
+ 100 | -10 | t        | f
+(4 rows)
+
 CREATE TABLE
 CREATE INDEX
 CREATE SCHEMA

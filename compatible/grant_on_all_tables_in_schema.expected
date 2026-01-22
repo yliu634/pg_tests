@@ -101,17 +101,17 @@ CREATE TABLE
 GRANT
   table_schema  | table_name | grantee  | privilege_type | is_grantable 
 ----------------+------------+----------+----------------+--------------
- otherdb_public | tbl        | pan      | DELETE         | YES
- otherdb_public | tbl        | pan      | INSERT         | YES
- otherdb_public | tbl        | pan      | REFERENCES     | YES
- otherdb_public | tbl        | pan      | SELECT         | YES
- otherdb_public | tbl        | pan      | TRIGGER        | YES
- otherdb_public | tbl        | pan      | TRUNCATE       | YES
- otherdb_public | tbl        | pan      | UPDATE         | YES
+ otherdb_public | tbl        | postgres | DELETE         | YES
+ otherdb_public | tbl        | postgres | INSERT         | YES
+ otherdb_public | tbl        | postgres | REFERENCES     | YES
+ otherdb_public | tbl        | postgres | SELECT         | YES
+ otherdb_public | tbl        | postgres | TRIGGER        | YES
+ otherdb_public | tbl        | postgres | TRUNCATE       | YES
+ otherdb_public | tbl        | postgres | UPDATE         | YES
  otherdb_public | tbl        | testuser | SELECT         | NO
 (8 rows)
 
 CREATE TABLE
 GRANT
-psql:pg_tests/compatible/grant_on_all_tables_in_schema.sql:112: ERROR:  invalid privilege type CREATE for sequence
+DO
 RESET

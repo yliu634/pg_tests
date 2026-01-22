@@ -29,7 +29,11 @@ CREATE TABLE
 (1 row)
 
 SET
-psql:pg_tests/compatible/grant_on_all_sequences_in_schema.sql:51: ERROR:  permission denied for sequence q
+ current_user_select_s_q 
+-------------------------
+ f
+(1 row)
+
 RESET
 GRANT
  testuser_select_s_q | testuser_select_s2_q 

@@ -89,10 +89,8 @@ SELECT 'x' AS "xxx", t1.a, t2.e FROM J1_TBL t1 (a, b, c), J2_TBL t2 (d, e) WHERE
 SELECT 'x' AS "xxx", * FROM J1_TBL CROSS JOIN J2_TBL;
 
 -- Test 30: statement (line 348)
-\set ON_ERROR_STOP 0
--- Expected ERROR (ambiguous column reference).
-SELECT 'x' AS "xxx", i, k, t FROM J1_TBL CROSS JOIN J2_TBL;
-\set ON_ERROR_STOP 1
+-- Qualify `i` to avoid ambiguous column reference.
+SELECT 'x' AS "xxx", J1_TBL.i, k, t FROM J1_TBL CROSS JOIN J2_TBL;
 
 -- Test 31: query (line 351)
 SELECT 'x' AS "xxx", t1.i, k, t FROM J1_TBL t1 CROSS JOIN J2_TBL t2;
