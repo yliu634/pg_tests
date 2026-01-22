@@ -1,0 +1,144 @@
+SET
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+ upper_hello | nested_udf_for_from | lower_hello | concat_hello 
+-------------+---------------------+-------------+--------------
+ HELLO       | hellohello          | hello       | hellohello
+(1 row)
+
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+ udfcallnest_3 
+---------------
+           512
+(1 row)
+
+        from         |      to       
+---------------------+---------------
+ concat_hello        | lower_hello
+ nested_udf_for_from | concat_hello
+ udfcallnest         | udfcall
+ udfcallnest_2       | udfcall
+ udfcallnest_2       | udfcallnest
+ udfcallnest_3       | udfcall
+ udfcallnest_3       | udfcallnest
+ udfcallnest_3       | udfcallnest_2
+ upper_hello         | lower_hello
+(9 rows)
+
+ALTER FUNCTION
+CREATE SCHEMA
+ALTER FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+CREATE TABLE
+CREATE FUNCTION
+CREATE FUNCTION
+ ins 
+-----
+  10
+  20
+  30
+(3 rows)
+
+ ins | ins 
+-----+-----
+  50 |  60
+(1 row)
+
+ a | b  
+---+----
+ 1 | 10
+ 2 | 20
+ 3 | 30
+ 4 | 40
+ 5 | 50
+ 6 | 60
+(6 rows)
+
+psql:pg_tests/compatible/udf_calling_udf.sql:122: ERROR:  duplicate key value violates unique constraint "ab_pkey"
+DETAIL:  Key (a)=(4) already exists.
+CONTEXT:  SQL function "ins_ab" statement 1
+SQL function "ins" statement 1
+psql:pg_tests/compatible/udf_calling_udf.sql:129: ERROR:  cannot drop table ab because other objects depend on it
+DETAIL:  function ins_ab(integer,integer) depends on table ab
+function ins(integer) depends on table ab
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+psql:pg_tests/compatible/udf_calling_udf.sql:139: ERROR:  cannot drop function ins_ab(integer,integer) because other objects depend on it
+DETAIL:  function ins(integer) depends on function ins_ab(integer,integer)
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+DROP FUNCTION
+DROP FUNCTION
+DROP TABLE
+CREATE FUNCTION
+CREATE FUNCTION
+ identity2 
+-----------
+        11
+(1 row)
+
+DROP FUNCTION
+DROP FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+DROP FUNCTION
+CREATE TYPE
+CREATE FUNCTION
+CREATE FUNCTION
+ f 
+---
+ 2
+(1 row)
+
+ f 
+---
+ 2
+(1 row)
+
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+psql:pg_tests/compatible/udf_calling_udf.sql:222: ERROR:  cannot drop function f2(integer) because other objects depend on it
+DETAIL:  function f1(integer) depends on function f2(integer)
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+psql:pg_tests/compatible/udf_calling_udf.sql:223: ERROR:  cannot drop function f1(integer) because other objects depend on it
+DETAIL:  function f2(integer) depends on function f1(integer)
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE PROCEDURE
+ f131354 
+---------
+       1
+(1 row)
+
+CALL
+              create_statement               
+---------------------------------------------
+ CREATE OR REPLACE FUNCTION public.f131354()+
+  RETURNS integer                           +
+  LANGUAGE sql                              +
+ BEGIN ATOMIC                               +
+  SELECT "fooBAR"() AS "fooBAR";            +
+ END                                        +
+ 
+(1 row)
+
+               create_statement                
+-----------------------------------------------
+ CREATE OR REPLACE PROCEDURE public.p131354() +
+  LANGUAGE sql                                +
+ AS $procedure$ SELECT "fooBAR"(); $procedure$+
+ 
+(1 row)
+
+RESET
