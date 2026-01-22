@@ -1,0 +1,2 @@
+pg_tests/compatible/cascade.sql
+pg_tests/compatible/cast.sql

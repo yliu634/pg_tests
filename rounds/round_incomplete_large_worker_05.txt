@@ -1,0 +1,2 @@
+pg_tests/compatible/inet.sql
+pg_tests/compatible/information_schema.sql

@@ -1,0 +1,2 @@
+pg_tests/compatible/udf_record.sql
+pg_tests/compatible/update.sql
