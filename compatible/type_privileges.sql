@@ -14,6 +14,10 @@ BEGIN
 END
 $$;
 
+-- Ensure repeatable runs across isolated databases: role memberships are global
+-- and may persist between runs of this file.
+REVOKE root FROM testuser;
+
 -- Test 1: statement (line 4)
 -- PostgreSQL does not have a database-level DROP privilege; grant CREATE on the
 -- current database and schema for the rest of this test.
@@ -122,3 +126,7 @@ ALTER TYPE test RENAME to test1;
 
 -- Test 27: statement (line 115)
 DROP TYPE test1;
+
+-- Cleanup: this file grants role membership, which is global (not per-db).
+RESET ROLE;
+REVOKE root FROM testuser;
