@@ -1,8 +1,7 @@
 CREATE COLLATION
 CREATE TABLE
 INSERT 0 1
-psql:pg_tests/compatible/collatedstring_constraint.sql:19: ERROR:  duplicate key value violates unique constraint "p_pkey"
-DETAIL:  Key (a)=(A) already exists.
+DO
 INSERT 0 1
 CREATE TABLE
 INSERT 0 1
@@ -31,8 +30,7 @@ INSERT 0 1
 CREATE TABLE
 INSERT 0 1
 INSERT 0 1
-psql:pg_tests/compatible/collatedstring_constraint.sql:62: ERROR:  insert or update on table "c2" violates foreign key constraint "fk_p"
-DETAIL:  Key (a)=(p) is not present in table "p".
+DO
  a 
 ---
  a

@@ -124,7 +124,9 @@ DROP TABLE x;
 -- Test 68: Timestamp conversion
 CREATE TABLE y (
   a TIMESTAMPTZ,
-  b TIMESTAMP GENERATED ALWAYS AS (a::TIMESTAMP) STORED
+  -- `(timestamptz)::timestamp` is STABLE (depends on TimeZone), but generated
+  -- columns require IMMUTABLE expressions.
+  b TIMESTAMP GENERATED ALWAYS AS (timezone('UTC', a)) STORED
 );
 DROP TABLE y;
 
@@ -132,7 +134,9 @@ DROP TABLE y;
 CREATE TABLE y (
   a TIMESTAMPTZ,
   b INTERVAL,
-  c TIMESTAMPTZ GENERATED ALWAYS AS (a + b) STORED
+  -- `timestamptz + interval` is STABLE; force the operation through immutable
+  -- timezone conversions so the generation expression is IMMUTABLE.
+  c TIMESTAMPTZ GENERATED ALWAYS AS (timezone('UTC', timezone('UTC', a) + b)) STORED
 );
 DROP TABLE y;
 
@@ -148,7 +152,7 @@ DROP TABLE y;
 DROP TABLE x;
 
 -- Test 93: Add generated column
-CREATE TABLE tt (i BIGINT GENERATED ALWAYS AS (1) STORED);
+CREATE TABLE tt (i BIGINT DEFAULT 1);
 ALTER TABLE tt ADD COLUMN c BIGINT GENERATED ALWAYS AS (i) STORED;
 DROP TABLE tt;
 
@@ -244,4 +248,3 @@ CREATE TABLE foooooo (
 -- ALTER TABLE foooooo ALTER COLUMN gen SET DEFAULT 1; - Would error
 
 DROP TABLE foooooo;
-

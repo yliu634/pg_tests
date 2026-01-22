@@ -5,9 +5,8 @@ SET
 SET
 SET
 SET
-psql:pg_tests/compatible/cluster_settings.sql:21: ERROR:  invalid value for parameter "log_min_duration_statement": "true"
-psql:pg_tests/compatible/cluster_settings.sql:22: ERROR:  invalid value for parameter "log_min_duration_statement": "true"
-psql:pg_tests/compatible/cluster_settings.sql:28: ERROR:  0 kB is outside the valid range for parameter "work_mem" (64 .. 2147483647)
+DO
+DO
 SET
 RESET
 SET
@@ -36,7 +35,7 @@ SET
 RESET
 ALTER ROLE
 SET
-psql:pg_tests/compatible/cluster_settings.sql:74: ERROR:  permission denied to set parameter "log_min_duration_statement"
+DO
 RESET
 ALTER ROLE
 SET

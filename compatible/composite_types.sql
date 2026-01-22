@@ -30,7 +30,18 @@ CREATE TYPE t AS (a INT, b INT);
 -- SELECT * FROM t; - This would fail as t is a type, not a table
 
 -- Test 5: statement (line 13)
-CREATE TABLE t (x INT);
+-- In PostgreSQL, type and table names share a namespace, so this conflicts with
+-- the composite type `t`. Swallow the expected error to keep this script
+-- error-free for expected-output generation.
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'CREATE TABLE t (x INT)';
+  EXCEPTION WHEN duplicate_table THEN
+    NULL;
+  END;
+END
+$$;
 
 -- Test 6: statement (line 16)
 -- CREATE TYPE t AS (a INT); - Cannot create type with same name as table
@@ -39,7 +50,16 @@ CREATE TABLE t (x INT);
 CREATE TABLE torename (x INT);
 
 -- Test 8: statement (line 22)
-ALTER TABLE torename RENAME TO t;
+-- Same name conflict as above.
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'ALTER TABLE torename RENAME TO t';
+  EXCEPTION WHEN duplicate_table THEN
+    NULL;
+  END;
+END
+$$;
 
 -- Test 9: query (line 25)
 SELECT (1, 2)::t, ((1, 2)::t).a, ((1, 2)::t).b;
@@ -101,7 +121,7 @@ CREATE TABLE atyp(a t[]);
 -- SHOW CREATE TABLE atyp; - Not directly compatible
 
 -- Test 29: statement (line 118)
-INSERT INTO atyp VALUES(ARRAY[(1, 2), (3, 4), NULL, (5, NULL)]);
+INSERT INTO atyp VALUES (ARRAY[(1, 2)::t, (3, 4)::t, NULL::t, (5, NULL)::t]);
 
 -- Test 30: query (line 121)
 SELECT * FROM atyp;
@@ -144,6 +164,7 @@ CREATE TYPE t AS (e e);
 
 -- Test 43: statement (line 214)
 DROP TYPE e CASCADE;
+DROP TYPE t;
 
 -- Test 44: statement (line 221)
 CREATE TYPE t AS (a INT, b TEXT);

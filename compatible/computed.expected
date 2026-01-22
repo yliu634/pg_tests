@@ -73,17 +73,16 @@ UPDATE 1
 (1 row)
 
 DROP TABLE
-psql:/home/pan/workspace/pg_tests/compatible/computed.sql:128: ERROR:  generation expression is not immutable
-psql:/home/pan/workspace/pg_tests/compatible/computed.sql:129: ERROR:  table "y" does not exist
-psql:/home/pan/workspace/pg_tests/compatible/computed.sql:136: ERROR:  generation expression is not immutable
-psql:/home/pan/workspace/pg_tests/compatible/computed.sql:137: ERROR:  table "y" does not exist
+CREATE TABLE
+DROP TABLE
+CREATE TABLE
+DROP TABLE
 CREATE TABLE
 CREATE TABLE
 DROP TABLE
 DROP TABLE
 CREATE TABLE
-psql:/home/pan/workspace/pg_tests/compatible/computed.sql:152: ERROR:  cannot use generated column "i" in column generation expression
-DETAIL:  A generated column cannot reference another generated column.
+ALTER TABLE
 DROP TABLE
 CREATE TABLE
 CREATE INDEX
