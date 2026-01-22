@@ -1,0 +1,166 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+CREATE SCHEMA
+CREATE FUNCTION
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+ANALYZE
+UPDATE 1
+  status  | num_checks 
+----------+------------
+ complete |          2
+(1 row)
+
+ANALYZE
+UPDATE 1
+  status  
+----------
+ complete
+(1 row)
+
+ANALYZE
+UPDATE 1
+  status  | num_checks 
+----------+------------
+ complete |          2
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+INSERT 0 3
+ANALYZE
+UPDATE 1
+  status  | num_checks 
+----------+------------
+ complete |          7
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 3
+ANALYZE
+UPDATE 1
+  status  | num_checks 
+----------+------------
+ complete |          2
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 1
+ANALYZE
+UPDATE 1
+  status  | num_checks 
+----------+------------
+ complete |          2
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+ANALYZE
+UPDATE 1
+  status  | num_checks 
+----------+------------
+ complete |          4
+(1 row)
+
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 2
+         datums_to_bytes          
+----------------------------------
+ \x2768656c6c6f272027776f726c6427
+(1 row)
+
+ANALYZE
+UPDATE 1
+  status  | num_checks 
+----------+------------
+ complete |          2
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 2
+           datums_to_bytes            
+--------------------------------------
+ \x2773656172636827202620277465726d27
+(1 row)
+
+ANALYZE
+UPDATE 1
+  status  | num_checks 
+----------+------------
+ complete |          2
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 2
+ datums_to_bytes  
+------------------
+ \x7b312c322c337d
+(1 row)
+
+ANALYZE
+UPDATE 1
+  status  | num_checks 
+----------+------------
+ complete |          2
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 2
+         datums_to_bytes          
+----------------------------------
+ \x27776f726431272027776f72643227
+(1 row)
+
+  datums_to_bytes   
+--------------------
+ \x2773656172636827
+(1 row)
+
+ datums_to_bytes 
+-----------------
+ \x7b312c327d
+(1 row)
+
+ANALYZE
+UPDATE 1
+  status  | num_checks 
+----------+------------
+ complete |          2
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+RESET
