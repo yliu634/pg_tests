@@ -1,0 +1,772 @@
+SET
+CREATE SCHEMA
+CREATE FUNCTION
+BEGIN
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+ALTER TABLE
+INSERT 0 1
+COMMIT
+  constraint_name   | constraint_type | table_schema | table_name |                     definition                     
+--------------------+-----------------+--------------+------------+----------------------------------------------------
+ child_pkey         | PRIMARY KEY     | test         | child      | PRIMARY KEY (id)
+ fk_child_parent_id | FOREIGN KEY     | test         | child      | FOREIGN KEY (parent_id) REFERENCES test.parent(id)
+(2 rows)
+
+ALTER TABLE
+  constraint_name   | constraint_type | table_schema | table_name |                     definition                     
+--------------------+-----------------+--------------+------------+----------------------------------------------------
+ child_pkey         | PRIMARY KEY     | test         | child      | PRIMARY KEY (id)
+ fk_child_parent_id | FOREIGN KEY     | test         | child      | FOREIGN KEY (parent_id) REFERENCES test.parent(id)
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+BEGIN
+ALTER TABLE
+INSERT 0 1
+COMMIT
+  constraint_name   | constraint_type | table_schema | table_name |                     definition                     
+--------------------+-----------------+--------------+------------+----------------------------------------------------
+ child_pkey         | PRIMARY KEY     | test         | child      | PRIMARY KEY (id)
+ fk_child_parent_id | FOREIGN KEY     | test         | child      | FOREIGN KEY (parent_id) REFERENCES test.parent(id)
+(2 rows)
+
+DROP TABLE
+BEGIN
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+COMMIT
+DROP TABLE
+BEGIN
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 1
+ALTER TABLE
+COMMIT
+BEGIN
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+ALTER TABLE
+COMMIT
+BEGIN
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+COMMIT
+SELECT 3
+  item  | quantity 
+--------+----------
+ cups   |       10
+ plates |       30
+ forks  |       15
+(3 rows)
+
+BEGIN
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+psql:pg_tests/compatible/schema_change_in_txn.sql:213: ERROR:  syntax error at or near "."
+LINE 1: ALTER TABLE test.chill RENAME TO test.child;
+                                             ^
+psql:pg_tests/compatible/schema_change_in_txn.sql:216: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/schema_change_in_txn.sql:219: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/schema_change_in_txn.sql:222: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/schema_change_in_txn.sql:225: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/schema_change_in_txn.sql:228: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/schema_change_in_txn.sql:231: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/schema_change_in_txn.sql:237: ERROR:  relation "test.kv" does not exist
+LINE 1: SELECT * FROM test.kv;
+                      ^
+BEGIN
+psql:pg_tests/compatible/schema_change_in_txn.sql:243: ERROR:  relation "test.kv" does not exist
+psql:pg_tests/compatible/schema_change_in_txn.sql:246: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/schema_change_in_txn.sql:252: ERROR:  relation "test.kv" does not exist
+LINE 1: SELECT * FROM test.kv;
+                      ^
+BEGIN
+psql:pg_tests/compatible/schema_change_in_txn.sql:258: ERROR:  column "id" referenced in foreign key constraint does not exist
+psql:pg_tests/compatible/schema_change_in_txn.sql:261: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/schema_change_in_txn.sql:264: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/schema_change_in_txn.sql:267: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE b;
+             ^
+psql:pg_tests/compatible/schema_change_in_txn.sql:270: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+BEGIN
+SELECT 3
+  item  | quantity 
+--------+----------
+ cups   |       10
+ plates |       30
+ forks  |       15
+(3 rows)
+
+CREATE INDEX
+ALTER TABLE
+psql:pg_tests/compatible/schema_change_in_txn.sql:291: ERROR:  relation "test.stock" does not exist
+LINE 1: SELECT * FROM test.stock;
+                      ^
+psql:pg_tests/compatible/schema_change_in_txn.sql:294: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+BEGIN
+psql:pg_tests/compatible/schema_change_in_txn.sql:303: ERROR:  relation "warehouse" does not exist
+LINE 1: INSERT INTO warehouse VALUES ('cups', 10), ('plates', 30), (...
+                    ^
+psql:pg_tests/compatible/schema_change_in_txn.sql:306: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/schema_change_in_txn.sql:309: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/schema_change_in_txn.sql:312: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/schema_change_in_txn.sql:315: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/schema_change_in_txn.sql:318: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/schema_change_in_txn.sql:321: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/schema_change_in_txn.sql:324: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+BEGIN
+SELECT 3
+  item  | quantity 
+--------+----------
+ cups   |       10
+ plates |       30
+ forks  |       15
+(3 rows)
+
+DROP TABLE
+SELECT 3
+  item  | quantity 
+--------+----------
+ plates |       10
+ knives |       30
+ spoons |       12
+(3 rows)
+
+  item  | quantity 
+--------+----------
+ plates |       10
+ knives |       30
+ spoons |       12
+(3 rows)
+
+COMMIT
+BEGIN
+SELECT 3
+  item  | quantity 
+--------+----------
+ cups   |       10
+ plates |       30
+ forks  |       15
+(3 rows)
+
+ALTER TABLE
+SELECT 3
+  item  | quantity 
+--------+----------
+ spoons |       11
+ plates |       34
+ knives |       22
+(3 rows)
+
+  item  | quantity 
+--------+----------
+ spoons |       11
+ plates |       34
+ knives |       22
+(3 rows)
+
+  item  | quantity 
+--------+----------
+ cups   |       10
+ plates |       30
+ forks  |       15
+(3 rows)
+
+COMMIT
+BEGIN
+SELECT 3
+  item  | quantity 
+--------+----------
+ cups   |       10
+ plates |       30
+ forks  |       10
+(3 rows)
+
+psql:pg_tests/compatible/schema_change_in_txn.sql:390: ERROR:  could not create unique index "bar"
+DETAIL:  Key (quantity)=(10) is duplicated.
+ROLLBACK
+psql:pg_tests/compatible/schema_change_in_txn.sql:396: ERROR:  relation "shopping" does not exist
+LINE 1: SELECT * FROM shopping;
+                      ^
+BEGIN
+SELECT 3
+  item  | quantity 
+--------+----------
+ cups   |       10
+ plates |       30
+ forks  |       10
+(3 rows)
+
+psql:pg_tests/compatible/schema_change_in_txn.sql:410: ERROR:  column "q" of relation "shopping" contains null values
+ROLLBACK
+psql:pg_tests/compatible/schema_change_in_txn.sql:417: ERROR:  relation "shopping" does not exist
+LINE 1: SELECT * FROM shopping;
+                      ^
+BEGIN
+SELECT 3
+  item  | quantity 
+--------+----------
+ cups   |       10
+ plates |       30
+ forks  |       10
+(3 rows)
+
+psql:pg_tests/compatible/schema_change_in_txn.sql:431: ERROR:  division by zero
+ROLLBACK
+BEGIN
+SELECT 3
+  item  | quantity 
+--------+----------
+ cups   |       10
+ plates |       30
+ forks  |       15
+(3 rows)
+
+ALTER TABLE
+psql:pg_tests/compatible/schema_change_in_txn.sql:452: ERROR:  relation "test.cutlery" does not exist
+LINE 1: SELECT * FROM test.cutlery ORDER BY 1,2,3,4;
+                      ^
+ROLLBACK
+BEGIN
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+COMMIT
+ k | v 
+---+---
+ a | b
+ e | f
+(2 rows)
+
+BEGIN
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+ALTER TABLE
+ k | v | d  
+---+---+----
+ a | b | 23
+(1 row)
+
+COMMIT
+BEGIN
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+ALTER TABLE
+ALTER TABLE
+ k | v 
+---+---
+ a | b
+(1 row)
+
+COMMIT
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+BEGIN
+TRUNCATE TABLE
+INSERT 0 1
+ k | v 
+---+---
+ a | b
+(1 row)
+
+COMMIT
+ k | v 
+---+---
+ a | b
+(1 row)
+
+BEGIN
+TRUNCATE TABLE
+INSERT 0 1
+COMMIT
+BEGIN
+TRUNCATE TABLE
+INSERT 0 1
+COMMIT
+INSERT 0 2
+psql:pg_tests/compatible/schema_change_in_txn.sql:595: ERROR:  syntax error at or near "skip_on_retry"
+LINE 1: skip_on_retry;
+        ^
+BEGIN
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+psql:pg_tests/compatible/schema_change_in_txn.sql:625: ERROR:  could not create unique index "i_idx"
+DETAIL:  Key (i)=(5) is duplicated.
+psql:pg_tests/compatible/schema_change_in_txn.sql:628: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/schema_change_in_txn.sql:631: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/schema_change_in_txn.sql:637: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW COLUMNS FROM customers;
+                     ^
+BEGIN
+ALTER TABLE
+psql:pg_tests/compatible/schema_change_in_txn.sql:646: ERROR:  syntax error at or near "AS"
+LINE 1: ALTER TABLE customers ADD j INT AS (i-1) STORED;
+                                        ^
+psql:pg_tests/compatible/schema_change_in_txn.sql:649: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+ k 
+---
+ b
+ z
+ x
+(3 rows)
+
+BEGIN
+psql:pg_tests/compatible/schema_change_in_txn.sql:661: ERROR:  relation "orders2" does not exist
+ROLLBACK
+BEGIN
+psql:pg_tests/compatible/schema_change_in_txn.sql:670: ERROR:  relation "orders2" does not exist
+psql:pg_tests/compatible/schema_change_in_txn.sql:673: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/schema_change_in_txn.sql:679: ERROR:  table "products" does not exist
+BEGIN
+psql:pg_tests/compatible/schema_change_in_txn.sql:685: ERROR:  relation "orders2" does not exist
+psql:pg_tests/compatible/schema_change_in_txn.sql:688: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+BEGIN
+psql:pg_tests/compatible/schema_change_in_txn.sql:697: ERROR:  relation "orders2" does not exist
+psql:pg_tests/compatible/schema_change_in_txn.sql:700: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+BEGIN
+psql:pg_tests/compatible/schema_change_in_txn.sql:709: ERROR:  relation "orders2" does not exist
+psql:pg_tests/compatible/schema_change_in_txn.sql:712: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+BEGIN
+psql:pg_tests/compatible/schema_change_in_txn.sql:721: ERROR:  relation "orders2" does not exist
+psql:pg_tests/compatible/schema_change_in_txn.sql:724: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+CREATE TABLE
+INSERT 0 1
+BEGIN
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+COMMIT
+ constraint_name  | constraint_type | table_schema | table_name  |        definition         
+------------------+-----------------+--------------+-------------+---------------------------
+ c_0              | CHECK           | public       | check_table | CHECK ((c > 0)) NOT VALID
+ check_table_pkey | PRIMARY KEY     | public       | check_table | PRIMARY KEY (k)
+ d_0              | CHECK           | public       | check_table | CHECK ((d > 0))
+(3 rows)
+
+BEGIN
+ALTER TABLE
+psql:pg_tests/compatible/schema_change_in_txn.sql:763: ERROR:  check constraint "e_0" of relation "check_table" is violated by some row
+ROLLBACK
+BEGIN
+psql:pg_tests/compatible/schema_change_in_txn.sql:772: ERROR:  column "e" does not exist
+ROLLBACK
+ constraint_name  | constraint_type | table_schema | table_name  |        definition         
+------------------+-----------------+--------------+-------------+---------------------------
+ c_0              | CHECK           | public       | check_table | CHECK ((c > 0)) NOT VALID
+ check_table_pkey | PRIMARY KEY     | public       | check_table | PRIMARY KEY (k)
+ d_0              | CHECK           | public       | check_table | CHECK ((d > 0))
+(3 rows)
+
+psql:pg_tests/compatible/schema_change_in_txn.sql:781: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW COLUMNS FROM check_table;
+                     ^
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+BEGIN
+psql:pg_tests/compatible/schema_change_in_txn.sql:796: ERROR:  could not create unique index "idx"
+DETAIL:  Key (a)=(0) is duplicated.
+psql:pg_tests/compatible/schema_change_in_txn.sql:799: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/schema_change_in_txn.sql:805: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW CONSTRAINTS FROM check_table;
+                         ^
+BEGIN
+ALTER TABLE
+psql:pg_tests/compatible/schema_change_in_txn.sql:814: ERROR:  check constraint "check_table_a_check1" of relation "check_table" is violated by some row
+ROLLBACK
+psql:pg_tests/compatible/schema_change_in_txn.sql:820: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW CONSTRAINTS FROM check_table;
+                         ^
+DROP TABLE
+CREATE TABLE
+BEGIN
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+COMMIT
+BEGIN
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+COMMIT
+BEGIN
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+COMMIT
+DROP TABLE
+CREATE TABLE
+BEGIN
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+COMMIT
+BEGIN
+psql:pg_tests/compatible/schema_change_in_txn.sql:898: ERROR:  column "f" of relation "check_table" already exists
+psql:pg_tests/compatible/schema_change_in_txn.sql:902: ERROR:  syntax error at or near "RENAME"
+LINE 2:                         RENAME CONSTRAINT f_0 to f_1;
+                                ^
+ROLLBACK
+DROP TABLE
+BEGIN
+CREATE TABLE
+INSERT 0 1
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+COMMIT
+ constraint_name | constraint_type | table_schema | table_name  |   definition    
+-----------------+-----------------+--------------+-------------+-----------------
+ ck_a            | CHECK           | public       | check_table | CHECK ((a = 0))
+ ck_b            | CHECK           | public       | check_table | CHECK ((b > 0))
+ ck_c            | CHECK           | public       | check_table | CHECK ((c > b))
+(3 rows)
+
+INSERT 0 1
+UPDATE 0
+DROP TABLE
+BEGIN
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/schema_change_in_txn.sql:956: ERROR:  check constraint "ck" of relation "check_table" is violated by some row
+ROLLBACK
+BEGIN
+CREATE TABLE
+INSERT 0 1
+ALTER TABLE
+psql:pg_tests/compatible/schema_change_in_txn.sql:974: ERROR:  check constraint "ck" of relation "check_table" is violated by some row
+ROLLBACK
+BEGIN
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/schema_change_in_txn.sql:989: ERROR:  check constraint "ck" of relation "check_table" is violated by some row
+ROLLBACK
+CREATE TABLE
+INSERT 0 1
+BEGIN
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+UPDATE 2
+COMMIT
+DROP TABLE
+CREATE TABLE
+BEGIN
+ALTER TABLE
+ALTER TABLE
+psql:pg_tests/compatible/schema_change_in_txn.sql:1034: ERROR:  new row for relation "t" violates check constraint "t_check"
+DETAIL:  Failing row contains (11, 10).
+ROLLBACK
+INSERT 0 1
+BEGIN
+ALTER TABLE
+ALTER TABLE
+psql:pg_tests/compatible/schema_change_in_txn.sql:1052: ERROR:  new row for relation "t" violates check constraint "t_check"
+DETAIL:  Failing row contains (12, 10).
+ROLLBACK
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+BEGIN
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+UPDATE 2
+COMMIT
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+BEGIN
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+UPDATE 2
+COMMIT
+DROP TABLE
+CREATE TABLE
+BEGIN
+ALTER TABLE
+ALTER TABLE
+psql:pg_tests/compatible/schema_change_in_txn.sql:1127: ERROR:  new row for relation "t" violates check constraint "t_check"
+DETAIL:  Failing row contains (11, 10).
+ROLLBACK
+INSERT 0 1
+BEGIN
+ALTER TABLE
+psql:pg_tests/compatible/schema_change_in_txn.sql:1142: ERROR:  check constraint "t_check" of relation "t" is violated by some row
+psql:pg_tests/compatible/schema_change_in_txn.sql:1145: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+BEGIN
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+UPDATE 2
+COMMIT
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+BEGIN
+ALTER TABLE
+ALTER TABLE
+COMMIT
+BEGIN
+ALTER TABLE
+psql:pg_tests/compatible/schema_change_in_txn.sql:1205: ERROR:  column "c" of relation "t" contains null values
+ROLLBACK
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+BEGIN
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+COMMIT
+DROP TABLE
+psql:pg_tests/compatible/schema_change_in_txn.sql:1238: ERROR:  syntax error at or near "INDEX"
+LINE 1: CREATE TABLE x (a INT PRIMARY KEY, b INT, UNIQUE INDEX (b), ...
+                                                         ^
+psql:pg_tests/compatible/schema_change_in_txn.sql:1241: ERROR:  syntax error at or near "("
+LINE 1: CREATE TABLE y (a INT PRIMARY KEY, b INT, INDEX (b));
+                                                        ^
+psql:pg_tests/compatible/schema_change_in_txn.sql:1244: ERROR:  relation "x" does not exist
+LINE 1: INSERT INTO x VALUES (1, 1, 1), (2, 2, 1);
+                    ^
+psql:pg_tests/compatible/schema_change_in_txn.sql:1247: ERROR:  relation "y" does not exist
+LINE 1: INSERT INTO y VALUES (1, 1), (2, 1);
+                    ^
+psql:pg_tests/compatible/schema_change_in_txn.sql:1250: ERROR:  relation "y" does not exist
+BEGIN
+psql:pg_tests/compatible/schema_change_in_txn.sql:1256: ERROR:  index "y_b_idx" does not exist
+psql:pg_tests/compatible/schema_change_in_txn.sql:1259: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+ constraint_name | constraint_type | table_schema | table_name | definition 
+-----------------+-----------------+--------------+------------+------------
+(0 rows)
+
+psql:pg_tests/compatible/schema_change_in_txn.sql:1268: ERROR:  relation "y" does not exist
+BEGIN
+psql:pg_tests/compatible/schema_change_in_txn.sql:1274: ERROR:  index "x_b_key" does not exist
+psql:pg_tests/compatible/schema_change_in_txn.sql:1277: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/schema_change_in_txn.sql:1283: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW CONSTRAINTS FROM x;
+                         ^
+psql:pg_tests/compatible/schema_change_in_txn.sql:1286: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW CONSTRAINTS FROM y;
+                         ^
+psql:pg_tests/compatible/schema_change_in_txn.sql:1289: ERROR:  table "x" does not exist
+CREATE TABLE
+ALTER TABLE
+BEGIN
+ALTER TABLE
+INSERT 0 1
+ROLLBACK
+ALTER TABLE
+ALTER TABLE
+BEGIN
+ALTER TABLE
+INSERT 0 1
+COMMIT
+DROP TABLE
+CREATE TABLE
+ALTER TABLE
+BEGIN
+ALTER TABLE
+INSERT 0 1
+ROLLBACK
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+BEGIN
+ALTER TABLE
+INSERT 0 1
+ROLLBACK
+ALTER TABLE
+DROP TABLE
+BEGIN
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+COMMIT
+BEGIN
+DROP TABLE
+DROP INDEX
+COMMIT
+CREATE TABLE
+INSERT 0 1
+CREATE SEQUENCE
+ALTER TABLE
+BEGIN
+psql:pg_tests/compatible/schema_change_in_txn.sql:1418: ERROR:  column "y" of relation "t42508" already exists
+ROLLBACK
+BEGIN
+SAVEPOINT
+CREATE TABLE
+ROLLBACK
+psql:pg_tests/compatible/schema_change_in_txn.sql:1427: ERROR:  relation "t" does not exist
+LINE 1: select * from t;
+                      ^
+ROLLBACK
+BEGIN
+SAVEPOINT
+psql:pg_tests/compatible/schema_change_in_txn.sql:1435: ERROR:  CREATE DATABASE cannot run inside a transaction block
+ROLLBACK
+psql:pg_tests/compatible/schema_change_in_txn.sql:1438: ERROR:  relation "d46224.t" does not exist
+LINE 1: select * from d46224.t;
+                      ^
+ROLLBACK
+BEGIN
+CREATE TABLE
+ALTER TABLE
+SAVEPOINT
+psql:pg_tests/compatible/schema_change_in_txn.sql:1464: ERROR:  insert or update on table "self_ref_fk" violates foreign key constraint "fk_self_ref_fk__parent_id"
+DETAIL:  Key (parent_id)=(1) is not present in table "self_ref_fk".
+ROLLBACK
+COMMIT
+psql:pg_tests/compatible/schema_change_in_txn.sql:1475: ERROR:  insert or update on table "self_ref_fk" violates foreign key constraint "fk_self_ref_fk__parent_id"
+DETAIL:  Key (parent_id)=(1) is not present in table "self_ref_fk".
+INSERT 0 3
+ id | parent_id 
+----+-----------
+  1 |          
+  2 |         1
+  3 |         2
+(3 rows)
+
+DELETE 1
+ id | parent_id 
+----+-----------
+(0 rows)
+
+DROP TABLE
+BEGIN
+CREATE TABLE
+INSERT 0 1
+ALTER TABLE
+COMMIT
+ constraint_name | constraint_type | table_schema | table_name | definition 
+-----------------+-----------------+--------------+------------+------------
+(0 rows)
+
+DROP TABLE
+BEGIN
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/schema_change_in_txn.sql:1525: ERROR:  column "a" of relation "t_52501_invalid" contains null values
+ROLLBACK
+CREATE TABLE
+BEGIN
+CREATE TABLE
+ALTER TABLE
+COMMIT
+  constraint_name   | constraint_type | table_schema | table_name  |                      definition                      
+--------------------+-----------------+--------------+-------------+------------------------------------------------------
+ child_54265_a_fkey | FOREIGN KEY     | public       | child_54265 | FOREIGN KEY (a) REFERENCES parent_54265(a) NOT VALID
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+BEGIN
+ALTER TABLE
+psql:pg_tests/compatible/schema_change_in_txn.sql:1564: ERROR:  cannot drop index idx because other objects depend on it
+DETAIL:  constraint t2_57592_a_fkey on table t2_57592 depends on index idx
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ROLLBACK
+CREATE DATABASE
+psql:pg_tests/compatible/schema_change_in_txn.sql:1573: ERROR:  syntax error at or near "USE"
+LINE 1: USE db_87672;
+        ^
+CREATE SCHEMA
+BEGIN
+CREATE SCHEMA
+psql:pg_tests/compatible/schema_change_in_txn.sql:1585: ERROR:  relation "crdb_internal.tables" does not exist
+LINE 1: SELECT * FROM crdb_internal.tables;
+                      ^
+psql:pg_tests/compatible/schema_change_in_txn.sql:1588: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+BEGIN
+psql:pg_tests/compatible/schema_change_in_txn.sql:1596: ERROR:  relation "t2" does not exist
+psql:pg_tests/compatible/schema_change_in_txn.sql:1597: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/schema_change_in_txn.sql:1601: ERROR:  table "t1" does not exist
+BEGIN
+psql:pg_tests/compatible/schema_change_in_txn.sql:1606: ERROR:  relation "t1" does not exist
+psql:pg_tests/compatible/schema_change_in_txn.sql:1607: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/schema_change_in_txn.sql:1611: ERROR:  table "t2" does not exist
+psql:pg_tests/compatible/schema_change_in_txn.sql:1614: ERROR:  table "t1" does not exist
+BEGIN
+ ?column? 
+----------
+        1
+(1 row)
+
+psql:pg_tests/compatible/schema_change_in_txn.sql:1623: ERROR:  syntax error at or near "skipif"
+LINE 1: skipif config weak-iso-level-configs;
+        ^
+psql:pg_tests/compatible/schema_change_in_txn.sql:1626: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/schema_change_in_txn.sql:1629: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/schema_change_in_txn.sql:1635: ERROR:  table "t1" does not exist
+CREATE TABLE
+CREATE TABLE
+SET
+BEGIN
+DROP TABLE
+DROP TABLE
+psql:pg_tests/compatible/schema_change_in_txn.sql:1662: ERROR:  invalid value for parameter "default_transaction_isolation": "$iso"
+HINT:  Available values: serializable, repeatable read, read committed, read uncommitted.
+psql:pg_tests/compatible/schema_change_in_txn.sql:1665: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/schema_change_in_txn.sql:1668: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/schema_change_in_txn.sql:1671: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/schema_change_in_txn.sql:1674: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/schema_change_in_txn.sql:1677: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/schema_change_in_txn.sql:1680: ERROR:  current transaction is aborted, commands ignored until end of transaction block

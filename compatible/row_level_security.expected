@@ -1,0 +1,2581 @@
+SET
+DO
+DROP DATABASE
+DROP DATABASE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+SET
+CREATE FUNCTION
+CREATE TABLE
+CREATE POLICY
+ALTER POLICY
+CREATE POLICY
+DROP POLICY
+DROP POLICY
+psql:pg_tests/compatible/row_level_security.sql:163: ERROR:  policy "notthere" for table "sanity1" does not exist
+DROP POLICY
+DROP POLICY
+CREATE POLICY
+DROP TABLE
+CREATE TABLE
+BEGIN
+CREATE POLICY
+DROP POLICY
+CREATE POLICY
+COMMIT
+BEGIN
+DROP POLICY
+CREATE POLICY
+COMMIT
+DROP TABLE
+CREATE TABLE
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE ROLE
+psql:pg_tests/compatible/row_level_security.sql:258: WARNING:  ignoring specified roles other than PUBLIC
+HINT:  All roles are members of the PUBLIC role.
+CREATE POLICY
+ schemaname |   tablename    | policyname | permissive  |  roles   |  cmd   | qual | with_check 
+------------+----------------+------------+-------------+----------+--------+------+------------
+ public     | multi_pol_tab1 | policy8    | PERMISSIVE  | {public} | ALL    |      | 
+ public     | multi_pol_tab1 | policy7    | PERMISSIVE  | {public} | SELECT |      | 
+ public     | multi_pol_tab1 | policy6    | PERMISSIVE  | {public} | DELETE |      | 
+ public     | multi_pol_tab1 | policy5    | PERMISSIVE  | {public} | UPDATE |      | 
+ public     | multi_pol_tab1 | policy4    | PERMISSIVE  | {public} | INSERT |      | 
+ public     | multi_pol_tab1 | policy3    | PERMISSIVE  | {public} | ALL    |      | 
+ public     | multi_pol_tab1 | policy2    | RESTRICTIVE | {public} | ALL    |      | 
+ public     | multi_pol_tab1 | policy1    | PERMISSIVE  | {public} | ALL    |      | 
+(8 rows)
+
+  name   |  cmd   |    type     | roles  | using_expr | with_check_expr 
+---------+--------+-------------+--------+------------+-----------------
+ policy1 | ALL    | PERMISSIVE  | public |            | 
+ policy2 | ALL    | RESTRICTIVE | public |            | 
+ policy3 | ALL    | PERMISSIVE  | public |            | 
+ policy4 | INSERT | PERMISSIVE  | public |            | 
+ policy5 | UPDATE | PERMISSIVE  | public |            | 
+ policy6 | DELETE | PERMISSIVE  | public |            | 
+ policy7 | SELECT | PERMISSIVE  | public |            | 
+ policy8 | ALL    | PERMISSIVE  | public |            | 
+(8 rows)
+
+CREATE DATABASE
+You are now connected to database "roachdb" as user "postgres".
+SET
+SET
+ schemaname | tablename | policyname | permissive | roles | cmd | qual | with_check 
+------------+-----------+------------+------------+-------+-----+------+------------
+(0 rows)
+
+You are now connected to database "crdb_tests_row_level_security" as user "postgres".
+SET
+SET
+DROP DATABASE
+CREATE TABLE
+CREATE POLICY
+CREATE POLICY
+CREATE TABLE
+CREATE POLICY
+CREATE POLICY
+ schemaname |   tablename    | policyname | permissive |  roles   | cmd | qual | with_check 
+------------+----------------+------------+------------+----------+-----+------+------------
+ public     | multi_pol_tab2 | policy9    | PERMISSIVE | {public} | ALL |      | 
+ public     | multi_pol_tab2 | policy10   | PERMISSIVE | {public} | ALL |      | 
+(2 rows)
+
+ schemaname |   tablename    | policyname | permissive |  roles   | cmd | qual | with_check 
+------------+----------------+------------+------------+----------+-----+------+------------
+ public     | multi_pol_tab3 | policy11   | PERMISSIVE | {public} | ALL |      | 
+ public     | multi_pol_tab3 | policy12   | PERMISSIVE | {public} | ALL |      | 
+(2 rows)
+
+   name   | cmd |    type    | roles  | using_expr | with_check_expr 
+----------+-----+------------+--------+------------+-----------------
+ policy10 | ALL | PERMISSIVE | public |            | 
+ policy9  | ALL | PERMISSIVE | public |            | 
+(2 rows)
+
+   name   | cmd |    type    | roles  | using_expr | with_check_expr 
+----------+-----+------------+--------+------------+-----------------
+ policy11 | ALL | PERMISSIVE | public |            | 
+ policy12 | ALL | PERMISSIVE | public |            | 
+(2 rows)
+
+DROP POLICY
+DROP POLICY
+DROP POLICY
+DROP POLICY
+DROP POLICY
+DROP POLICY
+DROP POLICY
+DROP TABLE
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE ROLE
+CREATE ROLE
+CREATE POLICY
+DROP POLICY
+DROP ROLE
+DROP TABLE
+CREATE TABLE
+CREATE ROLE
+CREATE POLICY
+ALTER POLICY
+DROP TABLE
+DROP ROLE
+CREATE TABLE
+CREATE ROLE
+GRANT ROLE
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+ALTER TABLE
+SET
+SET
+ current_user | session_user 
+--------------+--------------
+ john         | testuser
+(1 row)
+
+CREATE POLICY
+ current_user | session_user 
+--------------+--------------
+ john         | testuser
+(1 row)
+
+RESET
+DROP TABLE
+REVOKE
+REVOKE
+REVOKE
+REVOKE
+REVOKE
+DROP ROLE
+DROP ROLE
+CREATE TYPE
+CREATE TABLE
+CREATE POLICY
+                                                                                                                                                                                                                                                 polwithcheck                                                                                                                                                                                                                                                  
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ {OPEXPR :opno 3516 :opfuncid 3508 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({COERCEVIAIO :arg {VAR :varno 1 :varattno 1 :vartype 25 :vartypmod -1 :varcollid 100 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location 35} :resulttype 25354 :resultcollid 0 :coerceformat 1 :location 37} {CONST :consttype 25354 :consttypmod -1 :constcollid 0 :constlen 4 :constbyval true :constisnull false :location 50 :constvalue 4 [ 14 99 0 0 0 0 0 0 ]}) :location 48}
+(1 row)
+
+          with_check_expr          
+-----------------------------------
+ ((c1)::greeting = 'hi'::greeting)
+(1 row)
+
+psql:pg_tests/compatible/row_level_security.sql:506: ERROR:  cannot drop type greeting because other objects depend on it
+DETAIL:  policy p1 on table z1 depends on type greeting
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+psql:pg_tests/compatible/row_level_security.sql:514: ERROR:  cannot drop type greeting because other objects depend on it
+DETAIL:  policy p1 on table z1 depends on type greeting
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+DROP POLICY
+DROP TYPE
+psql:pg_tests/compatible/row_level_security.sql:528: ERROR:  type "greeting" does not exist
+DROP TABLE
+CREATE SEQUENCE
+CREATE TABLE
+CREATE POLICY
+psql:pg_tests/compatible/row_level_security.sql:545: ERROR:  cannot drop sequence seq1 because other objects depend on it
+DETAIL:  policy p1 on table pws depends on sequence seq1
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+DROP POLICY
+DROP SEQUENCE
+DROP TABLE
+CREATE FUNCTION
+CREATE TABLE
+CREATE POLICY
+                                                                                                                                            polqual                                                                                                                                             
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ {FUNCEXPR :funcid 25372 :funcresulttype 16 :funcretset false :funcvariadic false :funcformat 0 :funccollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 23 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location 46}) :location 37}
+(1 row)
+
+  using_expr  
+--------------
+ is_valid(c1)
+(1 row)
+
+     qual     |  with_check  
+--------------+--------------
+ is_valid(c1) | is_valid(c1)
+(1 row)
+
+psql:pg_tests/compatible/row_level_security.sql:581: ERROR:  cannot drop function is_valid(integer) because other objects depend on it
+DETAIL:  policy pol1 on table funcref depends on function is_valid(integer)
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+DROP POLICY
+DROP FUNCTION
+DROP TABLE
+CREATE TABLE
+CREATE POLICY
+CREATE POLICY
+ALTER TABLE
+psql:pg_tests/compatible/row_level_security.sql:606: ERROR:  cannot drop column c1 of table colref because other objects depend on it
+DETAIL:  policy p1 on table colref depends on column c1 of table colref
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+psql:pg_tests/compatible/row_level_security.sql:614: ERROR:  unrecognized parameter "schema_locked"
+psql:pg_tests/compatible/row_level_security.sql:617: ERROR:  cannot drop column c1 of table colref because other objects depend on it
+DETAIL:  policy p1 on table colref depends on column c1 of table colref
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ALTER TABLE
+psql:pg_tests/compatible/row_level_security.sql:629: ERROR:  cannot alter type of a column used in a policy definition
+DETAIL:  policy p1 on table colref depends on column "c1"
+DROP POLICY
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+psql:pg_tests/compatible/row_level_security.sql:644: ERROR:  cannot drop column c2 of table colref because other objects depend on it
+DETAIL:  policy p2 on table colref depends on column c2 of table colref
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+psql:pg_tests/compatible/row_level_security.sql:652: ERROR:  unrecognized parameter "schema_locked"
+psql:pg_tests/compatible/row_level_security.sql:655: ERROR:  cannot drop column c2 of table colref because other objects depend on it
+DETAIL:  policy p2 on table colref depends on column c2 of table colref
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ALTER TABLE
+psql:pg_tests/compatible/row_level_security.sql:666: ERROR:  cannot alter type of a column used in a policy definition
+DETAIL:  policy p2 on table colref depends on column "c2"
+DROP POLICY
+ALTER TABLE
+ALTER TABLE
+DROP TABLE
+CREATE FUNCTION
+CREATE TABLE
+CREATE POLICY
+psql:pg_tests/compatible/row_level_security.sql:692: ERROR:  relation "system.descriptor" does not exist
+LINE 2: FROM system.descriptor
+             ^
+ALTER TABLE
+psql:pg_tests/compatible/row_level_security.sql:700: ERROR:  relation "system.descriptor" does not exist
+LINE 2: FROM system.descriptor
+             ^
+ f 
+---
+ t
+(1 row)
+
+DROP TABLE
+DROP FUNCTION
+CREATE TABLE
+CREATE TABLE
+CREATE POLICY
+psql:pg_tests/compatible/row_level_security.sql:721: ERROR:  policy "p1" for table "t1" already exists
+DROP TABLE
+DROP TABLE
+CREATE TYPE
+CREATE TABLE
+CREATE POLICY
+psql:pg_tests/compatible/row_level_security.sql:747: ERROR:  relation "crdb_internal.create_statements" does not exist
+LINE 1: select create_statement from crdb_internal.create_statements...
+                                     ^
+psql:pg_tests/compatible/row_level_security.sql:750: ERROR:  relation "crdb_internal.create_statements" does not exist
+LINE 1: select create_statement from crdb_internal.create_statements...
+                                     ^
+psql:pg_tests/compatible/row_level_security.sql:753: ERROR:  relation "crdb_internal.create_statements" does not exist
+LINE 1: select rls_statements from crdb_internal.create_statements w...
+                                   ^
+psql:pg_tests/compatible/row_level_security.sql:756: ERROR:  relation "crdb_internal.create_statements" does not exist
+LINE 1: select fk_statements from crdb_internal.create_statements wh...
+                                  ^
+DROP TABLE
+DROP TYPE
+CREATE TABLE
+CREATE ROLE
+CREATE TABLE
+INSERT 0 1
+GRANT
+ALTER TABLE
+SET
+CREATE POLICY
+CREATE POLICY
+ALTER TABLE
+INSERT 0 4
+psql:pg_tests/compatible/row_level_security.sql:798: ERROR:  new row violates row-level security policy for table "ins"
+psql:pg_tests/compatible/row_level_security.sql:801: ERROR:  new row violates row-level security policy for table "ins"
+psql:pg_tests/compatible/row_level_security.sql:804: ERROR:  new row violates row-level security policy for table "ins"
+ ?column? 
+----------
+ foo
+(1 row)
+
+INSERT 0 1
+ ?column? 
+----------
+        1
+(1 row)
+
+INSERT 0 1
+ k  
+----
+ 99
+(1 row)
+
+INSERT 0 1
+psql:pg_tests/compatible/row_level_security.sql:818: ERROR:  permission denied for schema public
+psql:pg_tests/compatible/row_level_security.sql:821: ERROR:  function insert_15(integer) does not exist
+LINE 1: SELECT insert_15(0);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/row_level_security.sql:824: ERROR:  could not find a function named "insert_15"
+ c1 
+----
+  2
+  4
+(2 rows)
+
+INSERT 0 2
+psql:pg_tests/compatible/row_level_security.sql:830: ERROR:  new row violates row-level security policy for table "ins"
+SET
+DROP TABLE
+DROP TABLE
+DROP ROLE
+CREATE TABLE
+psql:pg_tests/compatible/row_level_security.sql:851: ERROR:  unrecognized parameter "schema_locked"
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ relname | relrowsecurity | relforcerowsecurity 
+---------+----------------+---------------------
+ roaches | f              | f
+(1 row)
+
+ALTER TABLE
+ relname | relrowsecurity | relforcerowsecurity 
+---------+----------------+---------------------
+ roaches | f              | t
+(1 row)
+
+ALTER TABLE
+ relname | relrowsecurity | relforcerowsecurity 
+---------+----------------+---------------------
+ roaches | f              | f
+(1 row)
+
+ALTER TABLE
+ relname | relrowsecurity | relforcerowsecurity 
+---------+----------------+---------------------
+ roaches | t              | t
+(1 row)
+
+psql:pg_tests/compatible/row_level_security.sql:924: ERROR:  relation "crdb_internal.create_statements" does not exist
+LINE 1: select create_statement from crdb_internal.create_statements...
+                                     ^
+psql:pg_tests/compatible/row_level_security.sql:927: ERROR:  relation "crdb_internal.create_statements" does not exist
+LINE 1: select create_statement from crdb_internal.create_statements...
+                                     ^
+psql:pg_tests/compatible/row_level_security.sql:930: ERROR:  relation "crdb_internal.create_statements" does not exist
+LINE 1: ... rls_statements, fk_statements, create_nofks from crdb_inter...
+                                                             ^
+ALTER TABLE
+psql:pg_tests/compatible/row_level_security.sql:944: ERROR:  relation "crdb_internal.create_statements" does not exist
+LINE 1: select rls_statements from crdb_internal.create_statements w...
+                                   ^
+psql:pg_tests/compatible/row_level_security.sql:947: ERROR:  relation "crdb_internal.create_statements" does not exist
+LINE 1: select fk_statements from crdb_internal.create_statements wh...
+                                  ^
+DROP TABLE
+CREATE TYPE
+CREATE TABLE
+ALTER TABLE
+INSERT 0 5
+   team    | league 
+-----------+--------
+ jays      | AL
+ orioles   | AL
+ tigers    | AL
+ cardinals | NL
+ nationals | NL
+(5 rows)
+
+CREATE ROLE
+GRANT
+SET
+ team | league 
+------+--------
+(0 rows)
+
+SET
+CREATE FUNCTION
+CREATE SEQUENCE
+GRANT
+CREATE POLICY
+                        using_expr                         
+-----------------------------------------------------------
+ (is_valid(league) AND (nextval('seq1'::regclass) < 1000))
+(1 row)
+
+   team    | league 
+-----------+--------
+ jays      | AL
+ orioles   | AL
+ tigers    | AL
+ nationals | NL
+(4 rows)
+
+SET
+  team   | league 
+---------+--------
+ jays    | AL
+ orioles | AL
+ tigers  | AL
+(3 rows)
+
+  team   | league 
+---------+--------
+ jays    | AL
+ orioles | AL
+ tigers  | AL
+(3 rows)
+
+SET
+SET
+  team   | league 
+---------+--------
+ jays    | AL
+ orioles | AL
+ tigers  | AL
+(3 rows)
+
+  team   | league 
+---------+--------
+ jays    | AL
+ orioles | AL
+ tigers  | AL
+(3 rows)
+
+SET
+psql:pg_tests/compatible/row_level_security.sql:1032: ERROR:  role "admin" does not exist
+SET
+  team   | league 
+---------+--------
+ jays    | AL
+ orioles | AL
+ tigers  | AL
+(3 rows)
+
+SET
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+SET
+  team   | league 
+---------+--------
+ orioles | AL
+ tigers  | AL
+(2 rows)
+
+UPDATE 0
+  team   | league 
+---------+--------
+ jays    | AL
+ orioles | AL
+ tigers  | AL
+(3 rows)
+
+SET
+DROP POLICY
+CREATE POLICY
+SET
+UPDATE 1
+UPDATE 0
+SET
+   team    | league 
+-----------+--------
+ Jays      | AL
+ nationals | NL
+(2 rows)
+
+SET
+DELETE 0
+  team   | league 
+---------+--------
+ Jays    | AL
+ orioles | AL
+ tigers  | AL
+(3 rows)
+
+SET
+DROP POLICY
+CREATE POLICY
+SET
+DELETE 1
+  team   | league 
+---------+--------
+ Jays    | AL
+ orioles | AL
+(2 rows)
+
+SET
+DROP TABLE
+DROP SEQUENCE
+DROP FUNCTION
+CREATE DATABASE
+You are now connected to database "db2" as user "postgres".
+SET
+SET
+CREATE TYPE
+CREATE TABLE
+ALTER TABLE
+CREATE POLICY
+You are now connected to database "crdb_tests_row_level_security" as user "postgres".
+SET
+SET
+DROP DATABASE
+CREATE ROLE
+CREATE TABLE
+INSERT 0 3
+ALTER TABLE
+GRANT
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+SET
+ c1 
+----
+(0 rows)
+
+ my_sec_definer_inserter_function 
+----------------------------------
+ 
+(1 row)
+
+ my_sec_definer_updater_function 
+---------------------------------
+ 
+(1 row)
+
+ my_sec_definer_reader_function 
+--------------------------------
+                              0
+                              1
+                             10
+                              4
+(4 rows)
+
+ my_non_sec_definer_reader_function 
+------------------------------------
+(0 rows)
+
+psql:pg_tests/compatible/row_level_security.sql:1244: ERROR:  new row violates row-level security policy for table "sensitive_data_table"
+CONTEXT:  SQL function "my_non_sec_definer_inserter_function" statement 1
+ my_non_sec_definer_updater_function 
+-------------------------------------
+ 
+(1 row)
+
+ my_sec_definer_reader_function 
+--------------------------------
+                              0
+                              1
+                             10
+                              4
+(4 rows)
+
+SET
+CREATE POLICY
+SET
+ my_sec_definer_reader_function 
+--------------------------------
+                              0
+                              1
+                             10
+                              4
+(4 rows)
+
+ my_non_sec_definer_reader_function 
+------------------------------------
+                                  1
+                                 10
+                                  4
+(3 rows)
+
+SET
+CREATE POLICY
+CREATE POLICY
+SET
+psql:pg_tests/compatible/row_level_security.sql:1288: ERROR:  new row violates row-level security policy for table "sensitive_data_table"
+CONTEXT:  SQL function "my_non_sec_definer_inserter_function" statement 1
+ my_non_sec_definer_inserter_function 
+--------------------------------------
+ 
+(1 row)
+
+psql:pg_tests/compatible/row_level_security.sql:1294: ERROR:  new row violates row-level security policy for table "sensitive_data_table"
+CONTEXT:  SQL function "my_non_sec_definer_updater_function" statement 1
+ my_non_sec_definer_updater_function 
+-------------------------------------
+ 
+(1 row)
+
+ my_sec_definer_reader_function 
+--------------------------------
+                              0
+                              1
+                              4
+                             54
+                             20
+(5 rows)
+
+SET
+DROP FUNCTION
+DROP FUNCTION
+DROP TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE SEQUENCE
+GRANT
+ALTER TABLE
+SET
+CREATE POLICY
+psql:pg_tests/compatible/row_level_security.sql:1345: ERROR:  new row violates row-level security policy for table "alter_policy_table"
+psql:pg_tests/compatible/row_level_security.sql:1348: ERROR:  only WITH CHECK expression allowed for INSERT
+ALTER POLICY
+INSERT 0 3
+ c1 
+----
+(0 rows)
+
+ALTER POLICY
+CREATE POLICY
+ c1 
+----
+(0 rows)
+
+psql:pg_tests/compatible/row_level_security.sql:1369: ERROR:  policy "p_sel" for table "alter_policy_table" does not exist
+psql:pg_tests/compatible/row_level_security.sql:1372: ERROR:  only USING expression allowed for SELECT, DELETE
+ALTER POLICY
+ c1 
+----
+  2
+  3
+(2 rows)
+
+ALTER POLICY
+ name  |  cmd   |    type    |            roles            | using_expr |           with_check_expr           
+-------+--------+------------+-----------------------------+------------+-------------------------------------
+ p_sel | SELECT | PERMISSIVE | alter_policy_role,aux1,aux2 | (c1 <> 1)  | 
+ p_ins | INSERT | PERMISSIVE | public                      |            | (nextval('seq1'::regclass) < 10000)
+(2 rows)
+
+SET
+psql:pg_tests/compatible/row_level_security.sql:1400: ERROR:  cannot drop sequence seq1 because other objects depend on it
+DETAIL:  policy p_ins on table alter_policy_table depends on sequence seq1
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ALTER POLICY
+DROP SEQUENCE
+DROP TABLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE TABLE
+ALTER TABLE
+GRANT
+SET
+ALTER TABLE
+CREATE POLICY
+DROP POLICY
+CREATE POLICY
+ALTER POLICY
+ALTER POLICY
+ALTER POLICY
+SET
+psql:pg_tests/compatible/row_level_security.sql:1457: ERROR:  must be owner of table table_owner_test
+psql:pg_tests/compatible/row_level_security.sql:1460: ERROR:  must be owner of table table_owner_test
+psql:pg_tests/compatible/row_level_security.sql:1467: ERROR:  must be owner of table table_owner_test
+psql:pg_tests/compatible/row_level_security.sql:1471: ERROR:  must be owner of relation table_owner_test
+psql:pg_tests/compatible/row_level_security.sql:1474: ERROR:  must be owner of table table_owner_test
+psql:pg_tests/compatible/row_level_security.sql:1477: ERROR:  must be owner of table table_owner_test
+SET
+DROP TABLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+GRANT
+SET
+psql:pg_tests/compatible/row_level_security.sql:1501: ERROR:  permission denied for schema public
+LINE 1: CREATE TABLE force_check (c1 INT NOT NULL PRIMARY KEY, c2 TE...
+                     ^
+psql:pg_tests/compatible/row_level_security.sql:1504: ERROR:  relation "force_check" does not exist
+LINE 1: INSERT INTO force_check VALUES (10, 'ten'), (20, 'twenty'), ...
+                    ^
+psql:pg_tests/compatible/row_level_security.sql:1511: ERROR:  permission denied for schema public
+psql:pg_tests/compatible/row_level_security.sql:1518: ERROR:  permission denied for schema public
+psql:pg_tests/compatible/row_level_security.sql:1525: ERROR:  permission denied for schema public
+psql:pg_tests/compatible/row_level_security.sql:1532: ERROR:  permission denied for schema public
+psql:pg_tests/compatible/row_level_security.sql:1535: ERROR:  relation "force_check" does not exist
+psql:pg_tests/compatible/row_level_security.sql:1538: ERROR:  relation "force_check" does not exist
+psql:pg_tests/compatible/row_level_security.sql:1541: ERROR:  relation "force_check" does not exist
+LINE 1: SELECT c1, c2 FROM force_check ORDER BY c1;
+                           ^
+psql:pg_tests/compatible/row_level_security.sql:1544: ERROR:  relation "force_check" does not exist
+LINE 1: SELECT c1, c2 FROM force_check WHERE c1 > 0 ORDER BY c1;
+                           ^
+psql:pg_tests/compatible/row_level_security.sql:1547: ERROR:  relation "force_check" does not exist
+LINE 1: INSERT INTO force_check VALUES (30, 'thirty');
+                    ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:1553: ERROR:  relation "force_check" does not exist
+LINE 1: SELECT c1, c2 FROM force_check ORDER BY c1;
+                           ^
+psql:pg_tests/compatible/row_level_security.sql:1556: ERROR:  relation "force_check" does not exist
+LINE 1: INSERT INTO force_check VALUES (33, 'thirty-three');
+                    ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:1562: ERROR:  relation "force_check" does not exist
+psql:pg_tests/compatible/row_level_security.sql:1565: ERROR:  relation "force_check" does not exist
+LINE 1: INSERT INTO force_check VALUES (30, 'thirty');
+                    ^
+psql:pg_tests/compatible/row_level_security.sql:1568: ERROR:  relation "force_check" does not exist
+LINE 1: SELECT c1, c2 FROM force_check WHERE c1 > 0 ORDER BY c1;
+                           ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:1574: ERROR:  relation "force_check" does not exist
+psql:pg_tests/compatible/row_level_security.sql:1577: ERROR:  relation "force_check" does not exist
+SET
+psql:pg_tests/compatible/row_level_security.sql:1583: ERROR:  relation "force_check" does not exist
+LINE 1: SELECT c1, c2 FROM force_check WHERE c1 > 0 ORDER BY c1;
+                           ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:1589: ERROR:  relation "force_check" does not exist
+SET
+psql:pg_tests/compatible/row_level_security.sql:1595: ERROR:  relation "force_check" does not exist
+LINE 1: SELECT c1, c2 FROM force_check WHERE c1 > 0 ORDER BY c1;
+                           ^
+psql:pg_tests/compatible/row_level_security.sql:1598: ERROR:  relation "force_check" does not exist
+LINE 1: INSERT INTO force_check VALUES (34, 'thirty-four');
+                    ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:1604: ERROR:  relation "force_check" does not exist
+psql:pg_tests/compatible/row_level_security.sql:1607: ERROR:  relation "force_check" does not exist
+SET
+psql:pg_tests/compatible/row_level_security.sql:1613: ERROR:  function access_large_c2_as_session_user() does not exist
+LINE 1: select * from access_large_c2_as_session_user();
+                      ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/row_level_security.sql:1616: ERROR:  function access_large_c2_as_forcer() does not exist
+LINE 1: select * from access_large_c2_as_forcer();
+                      ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/row_level_security.sql:1619: ERROR:  function insert_policy_violation_as_session_user(integer) does not exist
+LINE 1: SELECT insert_policy_violation_as_session_user(110);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/row_level_security.sql:1622: ERROR:  function insert_policy_violation_as_forcer(integer) does not exist
+LINE 1: SELECT insert_policy_violation_as_forcer(111);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+SET
+psql:pg_tests/compatible/row_level_security.sql:1628: ERROR:  relation "force_check" does not exist
+SET
+psql:pg_tests/compatible/row_level_security.sql:1634: ERROR:  function access_large_c2_as_session_user() does not exist
+LINE 1: select * from access_large_c2_as_session_user();
+                      ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/row_level_security.sql:1637: ERROR:  function access_large_c2_as_forcer() does not exist
+LINE 1: select * from access_large_c2_as_forcer();
+                      ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/row_level_security.sql:1640: ERROR:  function insert_policy_violation_as_session_user(integer) does not exist
+LINE 1: SELECT insert_policy_violation_as_session_user(111);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/row_level_security.sql:1643: ERROR:  function insert_policy_violation_as_forcer(integer) does not exist
+LINE 1: SELECT * FROM insert_policy_violation_as_forcer(112);
+                      ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+SET
+psql:pg_tests/compatible/row_level_security.sql:1649: ERROR:  table "force_check" does not exist
+CREATE TABLE
+CREATE ROLE
+GRANT
+ALTER TABLE
+SET
+ALTER TABLE
+CREATE POLICY
+INSERT 0 5
+ALTER TABLE
+psql:pg_tests/compatible/row_level_security.sql:1679: ERROR:  duplicate key value violates unique constraint "uniq_uniq_col_key"
+INSERT 0 1
+psql:pg_tests/compatible/row_level_security.sql:1685: ERROR:  new row violates row-level security policy for table "uniq"
+psql:pg_tests/compatible/row_level_security.sql:1688: ERROR:  duplicate key value violates unique constraint "uniq_uniq_col_key"
+UPDATE 1
+ rls_col | uniq_col 
+---------+----------
+(0 rows)
+
+UPDATE 0
+ALTER TABLE
+ rls_col | uniq_col 
+---------+----------
+ cat     |        2
+ dog     |        3
+ cat     |        4
+ hamster |        5
+ cat     |        6
+ cat     |        7
+(6 rows)
+
+SET
+DROP TABLE
+DROP ROLE
+CREATE TABLE
+CREATE TABLE
+CREATE ROLE
+GRANT
+GRANT
+ALTER TABLE
+ALTER TABLE
+SET
+INSERT 0 6
+INSERT 0 2
+ALTER TABLE
+psql:pg_tests/compatible/row_level_security.sql:1749: ERROR:  insert or update on table "child" violates foreign key constraint "fk"
+DETAIL:  Key (key)=(7) is not present in table "parent".
+INSERT 0 1
+ ?column? 
+----------
+(0 rows)
+
+ key 
+-----
+   1
+   2
+   3
+(3 rows)
+
+ALTER TABLE
+CREATE POLICY
+psql:pg_tests/compatible/row_level_security.sql:1767: ERROR:  insert or update on table "child" violates foreign key constraint "fk"
+DETAIL:  Key is not present in table "parent".
+psql:pg_tests/compatible/row_level_security.sql:1770: ERROR:  new row violates row-level security policy for table "child"
+INSERT 0 1
+ALTER TABLE
+DELETE 1
+CREATE POLICY
+ key 
+-----
+   2
+   3
+   4
+(3 rows)
+
+SET
+DROP TABLE
+DROP TABLE
+DROP ROLE
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 2
+CREATE ROLE
+GRANT
+SET
+ id | customer_id 
+----+-------------
+(0 rows)
+
+ id | name 
+----+------
+  2 | bob
+(1 row)
+
+UPDATE 1
+RESET
+  id  | customer_id 
+------+-------------
+ 1000 |           2
+ 1001 |           2
+(2 rows)
+
+SET
+ id | name 
+----+------
+  2 | bob
+(1 row)
+
+DELETE 1
+ id | customer_id 
+----+-------------
+(0 rows)
+
+RESET
+  id  | customer_id 
+------+-------------
+ 1000 |            
+ 1001 |            
+(2 rows)
+
+DROP TABLE
+DROP TABLE
+DROP ROLE
+CREATE TABLE
+CREATE ROLE
+ALTER TABLE
+SET
+ALTER TABLE
+CREATE POLICY
+CREATE POLICY
+INSERT 0 1
+psql:pg_tests/compatible/row_level_security.sql:1895: ERROR:  new row for relation "rgb_only" violates check constraint "rgb_only_col_check"
+psql:pg_tests/compatible/row_level_security.sql:1898: ERROR:  new row violates row-level security policy for table "rgb_only"
+DROP POLICY
+CREATE POLICY
+psql:pg_tests/compatible/row_level_security.sql:1907: ERROR:  new row violates row-level security policy for table "rgb_only"
+ col 
+-----
+ red
+(1 row)
+
+SET
+DROP TABLE
+DROP ROLE
+CREATE TYPE
+CREATE TABLE
+INSERT 0 3
+CREATE ROLE
+GRANT
+ALTER TABLE
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+SET
+ a | b 
+---+---
+ 1 | a
+ 3 | c
+(2 rows)
+
+DELETE 0
+ a | b 
+---+---
+ 1 | a
+ 3 | c
+(2 rows)
+
+psql:pg_tests/compatible/row_level_security.sql:1967: ERROR:  must be owner of table trunc
+TRUNCATE TABLE
+psql:pg_tests/compatible/row_level_security.sql:1973: ERROR:  must be owner of table trunc
+ a | b 
+---+---
+(0 rows)
+
+INSERT 0 3
+ a | b 
+---+---
+ 7 | a
+ 9 | c
+(2 rows)
+
+DELETE 0
+ a | b 
+---+---
+ 7 | a
+ 9 | c
+(2 rows)
+
+SET
+DROP TABLE
+DROP ROLE
+CREATE TABLE
+INSERT 0 3
+CREATE ROLE
+GRANT
+SET
+ c1 
+----
+ a
+ b
+ c
+(3 rows)
+
+SET
+ALTER TABLE
+SET
+ c1 
+----
+(0 rows)
+
+SET
+CREATE POLICY
+SET
+ c1 
+----
+ b
+ c
+(2 rows)
+
+SET
+ALTER TABLE
+SET
+ c1 
+----
+ a
+ b
+ c
+(3 rows)
+
+SET
+DROP TABLE
+SET
+psql:pg_tests/compatible/row_level_security.sql:2082: ERROR:  relation "rls_cache_test" does not exist
+LINE 1: SELECT * FROM rls_cache_test ORDER BY c1;
+                      ^
+SET
+DROP ROLE
+CREATE ROLE
+psql:pg_tests/compatible/row_level_security.sql:2100: ERROR:  syntax error at or near "AS"
+LINE 6:       v INT AS (c + 1) VIRTUAL
+                    ^
+psql:pg_tests/compatible/row_level_security.sql:2103: ERROR:  relation "t" does not exist
+LINE 1: INSERT INTO t VALUES (1,1,1,1),(-1,-1,-1,-1);
+                    ^
+psql:pg_tests/compatible/row_level_security.sql:2106: ERROR:  relation "t" does not exist
+psql:pg_tests/compatible/row_level_security.sql:2109: ERROR:  relation "t" does not exist
+psql:pg_tests/compatible/row_level_security.sql:2116: ERROR:  relation "t" does not exist
+psql:pg_tests/compatible/row_level_security.sql:2123: ERROR:  relation "t" does not exist
+psql:pg_tests/compatible/row_level_security.sql:2130: ERROR:  relation "t" does not exist
+psql:pg_tests/compatible/row_level_security.sql:2137: ERROR:  relation "t" does not exist
+SET
+psql:pg_tests/compatible/row_level_security.sql:2143: ERROR:  relation "t" does not exist
+LINE 1: SELECT * FROM t;
+                      ^
+psql:pg_tests/compatible/row_level_security.sql:2146: ERROR:  relation "t" does not exist
+LINE 1: SELECT k,a FROM t WHERE b IS NOT NULL;
+                        ^
+psql:pg_tests/compatible/row_level_security.sql:2149: ERROR:  relation "t" does not exist
+LINE 1: INSERT INTO t VALUES (2,2,2,2);
+                    ^
+psql:pg_tests/compatible/row_level_security.sql:2152: ERROR:  relation "t" does not exist
+LINE 1: INSERT INTO t VALUES (3,0,0,0);
+                    ^
+psql:pg_tests/compatible/row_level_security.sql:2155: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET c = 4 WHERE k = 2 RETURNING *;
+               ^
+psql:pg_tests/compatible/row_level_security.sql:2158: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET c = 0 WHERE k = 2 RETURNING *;
+               ^
+psql:pg_tests/compatible/row_level_security.sql:2161: ERROR:  relation "t" does not exist
+LINE 1: DELETE FROM t RETURNING v;
+                    ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:2167: ERROR:  relation "t" does not exist
+LINE 1: SELECT * FROM t ORDER BY k;
+                      ^
+psql:pg_tests/compatible/row_level_security.sql:2170: ERROR:  table "t" does not exist
+DROP ROLE
+CREATE ROLE
+psql:pg_tests/compatible/row_level_security.sql:2185: ERROR:  syntax error at or near "AS"
+LINE 6:       v INT AS (c + 1) STORED
+                    ^
+psql:pg_tests/compatible/row_level_security.sql:2188: ERROR:  relation "t" does not exist
+LINE 1: INSERT INTO t VALUES (1,1,1,1),(-1,-1,-1,-1);
+                    ^
+psql:pg_tests/compatible/row_level_security.sql:2191: ERROR:  relation "t" does not exist
+psql:pg_tests/compatible/row_level_security.sql:2194: ERROR:  relation "t" does not exist
+psql:pg_tests/compatible/row_level_security.sql:2201: ERROR:  relation "t" does not exist
+psql:pg_tests/compatible/row_level_security.sql:2208: ERROR:  relation "t" does not exist
+psql:pg_tests/compatible/row_level_security.sql:2215: ERROR:  relation "t" does not exist
+psql:pg_tests/compatible/row_level_security.sql:2222: ERROR:  relation "t" does not exist
+SET
+psql:pg_tests/compatible/row_level_security.sql:2228: ERROR:  relation "t" does not exist
+LINE 1: SELECT * FROM t;
+                      ^
+psql:pg_tests/compatible/row_level_security.sql:2231: ERROR:  relation "t" does not exist
+LINE 1: SELECT k,a FROM t WHERE b IS NOT NULL;
+                        ^
+psql:pg_tests/compatible/row_level_security.sql:2234: ERROR:  relation "t" does not exist
+LINE 1: INSERT INTO t VALUES (2,2,2,2);
+                    ^
+psql:pg_tests/compatible/row_level_security.sql:2237: ERROR:  relation "t" does not exist
+LINE 1: INSERT INTO t VALUES (3,0,0,0);
+                    ^
+psql:pg_tests/compatible/row_level_security.sql:2240: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET c = 4 WHERE k = 2 RETURNING *;
+               ^
+psql:pg_tests/compatible/row_level_security.sql:2243: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET c = 0 WHERE k = 2 RETURNING *;
+               ^
+psql:pg_tests/compatible/row_level_security.sql:2246: ERROR:  relation "t" does not exist
+LINE 1: DELETE FROM t RETURNING v;
+                    ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:2252: ERROR:  relation "t" does not exist
+LINE 1: SELECT * FROM t ORDER BY k;
+                      ^
+psql:pg_tests/compatible/row_level_security.sql:2255: ERROR:  table "t" does not exist
+DROP ROLE
+CREATE TABLE
+psql:pg_tests/compatible/row_level_security.sql:2264: ERROR:  only WITH CHECK expression allowed for INSERT
+psql:pg_tests/compatible/row_level_security.sql:2267: ERROR:  WITH CHECK cannot be applied to SELECT or DELETE
+psql:pg_tests/compatible/row_level_security.sql:2270: ERROR:  WITH CHECK cannot be applied to SELECT or DELETE
+DROP TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE ROLE
+GRANT
+SET
+psql:pg_tests/compatible/row_level_security.sql:2294: ERROR:  syntax error at or near "let"
+LINE 1: let $exp_file
+        ^
+psql:pg_tests/compatible/row_level_security.sql:2297: ERROR:  syntax error at or near "INTO"
+LINE 1: IMPORT INTO importer CSV DATA ('nodelocal://1/rls-importer/$...
+               ^
+psql:pg_tests/compatible/row_level_security.sql:2300: ERROR:  syntax error at or near "INTO"
+LINE 1: IMPORT INTO importer CSV DATA ('nodelocal://1/rls-importer/$...
+               ^
+ c1 
+----
+(0 rows)
+
+psql:pg_tests/compatible/row_level_security.sql:2308: ERROR:  must be owner of table importer
+psql:pg_tests/compatible/row_level_security.sql:2314: ERROR:  permission denied to drop role
+DETAIL:  Only roles with the CREATEROLE attribute and the ADMIN option on the target roles may drop roles.
+psql:pg_tests/compatible/row_level_security.sql:2317: ERROR:  permission denied for schema public
+LINE 1: CREATE TABLE rlsInsert (c1 int not null primary key, c2 text...
+                     ^
+psql:pg_tests/compatible/row_level_security.sql:2320: ERROR:  relation "rlsinsert" does not exist
+psql:pg_tests/compatible/row_level_security.sql:2327: ERROR:  relation "rlsinsert" does not exist
+psql:pg_tests/compatible/row_level_security.sql:2331: ERROR:  relation "rlsinsert" does not exist
+psql:pg_tests/compatible/row_level_security.sql:2334: ERROR:  relation "rlsinsert" does not exist
+psql:pg_tests/compatible/row_level_security.sql:2337: ERROR:  relation "rlsinsert" does not exist
+LINE 1: INSERT INTO rlsInsert VALUES (1, 'first', '2012-06-30'),(0, ...
+                    ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:2343: ERROR:  relation "rlsinsert" does not exist
+LINE 1: INSERT INTO rlsInsert VALUES (2, 'second', '2010-06-30');
+                    ^
+psql:pg_tests/compatible/row_level_security.sql:2346: ERROR:  relation "rlsinsert" does not exist
+LINE 1: INSERT INTO rlsInsert VALUES (3, 'third', '2012-07-08');
+                    ^
+psql:pg_tests/compatible/row_level_security.sql:2349: ERROR:  relation "rlsinsert" does not exist
+LINE 1: INSERT INTO rlsInsert SELECT c1 + 5, c2, c3 FROM rlsInsert;
+                    ^
+psql:pg_tests/compatible/row_level_security.sql:2352: ERROR:  relation "rlsinsert" does not exist
+LINE 1: INSERT INTO rlsInsert VALUES (4, 'four', NULL);
+                    ^
+psql:pg_tests/compatible/row_level_security.sql:2355: ERROR:  relation "rlsinsert" does not exist
+LINE 1: INSERT INTO rlsInsert SELECT c1 + 5, c2, c3 FROM rlsInsert W...
+                    ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:2369: ERROR:  relation "rlsinsert" does not exist
+SET
+psql:pg_tests/compatible/row_level_security.sql:2375: ERROR:  relation "rlsinsert" does not exist
+LINE 1: INSERT INTO rlsInsert VALUES (4, 'fourth', '2022-10-08');
+                    ^
+psql:pg_tests/compatible/row_level_security.sql:2378: ERROR:  relation "rlsinsert" does not exist
+LINE 1: select c1 from rlsInsert ORDER BY c1;
+                       ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:2384: ERROR:  table "rlsinsert" does not exist
+psql:pg_tests/compatible/row_level_security.sql:2387: ERROR:  type "league" already exists
+CREATE FUNCTION
+CREATE SEQUENCE
+CREATE TABLE
+ALTER TABLE
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+GRANT
+GRANT
+GRANT
+SET
+INSERT 0 3
+psql:pg_tests/compatible/row_level_security.sql:2443: ERROR:  new row violates row-level security policy for table "bbteams"
+UPDATE 1
+ setval 
+--------
+   1500
+(1 row)
+
+psql:pg_tests/compatible/row_level_security.sql:2452: ERROR:  new row violates row-level security policy for table "bbteams"
+SET
+ nextval 
+---------
+    1502
+(1 row)
+
+   team    | league | wins 
+-----------+--------+------
+ expos     | AL     |   87
+ guardians | AL     |     
+ royals    | AL     |     
+(3 rows)
+
+DROP TABLE
+DROP FUNCTION
+DROP SEQUENCE
+CREATE TABLE
+ALTER TABLE
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+INSERT 0 9
+CREATE ROLE
+GRANT
+SET
+ key | value 
+-----+-------
+   1 | okay
+   2 | okay
+   3 | okay
+(3 rows)
+
+ key | value 
+-----+-------
+   1 | okay
+   2 | okay
+   3 | okay
+(3 rows)
+
+SET
+DROP POLICY
+DROP POLICY
+DROP POLICY
+SET
+psql:pg_tests/compatible/row_level_security.sql:2543: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE multip;
+             ^
+psql:pg_tests/compatible/row_level_security.sql:2546: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE multip;
+             ^
+ key | value 
+-----+-------
+(0 rows)
+
+SET
+psql:pg_tests/compatible/row_level_security.sql:2555: ERROR:  unrecognized parameter "schema_locked"
+TRUNCATE TABLE
+ALTER TABLE
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+ name | cmd |    type     | roles  | with_check_expr 
+------+-----+-------------+--------+-----------------
+ and1 | ALL | RESTRICTIVE | public | 
+ and2 | ALL | RESTRICTIVE | public | 
+ or1  | ALL | PERMISSIVE  | public | 
+ or2  | ALL | PERMISSIVE  | public | 
+ or3  | ALL | PERMISSIVE  | public | 
+(5 rows)
+
+             using_expr             
+------------------------------------
+ (value !~~ '%sensitive%'::text)
+ (value !~~ '%confidential%'::text)
+ (key = 1)
+ (key = 2)
+ (key = 3)
+(5 rows)
+
+SET
+psql:pg_tests/compatible/row_level_security.sql:2582: ERROR:  new row violates row-level security policy for table "multip"
+INSERT 0 1
+psql:pg_tests/compatible/row_level_security.sql:2588: ERROR:  new row violates row-level security policy "and1" for table "multip"
+INSERT 0 1
+psql:pg_tests/compatible/row_level_security.sql:2594: ERROR:  new row violates row-level security policy "and2" for table "multip"
+INSERT 0 1
+psql:pg_tests/compatible/row_level_security.sql:2600: ERROR:  new row violates row-level security policy "and1" for table "multip"
+psql:pg_tests/compatible/row_level_security.sql:2603: ERROR:  new row violates row-level security policy for table "multip"
+psql:pg_tests/compatible/row_level_security.sql:2606: ERROR:  new row violates row-level security policy for table "multip"
+SET
+ key | value 
+-----+-------
+   1 | okay
+   2 | okay
+   3 | okay
+(3 rows)
+
+DROP TABLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE TABLE
+INSERT 0 4
+GRANT
+GRANT
+GRANT
+GRANT
+ALTER TABLE
+CREATE POLICY
+CREATE POLICY
+SET
+ id | owner |         content         
+----+-------+-------------------------
+  1 | alice | Alice’s first document
+  2 | alice | Alice’s second document
+(2 rows)
+
+SELECT 2
+ id | owner |         content         
+----+-------+-------------------------
+  1 | alice | Alice’s first document
+  2 | alice | Alice’s second document
+(2 rows)
+
+SELECT 2
+ id | owner |         content         
+----+-------+-------------------------
+  1 | alice | Alice’s first document
+  2 | alice | Alice’s second document
+(2 rows)
+
+GRANT
+RESET
+ALTER TABLE
+SET
+ id | owner |          content           
+----+-------+----------------------------
+  3 | bob   | Bob’s only document so far
+(1 row)
+
+ id | owner |         content         
+----+-------+-------------------------
+  1 | alice | Alice’s first document
+  2 | alice | Alice’s second document
+(2 rows)
+
+ id | owner |         content         
+----+-------+-------------------------
+  1 | alice | Alice’s first document
+  2 | alice | Alice’s second document
+(2 rows)
+
+REFRESH MATERIALIZED VIEW
+ id | owner |          content           
+----+-------+----------------------------
+  3 | bob   | Bob’s only document so far
+(1 row)
+
+RESET
+DROP TABLE
+DROP MATERIALIZED VIEW
+DROP TABLE
+REVOKE
+DROP ROLE
+ name | cmd | type | roles | using_expr | with_check_expr 
+------+-----+------+-------+------------+-----------------
+(0 rows)
+
+CREATE TABLE
+CREATE POLICY
+ALTER TABLE
+ name | cmd |    type    | roles  | using_expr | with_check_expr 
+------+-----+------------+--------+------------+-----------------
+ p1   | ALL | PERMISSIVE | public | true       | 
+(1 row)
+
+CREATE TABLE
+ALTER TABLE
+ name | cmd | type | roles | using_expr | with_check_expr 
+------+-----+------+-------+------------+-----------------
+(0 rows)
+
+CREATE TABLE
+ALTER TABLE
+INSERT 0 7
+CREATE POLICY
+CREATE POLICY
+CREATE ROLE
+GRANT
+SET
+UPDATE 3
+ c1 
+----
+  0
+  2
+  4
+(3 rows)
+
+UPDATE 3
+psql:pg_tests/compatible/row_level_security.sql:2779: ERROR:  new row violates row-level security policy for table "r1"
+psql:pg_tests/compatible/row_level_security.sql:2782: ERROR:  new row violates row-level security policy for table "r1"
+UPDATE 2
+ c1 
+----
+  6
+  8
+(2 rows)
+
+UPDATE 2
+ c1 
+----
+(0 rows)
+
+UPDATE 0
+ c1 
+----
+ 22
+  0
+  6
+  8
+(4 rows)
+
+SET
+ c1 
+----
+  1
+  3
+  5
+ 22
+  0
+  6
+  8
+(7 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+GRANT
+ALTER TABLE
+ALTER TABLE
+SET
+CREATE POLICY
+ counter 
+---------
+(0 rows)
+
+UPDATE 0
+DROP POLICY
+CREATE POLICY
+ counter 
+---------
+       1
+(1 row)
+
+ counter 
+---------
+(0 rows)
+
+ counter 
+---------
+(0 rows)
+
+psql:pg_tests/compatible/row_level_security.sql:2850: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [$cnt_oid as t];
+                      ^
+psql:pg_tests/compatible/row_level_security.sql:2853: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [$cnt_oid as t] FOR UPDATE;
+                      ^
+psql:pg_tests/compatible/row_level_security.sql:2856: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [$cnt_oid as t] FOR SHARE;
+                      ^
+ counter 
+---------
+(0 rows)
+
+UPDATE 0
+CREATE POLICY
+ counter 
+---------
+(0 rows)
+
+UPDATE 0
+ALTER POLICY
+ counter 
+---------
+       2
+(1 row)
+
+UPDATE 1
+ALTER POLICY
+psql:pg_tests/compatible/row_level_security.sql:2877: ERROR:  new row violates row-level security policy for table "cnt"
+ counter 
+---------
+(0 rows)
+
+DELETE 0
+DELETE 0
+ counter 
+---------
+       2
+(1 row)
+
+ALTER POLICY
+CREATE POLICY
+ counter 
+---------
+(0 rows)
+
+DELETE 0
+DELETE 1
+ALTER TABLE
+ counter 
+---------
+(0 rows)
+
+DROP POLICY
+ALTER TABLE
+ counter 
+---------
+(0 rows)
+
+DELETE 0
+DELETE 0
+ALTER TABLE
+ counter 
+---------
+(0 rows)
+
+ALTER TABLE
+DROP POLICY
+CREATE POLICY
+CREATE POLICY
+ counter 
+---------
+(0 rows)
+
+DELETE 0
+DELETE 0
+ALTER TABLE
+ counter 
+---------
+(0 rows)
+
+ALTER TABLE
+SET
+DROP TABLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE TABLE
+CREATE POLICY
+     name     | cmd |    type    |                    roles                    | using_expr | with_check_expr 
+--------------+-----+------------+---------------------------------------------+------------+-----------------
+ mixed_policy | ALL | PERMISSIVE | test_role1,test_role2,test_user1,test_user2 |            | 
+(1 row)
+
+CREATE POLICY
+       name        | cmd |    type    |                    roles                    | using_expr | with_check_expr 
+-------------------+-----+------------+---------------------------------------------+------------+-----------------
+ mixed_policy      | ALL | PERMISSIVE | test_role1,test_role2,test_user1,test_user2 |            | 
+ users_only_policy | ALL | PERMISSIVE | test_user1,test_user2                       |            | 
+(2 rows)
+
+CREATE POLICY
+       name        | cmd |    type    |                    roles                    | using_expr | with_check_expr 
+-------------------+-----+------------+---------------------------------------------+------------+-----------------
+ mixed_policy      | ALL | PERMISSIVE | test_role1,test_role2,test_user1,test_user2 |            | 
+ roles_only_policy | ALL | PERMISSIVE | test_role1,test_role2                       |            | 
+ users_only_policy | ALL | PERMISSIVE | test_user1,test_user2                       |            | 
+(3 rows)
+
+DROP TABLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE TABLE
+CREATE ROLE
+GRANT
+ALTER TABLE
+CREATE POLICY
+CREATE FUNCTION
+CREATE FUNCTION
+INSERT 0 3
+ id |  description  
+----+---------------
+ 10 | hidden: value
+(1 row)
+
+ id |  description  
+----+---------------
+ 11 | hidden: value
+(1 row)
+
+ id |      val      
+----+---------------
+  0 | visible: 0
+  1 | hidden: 1
+  2 | visible: 2
+ 10 | hidden: value
+ 11 | hidden: value
+(5 rows)
+
+SET
+ id |    val     
+----+------------
+  0 | visible: 0
+  2 | visible: 2
+(2 rows)
+
+ id |  description  
+----+---------------
+ 20 | hidden: value
+(1 row)
+
+psql:pg_tests/compatible/row_level_security.sql:3064: ERROR:  new row violates row-level security policy for table "bypassrls"
+CONTEXT:  SQL function "insert_policy_violation_as_session_user" statement 1
+SET
+psql:pg_tests/compatible/row_level_security.sql:3070: ERROR:  conflicting or redundant options
+LINE 1: ALTER ROLE bypassrls_user BYPASSRLS NOBYPASSRLS;
+                                            ^
+ALTER ROLE
+SET
+ id |      val      
+----+---------------
+  0 | visible: 0
+  1 | hidden: 1
+  2 | visible: 2
+ 10 | hidden: value
+ 11 | hidden: value
+ 20 | hidden: value
+(6 rows)
+
+ id |  description  
+----+---------------
+ 30 | hidden: value
+(1 row)
+
+ id |  description  
+----+---------------
+ 31 | hidden: value
+(1 row)
+
+SET
+ALTER ROLE
+ grantee  | privilege_type 
+----------+----------------
+ postgres | BYPASSRLS
+(1 row)
+
+SET
+ id |    val     
+----+------------
+  0 | visible: 0
+  2 | visible: 2
+(2 rows)
+
+psql:pg_tests/compatible/row_level_security.sql:3109: ERROR:  new row violates row-level security policy for table "bypassrls"
+CONTEXT:  SQL function "insert_policy_violation_as_session_user" statement 1
+SET
+SET
+ id |    val     
+----+------------
+  0 | visible: 0
+  2 | visible: 2
+(2 rows)
+
+psql:pg_tests/compatible/row_level_security.sql:3124: ERROR:  new row violates row-level security policy for table "bypassrls"
+CONTEXT:  SQL function "insert_policy_violation_as_session_user" statement 1
+SET
+DROP FUNCTION
+DROP TABLE
+DROP ROLE
+CREATE TABLE
+CREATE ROLE
+ALTER TABLE
+SET
+ALTER TABLE
+CREATE POLICY
+INSERT 0 1
+UPDATE 1
+UPDATE 1
+DROP POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+INSERT 0 1
+INSERT 0 1
+ALTER POLICY
+ALTER POLICY
+INSERT 0 1
+INSERT 0 1
+SET
+DROP TABLE
+DROP ROLE
+CREATE TABLE
+CREATE ROLE
+ALTER TABLE
+SET
+ALTER TABLE
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+INSERT 0 1
+psql:pg_tests/compatible/row_level_security.sql:3242: ERROR:  new row violates row-level security policy (USING expression) for table "ups"
+    comment     
+----------------
+ original value
+(1 row)
+
+ALTER POLICY
+INSERT 0 1
+INSERT 0 1
+ comment 
+---------
+ upsert
+(1 row)
+
+ALTER POLICY
+INSERT 0 1
+INSERT 0 1
+ comment 
+---------
+ upsert
+(1 row)
+
+ALTER POLICY
+INSERT 0 1
+psql:pg_tests/compatible/row_level_security.sql:3278: ERROR:  new row violates row-level security policy for table "ups"
+    comment     
+----------------
+ original value
+(1 row)
+
+DROP POLICY
+CREATE POLICY
+ALTER POLICY
+psql:pg_tests/compatible/row_level_security.sql:3293: ERROR:  new row violates row-level security policy for table "ups"
+ALTER POLICY
+INSERT 0 1
+INSERT 0 1
+ comment 
+---------
+ upsert
+(1 row)
+
+ALTER POLICY
+ALTER POLICY
+INSERT 0 1
+psql:pg_tests/compatible/row_level_security.sql:3317: ERROR:  new row violates row-level security policy for table "ups"
+    comment     
+----------------
+ original value
+(1 row)
+
+ALTER POLICY
+psql:pg_tests/compatible/row_level_security.sql:3326: ERROR:  new row violates row-level security policy for table "ups"
+ALTER TABLE
+INSERT 0 1
+ALTER TABLE
+psql:pg_tests/compatible/row_level_security.sql:3338: ERROR:  new row violates row-level security policy for table "ups"
+ALTER TABLE
+    comment     
+----------------
+ original value
+(1 row)
+
+ALTER TABLE
+DROP POLICY
+DROP POLICY
+DROP POLICY
+CREATE POLICY
+psql:pg_tests/compatible/row_level_security.sql:3362: ERROR:  new row violates row-level security policy for table "ups"
+ALTER TABLE
+INSERT 0 1
+ALTER TABLE
+psql:pg_tests/compatible/row_level_security.sql:3374: ERROR:  new row violates row-level security policy for table "ups"
+ALTER TABLE
+    comment     
+----------------
+ original value
+(1 row)
+
+ALTER TABLE
+ALTER POLICY
+INSERT 0 1
+psql:pg_tests/compatible/row_level_security.sql:3392: ERROR:  new row violates row-level security policy for table "ups"
+    comment     
+----------------
+ original value
+(1 row)
+
+ALTER POLICY
+psql:pg_tests/compatible/row_level_security.sql:3401: ERROR:  new row violates row-level security policy for table "ups"
+ALTER TABLE
+INSERT 0 1
+ALTER TABLE
+psql:pg_tests/compatible/row_level_security.sql:3413: ERROR:  new row violates row-level security policy for table "ups"
+psql:pg_tests/compatible/row_level_security.sql:3416: ERROR:  new row violates row-level security policy for table "ups"
+    comment     
+----------------
+ original value
+(1 row)
+
+ALTER POLICY
+INSERT 0 1
+psql:pg_tests/compatible/row_level_security.sql:3428: ERROR:  new row violates row-level security policy for table "ups"
+    comment     
+----------------
+ original value
+(1 row)
+
+DROP POLICY
+CREATE POLICY
+psql:pg_tests/compatible/row_level_security.sql:3440: ERROR:  new row violates row-level security policy for table "ups"
+INSERT 0 1
+psql:pg_tests/compatible/row_level_security.sql:3446: ERROR:  new row violates row-level security policy for table "ups"
+ALTER TABLE
+    comment     
+----------------
+ original value
+(1 row)
+
+SET
+DROP TABLE
+DROP ROLE
+CREATE TABLE
+CREATE ROLE
+ALTER TABLE
+SET
+ALTER TABLE
+CREATE POLICY
+CREATE POLICY
+INSERT 0 1
+INSERT 0 0
+psql:pg_tests/compatible/row_level_security.sql:3491: ERROR:  new row violates row-level security policy for table "ups"
+    comment     | c 
+----------------+---
+ original value | 1
+(1 row)
+
+ALTER POLICY
+psql:pg_tests/compatible/row_level_security.sql:3500: ERROR:  new row violates row-level security policy for table "ups"
+ALTER POLICY
+ALTER POLICY
+psql:pg_tests/compatible/row_level_security.sql:3509: ERROR:  new row violates row-level security policy for table "ups"
+INSERT 0 1
+INSERT 0 0
+psql:pg_tests/compatible/row_level_security.sql:3518: ERROR:  new row violates row-level security policy for table "ups"
+    comment     | c 
+----------------+---
+ original value | 2
+(1 row)
+
+DROP POLICY
+DROP POLICY
+CREATE POLICY
+psql:pg_tests/compatible/row_level_security.sql:3533: ERROR:  new row violates row-level security policy for table "ups"
+INSERT 0 1
+INSERT 0 0
+psql:pg_tests/compatible/row_level_security.sql:3542: ERROR:  new row violates row-level security policy for table "ups"
+    comment     | c 
+----------------+---
+ original value | 2
+(1 row)
+
+DELETE 1
+INSERT 0 1
+ALTER POLICY
+INSERT 0 0
+ALTER TABLE
+   comment   | c 
+-------------+---
+ first value | 5
+(1 row)
+
+ALTER TABLE
+ALTER POLICY
+INSERT 0 1
+INSERT 0 0
+psql:pg_tests/compatible/row_level_security.sql:3578: ERROR:  new row violates row-level security policy for table "ups"
+    comment     | c 
+----------------+---
+ original value | 1
+(1 row)
+
+ALTER POLICY
+INSERT 0 0
+ALTER TABLE
+    comment     | c 
+----------------+---
+ original value | 1
+(1 row)
+
+SET
+DROP TABLE
+DROP ROLE
+CREATE TABLE
+CREATE ROLE
+ALTER TABLE
+SET
+ALTER TABLE
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+psql:pg_tests/compatible/row_level_security.sql:3629: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO ups VALUES (1, 'original value', 1);
+        ^
+psql:pg_tests/compatible/row_level_security.sql:3632: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO ups VALUES (1, 'upsert', 2);
+        ^
+ comment | c 
+---------+---
+(0 rows)
+
+psql:pg_tests/compatible/row_level_security.sql:3638: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO ups VALUES (1, 'upsert', 3);
+        ^
+psql:pg_tests/compatible/row_level_security.sql:3641: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO ups VALUES (1, 'original value', 4);
+        ^
+ comment | c 
+---------+---
+(0 rows)
+
+ALTER POLICY
+psql:pg_tests/compatible/row_level_security.sql:3650: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO ups VALUES (2, 'original value', 1);
+        ^
+psql:pg_tests/compatible/row_level_security.sql:3653: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO ups VALUES (2, 'upsert', 2);
+        ^
+ comment | c 
+---------+---
+(0 rows)
+
+ALTER POLICY
+ALTER POLICY
+psql:pg_tests/compatible/row_level_security.sql:3665: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO ups VALUES (3, 'expect fail', 1);
+        ^
+psql:pg_tests/compatible/row_level_security.sql:3668: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO ups VALUES (3, 'original value', 2);
+        ^
+psql:pg_tests/compatible/row_level_security.sql:3671: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO ups VALUES (3, 'original value', 3);
+        ^
+psql:pg_tests/compatible/row_level_security.sql:3674: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO ups VALUES (3, 'upsert', 4);
+        ^
+ comment | c 
+---------+---
+(0 rows)
+
+ALTER TABLE
+psql:pg_tests/compatible/row_level_security.sql:3683: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO ups VALUES (3, 'upsert', 5);
+        ^
+ALTER TABLE
+psql:pg_tests/compatible/row_level_security.sql:3689: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO ups VALUES (3, 'original value', 6);
+        ^
+ALTER TABLE
+ comment | c 
+---------+---
+(0 rows)
+
+ALTER TABLE
+ALTER POLICY
+ALTER POLICY
+ALTER POLICY
+psql:pg_tests/compatible/row_level_security.sql:3710: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO ups VALUES (4, 'original value', 1);
+        ^
+ALTER POLICY
+psql:pg_tests/compatible/row_level_security.sql:3716: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO ups VALUES (4, 'original value', 2);
+        ^
+psql:pg_tests/compatible/row_level_security.sql:3719: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO ups VALUES (4, 'upsert', 3);
+        ^
+ comment | c 
+---------+---
+(0 rows)
+
+SET
+DROP TABLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+psql:pg_tests/compatible/row_level_security.sql:3745: ERROR:  type "f" does not exist
+LINE 5:   FAMILY f (k, a, b)
+                 ^
+psql:pg_tests/compatible/row_level_security.sql:3748: ERROR:  relation "t" does not exist
+LINE 1: INSERT INTO t VALUES (1, 10, true);
+                    ^
+psql:pg_tests/compatible/row_level_security.sql:3751: ERROR:  relation "t" does not exist
+psql:pg_tests/compatible/row_level_security.sql:3754: ERROR:  relation "t" does not exist
+psql:pg_tests/compatible/row_level_security.sql:3761: ERROR:  relation "t" does not exist
+psql:pg_tests/compatible/row_level_security.sql:3768: ERROR:  relation "t" does not exist
+psql:pg_tests/compatible/row_level_security.sql:3775: ERROR:  relation "t" does not exist
+psql:pg_tests/compatible/row_level_security.sql:3782: ERROR:  relation "t" does not exist
+SET
+psql:pg_tests/compatible/row_level_security.sql:3788: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET a = 0 WHERE true;
+               ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:3794: ERROR:  relation "t" does not exist
+LINE 1: SELECT k, a FROM t;
+                         ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:3800: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET a = -1 WHERE true;
+               ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:3806: ERROR:  relation "t" does not exist
+LINE 1: SELECT k, a FROM t;
+                         ^
+psql:pg_tests/compatible/row_level_security.sql:3809: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET k = 1, a = 10 WHERE true;
+               ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:3815: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET a = a - 10 WHERE true;
+               ^
+psql:pg_tests/compatible/row_level_security.sql:3818: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET a = 0 WHERE k = 1;
+               ^
+psql:pg_tests/compatible/row_level_security.sql:3821: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET a = 0 WHERE true RETURNING k;
+               ^
+psql:pg_tests/compatible/row_level_security.sql:3824: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET a = 0 WHERE true RETURNING k + 1;
+               ^
+psql:pg_tests/compatible/row_level_security.sql:3827: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET a = 0 WHERE true RETURNING (select t.a);
+               ^
+psql:pg_tests/compatible/row_level_security.sql:3830: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET a = 0 WHERE true RETURNING *;
+               ^
+psql:pg_tests/compatible/row_level_security.sql:3833: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET a = 0 WHERE true RETURNING t.*;
+               ^
+psql:pg_tests/compatible/row_level_security.sql:3836: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET a = 0 WHERE true RETURNING 'foo';
+               ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:3842: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET k = 1, a = 10 WHERE true;
+               ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:3848: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET a = 0 WHERE true RETURNING (select 1);
+               ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:3854: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET k = 1, a = 10 WHERE true;
+               ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:3860: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET a = 0 WHERE true RETURNING 1 + 1, 2, 'three';
+               ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:3866: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET k = 1, a = 10 WHERE true;
+               ^
+CREATE TABLE
+INSERT 0 1
+GRANT
+SET
+psql:pg_tests/compatible/row_level_security.sql:3881: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET a = other.a FROM other WHERE true;
+               ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:3887: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET k = 1, a = 10 WHERE true;
+               ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:3893: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET a = -3 FROM other WHERE true RETURNING other.k;
+               ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:3899: ERROR:  relation "t" does not exist
+LINE 1: SELECT a FROM t;
+                      ^
+psql:pg_tests/compatible/row_level_security.sql:3902: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET k = 1, a = 10 WHERE true;
+               ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:3908: ERROR:  relation "t" does not exist
+LINE 1: UPDATE t SET a = -2 FROM other WHERE other.k = 1;
+               ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:3914: ERROR:  relation "t" does not exist
+LINE 1: SELECT a FROM t;
+                      ^
+psql:pg_tests/compatible/row_level_security.sql:3917: ERROR:  table "t" does not exist
+DROP TABLE
+DROP ROLE
+psql:pg_tests/compatible/row_level_security.sql:3926: ERROR:  relation "alter_policy_table_locked" does not exist
+psql:pg_tests/compatible/row_level_security.sql:3929: ERROR:  relation "alter_policy_table_locked" does not exist
+psql:pg_tests/compatible/row_level_security.sql:3940: ERROR:  relation "alter_policy_table_locked" does not exist
+CREATE ROLE
+CREATE ROLE
+GRANT ROLE
+CREATE TABLE
+INSERT 0 1
+ALTER TABLE
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+GRANT
+SET
+ id | name  | department  
+----+-------+-------------
+  1 | Alice | Engineering
+(1 row)
+
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/row_level_security.sql:3993: ERROR:  new row violates row-level security policy for table "employees"
+UPDATE 0
+ id | name  | department  
+----+-------+-------------
+  1 | Alice | Engineering
+  2 | Bob   | Engineering
+  3 | Carol | Sales
+(3 rows)
+
+RESET
+REVOKE ROLE
+GRANT
+SET
+ id | name | department 
+----+------+------------
+(0 rows)
+
+psql:pg_tests/compatible/row_level_security.sql:4017: ERROR:  new row violates row-level security policy for table "employees"
+UPDATE 0
+RESET
+ id | name  | department  
+----+-------+-------------
+  1 | Alice | Engineering
+  2 | Bob   | Engineering
+  3 | Carol | Sales
+(3 rows)
+
+DROP TABLE
+DROP ROLE
+DROP ROLE
+psql:pg_tests/compatible/row_level_security.sql:4038: ERROR:  relation "trigger_rls_table" does not exist
+LINE 1: INSERT INTO trigger_rls_table VALUES (1, 100, 'alice'), (2, ...
+                    ^
+CREATE ROLE
+CREATE ROLE
+psql:pg_tests/compatible/row_level_security.sql:4047: ERROR:  relation "trigger_rls_table" does not exist
+psql:pg_tests/compatible/row_level_security.sql:4050: ERROR:  relation "trigger_rls_table" does not exist
+psql:pg_tests/compatible/row_level_security.sql:4055: ERROR:  syntax error at or near "("
+LINE 2:   USING (owner = current_user())
+                                     ^
+psql:pg_tests/compatible/row_level_security.sql:4069: ERROR:  syntax error at or near "("
+LINE 4: ... updated value for id % from % to %', current_user(), (NEW)....
+                                                             ^
+CREATE FUNCTION
+psql:pg_tests/compatible/row_level_security.sql:4085: ERROR:  relation "trigger_rls_table" does not exist
+psql:pg_tests/compatible/row_level_security.sql:4091: ERROR:  relation "trigger_rls_table" does not exist
+SET
+psql:pg_tests/compatible/row_level_security.sql:4097: ERROR:  relation "trigger_rls_table" does not exist
+LINE 1: SELECT * FROM trigger_rls_table ORDER BY id;
+                      ^
+psql:pg_tests/compatible/row_level_security.sql:4100: ERROR:  relation "trigger_rls_table" does not exist
+LINE 1: UPDATE trigger_rls_table SET value = 150 WHERE id = 1;
+               ^
+psql:pg_tests/compatible/row_level_security.sql:4103: ERROR:  relation "trigger_rls_table" does not exist
+LINE 1: UPDATE trigger_rls_table SET value = 250 WHERE id = 2;
+               ^
+psql:pg_tests/compatible/row_level_security.sql:4106: ERROR:  relation "trigger_rls_table" does not exist
+LINE 1: UPDATE trigger_rls_table SET value = -100 WHERE id = 1;
+               ^
+psql:pg_tests/compatible/row_level_security.sql:4109: ERROR:  relation "trigger_rls_table" does not exist
+LINE 1: INSERT INTO trigger_rls_table VALUES (5, 500, 'alice');
+                    ^
+psql:pg_tests/compatible/row_level_security.sql:4112: ERROR:  relation "trigger_rls_table" does not exist
+LINE 1: INSERT INTO trigger_rls_table VALUES (6, 600, 'bob');
+                    ^
+psql:pg_tests/compatible/row_level_security.sql:4115: ERROR:  relation "trigger_rls_table" does not exist
+LINE 1: DELETE FROM trigger_rls_table WHERE id = 3;
+                    ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:4121: ERROR:  relation "trigger_rls_table" does not exist
+LINE 1: SELECT * FROM trigger_rls_table ORDER BY id;
+                      ^
+psql:pg_tests/compatible/row_level_security.sql:4124: ERROR:  relation "trigger_rls_table" does not exist
+LINE 1: UPDATE trigger_rls_table SET value = 250 WHERE id = 2;
+               ^
+psql:pg_tests/compatible/row_level_security.sql:4127: ERROR:  relation "trigger_rls_table" does not exist
+LINE 1: UPDATE trigger_rls_table SET value = 175 WHERE id = 1;
+               ^
+psql:pg_tests/compatible/row_level_security.sql:4130: ERROR:  relation "trigger_rls_table" does not exist
+LINE 1: INSERT INTO trigger_rls_table VALUES (7, 700, 'bob');
+                    ^
+psql:pg_tests/compatible/row_level_security.sql:4138: ERROR:  permission denied for schema public
+psql:pg_tests/compatible/row_level_security.sql:4144: ERROR:  relation "trigger_rls_table" does not exist
+psql:pg_tests/compatible/row_level_security.sql:4147: ERROR:  relation "trigger_rls_table" does not exist
+LINE 1: INSERT INTO trigger_rls_table VALUES (8, 800, 'bob');
+                    ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:4153: ERROR:  relation "trigger_rls_table" does not exist
+LINE 1: SELECT * FROM trigger_rls_table WHERE owner = 'alice' ORDER ...
+                      ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:4164: ERROR:  permission denied for schema public
+psql:pg_tests/compatible/row_level_security.sql:4170: ERROR:  relation "trigger_rls_table" does not exist
+psql:pg_tests/compatible/row_level_security.sql:4173: ERROR:  relation "trigger_rls_table" does not exist
+LINE 1: INSERT INTO trigger_rls_table VALUES (9, 900, 'alice');
+                    ^
+psql:pg_tests/compatible/row_level_security.sql:4183: ERROR:  permission denied for schema public
+psql:pg_tests/compatible/row_level_security.sql:4189: ERROR:  relation "trigger_rls_table" does not exist
+psql:pg_tests/compatible/row_level_security.sql:4192: ERROR:  relation "trigger_rls_table" does not exist
+LINE 1: UPDATE trigger_rls_table SET value = 600 WHERE id = 5;
+               ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:4198: ERROR:  relation "trigger_rls_table" does not exist
+LINE 1: INSERT INTO trigger_rls_table VALUES (10, 1000, 'alice');
+                    ^
+psql:pg_tests/compatible/row_level_security.sql:4201: ERROR:  relation "trigger_rls_table" does not exist
+LINE 1: SELECT * FROM trigger_rls_table WHERE id = 10;
+                      ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:4207: ERROR:  relation "trigger_rls_table" does not exist
+LINE 1: SELECT * FROM trigger_rls_table ORDER BY id;
+                      ^
+psql:pg_tests/compatible/row_level_security.sql:4210: ERROR:  relation "trigger_rls_table" does not exist
+psql:pg_tests/compatible/row_level_security.sql:4211: ERROR:  relation "trigger_rls_table" does not exist
+psql:pg_tests/compatible/row_level_security.sql:4212: ERROR:  could not find a function named "change_owner_to_bob"
+psql:pg_tests/compatible/row_level_security.sql:4213: ERROR:  could not find a function named "change_updated_owner_to_bob"
+psql:pg_tests/compatible/row_level_security.sql:4214: ERROR:  relation "trigger_rls_table" does not exist
+psql:pg_tests/compatible/row_level_security.sql:4215: ERROR:  relation "trigger_rls_table" does not exist
+psql:pg_tests/compatible/row_level_security.sql:4216: ERROR:  relation "trigger_rls_table" does not exist
+psql:pg_tests/compatible/row_level_security.sql:4217: ERROR:  could not find a function named "log_value_changes"
+DROP FUNCTION
+psql:pg_tests/compatible/row_level_security.sql:4219: ERROR:  could not find a function named "try_bypass_rls"
+psql:pg_tests/compatible/row_level_security.sql:4220: ERROR:  table "trigger_rls_table" does not exist
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+ rolbypassrls 
+--------------
+ t
+ f
+(2 rows)
+
+ rolbypassrls 
+--------------
+ f
+(1 row)
+
+ rolbypassrls 
+--------------
+ t
+ f
+(2 rows)
+
+ rolbypassrls 
+--------------
+ f
+(1 row)
+
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+ rolcreaterole 
+---------------
+ t
+ f
+(2 rows)
+
+ rolcreaterole 
+---------------
+ f
+(1 row)
+
+ rolcreaterole 
+---------------
+ t
+ f
+(2 rows)
+
+ rolcreaterole 
+---------------
+ f
+(1 row)
+
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+ rolcreatedb 
+-------------
+ t
+ f
+(2 rows)
+
+ rolcreatedb 
+-------------
+ f
+(1 row)
+
+ rolcreatedb 
+-------------
+ t
+ f
+(2 rows)
+
+ rolcreatedb 
+-------------
+ f
+(1 row)
+
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE TABLE
+CREATE SEQUENCE
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE POLICY
+psql:pg_tests/compatible/row_level_security.sql:4345: ERROR:  cannot drop function func_using_old(integer) because other objects depend on it
+DETAIL:  policy test_policy on table dep_test depends on function func_using_old(integer)
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+psql:pg_tests/compatible/row_level_security.sql:4348: ERROR:  cannot drop sequence seq_with_check because other objects depend on it
+DETAIL:  policy test_policy on table dep_test depends on sequence seq_with_check
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ALTER POLICY
+psql:pg_tests/compatible/row_level_security.sql:4354: ERROR:  cannot drop sequence seq_with_check because other objects depend on it
+DETAIL:  policy test_policy on table dep_test depends on sequence seq_with_check
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+DROP FUNCTION
+psql:pg_tests/compatible/row_level_security.sql:4360: ERROR:  cannot drop function func_using_new(integer) because other objects depend on it
+DETAIL:  policy test_policy on table dep_test depends on function func_using_new(integer)
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+DROP TABLE
+DROP SEQUENCE
+DROP FUNCTION
+CREATE ROLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 2
+GRANT
+ALTER TABLE
+CREATE POLICY
+SET
+ x | y | alice_has_access 
+---+---+------------------
+(0 rows)
+
+psql:pg_tests/compatible/row_level_security.sql:4403: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM t WHERE y = 20 AND ARRAY[1,2,3][10] = 1;
+                                                     ^
+psql:pg_tests/compatible/row_level_security.sql:4406: ERROR:  syntax error at or near "["
+LINE 1: UPDATE t SET y = y WHERE y = 20 AND ARRAY[1,2,3][10] = 1 RET...
+                                                        ^
+psql:pg_tests/compatible/row_level_security.sql:4409: ERROR:  permission denied for schema public
+psql:pg_tests/compatible/row_level_security.sql:4412: ERROR:  function fail() does not exist
+LINE 1: DELETE FROM t WHERE y = 20 AND fail() = 1 RETURNING *;
+                                       ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/row_level_security.sql:4421: ERROR:  permission denied for schema public
+psql:pg_tests/compatible/row_level_security.sql:4424: ERROR:  function divbyzero() does not exist
+LINE 1: SELECT * FROM t WHERE y = 10 AND divbyzero() = 1;
+                                         ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/row_level_security.sql:4427: ERROR:  function divbyzero() does not exist
+LINE 1: SELECT * FROM t WHERE y = 20 AND divbyzero() = 1;
+                                         ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/row_level_security.sql:4430: ERROR:  invalid regular expression: parentheses () not balanced
+ x | y | alice_has_access 
+---+---+------------------
+(0 rows)
+
+UPDATE 0
+ x | y | alice_has_access 
+---+---+------------------
+(0 rows)
+
+DELETE 0
+psql:pg_tests/compatible/row_level_security.sql:4442: ERROR:  new row violates row-level security policy for table "t"
+RESET
+DROP TABLE
+psql:pg_tests/compatible/row_level_security.sql:4451: ERROR:  could not find a function named "fail"
+DROP ROLE
+CREATE TABLE
+psql:pg_tests/compatible/row_level_security.sql:4460: ERROR:  unrecognized configuration parameter "allow_view_with_security_invoker_clause"
+CREATE VIEW
+ALTER VIEW
+DROP VIEW
+DROP TABLE
+psql:pg_tests/compatible/row_level_security.sql:4475: ERROR:  unrecognized configuration parameter "allow_view_with_security_invoker_clause"
+CREATE ROLE
+CREATE TABLE
+INSERT 0 2
+ALTER TABLE
+GRANT
+SET
+ id | owner | balance 
+----+-------+---------
+(0 rows)
+
+SET
+psql:pg_tests/compatible/row_level_security.sql:4508: ERROR:  query would be affected by row-level security policy for table "accounts"
+RESET
+SET
+psql:pg_tests/compatible/row_level_security.sql:4518: ERROR:  syntax error at or near "("
+LINE 2:   USING (owner = current_user());
+                                     ^
+SET
+ id | owner | balance 
+----+-------+---------
+(0 rows)
+
+SET
+psql:pg_tests/compatible/row_level_security.sql:4530: ERROR:  query would be affected by row-level security policy for table "accounts"
+RESET
+psql:pg_tests/compatible/row_level_security.sql:4536: ERROR:  new row violates row-level security policy for table "accounts"
+UPDATE 0
+SET
+psql:pg_tests/compatible/row_level_security.sql:4545: ERROR:  query would be affected by row-level security policy for table "accounts"
+psql:pg_tests/compatible/row_level_security.sql:4548: ERROR:  query would be affected by row-level security policy for table "accounts"
+RESET
+DELETE 0
+psql:pg_tests/compatible/row_level_security.sql:4557: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO accounts VALUES (3, 'alice', 400);
+        ^
+SET
+psql:pg_tests/compatible/row_level_security.sql:4563: ERROR:  query would be affected by row-level security policy for table "accounts"
+psql:pg_tests/compatible/row_level_security.sql:4566: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO accounts VALUES (6, 'alice', 600);
+        ^
+RESET
+SET
+ALTER TABLE
+SET
+psql:pg_tests/compatible/row_level_security.sql:4581: ERROR:  policy "user_is_owner" for table "accounts" does not exist
+CREATE POLICY
+ id | owner | balance 
+----+-------+---------
+  1 | alice |     100
+  2 | bob   |     200
+(2 rows)
+
+SET
+ id | owner | balance 
+----+-------+---------
+  1 | alice |     100
+  2 | bob   |     200
+(2 rows)
+
+RESET
+ALTER TABLE
+ id | owner | balance 
+----+-------+---------
+(0 rows)
+
+SET
+psql:pg_tests/compatible/row_level_security.sql:4608: ERROR:  query would be affected by row-level security policy for table "accounts"
+HINT:  To disable the policy for the table's owner, use ALTER TABLE NO FORCE ROW LEVEL SECURITY.
+RESET
+SET
+SET
+ id | owner | balance 
+----+-------+---------
+  1 | alice |     100
+  2 | bob   |     200
+(2 rows)
+
+RESET
+CREATE TABLE
+INSERT 0 2
+GRANT
+SET
+SET
+ id 
+----
+  1
+  2
+(2 rows)
+
+SET
+DROP TABLE
+DROP ROLE
+psql:pg_tests/compatible/row_level_security.sql:4653: ERROR:  syntax error at or near "row_security"
+LINE 1: RESET SESSION row_security;
+                      ^
+CREATE TABLE
+CREATE ROLE
+GRANT
+ALTER TABLE
+ALTER TABLE
+SET
+CREATE POLICY
+psql:pg_tests/compatible/row_level_security.sql:4684: ERROR:  permission denied for schema public
+psql:pg_tests/compatible/row_level_security.sql:4687: ERROR:  procedure p158154() does not exist
+LINE 1: CALL p158154();
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+DROP POLICY
+ALTER TABLE
+psql:pg_tests/compatible/row_level_security.sql:4694: ERROR:  procedure p158154() does not exist
+LINE 1: CALL p158154();
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+SET
+psql:pg_tests/compatible/row_level_security.sql:4700: ERROR:  could not find a procedure named "p158154"
+DROP TABLE
+DROP ROLE

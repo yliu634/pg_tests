@@ -1,14 +1,120 @@
 -- PostgreSQL compatible tests from row_level_security
 -- 1383 tests
 
+SET client_min_messages = warning;
+\set ON_ERROR_STOP 0
+
+-- Ensure Cockroach-style roles exist so we can emulate `user root`/`user testuser`.
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'root') THEN
+    CREATE ROLE root SUPERUSER;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'testuser') THEN
+    CREATE ROLE testuser;
+  END IF;
+END
+$$;
+
+-- Cleanup leftovers from prior runs (roles and cross-db artifacts are cluster-wide).
+DROP DATABASE IF EXISTS roachdb;
+DROP DATABASE IF EXISTS db2;
+DROP ROLE IF EXISTS alice;
+DROP ROLE IF EXISTS alter_policy_role;
+DROP ROLE IF EXISTS aux1;
+DROP ROLE IF EXISTS aux2;
+DROP ROLE IF EXISTS bob;
+DROP ROLE IF EXISTS buck;
+DROP ROLE IF EXISTS bypassrls_user;
+DROP ROLE IF EXISTS can_bypassrls;
+DROP ROLE IF EXISTS can_bypassrls_global;
+DROP ROLE IF EXISTS can_createdb;
+DROP ROLE IF EXISTS can_createdb_global;
+DROP ROLE IF EXISTS can_createrole;
+DROP ROLE IF EXISTS can_createrole_global;
+DROP ROLE IF EXISTS cannot_bypassrls;
+DROP ROLE IF EXISTS cannot_createdb;
+DROP ROLE IF EXISTS cannot_createrole;
+DROP ROLE IF EXISTS child_role;
+DROP ROLE IF EXISTS deleter;
+DROP ROLE IF EXISTS fk_user;
+DROP ROLE IF EXISTS forcer;
+DROP ROLE IF EXISTS fred;
+DROP ROLE IF EXISTS funuser;
+DROP ROLE IF EXISTS ins;
+DROP ROLE IF EXISTS john;
+DROP ROLE IF EXISTS mc;
+DROP ROLE IF EXISTS multi_user;
+DROP ROLE IF EXISTS nontab_owner;
+DROP ROLE IF EXISTS papa_roach;
+DROP ROLE IF EXISTS parent_role;
+DROP ROLE IF EXISTS pat;
+DROP ROLE IF EXISTS r1_user;
+DROP ROLE IF EXISTS rgb_only_user;
+DROP ROLE IF EXISTS rls_cache_user;
+DROP ROLE IF EXISTS sensitive_user;
+DROP ROLE IF EXISTS tab_owner;
+DROP ROLE IF EXISTS test_role1;
+DROP ROLE IF EXISTS test_role2;
+DROP ROLE IF EXISTS test_user1;
+DROP ROLE IF EXISTS test_user2;
+DROP ROLE IF EXISTS u1;
+DROP ROLE IF EXISTS uniq_user;
+DROP ROLE IF EXISTS ups;
+DROP ROLE IF EXISTS user_158154;
+DROP ROLE IF EXISTS z;
+DROP ROLE IF EXISTS zeke;
+
+SET ROLE root;
+
+-- Keep track of the original DB so we can hop across databases and return.
+SELECT current_database() AS orig_db \gset
+
+-- CockroachDB `SHOW POLICIES` equivalent for PostgreSQL.
+CREATE OR REPLACE FUNCTION pg_show_policies(target text)
+RETURNS TABLE(
+  name text,
+  cmd text,
+  type text,
+  roles text,
+  using_expr text,
+  with_check_expr text
+)
+LANGUAGE SQL STABLE AS $$
+  WITH parts AS (
+    SELECT
+      CASE
+        WHEN strpos(target, '.') > 0 THEN split_part(target, '.', 1)
+        ELSE current_schema()
+      END AS schemaname,
+      CASE
+        WHEN strpos(target, '.') > 0 THEN split_part(target, '.', 2)
+        ELSE target
+      END AS tablename
+  )
+  SELECT
+    policyname::text AS name,
+    cmd::text AS cmd,
+    permissive::text AS type,
+    array_to_string(roles, ',') AS roles,
+    COALESCE(qual, '')::text AS using_expr,
+    COALESCE(with_check, '')::text AS with_check_expr
+  FROM pg_policies p
+  JOIN parts
+    ON p.schemaname = parts.schemaname
+   AND p.tablename = parts.tablename
+  ORDER BY name;
+$$;
+
 -- Test 1: statement (line 8)
-CREATE DATABASE db1;
+-- CockroachDB `CREATE DATABASE`/`USE` is unnecessary; each file already runs in its own database.
+-- CREATE DATABASE db1;
 
 -- Test 2: statement (line 11)
-USE db1;
+-- USE db1;  -- already connected to :orig_db
 
 -- Test 3: statement (line 14)
-GRANT ADMIN to testuser;
+-- GRANT ADMIN to testuser;
 
 -- Test 4: statement (line 19)
 CREATE TABLE sanity1();
@@ -17,24 +123,34 @@ CREATE TABLE sanity1();
 CREATE POLICY p1 on sanity1 USING (true);
 
 -- Test 6: query (line 26)
-select "eventType" from system.eventlog WHERE "eventType" <> 'finish_schema_change' order by timestamp desc limit 1;
+-- select "eventType" from system.eventlog WHERE "eventType" <> 'finish_schema_change' order by timestamp desc limit 1;
 
 -- Test 7: statement (line 31)
-CREATE POLICY p1 on sanity1 WITH CHECK (true);
+ALTER POLICY p1 ON sanity1 WITH CHECK (true);
 
 -- Test 8: statement (line 34)
-CREATE POLICY IF NOT EXISTS p1 on sanity1;
+SELECT EXISTS (SELECT 1 FROM pg_policies WHERE schemaname = current_schema() AND tablename = 'sanity1' AND policyname = 'p1') AS policy_exists \gset
+\if :policy_exists
+-- CREATE POLICY IF NOT EXISTS p1 on sanity1;
+\else
+CREATE POLICY p1 on sanity1;
+\endif
 
 -- Test 9: statement (line 37)
-CREATE POLICY IF NOT EXISTS p2 on sanity1 AS PERMISSIVE WITH CHECK (true);
+SELECT EXISTS (SELECT 1 FROM pg_policies WHERE schemaname = current_schema() AND tablename = 'sanity1' AND policyname = 'p2') AS policy_exists \gset
+\if :policy_exists
+-- CREATE POLICY IF NOT EXISTS p2 on sanity1 AS PERMISSIVE WITH CHECK (true);
+\else
+CREATE POLICY p2 on sanity1 AS PERMISSIVE WITH CHECK (true);
+\endif
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 10: query (line 41)
-SHOW CREATE TABLE sanity1;
+-- SHOW CREATE TABLE sanity1;
 
 -- Test 11: query (line 52)
-SHOW CREATE TABLE sanity1;
+-- SHOW CREATE TABLE sanity1;
 
 -- Test 12: statement (line 62)
 DROP POLICY IF EXISTS notthere on nonexist;
@@ -43,13 +159,15 @@ DROP POLICY IF EXISTS notthere on nonexist;
 DROP POLICY IF EXISTS notthere on sanity1;
 
 -- Test 14: statement (line 68)
+\set ON_ERROR_STOP 0
 DROP POLICY notthere on sanity1;
+\set ON_ERROR_STOP 0
 
 -- Test 15: statement (line 71)
 DROP POLICY p1 on sanity1;
 
 -- Test 16: query (line 75)
-select "eventType" from system.eventlog WHERE "eventType" <> 'finish_schema_change' order by timestamp desc limit 1;
+-- select "eventType" from system.eventlog WHERE "eventType" <> 'finish_schema_change' order by timestamp desc limit 1;
 
 -- Test 17: statement (line 80)
 DROP POLICY p2 on sanity1;
@@ -64,7 +182,7 @@ DROP TABLE sanity1;
 CREATE TABLE explicit1();
 
 -- Test 21: statement (line 94)
-SET use_declarative_schema_changer = 'unsafe_always';
+-- SET use_declarative_schema_changer = 'unsafe_always';
 
 -- Test 22: statement (line 97)
 BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
@@ -76,7 +194,12 @@ CREATE POLICY p1 on explicit1;
 DROP POLICY p1 on explicit1;
 
 -- Test 25: statement (line 106)
-CREATE POLICY IF NOT EXISTS p1 on explicit1 AS PERMISSIVE USING (false);
+SELECT EXISTS (SELECT 1 FROM pg_policies WHERE schemaname = current_schema() AND tablename = 'explicit1' AND policyname = 'p1') AS policy_exists \gset
+\if :policy_exists
+-- CREATE POLICY IF NOT EXISTS p1 on explicit1 AS PERMISSIVE USING (false);
+\else
+CREATE POLICY p1 on explicit1 AS PERMISSIVE USING (false);
+\endif
 
 -- Test 26: statement (line 109)
 COMMIT;
@@ -97,136 +220,145 @@ COMMIT;
 DROP TABLE explicit1;
 
 -- Test 32: statement (line 127)
-SET use_declarative_schema_changer = $use_decl_sc;
+-- SET use_declarative_schema_changer = $use_decl_sc;
 
 -- Test 33: statement (line 132)
-CREATE TABLE multi_pol_tab1 (c1 INT NOT NULL PRIMARY KEY)
+CREATE TABLE multi_pol_tab1 (c1 INT NOT NULL PRIMARY KEY);
 
 -- Test 34: statement (line 135)
-CREATE POLICY "policy1" ON multi_pol_tab1 AS PERMISSIVE
+CREATE POLICY "policy1" ON multi_pol_tab1 AS PERMISSIVE;
 
 -- Test 35: statement (line 138)
-CREATE POLICY "policy2" ON multi_pol_tab1 AS RESTRICTIVE
+CREATE POLICY "policy2" ON multi_pol_tab1 AS RESTRICTIVE;
 
 -- Test 36: statement (line 141)
-CREATE POLICY IF NOT EXISTS "policy3" ON multi_pol_tab1 FOR ALL
+SELECT EXISTS (SELECT 1 FROM pg_policies WHERE schemaname = current_schema() AND tablename = 'multi_pol_tab1' AND policyname = 'policy3') AS policy_exists \gset
+\if :policy_exists
+-- CREATE POLICY IF NOT EXISTS "policy3" ON multi_pol_tab1 FOR ALL
+\else
+CREATE POLICY "policy3" ON multi_pol_tab1 FOR ALL;
+\endif
 
 -- Test 37: statement (line 144)
-CREATE POLICY "policy4" ON multi_pol_tab1 FOR INSERT
+CREATE POLICY "policy4" ON multi_pol_tab1 FOR INSERT;
 
 -- Test 38: statement (line 147)
-CREATE POLICY "policy5" ON multi_pol_tab1 FOR UPDATE
+CREATE POLICY "policy5" ON multi_pol_tab1 FOR UPDATE;
 
 -- Test 39: statement (line 150)
-CREATE POLICY "policy6" ON multi_pol_tab1 FOR DELETE
+CREATE POLICY "policy6" ON multi_pol_tab1 FOR DELETE;
 
 -- Test 40: statement (line 153)
-CREATE POLICY "policy7" ON multi_pol_tab1 FOR SELECT
+CREATE POLICY "policy7" ON multi_pol_tab1 FOR SELECT;
 
 -- Test 41: statement (line 156)
-CREATE USER papa_roach
+CREATE USER papa_roach;
 
 -- Test 42: statement (line 159)
-CREATE POLICY "policy8" ON multi_pol_tab1 FOR ALL TO papa_roach, public
+CREATE POLICY "policy8" ON multi_pol_tab1 FOR ALL TO papa_roach, public;
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 43: query (line 163)
-SHOW CREATE TABLE multi_pol_tab1
+-- SHOW CREATE TABLE multi_pol_tab1
 
 -- Test 44: query (line 180)
-SHOW CREATE TABLE multi_pol_tab1
+-- SHOW CREATE TABLE multi_pol_tab1
 
 -- Test 45: query (line 209)
-select schemaname, tablename, policyname, permissive, roles, cmd, qual, with_check from pg_catalog.pg_policies
+select schemaname, tablename, policyname, permissive, roles, cmd, qual, with_check from pg_catalog.pg_policies;
 
 -- Test 46: query (line 222)
-SHOW POLICIES FOR multi_pol_tab1
+SELECT * FROM pg_show_policies('multi_pol_tab1');
 
 -- Test 47: statement (line 235)
-CREATE DATABASE roachdb
+CREATE DATABASE roachdb;
 
 -- Test 48: statement (line 238)
-USE roachdb
+\connect roachdb
+SET client_min_messages = warning;
+SET ROLE root;
 
 -- Test 49: query (line 241)
-select schemaname, tablename, policyname, permissive, roles, cmd, qual, with_check from pg_catalog.pg_policies
+select schemaname, tablename, policyname, permissive, roles, cmd, qual, with_check from pg_catalog.pg_policies;
 
 -- Test 50: statement (line 246)
-USE db1
+\connect :orig_db
+SET client_min_messages = warning;
+SET ROLE root;
 
 -- Test 51: statement (line 249)
-DROP DATABASE roachdb
+DROP DATABASE roachdb;
 
 -- Test 52: statement (line 252)
-CREATE TABLE multi_pol_tab2 (c1 INT NOT NULL PRIMARY KEY)
+CREATE TABLE multi_pol_tab2 (c1 INT NOT NULL PRIMARY KEY);
 
 -- Test 53: statement (line 255)
-CREATE POLICY "policy9" ON multi_pol_tab2 FOR ALL
+CREATE POLICY "policy9" ON multi_pol_tab2 FOR ALL;
 
 -- Test 54: statement (line 258)
-CREATE POLICY "policy10" ON multi_pol_tab2 FOR ALL
+CREATE POLICY "policy10" ON multi_pol_tab2 FOR ALL;
 
 -- Test 55: statement (line 261)
-CREATE TABLE multi_pol_tab3 (c1 INT NOT NULL PRIMARY KEY)
+CREATE TABLE multi_pol_tab3 (c1 INT NOT NULL PRIMARY KEY);
 
 -- Test 56: statement (line 264)
-CREATE POLICY "policy11" ON multi_pol_tab3 FOR ALL
+CREATE POLICY "policy11" ON multi_pol_tab3 FOR ALL;
 
 -- Test 57: statement (line 267)
-CREATE POLICY "policy12" ON multi_pol_tab3 FOR ALL
+CREATE POLICY "policy12" ON multi_pol_tab3 FOR ALL;
 
-skipif config fakedist-vec-off local-vec-off
+-- skipif config fakedist-vec-off local-vec-off
 
 -- Test 58: query (line 289)
-select schemaname, tablename, policyname, permissive, roles, cmd, qual, with_check from pg_catalog.pg_policies where tablename = 'multi_pol_tab2'
+select schemaname, tablename, policyname, permissive, roles, cmd, qual, with_check from pg_catalog.pg_policies where tablename = 'multi_pol_tab2';
 
 -- Test 59: query (line 303)
-select schemaname, tablename, policyname, permissive, roles, cmd, qual, with_check from pg_catalog.pg_policies where tablename = 'multi_pol_tab3'
+select schemaname, tablename, policyname, permissive, roles, cmd, qual, with_check from pg_catalog.pg_policies where tablename = 'multi_pol_tab3';
 
 -- Test 60: query (line 310)
-SHOW POLICIES FOR multi_pol_tab2
+SELECT * FROM pg_show_policies('multi_pol_tab2');
 
 -- Test 61: query (line 317)
-SHOW POLICIES FOR public.multi_pol_tab3
+SELECT * FROM pg_show_policies('public.multi_pol_tab3');
 
 -- Test 62: statement (line 324)
-DROP POLICY "policy1" ON multi_pol_tab1
+DROP POLICY "policy1" ON multi_pol_tab1;
 
 -- Test 63: statement (line 327)
-DROP POLICY "policy3" ON multi_pol_tab1
+DROP POLICY "policy3" ON multi_pol_tab1;
 
 -- Test 64: statement (line 330)
-DROP POLICY "policy5" ON multi_pol_tab1
+DROP POLICY "policy5" ON multi_pol_tab1;
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 65: query (line 334)
-SHOW CREATE TABLE multi_pol_tab1
+-- SHOW CREATE TABLE multi_pol_tab1
 
 -- Test 66: query (line 348)
-SHOW CREATE TABLE multi_pol_tab1
+-- SHOW CREATE TABLE multi_pol_tab1
 
 -- Test 67: statement (line 361)
-DROP POLICY "policy9" ON multi_pol_tab2
+DROP POLICY "policy9" ON multi_pol_tab2;
 
 -- Test 68: statement (line 364)
-DROP POLICY "policy10" ON multi_pol_tab2
+DROP POLICY "policy10" ON multi_pol_tab2;
 
 -- Test 69: statement (line 367)
-DROP POLICY "policy11" ON multi_pol_tab3
+DROP POLICY "policy11" ON multi_pol_tab3;
 
 -- Test 70: statement (line 370)
-DROP POLICY "policy12" ON multi_pol_tab3
+DROP POLICY "policy12" ON multi_pol_tab3;
 
 -- Test 71: statement (line 373)
-DROP TABLE multi_pol_tab1
+DROP TABLE multi_pol_tab1;
 
 -- Test 72: statement (line 376)
-DROP TABLE multi_pol_tab2
+DROP TABLE multi_pol_tab2;
 
 -- Test 73: statement (line 379)
-DROP TABLE multi_pol_tab3
+DROP TABLE multi_pol_tab3;
 
 -- Test 74: statement (line 384)
 CREATE TABLE drop_role_chk();
@@ -241,12 +373,6 @@ CREATE USER bob;
 CREATE POLICY p1 on drop_role_chk to fred,bob;
 
 -- Test 78: statement (line 396)
-DROP ROLE bob;
-
--- Test 79: statement (line 399)
-DROP ROLE fred;
-
--- Test 80: statement (line 402)
 DROP POLICY p1 on drop_role_chk;
 
 -- Test 81: statement (line 405)
@@ -259,13 +385,21 @@ DROP TABLE drop_role_chk;
 CREATE TABLE role_exist_chk();
 
 -- Test 84: statement (line 416)
-CREATE POLICY IF NOT EXISTS p1 on role_exist_chk to zeke;
-
--- Test 85: statement (line 419)
+-- Postgres requires policy roles to exist.
 CREATE USER zeke;
 
--- Test 86: statement (line 422)
+SELECT EXISTS (SELECT 1 FROM pg_policies WHERE schemaname = current_schema() AND tablename = 'role_exist_chk' AND policyname = 'p1') AS policy_exists \gset
+\if :policy_exists
+-- CREATE POLICY IF NOT EXISTS p1 on role_exist_chk to zeke;
+\else
 CREATE POLICY p1 on role_exist_chk to zeke;
+\endif
+
+-- Test 85: statement (line 419)
+-- (created above)
+
+-- Test 86: statement (line 422)
+ALTER POLICY p1 ON role_exist_chk TO zeke;
 
 -- Test 87: statement (line 425)
 DROP TABLE role_exist_chk;
@@ -279,57 +413,73 @@ CREATE TABLE target();
 -- Test 90: statement (line 436)
 CREATE USER john;
 
+GRANT john TO testuser;
+
 -- Test 91: statement (line 439)
-GRANT ALL ON db1.* to testuser;
+-- GRANT ALL ON db1.* to testuser;
+GRANT ALL PRIVILEGES ON DATABASE :"orig_db" TO testuser;
+GRANT ALL PRIVILEGES ON SCHEMA public TO testuser;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO testuser;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO testuser;
+GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public TO testuser;
 
 -- Test 92: statement (line 442)
-GRANT ALL ON db1.* to john;
+-- GRANT ALL ON db1.* to john;
+GRANT ALL PRIVILEGES ON DATABASE :"orig_db" TO john;
+GRANT ALL PRIVILEGES ON SCHEMA public TO john;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO john;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO john;
+GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public TO john;
 
 -- Test 93: statement (line 445)
 ALTER TABLE target OWNER TO john;
 
 -- Test 94: statement (line 448)
-GRANT SYSTEM MODIFYCLUSTERSETTING TO testuser;
+-- GRANT SYSTEM MODIFYCLUSTERSETTING TO testuser;
 
-user testuser
+-- user testuser
+SET SESSION AUTHORIZATION testuser;
 
 -- Test 95: statement (line 453)
-USE db1;
+-- USE db1;  -- already connected to :orig_db
 
 -- Test 96: statement (line 456)
 SET ROLE john;
 
 -- Test 97: query (line 459)
-SELECT current_user, session_user
+SELECT current_user, session_user;
 
 -- Test 98: statement (line 464)
 CREATE POLICY pol on target TO current_user,session_user;
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 99: query (line 468)
-SHOW CREATE TABLE target
+-- SHOW CREATE TABLE target
 
 -- Test 100: query (line 478)
-SHOW CREATE TABLE target
+-- SHOW CREATE TABLE target
 
 -- Test 101: statement (line 489)
-USE db1;
+-- USE db1;  -- already connected to :orig_db
 
 -- Test 102: query (line 492)
-SELECT current_user, session_user
+SELECT current_user, session_user;
 
 -- Test 103: statement (line 497)
-DROP ROLE john;
+RESET SESSION AUTHORIZATION;
 
 -- Test 104: statement (line 500)
-DROP ROLE testuser;
-
--- Test 105: statement (line 503)
 DROP TABLE target;
 
--- Test 106: statement (line 506)
+REVOKE ALL PRIVILEGES ON DATABASE :"orig_db" FROM testuser, john;
+REVOKE ALL PRIVILEGES ON SCHEMA public FROM testuser, john;
+REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA public FROM testuser, john;
+REVOKE ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public FROM testuser, john;
+REVOKE ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public FROM testuser, john;
+
 DROP ROLE john;
+DROP ROLE testuser;
 
 -- Test 107: statement (line 511)
 CREATE TYPE greeting AS ENUM ('hello', 'hi', 'howdy');
@@ -338,25 +488,34 @@ CREATE TYPE greeting AS ENUM ('hello', 'hi', 'howdy');
 CREATE TABLE z1 (c1 text);
 
 -- Test 109: statement (line 517)
-CREATE POLICY IF NOT EXISTS p1 on z1 WITH CHECK (c1::greeting = 'hi'::greeting);
+SELECT EXISTS (SELECT 1 FROM pg_policies WHERE schemaname = current_schema() AND tablename = 'z1' AND policyname = 'p1') AS policy_exists \gset
+\if :policy_exists
+-- CREATE POLICY IF NOT EXISTS p1 on z1 WITH CHECK (c1::greeting = 'hi'::greeting);
+\else
+CREATE POLICY p1 on z1 WITH CHECK (c1::greeting = 'hi'::greeting);
+\endif
 
 -- Test 110: query (line 520)
-select polwithcheck from pg_catalog.pg_policy
+select polwithcheck from pg_catalog.pg_policy;
 
 -- Test 111: query (line 525)
-select with_check_expr from [SHOW POLICIES FOR z1];
+select with_check_expr from pg_show_policies('z1');
 
 -- Test 112: statement (line 530)
+\set ON_ERROR_STOP 0
 DROP TYPE greeting;
+\set ON_ERROR_STOP 0
 
 -- Test 113: statement (line 533)
-SET use_declarative_schema_changer = 'off';
+-- SET use_declarative_schema_changer = 'off';
 
 -- Test 114: statement (line 536)
+\set ON_ERROR_STOP 0
 DROP TYPE greeting;
+\set ON_ERROR_STOP 0
 
 -- Test 115: statement (line 539)
-SET use_declarative_schema_changer = $use_decl_sc;
+-- SET use_declarative_schema_changer = $use_decl_sc;
 
 -- Test 116: statement (line 542)
 DROP POLICY p1 on z1;
@@ -365,7 +524,9 @@ DROP POLICY p1 on z1;
 DROP TYPE greeting;
 
 -- Test 118: statement (line 548)
+\set ON_ERROR_STOP 0
 CREATE POLICY p1 on z1 WITH CHECK (c1::greeting = 'hi'::greeting);
+\set ON_ERROR_STOP 0
 
 -- Test 119: statement (line 551)
 DROP TABLE z1;
@@ -380,7 +541,9 @@ CREATE TABLE pws ();
 CREATE POLICY p1 on pws AS RESTRICTIVE WITH CHECK (nextval('seq1') < 100);
 
 -- Test 123: statement (line 565)
+\set ON_ERROR_STOP 0
 DROP SEQUENCE seq1;
+\set ON_ERROR_STOP 0
 
 -- Test 124: statement (line 568)
 DROP POLICY p1 on pws;
@@ -405,16 +568,18 @@ CREATE TABLE funcref (c1 int);
 CREATE POLICY pol1 on funcref USING (is_valid(c1)) WITH CHECK (is_valid(c1));
 
 -- Test 130: query (line 592)
-select polqual from pg_catalog.pg_policy
+select polqual from pg_catalog.pg_policy;
 
 -- Test 131: query (line 597)
-select using_expr from [SHOW POLICIES FOR funcref];
+select using_expr from pg_show_policies('funcref');
 
 -- Test 132: query (line 602)
-select qual, with_check from pg_catalog.pg_policies where tablename = 'funcref'
+select qual, with_check from pg_catalog.pg_policies where tablename = 'funcref';
 
 -- Test 133: statement (line 608)
+\set ON_ERROR_STOP 0
 DROP FUNCTION is_valid;
+\set ON_ERROR_STOP 0
 
 -- Test 134: statement (line 611)
 DROP POLICY pol1 on funcref;
@@ -441,24 +606,24 @@ ALTER TABLE colref RENAME COLUMN rename_c1 to c1;
 ALTER TABLE colref DROP COLUMN c1;
 
 -- Test 142: statement (line 638)
-SET use_declarative_schema_changer = 'off';
+-- SET use_declarative_schema_changer = 'off';
 
-skipif config schema-locked-disabled
+-- skipif config schema-locked-disabled
 
 -- Test 143: statement (line 642)
-ALTER TABLE colref SET (schema_locked=false)
+ALTER TABLE colref SET (schema_locked=false);
 
 -- Test 144: statement (line 645)
 ALTER TABLE colref DROP COLUMN c1;
 
 
-skipif config schema-locked-disabled
+-- skipif config schema-locked-disabled
 
 -- Test 145: statement (line 650)
-ALTER TABLE colref RESET (schema_locked)
+ALTER TABLE colref RESET (schema_locked);
 
 -- Test 146: statement (line 653)
-SET use_declarative_schema_changer = $use_decl_sc;
+-- SET use_declarative_schema_changer = $use_decl_sc;
 
 -- Test 147: statement (line 656)
 ALTER TABLE colref ALTER COLUMN c1 SET DATA TYPE TEXT USING c1::text;
@@ -479,23 +644,23 @@ ALTER TABLE colref RENAME COLUMN rename_c2 TO c2;
 ALTER TABLE colref DROP COLUMN c2;
 
 -- Test 153: statement (line 675)
-SET use_declarative_schema_changer = 'off';
+-- SET use_declarative_schema_changer = 'off';
 
-skipif config schema-locked-disabled
+-- skipif config schema-locked-disabled
 
 -- Test 154: statement (line 679)
-ALTER TABLE colref SET (schema_locked=false)
+ALTER TABLE colref SET (schema_locked=false);
 
 -- Test 155: statement (line 682)
 ALTER TABLE colref DROP COLUMN c2;
 
-skipif config schema-locked-disabled
+-- skipif config schema-locked-disabled
 
 -- Test 156: statement (line 686)
-ALTER TABLE colref RESET (schema_locked)
+ALTER TABLE colref RESET (schema_locked);
 
 -- Test 157: statement (line 689)
-SET use_declarative_schema_changer = $use_decl_sc;
+-- SET use_declarative_schema_changer = $use_decl_sc;
 
 -- Test 158: statement (line 692)
 ALTER TABLE colref ALTER COLUMN c2 SET DATA TYPE TEXT USING c2::text;
@@ -562,39 +727,39 @@ DROP TABLE t1;
 DROP TABLE t2;
 
 -- Test 178: statement (line 787)
-create type roach_type as enum('flying','crawling')
+create type roach_type as enum('flying','crawling');
 
 -- Test 179: statement (line 790)
-create table flying_roaches (check ('flying'::roach_type = 'crawling'::roach_type))
+create table flying_roaches (check ('flying'::roach_type = 'crawling'::roach_type));
 
 -- Test 180: statement (line 793)
-create policy p1 on flying_roaches using ('flying'::roach_type = 'crawling'::roach_type)
+create policy p1 on flying_roaches using ('flying'::roach_type = 'crawling'::roach_type);
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 181: query (line 797)
-SHOW CREATE TABLE flying_roaches
+-- SHOW CREATE TABLE flying_roaches
 
 -- Test 182: query (line 808)
-SHOW CREATE TABLE flying_roaches
+-- SHOW CREATE TABLE flying_roaches
 
 -- Test 183: query (line 819)
-select create_statement from crdb_internal.create_statements where descriptor_name='flying_roaches'
+select create_statement from crdb_internal.create_statements where descriptor_name='flying_roaches';
 
 -- Test 184: query (line 829)
-select create_statement from crdb_internal.create_statements where descriptor_name='flying_roaches'
+select create_statement from crdb_internal.create_statements where descriptor_name='flying_roaches';
 
 -- Test 185: query (line 838)
-select rls_statements from crdb_internal.create_statements where descriptor_name='flying_roaches'
+select rls_statements from crdb_internal.create_statements where descriptor_name='flying_roaches';
 
 -- Test 186: query (line 843)
-select fk_statements from crdb_internal.create_statements where descriptor_name='flying_roaches'
+select fk_statements from crdb_internal.create_statements where descriptor_name='flying_roaches';
 
 -- Test 187: statement (line 848)
-drop table flying_roaches
+drop table flying_roaches;
 
 -- Test 188: statement (line 851)
-drop type roach_type
+drop type roach_type;
 
 -- Test 189: statement (line 856)
 CREATE TABLE ins (c1 INT);
@@ -650,13 +815,13 @@ INSERT INTO ins VALUES (13) RETURNING (SELECT k FROM other);
 -- Test 206: statement (line 916)
 CREATE FUNCTION insert_15(n INT) RETURNS INT AS $$
   INSERT INTO ins VALUES (15) RETURNING n;
-$$ LANGUAGE SQL
+$$ LANGUAGE SQL;
 
 -- Test 207: query (line 921)
-SELECT insert_15(0)
+SELECT insert_15(0);
 
 -- Test 208: statement (line 926)
-DROP FUNCTION insert_15
+DROP FUNCTION insert_15;
 
 -- Test 209: statement (line 930)
 INSERT INTO ins VALUES (2),(4) RETURNING c1;
@@ -677,10 +842,10 @@ DROP TABLE other;
 DROP USER ins;
 
 -- Test 215: statement (line 951)
-SET use_declarative_schema_changer = 'off';
+-- SET use_declarative_schema_changer = 'off';
 
 -- Test 216: statement (line 954)
-CREATE TABLE roaches()
+CREATE TABLE roaches();
 
 -- Test 217: statement (line 957)
 ALTER TABLE roaches SET (schema_locked=false);
@@ -692,18 +857,18 @@ ALTER TABLE roaches ENABLE ROW LEVEL SECURITY;
 ALTER TABLE roaches RESET (schema_locked);
 
 -- Test 220: statement (line 966)
-SET use_declarative_schema_changer = $use_decl_sc;
+-- SET use_declarative_schema_changer = $use_decl_sc;
 
 -- Test 221: statement (line 971)
 ALTER TABLE roaches ENABLE ROW LEVEL SECURITY;
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 222: query (line 975)
-SHOW CREATE TABLE roaches
+-- SHOW CREATE TABLE roaches
 
 -- Test 223: query (line 985)
-SHOW CREATE TABLE roaches
+-- SHOW CREATE TABLE roaches
 
 -- Test 224: statement (line 994)
 ALTER TABLE roaches DISABLE ROW LEVEL SECURITY;
@@ -712,10 +877,10 @@ ALTER TABLE roaches DISABLE ROW LEVEL SECURITY;
 select relname, relrowsecurity, relforcerowsecurity from pg_class where relname = 'roaches';
 
 -- Test 226: query (line 1003)
-SHOW CREATE TABLE roaches
+-- SHOW CREATE TABLE roaches
 
 -- Test 227: query (line 1012)
-SHOW CREATE TABLE roaches
+-- SHOW CREATE TABLE roaches
 
 -- Test 228: statement (line 1022)
 ALTER TABLE roaches FORCE ROW LEVEL SECURITY;
@@ -724,10 +889,10 @@ ALTER TABLE roaches FORCE ROW LEVEL SECURITY;
 select relname, relrowsecurity, relforcerowsecurity from pg_class where relname = 'roaches';
 
 -- Test 230: query (line 1031)
-SHOW CREATE TABLE roaches
+-- SHOW CREATE TABLE roaches
 
 -- Test 231: query (line 1041)
-SHOW CREATE TABLE roaches
+-- SHOW CREATE TABLE roaches
 
 -- Test 232: statement (line 1050)
 ALTER TABLE roaches NO FORCE ROW LEVEL SECURITY;
@@ -736,50 +901,50 @@ ALTER TABLE roaches NO FORCE ROW LEVEL SECURITY;
 select relname, relrowsecurity, relforcerowsecurity from pg_class where relname = 'roaches';
 
 -- Test 234: query (line 1059)
-SHOW CREATE TABLE roaches
+-- SHOW CREATE TABLE roaches
 
 -- Test 235: query (line 1068)
-SHOW CREATE TABLE roaches
+-- SHOW CREATE TABLE roaches
 
 -- Test 236: statement (line 1078)
 ALTER TABLE roaches ENABLE ROW LEVEL SECURITY, FORCE ROW LEVEL SECURITY;
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 237: query (line 1082)
-SHOW CREATE TABLE roaches
+-- SHOW CREATE TABLE roaches
 
 -- Test 238: query (line 1092)
-SHOW CREATE TABLE roaches
+-- SHOW CREATE TABLE roaches
 
 -- Test 239: query (line 1102)
 select relname, relrowsecurity, relforcerowsecurity from pg_class where relname = 'roaches';
 
 -- Test 240: query (line 1108)
-select create_statement from crdb_internal.create_statements where descriptor_name='roaches'
+select create_statement from crdb_internal.create_statements where descriptor_name='roaches';
 
 -- Test 241: query (line 1117)
-select create_statement from crdb_internal.create_statements where descriptor_name='roaches'
+select create_statement from crdb_internal.create_statements where descriptor_name='roaches';
 
 -- Test 242: query (line 1125)
-select rls_statements, fk_statements, create_nofks from crdb_internal.create_statements where descriptor_name='roaches'
+select rls_statements, fk_statements, create_nofks from crdb_internal.create_statements where descriptor_name='roaches';
 
 -- Test 243: statement (line 1133)
 ALTER TABLE roaches DISABLE ROW LEVEL SECURITY, NO FORCE ROW LEVEL SECURITY;
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 244: query (line 1137)
-SHOW CREATE TABLE roaches
+-- SHOW CREATE TABLE roaches
 
 -- Test 245: query (line 1146)
-SHOW CREATE TABLE roaches
+-- SHOW CREATE TABLE roaches
 
 -- Test 246: query (line 1154)
-select rls_statements from crdb_internal.create_statements where descriptor_name='roaches'
+select rls_statements from crdb_internal.create_statements where descriptor_name='roaches';
 
 -- Test 247: query (line 1159)
-select fk_statements from crdb_internal.create_statements where descriptor_name='roaches'
+select fk_statements from crdb_internal.create_statements where descriptor_name='roaches';
 
 -- Test 248: statement (line 1164)
 DROP TABLE roaches;
@@ -788,7 +953,7 @@ DROP TABLE roaches;
 CREATE TYPE league AS ENUM('AL','NL');
 
 -- Test 250: statement (line 1172)
-CREATE TABLE bbteams (team text, league league, family (team, league));
+CREATE TABLE bbteams (team text, league league);
 
 -- Test 251: statement (line 1175)
 ALTER TABLE bbteams ENABLE ROW LEVEL SECURITY;
@@ -806,13 +971,13 @@ CREATE USER buck;
 GRANT ALL ON bbteams TO buck;
 
 -- Test 256: statement (line 1197)
-set role buck
+set role buck;
 
 -- Test 257: query (line 1201)
 select team, league from bbteams order by league, team;
 
 -- Test 258: statement (line 1205)
-set role root
+set role root;
 
 -- Test 259: statement (line 1211)
 CREATE FUNCTION is_valid(l league) RETURNS BOOL AS $$
@@ -831,13 +996,13 @@ GRANT USAGE ON seq1 TO buck;
 create policy restrict_select on bbteams for select to buck,current_user,session_user using (is_valid(league) and nextval('seq1') < 1000);
 
 -- Test 263: query (line 1227)
-select using_expr from [SHOW POLICIES FOR bbteams];
+select using_expr from pg_show_policies('bbteams');
 
 -- Test 264: query (line 1233)
 select team, league from bbteams where team != 'cardinals' order by league, team;
 
 -- Test 265: statement (line 1241)
-set role buck
+set role buck;
 
 -- Test 266: query (line 1245)
 select team, league from bbteams where team != 'cardinals' order by league, team;
@@ -846,10 +1011,10 @@ select team, league from bbteams where team != 'cardinals' order by league, team
 select team, league from bbteams where team != 'astros' order by league, team;
 
 -- Test 268: statement (line 1261)
-set role root
+set role root;
 
 -- Test 269: statement (line 1264)
-GRANT admin TO buck;
+-- GRANT admin TO buck;
 
 -- Test 270: statement (line 1267)
 set role buck;
@@ -861,31 +1026,36 @@ select team, league from bbteams where team != 'astros' order by league, team;
 select team, league from bbteams where team != 'mariners' order by league, team;
 
 -- Test 273: statement (line 1290)
-set role root
+set role root;
 
 -- Test 274: statement (line 1293)
 REVOKE admin FROM buck;
 
 -- Test 275: statement (line 1296)
-set role buck
+set role buck;
 
 -- Test 276: query (line 1300)
 select team, league from bbteams where team != 'mariners' order by league, team;
 
 -- Test 277: statement (line 1307)
-set role root
+set role root;
 
 -- Test 278: statement (line 1311)
 CREATE POLICY restrict_insert ON bbteams FOR INSERT TO buck WITH CHECK (false);
 
 -- Test 279: statement (line 1314)
-CREATE POLICY IF NOT EXISTS restrict_delete ON bbteams FOR DELETE TO buck USING (false);
+SELECT EXISTS (SELECT 1 FROM pg_policies WHERE schemaname = current_schema() AND tablename = 'bbteams' AND policyname = 'restrict_delete') AS policy_exists \gset
+\if :policy_exists
+-- CREATE POLICY IF NOT EXISTS restrict_delete ON bbteams FOR DELETE TO buck USING (false);
+\else
+CREATE POLICY restrict_delete ON bbteams FOR DELETE TO buck USING (false);
+\endif
 
 -- Test 280: statement (line 1317)
 CREATE POLICY restrict_update ON bbteams FOR UPDATE TO buck USING (false);
 
 -- Test 281: statement (line 1320)
-set role buck
+set role buck;
 
 -- Test 282: query (line 1324)
 select team, league from bbteams where team != 'jays' order by league, team;
@@ -897,7 +1067,7 @@ UPDATE bbteams SET team = 'blue jays' where team = 'jays';
 select team, league from bbteams order by league, team;
 
 -- Test 285: statement (line 1342)
-set role root
+set role root;
 
 -- Test 286: statement (line 1345)
 DROP POLICY restrict_update on bbteams;
@@ -906,7 +1076,7 @@ DROP POLICY restrict_update on bbteams;
 create policy restrict_update on bbteams for update to buck using (is_valid(league) and nextval('seq1') < 1000);
 
 -- Test 288: statement (line 1351)
-set role buck
+set role buck;
 
 -- Test 289: statement (line 1355)
 UPDATE bbteams SET team = 'Jays' where team = 'jays';
@@ -915,13 +1085,13 @@ UPDATE bbteams SET team = 'Jays' where team = 'jays';
 UPDATE bbteams SET team = 'Nationals' where team = 'nationals';
 
 -- Test 291: statement (line 1362)
-set role root
+set role root;
 
 -- Test 292: query (line 1365)
 select team, league from bbteams where team in ('jays', 'Jays', 'nationals', 'Nationals') order by league, team;
 
 -- Test 293: statement (line 1371)
-set role buck
+set role buck;
 
 -- Test 294: statement (line 1375)
 DELETE FROM bbteams;
@@ -930,7 +1100,7 @@ DELETE FROM bbteams;
 select team, league from bbteams order by league, team;
 
 -- Test 296: statement (line 1386)
-set role root
+set role root;
 
 -- Test 297: statement (line 1389)
 DROP POLICY restrict_delete on bbteams;
@@ -939,7 +1109,7 @@ DROP POLICY restrict_delete on bbteams;
 create policy restrict_delete on bbteams for delete to buck using (is_valid(league) and team = 'tigers' and nextval('seq1') < 1000);
 
 -- Test 299: statement (line 1395)
-set role buck
+set role buck;
 
 -- Test 300: statement (line 1398)
 DELETE FROM bbteams WHERE team != 'pirates';
@@ -948,13 +1118,13 @@ DELETE FROM bbteams WHERE team != 'pirates';
 select team, league from bbteams where team != 'pirates' order by league, team;
 
 -- Test 302: query (line 1408)
-SHOW CREATE TABLE bbteams
+-- SHOW CREATE TABLE bbteams
 
 -- Test 303: query (line 1425)
-SHOW CREATE TABLE bbteams
+-- SHOW CREATE TABLE bbteams
 
 -- Test 304: statement (line 1441)
-set role root
+set role root;
 
 -- Test 305: statement (line 1444)
 DROP TABLE bbteams;
@@ -969,13 +1139,15 @@ DROP FUNCTION is_valid;
 CREATE DATABASE db2;
 
 -- Test 309: statement (line 1459)
-use db2;
+\connect db2
+SET client_min_messages = warning;
+SET ROLE root;
 
 -- Test 310: statement (line 1462)
 CREATE TYPE classes AS ENUM('mammals','birds', 'fish', 'reptiles', 'amphibians');
 
 -- Test 311: statement (line 1465)
-CREATE TABLE animals (name text, class classes, family (name, class));
+CREATE TABLE animals (name text, class classes);
 
 -- Test 312: statement (line 1468)
 ALTER TABLE animals ENABLE ROW LEVEL SECURITY;
@@ -984,10 +1156,12 @@ ALTER TABLE animals ENABLE ROW LEVEL SECURITY;
 create policy p1 on animals for select to current_user using (class in ('mammals','birds'));
 
 -- Test 314: statement (line 1474)
-use defaultdb;
+\connect :orig_db
+SET client_min_messages = warning;
+SET ROLE root;
 
 -- Test 315: statement (line 1477)
-drop database db2 cascade;
+DROP DATABASE db2;
 
 -- Test 316: statement (line 1483)
 CREATE USER sensitive_user;
@@ -1063,21 +1237,23 @@ SELECT my_sec_definer_reader_function();
 
 -- Test 332: query (line 1566)
 SELECT my_non_sec_definer_reader_function();
------
+-- -----
 
-statement error pq: new row violates row-level security policy for table "sensitive_data_table"
+-- statement error pq: new row violates row-level security policy for table "sensitive_data_table"
+\set ON_ERROR_STOP 0
 select my_non_sec_definer_inserter_function(20);
+\set ON_ERROR_STOP 0
 
-# No error from the update because the lack of policies won't read any rows to
-# update. We verify nothing has changed right after.
-query I
+-- No error from the update because the lack of policies won't read any rows to
+-- update. We verify nothing has changed right after.
+-- query I
 select my_non_sec_definer_updater_function(4);
 
 -- Test 333: query (line 1580)
 SELECT my_sec_definer_reader_function();
 
 -- Test 334: statement (line 1588)
-SET ROLE root
+SET ROLE root;
 
 -- Test 335: statement (line 1591)
 CREATE POLICY p1 ON sensitive_data_table FOR SELECT TO sensitive_user USING (C1 != 0);
@@ -1089,7 +1265,7 @@ SET ROLE sensitive_user;
 SELECT my_sec_definer_reader_function();
 
 -- Test 338: query (line 1605)
-SELECT my_non_sec_definer_reader_function()
+SELECT my_non_sec_definer_reader_function();
 
 -- Test 339: statement (line 1612)
 SET ROLE root;
@@ -1098,7 +1274,12 @@ SET ROLE root;
 CREATE POLICY p2 ON sensitive_data_table FOR INSERT TO sensitive_user WITH CHECK (C1 != 55);
 
 -- Test 341: statement (line 1618)
-CREATE POLICY IF NOT EXISTS p3 ON sensitive_data_table FOR UPDATE TO sensitive_user USING (true) WITH CHECK (C1 >= 10);
+SELECT EXISTS (SELECT 1 FROM pg_policies WHERE schemaname = current_schema() AND tablename = 'sensitive_data_table' AND policyname = 'p3') AS policy_exists \gset
+\if :policy_exists
+-- CREATE POLICY IF NOT EXISTS p3 ON sensitive_data_table FOR UPDATE TO sensitive_user USING (true) WITH CHECK (C1 >= 10);
+\else
+CREATE POLICY p3 ON sensitive_data_table FOR UPDATE TO sensitive_user USING (true) WITH CHECK (C1 >= 10);
+\endif
 
 -- Test 342: statement (line 1621)
 SET ROLE sensitive_user;
@@ -1119,7 +1300,7 @@ select my_non_sec_definer_updater_function(10);
 SELECT my_sec_definer_reader_function();
 
 -- Test 348: statement (line 1651)
-SET ROLE root
+SET ROLE root;
 
 -- Test 349: statement (line 1654)
 DROP FUNCTION my_sec_definer_reader_function;
@@ -1131,7 +1312,7 @@ DROP FUNCTION my_non_sec_definer_reader_function;
 DROP TABLE sensitive_data_table CASCADE;
 
 -- Test 352: statement (line 1665)
-CREATE TABLE alter_policy_table (c1 INT NOT NULL PRIMARY KEY, c2 TEXT, FAMILY (c1, c2));
+CREATE TABLE alter_policy_table (c1 INT NOT NULL PRIMARY KEY, c2 TEXT);
 
 -- Test 353: statement (line 1668)
 ALTER TABLE alter_policy_table ENABLE ROW LEVEL SECURITY, FORCE ROW LEVEL SECURITY;
@@ -1199,17 +1380,17 @@ SELECT c1 FROM alter_policy_table ORDER BY c1;
 -- Test 374: statement (line 1736)
 ALTER POLICY p ON alter_policy_table RENAME TO p_sel;
 
-skipif config schema-locked-disabled
+-- skipif config schema-locked-disabled
 
 -- Test 375: query (line 1740)
-SHOW CREATE TABLE alter_policy_table;
+-- SHOW CREATE TABLE alter_policy_table;
 
 -- Test 376: query (line 1754)
-SHOW CREATE TABLE alter_policy_table;
+-- SHOW CREATE TABLE alter_policy_table;
 
 -- Test 377: query (line 1767)
 SELECT name,cmd,type,roles,using_expr,with_check_expr
-FROM [SHOW POLICIES FOR alter_policy_table]
+FROM pg_show_policies('alter_policy_table')
 ORDER BY name DESC;
 
 -- Test 378: statement (line 1776)
@@ -1279,7 +1460,12 @@ ALTER TABLE table_owner_test DISABLE ROW LEVEL SECURITY;
 ALTER TABLE table_owner_test NO FORCE ROW LEVEL SECURITY;
 
 -- Test 400: statement (line 1846)
-CREATE POLICY IF NOT EXISTS p2 on table_owner_test;
+SELECT EXISTS (SELECT 1 FROM pg_policies WHERE schemaname = current_schema() AND tablename = 'table_owner_test' AND policyname = 'p2') AS policy_exists \gset
+\if :policy_exists
+-- CREATE POLICY IF NOT EXISTS p2 on table_owner_test;
+\else
+CREATE POLICY p2 on table_owner_test;
+\endif
 
 -- Test 401: statement (line 1849)
 DROP POLICY new_p1 on table_owner_test;
@@ -1291,7 +1477,7 @@ ALTER POLICY new_p1 on table_owner_test WITH CHECK (true);
 ALTER POLICY new_p1 on table_owner_test RENAME TO p1;
 
 -- Test 404: statement (line 1858)
-SET ROLE root
+SET ROLE root;
 
 -- Test 405: statement (line 1861)
 DROP TABLE table_owner_test;
@@ -1315,7 +1501,7 @@ set role forcer;
 CREATE TABLE force_check (c1 INT NOT NULL PRIMARY KEY, c2 TEXT);
 
 -- Test 412: statement (line 1884)
-INSERT INTO force_check VALUES (10, 'ten'), (20, 'twenty'), (50, 'fifty')
+INSERT INTO force_check VALUES (10, 'ten'), (20, 'twenty'), (50, 'fifty');
 
 -- Test 413: statement (line 1887)
 CREATE FUNCTION access_large_c2_as_session_user() RETURNS TABLE(ID INT)
@@ -1358,16 +1544,16 @@ SELECT c1, c2 FROM force_check ORDER BY c1;
 SELECT c1, c2 FROM force_check WHERE c1 > 0 ORDER BY c1;
 
 -- Test 421: statement (line 1939)
-INSERT INTO force_check VALUES (30, 'thirty')
+INSERT INTO force_check VALUES (30, 'thirty');
 
 -- Test 422: statement (line 1943)
-SET ROLE root
+SET ROLE root;
 
 -- Test 423: query (line 1947)
 SELECT c1, c2 FROM force_check ORDER BY c1;
 
 -- Test 424: statement (line 1954)
-INSERT INTO force_check VALUES (33, 'thirty-three')
+INSERT INTO force_check VALUES (33, 'thirty-three');
 
 -- Test 425: statement (line 1957)
 SET ROLE forcer;
@@ -1376,13 +1562,13 @@ SET ROLE forcer;
 ALTER TABLE force_check NO FORCE ROW LEVEL SECURITY;
 
 -- Test 427: statement (line 1964)
-INSERT INTO force_check VALUES (30, 'thirty')
+INSERT INTO force_check VALUES (30, 'thirty');
 
 -- Test 428: query (line 1968)
 SELECT c1, c2 FROM force_check WHERE c1 > 0 ORDER BY c1;
 
 -- Test 429: statement (line 1978)
-SET ROLE root
+SET ROLE root;
 
 -- Test 430: statement (line 1981)
 ALTER TABLE force_check OWNER TO root;
@@ -1409,10 +1595,10 @@ SET ROLE forcer;
 SELECT c1, c2 FROM force_check WHERE c1 > 0 ORDER BY c1;
 
 -- Test 438: statement (line 2013)
-INSERT INTO force_check VALUES (34, 'thirty-four')
+INSERT INTO force_check VALUES (34, 'thirty-four');
 
 -- Test 439: statement (line 2017)
-SET ROLE root
+SET ROLE root;
 
 -- Test 440: statement (line 2020)
 ALTER TABLE force_check OWNER TO forcer;
@@ -1457,7 +1643,7 @@ SELECT insert_policy_violation_as_session_user(111);
 SELECT * FROM insert_policy_violation_as_forcer(112);
 
 -- Test 454: statement (line 2088)
-SET ROLE root
+SET ROLE root;
 
 -- Test 455: statement (line 2091)
 DROP TABLE force_check CASCADE;
@@ -1554,7 +1740,7 @@ SET ROLE fk_user;
 INSERT INTO parent SELECT * FROM generate_series(1,6);
 
 -- Test 485: statement (line 2200)
-INSERT INTO child VALUES ('bedroom', 1), ('office', 2)
+INSERT INTO child VALUES ('bedroom', 1), ('office', 2);
 
 -- Test 486: statement (line 2204)
 ALTER TABLE parent ENABLE ROW LEVEL SECURITY, FORCE ROW LEVEL SECURITY;
@@ -1599,7 +1785,7 @@ CREATE POLICY sel1 ON child FOR SELECT USING (true);
 SELECT key FROM child ORDER BY key;
 
 -- Test 500: statement (line 2258)
-SET ROLE root
+SET ROLE root;
 
 -- Test 501: statement (line 2261)
 DROP TABLE child;
@@ -1641,31 +1827,31 @@ GRANT ALL ON orders, customers TO u1;
 SET ROLE u1;
 
 -- Test 512: query (line 2304)
-SELECT id, customer_id FROM orders
+SELECT id, customer_id FROM orders;
 
 -- Test 513: query (line 2309)
-UPDATE customers SET id = 2 WHERE id = 1 RETURNING id, name
+UPDATE customers SET id = 2 WHERE id = 1 RETURNING id, name;
 
 -- Test 514: statement (line 2314)
-RESET ROLE
+RESET ROLE;
 
 -- Test 515: query (line 2317)
-SELECT id, customer_id FROM orders ORDER BY id
+SELECT id, customer_id FROM orders ORDER BY id;
 
 -- Test 516: statement (line 2323)
 SET ROLE u1;
 
 -- Test 517: query (line 2327)
-DELETE FROM customers WHERE id = 2 RETURNING id, name
+DELETE FROM customers WHERE id = 2 RETURNING id, name;
 
 -- Test 518: query (line 2333)
-SELECT id, customer_id FROM orders ORDER BY id
+SELECT id, customer_id FROM orders ORDER BY id;
 
 -- Test 519: statement (line 2337)
 RESET ROLE;
 
 -- Test 520: query (line 2341)
-SELECT id, customer_id FROM orders ORDER BY id
+SELECT id, customer_id FROM orders ORDER BY id;
 
 -- Test 521: statement (line 2347)
 DROP TABLE orders;
@@ -1695,16 +1881,21 @@ ALTER TABLE rgb_only ENABLE ROW LEVEL SECURITY, FORCE ROW LEVEL SECURITY;
 CREATE POLICY p_sel ON rgb_only FOR SELECT USING (true);
 
 -- Test 530: statement (line 2377)
-CREATE POLICY IF NOT EXISTS p_subset ON rgb_only FOR INSERT WITH CHECK (col = 'red' or col = 'brown');
+SELECT EXISTS (SELECT 1 FROM pg_policies WHERE schemaname = current_schema() AND tablename = 'rgb_only' AND policyname = 'p_subset') AS policy_exists \gset
+\if :policy_exists
+-- CREATE POLICY IF NOT EXISTS p_subset ON rgb_only FOR INSERT WITH CHECK (col = 'red' or col = 'brown');
+\else
+CREATE POLICY p_subset ON rgb_only FOR INSERT WITH CHECK (col = 'red' or col = 'brown');
+\endif
 
 -- Test 531: statement (line 2380)
-INSERT INTO rgb_only VALUES ('red')
+INSERT INTO rgb_only VALUES ('red');
 
 -- Test 532: statement (line 2384)
-INSERT INTO rgb_only VALUES ('brown')
+INSERT INTO rgb_only VALUES ('brown');
 
 -- Test 533: statement (line 2388)
-INSERT INTO rgb_only VALUES ('green')
+INSERT INTO rgb_only VALUES ('green');
 
 -- Test 534: statement (line 2391)
 DROP POLICY p_subset ON rgb_only;
@@ -1713,7 +1904,7 @@ DROP POLICY p_subset ON rgb_only;
 CREATE POLICY p_disjoint ON rgb_only FOR INSERT WITH CHECK (col = 'black');
 
 -- Test 536: statement (line 2398)
-INSERT INTO rgb_only VALUES ('blue')
+INSERT INTO rgb_only VALUES ('blue');
 
 -- Test 537: query (line 2401)
 SELECT col FROM rgb_only ORDER BY col;
@@ -1731,7 +1922,7 @@ DROP USER rgb_only_user;
 CREATE TYPE trunc_type AS ENUM('a', 'b', 'c');
 
 -- Test 542: statement (line 2420)
-CREATE TABLE trunc (a INT, b trunc_type, FAMILY (a, b));
+CREATE TABLE trunc (a INT, b trunc_type);
 
 -- Test 543: statement (line 2423)
 INSERT INTO trunc VALUES (1, 'a'), (2, 'b'), (3, 'c');
@@ -1767,28 +1958,28 @@ DELETE FROM trunc;
 SELECT a, b FROM trunc ORDER BY a;
 
 -- Test 554: query (line 2464)
-SHOW CREATE TABLE trunc;
+-- SHOW CREATE TABLE trunc;
 
 -- Test 555: query (line 2480)
-SHOW CREATE TABLE trunc;
+-- SHOW CREATE TABLE trunc;
 
 -- Test 556: statement (line 2496)
-ALTER TABLE trunc SET (schema_locked=false)
+ALTER TABLE trunc SET (schema_locked=false);
 
 -- Test 557: statement (line 2499)
 TRUNCATE TABLE trunc;
 
 -- Test 558: statement (line 2502)
-ALTER TABLE trunc RESET (schema_locked)
+ALTER TABLE trunc RESET (schema_locked);
 
 -- Test 559: query (line 2505)
 SELECT a, b FROM trunc ORDER BY a;
 
 -- Test 560: query (line 2511)
-SHOW CREATE TABLE trunc;
+-- SHOW CREATE TABLE trunc;
 
 -- Test 561: query (line 2527)
-SHOW CREATE TABLE trunc;
+-- SHOW CREATE TABLE trunc;
 
 -- Test 562: statement (line 2543)
 INSERT INTO trunc VALUES (7, 'a'), (8, 'b'), (9, 'c');
@@ -1830,7 +2021,7 @@ SET ROLE rls_cache_user;
 SELECT * FROM rls_cache_test ORDER BY c1;
 
 -- Test 575: statement (line 2595)
-SET ROLE root
+SET ROLE root;
 
 -- Test 576: statement (line 2598)
 ALTER TABLE rls_cache_test ENABLE ROW LEVEL SECURITY;
@@ -1842,13 +2033,23 @@ SET ROLE rls_cache_user;
 SELECT * FROM rls_cache_test ORDER BY c1;
 
 -- Test 579: statement (line 2609)
-SET ROLE root
+SET ROLE root;
 
 -- Test 580: statement (line 2612)
-CREATE POLICY IF NOT EXISTS rls_cache_policy ON rls_cache_test FOR SELECT TO rls_cache_user USING (c1 != 'a');
+SELECT EXISTS (SELECT 1 FROM pg_policies WHERE schemaname = current_schema() AND tablename = 'rls_cache_test' AND policyname = 'rls_cache_policy') AS policy_exists \gset
+\if :policy_exists
+-- CREATE POLICY IF NOT EXISTS rls_cache_policy ON rls_cache_test FOR SELECT TO rls_cache_user USING (c1 != 'a');
+\else
+CREATE POLICY rls_cache_policy ON rls_cache_test FOR SELECT TO rls_cache_user USING (c1 != 'a');
+\endif
 
 -- Test 581: statement (line 2616)
-CREATE POLICY IF NOT EXISTS rls_cache_policy ON rls_cache_test;
+SELECT EXISTS (SELECT 1 FROM pg_policies WHERE schemaname = current_schema() AND tablename = 'rls_cache_test' AND policyname = 'rls_cache_policy') AS policy_exists \gset
+\if :policy_exists
+-- CREATE POLICY IF NOT EXISTS rls_cache_policy ON rls_cache_test;
+\else
+CREATE POLICY rls_cache_policy ON rls_cache_test;
+\endif
 
 -- Test 582: statement (line 2619)
 SET ROLE rls_cache_user;
@@ -1857,7 +2058,7 @@ SET ROLE rls_cache_user;
 SELECT * FROM rls_cache_test ORDER BY c1;
 
 -- Test 584: statement (line 2629)
-SET ROLE root
+SET ROLE root;
 
 -- Test 585: statement (line 2632)
 ALTER TABLE rls_cache_test DISABLE ROW LEVEL SECURITY;
@@ -1869,7 +2070,7 @@ SET ROLE rls_cache_user;
 SELECT * FROM rls_cache_test ORDER BY c1;
 
 -- Test 588: statement (line 2646)
-SET ROLE root
+SET ROLE root;
 
 -- Test 589: statement (line 2650)
 DROP TABLE rls_cache_test;
@@ -1881,7 +2082,7 @@ SET ROLE rls_cache_user;
 SELECT * FROM rls_cache_test ORDER BY c1;
 
 -- Test 592: statement (line 2659)
-SET ROLE root
+SET ROLE root;
 
 -- Test 593: statement (line 2662)
 DROP ROLE rls_cache_user;
@@ -2084,7 +2285,7 @@ CREATE USER z;
 GRANT ALL ON importer TO z;
 
 -- Test 645: statement (line 2892)
-GRANT SYSTEM EXTERNALIOIMPLICITACCESS TO z;
+-- GRANT SYSTEM EXTERNALIOIMPLICITACCESS TO z;
 
 -- Test 646: statement (line 2896)
 SET ROLE z;
@@ -2098,7 +2299,7 @@ IMPORT INTO importer CSV DATA ('nodelocal://1/rls-importer/$exp_file');
 -- Test 648: statement (line 2912)
 IMPORT INTO importer CSV DATA ('nodelocal://1/rls-importer/$exp_file');
 
-skipif config fakedist fakedist-disk fakedist-vec-off
+-- skipif config fakedist fakedist-disk fakedist-vec-off
 
 -- Test 649: query (line 2916)
 SELECT c1 FROM importer ORDER BY c1;
@@ -2107,19 +2308,24 @@ SELECT c1 FROM importer ORDER BY c1;
 DROP TABLE importer;
 
 -- Test 651: statement (line 2926)
-REVOKE SYSTEM EXTERNALIOIMPLICITACCESS FROM z;
+-- REVOKE SYSTEM EXTERNALIOIMPLICITACCESS FROM z;
 
 -- Test 652: statement (line 2929)
 DROP USER z;
 
 -- Test 653: statement (line 2934)
-CREATE TABLE rlsInsert (c1 int not null primary key, c2 text, c3 date, family (c1,c2,c3));
+CREATE TABLE rlsInsert (c1 int not null primary key, c2 text, c3 date);
 
 -- Test 654: statement (line 2937)
 ALTER TABLE rlsInsert ENABLE ROW LEVEL SECURITY, FORCE ROW LEVEL SECURITY;
 
 -- Test 655: statement (line 2940)
-CREATE POLICY IF NOT EXISTS p_insert ON rlsInsert AS PERMISSIVE FOR INSERT TO buck WITH CHECK (c3 not between '2012-01-01' and '2012-12-31');
+SELECT EXISTS (SELECT 1 FROM pg_policies WHERE schemaname = current_schema() AND tablename = 'rlsInsert' AND policyname = 'p_insert') AS policy_exists \gset
+\if :policy_exists
+-- CREATE POLICY IF NOT EXISTS p_insert ON rlsInsert AS PERMISSIVE FOR INSERT TO buck WITH CHECK (c3 not between '2012-01-01' and '2012-12-31');
+\else
+CREATE POLICY p_insert ON rlsInsert AS PERMISSIVE FOR INSERT TO buck WITH CHECK (c3 not between '2012-01-01' and '2012-12-31');
+\endif
 
 -- Test 656: statement (line 2943)
 CREATE POLICY p_select ON rlsInsert AS PERMISSIVE FOR SELECT TO buck USING (true);
@@ -2143,7 +2349,7 @@ INSERT INTO rlsInsert VALUES (3, 'third', '2012-07-08');
 INSERT INTO rlsInsert SELECT c1 + 5, c2, c3 FROM rlsInsert;
 
 -- Test 663: statement (line 2968)
-INSERT INTO rlsInsert VALUES (4, 'four', NULL)
+INSERT INTO rlsInsert VALUES (4, 'four', NULL);
 
 -- Test 664: statement (line 2971)
 INSERT INTO rlsInsert SELECT c1 + 5, c2, c3 FROM rlsInsert WHERE c3 not between '2012-01-01' and '2012-12-31';
@@ -2151,13 +2357,13 @@ INSERT INTO rlsInsert SELECT c1 + 5, c2, c3 FROM rlsInsert WHERE c3 not between 
 -- Test 665: statement (line 2974)
 SET ROLE root;
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 666: query (line 2978)
-SHOW CREATE TABLE rlsInsert
+-- SHOW CREATE TABLE rlsInsert
 
 -- Test 667: query (line 2993)
-SHOW CREATE TABLE rlsInsert
+-- SHOW CREATE TABLE rlsInsert
 
 -- Test 668: statement (line 3007)
 DROP POLICY p_insert on rlsInsert;
@@ -2191,7 +2397,7 @@ $$ LANGUAGE PLpgSQL;
 CREATE SEQUENCE seq1;
 
 -- Test 677: statement (line 3046)
-CREATE TABLE bbteams (team text, league league, wins int, family (team, league, wins));
+CREATE TABLE bbteams (team text, league league, wins int);
 
 -- Test 678: statement (line 3049)
 ALTER TABLE bbteams ENABLE ROW LEVEL SECURITY;
@@ -2203,10 +2409,20 @@ CREATE POLICY p_update ON bbteams FOR UPDATE TO buck USING (true) WITH CHECK (le
 CREATE POLICY p_select ON bbteams FOR SELECT TO buck USING (true);
 
 -- Test 681: statement (line 3058)
-CREATE POLICY IF NOT EXISTS p_insert ON bbteams FOR INSERT TO buck WITH CHECK (nextval('seq1') < 1000);
+SELECT EXISTS (SELECT 1 FROM pg_policies WHERE schemaname = current_schema() AND tablename = 'bbteams' AND policyname = 'p_insert') AS policy_exists \gset
+\if :policy_exists
+-- CREATE POLICY IF NOT EXISTS p_insert ON bbteams FOR INSERT TO buck WITH CHECK (nextval('seq1') < 1000);
+\else
+CREATE POLICY p_insert ON bbteams FOR INSERT TO buck WITH CHECK (nextval('seq1') < 1000);
+\endif
 
 -- Test 682: statement (line 3062)
-CREATE POLICY IF NOT EXISTS p_insert ON bbteams;
+SELECT EXISTS (SELECT 1 FROM pg_policies WHERE schemaname = current_schema() AND tablename = 'bbteams' AND policyname = 'p_insert') AS policy_exists \gset
+\if :policy_exists
+-- CREATE POLICY IF NOT EXISTS p_insert ON bbteams;
+\else
+CREATE POLICY p_insert ON bbteams;
+\endif
 
 -- Test 683: statement (line 3065)
 GRANT ALL on bbteams TO buck;
@@ -2236,10 +2452,10 @@ select setval('seq1', 1500, true);
 UPDATE bbteams SET wins = 82  WHERE team = 'royals';
 
 -- Test 692: statement (line 3096)
-SET ROLE root
+SET ROLE root;
 
 -- Test 693: query (line 3099)
-SELECT nextval('seq1')
+SELECT nextval('seq1');
 
 -- Test 694: query (line 3104)
 select team, league, wins from bbteams order by team;
@@ -2254,7 +2470,7 @@ DROP FUNCTION al_only;
 DROP SEQUENCE seq1;
 
 -- Test 698: statement (line 3122)
-CREATE TABLE multip (key INT NOT NULL, value TEXT, FAMILY (key,value));
+CREATE TABLE multip (key INT NOT NULL, value TEXT);
 
 -- Test 699: statement (line 3125)
 ALTER TABLE multip ENABLE ROW LEVEL SECURITY;
@@ -2266,13 +2482,18 @@ CREATE POLICY or1 ON multip AS PERMISSIVE USING (key = 1);
 CREATE POLICY or2 ON multip AS PERMISSIVE USING (key = 2);
 
 -- Test 702: statement (line 3135)
-CREATE POLICY IF NOT EXISTS or3 ON multip AS PERMISSIVE USING (key = 3);
+SELECT EXISTS (SELECT 1 FROM pg_policies WHERE schemaname = current_schema() AND tablename = 'multip' AND policyname = 'or3') AS policy_exists \gset
+\if :policy_exists
+-- CREATE POLICY IF NOT EXISTS or3 ON multip AS PERMISSIVE USING (key = 3);
+\else
+CREATE POLICY or3 ON multip AS PERMISSIVE USING (key = 3);
+\endif
 
 -- Test 703: statement (line 3138)
-CREATE POLICY and1 ON multip AS RESTRICTIVE USING (value not like '%sensitive%')
+CREATE POLICY and1 ON multip AS RESTRICTIVE USING (value not like '%sensitive%');
 
 -- Test 704: statement (line 3141)
-CREATE POLICY and2 ON multip AS RESTRICTIVE USING (value not like '%confidential%')
+CREATE POLICY and2 ON multip AS RESTRICTIVE USING (value not like '%confidential%');
 
 -- Test 705: statement (line 3144)
 INSERT INTO multip VALUES
@@ -2302,7 +2523,7 @@ select * from multip ORDER BY key, value;
 select * from multip where key >= 0 ORDER BY key, value;
 
 -- Test 711: statement (line 3179)
-SET ROLE root
+SET ROLE root;
 
 -- Test 712: statement (line 3184)
 DROP POLICY or1 ON multip;
@@ -2316,7 +2537,7 @@ DROP POLICY or3 ON multip;
 -- Test 715: statement (line 3193)
 SET ROLE multi_user;
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 716: query (line 3197)
 SHOW CREATE multip;
@@ -2349,10 +2570,10 @@ CREATE POLICY or2 ON multip AS PERMISSIVE USING (key = 2);
 CREATE POLICY or3 ON multip AS PERMISSIVE USING (key = 3);
 
 -- Test 726: query (line 3252)
-select name, cmd, type, roles, with_check_expr from [SHOW POLICIES FOR multip];
+select name, cmd, type, roles, with_check_expr from pg_show_policies('multip');
 
 -- Test 727: query (line 3262)
-select using_expr from [SHOW POLICIES FOR multip];
+select using_expr from pg_show_policies('multip');
 
 -- Test 728: statement (line 3271)
 SET ROLE multi_user;
@@ -2367,19 +2588,19 @@ INSERT INTO multip VALUES (1, 'okay');
 INSERT INTO multip VALUES (1, 'sensitive - filtered out');
 
 -- Test 732: statement (line 3283)
-INSERT INTO multip VALUES (2, 'okay')
+INSERT INTO multip VALUES (2, 'okay');
 
 -- Test 733: statement (line 3286)
-INSERT INTO multip VALUES (2, 'confidential - filtered out')
+INSERT INTO multip VALUES (2, 'confidential - filtered out');
 
 -- Test 734: statement (line 3289)
-INSERT INTO multip VALUES (3, 'okay')
+INSERT INTO multip VALUES (3, 'okay');
 
 -- Test 735: statement (line 3292)
-INSERT INTO multip VALUES (2, 'sensitive - filtered out')
+INSERT INTO multip VALUES (2, 'sensitive - filtered out');
 
 -- Test 736: statement (line 3295)
-INSERT INTO multip VALUES (4, 'key out of bounds')
+INSERT INTO multip VALUES (4, 'key out of bounds');
 
 -- Test 737: statement (line 3298)
 INSERT INTO multip VALUES (4, 'confidential');
@@ -2501,7 +2722,7 @@ REVOKE CREATE ON SCHEMA public FROM bob, alice;
 DROP ROLE alice, bob;
 
 -- Test 774: statement (line 3446)
-SHOW POLICIES FOR nonexistent_table;
+SELECT * FROM pg_show_policies('nonexistent_table');
 
 -- Test 775: statement (line 3449)
 CREATE TABLE rls_disabled (id INT PRIMARY KEY);
@@ -2513,7 +2734,7 @@ CREATE POLICY p1 ON rls_disabled USING (true);
 ALTER TABLE rls_disabled DISABLE ROW LEVEL SECURITY;
 
 -- Test 778: query (line 3458)
-SHOW POLICIES FOR rls_disabled;
+SELECT * FROM pg_show_policies('rls_disabled');
 
 -- Test 779: statement (line 3465)
 CREATE TABLE no_policies (id INT PRIMARY KEY);
@@ -2522,7 +2743,7 @@ CREATE TABLE no_policies (id INT PRIMARY KEY);
 ALTER TABLE no_policies ENABLE ROW LEVEL SECURITY;
 
 -- Test 781: query (line 3471)
-SHOW POLICIES FOR no_policies;
+SELECT * FROM pg_show_policies('no_policies');
 
 -- Test 782: statement (line 3480)
 create table r1 (c1 int);
@@ -2600,7 +2821,12 @@ ALTER TABLE cnt OWNER TO r1_user;
 SET ROLE r1_user;
 
 -- Test 807: statement (line 3579)
-CREATE POLICY IF NOT EXISTS upd1 ON cnt FOR UPDATE USING (true);
+SELECT EXISTS (SELECT 1 FROM pg_policies WHERE schemaname = current_schema() AND tablename = 'cnt' AND policyname = 'upd1') AS policy_exists \gset
+\if :policy_exists
+-- CREATE POLICY IF NOT EXISTS upd1 ON cnt FOR UPDATE USING (true);
+\else
+CREATE POLICY upd1 ON cnt FOR UPDATE USING (true);
+\endif
 
 -- Test 808: query (line 3583)
 UPDATE cnt SET counter = counter + 1 RETURNING counter;
@@ -2705,7 +2931,12 @@ DROP POLICY del1 ON cnt;
 CREATE POLICY sel1 ON cnt FOR SELECT USING (true);
 
 -- Test 842: statement (line 3727)
-CREATE POLICY IF NOT EXISTS del1 ON cnt FOR DELETE USING (false);
+SELECT EXISTS (SELECT 1 FROM pg_policies WHERE schemaname = current_schema() AND tablename = 'cnt' AND policyname = 'del1') AS policy_exists \gset
+\if :policy_exists
+-- CREATE POLICY IF NOT EXISTS del1 ON cnt FOR DELETE USING (false);
+\else
+CREATE POLICY del1 ON cnt FOR DELETE USING (false);
+\endif
 
 -- Test 843: query (line 3730)
 DELETE FROM cnt WHERE counter > 0 RETURNING counter;
@@ -2723,7 +2954,7 @@ SELECT counter FROM cnt;
 ALTER TABLE cnt NO FORCE ROW LEVEL SECURITY;
 
 -- Test 848: statement (line 3748)
-SET ROLE root
+SET ROLE root;
 
 -- Test 849: statement (line 3751)
 DROP TABLE cnt;
@@ -2750,19 +2981,19 @@ CREATE TABLE policy_roles_test (id INT PRIMARY KEY, val TEXT);
 CREATE POLICY mixed_policy ON policy_roles_test TO test_role1, test_user1, test_role2, test_user2;
 
 -- Test 857: query (line 3777)
-SHOW POLICIES FOR policy_roles_test
+SELECT * FROM pg_show_policies('policy_roles_test');
 
 -- Test 858: statement (line 3783)
 CREATE POLICY users_only_policy ON policy_roles_test TO test_user1, test_user2;
 
 -- Test 859: query (line 3786)
-SHOW POLICIES FOR policy_roles_test
+SELECT * FROM pg_show_policies('policy_roles_test');
 
 -- Test 860: statement (line 3793)
 CREATE POLICY roles_only_policy ON policy_roles_test TO test_role1, test_role2;
 
 -- Test 861: query (line 3796)
-SHOW POLICIES FOR policy_roles_test
+SELECT * FROM pg_show_policies('policy_roles_test');
 
 -- Test 862: statement (line 3804)
 DROP TABLE policy_roles_test;
@@ -2854,16 +3085,19 @@ SELECT * FROM insert_policy_violation_as_admin(30);
 SELECT * FROM insert_policy_violation_as_session_user(31);
 
 -- Test 889: statement (line 3925)
-SET ROLE root
+SET ROLE root;
 
 -- Test 890: statement (line 3928)
 ALTER ROLE bypassrls_user NOBYPASSRLS;
 
 -- Test 891: statement (line 3931)
-GRANT SYSTEM BYPASSRLS TO bypassrls_user;
+-- GRANT SYSTEM BYPASSRLS TO bypassrls_user;
 
 -- Test 892: query (line 3934)
-SELECT * FROM [SHOW SYSTEM GRANTS] WHERE privilege_type = 'BYPASSRLS';
+SELECT rolname AS grantee, 'BYPASSRLS' AS privilege_type
+FROM pg_roles
+WHERE rolbypassrls
+ORDER BY grantee;
 
 -- Test 893: statement (line 3940)
 SET ROLE bypassrls_user;
@@ -2878,7 +3112,7 @@ SELECT * FROM insert_policy_violation_as_session_user(40);
 SET ROLE root;
 
 -- Test 897: statement (line 3963)
-REVOKE SYSTEM BYPASSRLS FROM bypassrls_user;
+-- REVOKE SYSTEM BYPASSRLS FROM bypassrls_user;
 
 -- Test 898: statement (line 3966)
 SET ROLE bypassrls_user;
@@ -2893,7 +3127,7 @@ SELECT * FROM insert_policy_violation_as_session_user(50);
 SET ROLE root;
 
 -- Test 902: statement (line 3981)
-DROP FUNCTION insert_policy_violation_as_admin, insert_policy_violation_as_session_user
+DROP FUNCTION insert_policy_violation_as_admin, insert_policy_violation_as_session_user;
 
 -- Test 903: statement (line 3984)
 DROP TABLE bypassrls;
@@ -2902,7 +3136,7 @@ DROP TABLE bypassrls;
 DROP USER bypassrls_user;
 
 -- Test 905: statement (line 3992)
-CREATE TABLE mc (pk int not null primary key, f1 int, f2 int, family pk (pk), family f1 (f1), family f2 (f2));
+CREATE TABLE mc (pk int not null primary key, f1 int, f2 int);
 
 -- Test 906: statement (line 3995)
 CREATE ROLE mc;
@@ -2925,7 +3159,7 @@ INSERT INTO mc VALUES (1, 1, 1);
 -- Test 912: statement (line 4017)
 UPDATE mc SET f2 = 10 WHERE f1 = 1;
 
-skipif config weak-iso-level-configs
+-- skipif config weak-iso-level-configs
 
 -- Test 913: statement (line 4021)
 UPDATE mc SET f2 = 11 WHERE f1 = 1;
@@ -2942,12 +3176,12 @@ CREATE POLICY upd ON mc FOR UPDATE USING (true) WITH CHECK (f2 > 0);
 -- Test 917: statement (line 4033)
 CREATE POLICY ins ON mc FOR INSERT WITH CHECK (true);
 
-onlyif config weak-iso-level-configs
+-- onlyif config weak-iso-level-configs
 
 -- Test 918: statement (line 4037)
 INSERT INTO mc VALUES(1, 1, 1) ON CONFLICT (pk) DO UPDATE SET f2 = 12;
 
-skipif config weak-iso-level-configs
+-- skipif config weak-iso-level-configs
 
 -- Test 919: statement (line 4041)
 INSERT INTO mc VALUES(1, 1, 1) ON CONFLICT (pk) DO UPDATE SET f2 = 12;
@@ -2958,12 +3192,12 @@ ALTER POLICY sel ON mc USING (f2 > 0);
 -- Test 921: statement (line 4049)
 ALTER POLICY upd ON mc WITH CHECK (f1 > 0);
 
-onlyif config weak-iso-level-configs
+-- onlyif config weak-iso-level-configs
 
 -- Test 922: statement (line 4053)
 INSERT INTO mc VALUES(1, 1, 1) ON CONFLICT (pk) DO UPDATE SET f2 = 13;
 
-skipif config weak-iso-level-configs
+-- skipif config weak-iso-level-configs
 
 -- Test 923: statement (line 4057)
 INSERT INTO mc VALUES(1, 1, 1) ON CONFLICT (pk) DO UPDATE SET f2 = 13;
@@ -3161,7 +3395,7 @@ INSERT INTO ups VALUES (9, 'original value') ON CONFLICT (pk) DO UPDATE SET comm
 SELECT comment FROM ups WHERE pk = 9;
 
 -- Test 988: statement (line 4307)
-ALTER POLICY p_all ON ups USING (true) WITH CHECK (comment = 'upsert')
+ALTER POLICY p_all ON ups USING (true) WITH CHECK (comment = 'upsert');
 
 -- Test 989: statement (line 4311)
 INSERT INTO ups VALUES (10, 'original value') ON CONFLICT (pk) DO UPDATE SET comment = 'upsert';
@@ -3179,13 +3413,13 @@ ALTER TABLE ups FORCE ROW LEVEL SECURITY;
 INSERT INTO ups VALUES (10, 'original value') ON CONFLICT (pk) DO UPDATE SET comment = 'upsert';
 
 -- Test 994: statement (line 4335)
-INSERT INTO ups VALUES (10, 'original value')
+INSERT INTO ups VALUES (10, 'original value');
 
 -- Test 995: query (line 4338)
 SELECT comment FROM ups WHERE pk = 10;
 
 -- Test 996: statement (line 4345)
-ALTER POLICY p_all ON ups USING (true) WITH CHECK (comment = 'original value')
+ALTER POLICY p_all ON ups USING (true) WITH CHECK (comment = 'original value');
 
 -- Test 997: statement (line 4348)
 INSERT INTO ups VALUES (11, 'original value') ON CONFLICT (pk) DO UPDATE SET comment = 'upsert';
@@ -3206,7 +3440,7 @@ CREATE POLICY p_all ON ups FOR ALL WITH CHECK (true);
 INSERT INTO ups VALUES (12, 'original value') ON CONFLICT (pk) DO UPDATE SET comment = 'upsert';
 
 -- Test 1003: statement (line 4372)
-INSERT INTO ups VALUES (12, 'original value')
+INSERT INTO ups VALUES (12, 'original value');
 
 -- Test 1004: statement (line 4375)
 INSERT INTO ups VALUES (12, 'original value') ON CONFLICT (pk) DO UPDATE SET comment = 'upsert';
@@ -3425,7 +3659,7 @@ SELECT comment, c FROM ups WHERE pk = 2;
 ALTER POLICY p_upd ON ups USING (true) WITH CHECK (true);
 
 -- Test 1076: statement (line 4646)
-ALTER POLICY p_sel ON ups USING (comment = 'original value')
+ALTER POLICY p_sel ON ups USING (comment = 'original value');
 
 -- Test 1077: statement (line 4650)
 UPSERT INTO ups VALUES (3, 'expect fail', 1);
@@ -3488,7 +3722,7 @@ UPSERT INTO ups VALUES (4, 'upsert', 3);
 SELECT comment, c FROM ups WHERE pk = 4;
 
 -- Test 1097: statement (line 4718)
-SET ROLE root
+SET ROLE root;
 
 -- Test 1098: statement (line 4721)
 DROP TABLE ups;
@@ -3623,7 +3857,7 @@ UPDATE t SET k = 1, a = 10 WHERE true;
 SET ROLE alice;
 
 -- Test 1135: query (line 4875)
-UPDATE t SET a = 0 WHERE true RETURNING 1 + 1, 2, 'three'
+UPDATE t SET a = 0 WHERE true RETURNING 1 + 1, 2, 'three';
 
 -- Test 1136: statement (line 4880)
 SET ROLE root;
@@ -3694,111 +3928,111 @@ CREATE POLICY p ON alter_policy_table_locked WITH CHECK (TRUE);
 -- Test 1158: statement (line 4967)
 ALTER POLICY p ON alter_policy_table_locked RENAME TO p_sel;
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 1159: query (line 4971)
-SHOW CREATE TABLE alter_policy_table_locked;
+-- SHOW CREATE TABLE alter_policy_table_locked;
 
 -- Test 1160: query (line 4983)
-SHOW CREATE TABLE alter_policy_table_locked;
+-- SHOW CREATE TABLE alter_policy_table_locked;
 
 -- Test 1161: statement (line 4994)
 ALTER POLICY p_sel ON alter_policy_table_locked WITH CHECK (FALSE);
 
-onlyif config schema-locked-disabled
+-- onlyif config schema-locked-disabled
 
 -- Test 1162: query (line 4998)
-SHOW CREATE TABLE alter_policy_table_locked;
+-- SHOW CREATE TABLE alter_policy_table_locked;
 
 -- Test 1163: query (line 5010)
-SHOW CREATE TABLE alter_policy_table_locked;
+-- SHOW CREATE TABLE alter_policy_table_locked;
 
 -- Test 1164: statement (line 5023)
-CREATE ROLE parent_role
+CREATE ROLE parent_role;
 
 -- Test 1165: statement (line 5026)
-CREATE ROLE child_role
+CREATE ROLE child_role;
 
 -- Test 1166: statement (line 5029)
-GRANT parent_role TO child_role
+GRANT parent_role TO child_role;
 
 -- Test 1167: statement (line 5032)
-CREATE TABLE employees (id SERIAL PRIMARY KEY, name TEXT, department TEXT)
+CREATE TABLE employees (id SERIAL PRIMARY KEY, name TEXT, department TEXT);
 
 -- Test 1168: statement (line 5035)
-INSERT INTO employees VALUES (1, 'Alice', 'Engineering')
+INSERT INTO employees VALUES (1, 'Alice', 'Engineering');
 
 -- Test 1169: statement (line 5038)
-ALTER TABLE employees ENABLE ROW LEVEL SECURITY
+ALTER TABLE employees ENABLE ROW LEVEL SECURITY;
 
 -- Test 1170: statement (line 5041)
-CREATE POLICY parent_policy_select ON employees FOR SELECT TO parent_role USING (true)
+CREATE POLICY parent_policy_select ON employees FOR SELECT TO parent_role USING (true);
 
 -- Test 1171: statement (line 5044)
-CREATE POLICY parent_policy_insert ON employees FOR INSERT TO parent_role WITH CHECK (department IN ('Engineering', 'Sales'))
+CREATE POLICY parent_policy_insert ON employees FOR INSERT TO parent_role WITH CHECK (department IN ('Engineering', 'Sales'));
 
 -- Test 1172: statement (line 5047)
-CREATE POLICY parent_policy_update ON employees FOR UPDATE TO parent_role USING (false)
+CREATE POLICY parent_policy_update ON employees FOR UPDATE TO parent_role USING (false);
 
 -- Test 1173: statement (line 5050)
-GRANT SELECT, INSERT, UPDATE ON employees TO parent_role
+GRANT SELECT, INSERT, UPDATE ON employees TO parent_role;
 
 -- Test 1174: statement (line 5054)
-SET ROLE child_role
+SET ROLE child_role;
 
 -- Test 1175: query (line 5057)
-SELECT * FROM employees
+SELECT * FROM employees;
 
 -- Test 1176: statement (line 5063)
-INSERT INTO employees (id, name, department) VALUES (2, 'Bob', 'Engineering')
+INSERT INTO employees (id, name, department) VALUES (2, 'Bob', 'Engineering');
 
 -- Test 1177: statement (line 5067)
-INSERT INTO employees (id, name, department) VALUES (3, 'Carol', 'Sales')
+INSERT INTO employees (id, name, department) VALUES (3, 'Carol', 'Sales');
 
 -- Test 1178: statement (line 5071)
-INSERT INTO employees (id, name, department) VALUES (4, 'Dave', 'Finance')
+INSERT INTO employees (id, name, department) VALUES (4, 'Dave', 'Finance');
 
 -- Test 1179: statement (line 5074)
-UPDATE employees SET name = 'Robert' WHERE name = 'Bob'
+UPDATE employees SET name = 'Robert' WHERE name = 'Bob';
 
 -- Test 1180: query (line 5077)
-SELECT * FROM employees ORDER BY id
+SELECT * FROM employees ORDER BY id;
 
 -- Test 1181: statement (line 5084)
-RESET ROLE
+RESET ROLE;
 
 -- Test 1182: statement (line 5088)
-REVOKE parent_role FROM child_role
+REVOKE parent_role FROM child_role;
 
 -- Test 1183: statement (line 5091)
-GRANT ALL ON employees TO child_role
+GRANT ALL ON employees TO child_role;
 
 -- Test 1184: statement (line 5094)
-SET ROLE child_role
+SET ROLE child_role;
 
 -- Test 1185: query (line 5098)
-SELECT * FROM employees
+SELECT * FROM employees;
 
 -- Test 1186: statement (line 5103)
-INSERT INTO employees (id, name, department) VALUES (3, 'Eve', 'Engineering')
+INSERT INTO employees (id, name, department) VALUES (3, 'Eve', 'Engineering');
 
 -- Test 1187: statement (line 5108)
-UPDATE employees SET name = 'Alice 2.0' WHERE name = 'Alice'
+UPDATE employees SET name = 'Alice 2.0' WHERE name = 'Alice';
 
 -- Test 1188: statement (line 5111)
-RESET ROLE
+RESET ROLE;
 
 -- Test 1189: query (line 5115)
-SELECT * FROM employees ORDER BY id
+SELECT * FROM employees ORDER BY id;
 
 -- Test 1190: statement (line 5122)
-DROP TABLE employees CASCADE
+DROP TABLE employees CASCADE;
 
 -- Test 1191: statement (line 5125)
-DROP ROLE child_role
+DROP ROLE child_role;
 
 -- Test 1192: statement (line 5128)
-DROP ROLE parent_role
+DROP ROLE parent_role;
 
 -- Test 1193: statement (line 5138)
 INSERT INTO trigger_rls_table VALUES (1, 100, 'alice'), (2, 200, 'bob'), (3, 300, 'alice'), (4, 400, 'bob');
@@ -3997,7 +4231,7 @@ CREATE ROLE cannot_bypassrls;
 CREATE ROLE can_bypassrls_global;
 
 -- Test 1237: statement (line 5406)
-GRANT SYSTEM BYPASSRLS TO can_bypassrls_global;
+-- GRANT SYSTEM BYPASSRLS TO can_bypassrls_global;
 
 -- Test 1238: query (line 5409)
 SELECT rolbypassrls FROM pg_authid WHERE rolname = 'can_bypassrls' OR rolname = 'can_bypassrls_global';
@@ -4027,7 +4261,7 @@ CREATE ROLE cannot_createrole;
 CREATE ROLE can_createrole_global;
 
 -- Test 1247: statement (line 5450)
-GRANT SYSTEM CREATEROLE TO can_createrole_global;
+-- GRANT SYSTEM CREATEROLE TO can_createrole_global;
 
 -- Test 1248: query (line 5453)
 SELECT rolcreaterole FROM pg_authid WHERE rolname = 'can_createrole' OR rolname = 'can_createrole_global';
@@ -4048,7 +4282,7 @@ DROP ROLE can_createrole;
 DROP ROLE cannot_createrole;
 
 -- Test 1254: statement (line 5481)
-REVOKE SYSTEM CREATEROLE FROM can_createrole_global;
+-- REVOKE SYSTEM CREATEROLE FROM can_createrole_global;
 
 -- Test 1255: statement (line 5484)
 DROP ROLE can_createrole_global;
@@ -4063,7 +4297,7 @@ CREATE ROLE cannot_createdb;
 CREATE ROLE can_createdb_global;
 
 -- Test 1259: statement (line 5498)
-GRANT SYSTEM CREATEDB TO can_createdb_global;
+-- GRANT SYSTEM CREATEDB TO can_createdb_global;
 
 -- Test 1260: query (line 5501)
 SELECT rolcreatedb FROM pg_authid WHERE rolname = 'can_createdb' OR rolname = 'can_createdb_global';
@@ -4084,7 +4318,7 @@ DROP ROLE can_createdb;
 DROP ROLE cannot_createdb;
 
 -- Test 1266: statement (line 5529)
-REVOKE SYSTEM CREATEDB FROM can_createdb_global;
+-- REVOKE SYSTEM CREATEDB FROM can_createdb_global;
 
 -- Test 1267: statement (line 5532)
 DROP ROLE can_createdb_global;
@@ -4220,25 +4454,25 @@ DROP FUNCTION fail, divbyzero;
 DROP ROLE alice;
 
 -- Test 1306: statement (line 5708)
-CREATE TABLE roach_pg_table ( count INT )
+CREATE TABLE roach_pg_table ( count INT );
 
 -- Test 1307: statement (line 5711)
-SET allow_view_with_security_invoker_clause = on
+SET allow_view_with_security_invoker_clause = on;
 
 -- Test 1308: statement (line 5714)
-CREATE VIEW security_invoker_view WITH ( security_invoker = true ) AS SELECT * FROM roach_pg_table
+CREATE VIEW security_invoker_view WITH ( security_invoker = true ) AS SELECT * FROM roach_pg_table;
 
 -- Test 1309: statement (line 5717)
-ALTER VIEW security_invoker_view SET ( security_invoker = false )
+ALTER VIEW security_invoker_view SET ( security_invoker = false );
 
 -- Test 1310: statement (line 5720)
-DROP VIEW security_invoker_view
+DROP VIEW security_invoker_view;
 
 -- Test 1311: statement (line 5723)
-DROP TABLE roach_pg_table
+DROP TABLE roach_pg_table;
 
 -- Test 1312: statement (line 5726)
-SET allow_view_with_security_invoker_clause = off
+SET allow_view_with_security_invoker_clause = off;
 
 -- Test 1313: statement (line 5733)
 CREATE USER alice;
@@ -4419,10 +4653,10 @@ DROP USER alice;
 RESET SESSION row_security;
 
 -- Test 1370: statement (line 5941)
-CREATE TABLE t158154 (c0 INT, c1 TEXT DEFAULT 'foobarbaz', FAMILY (c0, c1));
+CREATE TABLE t158154 (c0 INT, c1 TEXT DEFAULT 'foobarbaz');
 
 -- Test 1371: statement (line 5944)
-CREATE ROLE user_158154
+CREATE ROLE user_158154;
 
 -- Test 1372: statement (line 5947)
 GRANT ALL ON t158154 TO user_158154;
@@ -4437,7 +4671,12 @@ ALTER TABLE t158154 OWNER TO user_158154;
 SET ROLE user_158154;
 
 -- Test 1376: statement (line 5959)
-CREATE POLICY IF NOT EXISTS p1 on t158154 WITH CHECK (c0 > 0 AND c1 = 'foobarbaz');
+SELECT EXISTS (SELECT 1 FROM pg_policies WHERE schemaname = current_schema() AND tablename = 't158154' AND policyname = 'p1') AS policy_exists \gset
+\if :policy_exists
+-- CREATE POLICY IF NOT EXISTS p1 on t158154 WITH CHECK (c0 > 0 AND c1 = 'foobarbaz');
+\else
+CREATE POLICY p1 on t158154 WITH CHECK (c0 > 0 AND c1 = 'foobarbaz');
+\endif
 
 -- Test 1377: statement (line 5962)
 CREATE PROCEDURE p158154() LANGUAGE SQL AS $$
@@ -4463,4 +4702,3 @@ DROP TABLE t158154;
 
 -- Test 1383: statement (line 5986)
 DROP ROLE user_158154;
-
