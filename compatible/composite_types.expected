@@ -5,6 +5,8 @@ DROP TABLE
 DROP TABLE
 DROP TABLE
 DROP TABLE
+DROP TABLE
+DROP TABLE
 DROP TYPE
 DROP TYPE
 DROP TYPE
@@ -16,9 +18,9 @@ RESET
 CREATE TYPE
 DROP TYPE
 CREATE TYPE
-DO
 CREATE TABLE
-DO
+CREATE TABLE
+ALTER TABLE
   row  | a | b 
 -------+---+---
  (1,2) | 1 | 2
@@ -37,7 +39,7 @@ INSERT 0 2
  (1,)  | 1 |  
 (5 rows)
 
-psql:pg_tests/compatible/composite_types.sql:86: NOTICE:  drop cascades to column a of table tab
+psql:pg_tests/compatible/composite_types.sql:68: NOTICE:  drop cascades to column a of table tab
 DROP TYPE
 CREATE TYPE
 CREATE TABLE
@@ -68,7 +70,7 @@ INSERT 0 1
 DROP TABLE
 CREATE TYPE
 DROP TABLE
-psql:pg_tests/compatible/composite_types.sql:142: NOTICE:  drop cascades to 2 other objects
+psql:pg_tests/compatible/composite_types.sql:124: NOTICE:  drop cascades to 2 other objects
 DETAIL:  drop cascades to column t2 of composite type t2
 drop cascades to column t1 of composite type t2
 DROP TYPE
@@ -77,7 +79,7 @@ DROP TYPE
 CREATE TYPE
 CREATE TABLE
 CREATE TYPE
-psql:pg_tests/compatible/composite_types.sql:166: NOTICE:  drop cascades to column e of composite type t
+psql:pg_tests/compatible/composite_types.sql:148: NOTICE:  drop cascades to column e of composite type t
 DROP TYPE
 DROP TYPE
 CREATE TYPE
@@ -104,13 +106,14 @@ CREATE TYPE
 CREATE SCHEMA
 CREATE TYPE
 CREATE TYPE
- typname  
-----------
+  typname  
+-----------
  ct1
  t2
+ t_renamed
+ t_table
  tab
- torename
-(4 rows)
+(5 rows)
 
 DROP TYPE
 DROP TYPE

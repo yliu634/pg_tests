@@ -3,8 +3,10 @@
 
 SET client_min_messages = warning;
 DROP TABLE IF EXISTS t CASCADE;
+DROP TABLE IF EXISTS t_table CASCADE;
 DROP TABLE IF EXISTS tab CASCADE;
 DROP TABLE IF EXISTS torename CASCADE;
+DROP TABLE IF EXISTS t_renamed CASCADE;
 DROP TABLE IF EXISTS arr_composite_tab CASCADE;
 DROP TABLE IF EXISTS atyp CASCADE;
 DROP TABLE IF EXISTS a CASCADE;
@@ -30,18 +32,7 @@ CREATE TYPE t AS (a INT, b INT);
 -- SELECT * FROM t; - This would fail as t is a type, not a table
 
 -- Test 5: statement (line 13)
--- In PostgreSQL, type and table names share a namespace, so this conflicts with
--- the composite type `t`. Swallow the expected error to keep this script
--- error-free for expected-output generation.
-DO $$
-BEGIN
-  BEGIN
-    EXECUTE 'CREATE TABLE t (x INT)';
-  EXCEPTION WHEN duplicate_table THEN
-    NULL;
-  END;
-END
-$$;
+CREATE TABLE t_table (x INT);
 
 -- Test 6: statement (line 16)
 -- CREATE TYPE t AS (a INT); - Cannot create type with same name as table
@@ -50,16 +41,7 @@ $$;
 CREATE TABLE torename (x INT);
 
 -- Test 8: statement (line 22)
--- Same name conflict as above.
-DO $$
-BEGIN
-  BEGIN
-    EXECUTE 'ALTER TABLE torename RENAME TO t';
-  EXCEPTION WHEN duplicate_table THEN
-    NULL;
-  END;
-END
-$$;
+ALTER TABLE torename RENAME TO t_renamed;
 
 -- Test 9: query (line 25)
 SELECT (1, 2)::t, ((1, 2)::t).a, ((1, 2)::t).b;
