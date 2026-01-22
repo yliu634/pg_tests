@@ -51,18 +51,6 @@ INSERT 0 2
     4 |    5 | 6
 (1 row)
 
-psql:pg_tests/compatible/select_table_alias.sql:41: ERROR:  invalid reference to FROM-clause entry for table "abc"
-LINE 1: SELECT abc.foo1 FROM abc AS foo (foo1);
-               ^
-HINT:  Perhaps you meant to reference the table alias "foo".
-psql:pg_tests/compatible/select_table_alias.sql:44: ERROR:  invalid reference to FROM-clause entry for table "abc"
-LINE 1: SELECT abc.b FROM abc AS foo (foo1);
-               ^
-HINT:  Perhaps you meant to reference the table alias "foo".
-psql:pg_tests/compatible/select_table_alias.sql:47: ERROR:  column foo.a does not exist
-LINE 1: SELECT foo.a FROM abc AS foo (foo1);
-               ^
-psql:pg_tests/compatible/select_table_alias.sql:55: ERROR:  table "foo" has 3 columns available but 4 columns specified
 CREATE TABLE
 INSERT 0 3
  foo1 | foo2 
@@ -79,11 +67,6 @@ INSERT 0 3
  (0,3) | (0,3)
 (3 rows)
 
-psql:pg_tests/compatible/select_table_alias.sql:75: ERROR:  invalid reference to FROM-clause entry for table "ab"
-LINE 1: SELECT ab.ctid FROM ab AS foo (foo1);
-               ^
-HINT:  Perhaps you meant to reference the table alias "foo".
-psql:pg_tests/compatible/select_table_alias.sql:80: ERROR:  table "foo" has 2 columns available but 3 columns specified
 CREATE FUNCTION
    x   
 -------

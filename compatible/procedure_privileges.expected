@@ -1,0 +1,60 @@
+BEGIN
+CREATE SCHEMA
+SET
+CREATE PROCEDURE
+CREATE PROCEDURE
+CREATE PROCEDURE
+CREATE ROLE
+ grantor  | grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+----------+----------+----------------+--------------+----------------+--------------
+ postgres | PUBLIC   | public         | test_priv_p1 | EXECUTE        | NO
+ postgres | PUBLIC   | public         | test_priv_p2 | EXECUTE        | NO
+ postgres | PUBLIC   | test_priv_sc1  | test_priv_p3 | EXECUTE        | NO
+ postgres | postgres | public         | test_priv_p1 | EXECUTE        | YES
+ postgres | postgres | public         | test_priv_p2 | EXECUTE        | YES
+ postgres | postgres | test_priv_sc1  | test_priv_p3 | EXECUTE        | YES
+(6 rows)
+
+GRANT
+ grantor  |        grantee         | routine_schema | routine_name | privilege_type | is_grantable 
+----------+------------------------+----------------+--------------+----------------+--------------
+ postgres | test_grantee_proc_priv | public         | test_priv_p1 | EXECUTE        | YES
+ postgres | test_grantee_proc_priv | public         | test_priv_p2 | EXECUTE        | YES
+ postgres | test_grantee_proc_priv | test_priv_sc1  | test_priv_p3 | EXECUTE        | YES
+(3 rows)
+
+REVOKE
+ grantor  |        grantee         | routine_schema | routine_name | privilege_type | is_grantable 
+----------+------------------------+----------------+--------------+----------------+--------------
+ postgres | test_grantee_proc_priv | public         | test_priv_p1 | EXECUTE        | NO
+ postgres | test_grantee_proc_priv | public         | test_priv_p2 | EXECUTE        | NO
+ postgres | test_grantee_proc_priv | test_priv_sc1  | test_priv_p3 | EXECUTE        | NO
+(3 rows)
+
+REVOKE
+ count 
+-------
+     0
+(1 row)
+
+GRANT
+ grantor  |        grantee         | routine_schema | routine_name | privilege_type | is_grantable 
+----------+------------------------+----------------+--------------+----------------+--------------
+ postgres | test_grantee_proc_priv | public         | test_priv_p1 | EXECUTE        | NO
+ postgres | test_grantee_proc_priv | public         | test_priv_p2 | EXECUTE        | NO
+ postgres | test_grantee_proc_priv | test_priv_sc1  | test_priv_p3 | EXECUTE        | NO
+(3 rows)
+
+ routine_schema | routine_name |   specific_name    
+----------------+--------------+--------------------
+ public         | test_priv_p1 | test_priv_p1_24709
+ public         | test_priv_p2 | test_priv_p2_24710
+ test_priv_sc1  | test_priv_p3 | test_priv_p3_24711
+(3 rows)
+
+ has_function_privilege 
+------------------------
+ t
+(1 row)
+
+ROLLBACK

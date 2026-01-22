@@ -1,0 +1,52 @@
+CREATE TABLE
+        a_seq        |        c_seq        
+---------------------+---------------------
+ public.serial_a_seq | public.serial_c_seq
+(1 row)
+
+INSERT 0 1
+ setval 
+--------
+      1
+(1 row)
+
+INSERT 0 2
+INSERT 0 1
+ count | count | count 
+-------+-------+-------
+     4 |     3 |     4
+(1 row)
+
+ a | b | c 
+---+---+---
+ 1 | 2 | 1
+ 2 | 7 | 2
+ 3 | 3 | 3
+ 4 | 2 | 4
+(4 rows)
+
+CREATE TABLE
+INSERT 0 2
+ count | count | count 
+-------+-------+-------
+     2 |     2 |     1
+(1 row)
+
+         a_seq         |         b_seq         
+-----------------------+-----------------------
+ public.smallbig_a_seq | public.smallbig_b_seq
+(1 row)
+
+CREATE TABLE
+     pg_get_serial_sequence     
+--------------------------------
+ public."serial_2_capITALS_seq"
+(1 row)
+
+CREATE SCHEMA
+CREATE TABLE
+         pg_get_serial_sequence          
+-----------------------------------------
+ "schema-hyphen"."Serial_3_capITALS_seq"
+(1 row)
+

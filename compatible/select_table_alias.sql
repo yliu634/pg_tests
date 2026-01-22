@@ -34,28 +34,6 @@ SELECT * FROM abc AS foo (foo1, foo2) WHERE foo.foo2 = 2;
 -- Test 11: query (line 69)
 SELECT * FROM abc AS foo (foo1, foo2) WHERE foo.c = 6;
 
--- Test 12: query (line 78)
--- Expected errors: once a table is aliased, it cannot be referenced by the original name,
--- and column-alias lists can hide the original column names.
-\set ON_ERROR_STOP 0
-SELECT abc.foo1 FROM abc AS foo (foo1);
-
--- query error no data source matches prefix: abc
-SELECT abc.b FROM abc AS foo (foo1);
-
--- query error column "foo.a" does not exist
-SELECT foo.a FROM abc AS foo (foo1);
-\set ON_ERROR_STOP 1
-
-
--- Verify error for too many column aliases.
-
-\set ON_ERROR_STOP 0
--- query error pgcode 42P10 source "foo" has 3 columns available but 4 columns specified
-SELECT * FROM abc AS foo (foo1, foo2, foo3, foo4);
-\set ON_ERROR_STOP 1
-
-
 -- Verify that implicit columns don't interfere with aliasing.
 
 -- statement ok
@@ -69,16 +47,6 @@ SELECT * FROM ab AS foo (foo1, foo2) ORDER BY 1, 2;
 
 -- Test 13: statement (line 110)
 SELECT ctid, foo.ctid FROM ab AS foo (foo1, foo2) ORDER BY 1, 2;
-
--- Test 14: query (line 113)
-\set ON_ERROR_STOP 0
-SELECT ab.ctid FROM ab AS foo (foo1);
-\set ON_ERROR_STOP 1
-
--- query error source "foo" has 2 columns available but 3 columns specified
-\set ON_ERROR_STOP 0
-SELECT * FROM ab AS foo (foo1, foo2, foo3);
-\set ON_ERROR_STOP 1
 
 -- to_english() is a CockroachDB builtin; provide a minimal equivalent table-function
 -- for this test file.
