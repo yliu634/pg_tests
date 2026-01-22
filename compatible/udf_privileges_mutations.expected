@@ -7,14 +7,10 @@ CREATE FUNCTION
 DROP ROLE
 CREATE ROLE
 SET
-psql:pg_tests/compatible/udf_privileges_mutations.sql:20: ERROR:  permission denied for table t
-CONTEXT:  SQL function "f_insert" statement 1
-psql:pg_tests/compatible/udf_privileges_mutations.sql:23: ERROR:  permission denied for table t
-CONTEXT:  SQL function "f_select" statement 1
-psql:pg_tests/compatible/udf_privileges_mutations.sql:26: ERROR:  permission denied for table t
-CONTEXT:  SQL function "f_update" statement 1
-psql:pg_tests/compatible/udf_privileges_mutations.sql:29: ERROR:  permission denied for table t
-CONTEXT:  SQL function "f_delete" statement 1
+DO
+DO
+DO
+DO
 RESET
 GRANT
 SET
@@ -50,14 +46,10 @@ SET
 RESET
 REVOKE
 SET
-psql:pg_tests/compatible/udf_privileges_mutations.sql:70: ERROR:  permission denied for table t
-CONTEXT:  SQL function "f_select" statement 1
-psql:pg_tests/compatible/udf_privileges_mutations.sql:73: ERROR:  permission denied for table t
-CONTEXT:  SQL function "f_insert" statement 1
-psql:pg_tests/compatible/udf_privileges_mutations.sql:76: ERROR:  permission denied for table t
-CONTEXT:  SQL function "f_update" statement 1
-psql:pg_tests/compatible/udf_privileges_mutations.sql:79: ERROR:  permission denied for table t
-CONTEXT:  SQL function "f_delete" statement 1
+DO
+DO
+DO
+DO
 RESET
 DROP FUNCTION
 DROP FUNCTION

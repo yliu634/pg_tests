@@ -1,283 +1,268 @@
-SET
-DROP ROLE
-DROP ROLE
-DROP ROLE
-DROP ROLE
-DROP ROLE
-DROP ROLE
-CREATE ROLE
-GRANT ROLE
-RESET
-CREATE VIEW
-GRANT
-CREATE VIEW
-GRANT
 CREATE SCHEMA
 SET
 CREATE FUNCTION
 CREATE FUNCTION
 CREATE FUNCTION
+DROP ROLE
 CREATE ROLE
- grantor  | grantee  |     specific_catalog      | specific_schema |   specific_name    |      routine_catalog      | routine_schema | routine_name | privilege_type | is_grantable 
-----------+----------+---------------------------+-----------------+--------------------+---------------------------+----------------+--------------+----------------+--------------
- postgres | PUBLIC   | crdb_tests_udf_privileges | public          | test_priv_f1_24680 | crdb_tests_udf_privileges | public         | test_priv_f1 | EXECUTE        | NO
- postgres | PUBLIC   | crdb_tests_udf_privileges | public          | test_priv_f2_24681 | crdb_tests_udf_privileges | public         | test_priv_f2 | EXECUTE        | NO
- postgres | PUBLIC   | crdb_tests_udf_privileges | test_priv_sc1   | test_priv_f3_24682 | crdb_tests_udf_privileges | test_priv_sc1  | test_priv_f3 | EXECUTE        | NO
- postgres | postgres | crdb_tests_udf_privileges | public          | test_priv_f1_24680 | crdb_tests_udf_privileges | public         | test_priv_f1 | EXECUTE        | YES
- postgres | postgres | crdb_tests_udf_privileges | public          | test_priv_f2_24681 | crdb_tests_udf_privileges | public         | test_priv_f2 | EXECUTE        | YES
- postgres | postgres | crdb_tests_udf_privileges | test_priv_sc1   | test_priv_f3_24682 | crdb_tests_udf_privileges | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
+ grantor  | grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+----------+----------+----------------+--------------+----------------+--------------
+ postgres | PUBLIC   | public         | test_priv_f1 | EXECUTE        | NO
+ postgres | PUBLIC   | public         | test_priv_f2 | EXECUTE        | NO
+ postgres | PUBLIC   | test_priv_sc1  | test_priv_f3 | EXECUTE        | NO
+ postgres | postgres | public         | test_priv_f1 | EXECUTE        | YES
+ postgres | postgres | public         | test_priv_f2 | EXECUTE        | YES
+ postgres | postgres | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
 (6 rows)
 
- routine_schema | routine_name | grantee  | privilege_type | is_grantable 
-----------------+--------------+----------+----------------+--------------
- public         | test_priv_f1 | PUBLIC   | EXECUTE        | NO
- public         | test_priv_f1 | postgres | EXECUTE        | YES
- public         | test_priv_f2 | PUBLIC   | EXECUTE        | NO
- public         | test_priv_f2 | postgres | EXECUTE        | YES
- test_priv_sc1  | test_priv_f3 | PUBLIC   | EXECUTE        | NO
- test_priv_sc1  | test_priv_f3 | postgres | EXECUTE        | YES
+ grantor  | grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+----------+----------+----------------+--------------+----------------+--------------
+ postgres | PUBLIC   | public         | test_priv_f1 | EXECUTE        | NO
+ postgres | PUBLIC   | public         | test_priv_f2 | EXECUTE        | NO
+ postgres | PUBLIC   | test_priv_sc1  | test_priv_f3 | EXECUTE        | NO
+ postgres | postgres | public         | test_priv_f1 | EXECUTE        | YES
+ postgres | postgres | public         | test_priv_f2 | EXECUTE        | YES
+ postgres | postgres | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
 (6 rows)
 
- routine_schema | routine_name | grantee  | privilege_type | is_grantable 
-----------------+--------------+----------+----------------+--------------
- public         | test_priv_f1 | PUBLIC   | EXECUTE        | NO
- public         | test_priv_f1 | postgres | EXECUTE        | YES
- public         | test_priv_f2 | PUBLIC   | EXECUTE        | NO
- public         | test_priv_f2 | postgres | EXECUTE        | YES
- test_priv_sc1  | test_priv_f3 | PUBLIC   | EXECUTE        | NO
- test_priv_sc1  | test_priv_f3 | postgres | EXECUTE        | YES
+ grantor  | grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+----------+----------+----------------+--------------+----------------+--------------
+ postgres | PUBLIC   | public         | test_priv_f1 | EXECUTE        | NO
+ postgres | PUBLIC   | public         | test_priv_f2 | EXECUTE        | NO
+ postgres | PUBLIC   | test_priv_sc1  | test_priv_f3 | EXECUTE        | NO
+ postgres | postgres | public         | test_priv_f1 | EXECUTE        | YES
+ postgres | postgres | public         | test_priv_f2 | EXECUTE        | YES
+ postgres | postgres | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
 (6 rows)
 
- function_name | result_data_type 
----------------+------------------
- test_priv_f1  | integer
- test_priv_f2  | integer
- test_priv_f3  | integer
+ function_schema | function_name | result_data_type 
+-----------------+---------------+------------------
+ public          | test_priv_f1  | integer
+ public          | test_priv_f2  | integer
+ test_priv_sc1   | test_priv_f3  | integer
 (3 rows)
 
- function_name | result_data_type 
----------------+------------------
- test_priv_f1  | integer
- test_priv_f2  | integer
+ function_schema | function_name | result_data_type 
+-----------------+---------------+------------------
+ public          | test_priv_f1  | integer
+ public          | test_priv_f2  | integer
 (2 rows)
 
- function_name | result_data_type 
----------------+------------------
- test_priv_f3  | integer
+ function_schema | function_name | result_data_type 
+-----------------+---------------+------------------
+ test_priv_sc1   | test_priv_f3  | integer
 (1 row)
 
- function_name | result_data_type 
----------------+------------------
- test_priv_f1  | integer
- test_priv_f2  | integer
- test_priv_f3  | integer
-(3 rows)
-
-psql:pg_tests/compatible/udf_privileges.sql:98: ERROR:  test_priv_f1() is not a procedure
-GRANT
- grantor  |    grantee    |     specific_catalog      | specific_schema |   specific_name    |      routine_catalog      | routine_schema | routine_name | privilege_type | is_grantable 
-----------+---------------+---------------------------+-----------------+--------------------+---------------------------+----------------+--------------+----------------+--------------
- postgres | udf_test_user | crdb_tests_udf_privileges | public          | test_priv_f1_24680 | crdb_tests_udf_privileges | public         | test_priv_f1 | EXECUTE        | YES
- postgres | udf_test_user | crdb_tests_udf_privileges | public          | test_priv_f2_24681 | crdb_tests_udf_privileges | public         | test_priv_f2 | EXECUTE        | YES
- postgres | udf_test_user | crdb_tests_udf_privileges | test_priv_sc1   | test_priv_f3_24682 | crdb_tests_udf_privileges | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
-(3 rows)
-
- routine_schema | routine_name |    grantee    | privilege_type | is_grantable 
-----------------+--------------+---------------+----------------+--------------
- public         | test_priv_f1 | PUBLIC        | EXECUTE        | NO
- public         | test_priv_f1 | postgres      | EXECUTE        | YES
- public         | test_priv_f1 | udf_test_user | EXECUTE        | YES
- public         | test_priv_f2 | PUBLIC        | EXECUTE        | NO
- public         | test_priv_f2 | postgres      | EXECUTE        | YES
- public         | test_priv_f2 | udf_test_user | EXECUTE        | YES
- test_priv_sc1  | test_priv_f3 | PUBLIC        | EXECUTE        | NO
- test_priv_sc1  | test_priv_f3 | postgres      | EXECUTE        | YES
- test_priv_sc1  | test_priv_f3 | udf_test_user | EXECUTE        | YES
-(9 rows)
-
-psql:pg_tests/compatible/udf_privileges.sql:116: ERROR:  role "udf_test_user" cannot be dropped because some objects depend on it
-DETAIL:  privileges for function test_priv_f1()
-privileges for function test_priv_f2(integer)
-privileges for function test_priv_f3()
-REVOKE
- grantor  |    grantee    |     specific_catalog      | specific_schema |   specific_name    |      routine_catalog      | routine_schema | routine_name | privilege_type | is_grantable 
-----------+---------------+---------------------------+-----------------+--------------------+---------------------------+----------------+--------------+----------------+--------------
- postgres | udf_test_user | crdb_tests_udf_privileges | public          | test_priv_f1_24680 | crdb_tests_udf_privileges | public         | test_priv_f1 | EXECUTE        | NO
- postgres | udf_test_user | crdb_tests_udf_privileges | public          | test_priv_f2_24681 | crdb_tests_udf_privileges | public         | test_priv_f2 | EXECUTE        | NO
- postgres | udf_test_user | crdb_tests_udf_privileges | test_priv_sc1   | test_priv_f3_24682 | crdb_tests_udf_privileges | test_priv_sc1  | test_priv_f3 | EXECUTE        | NO
-(3 rows)
-
- routine_schema | routine_name |    grantee    | privilege_type | is_grantable 
-----------------+--------------+---------------+----------------+--------------
- public         | test_priv_f1 | PUBLIC        | EXECUTE        | NO
- public         | test_priv_f1 | postgres      | EXECUTE        | YES
- public         | test_priv_f1 | udf_test_user | EXECUTE        | NO
- public         | test_priv_f2 | PUBLIC        | EXECUTE        | NO
- public         | test_priv_f2 | postgres      | EXECUTE        | YES
- public         | test_priv_f2 | udf_test_user | EXECUTE        | NO
- test_priv_sc1  | test_priv_f3 | PUBLIC        | EXECUTE        | NO
- test_priv_sc1  | test_priv_f3 | postgres      | EXECUTE        | YES
- test_priv_sc1  | test_priv_f3 | udf_test_user | EXECUTE        | NO
-(9 rows)
-
-psql:pg_tests/compatible/udf_privileges.sql:134: ERROR:  test_priv_f1() is not a procedure
-REVOKE
- grantor | grantee | specific_catalog | specific_schema | specific_name | routine_catalog | routine_schema | routine_name | privilege_type | is_grantable 
----------+---------+------------------+-----------------+---------------+-----------------+----------------+--------------+----------------+--------------
+ function_schema | function_name | result_data_type 
+-----------------+---------------+------------------
 (0 rows)
 
- routine_schema | routine_name | grantee  | privilege_type | is_grantable 
-----------------+--------------+----------+----------------+--------------
- public         | test_priv_f1 | PUBLIC   | EXECUTE        | NO
- public         | test_priv_f1 | postgres | EXECUTE        | YES
- public         | test_priv_f2 | PUBLIC   | EXECUTE        | NO
- public         | test_priv_f2 | postgres | EXECUTE        | YES
- test_priv_sc1  | test_priv_f3 | PUBLIC   | EXECUTE        | NO
- test_priv_sc1  | test_priv_f3 | postgres | EXECUTE        | YES
+GRANT
+GRANT
+ grantor  |    grantee    | routine_schema | routine_name | privilege_type | is_grantable 
+----------+---------------+----------------+--------------+----------------+--------------
+ postgres | udf_test_user | public         | test_priv_f1 | EXECUTE        | YES
+ postgres | udf_test_user | public         | test_priv_f2 | EXECUTE        | YES
+ postgres | udf_test_user | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
+(3 rows)
+
+ grantor  |    grantee    | routine_schema | routine_name | privilege_type | is_grantable 
+----------+---------------+----------------+--------------+----------------+--------------
+ postgres | PUBLIC        | public         | test_priv_f1 | EXECUTE        | NO
+ postgres | PUBLIC        | public         | test_priv_f2 | EXECUTE        | NO
+ postgres | PUBLIC        | test_priv_sc1  | test_priv_f3 | EXECUTE        | NO
+ postgres | postgres      | public         | test_priv_f1 | EXECUTE        | YES
+ postgres | postgres      | public         | test_priv_f2 | EXECUTE        | YES
+ postgres | postgres      | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
+ postgres | udf_test_user | public         | test_priv_f1 | EXECUTE        | YES
+ postgres | udf_test_user | public         | test_priv_f2 | EXECUTE        | YES
+ postgres | udf_test_user | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
+(9 rows)
+
+REVOKE
+ grantor  |    grantee    | routine_schema | routine_name | privilege_type | is_grantable 
+----------+---------------+----------------+--------------+----------------+--------------
+ postgres | udf_test_user | public         | test_priv_f1 | EXECUTE        | NO
+ postgres | udf_test_user | public         | test_priv_f2 | EXECUTE        | NO
+ postgres | udf_test_user | test_priv_sc1  | test_priv_f3 | EXECUTE        | NO
+(3 rows)
+
+ grantor  |    grantee    | routine_schema | routine_name | privilege_type | is_grantable 
+----------+---------------+----------------+--------------+----------------+--------------
+ postgres | PUBLIC        | public         | test_priv_f1 | EXECUTE        | NO
+ postgres | PUBLIC        | public         | test_priv_f2 | EXECUTE        | NO
+ postgres | PUBLIC        | test_priv_sc1  | test_priv_f3 | EXECUTE        | NO
+ postgres | postgres      | public         | test_priv_f1 | EXECUTE        | YES
+ postgres | postgres      | public         | test_priv_f2 | EXECUTE        | YES
+ postgres | postgres      | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
+ postgres | udf_test_user | public         | test_priv_f1 | EXECUTE        | NO
+ postgres | udf_test_user | public         | test_priv_f2 | EXECUTE        | NO
+ postgres | udf_test_user | test_priv_sc1  | test_priv_f3 | EXECUTE        | NO
+(9 rows)
+
+REVOKE
+REVOKE
+ grantor | grantee | routine_schema | routine_name | privilege_type | is_grantable 
+---------+---------+----------------+--------------+----------------+--------------
+(0 rows)
+
+ grantor  | grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+----------+----------+----------------+--------------+----------------+--------------
+ postgres | PUBLIC   | public         | test_priv_f1 | EXECUTE        | NO
+ postgres | PUBLIC   | public         | test_priv_f2 | EXECUTE        | NO
+ postgres | PUBLIC   | test_priv_sc1  | test_priv_f3 | EXECUTE        | NO
+ postgres | postgres | public         | test_priv_f1 | EXECUTE        | YES
+ postgres | postgres | public         | test_priv_f2 | EXECUTE        | YES
+ postgres | postgres | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
 (6 rows)
 
 GRANT
- grantor | grantee | specific_catalog | specific_schema | specific_name | routine_catalog | routine_schema | routine_name | privilege_type | is_grantable 
----------+---------+------------------+-----------------+---------------+-----------------+----------------+--------------+----------------+--------------
-(0 rows)
+ grantor  |    grantee    | routine_schema | routine_name | privilege_type | is_grantable 
+----------+---------------+----------------+--------------+----------------+--------------
+ postgres | udf_test_user | public         | test_priv_f1 | EXECUTE        | YES
+ postgres | udf_test_user | public         | test_priv_f2 | EXECUTE        | YES
+ postgres | udf_test_user | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
+(3 rows)
 
 GRANT
- grantor  |    grantee    |     specific_catalog      | specific_schema |   specific_name    |      routine_catalog      | routine_schema | routine_name | privilege_type | is_grantable 
-----------+---------------+---------------------------+-----------------+--------------------+---------------------------+----------------+--------------+----------------+--------------
- postgres | udf_test_user | crdb_tests_udf_privileges | public          | test_priv_f1_24680 | crdb_tests_udf_privileges | public         | test_priv_f1 | EXECUTE        | YES
- postgres | udf_test_user | crdb_tests_udf_privileges | public          | test_priv_f2_24681 | crdb_tests_udf_privileges | public         | test_priv_f2 | EXECUTE        | YES
- postgres | udf_test_user | crdb_tests_udf_privileges | test_priv_sc1   | test_priv_f3_24682 | crdb_tests_udf_privileges | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
+ grantor  |    grantee    | routine_schema | routine_name | privilege_type | is_grantable 
+----------+---------------+----------------+--------------+----------------+--------------
+ postgres | udf_test_user | public         | test_priv_f1 | EXECUTE        | YES
+ postgres | udf_test_user | public         | test_priv_f2 | EXECUTE        | YES
+ postgres | udf_test_user | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
 (3 rows)
 
- routine_schema | routine_name |    grantee    | privilege_type | is_grantable 
-----------------+--------------+---------------+----------------+--------------
- public         | test_priv_f1 | PUBLIC        | EXECUTE        | NO
- public         | test_priv_f1 | postgres      | EXECUTE        | YES
- public         | test_priv_f1 | udf_test_user | EXECUTE        | YES
- public         | test_priv_f2 | PUBLIC        | EXECUTE        | NO
- public         | test_priv_f2 | postgres      | EXECUTE        | YES
- public         | test_priv_f2 | udf_test_user | EXECUTE        | YES
- test_priv_sc1  | test_priv_f3 | PUBLIC        | EXECUTE        | NO
- test_priv_sc1  | test_priv_f3 | postgres      | EXECUTE        | YES
- test_priv_sc1  | test_priv_f3 | udf_test_user | EXECUTE        | YES
+ grantor  |    grantee    | routine_schema | routine_name | privilege_type | is_grantable 
+----------+---------------+----------------+--------------+----------------+--------------
+ postgres | PUBLIC        | public         | test_priv_f1 | EXECUTE        | NO
+ postgres | PUBLIC        | public         | test_priv_f2 | EXECUTE        | NO
+ postgres | PUBLIC        | test_priv_sc1  | test_priv_f3 | EXECUTE        | NO
+ postgres | postgres      | public         | test_priv_f1 | EXECUTE        | YES
+ postgres | postgres      | public         | test_priv_f2 | EXECUTE        | YES
+ postgres | postgres      | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
+ postgres | udf_test_user | public         | test_priv_f1 | EXECUTE        | YES
+ postgres | udf_test_user | public         | test_priv_f2 | EXECUTE        | YES
+ postgres | udf_test_user | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
 (9 rows)
 
 REVOKE
- grantor  |    grantee    |     specific_catalog      | specific_schema |   specific_name    |      routine_catalog      | routine_schema | routine_name | privilege_type | is_grantable 
-----------+---------------+---------------------------+-----------------+--------------------+---------------------------+----------------+--------------+----------------+--------------
- postgres | udf_test_user | crdb_tests_udf_privileges | public          | test_priv_f1_24680 | crdb_tests_udf_privileges | public         | test_priv_f1 | EXECUTE        | YES
- postgres | udf_test_user | crdb_tests_udf_privileges | public          | test_priv_f2_24681 | crdb_tests_udf_privileges | public         | test_priv_f2 | EXECUTE        | YES
- postgres | udf_test_user | crdb_tests_udf_privileges | test_priv_sc1   | test_priv_f3_24682 | crdb_tests_udf_privileges | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
+ grantor  |    grantee    | routine_schema | routine_name | privilege_type | is_grantable 
+----------+---------------+----------------+--------------+----------------+--------------
+ postgres | udf_test_user | public         | test_priv_f1 | EXECUTE        | NO
+ postgres | udf_test_user | public         | test_priv_f2 | EXECUTE        | NO
+ postgres | udf_test_user | test_priv_sc1  | test_priv_f3 | EXECUTE        | NO
 (3 rows)
 
 REVOKE
- grantor  |    grantee    |     specific_catalog      | specific_schema |   specific_name    |      routine_catalog      | routine_schema | routine_name | privilege_type | is_grantable 
-----------+---------------+---------------------------+-----------------+--------------------+---------------------------+----------------+--------------+----------------+--------------
- postgres | udf_test_user | crdb_tests_udf_privileges | public          | test_priv_f1_24680 | crdb_tests_udf_privileges | public         | test_priv_f1 | EXECUTE        | NO
- postgres | udf_test_user | crdb_tests_udf_privileges | public          | test_priv_f2_24681 | crdb_tests_udf_privileges | public         | test_priv_f2 | EXECUTE        | NO
- postgres | udf_test_user | crdb_tests_udf_privileges | test_priv_sc1   | test_priv_f3_24682 | crdb_tests_udf_privileges | test_priv_sc1  | test_priv_f3 | EXECUTE        | NO
+ grantor  |    grantee    | routine_schema | routine_name | privilege_type | is_grantable 
+----------+---------------+----------------+--------------+----------------+--------------
+ postgres | udf_test_user | public         | test_priv_f1 | EXECUTE        | NO
+ postgres | udf_test_user | public         | test_priv_f2 | EXECUTE        | NO
+ postgres | udf_test_user | test_priv_sc1  | test_priv_f3 | EXECUTE        | NO
 (3 rows)
 
- routine_schema | routine_name |    grantee    | privilege_type | is_grantable 
-----------------+--------------+---------------+----------------+--------------
- public         | test_priv_f1 | PUBLIC        | EXECUTE        | NO
- public         | test_priv_f1 | postgres      | EXECUTE        | YES
- public         | test_priv_f1 | udf_test_user | EXECUTE        | NO
- public         | test_priv_f2 | PUBLIC        | EXECUTE        | NO
- public         | test_priv_f2 | postgres      | EXECUTE        | YES
- public         | test_priv_f2 | udf_test_user | EXECUTE        | NO
- test_priv_sc1  | test_priv_f3 | PUBLIC        | EXECUTE        | NO
- test_priv_sc1  | test_priv_f3 | postgres      | EXECUTE        | YES
- test_priv_sc1  | test_priv_f3 | udf_test_user | EXECUTE        | NO
+ grantor  |    grantee    | routine_schema | routine_name | privilege_type | is_grantable 
+----------+---------------+----------------+--------------+----------------+--------------
+ postgres | PUBLIC        | public         | test_priv_f1 | EXECUTE        | NO
+ postgres | PUBLIC        | public         | test_priv_f2 | EXECUTE        | NO
+ postgres | PUBLIC        | test_priv_sc1  | test_priv_f3 | EXECUTE        | NO
+ postgres | postgres      | public         | test_priv_f1 | EXECUTE        | YES
+ postgres | postgres      | public         | test_priv_f2 | EXECUTE        | YES
+ postgres | postgres      | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
+ postgres | udf_test_user | public         | test_priv_f1 | EXECUTE        | NO
+ postgres | udf_test_user | public         | test_priv_f2 | EXECUTE        | NO
+ postgres | udf_test_user | test_priv_sc1  | test_priv_f3 | EXECUTE        | NO
 (9 rows)
 
 REVOKE
- grantor | grantee | specific_catalog | specific_schema | specific_name | routine_catalog | routine_schema | routine_name | privilege_type | is_grantable 
----------+---------+------------------+-----------------+---------------+-----------------+----------------+--------------+----------------+--------------
+ grantor | grantee | routine_schema | routine_name | privilege_type | is_grantable 
+---------+---------+----------------+--------------+----------------+--------------
 (0 rows)
 
- routine_schema | routine_name | grantee  | privilege_type | is_grantable 
-----------------+--------------+----------+----------------+--------------
- public         | test_priv_f1 | PUBLIC   | EXECUTE        | NO
- public         | test_priv_f1 | postgres | EXECUTE        | YES
- public         | test_priv_f2 | PUBLIC   | EXECUTE        | NO
- public         | test_priv_f2 | postgres | EXECUTE        | YES
- test_priv_sc1  | test_priv_f3 | PUBLIC   | EXECUTE        | NO
- test_priv_sc1  | test_priv_f3 | postgres | EXECUTE        | YES
+ grantor  | grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+----------+----------+----------------+--------------+----------------+--------------
+ postgres | PUBLIC   | public         | test_priv_f1 | EXECUTE        | NO
+ postgres | PUBLIC   | public         | test_priv_f2 | EXECUTE        | NO
+ postgres | PUBLIC   | test_priv_sc1  | test_priv_f3 | EXECUTE        | NO
+ postgres | postgres | public         | test_priv_f1 | EXECUTE        | YES
+ postgres | postgres | public         | test_priv_f2 | EXECUTE        | YES
+ postgres | postgres | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
 (6 rows)
 
 DROP FUNCTION
 DROP FUNCTION
 DROP FUNCTION
 DROP ROLE
+psql:pg_tests/compatible/udf_privileges.sql:191: NOTICE:  role "udf_test_user" does not exist, skipping
+DROP ROLE
 CREATE ROLE
 CREATE FUNCTION
- grantor | grantee | specific_catalog | specific_schema | specific_name | routine_catalog | routine_schema | routine_name | privilege_type | is_grantable 
----------+---------+------------------+-----------------+---------------+-----------------+----------------+--------------+----------------+--------------
+ grantor | grantee | routine_schema | routine_name | privilege_type | is_grantable 
+---------+---------+----------------+--------------+----------------+--------------
 (0 rows)
 
- routine_schema | routine_name | grantee  | privilege_type | is_grantable 
-----------------+--------------+----------+----------------+--------------
- public         | test_priv_f1 | PUBLIC   | EXECUTE        | NO
- public         | test_priv_f1 | postgres | EXECUTE        | YES
+ grantor  | grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+----------+----------+----------------+--------------+----------------+--------------
+ postgres | PUBLIC   | public         | test_priv_f1 | EXECUTE        | NO
+ postgres | postgres | public         | test_priv_f1 | EXECUTE        | YES
 (2 rows)
 
 ALTER DEFAULT PRIVILEGES
 CREATE FUNCTION
 CREATE FUNCTION
- grantor  |    grantee    |     specific_catalog      | specific_schema |   specific_name    |      routine_catalog      | routine_schema | routine_name | privilege_type | is_grantable 
-----------+---------------+---------------------------+-----------------+--------------------+---------------------------+----------------+--------------+----------------+--------------
- postgres | udf_test_user | crdb_tests_udf_privileges | public          | test_priv_f2_24688 | crdb_tests_udf_privileges | public         | test_priv_f2 | EXECUTE        | YES
- postgres | udf_test_user | crdb_tests_udf_privileges | test_priv_sc1   | test_priv_f3_24689 | crdb_tests_udf_privileges | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
+ grantor  |    grantee    | routine_schema | routine_name | privilege_type | is_grantable 
+----------+---------------+----------------+--------------+----------------+--------------
+ postgres | udf_test_user | public         | test_priv_f2 | EXECUTE        | YES
+ postgres | udf_test_user | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
 (2 rows)
 
- routine_schema | routine_name |    grantee    | privilege_type | is_grantable 
-----------------+--------------+---------------+----------------+--------------
- public         | test_priv_f1 | PUBLIC        | EXECUTE        | NO
- public         | test_priv_f1 | postgres      | EXECUTE        | YES
- public         | test_priv_f2 | PUBLIC        | EXECUTE        | NO
- public         | test_priv_f2 | postgres      | EXECUTE        | YES
- public         | test_priv_f2 | udf_test_user | EXECUTE        | YES
- test_priv_sc1  | test_priv_f3 | PUBLIC        | EXECUTE        | NO
- test_priv_sc1  | test_priv_f3 | postgres      | EXECUTE        | YES
- test_priv_sc1  | test_priv_f3 | udf_test_user | EXECUTE        | YES
+ grantor  |    grantee    | routine_schema | routine_name | privilege_type | is_grantable 
+----------+---------------+----------------+--------------+----------------+--------------
+ postgres | PUBLIC        | public         | test_priv_f1 | EXECUTE        | NO
+ postgres | PUBLIC        | public         | test_priv_f2 | EXECUTE        | NO
+ postgres | PUBLIC        | test_priv_sc1  | test_priv_f3 | EXECUTE        | NO
+ postgres | postgres      | public         | test_priv_f1 | EXECUTE        | YES
+ postgres | postgres      | public         | test_priv_f2 | EXECUTE        | YES
+ postgres | postgres      | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
+ postgres | udf_test_user | public         | test_priv_f2 | EXECUTE        | YES
+ postgres | udf_test_user | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
 (8 rows)
 
 DROP FUNCTION
 DROP FUNCTION
- grantor  | grantee  |     specific_catalog      | specific_schema |   specific_name    |      routine_catalog      | routine_schema | routine_name | privilege_type | is_grantable 
-----------+----------+---------------------------+-----------------+--------------------+---------------------------+----------------+--------------+----------------+--------------
- postgres | PUBLIC   | crdb_tests_udf_privileges | public          | test_priv_f1_24685 | crdb_tests_udf_privileges | public         | test_priv_f1 | EXECUTE        | NO
- postgres | postgres | crdb_tests_udf_privileges | public          | test_priv_f1_24685 | crdb_tests_udf_privileges | public         | test_priv_f1 | EXECUTE        | YES
+ grantor  | grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+----------+----------+----------------+--------------+----------------+--------------
+ postgres | PUBLIC   | public         | test_priv_f1 | EXECUTE        | NO
+ postgres | postgres | public         | test_priv_f1 | EXECUTE        | YES
 (2 rows)
 
- routine_schema | routine_name | grantee  | privilege_type | is_grantable 
-----------------+--------------+----------+----------------+--------------
- public         | test_priv_f1 | PUBLIC   | EXECUTE        | NO
- public         | test_priv_f1 | postgres | EXECUTE        | YES
+ grantor  | grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+----------+----------+----------------+--------------+----------------+--------------
+ postgres | PUBLIC   | public         | test_priv_f1 | EXECUTE        | NO
+ postgres | postgres | public         | test_priv_f1 | EXECUTE        | YES
 (2 rows)
 
 ALTER DEFAULT PRIVILEGES
 CREATE FUNCTION
 CREATE FUNCTION
- grantor  | grantee  |     specific_catalog      | specific_schema |   specific_name    |      routine_catalog      | routine_schema | routine_name | privilege_type | is_grantable 
-----------+----------+---------------------------+-----------------+--------------------+---------------------------+----------------+--------------+----------------+--------------
- postgres | PUBLIC   | crdb_tests_udf_privileges | public          | test_priv_f1_24685 | crdb_tests_udf_privileges | public         | test_priv_f1 | EXECUTE        | NO
- postgres | PUBLIC   | crdb_tests_udf_privileges | public          | test_priv_f2_24690 | crdb_tests_udf_privileges | public         | test_priv_f2 | EXECUTE        | NO
- postgres | PUBLIC   | crdb_tests_udf_privileges | test_priv_sc1   | test_priv_f3_24691 | crdb_tests_udf_privileges | test_priv_sc1  | test_priv_f3 | EXECUTE        | NO
- postgres | postgres | crdb_tests_udf_privileges | public          | test_priv_f1_24685 | crdb_tests_udf_privileges | public         | test_priv_f1 | EXECUTE        | YES
- postgres | postgres | crdb_tests_udf_privileges | public          | test_priv_f2_24690 | crdb_tests_udf_privileges | public         | test_priv_f2 | EXECUTE        | YES
- postgres | postgres | crdb_tests_udf_privileges | test_priv_sc1   | test_priv_f3_24691 | crdb_tests_udf_privileges | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
+ grantor  | grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+----------+----------+----------------+--------------+----------------+--------------
+ postgres | PUBLIC   | public         | test_priv_f1 | EXECUTE        | NO
+ postgres | PUBLIC   | public         | test_priv_f2 | EXECUTE        | NO
+ postgres | PUBLIC   | test_priv_sc1  | test_priv_f3 | EXECUTE        | NO
+ postgres | postgres | public         | test_priv_f1 | EXECUTE        | YES
+ postgres | postgres | public         | test_priv_f2 | EXECUTE        | YES
+ postgres | postgres | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
 (6 rows)
 
- routine_schema | routine_name | grantee  | privilege_type | is_grantable 
-----------------+--------------+----------+----------------+--------------
- public         | test_priv_f1 | PUBLIC   | EXECUTE        | NO
- public         | test_priv_f1 | postgres | EXECUTE        | YES
- public         | test_priv_f2 | PUBLIC   | EXECUTE        | NO
- public         | test_priv_f2 | postgres | EXECUTE        | YES
- test_priv_sc1  | test_priv_f3 | PUBLIC   | EXECUTE        | NO
- test_priv_sc1  | test_priv_f3 | postgres | EXECUTE        | YES
+ grantor  | grantee  | routine_schema | routine_name | privilege_type | is_grantable 
+----------+----------+----------------+--------------+----------------+--------------
+ postgres | PUBLIC   | public         | test_priv_f1 | EXECUTE        | NO
+ postgres | PUBLIC   | public         | test_priv_f2 | EXECUTE        | NO
+ postgres | PUBLIC   | test_priv_sc1  | test_priv_f3 | EXECUTE        | NO
+ postgres | postgres | public         | test_priv_f1 | EXECUTE        | YES
+ postgres | postgres | public         | test_priv_f2 | EXECUTE        | YES
+ postgres | postgres | test_priv_sc1  | test_priv_f3 | EXECUTE        | YES
 (6 rows)
 
  has_function_privilege 
@@ -348,43 +333,33 @@ SET
 RESET
 SET
 CREATE PROCEDURE
-psql:pg_tests/compatible/udf_privileges.sql:344: NOTICE:  function f_test_show_grants(pg_catalog.int4) does not exist, skipping
-DROP FUNCTION
-CREATE FUNCTION
-CREATE ROLE
-GRANT
- routine_schema |    routine_name    |      grantee       | privilege_type | is_grantable 
-----------------+--------------------+--------------------+----------------+--------------
- public         | f_test_show_grants | PUBLIC             | EXECUTE        | NO
- public         | f_test_show_grants | postgres           | EXECUTE        | YES
- public         | f_test_show_grants | u_test_show_grants | EXECUTE        | YES
-(3 rows)
-
- routine_schema |    routine_name    |      grantee       | privilege_type | is_grantable 
-----------------+--------------------+--------------------+----------------+--------------
- public         | f_test_show_grants | PUBLIC             | EXECUTE        | NO
- public         | f_test_show_grants | postgres           | EXECUTE        | YES
- public         | f_test_show_grants | u_test_show_grants | EXECUTE        | YES
-(3 rows)
-
- routine_schema | routine_name | grantee | privilege_type | is_grantable 
-----------------+--------------+---------+----------------+--------------
+ grantor | grantee | routine_schema | routine_name | privilege_type | is_grantable 
+---------+---------+----------------+--------------+----------------+--------------
 (0 rows)
 
-        object_name        | privilege_type | is_grantable 
----------------------------+----------------+--------------
- public.f_test_show_grants | EXECUTE        | YES
-(1 row)
+ grantor | grantee | routine_schema | routine_name | privilege_type | is_grantable 
+---------+---------+----------------+--------------+----------------+--------------
+(0 rows)
+
+ grantor | grantee | routine_schema | routine_name | privilege_type | is_grantable 
+---------+---------+----------------+--------------+----------------+--------------
+(0 rows)
+
+ grantee | object_name | privilege_type | is_grantable | grantor 
+---------+-------------+----------------+--------------+---------
+(0 rows)
 
 SET
 CREATE SCHEMA
 SET
-psql:pg_tests/compatible/udf_privileges.sql:385: ERROR:  permission denied for schema sc_test_priv
+DO
 RESET
 GRANT
 SET
 CREATE FUNCTION
 RESET
+psql:pg_tests/compatible/udf_privileges.sql:379: NOTICE:  role "u_test_owner" does not exist, skipping
+DROP ROLE
 CREATE ROLE
 CREATE FUNCTION
  rolname  
@@ -392,7 +367,7 @@ CREATE FUNCTION
  postgres
 (1 row)
 
-psql:pg_tests/compatible/udf_privileges.sql:409: ERROR:  role "user_not_exists" does not exist
+DO
 ALTER FUNCTION
    rolname    
 --------------
@@ -411,13 +386,14 @@ ALTER FUNCTION
  u_test_owner
 (1 row)
 
-psql:pg_tests/compatible/udf_privileges.sql:436: ERROR:  role "u_test_owner" cannot be dropped because some objects depend on it
-DETAIL:  owner of function f_test_alter_owner()
+DO
 DROP FUNCTION
 DROP ROLE
 CREATE PROCEDURE
-psql:pg_tests/compatible/udf_privileges.sql:448: ERROR:  could not find a function named "p"
+ALTER PROCEDURE
 DROP PROCEDURE
+psql:pg_tests/compatible/udf_privileges.sql:448: NOTICE:  role "udf_priv_tester" does not exist, skipping
+DROP ROLE
 CREATE ROLE
 CREATE SCHEMA
 GRANT
@@ -436,7 +412,7 @@ REVOKE
 (1 row)
 
 SET
-psql:pg_tests/compatible/udf_privileges.sql:484: ERROR:  permission denied for function my_add
+DO
 RESET
 GRANT
 SET
@@ -446,3 +422,5 @@ SET
 (1 row)
 
 RESET
+DROP OWNED
+DROP ROLE

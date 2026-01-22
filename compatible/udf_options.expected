@@ -1,33 +1,15 @@
-psql:pg_tests/compatible/udf_options.sql:10: ERROR:  could not access file "dir/funcs": No such file or directory
-psql:pg_tests/compatible/udf_options.sql:19: ERROR:  language "made_up_language" does not exist
+DO
+DO
 CREATE FUNCTION
-psql:pg_tests/compatible/udf_options.sql:27: ERROR:  return type mismatch in function declared to return integer
-DETAIL:  Actual return type is text.
-CONTEXT:  SQL function "f"
-psql:pg_tests/compatible/udf_options.sql:30: ERROR:  conflicting or redundant options
-LINE 1: CREATE FUNCTION f() RETURNS INT IMMUTABLE STABLE LANGUAGE SQ...
-                                                  ^
-psql:pg_tests/compatible/udf_options.sql:33: ERROR:  conflicting or redundant options
-LINE 1: ...CTION f() RETURNS INT CALLED ON NULL INPUT STABLE STRICT LAN...
-                                                             ^
-psql:pg_tests/compatible/udf_options.sql:36: ERROR:  conflicting or redundant options
-LINE 1: ...CTION f() RETURNS INT CALLED ON NULL INPUT STABLE RETURNS NU...
-                                                             ^
-psql:pg_tests/compatible/udf_options.sql:39: ERROR:  conflicting or redundant options
-LINE 1: CREATE FUNCTION f() RETURNS INT LEAKPROOF NOT LEAKPROOF LANG...
-                                                  ^
-psql:pg_tests/compatible/udf_options.sql:42: ERROR:  conflicting or redundant options
-LINE 1: ...URNS INT IMMUTABLE LANGUAGE SQL AS $$ SELECT 1 $$ AS $$ SELE...
-                                                             ^
-psql:pg_tests/compatible/udf_options.sql:45: ERROR:  conflicting or redundant options
-LINE 1: ...E FUNCTION f() RETURNS INT IMMUTABLE LANGUAGE SQL LANGUAGE S...
-                                                             ^
-psql:pg_tests/compatible/udf_options.sql:48: ERROR:  conflicting or redundant options
-LINE 1: ...NCTION f() RETURNS INT IMMUTABLE SECURITY INVOKER SECURITY D...
-                                                             ^
-psql:pg_tests/compatible/udf_options.sql:51: ERROR:  conflicting or redundant options
-LINE 1: ...NCTION f() RETURNS INT IMMUTABLE SECURITY INVOKER EXTERNAL S...
-                                                             ^
+CREATE FUNCTION
+DO
+DO
+DO
+DO
+DO
+DO
+DO
+DO
 CREATE TABLE
 INSERT 0 3
 CREATE FUNCTION
@@ -57,9 +39,16 @@ CREATE FUNCTION
  
 (1 row)
 
-psql:pg_tests/compatible/udf_options.sql:84: ERROR:  function "soundex" does not exist
-LINE 1: SELECT pg_get_functiondef('soundex'::regproc::oid);
-                                  ^
+                   pg_get_functiondef                   
+--------------------------------------------------------
+ CREATE OR REPLACE FUNCTION pg_catalog.pg_backend_pid()+
+  RETURNS integer                                      +
+  LANGUAGE internal                                    +
+  STABLE PARALLEL RESTRICTED STRICT                    +
+ AS $function$pg_backend_pid$function$                 +
+ 
+(1 row)
+
  l1 | l2 | i1 | i2 | s1 | s2 | v1 | v2 
 ----+----+----+----+----+----+----+----
   1 |  1 |  1 |  1 |  1 |  1 | 11 | 11
