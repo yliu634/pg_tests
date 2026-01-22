@@ -29,7 +29,7 @@ ALTER TABLE
  t1              | ckb
 (3 rows)
 
-psql:pg_tests/compatible/udf_in_constraints.sql:59: ERROR:  cannot drop function f1(integer) because other objects depend on it
+psql:compatible/udf_in_constraints.sql:59: ERROR:  cannot drop function f1(integer) because other objects depend on it
 DETAIL:  constraint chk_b on table t1 depends on function f1(integer)
 constraint cka on table t1 depends on function f1(integer)
 constraint ckb on table t1 depends on function f1(integer)
@@ -78,7 +78,7 @@ ALTER FUNCTION
  t2              | chk_sc1
 (1 row)
 
-psql:pg_tests/compatible/udf_in_constraints.sql:93: ERROR:  cannot drop function sc1.f2(integer) because other objects depend on it
+psql:compatible/udf_in_constraints.sql:93: ERROR:  cannot drop function sc1.f2(integer) because other objects depend on it
 DETAIL:  constraint chk_sc1 on table t2 depends on function sc1.f2(integer)
 HINT:  Use DROP ... CASCADE to drop the dependent objects too.
 DROP TABLE

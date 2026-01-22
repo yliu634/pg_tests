@@ -20,7 +20,7 @@ CREATE FUNCTION
  (3,4)
 (1 row)
 
-psql:pg_tests/compatible/udf_insert.sql:56: ERROR:  duplicate key value violates unique constraint "t_pkey"
+psql:compatible/udf_insert.sql:56: ERROR:  duplicate key value violates unique constraint "t_pkey"
 DETAIL:  Key (a)=(3) already exists.
 CONTEXT:  SQL function "f_insert" statement 1
  a | b 
@@ -69,7 +69,7 @@ CREATE FUNCTION
  (9,10)
 (2 rows)
 
-psql:pg_tests/compatible/udf_insert.sql:117: ERROR:  duplicate key value violates unique constraint "t_multi_pkey"
+psql:compatible/udf_insert.sql:117: ERROR:  duplicate key value violates unique constraint "t_multi_pkey"
 DETAIL:  Key (a)=(42) already exists.
 CONTEXT:  SQL function "f_2values" statement 1
 CREATE FUNCTION
@@ -79,7 +79,7 @@ CREATE FUNCTION
  (13,14)
 (2 rows)
 
-psql:pg_tests/compatible/udf_insert.sql:133: ERROR:  duplicate key value violates unique constraint "t_multi_pkey"
+psql:compatible/udf_insert.sql:133: ERROR:  duplicate key value violates unique constraint "t_multi_pkey"
 DETAIL:  Key (a)=(42) already exists.
 CONTEXT:  SQL function "f_2inserts" statement 2
  count 
@@ -112,7 +112,7 @@ ALTER TABLE
  (3,0,)
 (1 row)
 
-psql:pg_tests/compatible/udf_insert.sql:174: ERROR:  return type mismatch in function declared to return integer
+psql:compatible/udf_insert.sql:174: ERROR:  return type mismatch in function declared to return integer
 DETAIL:  Final statement must return exactly one column.
 CONTEXT:  SQL function "f_int" during startup
  a | b | c 
@@ -131,10 +131,10 @@ CREATE FUNCTION
 
 ALTER TABLE
 DROP FUNCTION
-psql:pg_tests/compatible/udf_insert.sql:197: ERROR:  column "c" of relation "t_alter" does not exist
+psql:compatible/udf_insert.sql:197: ERROR:  column "c" of relation "t_alter" does not exist
 ALTER TABLE
 ALTER TABLE
-psql:pg_tests/compatible/udf_insert.sql:206: ERROR:  INSERT has more expressions than target columns
+psql:compatible/udf_insert.sql:206: ERROR:  INSERT has more expressions than target columns
 LINE 2:   INSERT INTO t_alter VALUES (i) RETURNING *;
                                       ^
 QUERY:  
@@ -143,13 +143,13 @@ QUERY:
 CONTEXT:  SQL function "f_record" during startup
 CREATE TABLE
 CREATE FUNCTION
-psql:pg_tests/compatible/udf_insert.sql:224: ERROR:  new row for relation "t_checkb" violates check constraint "t_checkb_b_check"
+psql:compatible/udf_insert.sql:224: ERROR:  new row for relation "t_checkb" violates check constraint "t_checkb_b_check"
 DETAIL:  Failing row contains (1, 0).
 CONTEXT:  SQL function "f_checkb" statement 1
 CREATE TABLE
 CREATE FUNCTION
 ALTER TABLE
-psql:pg_tests/compatible/udf_insert.sql:244: ERROR:  column "b" does not exist
+psql:compatible/udf_insert.sql:244: ERROR:  column "b" does not exist
 LINE 2:   INSERT INTO t146414 (a) VALUES (100) RETURNING b;
                                                          ^
 QUERY:  

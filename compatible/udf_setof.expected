@@ -120,7 +120,7 @@ INSERT 0 2
             4
 (4 rows)
 
-psql:pg_tests/compatible/udf_setof.sql:92: ERROR:  return type mismatch in function declared to return integer
+psql:compatible/udf_setof.sql:92: ERROR:  return type mismatch in function declared to return integer
 DETAIL:  Final statement must return exactly one column.
 CONTEXT:  SQL function "err"
 CREATE FUNCTION
@@ -179,7 +179,7 @@ CREATE FUNCTION
  10 | 10
 (10 rows)
 
-psql:pg_tests/compatible/udf_setof.sql:134: ERROR:  OUT and INOUT arguments aren't allowed in TABLE functions
+psql:compatible/udf_setof.sql:134: ERROR:  OUT and INOUT arguments aren't allowed in TABLE functions
 CREATE FUNCTION
  f_table1 
 ----------
@@ -224,14 +224,14 @@ CREATE FUNCTION
        10
 (10 rows)
 
-psql:pg_tests/compatible/udf_setof.sql:160: ERROR:  return type mismatch in function declared to return integer
+psql:compatible/udf_setof.sql:160: ERROR:  return type mismatch in function declared to return integer
 DETAIL:  Final statement must return exactly one column.
 CONTEXT:  SQL function "err"
 CREATE FUNCTION
-psql:pg_tests/compatible/udf_setof.sql:168: ERROR:  syntax error at or near "INT"
+psql:compatible/udf_setof.sql:168: ERROR:  syntax error at or near "INT"
 LINE 1: SELECT * FROM f145414() AS foo(x, y INT);
                                             ^
-psql:pg_tests/compatible/udf_setof.sql:173: ERROR:  syntax error at or near ")"
+psql:compatible/udf_setof.sql:173: ERROR:  syntax error at or near ")"
 LINE 1: SELECT * FROM f145414() AS foo(x INT, y);
                                                ^
 DROP FUNCTION

@@ -57,12 +57,12 @@ CREATE PROCEDURE
  
 (1 row)
 
-psql:pg_tests/compatible/udf_schema_change.sql:81: ERROR:  function f_test_alter_name(integer) already exists in schema "public"
-psql:pg_tests/compatible/udf_schema_change.sql:87: ERROR:  function f_test_alter_name_same_in(integer) already exists in schema "public"
-psql:pg_tests/compatible/udf_schema_change.sql:93: ERROR:  function p(integer) already exists in schema "public"
-psql:pg_tests/compatible/udf_schema_change.sql:99: ERROR:  f_test_alter_name(integer) is not a procedure
+psql:compatible/udf_schema_change.sql:81: ERROR:  function f_test_alter_name(integer) already exists in schema "public"
+psql:compatible/udf_schema_change.sql:87: ERROR:  function f_test_alter_name_same_in(integer) already exists in schema "public"
+psql:compatible/udf_schema_change.sql:93: ERROR:  function p(integer) already exists in schema "public"
+psql:compatible/udf_schema_change.sql:99: ERROR:  f_test_alter_name(integer) is not a procedure
 ALTER FUNCTION
-psql:pg_tests/compatible/udf_schema_change.sql:108: ERROR:  function "f_test_alter_name(integer)" does not exist
+psql:compatible/udf_schema_change.sql:108: ERROR:  function "f_test_alter_name(integer)" does not exist
 LINE 1: SELECT pg_get_functiondef('f_test_alter_name(integer)'::regp...
                                   ^
                           create_statement                          
@@ -75,7 +75,7 @@ LINE 1: SELECT pg_get_functiondef('f_test_alter_name(integer)'::regp...
 (1 row)
 
 ALTER FUNCTION
-psql:pg_tests/compatible/udf_schema_change.sql:120: ERROR:  function "f_test_alter_name_new(integer)" does not exist
+psql:compatible/udf_schema_change.sql:120: ERROR:  function "f_test_alter_name_new(integer)" does not exist
 LINE 1: SELECT pg_get_functiondef('f_test_alter_name_new(integer)'::...
                                   ^
                             create_statement                            
@@ -105,8 +105,8 @@ CREATE FUNCTION
 (3 rows)
 
 ALTER FUNCTION
-psql:pg_tests/compatible/udf_schema_change.sql:161: ERROR:  function f_test_sc() already exists in schema "test_alter_sc"
-psql:pg_tests/compatible/udf_schema_change.sql:167: ERROR:  f_test_sc(integer) is not a procedure
+psql:compatible/udf_schema_change.sql:161: ERROR:  function f_test_sc() already exists in schema "test_alter_sc"
+psql:compatible/udf_schema_change.sql:167: ERROR:  f_test_sc(integer) is not a procedure
 ALTER FUNCTION
     schema     |  proname  |   args    
 ---------------+-----------+-----------
@@ -124,7 +124,7 @@ ALTER FUNCTION
  
 (1 row)
 
-psql:pg_tests/compatible/udf_schema_change.sql:187: ERROR:  function f_test_sc(integer) does not exist
+psql:compatible/udf_schema_change.sql:187: ERROR:  function f_test_sc(integer) does not exist
                        create_statement                        
 ---------------------------------------------------------------
  CREATE OR REPLACE FUNCTION test_alter_sc.f_test_sc(i integer)+
@@ -199,7 +199,7 @@ CREATE FUNCTION
 (1 row)
 
 ALTER SCHEMA
-psql:pg_tests/compatible/udf_schema_change.sql:256: ERROR:  schema "sc1" does not exist
+psql:compatible/udf_schema_change.sql:256: ERROR:  schema "sc1" does not exist
 LINE 1: SELECT sc1.f_type();
                ^
  f_type 
@@ -220,7 +220,7 @@ CREATE FUNCTION
 (1 row)
 
 ALTER TABLE
-psql:pg_tests/compatible/udf_schema_change.sql:279: ERROR:  return type mismatch in function declared to return t_alter
+psql:compatible/udf_schema_change.sql:279: ERROR:  return type mismatch in function declared to return t_alter
 DETAIL:  Final statement returns too many columns.
 CONTEXT:  SQL function "f_rtbl" during startup
 ALTER TABLE
@@ -230,7 +230,7 @@ ALTER TABLE
 (1 row)
 
 ALTER TABLE
-psql:pg_tests/compatible/udf_schema_change.sql:291: ERROR:  return type mismatch in function declared to return t_alter
+psql:compatible/udf_schema_change.sql:291: ERROR:  return type mismatch in function declared to return t_alter
 DETAIL:  Final statement returns too few columns.
 CONTEXT:  SQL function "f_rtbl"
 CREATE FUNCTION

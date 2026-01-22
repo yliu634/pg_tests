@@ -55,7 +55,7 @@ INSERT 0 3
  3 | 3
 (2 rows)
 
-psql:pg_tests/compatible/udf_in_index.sql:84: ERROR:  cannot drop function test_tbl_partial_f(integer) because other objects depend on it
+psql:compatible/udf_in_index.sql:84: ERROR:  cannot drop function test_tbl_partial_f(integer) because other objects depend on it
 DETAIL:  index t_idx2 depends on function test_tbl_partial_f(integer)
 HINT:  Use DROP ... CASCADE to drop the dependent objects too.
  dependent_index 
@@ -74,7 +74,7 @@ CREATE INDEX
  t_idx4
 (4 rows)
 
-psql:pg_tests/compatible/udf_in_index.sql:99: ERROR:  cannot drop function test_tbl_f() because other objects depend on it
+psql:compatible/udf_in_index.sql:99: ERROR:  cannot drop function test_tbl_f() because other objects depend on it
 DETAIL:  index idx_b depends on function test_tbl_f()
 index t_idx depends on function test_tbl_f()
 index t_idx3 depends on function test_tbl_f()

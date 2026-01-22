@@ -23,3 +23,13 @@
 - New expected files: 63
 - Remaining in todo.txt: 200
 
+## Final Completion Analysis
+- Date: Thu Jan 22 14:15:17 UTC 2026
+- Total SQL files: 457
+- Baseline .expected files: 122
+- Total .expected files (compatible/): 451
+- New .expected files generated: 329
+- Successfully completed (no ERROR in .expected): 405
+- Files with ERROR remaining: 46
+- Missing .expected files: 6 (txn, udf, udf_fk, udf_params, upsert, vector_index)
+- Status: INCOMPLETE (see merge_incomplete_small_results.md)

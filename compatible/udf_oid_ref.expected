@@ -29,7 +29,7 @@ CREATE INDEX
 (1 row)
 
 ALTER TABLE
-psql:pg_tests/compatible/udf_oid_ref.sql:102: ERROR:  new row for relation "t1" violates check constraint "c_len"
+psql:compatible/udf_oid_ref.sql:102: ERROR:  new row for relation "t1" violates check constraint "c_len"
 DETAIL:  Failing row contains (3, a).
 DROP FUNCTION
 CREATE FUNCTION
@@ -38,16 +38,16 @@ CREATE FUNCTION
              1
 (1 row)
 
-psql:pg_tests/compatible/udf_oid_ref.sql:116: ERROR:  function test.f1 expects 0 argument(s) but got 1
+psql:compatible/udf_oid_ref.sql:116: ERROR:  function test.f1 expects 0 argument(s) but got 1
 CONTEXT:  PL/pgSQL function crdb_call_int(oid,text[]) line 33 at RAISE
-psql:pg_tests/compatible/udf_oid_ref.sql:121: ERROR:  function test.f1 expects 0 argument(s) but got 1
+psql:compatible/udf_oid_ref.sql:121: ERROR:  function test.f1 expects 0 argument(s) but got 1
 CONTEXT:  PL/pgSQL function crdb_call_int(oid,text[]) line 33 at RAISE
-psql:pg_tests/compatible/udf_oid_ref.sql:126: ERROR:  function test.f1 expects 0 argument(s) but got 1
+psql:compatible/udf_oid_ref.sql:126: ERROR:  function test.f1 expects 0 argument(s) but got 1
 CONTEXT:  PL/pgSQL function crdb_call_int(oid,text[]) line 33 at RAISE
 CREATE SCHEMA
-psql:pg_tests/compatible/udf_oid_ref.sql:134: ERROR:  function test.f1 expects 0 argument(s) but got 1
+psql:compatible/udf_oid_ref.sql:134: ERROR:  function test.f1 expects 0 argument(s) but got 1
 CONTEXT:  PL/pgSQL function crdb_call_int(oid,text[]) line 33 at RAISE
-psql:pg_tests/compatible/udf_oid_ref.sql:139: ERROR:  function test.f1 expects 0 argument(s) but got 1
+psql:compatible/udf_oid_ref.sql:139: ERROR:  function test.f1 expects 0 argument(s) but got 1
 CONTEXT:  PL/pgSQL function crdb_call_int(oid,text[]) line 33 at RAISE
 DROP FUNCTION
 CREATE FUNCTION

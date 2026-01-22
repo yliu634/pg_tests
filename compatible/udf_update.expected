@@ -32,10 +32,10 @@ INSERT 0 1
 (1 row)
 
 INSERT 0 3
-psql:pg_tests/compatible/udf_update.sql:43: ERROR:  duplicate key value violates unique constraint "t_pkey"
+psql:compatible/udf_update.sql:43: ERROR:  duplicate key value violates unique constraint "t_pkey"
 DETAIL:  Key (a)=(1) already exists.
 CONTEXT:  SQL function "f1" statement 1
-psql:pg_tests/compatible/udf_update.sql:48: ERROR:  duplicate key value violates unique constraint "t_pkey"
+psql:compatible/udf_update.sql:48: ERROR:  duplicate key value violates unique constraint "t_pkey"
 DETAIL:  Key (a)=(14) already exists.
 CONTEXT:  SQL function "f1" statement 1
  a | b 
@@ -106,12 +106,12 @@ CREATE FUNCTION
  (1)
 (1 row)
 
-psql:pg_tests/compatible/udf_update.sql:126: ERROR:  new row for relation "t_check" violates check constraint "t_check_x_check"
+psql:compatible/udf_update.sql:126: ERROR:  new row for relation "t_check" violates check constraint "t_check_x_check"
 DETAIL:  Failing row contains (0).
 CONTEXT:  SQL function "f_check1" statement 1
 CREATE TABLE
 INSERT 0 3
-psql:pg_tests/compatible/udf_update.sql:144: ERROR:  column "b" can only be updated to DEFAULT
+psql:compatible/udf_update.sql:144: ERROR:  column "b" can only be updated to DEFAULT
 DETAIL:  Column "b" is an identity column defined as GENERATED ALWAYS.
 CONTEXT:  SQL function "f_err"
 CREATE FUNCTION
@@ -231,7 +231,7 @@ COMMIT
 CREATE TABLE
 CREATE FUNCTION
 ALTER TABLE
-psql:pg_tests/compatible/udf_update.sql:285: ERROR:  column "b" does not exist
+psql:compatible/udf_update.sql:285: ERROR:  column "b" does not exist
 LINE 2:   UPDATE t146414 SET a = a + 1 WHERE a = 1 RETURNING b;
                                                              ^
 QUERY:  

@@ -25,7 +25,7 @@ CREATE FUNCTION
 CREATE FUNCTION
 CREATE FUNCTION
 SET
-psql:pg_tests/compatible/udf_security.sql:65: ERROR:  permission denied for table top_secret_data
+psql:compatible/udf_security.sql:65: ERROR:  permission denied for table top_secret_data
  get_top_secret_data 
 ---------------------
                    1
@@ -35,13 +35,13 @@ psql:pg_tests/compatible/udf_security.sql:65: ERROR:  permission denied for tabl
 SET
 ALTER FUNCTION
 SET
-psql:pg_tests/compatible/udf_security.sql:82: ERROR:  permission denied for table top_secret_data
+psql:compatible/udf_security.sql:82: ERROR:  permission denied for table top_secret_data
 CONTEXT:  SQL function "get_top_secret_data" statement 1
 RESET
 REVOKE
 ALTER FUNCTION
 SET
-psql:pg_tests/compatible/udf_security.sql:99: ERROR:  permission denied for table top_secret_data
+psql:compatible/udf_security.sql:99: ERROR:  permission denied for table top_secret_data
 CONTEXT:  SQL function "get_top_secret_data" statement 1
 RESET
 REVOKE
@@ -56,7 +56,7 @@ ALTER TABLE
 (0 rows)
 
 SET
-psql:pg_tests/compatible/udf_security.sql:131: ERROR:  permission denied for table top_secret_data
+psql:compatible/udf_security.sql:131: ERROR:  permission denied for table top_secret_data
 CONTEXT:  SQL function "get_top_secret_data" statement 1
 RESET
 ALTER FUNCTION
@@ -71,15 +71,15 @@ SET
 SET
 REVOKE
 SET
-psql:pg_tests/compatible/udf_security.sql:154: ERROR:  permission denied for function get_secret_data
-psql:pg_tests/compatible/udf_security.sql:161: ERROR:  permission denied for schema public
-psql:pg_tests/compatible/udf_security.sql:168: ERROR:  permission denied for schema public
+psql:compatible/udf_security.sql:154: ERROR:  permission denied for function get_secret_data
+psql:compatible/udf_security.sql:161: ERROR:  permission denied for schema public
+psql:compatible/udf_security.sql:168: ERROR:  permission denied for schema public
 RESET
 CREATE ROLE
 SET
 SET
 SET
-psql:pg_tests/compatible/udf_security.sql:188: ERROR:  permission denied for table t
+psql:compatible/udf_security.sql:188: ERROR:  permission denied for table t
  get_t_nested 
 --------------
             1
@@ -88,7 +88,7 @@ psql:pg_tests/compatible/udf_security.sql:188: ERROR:  permission denied for tab
 SET
 ALTER FUNCTION
 SET
-psql:pg_tests/compatible/udf_security.sql:205: ERROR:  permission denied for table t
+psql:compatible/udf_security.sql:205: ERROR:  permission denied for table t
 CONTEXT:  SQL function "get_t" statement 1
 SET
 ALTER FUNCTION
@@ -119,7 +119,7 @@ CREATE ROLE
 GRANT
 ALTER FUNCTION
 SET
-psql:pg_tests/compatible/udf_security.sql:257: ERROR:  permission denied for table t
+psql:compatible/udf_security.sql:257: ERROR:  permission denied for table t
 CONTEXT:  SQL function "get_t" statement 1
 RESET
 GRANT
