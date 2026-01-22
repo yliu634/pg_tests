@@ -1,0 +1,5 @@
+pg_tests/compatible/show_commit_timestamp.sql
+pg_tests/compatible/show_completions.sql
+pg_tests/compatible/show_create.sql
+pg_tests/compatible/show_create_all_schemas.sql
+pg_tests/compatible/show_create_all_tables.sql

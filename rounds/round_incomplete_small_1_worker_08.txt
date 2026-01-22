@@ -1,0 +1,5 @@
+pg_tests/compatible/set_local.sql
+pg_tests/compatible/set_role.sql
+pg_tests/compatible/set_schema.sql
+pg_tests/compatible/set_time_zone.sql
+pg_tests/compatible/shift.sql

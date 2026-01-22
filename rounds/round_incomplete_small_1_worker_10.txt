@@ -1,0 +1,5 @@
+pg_tests/compatible/show_create_all_tables_builtin.sql
+pg_tests/compatible/show_default_privileges.sql
+pg_tests/compatible/time.sql
+pg_tests/compatible/txn_as_of.sql
+pg_tests/compatible/txn_retry.sql
