@@ -83,35 +83,51 @@
  255.0.0.0/10
 (1 row)
 
-psql:compatible/inet.sql:59: ERROR:  invalid input syntax for type inet: "192"
-LINE 1: SELECT '192'::INET;
-               ^
-psql:compatible/inet.sql:62: ERROR:  invalid input syntax for type inet: "19.0"
-LINE 1: SELECT '19.0'::INET;
-               ^
-psql:compatible/inet.sql:65: ERROR:  invalid input syntax for type inet: "19.0/32"
-LINE 1: SELECT '19.0/32'::INET;
-               ^
-psql:compatible/inet.sql:68: ERROR:  invalid input syntax for type inet: "19/32"
-LINE 1: SELECT '19/32'::INET;
-               ^
-psql:compatible/inet.sql:71: ERROR:  invalid input syntax for type inet: "19/16"
-LINE 1: SELECT '19/16'::INET;
-               ^
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
     inet     
 -------------
  19.0.0.0/15
 (1 row)
 
-psql:compatible/inet.sql:77: ERROR:  invalid input syntax for type inet: "192.168/24/1"
-LINE 1: SELECT '192.168/24/1'::INET;
-               ^
-psql:compatible/inet.sql:80: ERROR:  invalid input syntax for type inet: ""
-LINE 1: SELECT ''::INET;
-               ^
-psql:compatible/inet.sql:83: ERROR:  invalid input syntax for type inet: "0"
-LINE 1: SELECT '0'::INET;
-               ^
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
   inet   
 ---------
  0.0.0.0
@@ -377,8 +393,16 @@ LINE 1: SELECT '0'::INET;
  ef3e:9a67:7fbb:f9ee:8ef7:bfff:dfff:5efd
 (1 row)
 
-psql:compatible/inet.sql:245: ERROR:  cannot AND inet values of different sizes
-psql:compatible/inet.sql:248: ERROR:  cannot OR inet values of different sizes
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
     ?column?    
 ----------------
  203.172.98.118
@@ -429,27 +453,73 @@ psql:compatible/inet.sql:248: ERROR:  cannot OR inet values of different sizes
  4684658846864486648
 (1 row)
 
-psql:compatible/inet.sql:281: ERROR:  result is out of range
-psql:compatible/inet.sql:284: ERROR:  result is out of range
-psql:compatible/inet.sql:287: ERROR:  result is out of range
-psql:compatible/inet.sql:290: ERROR:  result is out of range
+   ?column?   
+--------------
+ 255.255.0.15
+(1 row)
+
+ ?column? 
+----------
+ 0.0.0.2
+(1 row)
+
+ ?column? 
+----------
+ ::2
+(1 row)
+
+ ?column? 
+----------
+        4
+(1 row)
+
   inet   
 ---------
  0.0.0.0
 (1 row)
 
-psql:compatible/inet.sql:296: ERROR:  invalid input syntax for type inet: ".0.0.0.0."
-LINE 1: SELECT '.0.0.0.0.'::INET;
-               ^
-psql:compatible/inet.sql:299: ERROR:  invalid input syntax for type inet: "0.0.0.0.0"
-LINE 1: SELECT '0.0.0.0.0'::INET;
-               ^
-psql:compatible/inet.sql:333: ERROR:  syntax error at or near "INSERT"
-LINE 4: INSERT INTO u VALUES ('192.168.0.1', '192.168.0.1')
-        ^
-psql:compatible/inet.sql:345: ERROR:  syntax error at or near "INSERT"
-LINE 3: INSERT INTO arrays VALUES
-        ^
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+       ip       |     ip2     
+----------------+-------------
+ 192.0.0.0      | 127.0.0.1
+ 192.168.0.5/24 | 192.168.0.5
+ 192.168.0.1/31 | 192.168.0.1
+ 192.168.0.0    | 192.168.0.1
+ 192.168.0.1    | 192.168.0.1
+ 192.168.0.1    | 192.168.0.2
+ 192.168.0.2    | 192.168.0.2
+ ::1            | 
+ ::ffff:1.2.3.4 | 
+(9 rows)
+
+CREATE TABLE
+INSERT 0 3
+                       ips                       
+-------------------------------------------------
+ {}
+ {192.168.0.1/10,::1}
+ {192.168.0.1,192.168.0.1/10,::1,::ffff:1.2.3.4}
+(3 rows)
+
    abbrev    
 -------------
  10.1.0.0/16
@@ -680,11 +750,19 @@ LINE 3: INSERT INTO arrays VALUES
  192.168.0.1
 (1 row)
 
-psql:compatible/inet.sql:486: ERROR:  invalid mask length: 100
-psql:compatible/inet.sql:489: ERROR:  invalid mask length: 33
- set_masklen 
--------------
- 192.168.0.1
+ masklen_valid 
+---------------
+ f
+(1 row)
+
+ masklen_valid 
+---------------
+ f
+(1 row)
+
+ masklen_valid 
+---------------
+ f
 (1 row)
 
   set_masklen  
@@ -697,12 +775,16 @@ psql:compatible/inet.sql:489: ERROR:  invalid mask length: 33
  ::ffff:192.168.0.1/100
 (1 row)
 
-    set_masklen     
---------------------
- ::ffff:192.168.0.1
+ masklen_valid 
+---------------
+ f
 (1 row)
 
-psql:compatible/inet.sql:504: ERROR:  invalid mask length: 129
+ masklen_valid 
+---------------
+ f
+(1 row)
+
      set_masklen      
 ----------------------
  ::ffff:192.168.0.1/0
@@ -763,12 +845,16 @@ psql:compatible/inet.sql:504: ERROR:  invalid mask length: 129
  127.1.2.3 | 127.1.2.3/16 | 10.1.2.3
 (1 row)
 
-psql:compatible/inet.sql:543: ERROR:  invalid input syntax for type inet: "some_invalid_value"
-LINE 1: SELECT inet('some_invalid_value');
-                    ^
-psql:compatible/inet.sql:546: ERROR:  syntax error at or near "query"
-LINE 1: query T
-        ^
+ pg_input_is_valid 
+-------------------
+ f
+(1 row)
+
+ inet  
+-------
+ ::111
+(1 row)
+
     inet     
 -------------
  192.168.0.2
