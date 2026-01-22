@@ -1,0 +1,242 @@
+SET
+DROP DATABASE
+DROP DATABASE
+RESET
+CREATE FUNCTION
+ f93083 
+--------
+      1
+(1 row)
+
+CREATE TYPE
+CREATE TABLE
+INSERT 0 1
+CREATE FUNCTION
+ f_93314 
+---------
+ (1,a)
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+CREATE FUNCTION
+ f_93314_alias 
+---------------
+ (1,"{a,b}")
+(1 row)
+
+CREATE TYPE
+CREATE TABLE
+INSERT 0 1
+CREATE FUNCTION
+ f_93314_comp 
+--------------
+ (1,2)
+(1 row)
+
+CREATE FUNCTION
+ f_93314_comp_t 
+----------------
+ (1,"(2,3)")
+(1 row)
+
+  oid  |    proname     | pronamespace | proowner | prolang | proleakproof | proisstrict | proretset | provolatile | pronargs | prorettype | proargtypes | proargmodes | proargnames |                  prosrc                  
+-------+----------------+--------------+----------+---------+--------------+-------------+-----------+-------------+----------+------------+-------------+-------------+-------------+------------------------------------------
+ 24724 | f_93314        |         2200 |       10 |      14 | f            | f           | f         | v           |        0 |      24723 |             |             |             |                                         +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             |   SELECT i, e                           +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             |   FROM t_93314                          +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             |   ORDER BY i                            +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             |   LIMIT 1;                              +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             | 
+ 24730 | f_93314_alias  |         2200 |       10 |      14 | f            | f           | f         | v           |        0 |      24727 |             |             |             |                                         +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             |   SELECT i, e                           +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             |   FROM t_93314_alias                    +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             |   ORDER BY i                            +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             |   LIMIT 1;                              +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             | 
+ 24739 | f_93314_comp   |         2200 |       10 |      14 | f            | f           | f         | v           |        0 |      24733 |             |             |             |                                         +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             |   SELECT (1, 2);                        +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             | 
+ 24740 | f_93314_comp_t |         2200 |       10 |      14 | f            | f           | f         | v           |        0 |      24736 |             |             |             |                                         +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             |   SELECT a, c FROM t_93314_comp LIMIT 1;+
+       |                |              |          |         |              |             |           |             |          |            |             |             |             | 
+(4 rows)
+
+CREATE FUNCTION
+CREATE TABLE
+INSERT 0 2
+ f95240 
+--------
+     33
+       
+(2 rows)
+
+psql:pg_tests/compatible/udf_regressions.sql:97: ERROR:  syntax error at or near "FUNCTION"
+LINE 1: EXPLAIN CREATE FUNCTION f() RETURNS INT LANGUAGE SQL AS 'SEL...
+                       ^
+CREATE FUNCTION
+ f96326 
+--------
+      1
+(1 row)
+
+CREATE FUNCTION
+ count 
+-------
+     1
+(1 row)
+
+DROP FUNCTION
+ count 
+-------
+     0
+(1 row)
+
+CREATE DATABASE
+You are now connected to database "db_95364" as user "postgres".
+CREATE FUNCTION
+ count 
+-------
+     1
+(1 row)
+
+You are now connected to database "crdb_tests_udf_regressions" as user "postgres".
+DROP DATABASE
+ count 
+-------
+     0
+(1 row)
+
+You are now connected to database "crdb_tests_udf_regressions" as user "postgres".
+CREATE SCHEMA
+CREATE FUNCTION
+ count 
+-------
+     1
+(1 row)
+
+psql:pg_tests/compatible/udf_regressions.sql:161: NOTICE:  drop cascades to function sc_95364.f_95364_3()
+DROP SCHEMA
+ count 
+-------
+     0
+(1 row)
+
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+ f_94146 
+---------
+       8
+(1 row)
+
+ f_94146 
+---------
+       4
+(1 row)
+
+ f_94146 
+---------
+       2
+(1 row)
+
+CREATE FUNCTION
+SET
+ f_97130 
+---------
+       1
+(1 row)
+
+SET
+CREATE FUNCTION
+ abs 
+-----
+   1
+(1 row)
+
+ abs 
+-----
+  99
+(1 row)
+
+CREATE FUNCTION
+CREATE FUNCTION
+ f_97854 
+---------
+ f
+(1 row)
+
+CREATE TABLE
+INSERT 0 3
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+ x | f93861_scalar | f93861_strict_scalar 
+---+---------------+----------------------
+ 1 |             1 |                    1
+ 2 |             1 |                    1
+   |             1 |                     
+(3 rows)
+
+ x | f93861_setof 
+---+--------------
+ 1 |            1
+ 1 |            2
+ 1 |            3
+ 2 |            1
+ 2 |            2
+ 2 |            3
+   |            1
+   |            2
+   |            3
+(9 rows)
+
+ x | f93861_strict_setof 
+---+---------------------
+ 1 |                   1
+ 1 |                   2
+ 1 |                   3
+ 2 |                   1
+ 2 |                   2
+ 2 |                   3
+(6 rows)
+
+CREATE FUNCTION
+ fn 
+----
+  1
+(1 row)
+
+DROP FUNCTION
+psql:pg_tests/compatible/udf_regressions.sql:245: ERROR:  function fn(integer) does not exist
+LINE 1: SELECT fn(1);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+CREATE FUNCTION
+ fn 
+----
+  1
+(1 row)
+
+CREATE DATABASE
+You are now connected to database "d" as user "postgres".
+psql:pg_tests/compatible/udf_regressions.sql:258: ERROR:  function fn(integer) does not exist
+LINE 1: SELECT fn(1);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+You are now connected to database "crdb_tests_udf_regressions" as user "postgres".
+DROP DATABASE
+DROP FUNCTION
+CREATE FUNCTION
+ f100923 
+---------
+ t
+ t
+(2 rows)
+
+psql:pg_tests/compatible/udf_regressions.sql:275: error: invalid command \x06'));
+psql:pg_tests/compatible/udf_regressions.sql:280: error: invalid command \x06'));
+psql:pg_tests/compatible/udf_regressions.sql:414: ERROR:  syntax error at or near "sFV"
+LINE 2:   SELECT * FROM (VALUES (e'\x1b'), ('y$$sFV'), (e'
+                                                ^

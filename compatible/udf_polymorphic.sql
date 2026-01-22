@@ -1,6 +1,9 @@
 -- PostgreSQL compatible tests from udf_polymorphic
 -- 94 tests
 
+-- Many statements below intentionally error (polymorphic type resolution).
+\set ON_ERROR_STOP 0
+
 -- Test 1: statement (line 1)
 CREATE TYPE greetings AS ENUM('hi', 'hello', 'yo');
 CREATE TYPE foo AS ENUM('bar', 'baz');
@@ -332,4 +335,3 @@ CREATE OR REPLACE FUNCTION dup (INOUT f2 ANYELEMENT, OUT f3 ANYARRAY) AS 'SELECT
 
 -- Test 94: query (line 570)
 SELECT dup(22);
-

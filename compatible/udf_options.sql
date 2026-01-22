@@ -1,8 +1,13 @@
 -- PostgreSQL compatible tests from udf_options
 -- 33 tests
 
+-- Many CREATE FUNCTION variants below are expected to error (invalid language,
+-- conflicting options, missing libraries). Keep the file running to capture the
+-- full output.
+\set ON_ERROR_STOP off
+
 -- Test 1: statement (line 3)
-CREATE FUNCTION populate() RETURNS integer AS 'dir/funcs', 'populate' LANGUAGE C
+CREATE FUNCTION populate() RETURNS integer AS 'dir/funcs', 'populate' LANGUAGE C;
 
 -- Test 2: statement (line 6)
 CREATE FUNCTION populate() RETURNS integer AS $$
@@ -11,13 +16,15 @@ DECLARE
 BEGIN
     PERFORM my_function();
 END;
-$$ LANGUAGE made_up_language
+$$ LANGUAGE made_up_language;
 
 -- Test 3: statement (line 15)
-CREATE FUNCTION f(a int) RETURNS INT LEAKPROOF STABLE LANGUAGE SQL AS 'SELECT 1'
+\set ON_ERROR_STOP on
+CREATE FUNCTION f(a int) RETURNS INT LEAKPROOF STABLE LANGUAGE SQL AS 'SELECT 1';
 
 -- Test 4: statement (line 18)
-CREATE FUNCTION f() RETURNS INT IMMUTABLE LANGUAGE SQL AS $$ SELECT 'hello' $$
+\set ON_ERROR_STOP off
+CREATE FUNCTION f() RETURNS INT IMMUTABLE LANGUAGE SQL AS $$ SELECT 'hello' $$;
 
 -- Test 5: statement (line 21)
 CREATE FUNCTION f() RETURNS INT IMMUTABLE STABLE LANGUAGE SQL AS $$ SELECT 1 $$;
@@ -44,6 +51,7 @@ CREATE FUNCTION f() RETURNS INT IMMUTABLE SECURITY INVOKER SECURITY DEFINER LANG
 CREATE FUNCTION f() RETURNS INT IMMUTABLE SECURITY INVOKER EXTERNAL SECURITY INVOKER LANGUAGE SQL AS $$ SELECT 1 $$;
 
 -- Test 13: statement (line 47)
+\set ON_ERROR_STOP on
 CREATE TABLE kv (k INT PRIMARY KEY, v INT);
 INSERT INTO kv VALUES (1, 1), (2, 2), (3, 3);
 CREATE FUNCTION get_l(i INT) RETURNS INT STABLE LANGUAGE SQL AS $$
@@ -63,16 +71,18 @@ SELECT i;
 $$;
 
 -- Test 14: query (line 66)
-SELECT pg_get_functiondef('get_l'::regproc::oid)
+SELECT pg_get_functiondef('get_l'::regproc::oid);
 
 -- Test 15: query (line 80)
-SELECT pg_get_functiondef(NULL)
+SELECT pg_get_functiondef(NULL);
 
 -- Test 16: query (line 85)
-SELECT pg_get_functiondef(123456)
+\set ON_ERROR_STOP off
+SELECT pg_get_functiondef(123456);
 
 -- Test 17: query (line 92)
-SELECT pg_get_functiondef('soundex'::regproc::oid)
+SELECT pg_get_functiondef('soundex'::regproc::oid);
+\set ON_ERROR_STOP on
 
 -- Test 18: query (line 99)
 WITH u AS (
@@ -98,28 +108,28 @@ CREATE FUNCTION rand_s() RETURNS INT STABLE LANGUAGE SQL AS $$SELECT nextval('sq
 CREATE FUNCTION rand_v() RETURNS INT VOLATILE  LANGUAGE SQL AS $$SELECT nextval('sq2')$$;
 
 -- Test 23: query (line 129)
-SELECT rand_v(), rand_v() FROM generate_series(1, 3)
+SELECT rand_v(), rand_v() FROM generate_series(1, 3);
 
 -- Test 24: statement (line 139)
 CREATE FUNCTION strict_fn(i INT, t TEXT, b BOOL) RETURNS INT STRICT LANGUAGE SQL AS $$
   SELECT 1
-$$
+$$;
 
 -- Test 25: query (line 144)
-SELECT strict_fn(1, 'foo', true)
+SELECT strict_fn(1, 'foo', true);
 
 -- Test 26: query (line 150)
 WITH tmp(a, b, c) AS MATERIALIZED (VALUES (1, 'foo', true))
-SELECT strict_fn(a, b, c) FROM tmp
+SELECT strict_fn(a, b, c) FROM tmp;
 
 -- Test 27: query (line 156)
-SELECT strict_fn(NULL, 'foo', true), strict_fn(1, NULL, true), strict_fn(1, 'foo', NULL)
+SELECT strict_fn(NULL, 'foo', true), strict_fn(1, NULL, true), strict_fn(1, 'foo', NULL);
 
 -- Test 28: query (line 161)
-SELECT strict_fn(NULL, NULL, true), strict_fn(1, NULL, NULL), strict_fn(NULL, 'foo', NULL)
+SELECT strict_fn(NULL, NULL, true), strict_fn(1, NULL, NULL), strict_fn(NULL, 'foo', NULL);
 
 -- Test 29: query (line 166)
-SELECT strict_fn(NULL, NULL, NULL)
+SELECT strict_fn(NULL, NULL, NULL);
 
 -- Test 30: statement (line 171)
 CREATE TABLE imp(k INT PRIMARY KEY, a INT, b TEXT);
@@ -128,11 +138,10 @@ INSERT INTO imp VALUES (1, 2, 'a');
 -- Test 31: statement (line 175)
 CREATE FUNCTION strict_fn_imp(t TEXT, i imp) RETURNS INT RETURNS NULL ON NULL INPUT LANGUAGE SQL AS $$
   SELECT 1
-$$
+$$;
 
 -- Test 32: query (line 182)
-SELECT strict_fn_imp('foo', (NULL,NULL,NULL)), (NULL,NULL,NULL)::imp IS NULL
+SELECT strict_fn_imp('foo', (NULL,NULL,NULL)), (NULL,NULL,NULL)::imp IS NULL;
 
 -- Test 33: query (line 187)
-SELECT strict_fn_imp('foo', NULL)
-
+SELECT strict_fn_imp('foo', NULL);

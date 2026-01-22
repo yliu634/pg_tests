@@ -1,0 +1,425 @@
+CREATE TYPE
+CREATE TYPE
+CREATE TYPE
+CREATE FUNCTION
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+psql:pg_tests/compatible/udf_polymorphic.sql:24: ERROR:  could not determine polymorphic type because input has type unknown
+psql:pg_tests/compatible/udf_polymorphic.sql:27: ERROR:  could not determine polymorphic type because input has type unknown
+DROP FUNCTION
+CREATE FUNCTION
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+psql:pg_tests/compatible/udf_polymorphic.sql:40: ERROR:  could not determine polymorphic type because input has type unknown
+psql:pg_tests/compatible/udf_polymorphic.sql:43: ERROR:  could not determine polymorphic type because input has type unknown
+psql:pg_tests/compatible/udf_polymorphic.sql:46: ERROR:  function f(integer) does not exist
+LINE 1: SELECT f(1);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/udf_polymorphic.sql:49: ERROR:  function f(greetings) does not exist
+LINE 1: SELECT f('hi'::greetings);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+DROP FUNCTION
+CREATE FUNCTION
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+psql:pg_tests/compatible/udf_polymorphic.sql:68: ERROR:  could not determine polymorphic type because input has type unknown
+psql:pg_tests/compatible/udf_polymorphic.sql:71: ERROR:  could not determine polymorphic type because input has type unknown
+psql:pg_tests/compatible/udf_polymorphic.sql:74: ERROR:  function f(integer, boolean) does not exist
+LINE 1: SELECT f(1, False);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/udf_polymorphic.sql:77: ERROR:  function f(integer[], boolean[]) does not exist
+LINE 1: SELECT f(ARRAY[1, 2], ARRAY[False, True]);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+DROP FUNCTION
+CREATE FUNCTION
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+psql:pg_tests/compatible/udf_polymorphic.sql:91: ERROR:  could not determine polymorphic type because input has type unknown
+psql:pg_tests/compatible/udf_polymorphic.sql:94: ERROR:  could not determine polymorphic type because input has type unknown
+psql:pg_tests/compatible/udf_polymorphic.sql:97: ERROR:  function f(integer, integer) does not exist
+LINE 1: SELECT f(1, 2);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/udf_polymorphic.sql:100: ERROR:  function f(integer[], integer) does not exist
+LINE 1: SELECT f(ARRAY[1, 2], 3);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/udf_polymorphic.sql:103: ERROR:  function f(greetings, greetings) does not exist
+LINE 1: SELECT f('hi'::greetings, 'hello'::greetings);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+DROP FUNCTION
+CREATE FUNCTION
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+psql:pg_tests/compatible/udf_polymorphic.sql:122: ERROR:  could not determine polymorphic type because input has type unknown
+psql:pg_tests/compatible/udf_polymorphic.sql:125: ERROR:  function f(text[], greetings) does not exist
+LINE 1: SELECT f(ARRAY['hi'], 'hello'::greetings);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/udf_polymorphic.sql:128: ERROR:  function f(greetings, text[]) does not exist
+LINE 1: SELECT f('hello'::greetings, ARRAY['hi']);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/udf_polymorphic.sql:131: ERROR:  function f(integer, integer) does not exist
+LINE 1: SELECT f(1, 2);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/udf_polymorphic.sql:134: ERROR:  function f(integer[], integer[]) does not exist
+LINE 1: SELECT f(ARRAY[1, 2], ARRAY[3, 4]);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+DROP FUNCTION
+CREATE FUNCTION
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+psql:pg_tests/compatible/udf_polymorphic.sql:153: ERROR:  could not determine polymorphic type because input has type unknown
+psql:pg_tests/compatible/udf_polymorphic.sql:156: ERROR:  function f(text[], greetings) does not exist
+LINE 1: SELECT f(ARRAY['hi'], 'hello'::greetings);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/udf_polymorphic.sql:159: ERROR:  function f(greetings, text[]) does not exist
+LINE 1: SELECT f('hello'::greetings, ARRAY['hi']);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/udf_polymorphic.sql:162: ERROR:  function f(integer, integer) does not exist
+LINE 1: SELECT f(1, 2);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/udf_polymorphic.sql:165: ERROR:  function f(integer[], integer[]) does not exist
+LINE 1: SELECT f(ARRAY[1, 2], ARRAY[3, 4]);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+DROP FUNCTION
+CREATE FUNCTION
+ f | f | f 
+---+---+---
+ 1 | 2 |  
+(1 row)
+
+psql:pg_tests/compatible/udf_polymorphic.sql:175: ERROR:  return type mismatch in function declared to return integer
+DETAIL:  Actual return type is text.
+CONTEXT:  SQL function "f" during inlining
+psql:pg_tests/compatible/udf_polymorphic.sql:178: ERROR:  return type mismatch in function declared to return integer
+DETAIL:  Actual return type is boolean.
+CONTEXT:  SQL function "f" during inlining
+DROP FUNCTION
+psql:pg_tests/compatible/udf_polymorphic.sql:184: ERROR:  cannot determine result data type
+DETAIL:  A result of type anyelement requires at least one input of type anyelement, anyarray, anynonarray, anyenum, anyrange, or anymultirange.
+psql:pg_tests/compatible/udf_polymorphic.sql:187: ERROR:  cannot determine result data type
+DETAIL:  A result of type anyarray requires at least one input of type anyelement, anyarray, anynonarray, anyenum, anyrange, or anymultirange.
+psql:pg_tests/compatible/udf_polymorphic.sql:190: ERROR:  cannot determine result data type
+DETAIL:  A result of type anyelement requires at least one input of type anyelement, anyarray, anynonarray, anyenum, anyrange, or anymultirange.
+psql:pg_tests/compatible/udf_polymorphic.sql:193: ERROR:  cannot determine result data type
+DETAIL:  A result of type anyelement requires at least one input of type anyelement, anyarray, anynonarray, anyenum, anyrange, or anymultirange.
+psql:pg_tests/compatible/udf_polymorphic.sql:196: ERROR:  cannot determine result data type
+DETAIL:  A result of type anyarray requires at least one input of type anyelement, anyarray, anynonarray, anyenum, anyrange, or anymultirange.
+CREATE FUNCTION
+ f | f |   f   
+---+---+-------
+ 1 | t | {1,2}
+(1 row)
+
+DROP FUNCTION
+CREATE FUNCTION
+  f  |  f  
+-----+-----
+ {1} | {t}
+(1 row)
+
+psql:pg_tests/compatible/udf_polymorphic.sql:212: ERROR:  could not find array type for data type integer[]
+DROP FUNCTION
+CREATE FUNCTION
+ f | f 
+---+---
+ 1 | t
+(1 row)
+
+DROP FUNCTION
+CREATE FUNCTION
+ f | f |   f   
+---+---+-------
+ 1 | t | {1,2}
+(1 row)
+
+DROP FUNCTION
+CREATE FUNCTION
+ f | f |   f   
+---+---+-------
+ 1 | t | {1,2}
+(1 row)
+
+DROP FUNCTION
+CREATE FUNCTION
+ f | f |  f  
+---+---+-----
+ 1 | t | foo
+(1 row)
+
+DROP FUNCTION
+CREATE FUNCTION
+ f | f |  f  | f 
+---+---+-----+---
+ 1 | 2 | bar | f
+(1 row)
+
+psql:pg_tests/compatible/udf_polymorphic.sql:250: ERROR:  arguments declared "anyelement" are not all alike
+DETAIL:  boolean versus integer
+DROP FUNCTION
+CREATE FUNCTION
+   f   
+-------
+ {1,2}
+(1 row)
+
+psql:pg_tests/compatible/udf_polymorphic.sql:260: ERROR:  arguments declared "anyarray" are not all alike
+DETAIL:  boolean[] versus integer[]
+DROP FUNCTION
+CREATE FUNCTION
+ f  | f  
+----+----
+ 10 | 10
+(1 row)
+
+psql:pg_tests/compatible/udf_polymorphic.sql:270: ERROR:  arguments declared "anyelement" are not all alike
+DETAIL:  boolean versus integer
+DROP FUNCTION
+CREATE FUNCTION
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+psql:pg_tests/compatible/udf_polymorphic.sql:283: ERROR:  argument declared anyarray is not consistent with argument declared anyelement
+DETAIL:  integer[] versus boolean
+DROP FUNCTION
+CREATE FUNCTION
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+psql:pg_tests/compatible/udf_polymorphic.sql:295: ERROR:  argument declared anyarray is not consistent with argument declared anyelement
+DETAIL:  integer[] versus boolean
+DROP FUNCTION
+psql:pg_tests/compatible/udf_polymorphic.sql:301: ERROR:  argument of DEFAULT must be type anyarray, not type integer
+LINE 1: CREATE FUNCTION f(x ANYARRAY DEFAULT 1) RETURNS INT LANGUAGE...
+                                             ^
+CREATE FUNCTION
+psql:pg_tests/compatible/udf_polymorphic.sql:307: ERROR:  function f(integer) does not exist
+psql:pg_tests/compatible/udf_polymorphic.sql:310: ERROR:  function f(text) does not exist
+psql:pg_tests/compatible/udf_polymorphic.sql:313: ERROR:  function f() does not exist
+psql:pg_tests/compatible/udf_polymorphic.sql:316: ERROR:  function f(anyarray) does not exist
+DROP FUNCTION
+CREATE FUNCTION
+psql:pg_tests/compatible/udf_polymorphic.sql:325: ERROR:  function f(anyarray) does not exist
+psql:pg_tests/compatible/udf_polymorphic.sql:328: ERROR:  function f(anyelement) does not exist
+DROP FUNCTION
+CREATE FUNCTION
+      dup       
+----------------
+ (22,"{22,22}")
+(1 row)
+
