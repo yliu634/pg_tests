@@ -1,0 +1,41 @@
+SET
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+ index_name | seq_in_index | column_name | is_primary | is_unique 
+------------+--------------+-------------+------------+-----------
+ c_idx      |            1 | c           | f          | f
+ d_b_idx    |            1 | d           | f          | t
+ d_b_idx    |            2 | b           | f          | t
+ expr_idx   |            1 | (a + b)     | f          | f
+ expr_idx   |            2 | c           | f          | f
+ t1_pkey    |            1 | a           | t          | t
+ t1_pkey    |            2 | b           | t          | t
+(7 rows)
+
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+ index_name  | seq_in_index | column_name | is_primary | is_unique 
+-------------+--------------+-------------+------------+-----------
+ a_e_c_idx   |            1 | a           | f          | f
+ a_e_c_idx   |            2 | e           | f          | f
+ a_e_c_idx   |            3 | c           | f          | f
+ b_d_idx     |            1 | b           | f          | t
+ b_d_idx     |            2 | d           | f          | t
+ c_e_d_a_idx |            1 | c           | f          | t
+ c_e_d_a_idx |            2 | e           | f          | t
+ c_e_d_a_idx |            3 | d           | f          | t
+ c_e_d_a_idx |            4 | a           | f          | t
+ d_idx       |            1 | d           | f          | f
+ t2_pkey     |            1 | c           | t          | t
+ t2_pkey     |            2 | b           | t          | t
+ t2_pkey     |            3 | a           | t          | t
+(13 rows)
+
+RESET

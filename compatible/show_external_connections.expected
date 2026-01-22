@@ -1,0 +1,65 @@
+SET
+CREATE EXTENSION
+DROP SERVER
+DROP SERVER
+DROP SERVER
+DROP ROLE
+CREATE ROLE
+CREATE SERVER
+CREATE SERVER
+ connection_name 
+-----------------
+ bar_conn
+ foo_conn
+(2 rows)
+
+ connection_name |                 srvoptions                 
+-----------------+--------------------------------------------
+ foo_conn        | {host=localhost,dbname=postgres,port=5432}
+(1 row)
+
+ connection_name 
+-----------------
+ bar_conn
+ foo_conn
+(2 rows)
+
+GRANT
+SET
+ connection_name 
+-----------------
+ foo_conn
+(1 row)
+
+ connection_name |                 srvoptions                 
+-----------------+--------------------------------------------
+ foo_conn        | {host=localhost,dbname=postgres,port=5432}
+(1 row)
+
+RESET
+ connection_name |                 srvoptions                 
+-----------------+--------------------------------------------
+ bar_conn        | {host=localhost,dbname=postgres,port=5432}
+(1 row)
+
+GRANT
+SET
+CREATE SERVER
+ connection_name 
+-----------------
+ baz_conn
+ foo_conn
+(2 rows)
+
+RESET
+ srvname  |                 srvoptions                 
+----------+--------------------------------------------
+ baz_conn | {host=localhost,dbname=postgres,port=5432}
+(1 row)
+
+DROP SERVER
+DROP SERVER
+DROP SERVER
+REVOKE
+DROP ROLE
+RESET

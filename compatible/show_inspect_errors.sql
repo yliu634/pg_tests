@@ -30,6 +30,20 @@ CREATE TABLE system.inspect_errors (
   details TEXT NOT NULL
 );
 
+-- Like to_regclass(), but also swallows errors for syntactically-invalid
+-- relation names (e.g. "db.schema.table").
+DROP FUNCTION IF EXISTS system.safe_regclass(text);
+CREATE FUNCTION system.safe_regclass(in_name text)
+RETURNS regclass
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN in_name::regclass;
+EXCEPTION WHEN OTHERS THEN
+  RETURN NULL;
+END;
+$$;
+
 CREATE VIEW system.show_inspect_errors AS
 SELECT
   ie.job_id,
@@ -55,11 +69,9 @@ GRANT SELECT ON system.jobs, system.inspect_errors, system.show_inspect_errors T
 
 -- Test 3: statement (line 11)
 -- Cockroach: SHOW INSPECT ERRORS FOR TABLE bad_table
-\set ON_ERROR_STOP 0
 SELECT job_id, error_type
 FROM system.show_inspect_errors
-WHERE table_name = 'bad_table'::regclass;
-\set ON_ERROR_STOP 1
+WHERE table_name = system.safe_regclass('bad_table');
 
 -- Test 4: statement (line 14)
 CREATE TABLE foo (a INT);
@@ -151,12 +163,10 @@ ORDER BY job_id, table_name, error_type;
 
 -- Test 18: query (line 153)
 -- Cockroach: SHOW INSPECT ERRORS FOR TABLE test.public.bar
-\set ON_ERROR_STOP 0
 SELECT job_id, error_type, aost, table_name
 FROM system.show_inspect_errors
-WHERE table_name = 'test.public.bar'::regclass
+WHERE table_name = system.safe_regclass('test.public.bar')
 ORDER BY job_id, table_name, error_type;
-\set ON_ERROR_STOP 1
 
 -- Test 19: query (line 158)
 -- Cockroach: SHOW INSPECT ERRORS FOR TABLE foo FOR JOB 555 WITH DETAILS
