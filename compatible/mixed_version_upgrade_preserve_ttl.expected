@@ -1,0 +1,18 @@
+SET
+CREATE SCHEMA
+CREATE FUNCTION
+CREATE TABLE
+COMMENT
+SET
+SET
+ upgraded 
+----------
+ t
+(1 row)
+
+                             create_statement                              
+---------------------------------------------------------------------------
+ CREATE TABLE tbl (id integer PRIMARY KEY); -- ttl_expire_after=10 minutes
+(1 row)
+
+RESET

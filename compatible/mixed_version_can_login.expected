@@ -1,0 +1,40 @@
+SET
+CREATE SCHEMA
+CREATE FUNCTION
+CREATE FUNCTION
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+RESET

@@ -1,0 +1,26 @@
+SET
+CREATE TABLE
+INSERT 0 100000
+        info         
+---------------------
+ distribution: local
+(1 row)
+
+CREATE STATISTICS
+ANALYZE
+ count  
+--------
+ 100000
+(1 row)
+
+        info         
+---------------------
+ distribution: local
+(1 row)
+
+ has_stats 
+-----------
+ t
+(1 row)
+
+RESET

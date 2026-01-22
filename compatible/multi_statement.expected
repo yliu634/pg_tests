@@ -1,0 +1,78 @@
+SET
+CREATE TABLE
+ k | v 
+---+---
+(0 rows)
+
+INSERT 0 1
+INSERT 0 1
+ k | v 
+---+---
+ a | b
+ c | d
+(2 rows)
+
+INSERT 0 0
+INSERT 0 1
+ k | v 
+---+---
+ a | b
+ c | d
+ e | f
+(3 rows)
+
+INSERT 0 1
+INSERT 0 0
+ k | v 
+---+---
+ a | b
+ c | d
+ e | f
+ g | h
+(4 rows)
+
+INSERT 0 1
+INSERT 0 1
+ k | v 
+---+---
+ a | b
+ c | d
+ e | f
+ g | h
+ i | j
+ k | l
+(6 rows)
+
+CREATE SCHEMA
+CREATE TABLE
+BEGIN
+INSERT 0 1
+COMMIT
+ k | v 
+---+---
+ a | b
+ c | d
+ e | f
+ g | h
+ i | j
+ k | l
+(6 rows)
+
+psql:pg_tests/compatible/multi_statement.sql:47: WARNING:  there is no transaction in progress
+ROLLBACK
+psql:pg_tests/compatible/multi_statement.sql:50: WARNING:  there is no transaction in progress
+ROLLBACK
+CREATE TABLE
+BEGIN
+ a 
+---
+(0 rows)
+
+INSERT 0 1
+COMMIT
+ a 
+---
+ 1
+(1 row)
+
+RESET

@@ -1,0 +1,7 @@
+SET
+                                   notice                                    
+-----------------------------------------------------------------------------
+ skipped: multiregion requires CockroachDB cluster regions/locality features
+(1 row)
+
+RESET
