@@ -18,10 +18,14 @@ CALL p('hi'::greetings);
 CALL p(ARRAY[1, 2, 3]);
 
 -- Test 4: statement (line 22)
+\set ON_ERROR_STOP 0
 CALL p('foo');
+\set ON_ERROR_STOP 1
 
 -- Test 5: statement (line 25)
+\set ON_ERROR_STOP 0
 CALL p(NULL);
+\set ON_ERROR_STOP 1
 
 -- Test 6: statement (line 29)
 DROP PROCEDURE p;
@@ -34,16 +38,24 @@ CALL p(NULL::INT[]);
 CALL p('{1, 2, 3}'::INT[]);
 
 -- Test 8: statement (line 40)
+\set ON_ERROR_STOP 0
 CALL p('{1, 2, 3}');
+\set ON_ERROR_STOP 1
 
 -- Test 9: statement (line 43)
+\set ON_ERROR_STOP 0
 CALL p(NULL);
+\set ON_ERROR_STOP 1
 
 -- Test 10: statement (line 46)
+\set ON_ERROR_STOP 0
 CALL p(1);
+\set ON_ERROR_STOP 1
 
 -- Test 11: statement (line 49)
+\set ON_ERROR_STOP 0
 CALL p('hi'::greetings);
+\set ON_ERROR_STOP 1
 
 -- Test 12: statement (line 77)
 DROP PROCEDURE p;
@@ -62,16 +74,24 @@ CALL p(1, '2');
 CALL p('hi'::greetings, 'hello');
 
 -- Test 16: statement (line 97)
+\set ON_ERROR_STOP 0
 CALL p('1', '2');
+\set ON_ERROR_STOP 1
 
 -- Test 17: statement (line 100)
+\set ON_ERROR_STOP 0
 CALL p(NULL, NULL);
+\set ON_ERROR_STOP 1
 
 -- Test 18: statement (line 103)
+\set ON_ERROR_STOP 0
 CALL p(1, False);
+\set ON_ERROR_STOP 1
 
 -- Test 19: statement (line 106)
+\set ON_ERROR_STOP 0
 CALL p(ARRAY[1, 2], ARRAY[False, True]);
+\set ON_ERROR_STOP 1
 
 -- Test 20: statement (line 111)
 DROP PROCEDURE p;
@@ -85,19 +105,29 @@ CALL p(ARRAY['hi'::greetings, 'hello'::greetings], ARRAY['yo'::greetings, NULL])
 CALL p(ARRAY[ROW(1, 2)::typ, NULL], ARRAY[ROW(3, 4)::typ]);
 
 -- Test 22: statement (line 122)
+\set ON_ERROR_STOP 0
 CALL p(NULL, NULL);
+\set ON_ERROR_STOP 1
 
 -- Test 23: statement (line 126)
+\set ON_ERROR_STOP 0
 CALL p('{1, 2}', '{3, 4}');
+\set ON_ERROR_STOP 1
 
 -- Test 24: statement (line 129)
+\set ON_ERROR_STOP 0
 CALL p(1, 2);
+\set ON_ERROR_STOP 1
 
 -- Test 25: statement (line 132)
+\set ON_ERROR_STOP 0
 CALL p(ARRAY[1, 2], 3);
+\set ON_ERROR_STOP 1
 
 -- Test 26: statement (line 135)
+\set ON_ERROR_STOP 0
 CALL p('hi'::greetings, 'hello'::greetings);
+\set ON_ERROR_STOP 1
 
 -- Test 27: statement (line 170)
 DROP PROCEDURE p;
@@ -116,19 +146,29 @@ CALL p(ARRAY['hi']::greetings[], 'hello'::greetings);
 CALL p(ARRAY[1, 2], '1');
 
 -- Test 30: statement (line 187)
+\set ON_ERROR_STOP 0
 CALL p(NULL, NULL);
+\set ON_ERROR_STOP 1
 
 -- Test 31: statement (line 190)
+\set ON_ERROR_STOP 0
 CALL p(ARRAY['hi'], 'hello'::greetings);
+\set ON_ERROR_STOP 1
 
 -- Test 32: statement (line 193)
+\set ON_ERROR_STOP 0
 CALL p('hello'::greetings, ARRAY['hi']);
+\set ON_ERROR_STOP 1
 
 -- Test 33: statement (line 196)
+\set ON_ERROR_STOP 0
 CALL p(1, 2);
+\set ON_ERROR_STOP 1
 
 -- Test 34: statement (line 199)
+\set ON_ERROR_STOP 0
 CALL p(ARRAY[1, 2], ARRAY[3, 4]);
+\set ON_ERROR_STOP 1
 
 -- Test 35: statement (line 202)
 DROP PROCEDURE p;
@@ -147,19 +187,29 @@ CALL p('hello'::greetings, ARRAY['hi']::greetings[]);
 CALL p('1', ARRAY[1, 2]);
 
 -- Test 38: statement (line 219)
+\set ON_ERROR_STOP 0
 CALL p(NULL, NULL);
+\set ON_ERROR_STOP 1
 
 -- Test 39: statement (line 222)
+\set ON_ERROR_STOP 0
 CALL p(ARRAY['hi'], 'hello'::greetings);
+\set ON_ERROR_STOP 1
 
 -- Test 40: statement (line 225)
+\set ON_ERROR_STOP 0
 CALL p('hello'::greetings, ARRAY['hi']);
+\set ON_ERROR_STOP 1
 
 -- Test 41: statement (line 228)
+\set ON_ERROR_STOP 0
 CALL p(1, 2);
+\set ON_ERROR_STOP 1
 
 -- Test 42: statement (line 231)
+\set ON_ERROR_STOP 0
 CALL p(ARRAY[1, 2], ARRAY[3, 4]);
+\set ON_ERROR_STOP 1
 
 -- Test 43: statement (line 353)
 DROP PROCEDURE p;
@@ -175,25 +225,37 @@ CALL p(2, NULL);
 CALL p(NULL::INT, NULL);
 
 -- Test 47: statement (line 372)
+\set ON_ERROR_STOP 0
 CALL p('foo'::TEXT, NULL);
+\set ON_ERROR_STOP 1
 
 -- Test 48: statement (line 375)
+\set ON_ERROR_STOP 0
 CALL p(True, NULL);
+\set ON_ERROR_STOP 1
 
 -- Test 49: statement (line 378)
 DROP PROCEDURE p;
 
 -- Test 50: statement (line 384)
+\set ON_ERROR_STOP 0
 CREATE PROCEDURE p(OUT x ANYELEMENT) LANGUAGE SQL AS $$ SELECT 1; $$;
+\set ON_ERROR_STOP 1
 
 -- Test 51: statement (line 388)
+\set ON_ERROR_STOP 0
 CREATE PROCEDURE p(OUT x ANYARRAY) LANGUAGE SQL AS $$ SELECT 1; $$;
+\set ON_ERROR_STOP 1
 
 -- Test 52: statement (line 392)
+\set ON_ERROR_STOP 0
 CREATE PROCEDURE p(x INT, OUT y ANYELEMENT) LANGUAGE SQL AS $$ SELECT 1; $$;
+\set ON_ERROR_STOP 1
 
 -- Test 53: statement (line 396)
+\set ON_ERROR_STOP 0
 CREATE PROCEDURE p(x INT, OUT y ANYARRAY, z OUT ANYELEMENT) LANGUAGE SQL AS $$ SELECT 1, 2; $$;
+\set ON_ERROR_STOP 1
 
 -- Test 54: statement (line 406)
 CREATE PROCEDURE p(INOUT x ANYELEMENT) LANGUAGE SQL AS $$ SELECT x; $$;
@@ -231,7 +293,9 @@ CALL p(1, NULL);
 CALL p(True, NULL);
 
 -- Test 65: statement (line 463)
+\set ON_ERROR_STOP 0
 CALL p(ARRAY[1, 2], NULL);
+\set ON_ERROR_STOP 1
 
 -- Test 66: statement (line 471)
 DROP PROCEDURE p;
@@ -248,23 +312,33 @@ DROP PROCEDURE p;
 CREATE PROCEDURE p(x ANYELEMENT, OUT y ANYELEMENT) LANGUAGE SQL AS $$ SELECT x; $$;
 
 -- Test 70: statement (line 491)
+\set ON_ERROR_STOP 0
 CALL p(true, ARRAY[True]);
+\set ON_ERROR_STOP 1
 
 -- Test 71: statement (line 494)
+\set ON_ERROR_STOP 0
 CALL p(1, ARRAY[2]);
+\set ON_ERROR_STOP 1
 
 -- Test 72: statement (line 497)
+\set ON_ERROR_STOP 0
 CALL p(1, True);
+\set ON_ERROR_STOP 1
 
 -- Test 73: statement (line 500)
 DROP PROCEDURE p;
 CREATE PROCEDURE p(x ANYELEMENT, OUT y ANYARRAY) LANGUAGE SQL AS $$ SELECT ARRAY[x]; $$;
 
 -- Test 74: statement (line 504)
+\set ON_ERROR_STOP 0
 CALL p(true, false);
+\set ON_ERROR_STOP 1
 
 -- Test 75: statement (line 507)
+\set ON_ERROR_STOP 0
 CALL p(1, 2);
+\set ON_ERROR_STOP 1
 
 -- Test 76: statement (line 517)
 DROP PROCEDURE p;
@@ -296,7 +370,9 @@ CALL p(NULL, 'foo'::TEXT, 'bar'::TEXT);
 CALL p(NULL, True, False);
 
 -- Test 85: statement (line 565)
+\set ON_ERROR_STOP 0
 CALL p(NULL, True);
+\set ON_ERROR_STOP 1
 
 -- Test 86: statement (line 568)
 DROP PROCEDURE p;
@@ -306,7 +382,9 @@ CREATE PROCEDURE p(x ANYARRAY, OUT ret ANYARRAY, y ANYARRAY DEFAULT ARRAY[1, 2])
 CALL p(ARRAY[4, 5], NULL);
 
 -- Test 88: statement (line 577)
+\set ON_ERROR_STOP 0
 CALL p(ARRAY[True], NULL);
+\set ON_ERROR_STOP 1
 
 -- Test 89: statement (line 591)
 DROP PROCEDURE p;
@@ -319,7 +397,9 @@ CALL p(NULL, 10);
 CALL p(NULL, 10, 100);
 
 -- Test 92: statement (line 605)
+\set ON_ERROR_STOP 0
 CALL p(NULL);
+\set ON_ERROR_STOP 1
 
 -- Test 93: statement (line 608)
 DROP PROCEDURE p;
@@ -332,7 +412,9 @@ CALL p(1, ARRAY[100]);
 CALL p(True, ARRAY[False]);
 
 -- Test 95: statement (line 618)
+\set ON_ERROR_STOP 0
 CALL p(True);
+\set ON_ERROR_STOP 1
 
 -- Test 96: statement (line 621)
 DROP PROCEDURE p;
@@ -344,31 +426,45 @@ CALL p(1, ARRAY[100]);
 CALL p(True, ARRAY[False]);
 
 -- Test 98: statement (line 630)
+\set ON_ERROR_STOP 0
 CALL p();
+\set ON_ERROR_STOP 1
 
 -- Test 99: statement (line 633)
 DROP PROCEDURE p;
 
 -- Test 100: statement (line 636)
+\set ON_ERROR_STOP 0
 CREATE PROCEDURE p(x ANYARRAY DEFAULT 1) LANGUAGE SQL AS $$ SELECT 1; $$;
+\set ON_ERROR_STOP 1
 
 -- Test 101: statement (line 641)
 CREATE PROCEDURE p(OUT y INT, x ANYELEMENT) LANGUAGE SQL AS $$ SELECT 1; $$;
 
 -- Test 102: statement (line 644)
+\set ON_ERROR_STOP 0
 DROP PROCEDURE p(OUT INT, INT);
+\set ON_ERROR_STOP 1
 
 -- Test 103: statement (line 647)
+\set ON_ERROR_STOP 0
 DROP PROCEDURE p(OUT INT, TEXT);
+\set ON_ERROR_STOP 1
 
 -- Test 104: statement (line 650)
+\set ON_ERROR_STOP 0
 DROP PROCEDURE p(OUT INT);
+\set ON_ERROR_STOP 1
 
 -- Test 105: statement (line 653)
+\set ON_ERROR_STOP 0
 DROP PROCEDURE p();
+\set ON_ERROR_STOP 1
 
 -- Test 106: statement (line 656)
+\set ON_ERROR_STOP 0
 DROP PROCEDURE p(OUT INT, ANYARRAY);
+\set ON_ERROR_STOP 1
 
 -- Test 107: statement (line 659)
 DROP PROCEDURE p(OUT INT, ANYELEMENT);
@@ -377,10 +473,14 @@ DROP PROCEDURE p(OUT INT, ANYELEMENT);
 CREATE PROCEDURE p(x INT, OUT ret INT) LANGUAGE SQL AS $$ SELECT 1; $$;
 
 -- Test 109: statement (line 665)
+\set ON_ERROR_STOP 0
 DROP PROCEDURE p(ANYARRAY, OUT INT);
+\set ON_ERROR_STOP 1
 
 -- Test 110: statement (line 668)
+\set ON_ERROR_STOP 0
 DROP PROCEDURE p(ANYELEMENT, OUT INT);
+\set ON_ERROR_STOP 1
 
 -- Test 111: statement (line 671)
 DROP PROCEDURE p(INT, OUT INT);
@@ -390,4 +490,3 @@ CREATE OR REPLACE PROCEDURE dup (INOUT f2 ANYELEMENT, OUT f3 ANYARRAY) AS 'SELEC
 
 -- Test 113: query (line 682)
 CALL dup(22, NULL);
-

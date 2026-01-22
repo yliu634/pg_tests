@@ -1,0 +1,383 @@
+SET
+CREATE PROCEDURE
+ is_procedure 
+--------------
+ t
+(1 row)
+
+CREATE SEQUENCE
+CREATE PROCEDURE
+CALL
+ currval 
+---------
+       1
+(1 row)
+
+CREATE PROCEDURE
+CALL
+ currval 
+---------
+       1
+(1 row)
+
+psql:pg_tests/compatible/procedure.sql:44: ERROR:  p() is a procedure
+LINE 1: SELECT p();
+               ^
+HINT:  To call a procedure, use CALL.
+psql:pg_tests/compatible/procedure.sql:47: ERROR:  p() is a procedure
+LINE 1: CALL p(p());
+               ^
+HINT:  To call a procedure, use CALL.
+psql:pg_tests/compatible/procedure.sql:50: ERROR:  p() is a procedure
+LINE 1: SELECT * FROM (VALUES (1), (2), (3)) LIMIT p();
+                                                   ^
+HINT:  To call a procedure, use CALL.
+psql:pg_tests/compatible/procedure.sql:53: ERROR:  p() is a procedure
+LINE 1: SELECT * FROM (VALUES (1), (2), (3)) ORDER BY p();
+                                                      ^
+HINT:  To call a procedure, use CALL.
+psql:pg_tests/compatible/procedure.sql:56: ERROR:  p() is a procedure
+LINE 1: SELECT * FROM (VALUES (1), (2), (3)) v(i) WHERE i = p();
+                                                            ^
+HINT:  To call a procedure, use CALL.
+psql:pg_tests/compatible/procedure.sql:59: ERROR:  p() is a procedure
+LINE 1: ... FROM (VALUES (1), (2), (3)) v(i) GROUP BY i HAVING i > p();
+                                                                   ^
+HINT:  To call a procedure, use CALL.
+psql:pg_tests/compatible/procedure.sql:62: ERROR:  p() is a procedure
+LINE 1: ...ALUES (1), (2)) v(i) JOIN (VALUES (2), (3)) w(j) ON i = p();
+                                                                   ^
+HINT:  To call a procedure, use CALL.
+psql:pg_tests/compatible/procedure.sql:65: ERROR:  p() is a procedure
+LINE 1: SELECT * FROM generate_series(1, p());
+                                         ^
+HINT:  To call a procedure, use CALL.
+psql:pg_tests/compatible/procedure.sql:68: ERROR:  p() is a procedure
+LINE 1: SELECT * FROM generate_series(1, p());
+                                         ^
+HINT:  To call a procedure, use CALL.
+psql:pg_tests/compatible/procedure.sql:71: ERROR:  p() is a procedure
+LINE 1: SELECT abs(p());
+                   ^
+HINT:  To call a procedure, use CALL.
+psql:pg_tests/compatible/procedure.sql:74: ERROR:  p() is a procedure
+LINE 1: SELECT nth_value(1, p()) OVER () FROM (VALUES (1), (2));
+                            ^
+HINT:  To call a procedure, use CALL.
+psql:pg_tests/compatible/procedure.sql:77: ERROR:  p() is a procedure
+LINE 1: SELECT nth_value(1, i) OVER (ORDER BY p()) FROM (VALUES (1),...
+                                              ^
+HINT:  To call a procedure, use CALL.
+CREATE PROCEDURE
+psql:pg_tests/compatible/procedure.sql:85: ERROR:  p() is a procedure
+LINE 1: SELECT p();
+               ^
+HINT:  To call a procedure, use CALL.
+CREATE PROCEDURE
+psql:pg_tests/compatible/procedure.sql:93: ERROR:  p(integer) is a procedure
+LINE 1: SELECT p(1);
+               ^
+HINT:  To call a procedure, use CALL.
+psql:pg_tests/compatible/procedure.sql:98: ERROR:  procedure no_exist() does not exist
+LINE 1: CALL no_exist();
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/procedure.sql:103: ERROR:  procedure p(integer, unknown) does not exist
+LINE 1: CALL p(1, 'foo');
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/procedure.sql:108: ERROR:  function foo() does not exist
+LINE 1: CALL p(foo());
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+CREATE FUNCTION
+psql:pg_tests/compatible/procedure.sql:116: ERROR:  function foo() does not exist
+LINE 1: CALL p(foo());
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/procedure.sql:121: ERROR:  function "p" already exists with same argument types
+psql:pg_tests/compatible/procedure.sql:126: ERROR:  p() is a procedure
+LINE 1: ...N err(i INT) RETURNS VOID LANGUAGE SQL AS $$ SELECT p(); $$;
+                                                               ^
+HINT:  To call a procedure, use CALL.
+psql:pg_tests/compatible/procedure.sql:131: ERROR:  p() is a procedure
+LINE 1: CREATE TABLE err (i INT DEFAULT p());
+                                        ^
+HINT:  To call a procedure, use CALL.
+psql:pg_tests/compatible/procedure.sql:136: ERROR:  p() is a procedure
+LINE 1: CREATE TABLE err (i INT GENERATED ALWAYS AS (p()) STORED);
+                                                     ^
+HINT:  To call a procedure, use CALL.
+CREATE TABLE
+psql:pg_tests/compatible/procedure.sql:142: ERROR:  p() is a procedure
+LINE 1: CREATE INDEX err_p_idx ON err (p());
+                                       ^
+HINT:  To call a procedure, use CALL.
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/procedure.sql:149: ERROR:  p() is a procedure
+LINE 1: CREATE INDEX err_ab_idx ON err (a, (b + p()));
+                                                ^
+HINT:  To call a procedure, use CALL.
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/procedure.sql:156: ERROR:  p() is a procedure
+LINE 1: CREATE INDEX err_a_idx ON err (a) WHERE p() = 1;
+                                                ^
+HINT:  To call a procedure, use CALL.
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+CREATE PROCEDURE
+CALL
+CALL
+ k | v  
+---+----
+ 1 | 11
+(1 row)
+
+CREATE FUNCTION
+CALL
+ k | v  
+---+----
+ 1 | 12
+(1 row)
+
+CALL
+ k | v  
+---+----
+ 1 | 13
+(1 row)
+
+CREATE FUNCTION
+ t_update 
+----------
+        1
+(1 row)
+
+CALL
+ k |  v  
+---+-----
+ 1 | 111
+(1 row)
+
+CALL
+ k |  v   
+---+------
+ 1 | 1111
+(1 row)
+
+CALL
+CREATE TABLE
+CREATE PROCEDURE
+CREATE PROCEDURE
+CALL
+ i | s 
+---+---
+ 1 | a
+(1 row)
+
+CALL
+ i | s 
+---+---
+ 1 | a
+ 2 | b
+(2 rows)
+
+CREATE TABLE
+CREATE PROCEDURE
+CREATE PROCEDURE
+CALL
+CALL
+ k | v 
+---+---
+ 1 | a
+(1 row)
+
+CREATE PROCEDURE
+CALL
+CALL
+CALL
+ k |    v     
+---+----------
+ 1 | a
+ 2 | b
+ 3 | overload
+ 4 | b
+(4 rows)
+
+CREATE PROCEDURE
+psql:pg_tests/compatible/procedure.sql:275: ERROR:  rfp(integer) is a procedure
+LINE 1: SELECT rfp(1);
+               ^
+HINT:  To call a procedure, use CALL.
+DROP PROCEDURE
+CREATE FUNCTION
+ rfp 
+-----
+ 101
+(1 row)
+
+DROP FUNCTION
+CREATE PROCEDURE
+psql:pg_tests/compatible/procedure.sql:293: ERROR:  rfp(integer) is a procedure
+LINE 1: SELECT rfp(1);
+               ^
+HINT:  To call a procedure, use CALL.
+DROP PROCEDURE
+CREATE PROCEDURE
+psql:pg_tests/compatible/procedure.sql:304: ERROR:  cannot use subquery in CALL argument
+LINE 1: CALL p111021((SELECT 1));
+                     ^
+psql:pg_tests/compatible/procedure.sql:309: ERROR:  cannot use subquery in CALL argument
+LINE 1: CALL p111021(CASE WHEN false THEN 1 ELSE (SELECT 1) END);
+                                                 ^
+CALL
+CALL
+psql:pg_tests/compatible/procedure.sql:324: ERROR:  family(unknown) is not a procedure
+LINE 1: CALL family(ALL NULL);
+             ^
+HINT:  To call a function, use SELECT.
+psql:pg_tests/compatible/procedure.sql:329: ERROR:  invalid attribute in procedure definition
+LINE 1: CREATE PROCEDURE pv() AS 'SELECT 1' VOLATILE LANGUAGE SQL;
+                                            ^
+psql:pg_tests/compatible/procedure.sql:332: ERROR:  invalid attribute in procedure definition
+LINE 1: CREATE PROCEDURE pv() AS 'SELECT 1' IMMUTABLE LANGUAGE SQL;
+                                            ^
+psql:pg_tests/compatible/procedure.sql:335: ERROR:  invalid attribute in procedure definition
+LINE 1: CREATE PROCEDURE pv() AS 'SELECT 1' STABLE LANGUAGE SQL;
+                                            ^
+psql:pg_tests/compatible/procedure.sql:338: ERROR:  invalid attribute in procedure definition
+LINE 1: CREATE PROCEDURE pv() AS 'SELECT 1' LEAKPROOF LANGUAGE SQL;
+                                            ^
+psql:pg_tests/compatible/procedure.sql:341: ERROR:  invalid attribute in procedure definition
+LINE 1: CREATE PROCEDURE pv() AS 'SELECT 1' NOT LEAKPROOF LANGUAGE S...
+                                            ^
+psql:pg_tests/compatible/procedure.sql:344: ERROR:  invalid attribute in procedure definition
+LINE 1: CREATE PROCEDURE pv() AS 'SELECT 1' CALLED ON NULL INPUT LAN...
+                                            ^
+psql:pg_tests/compatible/procedure.sql:347: ERROR:  invalid attribute in procedure definition
+LINE 1: CREATE PROCEDURE pv() AS 'SELECT 1' STRICT LANGUAGE SQL;
+                                            ^
+psql:pg_tests/compatible/procedure.sql:352: ERROR:  sum(integer) is not a procedure
+LINE 1: CALL sum(1);
+             ^
+HINT:  To call a function, use SELECT.
+psql:pg_tests/compatible/procedure.sql:357: ERROR:  first_value(integer) is not a procedure
+LINE 1: CALL first_value(1);
+             ^
+HINT:  To call a function, use SELECT.
+psql:pg_tests/compatible/procedure.sql:362: ERROR:  procedure addgeometrycolumn(unknown, unknown, unknown, unknown, unknown) does not exist
+LINE 1: CALL addgeometrycolumn(null, null, null, null, null);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+CREATE PROCEDURE
+psql:pg_tests/compatible/procedure.sql:373: ERROR:  calling procedures with output arguments is not supported in SQL functions
+CONTEXT:  SQL function "f"
+psql:pg_tests/compatible/procedure.sql:378: ERROR:  calling procedures with output arguments is not supported in SQL functions
+CONTEXT:  SQL function "p_outer"
+DROP PROCEDURE
+CREATE TYPE
+CREATE TYPE
+DROP PROCEDURE
+DROP PROCEDURE
+psql:pg_tests/compatible/procedure.sql:398: ERROR:  return type mismatch in function declared to return record
+DETAIL:  Final statement returns integer instead of one_typ at column 1.
+CONTEXT:  SQL function "p"
+CREATE PROCEDURE
+ foo 
+-----
+ (1)
+(1 row)
+
+DROP PROCEDURE
+psql:pg_tests/compatible/procedure.sql:410: ERROR:  cannot cast type record to one_typ
+DETAIL:  Cannot cast type record to integer in column 1.
+CONTEXT:  SQL function "p"
+psql:pg_tests/compatible/procedure.sql:415: ERROR:  procedure p(unknown) does not exist
+LINE 1: CALL p(NULL);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/procedure.sql:420: ERROR:  could not find a procedure named "p"
+psql:pg_tests/compatible/procedure.sql:425: ERROR:  return type mismatch in function declared to return record
+DETAIL:  Final statement returns integer instead of two_typ at column 1.
+CONTEXT:  SQL function "p"
+CREATE PROCEDURE
+  foo  
+-------
+ (1,2)
+(1 row)
+
+DROP PROCEDURE
+psql:pg_tests/compatible/procedure.sql:437: ERROR:  cannot cast type record to two_typ
+DETAIL:  Cannot cast type record to integer in column 1.
+CONTEXT:  SQL function "p"
+psql:pg_tests/compatible/procedure.sql:442: ERROR:  procedure p(unknown) does not exist
+LINE 1: CALL p(NULL);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/procedure.sql:447: ERROR:  could not find a procedure named "p"
+CREATE PROCEDURE
+ x | y 
+---+---
+ 1 | 2
+(1 row)
+
+DROP PROCEDURE
+psql:pg_tests/compatible/procedure.sql:457: ERROR:  return type mismatch in function declared to return record
+DETAIL:  Final statement returns record instead of integer at column 1.
+CONTEXT:  SQL function "p"
+psql:pg_tests/compatible/procedure.sql:462: ERROR:  procedure p(unknown, unknown) does not exist
+LINE 1: CALL p(NULL, NULL);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/procedure.sql:467: ERROR:  could not find a procedure named "p"
+psql:pg_tests/compatible/procedure.sql:472: ERROR:  return type mismatch in function declared to return record
+DETAIL:  Final statement returns record instead of integer at column 1.
+CONTEXT:  SQL function "p"
+CREATE TABLE
+CREATE PROCEDURE
+psql:pg_tests/compatible/procedure.sql:486: ERROR:  procedure returned null record
+INSERT 0 1
+ new_balance 
+-------------
+       900.0
+(1 row)
+
+DROP PROCEDURE
+DROP TABLE
+CREATE PROCEDURE
+psql:pg_tests/compatible/procedure.sql:504: ERROR:  function "p142886" already exists with same argument types
+DROP PROCEDURE
+CREATE TABLE
+CREATE PROCEDURE
+CREATE PROCEDURE
+CREATE PROCEDURE
+CALL
+ x | y 
+---+---
+ 1 | 2
+ 1 | 2
+(2 rows)
+
+DROP TABLE
+psql:pg_tests/compatible/procedure.sql:547: ERROR:  relation "xy" does not exist
+LINE 1: INSERT INTO xy VALUES (1, 2)
+                    ^
+QUERY:  INSERT INTO xy VALUES (1, 2)
+CONTEXT:  PL/pgSQL function p1_143282() line 3 at SQL statement
+SQL statement "CALL p1_143282()"
+PL/pgSQL function p3_143282() line 3 at CALL
+psql:pg_tests/compatible/procedure.sql:552: ERROR:  relation "xy" does not exist
+LINE 1: INSERT INTO xy VALUES (1, 2)
+                    ^
+QUERY:  INSERT INTO xy VALUES (1, 2)
+CONTEXT:  PL/pgSQL function p1_143282() line 3 at SQL statement
+SQL statement "CALL p1_143282()"
+PL/pgSQL function p2_143282() line 4 at CALL
+psql:pg_tests/compatible/procedure.sql:557: ERROR:  relation "xy" does not exist
+LINE 1: INSERT INTO xy VALUES (1, 2)
+                    ^
+QUERY:  INSERT INTO xy VALUES (1, 2)
+CONTEXT:  PL/pgSQL function p1_143282() line 3 at SQL statement
+RESET

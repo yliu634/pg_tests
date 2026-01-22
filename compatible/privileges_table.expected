@@ -1,0 +1,247 @@
+SET
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+GRANT ROLE
+GRANT ROLE
+DROP DATABASE
+CREATE DATABASE
+You are now connected to database "a" as user "postgres".
+CREATE FUNCTION
+psql:pg_tests/compatible/privileges_table.sql:96: NOTICE:  table "t" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+ table_schema | table_name | grantee  | privilege_type | is_grantable 
+--------------+------------+----------+----------------+--------------
+ public       | t          | postgres | DELETE         | YES
+ public       | t          | postgres | INSERT         | YES
+ public       | t          | postgres | REFERENCES     | YES
+ public       | t          | postgres | SELECT         | YES
+ public       | t          | postgres | TRIGGER        | YES
+ public       | t          | postgres | TRUNCATE       | YES
+ public       | t          | postgres | UPDATE         | YES
+(7 rows)
+
+GRANT
+REVOKE
+INSERT 0 2
+ k | v 
+---+---
+ 1 | 1
+ 2 | 2
+(2 rows)
+
+DELETE 2
+DELETE 0
+UPDATE 0
+UPDATE 0
+TRUNCATE TABLE
+DROP TABLE
+CREATE TABLE
+ table_schema | table_name | grantee  | privilege_type | is_grantable 
+--------------+------------+----------+----------------+--------------
+ public       | t          | postgres | DELETE         | YES
+ public       | t          | postgres | INSERT         | YES
+ public       | t          | postgres | REFERENCES     | YES
+ public       | t          | postgres | SELECT         | YES
+ public       | t          | postgres | TRIGGER        | YES
+ public       | t          | postgres | TRUNCATE       | YES
+ public       | t          | postgres | UPDATE         | YES
+(7 rows)
+
+  kind  | name |      detail      
+--------+------+------------------
+ column | k    | integer NOT NULL
+ column | v    | integer
+(2 rows)
+
+psql:pg_tests/compatible/privileges_table.sql:171: ERROR:  column "r" does not exist
+LINE 1: SELECT r FROM t;
+               ^
+GRANT
+REVOKE
+INSERT 0 2
+ k | v 
+---+---
+ 1 | 1
+ 2 | 2
+(2 rows)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+DELETE 2
+DELETE 0
+UPDATE 0
+UPDATE 0
+TRUNCATE TABLE
+DROP TABLE
+CREATE TABLE
+GRANT
+SET
+  kind  | name |      detail      
+--------+------+------------------
+ column | k    | integer NOT NULL
+ column | v    | integer
+(2 rows)
+
+GRANT
+REVOKE
+psql:pg_tests/compatible/privileges_table.sql:228: ERROR:  permission denied for table t
+psql:pg_tests/compatible/privileges_table.sql:232: ERROR:  permission denied for table t
+ k | v 
+---+---
+(0 rows)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+psql:pg_tests/compatible/privileges_table.sql:241: ERROR:  permission denied for table t
+psql:pg_tests/compatible/privileges_table.sql:244: ERROR:  permission denied for table t
+psql:pg_tests/compatible/privileges_table.sql:247: ERROR:  permission denied for table t
+psql:pg_tests/compatible/privileges_table.sql:250: ERROR:  permission denied for table t
+psql:pg_tests/compatible/privileges_table.sql:253: ERROR:  permission denied for table t
+psql:pg_tests/compatible/privileges_table.sql:256: ERROR:  must be owner of table t
+psql:pg_tests/compatible/privileges_table.sql:259: ERROR:  grant options cannot be granted back to your own grantor
+REVOKE
+psql:pg_tests/compatible/privileges_table.sql:267: WARNING:  no privileges were granted for "t"
+GRANT
+psql:pg_tests/compatible/privileges_table.sql:270: WARNING:  no privileges could be revoked for "t"
+psql:pg_tests/compatible/privileges_table.sql:270: WARNING:  no privileges could be revoked for column "tableoid" of relation "t"
+psql:pg_tests/compatible/privileges_table.sql:270: WARNING:  no privileges could be revoked for column "cmax" of relation "t"
+psql:pg_tests/compatible/privileges_table.sql:270: WARNING:  no privileges could be revoked for column "xmax" of relation "t"
+psql:pg_tests/compatible/privileges_table.sql:270: WARNING:  no privileges could be revoked for column "cmin" of relation "t"
+psql:pg_tests/compatible/privileges_table.sql:270: WARNING:  no privileges could be revoked for column "xmin" of relation "t"
+psql:pg_tests/compatible/privileges_table.sql:270: WARNING:  no privileges could be revoked for column "ctid" of relation "t"
+psql:pg_tests/compatible/privileges_table.sql:270: WARNING:  no privileges could be revoked for column "k" of relation "t"
+psql:pg_tests/compatible/privileges_table.sql:270: WARNING:  no privileges could be revoked for column "v" of relation "t"
+REVOKE
+GRANT
+GRANT
+psql:pg_tests/compatible/privileges_table.sql:279: ERROR:  permission denied for table t
+ k | v 
+---+---
+(0 rows)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+psql:pg_tests/compatible/privileges_table.sql:288: ERROR:  permission denied for table t
+psql:pg_tests/compatible/privileges_table.sql:291: ERROR:  permission denied for table t
+psql:pg_tests/compatible/privileges_table.sql:294: ERROR:  permission denied for table t
+psql:pg_tests/compatible/privileges_table.sql:297: ERROR:  permission denied for table t
+psql:pg_tests/compatible/privileges_table.sql:303: ERROR:  permission denied for table t
+psql:pg_tests/compatible/privileges_table.sql:309: ERROR:  must be owner of table t
+RESET
+DROP TABLE
+CREATE TABLE
+GRANT
+SET
+GRANT
+REVOKE
+INSERT 0 2
+ k | v 
+---+---
+ 1 | 1
+ 2 | 2
+(2 rows)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+DELETE 2
+DELETE 0
+UPDATE 0
+UPDATE 0
+TRUNCATE TABLE
+psql:pg_tests/compatible/privileges_table.sql:363: ERROR:  must be owner of table t
+RESET
+DROP TABLE
+CREATE TABLE
+GRANT
+SET
+INSERT 0 1
+psql:pg_tests/compatible/privileges_table.sql:384: ERROR:  permission denied for table t
+psql:pg_tests/compatible/privileges_table.sql:387: ERROR:  permission denied for table t
+psql:pg_tests/compatible/privileges_table.sql:390: ERROR:  permission denied for table t
+RESET
+GRANT
+SET
+INSERT 0 0
+psql:pg_tests/compatible/privileges_table.sql:407: ERROR:  permission denied for table t
+psql:pg_tests/compatible/privileges_table.sql:410: ERROR:  permission denied for table t
+RESET
+GRANT
+SET
+INSERT 0 1
+INSERT 0 1
+RESET
+DROP TABLE
+CREATE TABLE
+SET
+  kind  | name |      detail      
+--------+------+------------------
+ column | k    | integer NOT NULL
+ column | v    | integer
+(2 rows)
+
+    kind    |  name  |                         detail                         
+------------+--------+--------------------------------------------------------
+ column     | k      | integer NOT NULL
+ column     | v      | integer
+ constraint | t_pkey | PRIMARY KEY (k)
+ index      | t_pkey | CREATE UNIQUE INDEX t_pkey ON public.t USING btree (k)
+(4 rows)
+
+ kind  |  name  |                         detail                         
+-------+--------+--------------------------------------------------------
+ index | t_pkey | CREATE UNIQUE INDEX t_pkey ON public.t USING btree (k)
+(1 row)
+
+    kind    |  name  |     detail      
+------------+--------+-----------------
+ constraint | t_pkey | PRIMARY KEY (k)
+(1 row)
+
+RESET
+GRANT
+SET
+  kind  | name |      detail      
+--------+------+------------------
+ column | k    | integer NOT NULL
+ column | v    | integer
+(2 rows)
+
+    kind    |  name  |                         detail                         
+------------+--------+--------------------------------------------------------
+ column     | k      | integer NOT NULL
+ column     | v      | integer
+ constraint | t_pkey | PRIMARY KEY (k)
+ index      | t_pkey | CREATE UNIQUE INDEX t_pkey ON public.t USING btree (k)
+(4 rows)
+
+ kind  |  name  |                         detail                         
+-------+--------+--------------------------------------------------------
+ index | t_pkey | CREATE UNIQUE INDEX t_pkey ON public.t USING btree (k)
+(1 row)
+
+    kind    |  name  |     detail      
+------------+--------+-----------------
+ constraint | t_pkey | PRIMARY KEY (k)
+(1 row)
+
+RESET
+You are now connected to database "postgres" as user "postgres".
+DROP DATABASE
+DROP ROLE
+DROP ROLE
+RESET

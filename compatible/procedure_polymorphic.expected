@@ -1,0 +1,335 @@
+CREATE TYPE
+CREATE TYPE
+CREATE TYPE
+CREATE PROCEDURE
+CALL
+CALL
+CALL
+CALL
+CALL
+CALL
+psql:pg_tests/compatible/procedure_polymorphic.sql:22: ERROR:  could not determine polymorphic type because input has type unknown
+psql:pg_tests/compatible/procedure_polymorphic.sql:27: ERROR:  could not determine polymorphic type because input has type unknown
+DROP PROCEDURE
+CREATE PROCEDURE
+CALL
+CALL
+CALL
+CALL
+psql:pg_tests/compatible/procedure_polymorphic.sql:42: ERROR:  could not determine polymorphic type because input has type unknown
+psql:pg_tests/compatible/procedure_polymorphic.sql:47: ERROR:  could not determine polymorphic type because input has type unknown
+psql:pg_tests/compatible/procedure_polymorphic.sql:52: ERROR:  procedure p(integer) does not exist
+LINE 1: CALL p(1);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/procedure_polymorphic.sql:57: ERROR:  procedure p(greetings) does not exist
+LINE 1: CALL p('hi'::greetings);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+DROP PROCEDURE
+CREATE PROCEDURE
+CALL
+CALL
+CALL
+CALL
+CALL
+CALL
+psql:pg_tests/compatible/procedure_polymorphic.sql:78: ERROR:  could not determine polymorphic type because input has type unknown
+psql:pg_tests/compatible/procedure_polymorphic.sql:83: ERROR:  could not determine polymorphic type because input has type unknown
+psql:pg_tests/compatible/procedure_polymorphic.sql:88: ERROR:  procedure p(integer, boolean) does not exist
+LINE 1: CALL p(1, False);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/procedure_polymorphic.sql:93: ERROR:  procedure p(integer[], boolean[]) does not exist
+LINE 1: CALL p(ARRAY[1, 2], ARRAY[False, True]);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+DROP PROCEDURE
+CREATE PROCEDURE
+CALL
+CALL
+CALL
+CALL
+CALL
+psql:pg_tests/compatible/procedure_polymorphic.sql:109: ERROR:  could not determine polymorphic type because input has type unknown
+psql:pg_tests/compatible/procedure_polymorphic.sql:114: ERROR:  could not determine polymorphic type because input has type unknown
+psql:pg_tests/compatible/procedure_polymorphic.sql:119: ERROR:  procedure p(integer, integer) does not exist
+LINE 1: CALL p(1, 2);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/procedure_polymorphic.sql:124: ERROR:  procedure p(integer[], integer) does not exist
+LINE 1: CALL p(ARRAY[1, 2], 3);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/procedure_polymorphic.sql:129: ERROR:  procedure p(greetings, greetings) does not exist
+LINE 1: CALL p('hi'::greetings, 'hello'::greetings);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+DROP PROCEDURE
+CREATE PROCEDURE
+CALL
+CALL
+CALL
+CALL
+CALL
+CALL
+CALL
+CALL
+psql:pg_tests/compatible/procedure_polymorphic.sql:150: ERROR:  could not determine polymorphic type because input has type unknown
+psql:pg_tests/compatible/procedure_polymorphic.sql:155: ERROR:  procedure p(text[], greetings) does not exist
+LINE 1: CALL p(ARRAY['hi'], 'hello'::greetings);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/procedure_polymorphic.sql:160: ERROR:  procedure p(greetings, text[]) does not exist
+LINE 1: CALL p('hello'::greetings, ARRAY['hi']);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/procedure_polymorphic.sql:165: ERROR:  procedure p(integer, integer) does not exist
+LINE 1: CALL p(1, 2);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/procedure_polymorphic.sql:170: ERROR:  procedure p(integer[], integer[]) does not exist
+LINE 1: CALL p(ARRAY[1, 2], ARRAY[3, 4]);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+DROP PROCEDURE
+CREATE PROCEDURE
+CALL
+CALL
+CALL
+CALL
+CALL
+CALL
+CALL
+CALL
+psql:pg_tests/compatible/procedure_polymorphic.sql:191: ERROR:  could not determine polymorphic type because input has type unknown
+psql:pg_tests/compatible/procedure_polymorphic.sql:196: ERROR:  procedure p(text[], greetings) does not exist
+LINE 1: CALL p(ARRAY['hi'], 'hello'::greetings);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/procedure_polymorphic.sql:201: ERROR:  procedure p(greetings, text[]) does not exist
+LINE 1: CALL p('hello'::greetings, ARRAY['hi']);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/procedure_polymorphic.sql:206: ERROR:  procedure p(integer, integer) does not exist
+LINE 1: CALL p(1, 2);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/procedure_polymorphic.sql:211: ERROR:  procedure p(integer[], integer[]) does not exist
+LINE 1: CALL p(ARRAY[1, 2], ARRAY[3, 4]);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+DROP PROCEDURE
+CREATE PROCEDURE
+ y 
+---
+ 1
+(1 row)
+
+ y 
+---
+ 2
+(1 row)
+
+ y 
+---
+  
+(1 row)
+
+psql:pg_tests/compatible/procedure_polymorphic.sql:229: ERROR:  return type mismatch in function declared to return record
+DETAIL:  Final statement returns text instead of integer at column 1.
+CONTEXT:  SQL function "p" during startup
+psql:pg_tests/compatible/procedure_polymorphic.sql:234: ERROR:  return type mismatch in function declared to return record
+DETAIL:  Final statement returns boolean instead of integer at column 1.
+CONTEXT:  SQL function "p" during startup
+DROP PROCEDURE
+psql:pg_tests/compatible/procedure_polymorphic.sql:242: ERROR:  cannot determine result data type
+DETAIL:  A result of type anyelement requires at least one input of type anyelement, anyarray, anynonarray, anyenum, anyrange, or anymultirange.
+psql:pg_tests/compatible/procedure_polymorphic.sql:247: ERROR:  cannot determine result data type
+DETAIL:  A result of type anyarray requires at least one input of type anyelement, anyarray, anynonarray, anyenum, anyrange, or anymultirange.
+psql:pg_tests/compatible/procedure_polymorphic.sql:252: ERROR:  cannot determine result data type
+DETAIL:  A result of type anyelement requires at least one input of type anyelement, anyarray, anynonarray, anyenum, anyrange, or anymultirange.
+psql:pg_tests/compatible/procedure_polymorphic.sql:257: ERROR:  cannot determine result data type
+DETAIL:  A result of type anyarray requires at least one input of type anyelement, anyarray, anynonarray, anyenum, anyrange, or anymultirange.
+CREATE PROCEDURE
+ x 
+---
+ 1
+(1 row)
+
+ x 
+---
+ t
+(1 row)
+
+   x   
+-------
+ {1,2}
+(1 row)
+
+DROP PROCEDURE
+CREATE PROCEDURE
+ y 
+---
+ 1
+(1 row)
+
+ y 
+---
+ t
+(1 row)
+
+   y   
+-------
+ {1,2}
+(1 row)
+
+DROP PROCEDURE
+CREATE PROCEDURE
+  y  
+-----
+ {1}
+(1 row)
+
+  y  
+-----
+ {t}
+(1 row)
+
+psql:pg_tests/compatible/procedure_polymorphic.sql:297: ERROR:  could not find array type for data type integer[]
+DROP PROCEDURE
+CREATE PROCEDURE
+ y 
+---
+ 1
+(1 row)
+
+ y 
+---
+ t
+(1 row)
+
+DROP PROCEDURE
+CREATE PROCEDURE
+psql:pg_tests/compatible/procedure_polymorphic.sql:316: ERROR:  procedure p(boolean, boolean[]) does not exist
+LINE 1: CALL p(true, ARRAY[True]);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/procedure_polymorphic.sql:321: ERROR:  procedure p(integer, integer[]) does not exist
+LINE 1: CALL p(1, ARRAY[2]);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/procedure_polymorphic.sql:326: ERROR:  procedure p(integer, boolean) does not exist
+LINE 1: CALL p(1, True);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+DROP PROCEDURE
+CREATE PROCEDURE
+psql:pg_tests/compatible/procedure_polymorphic.sql:335: ERROR:  procedure p(boolean, boolean) does not exist
+LINE 1: CALL p(true, false);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/procedure_polymorphic.sql:340: ERROR:  procedure p(integer, integer) does not exist
+LINE 1: CALL p(1, 2);
+             ^
+HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+DROP PROCEDURE
+CREATE PROCEDURE
+ ret 
+-----
+   1
+(1 row)
+
+ ret 
+-----
+ t
+(1 row)
+
+ ret 
+-----
+ foo
+(1 row)
+
+DROP PROCEDURE
+CREATE PROCEDURE
+ ret 
+-----
+   1
+(1 row)
+
+ ret 
+-----
+   2
+(1 row)
+
+ ret 
+-----
+ bar
+(1 row)
+
+ ret 
+-----
+ f
+(1 row)
+
+psql:pg_tests/compatible/procedure_polymorphic.sql:374: ERROR:  arguments declared "anyelement" are not all alike
+DETAIL:  boolean versus integer
+DROP PROCEDURE
+CREATE PROCEDURE
+  ret  
+-------
+ {1,2}
+(1 row)
+
+psql:pg_tests/compatible/procedure_polymorphic.sql:386: ERROR:  arguments declared "anyarray" are not all alike
+DETAIL:  boolean[] versus integer[]
+DROP PROCEDURE
+CREATE PROCEDURE
+ ret 
+-----
+  10
+(1 row)
+
+ ret 
+-----
+  10
+(1 row)
+
+psql:pg_tests/compatible/procedure_polymorphic.sql:401: ERROR:  arguments declared "anyelement" are not all alike
+DETAIL:  boolean versus integer
+DROP PROCEDURE
+CREATE PROCEDURE
+CALL
+CALL
+CALL
+CALL
+psql:pg_tests/compatible/procedure_polymorphic.sql:416: ERROR:  argument declared anyarray is not consistent with argument declared anyelement
+DETAIL:  integer[] versus boolean
+DROP PROCEDURE
+CREATE PROCEDURE
+CALL
+CALL
+CALL
+psql:pg_tests/compatible/procedure_polymorphic.sql:430: ERROR:  argument declared anyarray is not consistent with argument declared anyelement
+DETAIL:  integer[] versus boolean
+DROP PROCEDURE
+psql:pg_tests/compatible/procedure_polymorphic.sql:438: ERROR:  argument of DEFAULT must be type anyarray, not type integer
+LINE 1: CREATE PROCEDURE p(x ANYARRAY DEFAULT 1) LANGUAGE SQL AS $$ ...
+                                              ^
+CREATE PROCEDURE
+psql:pg_tests/compatible/procedure_polymorphic.sql:446: ERROR:  procedure p(integer) does not exist
+psql:pg_tests/compatible/procedure_polymorphic.sql:451: ERROR:  procedure p(text) does not exist
+psql:pg_tests/compatible/procedure_polymorphic.sql:456: ERROR:  procedure p() does not exist
+psql:pg_tests/compatible/procedure_polymorphic.sql:461: ERROR:  procedure p() does not exist
+psql:pg_tests/compatible/procedure_polymorphic.sql:466: ERROR:  procedure p(anyarray) does not exist
+DROP PROCEDURE
+CREATE PROCEDURE
+psql:pg_tests/compatible/procedure_polymorphic.sql:477: ERROR:  procedure p(anyarray) does not exist
+psql:pg_tests/compatible/procedure_polymorphic.sql:482: ERROR:  procedure p(anyelement) does not exist
+DROP PROCEDURE
+CREATE PROCEDURE
+ f2 |   f3    
+----+---------
+ 22 | {22,22}
+(1 row)
+
