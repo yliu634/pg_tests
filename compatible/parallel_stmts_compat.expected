@@ -1,0 +1,192 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 0
+INSERT 0 1
+INSERT 0 1
+UPDATE 0
+UPDATE 0
+DELETE 1
+INSERT 0 1
+DELETE 1
+DELETE 0
+DELETE 0
+BEGIN
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+COMMIT
+ k | v 
+---+---
+ 1 | 2
+ 2 | 3
+ 3 | 4
+(3 rows)
+
+BEGIN
+INSERT 0 1
+INSERT 0 0
+INSERT 0 1
+COMMIT
+ transaction_status 
+--------------------
+ OK
+(1 row)
+
+ k | v 
+---+---
+ 1 | 2
+ 2 | 3
+ 3 | 4
+ 4 | 5
+ 5 | 6
+(5 rows)
+
+BEGIN
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+COMMIT
+ k | v 
+---+---
+ 1 | 7
+ 2 | 3
+ 3 | 9
+ 4 | 8
+ 5 | 6
+(5 rows)
+
+BEGIN
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+COMMIT
+ k | v  
+---+----
+ 1 |  8
+ 2 |  3
+ 3 | 10
+ 4 | 50
+ 5 |  6
+(5 rows)
+
+BEGIN
+UPDATE 1
+UPDATE 1
+UPDATE 0
+COMMIT
+ k | v  
+---+----
+ 1 |  1
+ 2 |  3
+ 3 |  3
+ 4 | 50
+ 5 |  6
+(5 rows)
+
+BEGIN
+UPDATE 1
+UPDATE 0
+UPDATE 1
+COMMIT
+ k  | v  
+----+----
+  2 |  3
+  3 |  3
+  5 |  6
+  9 |  1
+ 10 | 50
+(5 rows)
+
+BEGIN
+DELETE 0
+DELETE 1
+COMMIT
+ k  | v  
+----+----
+  2 |  3
+  3 |  3
+  9 |  1
+ 10 | 50
+(4 rows)
+
+INSERT 0 1
+BEGIN
+DELETE 0
+DELETE 1
+DELETE 1
+COMMIT
+ k  | v  
+----+----
+  9 |  1
+ 10 | 50
+(2 rows)
+
+DELETE 0
+BEGIN
+INSERT 0 1
+INSERT 0 1
+ k  | v  
+----+----
+  1 |  2
+  5 |  9
+  9 |  1
+ 10 | 50
+(4 rows)
+
+INSERT 0 1
+UPDATE 0
+ k  | v  
+----+----
+  1 |  2
+  5 |  9
+  6 | 10
+  9 |  1
+ 10 | 50
+(5 rows)
+
+DELETE 0
+COMMIT
+ k  | v  
+----+----
+  1 |  2
+  5 |  9
+  6 | 10
+  9 |  1
+ 10 | 50
+(5 rows)
+
+BEGIN
+INSERT 0 0
+INSERT 0 1
+ROLLBACK
+ k  | v  
+----+----
+  1 |  2
+  5 |  9
+  6 | 10
+  9 |  1
+ 10 | 50
+(5 rows)
+
+BEGIN
+UPDATE 0
+ROLLBACK
+DELETE 5
+PREPARE
+BEGIN
+INSERT 0 1
+INSERT 0 0
+ROLLBACK
+BEGIN
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+COMMIT
+ k | v 
+---+---
+ 1 | 2
+ 2 | 3
+ 3 | 4
+(3 rows)
+

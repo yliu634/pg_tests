@@ -1,0 +1,9 @@
+psql:pg_tests/compatible/partitioning.sql:5: NOTICE:  table "t" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX

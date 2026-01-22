@@ -1,0 +1,326 @@
+SET
+DROP ROLE
+DROP ROLE
+DROP ROLE
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype |                defaclacl                
+------------+-----------------+---------------+-----------------------------------------
+ postgres   | <global>        | S             | {=r/postgres,postgres=rwU/postgres}
+ postgres   | <global>        | f             | {postgres=X/postgres}
+ postgres   | <global>        | n             | {=U/postgres,postgres=UC/postgres}
+ postgres   | <global>        | r             | {=r/postgres,postgres=arwdDxt/postgres}
+(4 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE ROLE
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype |                                                                      defaclacl                                                                      
+------------+-----------------+---------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ postgres   | <global>        | S             | {=r/postgres,postgres=rwU/postgres,crdb_tests_pg_default_acl_foo=r*w*U*/postgres,crdb_tests_pg_default_acl_bar=r*w*U*/postgres}
+ postgres   | <global>        | T             | {=U/postgres,postgres=U/postgres,crdb_tests_pg_default_acl_foo=U*/postgres,crdb_tests_pg_default_acl_bar=U*/postgres}
+ postgres   | <global>        | f             | {=X/postgres,postgres=X/postgres,crdb_tests_pg_default_acl_foo=X*/postgres,crdb_tests_pg_default_acl_bar=X*/postgres}
+ postgres   | <global>        | n             | {=U/postgres,postgres=UC/postgres,crdb_tests_pg_default_acl_foo=U*C*/postgres,crdb_tests_pg_default_acl_bar=U*C*/postgres}
+ postgres   | <global>        | r             | {=r/postgres,postgres=arwdDxt/postgres,crdb_tests_pg_default_acl_foo=a*r*w*d*D*x*t*/postgres,crdb_tests_pg_default_acl_bar=a*r*w*d*D*x*t*/postgres}
+(5 rows)
+
+GRANT ROLE
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+          defaclrole           | defaclnamespace | defaclobjtype |                                                                            defaclacl                                                                             
+-------------------------------+-----------------+---------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ crdb_tests_pg_default_acl_bar | <global>        | S             | {crdb_tests_pg_default_acl_foo=r*w*U*/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_bar=r*w*U*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | T             | {=U/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_foo=U*/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_bar=U*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | f             | {=X/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_foo=X*/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_bar=X*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | n             | {crdb_tests_pg_default_acl_foo=U*C*/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_bar=U*C*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | r             | {crdb_tests_pg_default_acl_foo=a*r*w*d*D*x*t*/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_bar=a*r*w*d*D*x*t*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_foo | <global>        | S             | {crdb_tests_pg_default_acl_foo=r*w*U*/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_bar=r*w*U*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | T             | {=U/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_foo=U*/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_bar=U*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | f             | {=X/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_foo=X*/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_bar=X*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | n             | {crdb_tests_pg_default_acl_foo=U*C*/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_bar=U*C*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | r             | {crdb_tests_pg_default_acl_foo=a*r*w*d*D*x*t*/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_bar=a*r*w*d*D*x*t*/crdb_tests_pg_default_acl_foo}
+ postgres                      | <global>        | S             | {=r/postgres,postgres=rwU/postgres,crdb_tests_pg_default_acl_foo=r*w*U*/postgres,crdb_tests_pg_default_acl_bar=r*w*U*/postgres}
+ postgres                      | <global>        | T             | {=U/postgres,postgres=U/postgres,crdb_tests_pg_default_acl_foo=U*/postgres,crdb_tests_pg_default_acl_bar=U*/postgres}
+ postgres                      | <global>        | f             | {=X/postgres,postgres=X/postgres,crdb_tests_pg_default_acl_foo=X*/postgres,crdb_tests_pg_default_acl_bar=X*/postgres}
+ postgres                      | <global>        | n             | {=U/postgres,postgres=UC/postgres,crdb_tests_pg_default_acl_foo=U*C*/postgres,crdb_tests_pg_default_acl_bar=U*C*/postgres}
+ postgres                      | <global>        | r             | {=r/postgres,postgres=arwdDxt/postgres,crdb_tests_pg_default_acl_foo=a*r*w*d*D*x*t*/postgres,crdb_tests_pg_default_acl_bar=a*r*w*d*D*x*t*/postgres}
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+          defaclrole           | defaclnamespace | defaclobjtype |                                                                      defaclacl                                                                      
+-------------------------------+-----------------+---------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ crdb_tests_pg_default_acl_bar | <global>        | S             | {}
+ crdb_tests_pg_default_acl_bar | <global>        | T             | {=U/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | f             | {=X/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | n             | {}
+ crdb_tests_pg_default_acl_bar | <global>        | r             | {}
+ crdb_tests_pg_default_acl_foo | <global>        | S             | {}
+ crdb_tests_pg_default_acl_foo | <global>        | T             | {=U/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | f             | {=X/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | n             | {}
+ crdb_tests_pg_default_acl_foo | <global>        | r             | {}
+ postgres                      | <global>        | S             | {=r/postgres,postgres=rwU/postgres,crdb_tests_pg_default_acl_foo=r*w*U*/postgres,crdb_tests_pg_default_acl_bar=r*w*U*/postgres}
+ postgres                      | <global>        | T             | {=U/postgres,postgres=U/postgres,crdb_tests_pg_default_acl_foo=U*/postgres,crdb_tests_pg_default_acl_bar=U*/postgres}
+ postgres                      | <global>        | f             | {=X/postgres,postgres=X/postgres,crdb_tests_pg_default_acl_foo=X*/postgres,crdb_tests_pg_default_acl_bar=X*/postgres}
+ postgres                      | <global>        | n             | {=U/postgres,postgres=UC/postgres,crdb_tests_pg_default_acl_foo=U*C*/postgres,crdb_tests_pg_default_acl_bar=U*C*/postgres}
+ postgres                      | <global>        | r             | {=r/postgres,postgres=arwdDxt/postgres,crdb_tests_pg_default_acl_foo=a*r*w*d*D*x*t*/postgres,crdb_tests_pg_default_acl_bar=a*r*w*d*D*x*t*/postgres}
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+          defaclrole           | defaclnamespace | defaclobjtype |                                                                      defaclacl                                                                      
+-------------------------------+-----------------+---------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ crdb_tests_pg_default_acl_bar | <global>        | S             | {crdb_tests_pg_default_acl_bar=r*w*U*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | T             | {=U/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_bar=U*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | f             | {=X/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_bar=X*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | n             | {crdb_tests_pg_default_acl_bar=U*C*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | r             | {crdb_tests_pg_default_acl_bar=a*r*w*d*D*x*t*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_foo | <global>        | S             | {crdb_tests_pg_default_acl_foo=r*w*U*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | T             | {=U/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_foo=U*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | f             | {=X/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_foo=X*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | n             | {crdb_tests_pg_default_acl_foo=U*C*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | r             | {crdb_tests_pg_default_acl_foo=a*r*w*d*D*x*t*/crdb_tests_pg_default_acl_foo}
+ postgres                      | <global>        | S             | {=r/postgres,postgres=rwU/postgres,crdb_tests_pg_default_acl_foo=r*w*U*/postgres,crdb_tests_pg_default_acl_bar=r*w*U*/postgres}
+ postgres                      | <global>        | T             | {=U/postgres,postgres=U/postgres,crdb_tests_pg_default_acl_foo=U*/postgres,crdb_tests_pg_default_acl_bar=U*/postgres}
+ postgres                      | <global>        | f             | {=X/postgres,postgres=X/postgres,crdb_tests_pg_default_acl_foo=X*/postgres,crdb_tests_pg_default_acl_bar=X*/postgres}
+ postgres                      | <global>        | n             | {=U/postgres,postgres=UC/postgres,crdb_tests_pg_default_acl_foo=U*C*/postgres,crdb_tests_pg_default_acl_bar=U*C*/postgres}
+ postgres                      | <global>        | r             | {=r/postgres,postgres=arwdDxt/postgres,crdb_tests_pg_default_acl_foo=a*r*w*d*D*x*t*/postgres,crdb_tests_pg_default_acl_bar=a*r*w*d*D*x*t*/postgres}
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+          defaclrole           | defaclnamespace | defaclobjtype |                                                                      defaclacl                                                                      
+-------------------------------+-----------------+---------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ crdb_tests_pg_default_acl_bar | <global>        | S             | {crdb_tests_pg_default_acl_bar=r*w*U*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | T             | {=U/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_bar=U*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | f             | {=X/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_bar=X*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | n             | {crdb_tests_pg_default_acl_bar=U*C*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | r             | {crdb_tests_pg_default_acl_bar=a*r*w*d*D*x*t*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_foo | <global>        | S             | {crdb_tests_pg_default_acl_foo=r*w*U*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | T             | {=U/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_foo=U*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | f             | {=X/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_foo=X*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | n             | {crdb_tests_pg_default_acl_foo=U*C*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | r             | {crdb_tests_pg_default_acl_foo=a*w*d*D*x*t*/crdb_tests_pg_default_acl_foo}
+ postgres                      | <global>        | S             | {=r/postgres,postgres=rwU/postgres,crdb_tests_pg_default_acl_foo=r*w*U*/postgres,crdb_tests_pg_default_acl_bar=r*w*U*/postgres}
+ postgres                      | <global>        | T             | {=U/postgres,postgres=U/postgres,crdb_tests_pg_default_acl_foo=U*/postgres,crdb_tests_pg_default_acl_bar=U*/postgres}
+ postgres                      | <global>        | f             | {=X/postgres,postgres=X/postgres,crdb_tests_pg_default_acl_foo=X*/postgres,crdb_tests_pg_default_acl_bar=X*/postgres}
+ postgres                      | <global>        | n             | {=U/postgres,postgres=UC/postgres,crdb_tests_pg_default_acl_foo=U*C*/postgres,crdb_tests_pg_default_acl_bar=U*C*/postgres}
+ postgres                      | <global>        | r             | {=r/postgres,postgres=arwdDxt/postgres,crdb_tests_pg_default_acl_foo=a*r*w*d*D*x*t*/postgres,crdb_tests_pg_default_acl_bar=a*r*w*d*D*x*t*/postgres}
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+          defaclrole           | defaclnamespace | defaclobjtype |                                                                      defaclacl                                                                      
+-------------------------------+-----------------+---------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ crdb_tests_pg_default_acl_bar | <global>        | S             | {crdb_tests_pg_default_acl_bar=r*w*U*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | T             | {=U/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_bar=U*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | f             | {=X/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_bar=X*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | n             | {crdb_tests_pg_default_acl_bar=U*C*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | r             | {crdb_tests_pg_default_acl_bar=a*r*w*d*D*x*t*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_foo | <global>        | S             | {crdb_tests_pg_default_acl_foo=r*w*U*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | T             | {=U/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_foo=U*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | f             | {=X/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_foo=X*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | n             | {crdb_tests_pg_default_acl_foo=U*C*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | r             | {crdb_tests_pg_default_acl_foo=a*rw*d*D*x*t*/crdb_tests_pg_default_acl_foo}
+ postgres                      | <global>        | S             | {=r/postgres,postgres=rwU/postgres,crdb_tests_pg_default_acl_foo=r*w*U*/postgres,crdb_tests_pg_default_acl_bar=r*w*U*/postgres}
+ postgres                      | <global>        | T             | {=U/postgres,postgres=U/postgres,crdb_tests_pg_default_acl_foo=U*/postgres,crdb_tests_pg_default_acl_bar=U*/postgres}
+ postgres                      | <global>        | f             | {=X/postgres,postgres=X/postgres,crdb_tests_pg_default_acl_foo=X*/postgres,crdb_tests_pg_default_acl_bar=X*/postgres}
+ postgres                      | <global>        | n             | {=U/postgres,postgres=UC/postgres,crdb_tests_pg_default_acl_foo=U*C*/postgres,crdb_tests_pg_default_acl_bar=U*C*/postgres}
+ postgres                      | <global>        | r             | {=r/postgres,postgres=arwdDxt/postgres,crdb_tests_pg_default_acl_foo=a*r*w*d*D*x*t*/postgres,crdb_tests_pg_default_acl_bar=a*r*w*d*D*x*t*/postgres}
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+          defaclrole           | defaclnamespace | defaclobjtype |                                                              defaclacl                                                              
+-------------------------------+-----------------+---------------+-------------------------------------------------------------------------------------------------------------------------------------
+ crdb_tests_pg_default_acl_bar | <global>        | S             | {crdb_tests_pg_default_acl_bar=r*w*U*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | T             | {=U/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_bar=U*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | f             | {=X/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_bar=X*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | n             | {crdb_tests_pg_default_acl_bar=U*C*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | r             | {crdb_tests_pg_default_acl_bar=a*r*w*d*D*x*t*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_foo | <global>        | S             | {crdb_tests_pg_default_acl_foo=r*w*U*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | T             | {=U/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_foo=U*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | f             | {=X/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_foo=X*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | n             | {crdb_tests_pg_default_acl_foo=U*C*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | r             | {crdb_tests_pg_default_acl_foo=a*rw*d*D*x*t*/crdb_tests_pg_default_acl_foo}
+ postgres                      | <global>        | f             | {postgres=X/postgres}
+ postgres                      | <global>        | r             | {postgres=arwdDxt/postgres,crdb_tests_pg_default_acl_foo=a*w*d*D*x*t*/postgres,crdb_tests_pg_default_acl_bar=a*w*d*D*x*t*/postgres}
+(12 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+          defaclrole           | defaclnamespace | defaclobjtype |                                             defaclacl                                             
+-------------------------------+-----------------+---------------+---------------------------------------------------------------------------------------------------
+ crdb_tests_pg_default_acl_bar | <global>        | S             | {crdb_tests_pg_default_acl_bar=r*w*U*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | T             | {=U/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_bar=U*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | f             | {=X/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_bar=X*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | n             | {crdb_tests_pg_default_acl_bar=U*C*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | r             | {crdb_tests_pg_default_acl_bar=a*r*w*d*D*x*t*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_foo | <global>        | S             | {crdb_tests_pg_default_acl_foo=r*w*U*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | T             | {=U/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_foo=U*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | f             | {=X/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_foo=X*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | n             | {crdb_tests_pg_default_acl_foo=U*C*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | r             | {crdb_tests_pg_default_acl_foo=a*rw*d*D*x*t*/crdb_tests_pg_default_acl_foo}
+ postgres                      | <global>        | f             | {postgres=X/postgres}
+ postgres                      | <global>        | r             | {postgres=arwdDxt/postgres,crdb_tests_pg_default_acl_foo=Dx/postgres}
+(12 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+          defaclrole           | defaclnamespace | defaclobjtype |                                                                            defaclacl                                                                             
+-------------------------------+-----------------+---------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ crdb_tests_pg_default_acl_bar | <global>        | S             | {crdb_tests_pg_default_acl_foo=r*w*U*/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_bar=r*w*U*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | T             | {=U/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_foo=U*/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_bar=U*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | f             | {=X/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_foo=X*/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_bar=X*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | n             | {crdb_tests_pg_default_acl_foo=U*C*/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_bar=U*C*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | r             | {crdb_tests_pg_default_acl_foo=a*r*w*d*D*x*t*/crdb_tests_pg_default_acl_bar,crdb_tests_pg_default_acl_bar=a*r*w*d*D*x*t*/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_foo | <global>        | S             | {crdb_tests_pg_default_acl_foo=r*w*U*/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_bar=r*w*U*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | T             | {=U/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_foo=U*/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_bar=U*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | f             | {=X/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_foo=X*/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_bar=X*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | n             | {crdb_tests_pg_default_acl_foo=U*C*/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_bar=U*C*/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | r             | {crdb_tests_pg_default_acl_foo=a*r*w*d*D*x*t*/crdb_tests_pg_default_acl_foo,crdb_tests_pg_default_acl_bar=a*r*w*d*D*x*t*/crdb_tests_pg_default_acl_foo}
+ postgres                      | <global>        | S             | {postgres=rwU/postgres,crdb_tests_pg_default_acl_foo=r*w*U*/postgres,crdb_tests_pg_default_acl_bar=r*w*U*/postgres}
+ postgres                      | <global>        | T             | {=U/postgres,postgres=U/postgres,crdb_tests_pg_default_acl_foo=U*/postgres,crdb_tests_pg_default_acl_bar=U*/postgres}
+ postgres                      | <global>        | f             | {postgres=X/postgres,crdb_tests_pg_default_acl_foo=X*/postgres,crdb_tests_pg_default_acl_bar=X*/postgres}
+ postgres                      | <global>        | n             | {postgres=UC/postgres,crdb_tests_pg_default_acl_foo=U*C*/postgres,crdb_tests_pg_default_acl_bar=U*C*/postgres}
+ postgres                      | <global>        | r             | {postgres=arwdDxt/postgres,crdb_tests_pg_default_acl_foo=a*r*w*d*D*x*t*/postgres,crdb_tests_pg_default_acl_bar=a*r*w*d*D*x*t*/postgres}
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+          defaclrole           | defaclnamespace | defaclobjtype |             defaclacl              
+-------------------------------+-----------------+---------------+------------------------------------
+ crdb_tests_pg_default_acl_bar | <global>        | S             | {}
+ crdb_tests_pg_default_acl_bar | <global>        | T             | {=U/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | f             | {=X/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | n             | {}
+ crdb_tests_pg_default_acl_bar | <global>        | r             | {}
+ crdb_tests_pg_default_acl_foo | <global>        | S             | {}
+ crdb_tests_pg_default_acl_foo | <global>        | T             | {=U/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | f             | {=X/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | n             | {}
+ crdb_tests_pg_default_acl_foo | <global>        | r             | {}
+ postgres                      | <global>        | f             | {postgres=X/postgres}
+(11 rows)
+
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+          defaclrole           | defaclnamespace | defaclobjtype |             defaclacl              
+-------------------------------+-----------------+---------------+------------------------------------
+ crdb_tests_pg_default_acl_bar | <global>        | S             | {}
+ crdb_tests_pg_default_acl_bar | <global>        | T             | {=U/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | f             | {=X/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | n             | {}
+ crdb_tests_pg_default_acl_bar | <global>        | r             | {}
+ crdb_tests_pg_default_acl_foo | <global>        | S             | {}
+ crdb_tests_pg_default_acl_foo | <global>        | T             | {=U/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | f             | {=X/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | n             | {}
+ crdb_tests_pg_default_acl_foo | <global>        | r             | {}
+ postgres                      | <global>        | f             | {postgres=X/postgres}
+(11 rows)
+
+ALTER DEFAULT PRIVILEGES
+          defaclrole           | defaclnamespace | defaclobjtype |             defaclacl              
+-------------------------------+-----------------+---------------+------------------------------------
+ crdb_tests_pg_default_acl_bar | <global>        | S             | {}
+ crdb_tests_pg_default_acl_bar | <global>        | T             | {=U/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | f             | {=X/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | n             | {}
+ crdb_tests_pg_default_acl_bar | <global>        | r             | {}
+ crdb_tests_pg_default_acl_foo | <global>        | S             | {}
+ crdb_tests_pg_default_acl_foo | <global>        | T             | {=U/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | f             | {=X/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | n             | {}
+ crdb_tests_pg_default_acl_foo | <global>        | r             | {}
+ postgres                      | <global>        | T             | {postgres=U/postgres}
+ postgres                      | <global>        | f             | {postgres=X/postgres}
+(12 rows)
+
+ALTER DEFAULT PRIVILEGES
+          defaclrole           | defaclnamespace | defaclobjtype |                              defaclacl                               
+-------------------------------+-----------------+---------------+----------------------------------------------------------------------
+ crdb_tests_pg_default_acl_bar | <global>        | S             | {}
+ crdb_tests_pg_default_acl_bar | <global>        | T             | {=U/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | f             | {=X/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | n             | {}
+ crdb_tests_pg_default_acl_bar | <global>        | r             | {}
+ crdb_tests_pg_default_acl_foo | <global>        | S             | {}
+ crdb_tests_pg_default_acl_foo | <global>        | T             | {=U/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | f             | {=X/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | n             | {}
+ crdb_tests_pg_default_acl_foo | <global>        | r             | {}
+ postgres                      | <global>        | T             | {postgres=U/postgres,crdb_tests_pg_default_acl_testuser=U*/postgres}
+ postgres                      | <global>        | f             | {postgres=X/postgres}
+(12 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+          defaclrole           | defaclnamespace | defaclobjtype |                                                   defaclacl                                                    
+-------------------------------+-----------------+---------------+----------------------------------------------------------------------------------------------------------------
+ crdb_tests_pg_default_acl_bar | <global>        | S             | {}
+ crdb_tests_pg_default_acl_bar | <global>        | T             | {=U/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | f             | {=X/crdb_tests_pg_default_acl_bar}
+ crdb_tests_pg_default_acl_bar | <global>        | n             | {}
+ crdb_tests_pg_default_acl_bar | <global>        | r             | {}
+ crdb_tests_pg_default_acl_foo | <global>        | S             | {}
+ crdb_tests_pg_default_acl_foo | <global>        | T             | {=U/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | f             | {=X/crdb_tests_pg_default_acl_foo}
+ crdb_tests_pg_default_acl_foo | <global>        | n             | {}
+ crdb_tests_pg_default_acl_foo | <global>        | r             | {}
+ postgres                      | <global>        | S             | {postgres=rwU/postgres,crdb_tests_pg_default_acl_foo=r*w*U*/postgres}
+ postgres                      | <global>        | T             | {postgres=U/postgres,crdb_tests_pg_default_acl_foo=U*/postgres,crdb_tests_pg_default_acl_testuser=U*/postgres}
+ postgres                      | <global>        | f             | {postgres=X/postgres,crdb_tests_pg_default_acl_foo=X*/postgres}
+ postgres                      | <global>        | n             | {postgres=UC/postgres,crdb_tests_pg_default_acl_foo=U*C*/postgres}
+ postgres                      | <global>        | r             | {postgres=arwdDxt/postgres,crdb_tests_pg_default_acl_foo=a*r*w*d*D*x*t*/postgres}
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype |                   defaclacl                   
+------------+-----------------+---------------+-----------------------------------------------
+ postgres   | public          | S             | {crdb_tests_pg_default_acl_foo=rwU/postgres}
+ postgres   | public          | T             | {crdb_tests_pg_default_acl_foo=U/postgres}
+ postgres   | public          | f             | {crdb_tests_pg_default_acl_foo=X/postgres}
+ postgres   | public          | r             | {crdb_tests_pg_default_acl_foo=arwd/postgres}
+(4 rows)
+

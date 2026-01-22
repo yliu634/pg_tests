@@ -1,0 +1,151 @@
+SET
+CREATE EXTENSION
+ ?column? | digest | digest 
+----------+--------+--------
+ t        |        | 
+ t        |        | 
+ t        |        | 
+ t        |        | 
+ t        |        | 
+ t        |        | 
+(6 rows)
+
+ digest 
+--------
+ 
+(1 row)
+
+DO
+                                                              encode                                                              
+----------------------------------------------------------------------------------------------------------------------------------
+ d2fe98063f876b03193afb49b4979591
+ 4fd0b215276ef12f2b3e4c8ecac2811498b656fc
+ f524670b7e34f31467de0aa96593861cf65117d414fb2d86158d760e
+ 9c196e32dc0175f86f4b1cb89289d6619de6bee699e4c378e68309ed97a1a6ab
+ 30ddb9c8f347cffbfb44e519d814f074cf4047a55d6f563324f1c6a33920e5edfb2a34bac60bdc96cd33a95623d7d638
+ 3926a207c8c42b0c41792cbd3e1a1aaaf5f7a25704f62dfc939c4987dd7ce060009c5bb1c2447355b3216f10b537e9afa7b64a4e5391b0d631172d07939e087a
+(6 rows)
+
+ hmac | hmac | hmac 
+------+------+------
+      |      | 
+(1 row)
+
+DO
+ length | ?column? 
+--------+----------
+     16 | t
+(1 row)
+
+DO
+DO
+ char_length 
+-------------
+           2
+(1 row)
+
+ char_length 
+-------------
+           2
+           2
+(2 rows)
+
+DO
+ substr | char_length 
+--------+-------------
+ _J9..  |           9
+(1 row)
+
+ substr | char_length 
+--------+-------------
+ _J9..  |           9
+ _/...  |           9
+ _zzzz  |           9
+(3 rows)
+
+DO
+DO
+DO
+ substr | char_length 
+--------+-------------
+ $1$    |          11
+(1 row)
+
+ substr | char_length 
+--------+-------------
+ $1$    |          11
+ $1$    |          11
+(2 rows)
+
+DO
+ substr  | char_length 
+---------+-------------
+ $2a$06$ |          29
+ $2a$04$ |          29
+ $2a$31$ |          29
+(3 rows)
+
+DO
+DO
+DO
+DO
+               crypt                
+------------------------------------
+ $1$aRnqRmeP$.GKS2A8uOS7cKSGtb33BL0
+ $1$aRnqRmeP$zSsYGTxby0DLjRezdRBT50
+ $1$aRnqRmeP$79.GOqWdD1jolSFx6PGg5.
+ $1$aRnqRmeP$Qtrye90cHoHamBO08sQKC1
+(4 rows)
+
+               hash1                | ?column? 
+------------------------------------+----------
+ $1$aRnqRmeP$79.GOqWdD1jolSFx6PGg5. | t
+(1 row)
+
+DO
+                            crypt                             
+--------------------------------------------------------------
+ $2a$06$Ukv6DxN3PpZo4YboQRrIVOXwHbf79QsnJ4GoQyYv5vZozGSILtNUu
+ $2a$06$Ukv6DxN3PpZo4YboQRrIVOBxB6sdGuSnn.PViRLXxUFUiihB30ukm
+ $2a$06$Ukv6DxN3PpZo4YboQRrIVO6UrBIvyPUuhsGQvYZyAvmsIjt02Ze3O
+ $2a$06$Ukv6DxN3PpZo4YboQRrIVO9DZGS27nWDW5eSzsL/ckOByIGwpxf0a
+(4 rows)
+
+                            hash72                            | ?column? | ?column? 
+--------------------------------------------------------------+----------+----------
+ $2a$06$Ukv6DxN3PpZo4YboQRrIVOIQPDI39RHxEgW32.ICmqRFFBxkR8ddC | t        | t
+(1 row)
+
+                            hash1                             | ?column? 
+--------------------------------------------------------------+----------
+ $2a$06$Ukv6DxN3PpZo4YboQRrIVO6UrBIvyPUuhsGQvYZyAvmsIjt02Ze3O | t
+(1 row)
+
+                            crypt                             
+--------------------------------------------------------------
+ $2a$04$Ukv6DxN3PpZo4YboQRrIVOSgyjUD9vDt2W.RjRVhm7XC2QTQrtLSK
+ $2a$10$Ukv6DxN3PpZo4YboQRrIVOwLm63.TplP3REdrq258BBo3lUBnEbrm
+(2 rows)
+
+DO
+DO
+DO
+DO
+DO
+DO
+DO
+              encrypt               
+------------------------------------
+ \xdb5f149a7caf0cd275ca18c203a212c9
+(1 row)
+
+ length 
+--------
+     10
+(1 row)
+
+ length 
+--------
+      5
+(1 row)
+
