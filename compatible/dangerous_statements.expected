@@ -4,14 +4,10 @@ RESET
 CREATE TABLE
 UPDATE 0
 UPDATE 0
-psql:/home/pan/workspace/pg_tests/compatible/dangerous_statements.sql:22: ERROR:  syntax error at or near "ORDER"
-LINE 1: UPDATE foo SET x = 3 ORDER BY x LIMIT 1;
-                             ^
+UPDATE 0
 DELETE 0
 DELETE 0
-psql:/home/pan/workspace/pg_tests/compatible/dangerous_statements.sql:31: ERROR:  syntax error at or near "ORDER"
-LINE 1: DELETE FROM foo ORDER BY x LIMIT 1;
-                        ^
+DELETE 0
  x 
 ---
 (0 rows)

@@ -72,9 +72,10 @@ CREATE TABLE infer (x INT NOT NULL, y INT NOT NULL GENERATED ALWAYS AS (x % 5) S
 -- Test 41: statement (line 213)
 CREATE TABLE partial_indexes (
     a INT,
-    b INT,
-    INDEX idx_partial (a) WHERE a > 5
+    b INT
 );
+
+CREATE INDEX idx_partial ON partial_indexes (a) WHERE a > 5;
 
 -- Test 42: statement (line 220)
 INSERT INTO partial_indexes SELECT g, g FROM generate_series(1, 10) AS g;

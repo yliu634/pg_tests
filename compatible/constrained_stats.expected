@@ -12,16 +12,13 @@ ALTER TABLE
 CREATE INDEX
 ANALYZE
 CREATE TABLE
-psql:/home/pan/workspace/pg_tests/compatible/constrained_stats.sql:77: ERROR:  syntax error at or near "WHERE"
-LINE 4:     INDEX idx_partial (a) WHERE a > 5
-                                  ^
-psql:/home/pan/workspace/pg_tests/compatible/constrained_stats.sql:80: ERROR:  relation "partial_indexes" does not exist
-LINE 1: INSERT INTO partial_indexes SELECT g, g FROM generate_series...
-                    ^
-psql:/home/pan/workspace/pg_tests/compatible/constrained_stats.sql:83: ERROR:  relation "partial_indexes" does not exist
-psql:/home/pan/workspace/pg_tests/compatible/constrained_stats.sql:88: ERROR:  relation "partial_indexes" does not exist
-psql:/home/pan/workspace/pg_tests/compatible/constrained_stats.sql:91: ERROR:  index "idx_partial" does not exist
-psql:/home/pan/workspace/pg_tests/compatible/constrained_stats.sql:94: ERROR:  index "idx_a" does not exist
-psql:/home/pan/workspace/pg_tests/compatible/constrained_stats.sql:97: ERROR:  relation "partial_indexes" does not exist
-psql:/home/pan/workspace/pg_tests/compatible/constrained_stats.sql:100: ERROR:  index "idx_b" does not exist
-psql:/home/pan/workspace/pg_tests/compatible/constrained_stats.sql:103: ERROR:  relation "partial_indexes" does not exist
+CREATE TABLE
+CREATE INDEX
+INSERT 0 10
+ANALYZE
+CREATE INDEX
+DROP INDEX
+DROP INDEX
+CREATE INDEX
+DROP INDEX
+CREATE INDEX

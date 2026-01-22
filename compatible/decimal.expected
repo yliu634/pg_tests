@@ -1,74 +1,338 @@
 SET
 DROP TABLE
 RESET
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:26: ERROR:  syntax error at or near "ln"
-LINE 3: SELECT ln(7.682705743584112e-48::DECIMAL)
-               ^
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:35: ERROR:  syntax error at or near "pow"
-LINE 3: SELECT pow(1e-10::DECIMAL, 2)
-               ^
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:47: ERROR:  syntax error at or near "CREATE"
-LINE 3: CREATE TABLE t (d decimal, v decimal(3, 1))
-        ^
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:63: ERROR:  syntax error at or near "INSERT"
-LINE 3: INSERT INTO t2 VALUES
-        ^
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:72: ERROR:  syntax error at or near "INSERT"
-LINE 3: INSERT INTO t2 VALUES (0, 0)
-        ^
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:75: ERROR:  syntax error at or near "NaN"
-LINE 1: SELECT * FROM t2 WHERE d IS NaN and v IS NaN;
-                                    ^
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:78: ERROR:  relation "t2" does not exist
-LINE 1: SELECT * FROM t2 WHERE d = 'Infinity' and v = 'Infinity';
-                      ^
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:81: ERROR:  relation "t2" does not exist
-LINE 1: SELECT * FROM t2 WHERE d = '-Infinity' and v = '-Infinity';
-                      ^
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:106: ERROR:  syntax error at or near "("
-LINE 1: CREATE TABLE s (d decimal null, index (d))
-                                              ^
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:109: ERROR:  syntax error at or near "NAN"
-LINE 1: SELECT * FROM s WHERE d IS NAN;
-                                   ^
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:112: ERROR:  relation "s" does not exist
-LINE 1: SELECT * FROM s WHERE d = 'inf'::decimal;
-                      ^
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:115: ERROR:  relation "s" does not exist
-LINE 1: SELECT * FROM s WHERE d = 'NaN';
-                      ^
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:118: ERROR:  relation "s" does not exist
-LINE 1: SELECT d FROM s ORDER BY d, d::TEXT;
-                      ^
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:124: ERROR:  syntax error at or near "SELECT"
-LINE 3: SELECT * FROM s WHERE d = 0;
-        ^
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:137: ERROR:  syntax error at or near "SELECT"
-LINE 10: SELECT * FROM s WHERE d = 10;
-         ^
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:140: ERROR:  relation "s" does not exist
-LINE 1: SELECT * FROM s WHERE d = 10;
-                      ^
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:155: ERROR:  syntax error at or near "101.00"
-LINE 3: SELECT 101.00::decimal(6,4)
-               ^
+                                                ?column?                                                
+--------------------------------------------------------------------------------------------------------
+ 0.0000000000000000000000000000000000000000000000000000000000000000000000000000000002368598891903599999
+(1 row)
+
+                                  ln                                  
+----------------------------------------------------------------------
+ -108.485112668238820510524215696405428511491604892127535541266279313
+(1 row)
+
+                        sqrt                         
+-----------------------------------------------------
+ 0.0000000000000000312886010091997497733338189858352
+(1 row)
+
+               pow               
+---------------------------------
+ 0.15472926640705911954813027418
+(1 row)
+
+             pow              |             sqrt             
+------------------------------+------------------------------
+ 0.00000000010000000000000000 | 0.00001000000000000000000000
+(1 row)
+
+                ?column?                |                ?column?                |                ?column?                
+----------------------------------------+----------------------------------------+----------------------------------------
+ 0.000000000000000050000000000000000000 | 0.000000000000000033333333333333333333 | 0.000000000000000100000000000000000000
+(1 row)
+
+            pow             |             pow              |                pow                 |                 pow                  
+----------------------------+------------------------------+------------------------------------+--------------------------------------
+ 0.000000010000000000000000 | 0.00000000010000000000000000 | 0.00000000000000010000000000000000 | 0.0000000000000000010000000000000000
+(1 row)
+
+                  pow                   
+----------------------------------------
+ 0.000000000000000000010000000000000000
+(1 row)
+
+ numeric | numeric 
+---------+---------
+     NaN |     NaN
+(1 row)
+
+   numeric   
+-------------
+ 0.000000000
+(1 row)
+
+CREATE TABLE
+INSERT 0 4
+   d   |  v  
+-------+-----
+ 0.000 | 0.0
+  1.00 | 1.0
+   2.0 | 2.0
+     3 | 3.0
+(4 rows)
+
+CREATE TABLE
+INSERT 0 7
+     d     |     v     
+-----------+-----------
+ -Infinity | -Infinity
+    0.0000 |    0.0000
+      1.00 |      1.00
+       2.0 |       2.0
+         3 |         3
+  Infinity |  Infinity
+       NaN |       NaN
+(7 rows)
+
+ numeric 
+---------
+     NaN
+(1 row)
+
+  d  |  v  
+-----+-----
+ NaN | NaN
+(1 row)
+
+    d     |    v     
+----------+----------
+ Infinity | Infinity
+(1 row)
+
+     d     |     v     
+-----------+-----------
+ -Infinity | -Infinity
+(1 row)
+
+CREATE TABLE
+INSERT 0 7
+INSERT 0 5
+   d    
+--------
+      0
+      0
+    0.0
+   0.00
+  0.000
+ 0.0000
+(6 rows)
+
+  d  
+-----
+ NaN
+(1 row)
+
+    d     
+----------
+ Infinity
+(1 row)
+
+  d  
+-----
+ NaN
+(1 row)
+
+     d     
+-----------
+ -Infinity
+        -1
+         0
+         0
+       0.0
+      0.00
+     0.000
+    0.0000
+         1
+  Infinity
+       NaN
+          
+(12 rows)
+
+CREATE INDEX
+   d    
+--------
+      0
+      0
+    0.0
+   0.00
+  0.000
+ 0.0000
+(6 rows)
+
+INSERT 0 7
+     d     
+-----------
+        10
+      10.0
+     10.00
+    10.000
+   10.0000
+  10.00000
+ 10.000000
+(7 rows)
+
+     d     
+-----------
+        10
+      10.0
+     10.00
+    10.000
+   10.0000
+  10.00000
+ 10.000000
+(7 rows)
+
+ numeric 
+---------
+  1.0000
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+ x 
+---
+ 1
+(1 row)
+
  ?column? 
 ----------
       NaN
 (1 row)
 
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:161: ERROR:  relation "a" does not exist
-LINE 1: SELECT 1.0 / 'Infinity' + 2 FROM a;
-                                         ^
+ ?column? 
+----------
+        2
+(1 row)
+
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ?column?                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
  2.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 (1 row)
 
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:213: ERROR:  syntax error at or near "stddev_pop"
-LINE 3: SELECT stddev_pop('inf'::numeric), stddev_samp('inf'::numeri...
-               ^
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:216: ERROR:  division by zero
+ var_pop | var_samp 
+---------+----------
+     NaN |         
+(1 row)
+
+ stddev_pop | stddev_samp 
+------------+-------------
+        NaN |            
+(1 row)
+
+   sum    |   avg    | var_pop 
+----------+----------+---------
+ Infinity | Infinity |     NaN
+(1 row)
+
+   sum    |   avg    | var_pop 
+----------+----------+---------
+ Infinity | Infinity |     NaN
+(1 row)
+
+   sum    |   avg    | var_pop 
+----------+----------+---------
+ Infinity | Infinity |     NaN
+(1 row)
+
+ sum | avg | var_pop 
+-----+-----+---------
+ NaN | NaN |     NaN
+(1 row)
+
+    sum    |    avg    | var_pop 
+-----------+-----------+---------
+ -Infinity | -Infinity |     NaN
+(1 row)
+
+    x1     |    x2     |    sum    |   diff    |   prod    
+-----------+-----------+-----------+-----------+-----------
+         0 |         0 |         0 |         0 |         0
+         0 |         1 |         1 |        -1 |         0
+         0 |        -1 |        -1 |         1 |         0
+         0 |       4.2 |       4.2 |      -4.2 |       0.0
+         0 |  Infinity |  Infinity | -Infinity |       NaN
+         0 | -Infinity | -Infinity |  Infinity |       NaN
+         0 |       NaN |       NaN |       NaN |       NaN
+         1 |         0 |         1 |         1 |         0
+         1 |         1 |         2 |         0 |         1
+         1 |        -1 |         0 |         2 |        -1
+         1 |       4.2 |       5.2 |      -3.2 |       4.2
+         1 |  Infinity |  Infinity | -Infinity |  Infinity
+         1 | -Infinity | -Infinity |  Infinity | -Infinity
+         1 |       NaN |       NaN |       NaN |       NaN
+        -1 |         0 |        -1 |        -1 |         0
+        -1 |         1 |         0 |        -2 |        -1
+        -1 |        -1 |        -2 |         0 |         1
+        -1 |       4.2 |       3.2 |      -5.2 |      -4.2
+        -1 |  Infinity |  Infinity | -Infinity | -Infinity
+        -1 | -Infinity | -Infinity |  Infinity |  Infinity
+        -1 |       NaN |       NaN |       NaN |       NaN
+       4.2 |         0 |       4.2 |       4.2 |       0.0
+       4.2 |         1 |       5.2 |       3.2 |       4.2
+       4.2 |        -1 |       3.2 |       5.2 |      -4.2
+       4.2 |       4.2 |       8.4 |       0.0 |     17.64
+       4.2 |  Infinity |  Infinity | -Infinity |  Infinity
+       4.2 | -Infinity | -Infinity |  Infinity | -Infinity
+       4.2 |       NaN |       NaN |       NaN |       NaN
+  Infinity |         0 |  Infinity |  Infinity |       NaN
+  Infinity |         1 |  Infinity |  Infinity |  Infinity
+  Infinity |        -1 |  Infinity |  Infinity | -Infinity
+  Infinity |       4.2 |  Infinity |  Infinity |  Infinity
+  Infinity |  Infinity |  Infinity |       NaN |  Infinity
+  Infinity | -Infinity |       NaN |  Infinity | -Infinity
+  Infinity |       NaN |       NaN |       NaN |       NaN
+ -Infinity |         0 | -Infinity | -Infinity |       NaN
+ -Infinity |         1 | -Infinity | -Infinity | -Infinity
+ -Infinity |        -1 | -Infinity | -Infinity |  Infinity
+ -Infinity |       4.2 | -Infinity | -Infinity | -Infinity
+ -Infinity |  Infinity |       NaN | -Infinity | -Infinity
+ -Infinity | -Infinity | -Infinity |       NaN |  Infinity
+ -Infinity |       NaN |       NaN |       NaN |       NaN
+       NaN |         0 |       NaN |       NaN |       NaN
+       NaN |         1 |       NaN |       NaN |       NaN
+       NaN |        -1 |       NaN |       NaN |       NaN
+       NaN |       4.2 |       NaN |       NaN |       NaN
+       NaN |  Infinity |       NaN |       NaN |       NaN
+       NaN | -Infinity |       NaN |       NaN |       NaN
+       NaN |       NaN |       NaN |       NaN |       NaN
+(49 rows)
+
+    x1     |    x2     |          quot           | mod  |    div    
+-----------+-----------+-------------------------+------+-----------
+         0 |         1 |  0.00000000000000000000 |    0 |         0
+         0 |        -1 |  0.00000000000000000000 |    0 |         0
+         0 |       4.2 |  0.00000000000000000000 |  0.0 |         0
+         0 |  Infinity |                       0 |    0 |         0
+         0 | -Infinity |                       0 |    0 |         0
+         0 |       NaN |                     NaN |  NaN |       NaN
+         1 |         1 |  1.00000000000000000000 |    0 |         1
+         1 |        -1 | -1.00000000000000000000 |    0 |        -1
+         1 |       4.2 |  0.23809523809523809524 |  1.0 |         0
+         1 |  Infinity |                       0 |    1 |         0
+         1 | -Infinity |                       0 |    1 |         0
+         1 |       NaN |                     NaN |  NaN |       NaN
+        -1 |         1 | -1.00000000000000000000 |    0 |        -1
+        -1 |        -1 |  1.00000000000000000000 |    0 |         1
+        -1 |       4.2 | -0.23809523809523809524 | -1.0 |         0
+        -1 |  Infinity |                       0 |   -1 |         0
+        -1 | -Infinity |                       0 |   -1 |         0
+        -1 |       NaN |                     NaN |  NaN |       NaN
+       4.2 |         1 |      4.2000000000000000 |  0.2 |         4
+       4.2 |        -1 |     -4.2000000000000000 |  0.2 |        -4
+       4.2 |       4.2 |  1.00000000000000000000 |  0.0 |         1
+       4.2 |  Infinity |                       0 |  4.2 |         0
+       4.2 | -Infinity |                       0 |  4.2 |         0
+       4.2 |       NaN |                     NaN |  NaN |       NaN
+  Infinity |         1 |                Infinity |  NaN |  Infinity
+  Infinity |        -1 |               -Infinity |  NaN | -Infinity
+  Infinity |       4.2 |                Infinity |  NaN |  Infinity
+  Infinity |  Infinity |                     NaN |  NaN |       NaN
+  Infinity | -Infinity |                     NaN |  NaN |       NaN
+  Infinity |       NaN |                     NaN |  NaN |       NaN
+ -Infinity |         1 |               -Infinity |  NaN | -Infinity
+ -Infinity |        -1 |                Infinity |  NaN |  Infinity
+ -Infinity |       4.2 |               -Infinity |  NaN | -Infinity
+ -Infinity |  Infinity |                     NaN |  NaN |       NaN
+ -Infinity | -Infinity |                     NaN |  NaN |       NaN
+ -Infinity |       NaN |                     NaN |  NaN |       NaN
+       NaN |         1 |                     NaN |  NaN |       NaN
+       NaN |        -1 |                     NaN |  NaN |       NaN
+       NaN |       4.2 |                     NaN |  NaN |       NaN
+       NaN |  Infinity |                     NaN |  NaN |       NaN
+       NaN | -Infinity |                     NaN |  NaN |       NaN
+       NaN |       NaN |                     NaN |  NaN |       NaN
+(42 rows)
+
  ?column? 
 ----------
       NaN
@@ -99,20 +363,54 @@ psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:216: ERROR:  division b
  -Infinity
 (1 row)
 
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:237: ERROR:  cannot convert NaN to smallint
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:240: ERROR:  cannot convert infinity to bigint
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:264: ERROR:  syntax error at or near "width_bucket"
-LINE 3: SELECT width_bucket(2.0, 3.0, '-inf', 888)
-               ^
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:273: ERROR:  syntax error at or near "INSERT"
-LINE 3: INSERT INTO t86790 VALUES (-4429772553778622992)
-        ^
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:279: ERROR:  syntax error at or near "SELECT"
-LINE 3: SELECT (x / 1)::DECIMAL FROM t86790;
-        ^
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:285: ERROR:  syntax error at or near "CREATE"
-LINE 3: CREATE TABLE regression_40929 AS SELECT g FROM (VALUES (1)) ...
-        ^
-psql:/home/pan/workspace/pg_tests/compatible/decimal.sql:297: ERROR:  syntax error at or near "SELECT"
-LINE 9: SELECT 0::DECIMAL / 'infinity'::DECIMAL;
-        ^
+ width_bucket 
+--------------
+          889
+(1 row)
+
+ exp |   exp    | exp 
+-----+----------+-----
+ NaN | Infinity |   0
+(1 row)
+
+    x1     
+-----------
+  Infinity
+  Infinity
+ -Infinity
+  Infinity
+  Infinity
+ -Infinity
+(6 rows)
+
+CREATE TABLE
+       attname       | atttypmod 
+---------------------+-----------
+ no_typmod           |        -1
+ precision           |    327684
+ precision_and_width |    327687
+(3 rows)
+
+CREATE TABLE
+INSERT 0 1
+       numeric        
+----------------------
+ -4429772553778622992
+(1 row)
+
+       numeric        
+----------------------
+ -4429772553778622992
+(1 row)
+
+SELECT 1
+ g | ?column? | ?column? | ?column? | ?column? 
+---+----------+----------+----------+----------
+ 1 |        0 |        0 |        0 |        0
+(1 row)
+
+ ?column? 
+----------
+        0
+(1 row)
+

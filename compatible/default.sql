@@ -2,6 +2,7 @@
 -- 34 tests
 
 -- Test 1: statement (line 1)
+\set ON_ERROR_STOP 0
 CREATE TABLE t (a INT PRIMARY KEY DEFAULT false);
 
 -- Test 2: statement (line 4)
@@ -9,6 +10,7 @@ CREATE TABLE t (a INT PRIMARY KEY DEFAULT (SELECT 1));
 
 -- Test 3: statement (line 7)
 CREATE TABLE t (a INT PRIMARY KEY DEFAULT b);
+\set ON_ERROR_STOP 1
 
 -- Test 4: statement (line 11)
 SET client_min_messages = warning;
@@ -18,10 +20,12 @@ RESET client_min_messages;
 CREATE TABLE null_default (ts TIMESTAMP PRIMARY KEY NULL DEFAULT NULL);
 
 -- Test 5: statement (line 15)
+\set ON_ERROR_STOP 0
 CREATE TABLE bad (a INT DEFAULT count(1));
 
 -- Test 6: statement (line 19)
 CREATE TABLE bad (a INT DEFAULT count(1) OVER ());
+\set ON_ERROR_STOP 1
 
 -- Test 7: statement (line 22)
 SET client_min_messages = warning;
@@ -36,13 +40,25 @@ CREATE TABLE t (
 );
 
 -- Test 8: query (line 30)
-SHOW COLUMNS FROM t;
+SELECT column_name, data_type, is_nullable, column_default
+FROM information_schema.columns
+WHERE table_schema = current_schema()
+  AND table_name = 't'
+ORDER BY ordinal_position;
 
 -- Test 9: statement (line 39)
 COMMENT ON COLUMN t.a IS 'a';
 
 -- Test 10: query (line 42)
-SHOW COLUMNS FROM t WITH COMMENT;
+SELECT c.column_name,
+       c.data_type,
+       c.is_nullable,
+       c.column_default,
+       col_description(to_regclass(format('%I.%I', c.table_schema, c.table_name)), c.ordinal_position) AS comment
+FROM information_schema.columns AS c
+WHERE c.table_schema = current_schema()
+  AND c.table_name = 't'
+ORDER BY c.ordinal_position;
 
 -- Test 11: statement (line 51)
 INSERT INTO t VALUES (DEFAULT, DEFAULT, DEFAULT, DEFAULT);
@@ -98,7 +114,7 @@ SELECT a, b <= now(), c >= 0.0, d <= now() FROM t WHERE a = 2;
 UPDATE t SET b = DEFAULT, c = DEFAULT, d = DEFAULT;
 
 -- Test 28: statement (line 115)
-UPDATE t SET (b) = (DEFAULT), (c) = (DEFAULT), (d) = (DEFAULT);
+UPDATE t SET (b, c, d) = (DEFAULT, DEFAULT, DEFAULT);
 
 -- Test 29: statement (line 119)
 SET client_min_messages = warning;
@@ -118,7 +134,11 @@ UPDATE v SET a = DEFAULT;
 UPDATE v SET (a, c) = (DEFAULT, DEFAULT);
 
 -- Test 32: query (line 132)
-SHOW COLUMNS FROM v;
+SELECT column_name, data_type, is_nullable, column_default
+FROM information_schema.columns
+WHERE table_schema = current_schema()
+  AND table_name = 'v'
+ORDER BY ordinal_position;
 
 -- Test 33: statement (line 145)
 SET client_min_messages = warning;

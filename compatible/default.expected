@@ -1,32 +1,42 @@
-psql:/home/pan/workspace/pg_tests/compatible/default.sql:5: ERROR:  column "a" is of type integer but default expression is of type boolean
+psql:pg_tests/compatible/default.sql:6: ERROR:  column "a" is of type integer but default expression is of type boolean
 HINT:  You will need to rewrite or cast the expression.
-psql:/home/pan/workspace/pg_tests/compatible/default.sql:8: ERROR:  cannot use subquery in DEFAULT expression
+psql:pg_tests/compatible/default.sql:9: ERROR:  cannot use subquery in DEFAULT expression
 LINE 1: CREATE TABLE t (a INT PRIMARY KEY DEFAULT (SELECT 1));
                                                   ^
-psql:/home/pan/workspace/pg_tests/compatible/default.sql:11: ERROR:  cannot use column reference in DEFAULT expression
+psql:pg_tests/compatible/default.sql:12: ERROR:  cannot use column reference in DEFAULT expression
 LINE 1: CREATE TABLE t (a INT PRIMARY KEY DEFAULT b);
                                                   ^
 SET
 DROP TABLE
 RESET
 CREATE TABLE
-psql:/home/pan/workspace/pg_tests/compatible/default.sql:21: ERROR:  aggregate functions are not allowed in DEFAULT expressions
+psql:pg_tests/compatible/default.sql:24: ERROR:  aggregate functions are not allowed in DEFAULT expressions
 LINE 1: CREATE TABLE bad (a INT DEFAULT count(1));
                                         ^
-psql:/home/pan/workspace/pg_tests/compatible/default.sql:24: ERROR:  window functions are not allowed in DEFAULT expressions
+psql:pg_tests/compatible/default.sql:27: ERROR:  window functions are not allowed in DEFAULT expressions
 LINE 1: CREATE TABLE bad (a INT DEFAULT count(1) OVER ());
                                         ^
 SET
 DROP TABLE
 RESET
 CREATE TABLE
-psql:/home/pan/workspace/pg_tests/compatible/default.sql:39: ERROR:  syntax error at or near "FROM"
-LINE 1: SHOW COLUMNS FROM t;
-                     ^
+ column_name |          data_type          | is_nullable | column_default 
+-------------+-----------------------------+-------------+----------------
+ a           | integer                     | NO          | 42
+ b           | timestamp without time zone | YES         | now()
+ c           | double precision            | YES         | random()
+ d           | date                        | YES         | now()
+(4 rows)
+
 COMMENT
-psql:/home/pan/workspace/pg_tests/compatible/default.sql:45: ERROR:  syntax error at or near "FROM"
-LINE 1: SHOW COLUMNS FROM t WITH COMMENT;
-                     ^
+ column_name |          data_type          | is_nullable | column_default | comment 
+-------------+-----------------------------+-------------+----------------+---------
+ a           | integer                     | NO          | 42             | a
+ b           | timestamp without time zone | YES         | now()          | 
+ c           | double precision            | YES         | random()       | 
+ d           | date                        | YES         | now()          | 
+(4 rows)
+
 INSERT 0 1
  a  | ?column? | ?column? | ?column? 
 ----+----------+----------+----------
@@ -66,18 +76,20 @@ UPDATE 1
 (1 row)
 
 UPDATE 3
-psql:/home/pan/workspace/pg_tests/compatible/default.sql:101: ERROR:  source for a multiple-column UPDATE item must be a sub-SELECT or ROW() expression
-LINE 1: UPDATE t SET (b) = (DEFAULT), (c) = (DEFAULT), (d) = (DEFAUL...
-                            ^
+UPDATE 3
 SET
 DROP TABLE
 RESET
 CREATE TABLE
 UPDATE 0
 UPDATE 0
-psql:/home/pan/workspace/pg_tests/compatible/default.sql:121: ERROR:  syntax error at or near "FROM"
-LINE 1: SHOW COLUMNS FROM v;
-                     ^
+ column_name |          data_type          | is_nullable | column_default 
+-------------+-----------------------------+-------------+----------------
+ a           | integer                     | NO          | 
+ b           | timestamp without time zone | YES         | 
+ c           | integer                     | YES         | 
+(3 rows)
+
 SET
 DROP TABLE
 RESET

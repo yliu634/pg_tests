@@ -19,7 +19,10 @@ UPDATE foo SET x = 3;
 UPDATE foo SET x = 3 WHERE x = 2;
 
 -- Test 5: statement (line 13)
-UPDATE foo SET x = 3 ORDER BY x LIMIT 1;
+WITH target AS (
+    SELECT ctid FROM foo ORDER BY x LIMIT 1
+)
+UPDATE foo SET x = 3 WHERE ctid IN (SELECT ctid FROM target);
 
 -- Test 6: statement (line 16)
 DELETE FROM foo;
@@ -28,7 +31,10 @@ DELETE FROM foo;
 DELETE FROM foo WHERE x = 2;
 
 -- Test 8: statement (line 22)
-DELETE FROM foo ORDER BY x LIMIT 1;
+WITH target AS (
+    SELECT ctid FROM foo ORDER BY x LIMIT 1
+)
+DELETE FROM foo WHERE ctid IN (SELECT ctid FROM target);
 
 -- Test 9: statement (line 25)
 SELECT * FROM foo FOR UPDATE;
@@ -72,4 +78,3 @@ ALTER TABLE foo DROP COLUMN x;
 -- Test 22: statement (line 64)
 -- PostgreSQL doesn't support SET database
 -- SET database = '';
-
