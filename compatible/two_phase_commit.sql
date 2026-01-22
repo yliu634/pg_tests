@@ -13,6 +13,10 @@ CREATE ROLE tpct_testuser LOGIN;
 -- Test 1: query (line 3)
 SHOW max_prepared_transactions;
 
+-- Store the setting for conditional execution below. `\gset` captures the
+-- result without printing extra output.
+SELECT (current_setting('max_prepared_transactions')::int > 0) AS prepared_txns_enabled \gset
+
 -- Test 2: query (line 8)
 SELECT gid AS global_id, owner, database
 FROM pg_catalog.pg_prepared_xacts
@@ -28,6 +32,8 @@ CREATE TABLE t (a INT);
 
 -- Test 5: statement (line 19)
 GRANT ALL ON t TO tpct_testuser;
+
+\if :prepared_txns_enabled
 
 -- Test 6: statement (line 24)
 BEGIN;
@@ -304,6 +310,11 @@ ROLLBACK PREPARED 'read-write-testuser';
 SELECT gid AS global_id, owner, database
 FROM pg_catalog.pg_prepared_xacts
 ORDER BY gid;
+
+\else
+-- `max_prepared_transactions` is a postmaster setting; when it is 0, prepared
+-- transactions are disabled, so the rest of this test cannot run.
+\endif
 
 -- cleanup
 DROP TABLE t;

@@ -1,0 +1,44 @@
+DO
+GRANT
+GRANT
+GRANT
+SET
+CREATE TYPE
+CREATE TABLE
+GRANT
+CREATE TABLE
+DROP TABLE
+REVOKE
+SET
+psql:pg_tests/compatible/type_privileges.sql:49: ERROR:  permission denied for type test
+ test  
+-------
+ hello
+(1 row)
+
+psql:pg_tests/compatible/type_privileges.sql:55: ERROR:  permission denied for type test
+psql:pg_tests/compatible/type_privileges.sql:58: ERROR:  permission denied for type test
+RESET
+SET
+GRANT
+SET
+CREATE TABLE
+CREATE VIEW
+CREATE VIEW
+psql:pg_tests/compatible/type_privileges.sql:80: ERROR:  must be owner of type test
+psql:pg_tests/compatible/type_privileges.sql:83: ERROR:  must be owner of type test
+RESET
+psql:pg_tests/compatible/type_privileges.sql:91: ERROR:  invalid privilege type SELECT for type
+psql:pg_tests/compatible/type_privileges.sql:94: ERROR:  invalid privilege type INSERT for type
+psql:pg_tests/compatible/type_privileges.sql:97: ERROR:  invalid privilege type DELETE for type
+psql:pg_tests/compatible/type_privileges.sql:100: ERROR:  invalid privilege type UPDATE for type
+psql:pg_tests/compatible/type_privileges.sql:103: ERROR:  unrecognized privilege type "zoneconfig"
+GRANT
+GRANT ROLE
+DROP VIEW
+DROP VIEW
+DROP TABLE
+DROP TABLE
+SET
+ALTER TYPE
+DROP TYPE
