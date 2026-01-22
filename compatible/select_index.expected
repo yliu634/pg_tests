@@ -1,0 +1,7 @@
+SET
+                                            notice                                             
+-----------------------------------------------------------------------------------------------
+ skipped: select_index depends on CockroachDB-specific index syntax/hints and missing fixtures
+(1 row)
+
+RESET

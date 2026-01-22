@@ -1,0 +1,136 @@
+ table_name 
+------------
+(0 rows)
+
+ count 
+-------
+     0
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+psql:pg_tests/compatible/select_search_path.sql:27: NOTICE:  schema "t1" does not exist, skipping
+DROP SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+psql:pg_tests/compatible/select_search_path.sql:36: NOTICE:  schema "t2" does not exist, skipping
+DROP SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+SET
+ count 
+-------
+     2
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+SET
+ count 
+-------
+     0
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+SET
+ current_schema 
+----------------
+ public
+(1 row)
+
+SET
+ current_schema 
+----------------
+ 
+(1 row)
+
+SET
+ current_schemas 
+-----------------
+ {public}
+(1 row)
+
+CREATE TABLE
+ x 
+---
+(0 rows)
+
