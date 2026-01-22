@@ -274,27 +274,28 @@ OVERLAPS
 INTERVAL '30 minutes');
 
 -- Test 35: query (line 343)
+-- PostgreSQL does not implement OVERLAPS for timetz; cast to time.
 SELECT
-(TIMETZ '00:00:00',
+((TIMETZ '00:00:00')::time,
 INTERVAL '3 hours')
 OVERLAPS
-(TIMETZ '00:30:00',
+((TIMETZ '00:30:00')::time,
 INTERVAL '30 minutes');
 
 -- Test 36: query (line 353)
 SELECT
-(TIMETZ '00:00:00',
+((TIMETZ '00:00:00')::time,
 INTERVAL '100 s')
 OVERLAPS
-(TIMETZ '00:30:00',
+((TIMETZ '00:30:00')::time,
 INTERVAL '30 minutes');
 
 -- Test 37: query (line 363)
 SELECT
-(TIMETZ '00:00:00',
+((TIMETZ '00:00:00')::time,
 INTERVAL '30 minutes')
 OVERLAPS
-(TIMETZ '00:30:00',
+((TIMETZ '00:30:00')::time,
 INTERVAL '30 minutes');
 
 -- Test 38: query (line 373)
@@ -324,20 +325,19 @@ INTERVAL '2 days');
 -- Test 41: query (line 403)
 SELECT
 (TIMESTAMP '2000-01-01 00:00:00',
-TIME '2000-01-01 01:00:00')
+TIMESTAMP '2000-01-01 01:00:00')
 OVERLAPS
-(TIME '2000-01-01 00:30:00',
+(TIMESTAMP '2000-01-01 00:30:00',
 TIMESTAMP '2000-01-01 01:30:00');
 
-query T
-SELECT (NULL, NULL) overlaps (NULL, NULL);
+-- query T
+SELECT (NULL::timestamp, NULL::timestamp) overlaps (NULL::timestamp, NULL::timestamp);
 
 -- Test 42: query (line 416)
-SELECT (NULL, INTERVAL '1 day') overlaps (NULL, NULL);
+SELECT (NULL::timestamp, INTERVAL '1 day') overlaps (NULL::timestamp, NULL::timestamp);
 
 -- Test 43: query (line 421)
-SELECT (DATE '2000-01-01', INTERVAL '1 day') overlaps (NULL, NULL);
+SELECT (DATE '2000-01-01', INTERVAL '1 day') overlaps (NULL::date, NULL::date);
 
 -- Test 44: query (line 426)
 SELECT (DATE '2000-01-01', NULL) overlaps (DATE '2000-01-01', DATE '2000-01-02');
-

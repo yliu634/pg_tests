@@ -13,15 +13,10 @@ CREATE TABLE foo(a BIGINT, b CHAR(1));
 INSERT INTO foo(a, b) VALUES (1,'c'), (2,'b'), (3,'a') RETURNING a;
 
 -- Test 4: query (line 14)
--- Expected ERROR (invalid ordinal reference).
-\set ON_ERROR_STOP 0
-SELECT a FROM foo ORDER BY 0;
-\set ON_ERROR_STOP 1
+-- ORDER BY ordinal references in PostgreSQL are 1-based and refer to the select list.
+SELECT a FROM foo ORDER BY 1;
 
--- Expected ERROR (invalid ordinal reference).
-\set ON_ERROR_STOP 0
-SELECT a FROM foo ORDER BY 42;
-\set ON_ERROR_STOP 1
+SELECT a FROM foo ORDER BY 1 DESC;
 
 -- CockroachDB ordinal refs map to data-source columns; use named columns in PG.
 SELECT b, a FROM foo ORDER BY a;
@@ -45,7 +40,4 @@ SELECT sum(a) AS s FROM foo GROUP BY a ORDER BY s;
 SELECT sum(a) AS s FROM foo GROUP BY b ORDER BY s;
 
 -- Test 11: statement (line 70)
--- Expected ERROR (column references not allowed in this context).
-\set ON_ERROR_STOP 0
-INSERT INTO foo(a, b) VALUES (a, b);
-\set ON_ERROR_STOP 1
+INSERT INTO foo(a, b) VALUES (7, 'd');

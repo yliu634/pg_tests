@@ -1,6 +1,10 @@
 -- PostgreSQL compatible tests from orms
 -- 29 tests
 
+-- Setup: the introspection queries below expect these tables to exist.
+CREATE TABLE a (id INT PRIMARY KEY);
+CREATE TABLE customers (name TEXT PRIMARY KEY, id INT);
+
 -- Test 1: query (line 12)
 SELECT a.attname, format_type(a.atttypid, a.atttypmod), pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod
     FROM pg_attribute a
@@ -9,7 +13,7 @@ SELECT a.attname, format_type(a.atttypid, a.atttypmod), pg_get_expr(d.adbin, d.a
     AND a.attnum = d.adnum
     WHERE a.attrelid = 'a'::regclass
     AND a.attnum > 0 AND NOT a.attisdropped
-    ORDER BY a.attnum
+    ORDER BY a.attnum;
 
 -- Test 2: query (line 29)
 SELECT t.typname enum_name, array_agg(e.enumlabel ORDER BY enumsortorder) enum_value
@@ -17,10 +21,10 @@ SELECT t.typname enum_name, array_agg(e.enumlabel ORDER BY enumsortorder) enum_v
     JOIN pg_enum e ON t.oid = e.enumtypid
     JOIN pg_catalog.pg_namespace n ON n.oid = t.typnamespace
     WHERE n.nspname = 'public'
-    GROUP BY 1
+    GROUP BY 1;
 
 -- Test 3: statement (line 47)
-INSERT INTO customers VALUES ('jordan', 12), ('cuong', 13)
+INSERT INTO customers VALUES ('jordan', 12), ('cuong', 13);
 
 -- Test 4: query (line 50)
 SELECT i.relname AS name,
@@ -37,25 +41,25 @@ FROM pg_class t,
 WHERE t.oid = ix.indrelid
 AND   i.oid = ix.indexrelid
 AND   a.attrelid = t.oid
-AND   t.relkind = 'r'
-AND   t.relname = 'customers' -- this query is run once for each table
-GROUP BY i.relname,
-         ix.indexrelid,
-         ix.indisprimary,
-         ix.indisunique,
-         ix.indkey
-ORDER BY i.relname
+	AND   t.relkind = 'r'
+	AND   t.relname = 'customers' -- this query is run once for each table
+	GROUP BY i.relname,
+	         ix.indexrelid,
+	         ix.indisprimary,
+	         ix.indisunique,
+	         ix.indkey
+	ORDER BY i.relname;
 
 -- Test 5: query (line 79)
 SELECT a.attname, format_type(a.atttypid, a.atttypmod) AS data_type
 FROM   pg_index i
-JOIN   pg_attribute a ON a.attrelid = i.indrelid
-                     AND a.attnum = ANY(i.indkey)
-                     WHERE  i.indrelid = '"a"'::regclass
-                     AND    i.indisprimary
+	JOIN   pg_attribute a ON a.attrelid = i.indrelid
+	                     AND a.attnum = ANY(i.indkey)
+	                     WHERE  i.indrelid = '"a"'::regclass
+	                     AND    i.indisprimary;
 
 -- Test 6: statement (line 90)
-CREATE TABLE b (id INT, a_id INT, FOREIGN KEY (a_id) REFERENCES a (id))
+CREATE TABLE b (id INT, a_id INT, FOREIGN KEY (a_id) REFERENCES a (id));
 
 -- Test 7: query (line 95)
 SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
@@ -65,16 +69,16 @@ JOIN pg_class t2 ON c.confrelid = t2.oid
 JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
 JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
 JOIN pg_namespace t3 ON c.connamespace = t3.oid
-WHERE c.contype = 'f'
-AND t1.relname ='b'
-AND t3.nspname = ANY (current_schemas(false))
-ORDER BY c.conname
+	WHERE c.contype = 'f'
+	AND t1.relname ='b'
+	AND t3.nspname = ANY (current_schemas(false))
+	ORDER BY c.conname;
 
 -- Test 8: query (line 111)
-SELECT 'decimal(18,2)'::regtype::oid
+SELECT 'decimal(18,2)'::regtype::oid;
 
 -- Test 9: query (line 119)
-SELECT 'character varying'::regtype::oid
+SELECT 'character varying'::regtype::oid;
 
 -- Test 10: statement (line 124)
 CREATE INDEX b_idx ON b(a_id);
@@ -84,13 +88,13 @@ SELECT count(*)
 FROM pg_class t
 INNER JOIN pg_index d ON t.oid = d.indrelid
 INNER JOIN pg_class i ON d.indexrelid = i.oid
-WHERE i.relkind = 'i'
-AND i.relname = 'b_idx'
-AND t.relname = 'b'
-AND i.relnamespace IN (SELECT oid FROM pg_namespace WHERE nspname = ANY (current_schemas(false)))
+	WHERE i.relkind = 'i'
+	AND i.relname = 'b_idx'
+	AND t.relname = 'b'
+	AND i.relnamespace IN (SELECT oid FROM pg_namespace WHERE nspname = ANY (current_schemas(false)));
 
 -- Test 12: statement (line 141)
-CREATE TABLE c (a INT, b INT, PRIMARY KEY (a, b))
+CREATE TABLE c (a INT, b INT, PRIMARY KEY (a, b));
 
 -- Test 13: query (line 145)
 SELECT
@@ -105,13 +109,13 @@ FROM
             indrelid = '"c"'::REGCLASS AND indisprimary
     )
         AS i
-    JOIN pg_attribute AS a ON
-            a.attrelid = i.indrelid AND a.attnum = i.indkey[i.idx]
-ORDER BY
-    i.idx
+	    JOIN pg_attribute AS a ON
+	            a.attrelid = i.indrelid AND a.attnum = i.indkey[i.idx]
+	ORDER BY
+	    i.idx;
 
 -- Test 14: statement (line 166)
-CREATE TABLE metatest (a INT PRIMARY KEY)
+CREATE TABLE metatest (a INT PRIMARY KEY);
 
 -- Test 15: query (line 170)
 SELECT a.attname,
@@ -127,10 +131,10 @@ SELECT a.attname,
    AND a.attcollation <> t.typcollation),
    col_description(a.attrelid, a.attnum) AS comment
 FROM pg_attribute a LEFT JOIN pg_attrdef d
-ON a.attrelid = d.adrelid AND a.attnum = d.adnum
-WHERE a.attrelid = '"metatest"'::regclass
-AND a.attnum > 0 AND NOT a.attisdropped
-ORDER BY a.attnum
+	ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+	WHERE a.attrelid = '"metatest"'::regclass
+	AND a.attnum > 0 AND NOT a.attisdropped
+	ORDER BY a.attnum;
 
 -- Test 16: query (line 193)
 SELECT
@@ -139,7 +143,7 @@ SELECT
     COALESCE(
         (
             SELECT
-                attnum = ANY conkey
+                attnum = ANY (conkey)
             FROM
                 pg_constraint
             WHERE
@@ -192,22 +196,21 @@ WHERE
 SELECT * FROM (SELECT n.nspname, c.relname, a.attname, a.atttypid, a.attnotnull OR ((t.typtype = 'd') AND t.typnotnull) AS attnotnull, a.atttypmod, a.attlen, row_number() OVER (PARTITION BY a.attrelid ORDER BY a.attnum) AS attnum, pg_get_expr(def.adbin, def.adrelid) AS adsrc, dsc.description, t.typbasetype, t.typtype FROM pg_catalog.pg_namespace AS n JOIN pg_catalog.pg_class AS c ON (c.relnamespace = n.oid) JOIN pg_catalog.pg_attribute AS a ON (a.attrelid = c.oid) JOIN pg_catalog.pg_type AS t ON (a.atttypid = t.oid) LEFT JOIN pg_catalog.pg_attrdef AS def ON ((a.attrelid = def.adrelid) AND (a.attnum = def.adnum)) LEFT JOIN pg_catalog.pg_description AS dsc ON ((c.oid = dsc.objoid) AND (a.attnum = dsc.objsubid)) LEFT JOIN pg_catalog.pg_class AS dc ON ((dc.oid = dsc.classoid) AND (dc.relname = 'pg_class')) LEFT JOIN pg_catalog.pg_namespace AS dn ON ((dc.relnamespace = dn.oid) AND (dn.nspname = 'pg_catalog')) WHERE (((c.relkind IN ('r', 'v', 'f', 'm')) AND (a.attnum > 0)) AND (NOT a.attisdropped)) AND (n.nspname LIKE 'public')) AS c;
 
 -- Test 18: statement (line 270)
-SELECT
-	array_agg(t_pk.table_name ORDER BY t_pk.table_name)
-FROM
-	information_schema.statistics AS i
-	LEFT JOIN (
-			SELECT
-				array_agg(c.column_name) AS table_primary_key_columns,
-				c.table_name
-			FROM
-				information_schema.columns AS c
-			GROUP BY
-				c.table_name
-		)
-			AS t_pk ON i.table_name = t_pk.table_name
-GROUP BY
-	t_pk.table_primary_key_columns
+-- information_schema.statistics is MySQL-specific; derive primary key metadata from
+-- PostgreSQL's information_schema views instead.
+SELECT array_agg(pk.table_name ORDER BY pk.table_name)
+FROM (
+  SELECT kcu.table_name, array_agg(kcu.column_name ORDER BY kcu.ordinal_position) AS pk_cols
+  FROM information_schema.table_constraints tc
+  JOIN information_schema.key_column_usage kcu
+    ON tc.constraint_name = kcu.constraint_name
+   AND tc.table_schema = kcu.table_schema
+   AND tc.table_name = kcu.table_name
+  WHERE tc.constraint_type = 'PRIMARY KEY'
+    AND tc.table_schema = 'public'
+  GROUP BY kcu.table_name
+) pk
+GROUP BY pk.pk_cols;
 
 -- Test 19: query (line 289)
 SELECT
@@ -261,7 +264,7 @@ WHERE
   fk.contype = 'f';
 
 -- Test 20: statement (line 344)
-CREATE TABLE regression_66576 ()
+CREATE TABLE regression_66576 ();
 
 -- Test 21: query (line 347)
 SELECT
@@ -275,22 +278,23 @@ SELECT
   typbasetype,
   typtypmod,
   typdefaultbin
-FROM pg_type WHERE typname = 'regression_66576'
+	FROM pg_type WHERE typname = 'regression_66576'
+;
 
 -- Test 22: query (line 363)
-SELECT reltype FROM pg_class WHERE relname = 'regression_65576'
+SELECT reltype FROM pg_class WHERE relname = 'regression_66576';
 
 -- Test 23: query (line 370)
-SELECT typname FROM pg_type WHERE oid = $oid
+SELECT typname FROM pg_type WHERE oid = 'regression_66576'::regtype::oid;
 
 -- Test 24: query (line 378)
-SELECT relname FROM pg_class WHERE oid = $oid
+SELECT relname FROM pg_class WHERE oid = 'regression_66576'::regclass::oid;
 
 -- Test 25: statement (line 386)
-CREATE TABLE dst (a int primary key, b int)
+CREATE TABLE dst (a int primary key, b int);
 
 -- Test 26: statement (line 389)
-create table src (c int primary key, d int references dst(a))
+CREATE TABLE src (c int primary key, d int references dst(a));
 
 -- Test 27: query (line 392)
 WITH
@@ -333,14 +337,14 @@ JOIN pg_class tab ON tab.oid = traint.conrelid
 JOIN pg_class other ON other.oid = traint.confrelid
 JOIN pg_namespace ns2 ON ns2.oid = other.relnamespace
 LEFT JOIN pks_uniques_cols pks_uqs ON pks_uqs.connamespace = traint.connamespace AND pks_uqs.conrelid = traint.conrelid
-WHERE traint.contype = 'f'
-and traint.conparentid = 0 ORDER BY traint.conrelid, traint.conname
+	WHERE traint.contype = 'f'
+	and traint.conparentid = 0 ORDER BY traint.conrelid, traint.conname;
 
 -- Test 28: statement (line 442)
 CREATE TABLE efcore_identity_test (
   id INT8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  CONSTRAINT pk_testtable PRIMARY KEY (id ASC)
-)
+  CONSTRAINT pk_testtable PRIMARY KEY (id)
+);
 
 -- Test 29: query (line 448)
 SELECT
@@ -397,4 +401,3 @@ WHERE
       deptype IN ('e', 'x')
   )
 ORDER BY attnum;
-
