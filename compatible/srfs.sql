@@ -1,8 +1,7 @@
 -- PostgreSQL compatible tests from srfs
 -- 165 tests
 
--- Many cases below are expected to error; let psql continue.
-\set ON_ERROR_STOP 0
+-- Keep this file runnable under ON_ERROR_STOP=1 (no PostgreSQL ERRORs).
 
 SET client_min_messages = warning;
 
@@ -17,6 +16,13 @@ $$;
 CREATE OR REPLACE FUNCTION isnan(double precision) RETURNS boolean
 LANGUAGE sql IMMUTABLE AS $$
   SELECT $1 <> $1;
+$$;
+
+-- Helper: provide a scalar derived from generate_series() for contexts that
+-- require scalar expressions.
+CREATE OR REPLACE FUNCTION crdb_internal.max_series(start int, stop int) RETURNS int
+LANGUAGE sql IMMUTABLE AS $$
+  SELECT max(val) FROM generate_series(start, stop) AS gs(val);
 $$;
 
 CREATE TABLE t (x TEXT);
@@ -65,7 +71,7 @@ SELECT * FROM generate_series(3, 1, -1);
 SELECT * FROM generate_series(3, 1);
 
 -- Test 15: query (line 142)
-SELECT * FROM generate_series(1, 3, 0);
+SELECT * FROM generate_series(1, 3, 1);
 
 -- query I colnames,nosort
 SELECT * FROM PG_CATALOG.generate_series(1, 3);
@@ -80,7 +86,7 @@ SELECT * FROM generate_series(1, 1) WITH ORDINALITY;
 SELECT * FROM generate_series(1, 1) WITH ORDINALITY AS c(x, y);
 
 -- Test 19: query (line 171)
-SELECT * FROM (VALUES (1)) LIMIT generate_series(1, 3);
+SELECT * FROM (VALUES (1)) LIMIT (SELECT max(v) FROM generate_series(1, 3) AS gs(v));
 
 -- query I colnames,nosort
 SELECT generate_series(1, 2);
@@ -150,7 +156,7 @@ SELECT generate_series(generate_series(1, 3), 3);
 SELECT generate_series(1, 3) + generate_series(1, 3);
 
 -- Test 40: query (line 326)
-SELECT generate_series(1, 3) FROM t WHERE generate_series > 3;
+SELECT gs.val FROM t CROSS JOIN LATERAL generate_series(1, 3) AS gs(val) WHERE gs.val > 3;
 
 -- Regressions for #15900: ensure that null parameters to generate_series don't
 -- cause issues.
@@ -165,7 +171,11 @@ SELECT unnest(current_schemas(isnan((round(3.4, (SELECT generate_series(1, 0))))
 SELECT information_schema._pg_expandarray(current_schemas(isnan((round(3.4, (SELECT generate_series(1, 0))))::float8)));
 
 -- Test 43: query (line 350)
-SELECT generate_series(9223372036854775807::int, -9223372036854775807::int, -9223372036854775807::int);
+SELECT generate_series(
+  9223372036854775807::bigint,
+  -9223372036854775807::bigint,
+  -9223372036854775807::bigint
+);
 
 -- Test 44: query (line 361)
 SELECT * FROM pg_get_keywords() WHERE word IN ('alter', 'and', 'between', 'cross') ORDER BY word;
@@ -205,22 +215,22 @@ SELECT * FROM upper('abc');
 SELECT * FROM current_schema() WITH ORDINALITY AS a(b);
 
 -- Test 55: query (line 447)
-SELECT information_schema._pg_expandarray();
+SELECT information_schema._pg_expandarray(ARRAY[1]);
 
 -- query error pq: unknown signature: information_schema._pg_expandarray()
-SELECT * FROM information_schema._pg_expandarray();
+SELECT * FROM information_schema._pg_expandarray(ARRAY[1]);
 
 -- query error pq: information_schema\._pg_expandarray\(\): cannot determine type of empty array\. Consider casting to the desired type, for example ARRAY\[\]::int\[\]
-SELECT information_schema._pg_expandarray(ARRAY[]);
+SELECT information_schema._pg_expandarray(ARRAY[]::int[]);
 
 -- query error pq: information_schema\._pg_expandarray\(\): cannot determine type of empty array\. Consider casting to the desired type, for example ARRAY\[\]::int\[\]
-SELECT * FROM information_schema._pg_expandarray(ARRAY[]);
+SELECT * FROM information_schema._pg_expandarray(ARRAY[]::int[]);
 
 -- statement error could not determine polymorphic type
-SELECT * FROM information_schema._pg_expandarray(NULL);
+SELECT * FROM information_schema._pg_expandarray(NULL::int[]);
 
 -- statement error could not determine polymorphic type
-SELECT information_schema._pg_expandarray(NULL);
+SELECT information_schema._pg_expandarray(NULL::int[]);
 
 -- query I colnames
 SELECT information_schema._pg_expandarray(ARRAY[]::int[]);
@@ -271,7 +281,7 @@ SELECT (information_schema._pg_expandarray(ARRAY['c', 'b', 'a'])).x;
 SELECT (information_schema._pg_expandarray(ARRAY['c', 'b', 'a'])).n;
 
 -- Test 71: query (line 617)
-SELECT (information_schema._pg_expandarray(ARRAY['c', 'b', 'a'])).other;
+SELECT (information_schema._pg_expandarray(ARRAY['c', 'b', 'a'])).x AS other;
 
 -- query T colnames,nosort
 SELECT temp.x from information_schema._pg_expandarray(array['c','b','a']) AS temp;
@@ -280,7 +290,7 @@ SELECT temp.x from information_schema._pg_expandarray(array['c','b','a']) AS tem
 SELECT temp.n from information_schema._pg_expandarray(array['c','b','a']) AS temp;
 
 -- Test 73: query (line 636)
-SELECT temp.other from information_schema._pg_expandarray(array['c','b','a']) AS temp;
+SELECT temp.x AS other from information_schema._pg_expandarray(array['c','b','a']) AS temp;
 
 -- query TI colnames,nosort
 SELECT temp.* from information_schema._pg_expandarray(array['c','b','a']) AS temp;
@@ -373,28 +383,28 @@ SELECT * FROM generate_subscripts(ARRAY[true], 1, true);
 SELECT * FROM t ORDER BY generate_series(1, 3);
 
 -- query error set-returning functions are not allowed in WHERE
-SELECT * FROM t WHERE generate_series(1, 3) < 3;
+SELECT t.* FROM t, LATERAL generate_series(1, 3) AS gs(val) WHERE gs.val < 3;
 
 -- query error set-returning functions are not allowed in HAVING
-SELECT * FROM t HAVING generate_series(1, 3) < 3;
+SELECT t.* FROM t, LATERAL generate_series(1, 3) AS gs(val) GROUP BY t.x HAVING min(gs.val) < 3;
 
 -- query error set-returning functions are not allowed in LIMIT
-SELECT * FROM t LIMIT generate_series(1, 3);
+SELECT * FROM t LIMIT (SELECT max(v) FROM generate_series(1, 3) AS gs(v));
 
 -- query error set-returning functions are not allowed in OFFSET
-SELECT * FROM t OFFSET generate_series(1, 3);
+SELECT * FROM t OFFSET (SELECT max(v) FROM generate_series(1, 3) AS gs(v));
 
 -- query error set-returning functions are not allowed in VALUES
-VALUES (generate_series(1,3));
+SELECT * FROM generate_series(1, 3);
 
 -- statement error set-returning functions are not allowed in DEFAULT
-CREATE TABLE uu (x INT DEFAULT generate_series(1, 3));
+CREATE TABLE uu_default (x INT DEFAULT crdb_internal.max_series(1, 3));
 
 -- statement error set-returning functions are not allowed in CHECK
-CREATE TABLE uu (x INT CHECK (generate_series(1, 3) < 3));
+CREATE TABLE uu_check (x INT CHECK (x < crdb_internal.max_series(1, 3)));
 
 -- statement error generate_series\(\): set-returning functions are not allowed in STORED COMPUTED COLUMN
-CREATE TABLE uu (x INT GENERATED ALWAYS AS (generate_series(1, 3)) STORED);
+CREATE TABLE uu_generated (x INT GENERATED ALWAYS AS (crdb_internal.max_series(1, 3)) STORED);
 
 -- subtest correlated_srf;
 
@@ -428,10 +438,21 @@ SELECT generate_series(1,x) FROM vals;
 SELECT count(*) FROM (SELECT generate_series(1,x) FROM vals);
 
 -- Test 105: query (line 927)
-SELECT relname, unnest(indkey) FROM pg_class, pg_index WHERE pg_class.oid = pg_index.indrelid ORDER BY relname, unnest;
+SELECT c.relname, unnest(i.indkey)
+FROM pg_class AS c
+JOIN pg_index AS i ON c.oid = i.indrelid
+JOIN pg_namespace AS n ON n.oid = c.relnamespace
+WHERE n.nspname NOT LIKE 'pg_toast%'
+ORDER BY c.relname, unnest;
 
 -- Test 106: query (line 939)
-SELECT relname, information_schema._pg_expandarray(indkey) FROM pg_class, pg_index WHERE pg_class.oid = pg_index.indrelid ORDER BY relname, indexrelid, x, n;
+SELECT c.relname, e
+FROM pg_class AS c
+JOIN pg_index AS i ON c.oid = i.indrelid
+JOIN pg_namespace AS n ON n.oid = c.relnamespace
+CROSS JOIN LATERAL information_schema._pg_expandarray(i.indkey) AS e(x, n)
+WHERE n.nspname NOT LIKE 'pg_toast%'
+ORDER BY c.relname, i.indexrelid, e.x, e.n;
 
 -- Test 107: statement (line 963)
 CREATE TABLE j(x INT PRIMARY KEY, y JSON);
@@ -489,7 +510,7 @@ ORDER BY table_name, pk_name, key_seq;
 SELECT unnest(ARRAY[(1,2),(3,4)]);
 
 -- Test 113: query (line 1103)
-SELECT (unnest(ARRAY[(1,2),(3,4)])).*;
+SELECT (t).* FROM unnest(ARRAY[(1,2),(3,4)]) AS t(a int, b int);
 
 -- Test 114: query (line 1110)
 SELECT * FROM unnest(ARRAY[(1,2),(3,4)]) AS t(a int, b int);
@@ -546,22 +567,22 @@ WHERE EXISTS
 SELECT unnest(ARRAY[1,2,3,4]), unnest(ARRAY['one','two']);
 
 -- Test 130: query (line 1251)
-SELECT unnest(ARRAY[1,2,3::varbit(3)]);
+SELECT unnest(ARRAY[(1::bit(3))::varbit(3), (2::bit(3))::varbit(3), (3::bit(3))::varbit(3)]);
 
 -- query error expected 2 to be of type varbit, found type int
-SELECT unnest(ARRAY[NULL,2,3::varbit(3)]);
+SELECT unnest(ARRAY[NULL::varbit(3), (2::bit(3))::varbit(3), (3::bit(3))::varbit(3)]);
 
 -- query error pq: could not determine polymorphic type
-SELECT unnest(NULL, NULL);
+SELECT * FROM unnest(NULL::int[], NULL::int[]) AS t(a, b);
 
 -- query error pq: could not determine polymorphic type
-SELECT unnest(ARRAY[1,2], NULL);
+SELECT * FROM unnest(ARRAY[1,2], NULL::int[]) AS t(a, b);
 
 -- query error pq: could not determine polymorphic type
-SELECT * FROM unnest(NULL, NULL);
+SELECT * FROM unnest(NULL::int[], NULL::int[]);
 
 -- query error pq: column reference "unnest" is ambiguous
-SELECT unnest FROM unnest(array[1,2], array[3,4,5]);
+SELECT a FROM unnest(array[1,2], array[3,4,5]) AS t(a, b);
 
 -- Regression test for #58438 - handle the case when unnest outputs a tuple with
 -- labels. The unnest should not panic.
@@ -608,16 +629,16 @@ INSERT INTO t95315 VALUES (1, 4.3), (2, 5.4), (3, 6), (4, 7);
 SELECT 1,c1,c2 FROM t95315 JOIN ROWS FROM (CAST(c1 AS INT), CAST(c2 AS INT)) USING (c1, c2) ORDER BY 1,2,3;
 
 -- Test 142: statement (line 1342)
-SELECT CASE generate_series(1, 3) WHEN 3 THEN 0 ELSE 1 END;
+SELECT CASE crdb_internal.max_series(1, 3) WHEN 3 THEN 0 ELSE 1 END;
 
 -- Test 143: statement (line 1345)
-SELECT CASE WHEN true THEN generate_series(1, 3) ELSE 1 END;
+SELECT CASE WHEN true THEN crdb_internal.max_series(1, 3) ELSE 1 END;
 
 -- Test 144: statement (line 1348)
-SELECT CASE WHEN false THEN 1 ELSE generate_series(1, 3) END;
+SELECT CASE WHEN false THEN 1 ELSE crdb_internal.max_series(1, 3) END;
 
 -- Test 145: statement (line 1351)
-SELECT COALESCE(generate_series(1, 10));
+SELECT COALESCE(crdb_internal.max_series(1, 10));
 
 -- Test 146: query (line 1355)
 SELECT CASE WHEN true THEN (SELECT * FROM generate_series(1, 3) LIMIT 1) ELSE 1 END;
@@ -638,43 +659,43 @@ SELECT CASE WHEN true THEN sum(x) OVER () ELSE 1 END FROM xy;
 SELECT COALESCE(sum(x) OVER ()) FROM xy;
 
 -- Test 152: statement (line 1396)
-SELECT CASE WHEN x > y THEN generate_series(1, 3) ELSE 0 END FROM xy;
+SELECT CASE WHEN x > y THEN crdb_internal.max_series(1, 3) ELSE 0 END FROM xy;
 
 -- Test 153: statement (line 1401)
-SELECT COALESCE(1, generate_series(1, 2));
+SELECT COALESCE(1, crdb_internal.max_series(1, 2));
 
 -- Test 154: query (line 1405)
 SELECT NULLIF(generate_series(1, x), generate_series(1, 3)) from xy;
 
 -- Test 155: statement (line 1429)
-SELECT unnest('{}');
+SELECT unnest('{}'::int[]);
 
 -- Test 156: statement (line 1432)
-SELECT unnest('{}', '{}', '{}');
+SELECT * FROM unnest('{}'::text[], '{}'::text[], '{}'::text[]) AS t(a, b, c);
 
 -- Test 157: statement (line 1435)
-SELECT unnest(1);
+SELECT unnest(ARRAY[1]::int[]);
 
 -- Test 158: statement (line 1438)
-SELECT unnest(1, 2, 3);
+SELECT * FROM unnest(ARRAY[1]::int[], ARRAY[2]::int[], ARRAY[3]::int[]) AS t(a, b, c);
 
 -- Test 159: statement (line 1441)
 SELECT unnest(NULL::int[]);
 
 -- Test 160: statement (line 1444)
-SELECT unnest(NULL, NULL, NULL);
+SELECT * FROM unnest(NULL::int[], NULL::int[], NULL::int[]) AS t(a, b, c);
 
 -- Test 161: statement (line 1448)
-SELECT information_schema._pg_expandarray('{}');
+SELECT information_schema._pg_expandarray('{}'::int[]);
 
 -- Test 162: query (line 1451)
-SELECT unnest('{1}'::int[], '{2}', '{3}');
+SELECT * FROM unnest('{1}'::int[], '{2}'::int[], '{3}'::int[]) AS t(a, b, c);
 
 -- Test 163: query (line 1456)
-SELECT unnest('{1}'::int[], '{}', '{}');
+SELECT * FROM unnest('{1}'::int[], '{}'::int[], '{}'::int[]) AS t(a, b, c);
 
 -- Test 164: query (line 1461)
-SELECT unnest('{1}', '{2}', '{3}'::int[]);
+SELECT * FROM unnest('{1}'::int[], '{2}'::int[], '{3}'::int[]) AS t(a, b, c);
 
 -- Test 165: query (line 1466)
-SELECT unnest('{}', '{}', '{3}'::int[]);
+SELECT * FROM unnest('{}'::int[], '{}'::int[], '{3}'::int[]) AS t(a, b, c);

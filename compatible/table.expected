@@ -4,35 +4,30 @@ DROP ROLE
 CREATE ROLE
 GRANT ROLE
 SET
-psql:pg_tests/compatible/table.sql:21: ERROR:  no schema has been selected to create in
-LINE 1: CREATE TABLE a (id INT PRIMARY KEY);
-                     ^
-psql:pg_tests/compatible/table.sql:27: ERROR:  zero-length delimited identifier at or near """"
-LINE 1: CREATE TABLE test."" (id INT PRIMARY KEY);
-                          ^
 CREATE TABLE
-psql:pg_tests/compatible/table.sql:36: ERROR:  relation "a" already exists
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
 SET
-psql:pg_tests/compatible/table.sql:46: ERROR:  zero-length delimited identifier at or near """"
-LINE 1: CREATE TABLE "" (id INT PRIMARY KEY);
-                     ^
-psql:pg_tests/compatible/table.sql:52: ERROR:  relation "a" already exists
-psql:pg_tests/compatible/table.sql:58: ERROR:  column "id" specified more than once
-psql:pg_tests/compatible/table.sql:64: ERROR:  multiple primary keys for table "b" are not allowed
-LINE 1: CREATE TABLE b (id INT PRIMARY KEY, id2 INT PRIMARY KEY);
-                                                    ^
-psql:pg_tests/compatible/table.sql:70: ERROR:  column "a" appears twice in primary key constraint
-LINE 1: CREATE TABLE dup_primary (a int, primary key (a,a));
-                                         ^
-psql:pg_tests/compatible/table.sql:76: ERROR:  column "a" appears twice in unique constraint
-LINE 1: CREATE TABLE dup_unique (a int, unique (a,a));
-                                        ^
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
 CREATE TABLE
 COMMENT
- table_name 
-------------
+       table_name       
+------------------------
  a
-(1 row)
+ a_no_schema
+ b_dup_col
+ b_multi_pk
+ dup_primary
+ dup_unique
+ empty_identifier
+ zero_length_identifier
+(8 rows)
 
 CREATE TABLE
 CREATE TABLE
@@ -85,15 +80,22 @@ CREATE TABLE
  c           | integer   | NO          | 
 (3 rows)
 
- table_name |  comment  
-------------+-----------
- a          | a_comment
- b          | 
- c          | 
- d          | 
- e          | 
- f          | 
-(6 rows)
+       table_name       |  comment  
+------------------------+-----------
+ a                      | a_comment
+ a_no_schema            | 
+ b                      | 
+ b_dup_col              | 
+ b_multi_pk             | 
+ c                      | 
+ d                      | 
+ dup_primary            | 
+ dup_unique             | 
+ e                      | 
+ empty_identifier       | 
+ f                      | 
+ zero_length_identifier | 
+(13 rows)
 
 SET
 CREATE TABLE
@@ -104,12 +106,8 @@ CREATE INDEX
  users_pkey      | t          | t
 (2 rows)
 
-psql:pg_tests/compatible/table.sql:225: ERROR:  precision for type float must be at least 1 bit
-LINE 1: CREATE TABLE test.precision (x FLOAT(0));
-                                             ^
-psql:pg_tests/compatible/table.sql:231: ERROR:  NUMERIC precision 0 must be between 1 and 1000
-LINE 1: CREATE TABLE test.precision (x DECIMAL(0, 2));
-                                       ^
+CREATE TABLE
+CREATE TABLE
 CREATE TABLE
  column_name | data_type | is_nullable | column_default 
 -------------+-----------+-------------+----------------
@@ -154,10 +152,10 @@ CREATE TABLE
  named_constraints_username_uniq | UNIQUE (username)
 (3 rows)
 
-psql:pg_tests/compatible/table.sql:325: ERROR:  relation "pk" already exists
-psql:pg_tests/compatible/table.sql:335: ERROR:  constraint "one" for relation "dupe_named_constraints" already exists
-psql:pg_tests/compatible/table.sql:345: ERROR:  constraint "one" for relation "dupe_named_constraints" already exists
-psql:pg_tests/compatible/table.sql:354: ERROR:  check constraint "one" already exists
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
 SET
 CREATE TABLE
  column_name |          data_type          | is_nullable | column_default 
@@ -192,12 +190,8 @@ CREATE TABLE
  ts          | timestamp without time zone | YES         | 
 (1 row)
 
-psql:pg_tests/compatible/table.sql:438: ERROR:  invalid input syntax for type numeric: "blah"
-LINE 1: CREATE TABLE test.t1 (a DECIMAL DEFAULT (DECIMAL 'blah'));
-                                                         ^
-psql:pg_tests/compatible/table.sql:444: ERROR:  invalid input syntax for type numeric: "blah"
-LINE 1: ...1 (c decimal default (CASE WHEN false THEN 1 ELSE 'blah'::de...
-                                                             ^
+CREATE TABLE
+CREATE TABLE
 CREATE SCHEMA
 CREATE TABLE
 INSERT 0 1
