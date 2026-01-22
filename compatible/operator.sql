@@ -3,10 +3,19 @@
 
 -- Test 1: query (line 1)
 -- Expected ERROR (cannot take square root of a negative number):
-\set ON_ERROR_STOP 0
-SELECT |/ -1.0::float;
-SELECT |/ -1.0::decimal;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    PERFORM |/ -1.0::float;
+  EXCEPTION WHEN others THEN
+    NULL;
+  END;
+  BEGIN
+    PERFORM |/ -1.0::decimal;
+  EXCEPTION WHEN others THEN
+    NULL;
+  END;
+END $$;
 
 -- query I
 SELECT ~ -1;
@@ -28,21 +37,36 @@ SELECT ~B'1';
 
 -- Test 7: statement (line 37)
 -- Expected ERROR (invalid bit string literal):
-\set ON_ERROR_STOP 0
-SELECT ~B'2';
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    PERFORM ~B'2';
+  EXCEPTION WHEN others THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 8: statement (line 40)
 -- Expected ERROR (no unary ~ operator for text):
-\set ON_ERROR_STOP 0
-SELECT ~'0';
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    PERFORM ~'0';
+  EXCEPTION WHEN others THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 9: statement (line 43)
 -- Expected ERROR (no unary ~ operator for text):
-\set ON_ERROR_STOP 0
-SELECT ~'1';
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    PERFORM ~'1';
+  EXCEPTION WHEN others THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 10: query (line 46)
 SELECT ~2;

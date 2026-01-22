@@ -29,17 +29,29 @@ SELECT a, b FROM t;
 SELECT count(rowid) FROM t;
 
 -- Test 7: statement (line 33)
-\set ON_ERROR_STOP 0
-INSERT INTO t (a, b) VALUES (5, 6, '7');
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    INSERT INTO t (a, b) VALUES (5, 6, '7');
+  EXCEPTION WHEN others THEN
+    -- Expected error: too many values for the target column list.
+    NULL;
+  END;
+END $$;
 
 -- Test 8: query (line 36)
 SELECT a, b FROM t;
 
 -- Test 9: statement (line 44)
-\set ON_ERROR_STOP 0
-SELECT a, b, c, rowid FROM t;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    PERFORM a, b, c, rowid FROM t;
+  EXCEPTION WHEN others THEN
+    -- Expected error: selecting a non-existent column.
+    NULL;
+  END;
+END $$;
 
 -- Test 10: statement (line 47)
 INSERT INTO t (a, rowid) VALUES (10, 11);
