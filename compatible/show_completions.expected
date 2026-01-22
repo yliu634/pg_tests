@@ -1,0 +1,87 @@
+SET
+CREATE SCHEMA
+CREATE FUNCTION
+ completion 
+------------
+ create
+(1 row)
+
+ completion 
+------------
+ create
+(1 row)
+
+ completion 
+------------
+ create
+(1 row)
+
+ completion 
+------------
+ create
+(1 row)
+
+ completion 
+------------
+ create
+(1 row)
+
+ completion 
+------------
+ create
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ completion 
+------------
+ select
+(1 row)
+
+ completion 
+------------
+ create
+(1 row)
+
+  completion  
+--------------
+ search
+ second
+ security
+ select
+ sequence
+ sequences
+ serializable
+ server
+ session
+ session_user
+ set
+ setof
+ sets
+(13 rows)
+
+ completion 
+------------
+(0 rows)
+
+ completion 
+------------
+(0 rows)
+
+ completion 
+------------
+ select
+(1 row)
+
+ completion 
+------------
+(0 rows)
+
+ completion 
+------------
+(0 rows)
+
+RESET

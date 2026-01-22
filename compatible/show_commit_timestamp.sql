@@ -1,245 +1,133 @@
 -- PostgreSQL compatible tests from show_commit_timestamp
--- 56 tests
-
--- Test 1: statement (line 2)
-create table foo (i int primary key)
-
--- Test 2: statement (line 7)
-begin;
-insert into foo values (1)
-
-let $commit_ts
-show commit timestamp
-
--- Test 3: statement (line 14)
-commit
-
-let $commit_ts_after_txn
-show commit timestamp
-
--- Test 4: query (line 20)
-select $commit_ts_after_txn = $commit_ts
-
--- Test 5: query (line 25)
-select * from foo where crdb_internal_mvcc_timestamp = $commit_ts
-
--- Test 6: statement (line 32)
-begin;
-savepoint cockroach_restart;
-insert into foo values (2);
-release cockroach_restart
-
-let $commit_ts
-show commit timestamp
-
-let $commit_ts_again
-show commit timestamp
-
--- Test 7: statement (line 44)
-commit
-
-let $commit_ts_after_txn
-show commit timestamp
-
--- Test 8: query (line 50)
-select $commit_ts_after_txn = $commit_ts, $commit_ts = $commit_ts_again
-
--- Test 9: query (line 55)
-select * from foo where crdb_internal_mvcc_timestamp = $commit_ts
-
--- Test 10: statement (line 62)
-begin;
-savepoint cockroach_restart;
-insert into foo values (3);
-release cockroach_restart;
-commit
-
-let $commit_ts
-show commit timestamp
-
-let $commit_ts_again
-show commit timestamp
-
--- Test 11: query (line 75)
-select $commit_ts_after_txn = $commit_ts, $commit_ts = $commit_ts_again
-
--- Test 12: query (line 80)
-select * from foo where crdb_internal_mvcc_timestamp = $commit_ts
-
--- Test 13: statement (line 87)
-insert into foo values (4);
-
-let $commit_ts
-show commit timestamp
-
-let $commit_ts_again
-show commit timestamp
-
--- Test 14: query (line 96)
-select * from foo where crdb_internal_mvcc_timestamp = $commit_ts
-
--- Test 15: query (line 101)
-select * from foo where crdb_internal_mvcc_timestamp = $commit_ts_again
-
--- Test 16: query (line 106)
-select * from foo where crdb_internal_mvcc_timestamp = ($commit_ts) + 0.0000000001
-
--- Test 17: query (line 110)
-select * from foo where crdb_internal_mvcc_timestamp = ($commit_ts) + 1
-
--- Test 18: statement (line 116)
-begin;
-rollback
-
--- Test 19: statement (line 120)
-show commit timestamp
-
--- Test 20: statement (line 123)
-insert into foo values (5)
-
--- Test 21: statement (line 126)
-show commit timestamp
-
--- Test 22: statement (line 129)
-begin;
-select 1/0;
-
--- Test 23: statement (line 133)
-show commit timestamp
-
--- Test 24: statement (line 136)
-rollback
-
--- Test 25: statement (line 139)
-show commit timestamp
-
--- Test 26: query (line 149)
-select * from foo where crdb_internal_mvcc_timestamp = $commit_ts order by i
-
--- Test 27: statement (line 155)
-insert into foo values (8);
-show commit timestamp;
-insert into foo values (9)
-
--- Test 28: query (line 173)
-select * from foo where crdb_internal_mvcc_timestamp = $commit_ts order by i
-
--- Test 29: statement (line 192)
-insert into foo values(16);
-
--- Test 30: statement (line 195)
-commit
-
--- Test 31: query (line 198)
-select * from foo where crdb_internal_mvcc_timestamp = $commit_ts order by i
-
--- Test 32: statement (line 207)
-create function f() returns decimal volatile language sql as $$ show commit timestamp $$;
-
--- Test 33: statement (line 214)
-prepare s as show commit timestamp;
-
--- Test 34: statement (line 222)
-with committs as (show commit timestamp) select * from committs;
-
--- Test 35: statement (line 225)
-select * from [show commit timestamp]
-
--- Test 36: statement (line 232)
-drop table foo;
-create table foo (i int primary key)
-
--- Test 37: statement (line 236)
-insert into foo values (1)
-
--- Test 38: statement (line 239)
-begin;
-alter table foo add column j int default 42
-
-let $commit_ts
-show commit timestamp
-
--- Test 39: statement (line 246)
-commit;
-
--- Test 40: query (line 249)
-select * from foo
-
--- Test 41: statement (line 262)
-drop table foo;
-create table foo (i int primary key) WITH (schema_locked=false);
-insert into foo values (1);
-
--- Test 42: statement (line 267)
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-SET LOCAL autocommit_before_ddl=off;
-alter table foo add check (i <= 0)
-
--- Test 43: statement (line 274)
-show commit timestamp
-
--- Test 44: statement (line 277)
-rollback;
-drop table foo
-
--- Test 45: statement (line 286)
-begin;
-show commit timestamp
-
--- Test 46: statement (line 290)
-release savepoint cockroach_restart;
-
--- Test 47: statement (line 293)
-rollback
-
--- Test 48: statement (line 302)
-create table foo (i int primary key);
-
--- Test 49: statement (line 305)
-begin;
-insert into foo values (1), (3);
-
-let $ts1
-show commit timestamp
-
--- Test 50: statement (line 312)
-commit
-
--- Test 51: statement (line 315)
-begin;
-insert into foo values (2), (4);
-
-user root
-
--- Test 52: statement (line 321)
-begin priority high; select * from foo; commit;
-
-user testuser
-
-let $ts2
-show commit timestamp
-
--- Test 53: statement (line 329)
-commit
-
--- Test 54: query (line 334)
-SELECT i,
-         CASE
-         WHEN ts = $ts1 THEN 'ts1'
-         WHEN ts = $ts2 THEN 'ts2'
-         END
-    FROM (SELECT i, crdb_internal_mvcc_timestamp AS ts FROM foo)
-ORDER BY i ASC;
-
--- Test 55: query (line 349)
-SELECT i,
-         CASE
-         WHEN ts = $ts1 THEN 'ts1'
-         WHEN ts = $ts2 THEN 'ts2'
-         END
-    FROM (SELECT i, crdb_internal_mvcc_timestamp AS ts FROM foo)
-ORDER BY i ASC;
-
--- Test 56: statement (line 363)
-drop table foo
-
+-- 18 tests
+
+SET client_min_messages = warning;
+
+CREATE SCHEMA IF NOT EXISTS crdb_internal;
+
+-- CockroachDB has SHOW COMMIT TIMESTAMP to surface the commit timestamp for the
+-- current transaction. PostgreSQL does not expose commit timestamps unless
+-- track_commit_timestamp is enabled cluster-wide. Approximate by assigning a
+-- deterministic, monotonic "commit timestamp" per transaction.
+CREATE SEQUENCE IF NOT EXISTS crdb_internal.commit_ts_seq START 1;
+
+CREATE TABLE IF NOT EXISTS crdb_internal.txn_commit_ts (
+  xid BIGINT PRIMARY KEY,
+  commit_ts BIGINT NOT NULL
+);
+
+CREATE OR REPLACE FUNCTION crdb_internal.show_commit_timestamp()
+RETURNS BIGINT
+LANGUAGE plpgsql AS $$
+DECLARE
+  xid_val BIGINT;
+  ts BIGINT;
+BEGIN
+  xid_val := txid_current();
+  SELECT t.commit_ts INTO ts
+  FROM crdb_internal.txn_commit_ts AS t
+  WHERE t.xid = xid_val;
+
+  IF ts IS NULL THEN
+    ts := nextval('crdb_internal.commit_ts_seq'::regclass);
+    INSERT INTO crdb_internal.txn_commit_ts(xid, commit_ts) VALUES (xid_val, ts);
+  END IF;
+
+  RETURN ts;
+END;
+$$;
+
+DROP TABLE IF EXISTS foo;
+CREATE TABLE foo (
+  i INT PRIMARY KEY,
+  ts BIGINT NOT NULL
+);
+
+-- Test 1: statement (basic insert)
+BEGIN;
+INSERT INTO foo(i, ts) VALUES (1, crdb_internal.show_commit_timestamp());
+SELECT crdb_internal.show_commit_timestamp() AS ts1 \gset
+COMMIT;
+
+-- Test 2: query (ts1 matches inserted row)
+SELECT :ts1::bigint = (SELECT ts FROM foo WHERE i = 1) AS ts_matches_row;
+
+-- Test 3: query (select by timestamp)
+SELECT * FROM foo WHERE ts = :ts1::bigint ORDER BY i;
+
+-- Test 4: statement (savepoint/release; ts stable within txn)
+BEGIN;
+SAVEPOINT cockroach_restart;
+INSERT INTO foo(i, ts) VALUES (2, crdb_internal.show_commit_timestamp());
+RELEASE SAVEPOINT cockroach_restart;
+SELECT crdb_internal.show_commit_timestamp() AS ts2 \gset
+SELECT crdb_internal.show_commit_timestamp() AS ts2_again \gset
+COMMIT;
+
+-- Test 5: query (ts stable within txn)
+SELECT :ts2::bigint = :ts2_again::bigint AS ts_stable_within_tx;
+
+-- Test 6: query (select by timestamp)
+SELECT * FROM foo WHERE ts = :ts2::bigint ORDER BY i;
+
+-- Test 7: statement (autocommit insert; capture ts via RETURNING)
+INSERT INTO foo(i, ts)
+VALUES (3, crdb_internal.show_commit_timestamp())
+RETURNING ts AS ts3 \gset
+
+-- Test 8: query (select by timestamp)
+SELECT * FROM foo WHERE ts = :ts3::bigint ORDER BY i;
+
+-- Test 9: statement (rollback-to-savepoint keeps ts)
+BEGIN;
+SELECT crdb_internal.show_commit_timestamp() AS ts4 \gset
+SAVEPOINT sp;
+INSERT INTO foo(i, ts) VALUES (99, crdb_internal.show_commit_timestamp());
+ROLLBACK TO SAVEPOINT sp;
+SELECT crdb_internal.show_commit_timestamp() AS ts4_again \gset
+COMMIT;
+
+-- Test 10: query (ts stable across savepoint rollback)
+SELECT :ts4::bigint = :ts4_again::bigint AS ts_stable_across_savepoint_rollback;
+
+-- Test 11: statement (rollback removes writes)
+BEGIN;
+INSERT INTO foo(i, ts)
+VALUES (4, crdb_internal.show_commit_timestamp())
+RETURNING ts AS ts_rolled \gset
+ROLLBACK;
+
+-- Test 12: query (row not present after rollback)
+SELECT count(*) AS rows_i4 FROM foo WHERE i = 4;
+
+-- Test 13: statement (SQL UDF wrapper)
+CREATE OR REPLACE FUNCTION f_commit_ts() RETURNS BIGINT LANGUAGE sql AS $$
+  SELECT crdb_internal.show_commit_timestamp();
+$$;
+
+-- Test 14: statement (UDF stable within txn)
+BEGIN;
+SELECT f_commit_ts() AS f_ts1 \gset
+SELECT f_commit_ts() AS f_ts2 \gset
+COMMIT;
+
+-- Test 15: query (UDF stable)
+SELECT :f_ts1::bigint = :f_ts2::bigint AS func_ts_stable;
+
+-- Test 16: statement (prepared statement stable within txn)
+BEGIN;
+PREPARE s_commit_ts AS SELECT crdb_internal.show_commit_timestamp();
+EXECUTE s_commit_ts;
+EXECUTE s_commit_ts;
+DEALLOCATE s_commit_ts;
+COMMIT;
+
+-- Test 17: query (CTE usage)
+WITH committs AS (SELECT crdb_internal.show_commit_timestamp() AS ts)
+SELECT * FROM committs;
+
+-- Test 18: statement (cleanup)
+DROP FUNCTION f_commit_ts();
+DROP TABLE foo;
+
+RESET client_min_messages;

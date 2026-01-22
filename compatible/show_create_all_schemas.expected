@@ -1,0 +1,58 @@
+SET
+CREATE SCHEMA
+CREATE FUNCTION
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+CREATE SCHEMA
+SET
+ show_create_all_schemas 
+-------------------------
+ CREATE SCHEMA d;
+(1 row)
+
+CREATE SCHEMA
+ show_create_all_schemas 
+-------------------------
+ CREATE SCHEMA d;
+ CREATE SCHEMA d__test;
+(2 rows)
+
+CREATE SCHEMA
+ show_create_all_schemas 
+-------------------------
+ CREATE SCHEMA d;
+ CREATE SCHEMA d__test;
+ CREATE SCHEMA d__test2;
+(3 rows)
+
+DROP SCHEMA
+ show_create_all_schemas 
+-------------------------
+ CREATE SCHEMA d;
+ CREATE SCHEMA d__test2;
+(2 rows)
+
+COMMENT
+        show_create_all_schemas         
+----------------------------------------
+ CREATE SCHEMA d;
+ CREATE SCHEMA d__test2;
+ COMMENT ON SCHEMA d IS 'test comment';
+(3 rows)
+
+DROP SCHEMA
+CREATE SCHEMA
+ show_create_all_schemas 
+-------------------------
+ CREATE SCHEMA "d-d";
+(1 row)
+
+DROP SCHEMA
+CREATE SCHEMA
+ show_create_all_schemas 
+-------------------------
+ CREATE SCHEMA "a""bc";
+(1 row)
+
+RESET
