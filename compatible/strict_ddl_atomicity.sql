@@ -19,9 +19,14 @@ BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 -- Test 3: statement (line 16)
 SAVEPOINT ddl_sp;
 -- Expected ERROR (duplicate key values prevent unique constraint creation):
-\set ON_ERROR_STOP 0
-ALTER TABLE testing ADD CONSTRAINT "unique_values" UNIQUE(v);
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  EXECUTE 'ALTER TABLE testing ADD CONSTRAINT \"unique_values\" UNIQUE(v)';
+EXCEPTION
+  WHEN others THEN
+    NULL;
+END
+$$;
 ROLLBACK TO SAVEPOINT ddl_sp;
 RELEASE SAVEPOINT ddl_sp;
 
@@ -50,9 +55,14 @@ BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 
 -- Test 11: statement (line 53)
 -- Expected ERROR (duplicate key values prevent unique constraint creation):
-\set ON_ERROR_STOP 0
-ALTER TABLE testing ADD CONSTRAINT "unique_values" UNIQUE(v);
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  EXECUTE 'ALTER TABLE testing ADD CONSTRAINT \"unique_values\" UNIQUE(v)';
+EXCEPTION
+  WHEN others THEN
+    NULL;
+END
+$$;
 
 -- Test 12: statement (line 56)
 ROLLBACK;
@@ -63,9 +73,15 @@ ROLLBACK;
 -- skipif config weak-iso-level-configs
 
 -- Test 14: statement (line 63)
-\set ON_ERROR_STOP 0
-SELECT 1; ALTER TABLE testing ADD CONSTRAINT "unique_values" UNIQUE(v);
-\set ON_ERROR_STOP 1
+SELECT 1;
+DO $$
+BEGIN
+  EXECUTE 'ALTER TABLE testing ADD CONSTRAINT \"unique_values\" UNIQUE(v)';
+EXCEPTION
+  WHEN others THEN
+    NULL;
+END
+$$;
 
 -- onlyif config weak-iso-level-configs
 

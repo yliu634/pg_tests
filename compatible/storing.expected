@@ -1,0 +1,111 @@
+SET
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+ indexname 
+-----------
+ b_idx
+ c_idx
+ t_pkey
+(3 rows)
+
+INSERT 0 1
+ a | b | c | d 
+---+---+---+---
+ 1 | 2 | 3 | 4
+(1 row)
+
+ a | b | c | d 
+---+---+---+---
+ 1 | 2 | 3 | 4
+(1 row)
+
+CREATE INDEX
+ a | b | d 
+---+---+---
+ 1 | 2 | 4
+(1 row)
+
+DO
+DO
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 3
+DELETE 1
+ a 
+---
+ a
+ c
+(2 rows)
+
+DROP INDEX
+ a 
+---
+ a
+ c
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 3
+UPDATE 1
+ a | b 
+---+---
+ a | f
+ b | f
+ c | f
+(3 rows)
+
+DROP INDEX
+ a | b 
+---+---
+ a | f
+ b | f
+ c | f
+(3 rows)
+
+DELETE 3
+CREATE INDEX
+INSERT 0 3
+UPDATE 1
+ a | b 
+---+---
+ a | f
+ b | f
+ c | f
+(3 rows)
+
+DROP INDEX
+ a | b 
+---+---
+ a | f
+ b | f
+ c | f
+(3 rows)
+
+INSERT 0 1
+INSERT 0 1
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+CREATE INDEX
+ a | b | c 
+---+---+---
+ 1 | 2 | 3
+(1 row)
+
+RESET
