@@ -1,0 +1,176 @@
+SET
+CREATE EXTENSION
+RESET
+CREATE PROCEDURE
+CREATE TABLE
+INSERT 0 2
+ id |          box_a           |      orphan      |                  arr                  
+----+--------------------------+------------------+---------------------------------------
+  1 | BOX(1 2,3 4)             | BOX(3 4,5 6)     | {"BOX(-3 -4,-1 -2)"}
+  2 | BOX(10.1 20.1,30.5 40.6) | BOX(30 40,50 60) | {"BOX(-3 -4,-1 -2)","BOX(3 -6,5 -4)"}
+(2 rows)
+
+psql:pg_tests/compatible/geospatial_bbox.sql:46: NOTICE:  expected failure: BOX2D_construct: arguments must be points
+CALL
+psql:pg_tests/compatible/geospatial_bbox.sql:50: NOTICE:  expected failure: BOX2D_construct: arguments must be points
+CALL
+psql:pg_tests/compatible/geospatial_bbox.sql:54: NOTICE:  expected failure: BOX2D_construct: args can not be empty points
+CALL
+psql:pg_tests/compatible/geospatial_bbox.sql:58: NOTICE:  expected failure: BOX2D_construct: args can not be empty points
+CALL
+psql:pg_tests/compatible/geospatial_bbox.sql:62: NOTICE:  expected failure: BOX2D_construct: Operation on mixed SRID geometries (Point, 4326) != (Point, 3857)
+CALL
+ st_makebox2d 
+--------------
+ BOX(1 0,5 6)
+ BOX(1 0,1 0)
+(2 rows)
+
+CREATE TABLE
+INSERT 0 4
+CREATE TABLE
+INSERT 0 3
+ ?column? 
+----------
+ t
+(1 row)
+
+              dsc              |              dsc              | ?column? | ?column? | ?column? | ?column? 
+-------------------------------+-------------------------------+----------+----------+----------+----------
+ NULL                          | NULL                          |          |          |          | 
+ NULL                          | empty point                   |          |          |          | 
+ NULL                          | linestring from origin to 1 1 |          |          |          | 
+ NULL                          | point 0.5 0.5                 |          |          |          | 
+ empty point                   | NULL                          |          |          |          | 
+ empty point                   | empty point                   | f        | f        | f        | f
+ empty point                   | linestring from origin to 1 1 | f        | f        | f        | f
+ empty point                   | point 0.5 0.5                 | f        | f        | f        | f
+ linestring from origin to 1 1 | NULL                          |          |          |          | 
+ linestring from origin to 1 1 | empty point                   | f        | f        | f        | f
+ linestring from origin to 1 1 | linestring from origin to 1 1 | t        | t        | t        | t
+ linestring from origin to 1 1 | point 0.5 0.5                 | t        | t        | t        | f
+ point 0.5 0.5                 | NULL                          |          |          |          | 
+ point 0.5 0.5                 | empty point                   | f        | f        | f        | f
+ point 0.5 0.5                 | linestring from origin to 1 1 | t        | t        | f        | t
+ point 0.5 0.5                 | point 0.5 0.5                 | t        | t        | t        | t
+(16 rows)
+
+          dsc           |          dsc           | ?column? | ?column? | ?column? | ?column? 
+------------------------+------------------------+----------+----------+----------+----------
+ NULL                   | NULL                   |          |          |          | 
+ NULL                   | box at origin          |          |          |          | 
+ NULL                   | box from origin to 1 1 |          |          |          | 
+ box at origin          | NULL                   |          |          |          | 
+ box at origin          | box at origin          | t        | t        | t        | t
+ box at origin          | box from origin to 1 1 | t        | t        | f        | t
+ box from origin to 1 1 | NULL                   |          |          |          | 
+ box from origin to 1 1 | box at origin          | t        | t        | t        | f
+ box from origin to 1 1 | box from origin to 1 1 | t        | t        | t        | t
+(9 rows)
+
+              dsc              |          dsc           | ?column? | ?column? | ?column? | ?column? 
+-------------------------------+------------------------+----------+----------+----------+----------
+ NULL                          | NULL                   |          |          |          | 
+ NULL                          | box at origin          |          |          |          | 
+ NULL                          | box from origin to 1 1 |          |          |          | 
+ empty point                   | NULL                   |          |          |          | 
+ empty point                   | box at origin          | f        | f        | f        | f
+ empty point                   | box from origin to 1 1 | f        | f        | f        | f
+ linestring from origin to 1 1 | NULL                   |          |          |          | 
+ linestring from origin to 1 1 | box at origin          | t        | t        | t        | f
+ linestring from origin to 1 1 | box from origin to 1 1 | t        | t        | t        | t
+ point 0.5 0.5                 | NULL                   |          |          |          | 
+ point 0.5 0.5                 | box at origin          | f        | f        | f        | f
+ point 0.5 0.5                 | box from origin to 1 1 | t        | t        | f        | t
+(12 rows)
+
+ st_combinebbox 
+----------------
+ 
+ BOX(-1 -1,1 1)
+ BOX(4 -5,4 -5)
+ BOX(-1 -5,4 1)
+(4 rows)
+
+ st_combinebbox 
+----------------
+ 
+(1 row)
+
+     st_expand      |     st_expand      
+--------------------+--------------------
+ BOX(-11 -11,11 11) | BOX(-11 -21,11 21)
+ BOX(-20 -30,25 40) | BOX(-20 -40,25 50)
+                    | 
+(3 rows)
+
+              st_asewkt               
+--------------------------------------
+ 
+ POINT(-1 -1)
+ LINESTRING(1 3,20 3)
+ LINESTRING(5.5 -10,5.5 60)
+ POLYGON((-1 -2,-1 6,4 6,4 -2,-1 -2))
+(5 rows)
+
+       g       
+---------------
+ 
+ 
+ BOX(5 5,5 5)
+ BOX(4 5,9 10)
+(4 rows)
+
+ st_xmin | st_ymin | st_xmax | st_ymax 
+---------+---------+---------+---------
+      -1 |      -1 |      -1 |      -1
+       1 |       3 |      20 |       3
+     5.5 |     -10 |     5.5 |      60
+      -1 |      -2 |       4 |       6
+(4 rows)
+
+                                         g                                          
+------------------------------------------------------------------------------------
+ BOX(0 0,3.274180926382542e-10 1.637090463191271e-10)
+ BOX(20.012344998976914 -20.012345000286587,20.012345000286587 -20.012344998976914)
+ BOX(90 0,90.00000000032742 1.637090463191271e-10)
+ BOX(90 0,90.0439453125 0.0439453125)
+(4 rows)
+
+ st_box2dfromgeohash 
+---------------------
+ BOX(-90 45,-45 90)
+(1 row)
+
+                                st_box2dfromgeohash                                 
+------------------------------------------------------------------------------------
+ BOX(20.012344998976914 -20.012345000286587,20.012345000286587 -20.012344998976914)
+(1 row)
+
+                                st_box2dfromgeohash                                 
+------------------------------------------------------------------------------------
+ BOX(20.012344998976914 -20.012345000286587,20.012345000286587 -20.012344998976914)
+(1 row)
+
+                                st_box2dfromgeohash                                 
+------------------------------------------------------------------------------------
+ BOX(20.012344998976914 -20.012345000286587,20.012345000286587 -20.012344998976914)
+(1 row)
+
+ st_box2dfromgeohash 
+---------------------
+ 
+(1 row)
+
+ st_box2dfromgeohash 
+---------------------
+ 
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+ count 
+-------
+     0
+(1 row)
+

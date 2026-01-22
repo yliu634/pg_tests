@@ -7,6 +7,21 @@ SET client_min_messages = warning;
 -- creating/dropping extra databases in this test.
 SELECT current_database() AS orig_db \gset
 
+-- Helper: run a statement expected to error without emitting psql ERROR output.
+CREATE OR REPLACE PROCEDURE pg_temp.expect_error(sql text)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  stmt text;
+BEGIN
+  stmt := regexp_replace(sql, ';[[:space:]]*$', '');
+  EXECUTE stmt;
+  RAISE NOTICE 'expected failure did not occur';
+EXCEPTION WHEN OTHERS THEN
+  RAISE NOTICE 'expected failure: %', SQLERRM;
+END;
+$$;
+
 -- Ensure repeatable runs (roles are cluster-wide, databases persist on failure).
 DROP DATABASE IF EXISTS a;
 DROP ROLE IF EXISTS testuser;
@@ -43,21 +58,15 @@ ORDER BY table_name, table_type;
 
 -- Test 5: statement (line 20)
 -- Expected ERROR (dependent views exist).
-\set ON_ERROR_STOP 0
-DROP TABLE a;
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$DROP TABLE a;$sql$);
 
 -- Test 6: statement (line 23)
 -- Expected ERROR (b is a view).
-\set ON_ERROR_STOP 0
-DROP TABLE b;
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$DROP TABLE b;$sql$);
 
 -- Test 7: statement (line 26)
 -- Expected ERROR (dependent views exist).
-\set ON_ERROR_STOP 0
-DROP VIEW b;
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$DROP VIEW b;$sql$);
 
 -- Test 8: statement (line 29)
 CREATE VIEW d AS SELECT k,v FROM a;
@@ -67,9 +76,7 @@ CREATE VIEW diamond AS SELECT count(*) FROM b AS b JOIN d AS d ON b.k = d.k;
 
 -- Test 10: statement (line 35)
 -- Expected ERROR (diamond depends on d).
-\set ON_ERROR_STOP 0
-DROP VIEW d;
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$DROP VIEW d;$sql$);
 
 -- Test 11: statement (line 38)
 GRANT ALL ON d TO testuser;
@@ -122,9 +129,7 @@ SET ROLE testuser;
 
 -- Test 23: statement (line 96)
 -- Expected ERROR (must be owner to drop).
-\set ON_ERROR_STOP 0
-DROP VIEW testuser3;
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$DROP VIEW testuser3;$sql$);
 
 -- Test 24: query (line 99)
 SELECT table_name, table_type
@@ -134,21 +139,15 @@ ORDER BY table_name, table_type;
 
 -- Test 25: statement (line 106)
 -- Expected ERROR (must be owner; also dependent views exist).
-\set ON_ERROR_STOP 0
-DROP VIEW testuser1;
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$DROP VIEW testuser1;$sql$);
 
 -- Test 26: statement (line 109)
 -- Expected ERROR (must be owner; also dependent views exist).
-\set ON_ERROR_STOP 0
-DROP VIEW testuser1 RESTRICT;
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$DROP VIEW testuser1 RESTRICT;$sql$);
 
 -- Test 27: statement (line 112)
 -- Expected ERROR (must be owner).
-\set ON_ERROR_STOP 0
-DROP VIEW testuser1 CASCADE;
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$DROP VIEW testuser1 CASCADE;$sql$);
 
 -- Test 28: query (line 115)
 SELECT table_name, table_type
@@ -158,9 +157,7 @@ ORDER BY table_name, table_type;
 
 -- Test 29: statement (line 120)
 -- Expected ERROR (must be owner).
-\set ON_ERROR_STOP 0
-DROP VIEW testuser2;
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$DROP VIEW testuser2;$sql$);
 
 -- user root
 RESET ROLE;
@@ -175,18 +172,14 @@ GRANT ALL ON b to testuser;
 GRANT ALL ON c to testuser;
 
 -- Test 33: statement (line 134)
-\set ON_ERROR_STOP 0
-GRANT ALL ON d to testuser;
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$GRANT ALL ON d to testuser;$sql$);
 
 -- user testuser
 SET ROLE testuser;
 
 -- Test 34: statement (line 139)
 -- Expected ERROR (must be owner to drop).
-\set ON_ERROR_STOP 0
-DROP TABLE a CASCADE;
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$DROP TABLE a CASCADE;$sql$);
 
 -- user root
 RESET ROLE;
@@ -208,9 +201,7 @@ CREATE VIEW y AS SELECT column1, column2 FROM x;
 
 -- Test 39: statement (line 157)
 -- Expected ERROR (y depends on x).
-\set ON_ERROR_STOP 0
-DROP VIEW x;
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$DROP VIEW x;$sql$);
 
 -- Test 40: statement (line 160)
 DROP VIEW x, y;
@@ -223,9 +214,7 @@ CREATE VIEW y AS SELECT column1, column2 FROM x;
 
 -- Test 43: statement (line 169)
 -- Expected ERROR (y depends on x).
-\set ON_ERROR_STOP 0
-DROP VIEW x;
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$DROP VIEW x;$sql$);
 
 -- Test 44: statement (line 172)
 DROP VIEW y, x;

@@ -3,6 +3,24 @@
 
 SET client_min_messages = warning;
 
+-- Helper: run a query expected to error without emitting psql ERROR output.
+CREATE OR REPLACE PROCEDURE pg_temp.expect_error_query(sql text)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  stmt text;
+  rec record;
+BEGIN
+  stmt := regexp_replace(sql, ';[[:space:]]*$', '');
+  FOR rec IN EXECUTE stmt LOOP
+    NULL;
+  END LOOP;
+  RAISE NOTICE 'expected failure did not occur';
+EXCEPTION WHEN OTHERS THEN
+  RAISE NOTICE 'expected failure: %', SQLERRM;
+END;
+$$;
+
 DROP TABLE IF EXISTS t;
 CREATE TABLE t (
   key     TEXT PRIMARY KEY,
@@ -70,33 +88,23 @@ WHERE
 
 -- Test 5: statement (line 87)
 -- Expected ERROR (date underflow).
-\set ON_ERROR_STOP 0
-SELECT _date - 1 FROM t WHERE key = 'min';
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error_query($sql$SELECT _date - 1 FROM t WHERE key = 'min';$sql$);
 
 -- Test 6: query (line 91)
 -- Expected ERROR (int2 underflow).
-\set ON_ERROR_STOP 0
-SELECT _int2 - 1::INT2 FROM t WHERE key = 'min';
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error_query($sql$SELECT _int2 - 1::INT2 FROM t WHERE key = 'min';$sql$);
 
 -- Test 7: query (line 97)
 -- Expected ERROR (int4 underflow).
-\set ON_ERROR_STOP 0
-SELECT _int4 - 1::INT4 FROM t WHERE key = 'min';
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error_query($sql$SELECT _int4 - 1::INT4 FROM t WHERE key = 'min';$sql$);
 
 -- Test 8: statement (line 102)
 -- Expected ERROR (int8 underflow).
-\set ON_ERROR_STOP 0
-SELECT _int8 - 1::INT8 FROM t WHERE key = 'min';
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error_query($sql$SELECT _int8 - 1::INT8 FROM t WHERE key = 'min';$sql$);
 
 -- Test 9: query (line 105)
 -- Expected ERROR (float8 underflow/overflow at extremes).
-\set ON_ERROR_STOP 0
-SELECT _float8 - 1e300 FROM t WHERE key = 'min';
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error_query($sql$SELECT _float8 - 1e300 FROM t WHERE key = 'min';$sql$);
 
 -- Test 10: query (line 112)
 SELECT _date, _date - 1 FROM t WHERE key = 'max';
@@ -121,33 +129,23 @@ WHERE
 
 -- Test 12: statement (line 138)
 -- Expected ERROR (date overflow).
-\set ON_ERROR_STOP 0
-SELECT _date + 1 FROM t WHERE key = 'max';
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error_query($sql$SELECT _date + 1 FROM t WHERE key = 'max';$sql$);
 
 -- Test 13: query (line 142)
 -- Expected ERROR (int2 overflow).
-\set ON_ERROR_STOP 0
-SELECT _int2 + 1::INT2 FROM t WHERE key = 'max';
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error_query($sql$SELECT _int2 + 1::INT2 FROM t WHERE key = 'max';$sql$);
 
 -- Test 14: query (line 148)
 -- Expected ERROR (int4 overflow).
-\set ON_ERROR_STOP 0
-SELECT _int4 + 1::INT4 FROM t WHERE key = 'max';
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error_query($sql$SELECT _int4 + 1::INT4 FROM t WHERE key = 'max';$sql$);
 
 -- Test 15: statement (line 153)
 -- Expected ERROR (int8 overflow).
-\set ON_ERROR_STOP 0
-SELECT _int8 + 1::INT8 FROM t WHERE key = 'max';
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error_query($sql$SELECT _int8 + 1::INT8 FROM t WHERE key = 'max';$sql$);
 
 -- Test 16: query (line 156)
 -- Expected ERROR (float8 overflow at extremes).
-\set ON_ERROR_STOP 0
-SELECT _float8 + 1e300 FROM t WHERE key = 'max';
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error_query($sql$SELECT _float8 + 1e300 FROM t WHERE key = 'max';$sql$);
 
 -- Test 17: query (line 163)
 SELECT _date, _date + 1, _date - 1 FROM t WHERE key = '+inf';
@@ -182,7 +180,7 @@ WHERE
 SELECT sum(t._int8) FROM t, t AS u WHERE t.key = 'max';
 
 -- Test 22: query (line 203)
-\set ON_ERROR_STOP 0
+CALL pg_temp.expect_error_query($sql$
 SELECT
     sum(t._int2),
     sum(t._int4),
@@ -198,8 +196,7 @@ FROM
     t, t AS u
 WHERE
     t.key = 'min'
-;
-\set ON_ERROR_STOP 1
+;$sql$);
 
 -- Test 23: query (line 222)
 SELECT
@@ -214,7 +211,7 @@ WHERE
 SELECT sum(t._int8) FROM t, t AS u WHERE t.key = 'min';
 
 -- Test 25: query (line 235)
-\set ON_ERROR_STOP 0
+CALL pg_temp.expect_error_query($sql$
 SELECT
     sum(t._int2),
     sum(t._int4),
@@ -228,8 +225,7 @@ SELECT
     avg(t._float8)
 FROM
     t
-;
-\set ON_ERROR_STOP 1
+;$sql$);
 
 -- Test 26: query (line 252)
 SELECT

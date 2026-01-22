@@ -4,7 +4,7 @@
 -- CockroachDB exposes `crdb_internal.probe_ranges(...)` for probing KV ranges.
 -- PostgreSQL has no equivalent, so provide a minimal stub that returns zero
 -- rows; this preserves the expected-empty/zero-count assertions below.
-CREATE SCHEMA crdb_internal;
+CREATE SCHEMA IF NOT EXISTS crdb_internal;
 
 CREATE OR REPLACE FUNCTION crdb_internal.probe_ranges(probe_interval interval, probe_type text)
 RETURNS TABLE (range_id int, error text, verbose_trace text)

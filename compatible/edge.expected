@@ -1,4 +1,5 @@
 SET
+CREATE PROCEDURE
 DROP TABLE
 CREATE TABLE
 INSERT 0 2
@@ -13,11 +14,11 @@ INSERT 0 2
  -32768 |   -32767 | -2147483648 | -2147483647 | -9223372036854775808 | -9223372036854775807 | -3.4028235e+38 | -3.4028234663852886e+38 | -1.7976931348623e+308 | -1.7976931348623e+308
 (1 row)
 
-psql:pg_tests/compatible/edge.sql:74: ERROR:  date out of range
-psql:pg_tests/compatible/edge.sql:80: ERROR:  smallint out of range
-psql:pg_tests/compatible/edge.sql:86: ERROR:  integer out of range
-psql:pg_tests/compatible/edge.sql:92: ERROR:  bigint out of range
-psql:pg_tests/compatible/edge.sql:98: ERROR:  value out of range: overflow
+CALL
+CALL
+CALL
+CALL
+CALL
      _date     |   ?column?    
 ---------------+---------------
  5874897-12-31 | 5874897-12-30
@@ -28,11 +29,11 @@ psql:pg_tests/compatible/edge.sql:98: ERROR:  value out of range: overflow
  32767 |    32766 | 2147483647 | 2147483646 | 9223372036854775807 | 9223372036854775806 | 3.4028235e+38 | 3.4028234663852886e+38 | 1.7976931348623e+308 | 1.7976931348623e+308
 (1 row)
 
-psql:pg_tests/compatible/edge.sql:125: ERROR:  date out of range
-psql:pg_tests/compatible/edge.sql:131: ERROR:  smallint out of range
-psql:pg_tests/compatible/edge.sql:137: ERROR:  integer out of range
-psql:pg_tests/compatible/edge.sql:143: ERROR:  bigint out of range
-psql:pg_tests/compatible/edge.sql:149: ERROR:  value out of range: overflow
+CALL
+CALL
+CALL
+CALL
+CALL
   _date   | ?column? | ?column? 
 ----------+----------+----------
  infinity | infinity | infinity
@@ -58,7 +59,7 @@ psql:pg_tests/compatible/edge.sql:149: ERROR:  value out of range: overflow
  36893488147419103228
 (1 row)
 
-psql:pg_tests/compatible/edge.sql:201: ERROR:  value out of range: overflow
+CALL
    sum   |     sum     
 ---------+-------------
  -131072 | -8589934592
@@ -69,7 +70,7 @@ psql:pg_tests/compatible/edge.sql:201: ERROR:  value out of range: overflow
  -36893488147419103232
 (1 row)
 
-psql:pg_tests/compatible/edge.sql:231: ERROR:  value out of range: overflow
+CALL
  sum | sum | sum 
 -----+-----+-----
   -1 |  -1 |  -1
