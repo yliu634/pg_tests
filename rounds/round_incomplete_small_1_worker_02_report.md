@@ -20,3 +20,5 @@ PROCESSING: pg_tests/compatible/drop_schema.sql
 NEEDS_ADAPTATION: pg_tests/compatible/drop_schema.sql
 ADAPTED_SUCCESS: pg_tests/compatible/drop_schema.sql
 
+Worker ID: 02
+Status: COMPLETE
