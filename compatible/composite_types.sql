@@ -231,7 +231,8 @@ CREATE TYPE sc1.ct3 AS ();
 -- SHOW TYPES; - Not directly compatible
 SELECT t.typname FROM pg_type t
 JOIN pg_namespace n ON t.typnamespace = n.oid
-WHERE n.nspname = 'public' AND t.typtype = 'c'
+JOIN pg_class c ON c.oid = t.typrelid
+WHERE n.nspname = 'public' AND t.typtype = 'c' AND c.relkind = 'c'
 ORDER BY t.typname;
 
 -- Test 69: statement (line 322)

@@ -124,9 +124,9 @@ DROP TABLE x;
 -- Test 68: Timestamp conversion
 CREATE TABLE y (
   a TIMESTAMPTZ,
-  -- `(timestamptz)::timestamp` is STABLE (depends on TimeZone), but generated
-  -- columns require IMMUTABLE expressions.
-  b TIMESTAMP GENERATED ALWAYS AS (timezone('UTC', a)) STORED
+  -- `a::timestamp` is STABLE (depends on TimeZone), which PG disallows for
+  -- generated columns. Use an immutable conversion instead.
+  b TIMESTAMP GENERATED ALWAYS AS (a AT TIME ZONE 'UTC') STORED
 );
 DROP TABLE y;
 
@@ -134,9 +134,9 @@ DROP TABLE y;
 CREATE TABLE y (
   a TIMESTAMPTZ,
   b INTERVAL,
-  -- `timestamptz + interval` is STABLE; force the operation through immutable
-  -- timezone conversions so the generation expression is IMMUTABLE.
-  c TIMESTAMPTZ GENERATED ALWAYS AS (timezone('UTC', timezone('UTC', a) + b)) STORED
+  -- `timestamptz + interval` is not immutable in PG, so do the arithmetic in a
+  -- fixed timezone instead.
+  c TIMESTAMPTZ GENERATED ALWAYS AS (((a AT TIME ZONE 'UTC') + b) AT TIME ZONE 'UTC') STORED
 );
 DROP TABLE y;
 

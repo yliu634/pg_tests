@@ -20,5 +20,6 @@
 - PROCESSING: `pg_tests/compatible/computed.sql`
 - RESULT: ADAPTED_SUCCESS (`pg_tests/compatible/computed.sql` updated; `pg_tests/compatible/computed.expected` regenerated cleanly)
 
-Worker ID: 00
-Status: COMPLETE
+## Meta
+- Worker ID: 00
+- Status: COMPLETE

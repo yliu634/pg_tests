@@ -106,14 +106,11 @@ CREATE TYPE
 CREATE SCHEMA
 CREATE TYPE
 CREATE TYPE
-  typname  
------------
+ typname 
+---------
  ct1
  t2
- t_renamed
- t_table
- tab
-(5 rows)
+(2 rows)
 
 DROP TYPE
 DROP TYPE
