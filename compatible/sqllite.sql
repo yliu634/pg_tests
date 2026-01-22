@@ -5,7 +5,7 @@
 CREATE TABLE tab4(pk INTEGER PRIMARY KEY, col0 INTEGER, col1 FLOAT, col2 TEXT, col3 INTEGER, col4 FLOAT, col5 TEXT);
 CREATE UNIQUE INDEX idx_tab4_0 ON tab4 (col1,col3);
 CREATE INDEX idx_tab4_3 ON tab4 (col4,col0);
-CREATE UNIQUE INDEX idx_tab4_4 ON tab4 (col3 DESC)
+CREATE UNIQUE INDEX idx_tab4_4 ON tab4 (col3 DESC);
 
 -- Test 2: statement (line 7)
 INSERT INTO tab4 VALUES
@@ -411,10 +411,10 @@ INSERT INTO tab4 VALUES
 (399,7830,6244.65,'llxnk',9196,5485.5,'ezjgd'),
 (400,1629,1433.59,'rvqig',160,448.93,'geasg'),
 (401,74,9368.21,'xrfsr',544,4620.31,'oacwp'),
-(402,9514,7565.27,'smbtx',9832,6108.78,'emzgv')
+(402,9514,7565.27,'smbtx',9832,6108.78,'emzgv');
 
 -- Test 3: query (line 413)
-SELECT pk FROM tab4 WHERE col0 > 234 AND (((col0 = 3987 OR (col3 < 5405 AND col1 > 9351.41)))) AND (col4 BETWEEN 1444.94 AND 6239.10) ORDER BY 1 DESC
+SELECT pk FROM tab4 WHERE col0 > 234 AND (((col0 = 3987 OR (col3 < 5405 AND col1 > 9351.41)))) AND (col4 BETWEEN 1444.94 AND 6239.10) ORDER BY 1 DESC;
 
 -- Test 4: statement (line 427)
 CREATE TABLE tab64784(pk INTEGER PRIMARY KEY, col0 INTEGER, col1 FLOAT, col2 TEXT, col3 INTEGER, col4 FLOAT, col5 TEXT);
@@ -433,14 +433,15 @@ INSERT INTO tab64784 VALUES(8,221,210.65,'zjpts',226,219.82,'sezsm');
 INSERT INTO tab64784 VALUES(9,222,211.57,'slaxq',227,220.91,'bdqyb');
 
 -- Test 5: query (line 443)
-SELECT pk, col0 FROM tab64784 WHERE (col0 IN (SELECT col3 FROM tab64784 WHERE col3 IS NULL OR (col1 < 22.54) OR col4 > 85.74) OR ((col4 IS NULL)) AND col3 < 8 OR (col4 > 82.93 AND (col0 <= 61) AND col0 > 94 AND col0 > 15)) ORDER BY 2 DESC
+SELECT pk, col0 FROM tab64784 WHERE (col0 IN (SELECT col3 FROM tab64784 WHERE col3 IS NULL OR (col1 < 22.54) OR col4 > 85.74) OR ((col4 IS NULL)) AND col3 < 8 OR (col4 > 82.93 AND (col0 <= 61) AND col0 > 94 AND col0 > 15)) ORDER BY 2 DESC;
 
 -- Test 6: statement (line 455)
-CREATE TABLE t73103(pk INT PRIMARY KEY, col0 INT, col1 INT, UNIQUE INDEX idx (col0), UNIQUE INDEX idx_storing (col0) STORING (col1));
+CREATE TABLE t73103(pk INT PRIMARY KEY, col0 INT, col1 INT);
+CREATE UNIQUE INDEX idx ON t73103 (col0);
+CREATE UNIQUE INDEX idx_storing ON t73103 (col0) INCLUDE (col1);
 
 -- Test 7: query (line 458)
-SELECT pk, col0 FROM t73103@idx WHERE col0 <= 63 OR col0 IN (27,11,93,41) ORDER BY 2 DESC
+SELECT pk, col0 FROM t73103 WHERE col0 <= 63 OR col0 IN (27,11,93,41) ORDER BY 2 DESC;
 
 -- Test 8: query (line 462)
-SELECT pk, col0 FROM t73103@idx_storing WHERE col0 <= 63 OR col0 IN (27,11,93,41) ORDER BY 2 DESC
-
+SELECT pk, col0 FROM t73103 WHERE col0 <= 63 OR col0 IN (27,11,93,41) ORDER BY 2 DESC;

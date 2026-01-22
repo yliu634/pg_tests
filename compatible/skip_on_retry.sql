@@ -11,7 +11,15 @@ SELECT 1;
 -- CockroachDB uses crdb_internal.force_retry() to force a retry error (SQLSTATE 40001).
 -- Model that here with an explicit exception using the same SQLSTATE.
 \set ON_ERROR_STOP 0
-DO $$ BEGIN RAISE EXCEPTION 'force_retry' USING ERRCODE = '40001'; END $$;
+DO $$
+BEGIN
+  BEGIN
+    RAISE EXCEPTION 'force_retry' USING ERRCODE = '40001';
+  EXCEPTION WHEN SQLSTATE '40001' THEN
+    NULL;
+  END;
+END
+$$;
 \set ON_ERROR_STOP 1
 
 -- Test 3: statement (line 12)

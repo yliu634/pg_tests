@@ -1,0 +1,10 @@
+SET
+BEGIN
+ ?column? 
+----------
+        1
+(1 row)
+
+DO
+ROLLBACK
+RESET
