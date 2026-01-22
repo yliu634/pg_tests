@@ -1,0 +1,2504 @@
+SET
+CREATE SCHEMA
+CREATE FUNCTION
+psql:pg_tests/compatible/show_create_all_tables_builtin.sql:50: ERROR:  schema group \"d\" not found
+CONTEXT:  PL/pgSQL function crdb_internal.show_create_all_tables(text) line 19 at RAISE
+DROP SCHEMA
+CREATE SCHEMA
+                           show_create_all_tables                           
+----------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict EM3C2zgpwNiVahk82FfaM21qAIhGW9fedWW8L5dd0JALK1tLXA5U84ub1xu8uFQ
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: d; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "d";
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict EM3C2zgpwNiVahk82FfaM21qAIhGW9fedWW8L5dd0JALK1tLXA5U84ub1xu8uFQ
+ 
+(33 rows)
+
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE VIEW
+CREATE SEQUENCE
+                                                                    show_create_all_tables                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict 0JOXevqjbs4azxf7KUbGJdWbB0WmIDscwfopNgF8siGsmYgBEZsnVMBBdtyuOIx
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: d; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "d";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: full_test; Type: TABLE; Schema: d; Owner: -
+ --
+ 
+ CREATE TABLE "d"."full_test" (
+     "x" integer,
+     "y" integer,
+     "z" integer
+ );
+ 
+ 
+ --
+ -- Name: parent; Type: TABLE; Schema: d; Owner: -
+ --
+ 
+ CREATE TABLE "d"."parent" (
+     "x" integer,
+     "y" integer,
+     "z" integer
+ );
+ 
+ 
+ --
+ -- Name: s; Type: SEQUENCE; Schema: d; Owner: -
+ --
+ 
+ CREATE SEQUENCE "d"."s"
+     START WITH 1
+     INCREMENT BY 1
+     NO MINVALUE
+     NO MAXVALUE
+     CACHE 1;
+ 
+ 
+ --
+ -- Name: vx; Type: VIEW; Schema: d; Owner: -
+ --
+ 
+ CREATE VIEW "d"."vx" AS
+  SELECT 1 AS "?column?";
+ 
+ 
+ --
+ -- Name: full_test full_test_x_key; Type: CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."full_test"
+     ADD CONSTRAINT "full_test_x_key" UNIQUE ("x");
+ 
+ 
+ --
+ -- Name: parent parent_x_key; Type: CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."parent"
+     ADD CONSTRAINT "parent_x_key" UNIQUE ("x");
+ 
+ 
+ --
+ -- Name: parent parent_x_y_z_key; Type: CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."parent"
+     ADD CONSTRAINT "parent_x_y_z_key" UNIQUE ("x", "y", "z");
+ 
+ 
+ --
+ -- Name: full_test full_test_x_y_z_fkey; Type: FK CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."full_test"
+     ADD CONSTRAINT "full_test_x_y_z_fkey" FOREIGN KEY ("x", "y", "z") REFERENCES "d"."parent"("x", "y", "z") MATCH FULL ON UPDATE CASCADE ON DELETE CASCADE;
+ 
+ 
+ --
+ -- Name: full_test test_fk; Type: FK CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."full_test"
+     ADD CONSTRAINT "test_fk" FOREIGN KEY ("x") REFERENCES "d"."parent"("x") ON DELETE CASCADE;
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict 0JOXevqjbs4azxf7KUbGJdWbB0WmIDscwfopNgF8siGsmYgBEZsnVMBBdtyuOIx
+ 
+(119 rows)
+
+                                                                    show_create_all_tables                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict vm9KJHYepl1W4EDYbEI1OkKKQAVDvQbyQPRADbrlyEZR4zChOAYRutmTBmhkcpf
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: d; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "d";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: full_test; Type: TABLE; Schema: d; Owner: -
+ --
+ 
+ CREATE TABLE "d"."full_test" (
+     "x" integer,
+     "y" integer,
+     "z" integer
+ );
+ 
+ 
+ --
+ -- Name: parent; Type: TABLE; Schema: d; Owner: -
+ --
+ 
+ CREATE TABLE "d"."parent" (
+     "x" integer,
+     "y" integer,
+     "z" integer
+ );
+ 
+ 
+ --
+ -- Name: s; Type: SEQUENCE; Schema: d; Owner: -
+ --
+ 
+ CREATE SEQUENCE "d"."s"
+     START WITH 1
+     INCREMENT BY 1
+     NO MINVALUE
+     NO MAXVALUE
+     CACHE 1;
+ 
+ 
+ --
+ -- Name: vx; Type: VIEW; Schema: d; Owner: -
+ --
+ 
+ CREATE VIEW "d"."vx" AS
+  SELECT 1 AS "?column?";
+ 
+ 
+ --
+ -- Name: full_test full_test_x_key; Type: CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."full_test"
+     ADD CONSTRAINT "full_test_x_key" UNIQUE ("x");
+ 
+ 
+ --
+ -- Name: parent parent_x_key; Type: CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."parent"
+     ADD CONSTRAINT "parent_x_key" UNIQUE ("x");
+ 
+ 
+ --
+ -- Name: parent parent_x_y_z_key; Type: CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."parent"
+     ADD CONSTRAINT "parent_x_y_z_key" UNIQUE ("x", "y", "z");
+ 
+ 
+ --
+ -- Name: full_test full_test_x_y_z_fkey; Type: FK CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."full_test"
+     ADD CONSTRAINT "full_test_x_y_z_fkey" FOREIGN KEY ("x", "y", "z") REFERENCES "d"."parent"("x", "y", "z") MATCH FULL ON UPDATE CASCADE ON DELETE CASCADE;
+ 
+ 
+ --
+ -- Name: full_test test_fk; Type: FK CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."full_test"
+     ADD CONSTRAINT "test_fk" FOREIGN KEY ("x") REFERENCES "d"."parent"("x") ON DELETE CASCADE;
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict vm9KJHYepl1W4EDYbEI1OkKKQAVDvQbyQPRADbrlyEZR4zChOAYRutmTBmhkcpf
+ 
+(119 rows)
+
+                                                                    show_create_all_tables                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict mO5833sz3JsBCyQdzS4TnwFvuCEP8XlZLXAT4C2CM3036W84FbbZxshcVX9bFIY
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: d; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "d";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: full_test; Type: TABLE; Schema: d; Owner: -
+ --
+ 
+ CREATE TABLE "d"."full_test" (
+     "x" integer,
+     "y" integer,
+     "z" integer
+ );
+ 
+ 
+ --
+ -- Name: parent; Type: TABLE; Schema: d; Owner: -
+ --
+ 
+ CREATE TABLE "d"."parent" (
+     "x" integer,
+     "y" integer,
+     "z" integer
+ );
+ 
+ 
+ --
+ -- Name: s; Type: SEQUENCE; Schema: d; Owner: -
+ --
+ 
+ CREATE SEQUENCE "d"."s"
+     START WITH 1
+     INCREMENT BY 1
+     NO MINVALUE
+     NO MAXVALUE
+     CACHE 1;
+ 
+ 
+ --
+ -- Name: vx; Type: VIEW; Schema: d; Owner: -
+ --
+ 
+ CREATE VIEW "d"."vx" AS
+  SELECT 1 AS "?column?";
+ 
+ 
+ --
+ -- Name: full_test full_test_x_key; Type: CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."full_test"
+     ADD CONSTRAINT "full_test_x_key" UNIQUE ("x");
+ 
+ 
+ --
+ -- Name: parent parent_x_key; Type: CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."parent"
+     ADD CONSTRAINT "parent_x_key" UNIQUE ("x");
+ 
+ 
+ --
+ -- Name: parent parent_x_y_z_key; Type: CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."parent"
+     ADD CONSTRAINT "parent_x_y_z_key" UNIQUE ("x", "y", "z");
+ 
+ 
+ --
+ -- Name: full_test full_test_x_y_z_fkey; Type: FK CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."full_test"
+     ADD CONSTRAINT "full_test_x_y_z_fkey" FOREIGN KEY ("x", "y", "z") REFERENCES "d"."parent"("x", "y", "z") MATCH FULL ON UPDATE CASCADE ON DELETE CASCADE;
+ 
+ 
+ --
+ -- Name: full_test test_fk; Type: FK CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."full_test"
+     ADD CONSTRAINT "test_fk" FOREIGN KEY ("x") REFERENCES "d"."parent"("x") ON DELETE CASCADE;
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict mO5833sz3JsBCyQdzS4TnwFvuCEP8XlZLXAT4C2CM3036W84FbbZxshcVX9bFIY
+ 
+(119 rows)
+
+                                                                    show_create_all_tables                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict tMAU1Ns9r26wyuKbnsIVTy2GvIcZGIu3h3JFwKAUYl8XJwLlV0ra6ac3gpjMaYT
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: d; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "d";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: full_test; Type: TABLE; Schema: d; Owner: -
+ --
+ 
+ CREATE TABLE "d"."full_test" (
+     "x" integer,
+     "y" integer,
+     "z" integer
+ );
+ 
+ 
+ --
+ -- Name: parent; Type: TABLE; Schema: d; Owner: -
+ --
+ 
+ CREATE TABLE "d"."parent" (
+     "x" integer,
+     "y" integer,
+     "z" integer
+ );
+ 
+ 
+ --
+ -- Name: s; Type: SEQUENCE; Schema: d; Owner: -
+ --
+ 
+ CREATE SEQUENCE "d"."s"
+     START WITH 1
+     INCREMENT BY 1
+     NO MINVALUE
+     NO MAXVALUE
+     CACHE 1;
+ 
+ 
+ --
+ -- Name: vx; Type: VIEW; Schema: d; Owner: -
+ --
+ 
+ CREATE VIEW "d"."vx" AS
+  SELECT 1 AS "?column?";
+ 
+ 
+ --
+ -- Name: full_test full_test_x_key; Type: CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."full_test"
+     ADD CONSTRAINT "full_test_x_key" UNIQUE ("x");
+ 
+ 
+ --
+ -- Name: parent parent_x_key; Type: CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."parent"
+     ADD CONSTRAINT "parent_x_key" UNIQUE ("x");
+ 
+ 
+ --
+ -- Name: parent parent_x_y_z_key; Type: CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."parent"
+     ADD CONSTRAINT "parent_x_y_z_key" UNIQUE ("x", "y", "z");
+ 
+ 
+ --
+ -- Name: full_test full_test_x_y_z_fkey; Type: FK CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."full_test"
+     ADD CONSTRAINT "full_test_x_y_z_fkey" FOREIGN KEY ("x", "y", "z") REFERENCES "d"."parent"("x", "y", "z") MATCH FULL ON UPDATE CASCADE ON DELETE CASCADE;
+ 
+ 
+ --
+ -- Name: full_test test_fk; Type: FK CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."full_test"
+     ADD CONSTRAINT "test_fk" FOREIGN KEY ("x") REFERENCES "d"."parent"("x") ON DELETE CASCADE;
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict tMAU1Ns9r26wyuKbnsIVTy2GvIcZGIu3h3JFwKAUYl8XJwLlV0ra6ac3gpjMaYT
+ 
+(119 rows)
+
+                                                                    show_create_all_tables                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict xn5SYeuKZskvE5vFTQmyRbMnfguQzZGsAjN2zr77jsCFhsqYoTqAYwGAOkOyLah
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: d; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "d";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: full_test; Type: TABLE; Schema: d; Owner: -
+ --
+ 
+ CREATE TABLE "d"."full_test" (
+     "x" integer,
+     "y" integer,
+     "z" integer
+ );
+ 
+ 
+ --
+ -- Name: parent; Type: TABLE; Schema: d; Owner: -
+ --
+ 
+ CREATE TABLE "d"."parent" (
+     "x" integer,
+     "y" integer,
+     "z" integer
+ );
+ 
+ 
+ --
+ -- Name: s; Type: SEQUENCE; Schema: d; Owner: -
+ --
+ 
+ CREATE SEQUENCE "d"."s"
+     START WITH 1
+     INCREMENT BY 1
+     NO MINVALUE
+     NO MAXVALUE
+     CACHE 1;
+ 
+ 
+ --
+ -- Name: vx; Type: VIEW; Schema: d; Owner: -
+ --
+ 
+ CREATE VIEW "d"."vx" AS
+  SELECT 1 AS "?column?";
+ 
+ 
+ --
+ -- Name: full_test full_test_x_key; Type: CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."full_test"
+     ADD CONSTRAINT "full_test_x_key" UNIQUE ("x");
+ 
+ 
+ --
+ -- Name: parent parent_x_key; Type: CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."parent"
+     ADD CONSTRAINT "parent_x_key" UNIQUE ("x");
+ 
+ 
+ --
+ -- Name: parent parent_x_y_z_key; Type: CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."parent"
+     ADD CONSTRAINT "parent_x_y_z_key" UNIQUE ("x", "y", "z");
+ 
+ 
+ --
+ -- Name: full_test full_test_x_y_z_fkey; Type: FK CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."full_test"
+     ADD CONSTRAINT "full_test_x_y_z_fkey" FOREIGN KEY ("x", "y", "z") REFERENCES "d"."parent"("x", "y", "z") MATCH FULL ON UPDATE CASCADE ON DELETE CASCADE;
+ 
+ 
+ --
+ -- Name: full_test test_fk; Type: FK CONSTRAINT; Schema: d; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "d"."full_test"
+     ADD CONSTRAINT "test_fk" FOREIGN KEY ("x") REFERENCES "d"."parent"("x") ON DELETE CASCADE;
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict xn5SYeuKZskvE5vFTQmyRbMnfguQzZGsAjN2zr77jsCFhsqYoTqAYwGAOkOyLah
+ 
+(119 rows)
+
+DROP SCHEMA
+CREATE SCHEMA
+SET
+CREATE TABLE
+                           show_create_all_tables                           
+----------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict xtbmf0l8LScaeestcdWhAITaxdtoG2hVVcbFQeptXC7DreAlJeaJ042OSnHvslc
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: temp_test; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "temp_test";
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict xtbmf0l8LScaeestcdWhAITaxdtoG2hVVcbFQeptXC7DreAlJeaJ042OSnHvslc
+ 
+(33 rows)
+
+BEGIN
+DROP SCHEMA
+CREATE SCHEMA
+SET
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE SEQUENCE
+CREATE TABLE
+COMMIT
+                                show_create_all_tables                                
+--------------------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict UwOwiOPaeO5pxPy24iWfFN0egsQEyuKMphEx6dRLsdxZlpRJf80RYTvBJCRRu95
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: test_fk_order; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_fk_order";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: a; Type: TABLE; Schema: test_fk_order; Owner: -
+ --
+ 
+ CREATE TABLE "test_fk_order"."a" (
+     "i" integer
+ );
+ 
+ 
+ --
+ -- Name: b; Type: TABLE; Schema: test_fk_order; Owner: -
+ --
+ 
+ CREATE TABLE "test_fk_order"."b" (
+     "i" integer NOT NULL
+ );
+ 
+ 
+ --
+ -- Name: c; Type: TABLE; Schema: test_fk_order; Owner: -
+ --
+ 
+ CREATE TABLE "test_fk_order"."c" (
+     "i" integer
+ );
+ 
+ 
+ --
+ -- Name: d; Type: TABLE; Schema: test_fk_order; Owner: -
+ --
+ 
+ CREATE TABLE "test_fk_order"."d" (
+     "i" integer NOT NULL,
+     "e" integer,
+     "f" integer
+ );
+ 
+ 
+ --
+ -- Name: e; Type: TABLE; Schema: test_fk_order; Owner: -
+ --
+ 
+ CREATE TABLE "test_fk_order"."e" (
+     "i" integer NOT NULL
+ );
+ 
+ 
+ --
+ -- Name: f; Type: TABLE; Schema: test_fk_order; Owner: -
+ --
+ 
+ CREATE TABLE "test_fk_order"."f" (
+     "i" integer NOT NULL,
+     "g" integer
+ );
+ 
+ 
+ --
+ -- Name: g; Type: TABLE; Schema: test_fk_order; Owner: -
+ --
+ 
+ CREATE TABLE "test_fk_order"."g" (
+     "i" integer NOT NULL
+ );
+ 
+ 
+ --
+ -- Name: s; Type: SEQUENCE; Schema: test_fk_order; Owner: -
+ --
+ 
+ CREATE SEQUENCE "test_fk_order"."s"
+     START WITH 1
+     INCREMENT BY 1
+     NO MINVALUE
+     NO MAXVALUE
+     CACHE 1;
+ 
+ 
+ --
+ -- Name: s_tbl; Type: TABLE; Schema: test_fk_order; Owner: -
+ --
+ 
+ CREATE TABLE "test_fk_order"."s_tbl" (
+     "id" integer DEFAULT "nextval"('"test_fk_order"."s"'::"regclass") NOT NULL,
+     "v" integer
+ );
+ 
+ 
+ --
+ -- Name: b b_pkey; Type: CONSTRAINT; Schema: test_fk_order; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_fk_order"."b"
+     ADD CONSTRAINT "b_pkey" PRIMARY KEY ("i");
+ 
+ 
+ --
+ -- Name: d d_pkey; Type: CONSTRAINT; Schema: test_fk_order; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_fk_order"."d"
+     ADD CONSTRAINT "d_pkey" PRIMARY KEY ("i");
+ 
+ 
+ --
+ -- Name: e e_pkey; Type: CONSTRAINT; Schema: test_fk_order; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_fk_order"."e"
+     ADD CONSTRAINT "e_pkey" PRIMARY KEY ("i");
+ 
+ 
+ --
+ -- Name: f f_pkey; Type: CONSTRAINT; Schema: test_fk_order; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_fk_order"."f"
+     ADD CONSTRAINT "f_pkey" PRIMARY KEY ("i");
+ 
+ 
+ --
+ -- Name: g g_pkey; Type: CONSTRAINT; Schema: test_fk_order; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_fk_order"."g"
+     ADD CONSTRAINT "g_pkey" PRIMARY KEY ("i");
+ 
+ 
+ --
+ -- Name: s_tbl s_tbl_pkey; Type: CONSTRAINT; Schema: test_fk_order; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_fk_order"."s_tbl"
+     ADD CONSTRAINT "s_tbl_pkey" PRIMARY KEY ("id");
+ 
+ 
+ --
+ -- Name: a a_i_fkey; Type: FK CONSTRAINT; Schema: test_fk_order; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_fk_order"."a"
+     ADD CONSTRAINT "a_i_fkey" FOREIGN KEY ("i") REFERENCES "test_fk_order"."b"("i");
+ 
+ 
+ --
+ -- Name: c c_i_fkey; Type: FK CONSTRAINT; Schema: test_fk_order; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_fk_order"."c"
+     ADD CONSTRAINT "c_i_fkey" FOREIGN KEY ("i") REFERENCES "test_fk_order"."d"("i");
+ 
+ 
+ --
+ -- Name: d d_e_fkey; Type: FK CONSTRAINT; Schema: test_fk_order; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_fk_order"."d"
+     ADD CONSTRAINT "d_e_fkey" FOREIGN KEY ("e") REFERENCES "test_fk_order"."e"("i");
+ 
+ 
+ --
+ -- Name: d d_f_fkey; Type: FK CONSTRAINT; Schema: test_fk_order; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_fk_order"."d"
+     ADD CONSTRAINT "d_f_fkey" FOREIGN KEY ("f") REFERENCES "test_fk_order"."f"("i");
+ 
+ 
+ --
+ -- Name: f f_g_fkey; Type: FK CONSTRAINT; Schema: test_fk_order; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_fk_order"."f"
+     ADD CONSTRAINT "f_g_fkey" FOREIGN KEY ("g") REFERENCES "test_fk_order"."g"("i");
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict UwOwiOPaeO5pxPy24iWfFN0egsQEyuKMphEx6dRLsdxZlpRJf80RYTvBJCRRu95
+ 
+(213 rows)
+
+                                show_create_all_tables                                
+--------------------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict da6LVg5FpFJyicCWDxhOYbrdybVZKdfI08GGa3Mpq0TojdxmzbVnppqMBASSidv
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: test_fk_order; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_fk_order";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: a; Type: TABLE; Schema: test_fk_order; Owner: -
+ --
+ 
+ CREATE TABLE "test_fk_order"."a" (
+     "i" integer
+ );
+ 
+ 
+ --
+ -- Name: b; Type: TABLE; Schema: test_fk_order; Owner: -
+ --
+ 
+ CREATE TABLE "test_fk_order"."b" (
+     "i" integer NOT NULL
+ );
+ 
+ 
+ --
+ -- Name: c; Type: TABLE; Schema: test_fk_order; Owner: -
+ --
+ 
+ CREATE TABLE "test_fk_order"."c" (
+     "i" integer
+ );
+ 
+ 
+ --
+ -- Name: d; Type: TABLE; Schema: test_fk_order; Owner: -
+ --
+ 
+ CREATE TABLE "test_fk_order"."d" (
+     "i" integer NOT NULL,
+     "e" integer,
+     "f" integer
+ );
+ 
+ 
+ --
+ -- Name: e; Type: TABLE; Schema: test_fk_order; Owner: -
+ --
+ 
+ CREATE TABLE "test_fk_order"."e" (
+     "i" integer NOT NULL
+ );
+ 
+ 
+ --
+ -- Name: f; Type: TABLE; Schema: test_fk_order; Owner: -
+ --
+ 
+ CREATE TABLE "test_fk_order"."f" (
+     "i" integer NOT NULL,
+     "g" integer
+ );
+ 
+ 
+ --
+ -- Name: g; Type: TABLE; Schema: test_fk_order; Owner: -
+ --
+ 
+ CREATE TABLE "test_fk_order"."g" (
+     "i" integer NOT NULL
+ );
+ 
+ 
+ --
+ -- Name: s; Type: SEQUENCE; Schema: test_fk_order; Owner: -
+ --
+ 
+ CREATE SEQUENCE "test_fk_order"."s"
+     START WITH 1
+     INCREMENT BY 1
+     NO MINVALUE
+     NO MAXVALUE
+     CACHE 1;
+ 
+ 
+ --
+ -- Name: s_tbl; Type: TABLE; Schema: test_fk_order; Owner: -
+ --
+ 
+ CREATE TABLE "test_fk_order"."s_tbl" (
+     "id" integer DEFAULT "nextval"('"test_fk_order"."s"'::"regclass") NOT NULL,
+     "v" integer
+ );
+ 
+ 
+ --
+ -- Name: b b_pkey; Type: CONSTRAINT; Schema: test_fk_order; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_fk_order"."b"
+     ADD CONSTRAINT "b_pkey" PRIMARY KEY ("i");
+ 
+ 
+ --
+ -- Name: d d_pkey; Type: CONSTRAINT; Schema: test_fk_order; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_fk_order"."d"
+     ADD CONSTRAINT "d_pkey" PRIMARY KEY ("i");
+ 
+ 
+ --
+ -- Name: e e_pkey; Type: CONSTRAINT; Schema: test_fk_order; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_fk_order"."e"
+     ADD CONSTRAINT "e_pkey" PRIMARY KEY ("i");
+ 
+ 
+ --
+ -- Name: f f_pkey; Type: CONSTRAINT; Schema: test_fk_order; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_fk_order"."f"
+     ADD CONSTRAINT "f_pkey" PRIMARY KEY ("i");
+ 
+ 
+ --
+ -- Name: g g_pkey; Type: CONSTRAINT; Schema: test_fk_order; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_fk_order"."g"
+     ADD CONSTRAINT "g_pkey" PRIMARY KEY ("i");
+ 
+ 
+ --
+ -- Name: s_tbl s_tbl_pkey; Type: CONSTRAINT; Schema: test_fk_order; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_fk_order"."s_tbl"
+     ADD CONSTRAINT "s_tbl_pkey" PRIMARY KEY ("id");
+ 
+ 
+ --
+ -- Name: a a_i_fkey; Type: FK CONSTRAINT; Schema: test_fk_order; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_fk_order"."a"
+     ADD CONSTRAINT "a_i_fkey" FOREIGN KEY ("i") REFERENCES "test_fk_order"."b"("i");
+ 
+ 
+ --
+ -- Name: c c_i_fkey; Type: FK CONSTRAINT; Schema: test_fk_order; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_fk_order"."c"
+     ADD CONSTRAINT "c_i_fkey" FOREIGN KEY ("i") REFERENCES "test_fk_order"."d"("i");
+ 
+ 
+ --
+ -- Name: d d_e_fkey; Type: FK CONSTRAINT; Schema: test_fk_order; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_fk_order"."d"
+     ADD CONSTRAINT "d_e_fkey" FOREIGN KEY ("e") REFERENCES "test_fk_order"."e"("i");
+ 
+ 
+ --
+ -- Name: d d_f_fkey; Type: FK CONSTRAINT; Schema: test_fk_order; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_fk_order"."d"
+     ADD CONSTRAINT "d_f_fkey" FOREIGN KEY ("f") REFERENCES "test_fk_order"."f"("i");
+ 
+ 
+ --
+ -- Name: f f_g_fkey; Type: FK CONSTRAINT; Schema: test_fk_order; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_fk_order"."f"
+     ADD CONSTRAINT "f_g_fkey" FOREIGN KEY ("g") REFERENCES "test_fk_order"."g"("i");
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict da6LVg5FpFJyicCWDxhOYbrdybVZKdfI08GGa3Mpq0TojdxmzbVnppqMBASSidv
+ 
+(213 rows)
+
+DROP SCHEMA
+CREATE SCHEMA
+SET
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+ALTER TABLE
+                                                   show_create_all_tables                                                   
+----------------------------------------------------------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict 7gIpaGNq4mcYAZFe8XtOtPaYiNsHfO4vRvDHoGd251dI0FM8Lmn1QTAa69Dwo6h
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: test_cycle; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_cycle";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: loop_a; Type: TABLE; Schema: test_cycle; Owner: -
+ --
+ 
+ CREATE TABLE "test_cycle"."loop_a" (
+     "id" integer NOT NULL,
+     "b_id" integer
+ );
+ 
+ 
+ --
+ -- Name: loop_b; Type: TABLE; Schema: test_cycle; Owner: -
+ --
+ 
+ CREATE TABLE "test_cycle"."loop_b" (
+     "id" integer NOT NULL,
+     "a_id" integer
+ );
+ 
+ 
+ --
+ -- Name: loop_a loop_a_pkey; Type: CONSTRAINT; Schema: test_cycle; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_cycle"."loop_a"
+     ADD CONSTRAINT "loop_a_pkey" PRIMARY KEY ("id");
+ 
+ 
+ --
+ -- Name: loop_b loop_b_pkey; Type: CONSTRAINT; Schema: test_cycle; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_cycle"."loop_b"
+     ADD CONSTRAINT "loop_b_pkey" PRIMARY KEY ("id");
+ 
+ 
+ --
+ -- Name: loop_a_b_id_idx; Type: INDEX; Schema: test_cycle; Owner: -
+ --
+ 
+ CREATE INDEX "loop_a_b_id_idx" ON "test_cycle"."loop_a" USING "btree" ("b_id");
+ 
+ 
+ --
+ -- Name: loop_a b_id_delete_constraint; Type: FK CONSTRAINT; Schema: test_cycle; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_cycle"."loop_a"
+     ADD CONSTRAINT "b_id_delete_constraint" FOREIGN KEY ("b_id") REFERENCES "test_cycle"."loop_b"("id") ON DELETE CASCADE;
+ 
+ 
+ --
+ -- Name: loop_b loop_b_a_id_fkey; Type: FK CONSTRAINT; Schema: test_cycle; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_cycle"."loop_b"
+     ADD CONSTRAINT "loop_b_a_id_fkey" FOREIGN KEY ("a_id") REFERENCES "test_cycle"."loop_a"("id") ON DELETE CASCADE;
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict 7gIpaGNq4mcYAZFe8XtOtPaYiNsHfO4vRvDHoGd251dI0FM8Lmn1QTAa69Dwo6h
+ 
+(96 rows)
+
+                                                   show_create_all_tables                                                   
+----------------------------------------------------------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict 8lcGNm4njbXqJIZTspotIwQxTKYTfskLoOJriUtvCoO8S3EEJQpGgpYcv7kzuKI
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: test_cycle; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_cycle";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: loop_a; Type: TABLE; Schema: test_cycle; Owner: -
+ --
+ 
+ CREATE TABLE "test_cycle"."loop_a" (
+     "id" integer NOT NULL,
+     "b_id" integer
+ );
+ 
+ 
+ --
+ -- Name: loop_b; Type: TABLE; Schema: test_cycle; Owner: -
+ --
+ 
+ CREATE TABLE "test_cycle"."loop_b" (
+     "id" integer NOT NULL,
+     "a_id" integer
+ );
+ 
+ 
+ --
+ -- Name: loop_a loop_a_pkey; Type: CONSTRAINT; Schema: test_cycle; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_cycle"."loop_a"
+     ADD CONSTRAINT "loop_a_pkey" PRIMARY KEY ("id");
+ 
+ 
+ --
+ -- Name: loop_b loop_b_pkey; Type: CONSTRAINT; Schema: test_cycle; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_cycle"."loop_b"
+     ADD CONSTRAINT "loop_b_pkey" PRIMARY KEY ("id");
+ 
+ 
+ --
+ -- Name: loop_a_b_id_idx; Type: INDEX; Schema: test_cycle; Owner: -
+ --
+ 
+ CREATE INDEX "loop_a_b_id_idx" ON "test_cycle"."loop_a" USING "btree" ("b_id");
+ 
+ 
+ --
+ -- Name: loop_a b_id_delete_constraint; Type: FK CONSTRAINT; Schema: test_cycle; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_cycle"."loop_a"
+     ADD CONSTRAINT "b_id_delete_constraint" FOREIGN KEY ("b_id") REFERENCES "test_cycle"."loop_b"("id") ON DELETE CASCADE;
+ 
+ 
+ --
+ -- Name: loop_b loop_b_a_id_fkey; Type: FK CONSTRAINT; Schema: test_cycle; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_cycle"."loop_b"
+     ADD CONSTRAINT "loop_b_a_id_fkey" FOREIGN KEY ("a_id") REFERENCES "test_cycle"."loop_a"("id") ON DELETE CASCADE;
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict 8lcGNm4njbXqJIZTspotIwQxTKYTfskLoOJriUtvCoO8S3EEJQpGgpYcv7kzuKI
+ 
+(96 rows)
+
+DROP SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+                           show_create_all_tables                           
+----------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict o6SkAprlaOTwrkY8oPWJDriMHZ2J8MdiUlhsbWofpQfHzKPveWPgcubmTOWHXp2
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: test_primary_key; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_primary_key";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: t; Type: TABLE; Schema: test_primary_key; Owner: -
+ --
+ 
+ CREATE TABLE "test_primary_key"."t" (
+     "i" integer NOT NULL
+ );
+ 
+ 
+ --
+ -- Name: t pk_name; Type: CONSTRAINT; Schema: test_primary_key; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_primary_key"."t"
+     ADD CONSTRAINT "pk_name" PRIMARY KEY ("i");
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict o6SkAprlaOTwrkY8oPWJDriMHZ2J8MdiUlhsbWofpQfHzKPveWPgcubmTOWHXp2
+ 
+(54 rows)
+
+                           show_create_all_tables                           
+----------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict pmtGLrsnxoPdSeDlAaV3gPkHhghS2it8l9tdepqDNXtggSfRbipsuMuA5Su7Cov
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: test_primary_key; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_primary_key";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: t; Type: TABLE; Schema: test_primary_key; Owner: -
+ --
+ 
+ CREATE TABLE "test_primary_key"."t" (
+     "i" integer NOT NULL
+ );
+ 
+ 
+ --
+ -- Name: t pk_name; Type: CONSTRAINT; Schema: test_primary_key; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_primary_key"."t"
+     ADD CONSTRAINT "pk_name" PRIMARY KEY ("i");
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict pmtGLrsnxoPdSeDlAaV3gPkHhghS2it8l9tdepqDNXtggSfRbipsuMuA5Su7Cov
+ 
+(54 rows)
+
+DROP SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+                           show_create_all_tables                            
+-----------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict 2CbyiJvtiro2Th6PfCPKKmXxCHHY2FL7AkeV3uE2iqVbLoECoHhEJmhtFNnxmG7
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: test_computed_column; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_computed_column";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: t; Type: TABLE; Schema: test_computed_column; Owner: -
+ --
+ 
+ CREATE TABLE "test_computed_column"."t" (
+     "a" integer NOT NULL,
+     "b" integer GENERATED ALWAYS AS (("a" + 1)) STORED
+ );
+ 
+ 
+ --
+ -- Name: t t_pkey; Type: CONSTRAINT; Schema: test_computed_column; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_computed_column"."t"
+     ADD CONSTRAINT "t_pkey" PRIMARY KEY ("a");
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict 2CbyiJvtiro2Th6PfCPKKmXxCHHY2FL7AkeV3uE2iqVbLoECoHhEJmhtFNnxmG7
+ 
+(55 rows)
+
+                           show_create_all_tables                            
+-----------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict dVdYWFfHz6wF00SZQW1qpESEJhiasDMHXiyeXlt0yp4FrFIG1NKCrTQUWbZkjP1
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: test_computed_column; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_computed_column";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: t; Type: TABLE; Schema: test_computed_column; Owner: -
+ --
+ 
+ CREATE TABLE "test_computed_column"."t" (
+     "a" integer NOT NULL,
+     "b" integer GENERATED ALWAYS AS (("a" + 1)) STORED
+ );
+ 
+ 
+ --
+ -- Name: t t_pkey; Type: CONSTRAINT; Schema: test_computed_column; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_computed_column"."t"
+     ADD CONSTRAINT "t_pkey" PRIMARY KEY ("a");
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict dVdYWFfHz6wF00SZQW1qpESEJhiasDMHXiyeXlt0yp4FrFIG1NKCrTQUWbZkjP1
+ 
+(55 rows)
+
+DROP SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+                           show_create_all_tables                           
+----------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict KX2xxOFKfcFro3nXxgqdBkxmSbVpvRaHnms5SdhwTDbwkEEByoKsipaiCOHBiGh
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: test_escaping; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_escaping";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: ;; Type: TABLE; Schema: test_escaping; Owner: -
+ --
+ 
+ CREATE TABLE "test_escaping".";" (
+     ";" integer
+ );
+ 
+ 
+ --
+ -- Name: ;_;_idx; Type: INDEX; Schema: test_escaping; Owner: -
+ --
+ 
+ CREATE INDEX ";_;_idx" ON "test_escaping".";" USING "btree" (";");
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict KX2xxOFKfcFro3nXxgqdBkxmSbVpvRaHnms5SdhwTDbwkEEByoKsipaiCOHBiGh
+ 
+(53 rows)
+
+                           show_create_all_tables                           
+----------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict G5bCrPTaEdsfFak73Nxjc140prYupLgf7POpsJeFdQpQxpKairNXF0vFa1WYGEM
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: test_escaping; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_escaping";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: ;; Type: TABLE; Schema: test_escaping; Owner: -
+ --
+ 
+ CREATE TABLE "test_escaping".";" (
+     ";" integer
+ );
+ 
+ 
+ --
+ -- Name: ;_;_idx; Type: INDEX; Schema: test_escaping; Owner: -
+ --
+ 
+ CREATE INDEX ";_;_idx" ON "test_escaping".";" USING "btree" (";");
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict G5bCrPTaEdsfFak73Nxjc140prYupLgf7POpsJeFdQpQxpKairNXF0vFa1WYGEM
+ 
+(53 rows)
+
+DROP SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+COMMENT
+COMMENT
+COMMENT
+                             show_create_all_tables                              
+---------------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict pIcEMEGBstI2p32OZtLe1hse1XAf2ew6owsnr53DP5LAuKnSuPvg36fC4jLiggv
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: test_comment; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_comment";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: t   t; Type: TABLE; Schema: test_comment; Owner: -
+ --
+ 
+ CREATE TABLE "test_comment"."t   t" (
+     "x'" integer NOT NULL
+ );
+ 
+ 
+ --
+ -- Name: TABLE "t   t"; Type: COMMENT; Schema: test_comment; Owner: -
+ --
+ 
+ COMMENT ON TABLE "test_comment"."t   t" IS 'has '' quotes';
+ 
+ 
+ --
+ -- Name: COLUMN "t   t"."x'"; Type: COMMENT; Schema: test_comment; Owner: -
+ --
+ 
+ COMMENT ON COLUMN "test_comment"."t   t"."x'" IS 'i '' just '' love '' quotes';
+ 
+ 
+ --
+ -- Name: t   t t   t_pkey; Type: CONSTRAINT; Schema: test_comment; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_comment"."t   t"
+     ADD CONSTRAINT "t   t_pkey" PRIMARY KEY ("x'");
+ 
+ 
+ --
+ -- Name: INDEX "t   t_pkey"; Type: COMMENT; Schema: test_comment; Owner: -
+ --
+ 
+ COMMENT ON INDEX "test_comment"."t   t_pkey" IS 'has '' more '' quotes';
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict pIcEMEGBstI2p32OZtLe1hse1XAf2ew6owsnr53DP5LAuKnSuPvg36fC4jLiggv
+ 
+(75 rows)
+
+                             show_create_all_tables                              
+---------------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict i7ZYiUsUgvLgmxzPwDGwdNTb8UaL71vQCrFVuaEubgyuM2tDtb6cdwhfY1L0IVy
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: test_comment; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_comment";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: t   t; Type: TABLE; Schema: test_comment; Owner: -
+ --
+ 
+ CREATE TABLE "test_comment"."t   t" (
+     "x'" integer NOT NULL
+ );
+ 
+ 
+ --
+ -- Name: TABLE "t   t"; Type: COMMENT; Schema: test_comment; Owner: -
+ --
+ 
+ COMMENT ON TABLE "test_comment"."t   t" IS 'has '' quotes';
+ 
+ 
+ --
+ -- Name: COLUMN "t   t"."x'"; Type: COMMENT; Schema: test_comment; Owner: -
+ --
+ 
+ COMMENT ON COLUMN "test_comment"."t   t"."x'" IS 'i '' just '' love '' quotes';
+ 
+ 
+ --
+ -- Name: t   t t   t_pkey; Type: CONSTRAINT; Schema: test_comment; Owner: -
+ --
+ 
+ ALTER TABLE ONLY "test_comment"."t   t"
+     ADD CONSTRAINT "t   t_pkey" PRIMARY KEY ("x'");
+ 
+ 
+ --
+ -- Name: INDEX "t   t_pkey"; Type: COMMENT; Schema: test_comment; Owner: -
+ --
+ 
+ COMMENT ON INDEX "test_comment"."t   t_pkey" IS 'has '' more '' quotes';
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict i7ZYiUsUgvLgmxzPwDGwdNTb8UaL71vQCrFVuaEubgyuM2tDtb6cdwhfY1L0IVy
+ 
+(75 rows)
+
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+CREATE SCHEMA
+CREATE SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+                           show_create_all_tables                           
+----------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict IklZvSXvApRPkSbX4YaniWJO46efiwEFZkkgEggBoAFZgx0T3qx32ccsPdzHACy
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: test_schema; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_schema";
+ 
+ 
+ --
+ -- Name: test_schema__sc1; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_schema__sc1";
+ 
+ 
+ --
+ -- Name: test_schema__sc2; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_schema__sc2";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: t; Type: TABLE; Schema: test_schema__sc1; Owner: -
+ --
+ 
+ CREATE TABLE "test_schema__sc1"."t" (
+     "x" integer
+ );
+ 
+ 
+ --
+ -- Name: t; Type: TABLE; Schema: test_schema__sc2; Owner: -
+ --
+ 
+ CREATE TABLE "test_schema__sc2"."t" (
+     "x" integer
+ );
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict IklZvSXvApRPkSbX4YaniWJO46efiwEFZkkgEggBoAFZgx0T3qx32ccsPdzHACy
+ 
+(69 rows)
+
+                           show_create_all_tables                           
+----------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict WGD9IeynBV0t619Hb3sbjnAisQrn6ef1BA65ug6FZusDfapVrPOpcICND8h3qmJ
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: test_schema; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_schema";
+ 
+ 
+ --
+ -- Name: test_schema__sc1; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_schema__sc1";
+ 
+ 
+ --
+ -- Name: test_schema__sc2; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_schema__sc2";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: t; Type: TABLE; Schema: test_schema__sc1; Owner: -
+ --
+ 
+ CREATE TABLE "test_schema__sc1"."t" (
+     "x" integer
+ );
+ 
+ 
+ --
+ -- Name: t; Type: TABLE; Schema: test_schema__sc2; Owner: -
+ --
+ 
+ CREATE TABLE "test_schema__sc2"."t" (
+     "x" integer
+ );
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict WGD9IeynBV0t619Hb3sbjnAisQrn6ef1BA65ug6FZusDfapVrPOpcICND8h3qmJ
+ 
+(69 rows)
+
+DROP SCHEMA
+CREATE SCHEMA
+SET
+CREATE SEQUENCE
+                           show_create_all_tables                           
+----------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict uVfuWkWgbXs2oKR7bsvDMFIwcNmatmJeXWqbVhmJFHIihReFMRq8tnGXgMWW5SQ
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: test_sequence; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_sequence";
+ 
+ 
+ --
+ -- Name: s1; Type: SEQUENCE; Schema: test_sequence; Owner: -
+ --
+ 
+ CREATE SEQUENCE "test_sequence"."s1"
+     START WITH 1
+     INCREMENT BY 123
+     NO MINVALUE
+     NO MAXVALUE
+     CACHE 1;
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict uVfuWkWgbXs2oKR7bsvDMFIwcNmatmJeXWqbVhmJFHIihReFMRq8tnGXgMWW5SQ
+ 
+(45 rows)
+
+BEGIN
+                           show_create_all_tables                           
+----------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict 88bf8Vi2r8xprqsBRya41GkMZKG0GljmjogX14jcE2j8u3uVQ2zAExy9DvXOdf7
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: test_schema; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_schema";
+ 
+ 
+ --
+ -- Name: test_schema__sc1; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_schema__sc1";
+ 
+ 
+ --
+ -- Name: test_schema__sc2; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_schema__sc2";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: t; Type: TABLE; Schema: test_schema__sc1; Owner: -
+ --
+ 
+ CREATE TABLE "test_schema__sc1"."t" (
+     "x" integer
+ );
+ 
+ 
+ --
+ -- Name: t; Type: TABLE; Schema: test_schema__sc2; Owner: -
+ --
+ 
+ CREATE TABLE "test_schema__sc2"."t" (
+     "x" integer
+ );
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict 88bf8Vi2r8xprqsBRya41GkMZKG0GljmjogX14jcE2j8u3uVQ2zAExy9DvXOdf7
+ 
+(69 rows)
+
+                           show_create_all_tables                           
+----------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict c4d4ODwE4u1JM5ig92SuxWROWzcsVXe0bjMIJKMwPCJL90pqTBfE9HpSVHNngdX
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: test_schema; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_schema";
+ 
+ 
+ --
+ -- Name: test_schema__sc1; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_schema__sc1";
+ 
+ 
+ --
+ -- Name: test_schema__sc2; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_schema__sc2";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: t; Type: TABLE; Schema: test_schema__sc1; Owner: -
+ --
+ 
+ CREATE TABLE "test_schema__sc1"."t" (
+     "x" integer
+ );
+ 
+ 
+ --
+ -- Name: t; Type: TABLE; Schema: test_schema__sc2; Owner: -
+ --
+ 
+ CREATE TABLE "test_schema__sc2"."t" (
+     "x" integer
+ );
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict c4d4ODwE4u1JM5ig92SuxWROWzcsVXe0bjMIJKMwPCJL90pqTBfE9HpSVHNngdX
+ 
+(69 rows)
+
+COMMIT
+BEGIN
+ x 
+---
+(0 rows)
+
+                           show_create_all_tables                           
+----------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict ve6iuCLYU4ttxvb9RhtbbHdMl4YeMYF73dGKCWlJZYeMPOepdGZZoNoQsv7yfah
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: test_schema; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_schema";
+ 
+ 
+ --
+ -- Name: test_schema__sc1; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_schema__sc1";
+ 
+ 
+ --
+ -- Name: test_schema__sc2; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_schema__sc2";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: t; Type: TABLE; Schema: test_schema__sc1; Owner: -
+ --
+ 
+ CREATE TABLE "test_schema__sc1"."t" (
+     "x" integer
+ );
+ 
+ 
+ --
+ -- Name: t; Type: TABLE; Schema: test_schema__sc2; Owner: -
+ --
+ 
+ CREATE TABLE "test_schema__sc2"."t" (
+     "x" integer
+ );
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict ve6iuCLYU4ttxvb9RhtbbHdMl4YeMYF73dGKCWlJZYeMPOepdGZZoNoQsv7yfah
+ 
+(69 rows)
+
+COMMIT
+BEGIN
+ x 
+---
+(0 rows)
+
+                           show_create_all_tables                           
+----------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict BiXdVYX2cW7M9PNn45RITlsdzlRBn2ZM9nsyDaqncDSVI8BBseOg6orXYW5UaPi
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: test_schema; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_schema";
+ 
+ 
+ --
+ -- Name: test_schema__sc1; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_schema__sc1";
+ 
+ 
+ --
+ -- Name: test_schema__sc2; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "test_schema__sc2";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: t; Type: TABLE; Schema: test_schema__sc1; Owner: -
+ --
+ 
+ CREATE TABLE "test_schema__sc1"."t" (
+     "x" integer
+ );
+ 
+ 
+ --
+ -- Name: t; Type: TABLE; Schema: test_schema__sc2; Owner: -
+ --
+ 
+ CREATE TABLE "test_schema__sc2"."t" (
+     "x" integer
+ );
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict BiXdVYX2cW7M9PNn45RITlsdzlRBn2ZM9nsyDaqncDSVI8BBseOg6orXYW5UaPi
+ 
+(69 rows)
+
+COMMIT
+DROP SCHEMA
+CREATE SCHEMA
+SET
+CREATE TABLE
+                           show_create_all_tables                           
+----------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict QKb1hWB58pnfbjjYRoKMHAJ6YEdvBc18GEEXtRbg2fy4ShHOSpjizhN6rbpEfsQ
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: d-d; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "d-d";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: t; Type: TABLE; Schema: d-d; Owner: -
+ --
+ 
+ CREATE TABLE "d-d"."t" (
+ );
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict QKb1hWB58pnfbjjYRoKMHAJ6YEdvBc18GEEXtRbg2fy4ShHOSpjizhN6rbpEfsQ
+ 
+(45 rows)
+
+DROP SCHEMA
+CREATE SCHEMA
+SET
+CREATE TABLE
+                           show_create_all_tables                           
+----------------------------------------------------------------------------
+ --
+ -- PostgreSQL database dump
+ --
+ 
+ \restrict 3O4qO0ecxAfjG5sH9o3esNg0Rd3peKg05x3qQnMHrv3Wl3Xb0WEchpKp80acLx2
+ 
+ -- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ -- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+ 
+ SET statement_timeout = 0;
+ SET lock_timeout = 0;
+ SET idle_in_transaction_session_timeout = 0;
+ SET client_encoding = 'UTF8';
+ SET standard_conforming_strings = on;
+ SELECT pg_catalog.set_config('search_path', '', false);
+ SET check_function_bodies = false;
+ SET xmloption = content;
+ SET client_min_messages = warning;
+ SET row_security = off;
+ 
+ --
+ -- Name: a"bc; Type: SCHEMA; Schema: -; Owner: -
+ --
+ 
+ CREATE SCHEMA "a""bc";
+ 
+ 
+ SET default_tablespace = '';
+ 
+ SET default_table_access_method = "heap";
+ 
+ --
+ -- Name: t; Type: TABLE; Schema: a"bc; Owner: -
+ --
+ 
+ CREATE TABLE "a""bc"."t" (
+ );
+ 
+ 
+ --
+ -- PostgreSQL database dump complete
+ --
+ 
+ unrestrict 3O4qO0ecxAfjG5sH9o3esNg0Rd3peKg05x3qQnMHrv3Wl3Xb0WEchpKp80acLx2
+ 
+(45 rows)
+

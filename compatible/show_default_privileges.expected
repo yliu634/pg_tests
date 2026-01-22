@@ -1,0 +1,512 @@
+SET
+DROP DATABASE
+DROP DATABASE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE SCHEMA
+CREATE VIEW
+RESET
+SET
+ defaclrole | defaclnamespace | defaclobjtype | grantee | privilege_type | is_grantable 
+------------+-----------------+---------------+---------+----------------+--------------
+(0 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype | grantee | privilege_type | is_grantable 
+------------+-----------------+---------------+---------+----------------+--------------
+ root       | <global>        | type          | root    | USAGE          | NO
+(1 row)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype | grantee | privilege_type | is_grantable 
+------------+-----------------+---------------+---------+----------------+--------------
+ root       | <global>        | schema        | PUBLIC  | USAGE          | NO
+ root       | <global>        | schema        | root    | CREATE         | NO
+ root       | <global>        | schema        | root    | USAGE          | NO
+ root       | <global>        | sequence      | PUBLIC  | SELECT         | NO
+ root       | <global>        | sequence      | root    | SELECT         | NO
+ root       | <global>        | sequence      | root    | UPDATE         | NO
+ root       | <global>        | sequence      | root    | USAGE          | NO
+ root       | <global>        | table         | PUBLIC  | SELECT         | NO
+(8 rows)
+
+CREATE ROLE
+CREATE ROLE
+ defaclrole | defaclnamespace | defaclobjtype | grantee | privilege_type | is_grantable 
+------------+-----------------+---------------+---------+----------------+--------------
+ root       | <global>        | schema        | PUBLIC  | USAGE          | NO
+ root       | <global>        | schema        | root    | CREATE         | NO
+ root       | <global>        | schema        | root    | USAGE          | NO
+ root       | <global>        | sequence      | PUBLIC  | SELECT         | NO
+ root       | <global>        | sequence      | root    | SELECT         | NO
+ root       | <global>        | sequence      | root    | UPDATE         | NO
+ root       | <global>        | sequence      | root    | USAGE          | NO
+ root       | <global>        | table         | PUBLIC  | SELECT         | NO
+(8 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype | grantee | privilege_type | is_grantable 
+------------+-----------------+---------------+---------+----------------+--------------
+ root       | <global>        | schema        | PUBLIC  | USAGE          | NO
+ root       | <global>        | schema        | bar     | CREATE         | NO
+ root       | <global>        | schema        | bar     | USAGE          | NO
+ root       | <global>        | schema        | foo     | CREATE         | NO
+ root       | <global>        | schema        | foo     | USAGE          | NO
+ root       | <global>        | schema        | root    | CREATE         | NO
+ root       | <global>        | schema        | root    | USAGE          | NO
+ root       | <global>        | sequence      | PUBLIC  | SELECT         | NO
+ root       | <global>        | sequence      | bar     | SELECT         | NO
+ root       | <global>        | sequence      | bar     | UPDATE         | NO
+ root       | <global>        | sequence      | bar     | USAGE          | NO
+ root       | <global>        | sequence      | foo     | SELECT         | NO
+ root       | <global>        | sequence      | foo     | UPDATE         | NO
+ root       | <global>        | sequence      | foo     | USAGE          | NO
+ root       | <global>        | sequence      | root    | SELECT         | NO
+ root       | <global>        | sequence      | root    | UPDATE         | NO
+ root       | <global>        | sequence      | root    | USAGE          | NO
+ root       | <global>        | table         | PUBLIC  | SELECT         | NO
+ root       | <global>        | table         | bar     | DELETE         | NO
+ root       | <global>        | table         | bar     | INSERT         | NO
+ root       | <global>        | table         | bar     | REFERENCES     | NO
+ root       | <global>        | table         | bar     | SELECT         | NO
+ root       | <global>        | table         | bar     | TRIGGER        | NO
+ root       | <global>        | table         | bar     | TRUNCATE       | NO
+ root       | <global>        | table         | bar     | UPDATE         | NO
+ root       | <global>        | table         | foo     | DELETE         | NO
+ root       | <global>        | table         | foo     | INSERT         | NO
+ root       | <global>        | table         | foo     | REFERENCES     | NO
+ root       | <global>        | table         | foo     | SELECT         | NO
+ root       | <global>        | table         | foo     | TRIGGER        | NO
+ root       | <global>        | table         | foo     | TRUNCATE       | NO
+ root       | <global>        | table         | foo     | UPDATE         | NO
+ root       | <global>        | type          | PUBLIC  | USAGE          | NO
+ root       | <global>        | type          | bar     | USAGE          | NO
+ root       | <global>        | type          | foo     | USAGE          | NO
+ root       | <global>        | type          | root    | USAGE          | NO
+(36 rows)
+
+GRANT ROLE
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype | grantee | privilege_type | is_grantable 
+------------+-----------------+---------------+---------+----------------+--------------
+ bar        | <global>        | schema        | bar     | CREATE         | NO
+ bar        | <global>        | schema        | bar     | USAGE          | NO
+ bar        | <global>        | schema        | foo     | CREATE         | NO
+ bar        | <global>        | schema        | foo     | USAGE          | NO
+ bar        | <global>        | sequence      | bar     | SELECT         | NO
+ bar        | <global>        | sequence      | bar     | UPDATE         | NO
+ bar        | <global>        | sequence      | bar     | USAGE          | NO
+ bar        | <global>        | sequence      | foo     | SELECT         | NO
+ bar        | <global>        | sequence      | foo     | UPDATE         | NO
+ bar        | <global>        | sequence      | foo     | USAGE          | NO
+ bar        | <global>        | table         | bar     | DELETE         | NO
+ bar        | <global>        | table         | bar     | INSERT         | NO
+ bar        | <global>        | table         | bar     | REFERENCES     | NO
+ bar        | <global>        | table         | bar     | SELECT         | NO
+ bar        | <global>        | table         | bar     | TRIGGER        | NO
+ bar        | <global>        | table         | bar     | TRUNCATE       | NO
+ bar        | <global>        | table         | bar     | UPDATE         | NO
+ bar        | <global>        | table         | foo     | DELETE         | NO
+ bar        | <global>        | table         | foo     | INSERT         | NO
+ bar        | <global>        | table         | foo     | REFERENCES     | NO
+ bar        | <global>        | table         | foo     | SELECT         | NO
+ bar        | <global>        | table         | foo     | TRIGGER        | NO
+ bar        | <global>        | table         | foo     | TRUNCATE       | NO
+ bar        | <global>        | table         | foo     | UPDATE         | NO
+ bar        | <global>        | type          | PUBLIC  | USAGE          | NO
+ bar        | <global>        | type          | bar     | USAGE          | NO
+ bar        | <global>        | type          | foo     | USAGE          | NO
+ foo        | <global>        | schema        | bar     | CREATE         | NO
+ foo        | <global>        | schema        | bar     | USAGE          | NO
+ foo        | <global>        | schema        | foo     | CREATE         | NO
+ foo        | <global>        | schema        | foo     | USAGE          | NO
+ foo        | <global>        | sequence      | bar     | SELECT         | NO
+ foo        | <global>        | sequence      | bar     | UPDATE         | NO
+ foo        | <global>        | sequence      | bar     | USAGE          | NO
+ foo        | <global>        | sequence      | foo     | SELECT         | NO
+ foo        | <global>        | sequence      | foo     | UPDATE         | NO
+ foo        | <global>        | sequence      | foo     | USAGE          | NO
+ foo        | <global>        | table         | bar     | DELETE         | NO
+ foo        | <global>        | table         | bar     | INSERT         | NO
+ foo        | <global>        | table         | bar     | REFERENCES     | NO
+ foo        | <global>        | table         | bar     | SELECT         | NO
+ foo        | <global>        | table         | bar     | TRIGGER        | NO
+ foo        | <global>        | table         | bar     | TRUNCATE       | NO
+ foo        | <global>        | table         | bar     | UPDATE         | NO
+ foo        | <global>        | table         | foo     | DELETE         | NO
+ foo        | <global>        | table         | foo     | INSERT         | NO
+ foo        | <global>        | table         | foo     | REFERENCES     | NO
+ foo        | <global>        | table         | foo     | SELECT         | NO
+ foo        | <global>        | table         | foo     | TRIGGER        | NO
+ foo        | <global>        | table         | foo     | TRUNCATE       | NO
+ foo        | <global>        | table         | foo     | UPDATE         | NO
+ foo        | <global>        | type          | PUBLIC  | USAGE          | NO
+ foo        | <global>        | type          | bar     | USAGE          | NO
+ foo        | <global>        | type          | foo     | USAGE          | NO
+ root       | <global>        | schema        | PUBLIC  | USAGE          | NO
+ root       | <global>        | schema        | bar     | CREATE         | NO
+ root       | <global>        | schema        | bar     | USAGE          | NO
+ root       | <global>        | schema        | foo     | CREATE         | NO
+ root       | <global>        | schema        | foo     | USAGE          | NO
+ root       | <global>        | schema        | root    | CREATE         | NO
+ root       | <global>        | schema        | root    | USAGE          | NO
+ root       | <global>        | sequence      | PUBLIC  | SELECT         | NO
+ root       | <global>        | sequence      | bar     | SELECT         | NO
+ root       | <global>        | sequence      | bar     | UPDATE         | NO
+ root       | <global>        | sequence      | bar     | USAGE          | NO
+ root       | <global>        | sequence      | foo     | SELECT         | NO
+ root       | <global>        | sequence      | foo     | UPDATE         | NO
+ root       | <global>        | sequence      | foo     | USAGE          | NO
+ root       | <global>        | sequence      | root    | SELECT         | NO
+ root       | <global>        | sequence      | root    | UPDATE         | NO
+ root       | <global>        | sequence      | root    | USAGE          | NO
+ root       | <global>        | table         | PUBLIC  | SELECT         | NO
+ root       | <global>        | table         | bar     | DELETE         | NO
+ root       | <global>        | table         | bar     | INSERT         | NO
+ root       | <global>        | table         | bar     | REFERENCES     | NO
+ root       | <global>        | table         | bar     | SELECT         | NO
+ root       | <global>        | table         | bar     | TRIGGER        | NO
+ root       | <global>        | table         | bar     | TRUNCATE       | NO
+ root       | <global>        | table         | bar     | UPDATE         | NO
+ root       | <global>        | table         | foo     | DELETE         | NO
+ root       | <global>        | table         | foo     | INSERT         | NO
+ root       | <global>        | table         | foo     | REFERENCES     | NO
+ root       | <global>        | table         | foo     | SELECT         | NO
+ root       | <global>        | table         | foo     | TRIGGER        | NO
+ root       | <global>        | table         | foo     | TRUNCATE       | NO
+ root       | <global>        | table         | foo     | UPDATE         | NO
+ root       | <global>        | type          | PUBLIC  | USAGE          | NO
+ root       | <global>        | type          | bar     | USAGE          | NO
+ root       | <global>        | type          | foo     | USAGE          | NO
+ root       | <global>        | type          | root    | USAGE          | NO
+(90 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype | grantee | privilege_type | is_grantable 
+------------+-----------------+---------------+---------+----------------+--------------
+ bar        | <global>        | type          | PUBLIC  | USAGE          | NO
+ foo        | <global>        | type          | PUBLIC  | USAGE          | NO
+ root       | <global>        | schema        | PUBLIC  | USAGE          | NO
+ root       | <global>        | schema        | bar     | CREATE         | NO
+ root       | <global>        | schema        | bar     | USAGE          | NO
+ root       | <global>        | schema        | foo     | CREATE         | NO
+ root       | <global>        | schema        | foo     | USAGE          | NO
+ root       | <global>        | schema        | root    | CREATE         | NO
+ root       | <global>        | schema        | root    | USAGE          | NO
+ root       | <global>        | sequence      | PUBLIC  | SELECT         | NO
+ root       | <global>        | sequence      | bar     | SELECT         | NO
+ root       | <global>        | sequence      | bar     | UPDATE         | NO
+ root       | <global>        | sequence      | bar     | USAGE          | NO
+ root       | <global>        | sequence      | foo     | SELECT         | NO
+ root       | <global>        | sequence      | foo     | UPDATE         | NO
+ root       | <global>        | sequence      | foo     | USAGE          | NO
+ root       | <global>        | sequence      | root    | SELECT         | NO
+ root       | <global>        | sequence      | root    | UPDATE         | NO
+ root       | <global>        | sequence      | root    | USAGE          | NO
+ root       | <global>        | table         | PUBLIC  | SELECT         | NO
+ root       | <global>        | table         | bar     | DELETE         | NO
+ root       | <global>        | table         | bar     | INSERT         | NO
+ root       | <global>        | table         | bar     | REFERENCES     | NO
+ root       | <global>        | table         | bar     | SELECT         | NO
+ root       | <global>        | table         | bar     | TRIGGER        | NO
+ root       | <global>        | table         | bar     | TRUNCATE       | NO
+ root       | <global>        | table         | bar     | UPDATE         | NO
+ root       | <global>        | table         | foo     | DELETE         | NO
+ root       | <global>        | table         | foo     | INSERT         | NO
+ root       | <global>        | table         | foo     | REFERENCES     | NO
+ root       | <global>        | table         | foo     | SELECT         | NO
+ root       | <global>        | table         | foo     | TRIGGER        | NO
+ root       | <global>        | table         | foo     | TRUNCATE       | NO
+ root       | <global>        | table         | foo     | UPDATE         | NO
+ root       | <global>        | type          | PUBLIC  | USAGE          | NO
+ root       | <global>        | type          | bar     | USAGE          | NO
+ root       | <global>        | type          | foo     | USAGE          | NO
+ root       | <global>        | type          | root    | USAGE          | NO
+(38 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype | grantee | privilege_type | is_grantable 
+------------+-----------------+---------------+---------+----------------+--------------
+ bar        | <global>        | type          | PUBLIC  | USAGE          | NO
+ foo        | <global>        | type          | PUBLIC  | USAGE          | NO
+ root       | <global>        | table         | bar     | DELETE         | NO
+ root       | <global>        | table         | bar     | INSERT         | NO
+ root       | <global>        | table         | bar     | REFERENCES     | NO
+ root       | <global>        | table         | bar     | TRIGGER        | NO
+ root       | <global>        | table         | bar     | TRUNCATE       | NO
+ root       | <global>        | table         | bar     | UPDATE         | NO
+ root       | <global>        | table         | foo     | DELETE         | NO
+ root       | <global>        | table         | foo     | INSERT         | NO
+ root       | <global>        | table         | foo     | REFERENCES     | NO
+ root       | <global>        | table         | foo     | TRIGGER        | NO
+ root       | <global>        | table         | foo     | TRUNCATE       | NO
+ root       | <global>        | table         | foo     | UPDATE         | NO
+ root       | <global>        | type          | root    | USAGE          | NO
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype | grantee | privilege_type | is_grantable 
+------------+-----------------+---------------+---------+----------------+--------------
+ bar        | <global>        | type          | PUBLIC  | USAGE          | NO
+ foo        | <global>        | type          | PUBLIC  | USAGE          | NO
+ root       | <global>        | table         | foo     | TRIGGER        | YES
+ root       | <global>        | table         | foo     | TRUNCATE       | YES
+ root       | <global>        | type          | root    | USAGE          | NO
+(5 rows)
+
+CREATE DATABASE
+You are now connected to database "test2" as user "postgres".
+CREATE SCHEMA
+CREATE VIEW
+SET
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype | grantee  | privilege_type | is_grantable 
+------------+-----------------+---------------+----------+----------------+--------------
+ testuser   | <global>        | table         | foo      | TRIGGER        | YES
+ testuser   | <global>        | table         | foo      | TRUNCATE       | YES
+ testuser   | <global>        | table         | testuser | DELETE         | NO
+ testuser   | <global>        | table         | testuser | INSERT         | NO
+ testuser   | <global>        | table         | testuser | REFERENCES     | NO
+ testuser   | <global>        | table         | testuser | SELECT         | NO
+ testuser   | <global>        | table         | testuser | TRIGGER        | NO
+ testuser   | <global>        | table         | testuser | TRUNCATE       | NO
+ testuser   | <global>        | table         | testuser | UPDATE         | NO
+(9 rows)
+
+ defaclrole | defaclnamespace | defaclobjtype | grantee  | privilege_type | is_grantable 
+------------+-----------------+---------------+----------+----------------+--------------
+ testuser   | <global>        | table         | foo      | TRIGGER        | YES
+ testuser   | <global>        | table         | foo      | TRUNCATE       | YES
+ testuser   | <global>        | table         | testuser | DELETE         | NO
+ testuser   | <global>        | table         | testuser | INSERT         | NO
+ testuser   | <global>        | table         | testuser | REFERENCES     | NO
+ testuser   | <global>        | table         | testuser | SELECT         | NO
+ testuser   | <global>        | table         | testuser | TRIGGER        | NO
+ testuser   | <global>        | table         | testuser | TRUNCATE       | NO
+ testuser   | <global>        | table         | testuser | UPDATE         | NO
+(9 rows)
+
+ defaclrole | defaclnamespace | defaclobjtype | grantee  | privilege_type | is_grantable 
+------------+-----------------+---------------+----------+----------------+--------------
+ testuser   | <global>        | table         | foo      | TRIGGER        | YES
+ testuser   | <global>        | table         | foo      | TRUNCATE       | YES
+ testuser   | <global>        | table         | testuser | DELETE         | NO
+ testuser   | <global>        | table         | testuser | INSERT         | NO
+ testuser   | <global>        | table         | testuser | REFERENCES     | NO
+ testuser   | <global>        | table         | testuser | SELECT         | NO
+ testuser   | <global>        | table         | testuser | TRIGGER        | NO
+ testuser   | <global>        | table         | testuser | TRUNCATE       | NO
+ testuser   | <global>        | table         | testuser | UPDATE         | NO
+(9 rows)
+
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype | grantee  | privilege_type | is_grantable 
+------------+-----------------+---------------+----------+----------------+--------------
+ root       | <global>        | table         | foo      | TRIGGER        | YES
+ root       | <global>        | table         | foo      | TRUNCATE       | YES
+ root       | <global>        | table         | root     | DELETE         | NO
+ root       | <global>        | table         | root     | INSERT         | NO
+ root       | <global>        | table         | root     | REFERENCES     | NO
+ root       | <global>        | table         | root     | SELECT         | NO
+ root       | <global>        | table         | root     | TRIGGER        | NO
+ root       | <global>        | table         | root     | TRUNCATE       | NO
+ root       | <global>        | table         | root     | UPDATE         | NO
+ testuser   | <global>        | table         | foo      | TRIGGER        | YES
+ testuser   | <global>        | table         | foo      | TRUNCATE       | YES
+ testuser   | <global>        | table         | testuser | DELETE         | NO
+ testuser   | <global>        | table         | testuser | INSERT         | NO
+ testuser   | <global>        | table         | testuser | REFERENCES     | NO
+ testuser   | <global>        | table         | testuser | SELECT         | NO
+ testuser   | <global>        | table         | testuser | TRIGGER        | NO
+ testuser   | <global>        | table         | testuser | TRUNCATE       | NO
+ testuser   | <global>        | table         | testuser | UPDATE         | NO
+(18 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype |  grantee  | privilege_type | is_grantable 
+------------+-----------------+---------------+-----------+----------------+--------------
+ bar        | <global>        | table         | bar       | DELETE         | NO
+ bar        | <global>        | table         | bar       | INSERT         | NO
+ bar        | <global>        | table         | bar       | REFERENCES     | NO
+ bar        | <global>        | table         | bar       | SELECT         | NO
+ bar        | <global>        | table         | bar       | TRIGGER        | NO
+ bar        | <global>        | table         | bar       | TRUNCATE       | NO
+ bar        | <global>        | table         | bar       | UPDATE         | NO
+ bar        | <global>        | table         | foo       | TRIGGER        | YES
+ bar        | <global>        | table         | foo       | TRUNCATE       | YES
+ foo        | <global>        | table         | foo       | DELETE         | NO
+ foo        | <global>        | table         | foo       | INSERT         | NO
+ foo        | <global>        | table         | foo       | REFERENCES     | NO
+ foo        | <global>        | table         | foo       | SELECT         | NO
+ foo        | <global>        | table         | foo       | TRIGGER        | YES
+ foo        | <global>        | table         | foo       | TRUNCATE       | YES
+ foo        | <global>        | table         | foo       | UPDATE         | NO
+ root       | <global>        | table         | foo       | TRIGGER        | YES
+ root       | <global>        | table         | foo       | TRUNCATE       | YES
+ root       | <global>        | table         | root      | DELETE         | NO
+ root       | <global>        | table         | root      | INSERT         | NO
+ root       | <global>        | table         | root      | REFERENCES     | NO
+ root       | <global>        | table         | root      | SELECT         | NO
+ root       | <global>        | table         | root      | TRIGGER        | NO
+ root       | <global>        | table         | root      | TRUNCATE       | NO
+ root       | <global>        | table         | root      | UPDATE         | NO
+ testuser   | <global>        | table         | foo       | TRIGGER        | YES
+ testuser   | <global>        | table         | foo       | TRUNCATE       | YES
+ testuser   | <global>        | table         | testuser  | DELETE         | NO
+ testuser   | <global>        | table         | testuser  | INSERT         | NO
+ testuser   | <global>        | table         | testuser  | REFERENCES     | NO
+ testuser   | <global>        | table         | testuser  | SELECT         | NO
+ testuser   | <global>        | table         | testuser  | TRIGGER        | NO
+ testuser   | <global>        | table         | testuser  | TRUNCATE       | NO
+ testuser   | <global>        | table         | testuser  | UPDATE         | NO
+ testuser2  | <global>        | table         | foo       | TRIGGER        | YES
+ testuser2  | <global>        | table         | foo       | TRUNCATE       | YES
+ testuser2  | <global>        | table         | testuser2 | DELETE         | NO
+ testuser2  | <global>        | table         | testuser2 | INSERT         | NO
+ testuser2  | <global>        | table         | testuser2 | REFERENCES     | NO
+ testuser2  | <global>        | table         | testuser2 | SELECT         | NO
+ testuser2  | <global>        | table         | testuser2 | TRIGGER        | NO
+ testuser2  | <global>        | table         | testuser2 | TRUNCATE       | NO
+ testuser2  | <global>        | table         | testuser2 | UPDATE         | NO
+(43 rows)
+
+CREATE DATABASE
+You are now connected to database "MixedCaseDB" as user "postgres".
+CREATE SCHEMA
+CREATE VIEW
+SET
+CREATE SCHEMA
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype | grantee | privilege_type | is_grantable 
+------------+-----------------+---------------+---------+----------------+--------------
+ root       | MixedCaseSchema | table         | bar     | DELETE         | NO
+ root       | MixedCaseSchema | table         | bar     | INSERT         | NO
+ root       | MixedCaseSchema | table         | bar     | REFERENCES     | NO
+ root       | MixedCaseSchema | table         | bar     | SELECT         | NO
+ root       | MixedCaseSchema | table         | bar     | TRIGGER        | NO
+ root       | MixedCaseSchema | table         | bar     | TRUNCATE       | NO
+ root       | MixedCaseSchema | table         | bar     | UPDATE         | NO
+ root       | MixedCaseSchema | table         | foo     | SELECT         | YES
+(8 rows)
+
+ defaclrole | defaclnamespace | defaclobjtype | grantee | privilege_type | is_grantable 
+------------+-----------------+---------------+---------+----------------+--------------
+ root       | MixedCaseSchema | table         | bar     | DELETE         | NO
+ root       | MixedCaseSchema | table         | bar     | INSERT         | NO
+ root       | MixedCaseSchema | table         | bar     | REFERENCES     | NO
+ root       | MixedCaseSchema | table         | bar     | SELECT         | NO
+ root       | MixedCaseSchema | table         | bar     | TRIGGER        | NO
+ root       | MixedCaseSchema | table         | bar     | TRUNCATE       | NO
+ root       | MixedCaseSchema | table         | bar     | UPDATE         | NO
+ root       | MixedCaseSchema | table         | foo     | SELECT         | YES
+(8 rows)
+
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype | grantee  | privilege_type | is_grantable 
+------------+-----------------+---------------+----------+----------------+--------------
+ root       | <global>        | table         | root     | DELETE         | NO
+ root       | <global>        | table         | root     | INSERT         | NO
+ root       | <global>        | table         | root     | REFERENCES     | NO
+ root       | <global>        | table         | root     | SELECT         | NO
+ root       | <global>        | table         | root     | TRIGGER        | NO
+ root       | <global>        | table         | root     | TRUNCATE       | NO
+ root       | <global>        | table         | root     | UPDATE         | NO
+ root       | <global>        | table         | testuser | SELECT         | NO
+ root       | MixedCaseSchema | table         | bar      | DELETE         | NO
+ root       | MixedCaseSchema | table         | bar      | INSERT         | NO
+ root       | MixedCaseSchema | table         | bar      | REFERENCES     | NO
+ root       | MixedCaseSchema | table         | bar      | SELECT         | NO
+ root       | MixedCaseSchema | table         | bar      | TRIGGER        | NO
+ root       | MixedCaseSchema | table         | bar      | TRUNCATE       | NO
+ root       | MixedCaseSchema | table         | bar      | UPDATE         | NO
+ root       | MixedCaseSchema | table         | foo      | SELECT         | YES
+(16 rows)
+
+ defaclrole | defaclnamespace | defaclobjtype | grantee  | privilege_type | is_grantable 
+------------+-----------------+---------------+----------+----------------+--------------
+ root       | <global>        | table         | testuser | SELECT         | NO
+(1 row)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype | grantee | privilege_type | is_grantable 
+------------+-----------------+---------------+---------+----------------+--------------
+ bar        | <global>        | table         | bar     | DELETE         | NO
+ bar        | <global>        | table         | bar     | INSERT         | NO
+ bar        | <global>        | table         | bar     | REFERENCES     | NO
+ bar        | <global>        | table         | bar     | SELECT         | NO
+ bar        | <global>        | table         | bar     | TRIGGER        | YES
+ bar        | <global>        | table         | bar     | TRUNCATE       | YES
+ bar        | <global>        | table         | bar     | UPDATE         | NO
+ bar        | <global>        | table         | foo     | TRIGGER        | YES
+ bar        | <global>        | table         | foo     | TRUNCATE       | YES
+ foo        | <global>        | table         | bar     | TRIGGER        | YES
+ foo        | <global>        | table         | bar     | TRUNCATE       | YES
+ foo        | <global>        | table         | foo     | DELETE         | NO
+ foo        | <global>        | table         | foo     | INSERT         | NO
+ foo        | <global>        | table         | foo     | REFERENCES     | NO
+ foo        | <global>        | table         | foo     | SELECT         | NO
+ foo        | <global>        | table         | foo     | TRIGGER        | YES
+ foo        | <global>        | table         | foo     | TRUNCATE       | YES
+ foo        | <global>        | table         | foo     | UPDATE         | NO
+ root       | <global>        | table         | bar     | TRIGGER        | YES
+ root       | <global>        | table         | bar     | TRUNCATE       | YES
+ root       | <global>        | table         | foo     | TRIGGER        | YES
+ root       | <global>        | table         | foo     | TRUNCATE       | YES
+ root       | MixedCaseSchema | table         | bar     | DELETE         | NO
+ root       | MixedCaseSchema | table         | bar     | INSERT         | NO
+ root       | MixedCaseSchema | table         | bar     | REFERENCES     | NO
+ root       | MixedCaseSchema | table         | bar     | SELECT         | NO
+ root       | MixedCaseSchema | table         | bar     | TRIGGER        | NO
+ root       | MixedCaseSchema | table         | bar     | TRUNCATE       | NO
+ root       | MixedCaseSchema | table         | bar     | UPDATE         | NO
+ root       | MixedCaseSchema | table         | foo     | SELECT         | YES
+ testuser   | <global>        | table         | bar     | TRIGGER        | YES
+ testuser   | <global>        | table         | bar     | TRUNCATE       | YES
+ testuser   | <global>        | table         | foo     | TRIGGER        | YES
+ testuser   | <global>        | table         | foo     | TRUNCATE       | YES
+ testuser2  | <global>        | table         | bar     | TRIGGER        | YES
+ testuser2  | <global>        | table         | bar     | TRUNCATE       | YES
+ testuser2  | <global>        | table         | foo     | TRIGGER        | YES
+ testuser2  | <global>        | table         | foo     | TRUNCATE       | YES
+(38 rows)
+
+ defaclrole | defaclnamespace | defaclobjtype | grantee | privilege_type | is_grantable 
+------------+-----------------+---------------+---------+----------------+--------------
+ root       | MixedCaseSchema | table         | foo     | SELECT         | YES
+(1 row)
+
+You are now connected to database "crdb_tests_show_default_privileges" as user "postgres".
+DROP DATABASE
+DROP DATABASE
