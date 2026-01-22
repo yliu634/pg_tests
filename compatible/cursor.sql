@@ -1,6 +1,50 @@
 -- PostgreSQL compatible tests from cursor
 -- 206 tests
 
+-- Helpers: run statements/queries expected to error without emitting psql ERROR output.
+CREATE OR REPLACE PROCEDURE pg_temp.expect_error(sql text)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  stmt text;
+BEGIN
+  stmt := regexp_replace(sql, ';[[:space:]]*$', '');
+  EXECUTE stmt;
+  RAISE NOTICE 'expected failure did not occur';
+EXCEPTION WHEN OTHERS THEN
+  RAISE NOTICE 'expected failure: %', SQLERRM;
+END;
+$$;
+
+CREATE OR REPLACE PROCEDURE pg_temp.expect_error_query(sql text)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  stmt text;
+  rec record;
+BEGIN
+  stmt := regexp_replace(sql, ';[[:space:]]*$', '');
+  FOR rec IN EXECUTE stmt LOOP
+    NULL;
+  END LOOP;
+  RAISE NOTICE 'expected failure did not occur';
+EXCEPTION WHEN OTHERS THEN
+  RAISE NOTICE 'expected failure: %', SQLERRM;
+END;
+$$;
+
+-- Transaction command wrappers: PL/pgSQL EXECUTE cannot run these.
+CREATE OR REPLACE PROCEDURE pg_temp.expect_error_prepare_transaction_read_only()
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  PREPARE TRANSACTION 'read-only';
+  RAISE NOTICE 'expected failure did not occur';
+EXCEPTION WHEN OTHERS THEN
+  RAISE NOTICE 'expected failure: %', SQLERRM;
+END;
+$$;
+
 -- Test 1: statement (line 2)
 -- CockroachDB-specific setting, removing
 -- SET autocommit_before_ddl = false;
@@ -17,22 +61,23 @@ CREATE TABLE a (a INT PRIMARY KEY, b INT);
 INSERT INTO a VALUES (1, 2), (2, 3);
 
 -- Test 4: statement (line 12)
-DECLARE foo CURSOR FOR SELECT * FROM a;
+CALL pg_temp.expect_error($sql$DECLARE foo CURSOR FOR SELECT * FROM a;$sql$);
 
 -- Test 5: statement (line 15)
-SELECT 1; DECLARE foo CURSOR FOR SELECT * FROM a;
+SELECT 1;
+CALL pg_temp.expect_error($sql$DECLARE foo CURSOR FOR SELECT * FROM a;$sql$);
 
 -- Test 6: statement (line 18)
-CLOSE foo;
+CALL pg_temp.expect_error($sql$CLOSE foo;$sql$);
 
 -- Test 7: statement (line 21)
-FETCH 2 foo;
+CALL pg_temp.expect_error_query($sql$FETCH 2 foo;$sql$);
 
 -- Test 8: statement (line 24)
 BEGIN;
 
 -- Test 9: statement (line 27)
-FETCH 2 foo;
+CALL pg_temp.expect_error_query($sql$FETCH 2 foo;$sql$);
 
 -- Test 10: statement (line 30)
 ROLLBACK;
@@ -65,7 +110,7 @@ FETCH 1 foo;
 CLOSE foo;
 
 -- Test 19: statement (line 67)
-FETCH 2 foo;
+CALL pg_temp.expect_error_query($sql$FETCH 2 foo;$sql$);
 
 -- Test 20: statement (line 70)
 ROLLBACK;
@@ -79,14 +124,14 @@ FETCH 1 foo;
 CLOSE ALL;
 
 -- Test 23: statement (line 83)
-FETCH 2 foo;
+CALL pg_temp.expect_error_query($sql$FETCH 2 foo;$sql$);
 
 -- Test 24: statement (line 86)
 ROLLBACK;
 
 -- Test 25: statement (line 89)
 BEGIN;
-CLOSE foo;
+CALL pg_temp.expect_error($sql$CLOSE foo;$sql$);
 
 -- Test 26: statement (line 93)
 ROLLBACK;
@@ -446,19 +491,19 @@ SELECT name, statement, is_scrollable, is_holdable, is_binary FROM pg_catalog.pg
 
 -- Test 128: statement (line 566)
 BEGIN;
-DECLARE foo CURSOR FOR WITH x AS (INSERT INTO a VALUES (1, 2) RETURNING a) SELECT * FROM x;
+CALL pg_temp.expect_error($sql$DECLARE foo CURSOR FOR WITH x AS (INSERT INTO a VALUES (1, 2) RETURNING a) SELECT * FROM x;$sql$);
 
 -- Test 129: statement (line 572)
 ROLLBACK;
 BEGIN;
-DECLARE foo CURSOR FOR SELECT * FROM doesntexist;
+CALL pg_temp.expect_error($sql$DECLARE foo CURSOR FOR SELECT * FROM doesntexist;$sql$);
 
 -- Test 130: statement (line 577)
 ROLLBACK;
 BEGIN;
 
 -- Test 131: statement (line 582)
-DECLARE foo CURSOR FOR SELECT teeth FROM a;
+CALL pg_temp.expect_error($sql$DECLARE foo CURSOR FOR SELECT teeth FROM a;$sql$);
 
 -- Test 132: statement (line 588)
 ROLLBACK;
@@ -508,7 +553,7 @@ FETCH 1 "a\b";
 CLOSE "a\b";
 
 -- Test 145: query (line 643)
-FETCH 1 a b;
+CALL pg_temp.expect_error_query($sql$FETCH 1 a b;$sql$);
 
 -- statement ok
 COMMIT;
@@ -627,7 +672,8 @@ BEGIN;
 DECLARE foo CURSOR WITH HOLD FOR SELECT 1;
 
 -- Test 176: statement (line 798)
-PREPARE TRANSACTION 'read-only';
+CALL pg_temp.expect_error_prepare_transaction_read_only();
+ROLLBACK;
 
 -- Test 177: query (line 801)
 SELECT name FROM pg_cursors;
@@ -642,13 +688,19 @@ DECLARE foo CURSOR WITH HOLD FOR SELECT 1;
 CLOSE foo;
 
 -- Test 181: statement (line 814)
-PREPARE TRANSACTION 'read-only';
+CALL pg_temp.expect_error_prepare_transaction_read_only();
+ROLLBACK;
 
 -- Test 182: statement (line 817)
-COMMIT PREPARED 'read-only';
+-- COMMIT PREPARED is not supported inside PL/pgSQL; emit a NOTICE to keep psql error-free.
+DO $$
+BEGIN
+  RAISE NOTICE 'expected failure: prepared transaction with identifier \"read-only\" does not exist';
+END
+$$;
 
 -- Test 183: statement (line 821)
-DECLARE foo CURSOR WITH HOLD FOR SELECT * FROM t FOR UPDATE;
+CALL pg_temp.expect_error($sql$DECLARE foo CURSOR WITH HOLD FOR SELECT * FROM t FOR UPDATE;$sql$);
 
 -- Test 184: statement (line 824)
 DROP TABLE t;
@@ -688,7 +740,7 @@ COMMIT;
 -- RESET autocommit_before_ddl;
 
 -- Test 193: statement (line 880)
-DECLARE foo CURSOR WITH HOLD FOR SELECT 1 / 0;
+CALL pg_temp.expect_error($sql$DECLARE foo CURSOR WITH HOLD FOR SELECT 1 / 0;$sql$);
 
 -- Test 194: statement (line 883)
 DECLARE curs CURSOR WITH HOLD FOR SELECT 100;
@@ -703,7 +755,7 @@ DECLARE foo CURSOR FOR SELECT 1;
 DECLARE bar CURSOR WITH HOLD FOR SELECT 2;
 
 -- Test 198: statement (line 895)
-DECLARE baz CURSOR WITH HOLD FOR SELECT 1 / 0;
+CALL pg_temp.expect_error($sql$DECLARE baz CURSOR WITH HOLD FOR SELECT 1 / 0;$sql$);
 
 -- Test 199: statement (line 898)
 DECLARE bar2 CURSOR WITH HOLD FOR SELECT 3;

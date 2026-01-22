@@ -1,14 +1,27 @@
 -- PostgreSQL compatible tests from check_constraints
 -- 108 tests
 
+-- Helper: run a statement that is expected to error without emitting psql ERROR output.
+CREATE OR REPLACE PROCEDURE pg_temp.expect_error(sql text)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  stmt text;
+BEGIN
+  stmt := regexp_replace(sql, ';[[:space:]]*$', '');
+  EXECUTE stmt;
+  RAISE NOTICE 'expected failure did not occur';
+EXCEPTION WHEN OTHERS THEN
+  RAISE NOTICE 'expected failure: %', SQLERRM;
+END;
+$$;
+
 -- Test 1: statement (line 3)
 CREATE TABLE t1 (a INT CHECK (a > 0), to_delete INT, b INT CHECK (b < 0) CHECK (b > -100));
 
 -- Test 2: statement (line 6)
 -- Expected ERROR: invalid input syntax for type integer: "3.3".
-\set ON_ERROR_STOP 0
-INSERT INTO t1 VALUES ('3.3', 0, -1);
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$INSERT INTO t1 VALUES ('3.3', 0, -1);$sql$);
 
 -- Test 3: statement (line 9)
 INSERT INTO t1 VALUES ('3', 0, -1);
@@ -24,21 +37,15 @@ INSERT INTO t1 (a, b) VALUES (4, -2);
 
 -- Test 7: statement (line 21)
 -- Expected ERROR: violates CHECK (a > 0).
-\set ON_ERROR_STOP 0
-INSERT INTO t1 VALUES (-3, -1);
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$INSERT INTO t1 VALUES (-3, -1);$sql$);
 
 -- Test 8: statement (line 24)
 -- Expected ERROR: violates CHECK (b < 0).
-\set ON_ERROR_STOP 0
-INSERT INTO t1 VALUES (3, 1);
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$INSERT INTO t1 VALUES (3, 1);$sql$);
 
 -- Test 9: statement (line 27)
 -- Expected ERROR: violates CHECK (b > -100).
-\set ON_ERROR_STOP 0
-INSERT INTO t1 VALUES (3, -101);
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$INSERT INTO t1 VALUES (3, -101);$sql$);
 
 -- Test 10: statement (line 30)
 INSERT INTO t1 (b, a) VALUES (-2, 4);
@@ -54,24 +61,18 @@ CREATE TABLE t2 (a INT DEFAULT -1 CHECK (a >= 0), b INT CHECK (b <= 0), CHECK (b
 
 -- Test 14: statement (line 42)
 -- Expected ERROR: violates CHECK (a >= 0) via default a = -1.
-\set ON_ERROR_STOP 0
-INSERT INTO t2 (b) VALUES (-2);
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$INSERT INTO t2 (b) VALUES (-2);$sql$);
 
 -- Test 15: statement (line 47)
 ALTER TABLE t2 RENAME COLUMN b TO c;
 
 -- Test 16: statement (line 50)
 -- Expected ERROR: violates CHECK (c <= 0).
-\set ON_ERROR_STOP 0
-INSERT INTO t2 (a, c) VALUES (2, 1);
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$INSERT INTO t2 (a, c) VALUES (2, 1);$sql$);
 
 -- Test 17: statement (line 53)
 -- Expected ERROR: violates CHECK (c < a).
-\set ON_ERROR_STOP 0
-INSERT INTO t2 (a, c) VALUES (0, 0);
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$INSERT INTO t2 (a, c) VALUES (0, 0);$sql$);
 
 -- Test 18: statement (line 56)
 INSERT INTO t2 (a, c) VALUES (2, -1);
@@ -84,27 +85,23 @@ INSERT INTO t3 (a, b) VALUES (3, 2);
 
 -- Test 21: statement (line 65)
 -- Expected ERROR: violates CHECK (b < a).
-\set ON_ERROR_STOP 0
-INSERT INTO t3 (a, b) VALUES (2, 3);
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$INSERT INTO t3 (a, b) VALUES (2, 3);$sql$);
 
 -- Test 22: statement (line 69)
 -- Expected ERROR: aggregate functions are not allowed in check constraints.
-\set ON_ERROR_STOP 0
-CREATE TABLE t4 (a INT, b INT CHECK (count(*) = 1));
+CALL pg_temp.expect_error($sql$CREATE TABLE t4 (a INT, b INT CHECK (count(*) = 1));$sql$);
 
 -- Test 23: statement (line 73)
 -- Expected ERROR: subqueries are not allowed in check constraints.
-CREATE TABLE t4 (a INT, b INT CHECK (EXISTS (SELECT * FROM t2)));
+CALL pg_temp.expect_error($sql$CREATE TABLE t4 (a INT, b INT CHECK (EXISTS (SELECT * FROM t2)));$sql$);
 
 -- Test 24: statement (line 77)
 -- Expected ERROR: CHECK constraint expression must be boolean.
-CREATE TABLE t4 (a INT CHECK(1));
+CALL pg_temp.expect_error($sql$CREATE TABLE t4 (a INT CHECK(1));$sql$);
 
 -- Test 25: statement (line 80)
 -- Expected ERROR: CHECK constraint expression must be boolean.
-CREATE TABLE t4 (a INT CHECK(a));
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$CREATE TABLE t4 (a INT CHECK(a));$sql$);
 
 -- Test 26: statement (line 84)
 CREATE TABLE calls_func (a INT CHECK(abs(a) < 2));
@@ -114,29 +111,23 @@ INSERT INTO calls_func VALUES (1), (-1);
 
 -- Test 28: statement (line 90)
 -- Expected ERROR: violates CHECK (abs(a) < 2).
-\set ON_ERROR_STOP 0
-INSERT INTO calls_func VALUES (-5);
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$INSERT INTO calls_func VALUES (-5);$sql$);
 
 -- Test 29: statement (line 94)
 -- Expected ERROR: aggregate functions are not allowed in check constraints.
-\set ON_ERROR_STOP 0
-CREATE TABLE bad (a INT CHECK(sum(a) > 1));
+CALL pg_temp.expect_error($sql$CREATE TABLE bad (a INT CHECK(sum(a) > 1));$sql$);
 
 -- Test 30: statement (line 98)
 -- Expected ERROR: window functions are not allowed in check constraints.
-CREATE TABLE bad (a INT CHECK(sum(a) OVER () > 1));
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$CREATE TABLE bad (a INT CHECK(sum(a) OVER () > 1));$sql$);
 
 -- Test 31: statement (line 102)
 -- Expected ERROR: CHECK constraint expression must be boolean.
-\set ON_ERROR_STOP 0
-CREATE TABLE t4 (a INT CHECK (false - true));
+CALL pg_temp.expect_error($sql$CREATE TABLE t4 (a INT CHECK (false - true));$sql$);
 
 -- Test 32: statement (line 105)
 -- Expected ERROR: referenced columns do not exist.
-CREATE TABLE t4 (a INT, CHECK (a < b), CHECK (a+b+c+d < 20));
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$CREATE TABLE t4 (a INT, CHECK (a < b), CHECK (a+b+c+d < 20));$sql$);
 
 -- Test 33: statement (line 108)
 CREATE TABLE t4 (
@@ -150,9 +141,7 @@ INSERT INTO t4 (a, b) VALUES (2, 3);
 
 -- Test 35: statement (line 119)
 -- Expected ERROR: violates CHECK (a < b) with default b = 5.
-\set ON_ERROR_STOP 0
-INSERT INTO t4 (a) VALUES (6);
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$INSERT INTO t4 (a) VALUES (6);$sql$);
 
 -- Test 36: statement (line 122)
 INSERT INTO t4 VALUES (1, 2, 3, 4);
@@ -162,24 +151,20 @@ INSERT INTO t4 VALUES (NULL, 2, 22, NULL);
 
 -- Test 38: statement (line 128)
 -- Expected ERROR: violates CHECK (a+b+c+d < 20).
-\set ON_ERROR_STOP 0
-INSERT INTO t4 VALUES (1, 2, 3, 19);
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$INSERT INTO t4 VALUES (1, 2, 3, 19);$sql$);
 
 -- Test 39: query (line 131)
 SELECT * from t3;
 
 -- Test 40: statement (line 137)
 -- Expected ERROR: violates CHECK (b < a).
-\set ON_ERROR_STOP 0
-UPDATE t3 SET b = 3 WHERE a = 3;
+CALL pg_temp.expect_error($sql$UPDATE t3 SET b = 3 WHERE a = 3;$sql$);
 
 -- onlyif config #112488 weak-iso-level-configs
 
 -- Test 41: statement (line 141)
 -- Expected ERROR: violates CHECK (b < a).
-UPDATE t3 SET b = 3 WHERE a = 3;
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$UPDATE t3 SET b = 3 WHERE a = 3;$sql$);
 
 -- skipif config #112488 weak-iso-level-configs
 
@@ -188,9 +173,7 @@ UPDATE t3 SET b = 1 WHERE a = 3;
 
 -- Test 43: statement (line 148)
 -- Expected ERROR: violates CHECK (a < b).
-\set ON_ERROR_STOP 0
-UPDATE t4 SET a = 2 WHERE c = 3;
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$UPDATE t4 SET a = 2 WHERE c = 3;$sql$);
 
 -- Test 44: statement (line 151)
 UPDATE t4 SET a = 0 WHERE c = 3;
@@ -204,31 +187,25 @@ CREATE TABLE t5 (
 
 -- Test 46: statement (line 162)
 -- Expected ERROR: violates CHECK (a > b).
-\set ON_ERROR_STOP 0
-INSERT INTO t5 VALUES (1, 10, 20) ON CONFLICT (k) DO NOTHING;
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$INSERT INTO t5 VALUES (1, 10, 20) ON CONFLICT (k) DO NOTHING;$sql$);
 
 -- Test 47: statement (line 165)
 INSERT INTO t5 VALUES (1, 10, 9) ON CONFLICT (k) DO NOTHING;
 
 -- Test 48: statement (line 169)
 -- Expected ERROR: violates CHECK (a > b).
-\set ON_ERROR_STOP 0
-INSERT INTO t5 VALUES (1, 10, 20) ON CONFLICT (k) DO NOTHING;
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$INSERT INTO t5 VALUES (1, 10, 20) ON CONFLICT (k) DO NOTHING;$sql$);
 
 -- Test 49: statement (line 174)
 -- Expected ERROR: violates CHECK (a > b).
-\set ON_ERROR_STOP 0
-INSERT INTO t5 VALUES (2, 11, 12) ON CONFLICT (k) DO UPDATE SET b = 12 WHERE t5.k = 2;
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$INSERT INTO t5 VALUES (2, 11, 12) ON CONFLICT (k) DO UPDATE SET b = 12 WHERE t5.k = 2;$sql$);
 
 -- Test 50: statement (line 177)
 -- Expected ERROR: violates CHECK (a > b).
-\set ON_ERROR_STOP 0
+CALL pg_temp.expect_error($sql$
 INSERT INTO t5 VALUES (2, 11, 12)
   ON CONFLICT (k) DO UPDATE SET a = EXCLUDED.a, b = EXCLUDED.b;
-\set ON_ERROR_STOP 1
+$sql$);
 
 -- Test 51: statement (line 180)
 INSERT INTO t5 VALUES (2, 11, 10)
@@ -246,31 +223,25 @@ SELECT * FROM t5;
 
 -- Test 55: statement (line 198)
 -- Expected ERROR: violates CHECK (a > b).
-\set ON_ERROR_STOP 0
-INSERT INTO t5 VALUES (2, 11, 12) ON CONFLICT (k) DO UPDATE SET b = 12 WHERE t5.k = 2;
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$INSERT INTO t5 VALUES (2, 11, 12) ON CONFLICT (k) DO UPDATE SET b = 12 WHERE t5.k = 2;$sql$);
 
 -- Test 56: statement (line 201)
 -- Expected ERROR: violates CHECK (a > b).
-\set ON_ERROR_STOP 0
+CALL pg_temp.expect_error($sql$
 INSERT INTO t5 VALUES (2, 11, 12)
   ON CONFLICT (k) DO UPDATE SET a = EXCLUDED.a, b = EXCLUDED.b;
-\set ON_ERROR_STOP 1
+$sql$);
 
 -- Test 57: statement (line 204)
 -- Expected ERROR: violates CHECK (a > b).
-\set ON_ERROR_STOP 0
-INSERT INTO t5 VALUES (2, 11, 12) ON CONFLICT (k) DO UPDATE SET b = t5.a + 1 WHERE t5.k = 2;
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$INSERT INTO t5 VALUES (2, 11, 12) ON CONFLICT (k) DO UPDATE SET b = t5.a + 1 WHERE t5.k = 2;$sql$);
 
 -- Test 58: query (line 207)
 SELECT * FROM t5;
 
 -- Test 59: statement (line 213)
 -- Expected ERROR: subqueries are not allowed in check constraints.
-\set ON_ERROR_STOP 0
-CREATE TABLE t6 (x INT CHECK (x = (SELECT 1)));
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$CREATE TABLE t6 (x INT CHECK (x = (SELECT 1)));$sql$);
 
 -- Test 60: statement (line 218)
 CREATE TABLE t7 (
@@ -317,21 +288,21 @@ ORDER BY conname;
 
 -- Test 65: statement (line 301)
 -- Expected ERROR: check constraints cannot reference other relations.
-\set ON_ERROR_STOP 0
+CALL pg_temp.expect_error($sql$
 CREATE TABLE t8 (
   a INT,
   CHECK (different_table.a > 0)
 );
-\set ON_ERROR_STOP 1
+$sql$);
 
 -- Test 66: statement (line 307)
 -- Expected ERROR: check constraints cannot reference other schemas/relations.
-\set ON_ERROR_STOP 0
+CALL pg_temp.expect_error($sql$
 CREATE TABLE t8 (
   a INT,
   CHECK (different_database.t8.a > 0)
 );
-\set ON_ERROR_STOP 1
+$sql$);
 
 -- Test 67: statement (line 313)
 CREATE SCHEMA IF NOT EXISTS test;
@@ -385,9 +356,7 @@ INSERT INTO t9 VALUES (5, 3);
 
 -- Test 74: statement (line 378)
 -- Expected ERROR: violates CHECK (a > b).
-\set ON_ERROR_STOP 0
-INSERT INTO t9 VALUES (6, 7);
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$INSERT INTO t9 VALUES (6, 7);$sql$);
 
 -- skipif config #112488 weak-iso-level-configs
 
@@ -398,9 +367,7 @@ UPDATE t9 SET b = 4 WHERE a = 5;
 
 -- Test 76: statement (line 386)
 -- Expected ERROR: violates CHECK (a > b).
-\set ON_ERROR_STOP 0
-UPDATE t9 SET b = 6 WHERE a = 5;
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$UPDATE t9 SET b = 6 WHERE a = 5;$sql$);
 
 -- skipif config #112488 weak-iso-level-configs
 
@@ -411,9 +378,7 @@ UPDATE t9 SET a = 7 WHERE a = 4;
 
 -- Test 78: statement (line 394)
 -- Expected ERROR: violates CHECK (a > b).
-\set ON_ERROR_STOP 0
-UPDATE t9 SET a = 2 WHERE a = 5;
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$UPDATE t9 SET a = 2 WHERE a = 5;$sql$);
 
 -- onlyif config #112488 weak-iso-level-configs
 
@@ -470,9 +435,7 @@ CREATE TABLE t46675isnotnull (k int, a int, CHECK ((k, a) IS NOT NULL));
 
 -- Test 92: statement (line 457)
 -- Expected ERROR: violates CHECK ((k, a) IS NOT NULL).
-\set ON_ERROR_STOP 0
-INSERT INTO t46675isnotnull VALUES (1, NULL);
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error($sql$INSERT INTO t46675isnotnull VALUES (1, NULL);$sql$);
 
 -- Test 93: statement (line 462)
 CREATE TABLE t51690(x INT, y INT, CHECK(x / y = 1));

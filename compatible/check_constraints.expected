@@ -1,93 +1,84 @@
+CREATE PROCEDURE
 CREATE TABLE
-psql:pg_tests/compatible/check_constraints.sql:10: ERROR:  invalid input syntax for type integer: "3.3"
-LINE 1: INSERT INTO t1 VALUES ('3.3', 0, -1);
-                               ^
+psql:pg_tests/compatible/check_constraints.sql:24: NOTICE:  expected failure: invalid input syntax for type integer: "3.3"
+CALL
 INSERT 0 1
 INSERT 0 1
 ALTER TABLE
 INSERT 0 1
-psql:pg_tests/compatible/check_constraints.sql:28: ERROR:  new row for relation "t1" violates check constraint "t1_a_check"
-DETAIL:  Failing row contains (-3, -1).
-psql:pg_tests/compatible/check_constraints.sql:34: ERROR:  new row for relation "t1" violates check constraint "t1_b_check"
-DETAIL:  Failing row contains (3, 1).
-psql:pg_tests/compatible/check_constraints.sql:40: ERROR:  new row for relation "t1" violates check constraint "t1_b_check1"
-DETAIL:  Failing row contains (3, -101).
+psql:pg_tests/compatible/check_constraints.sql:40: NOTICE:  expected failure: new row for relation "t1" violates check constraint "t1_a_check"
+CALL
+psql:pg_tests/compatible/check_constraints.sql:44: NOTICE:  expected failure: new row for relation "t1" violates check constraint "t1_b_check"
+CALL
+psql:pg_tests/compatible/check_constraints.sql:48: NOTICE:  expected failure: new row for relation "t1" violates check constraint "t1_b_check1"
+CALL
 INSERT 0 1
 INSERT 0 1
 INSERT 0 1
 CREATE TABLE
-psql:pg_tests/compatible/check_constraints.sql:58: ERROR:  new row for relation "t2" violates check constraint "t2_a_check"
-DETAIL:  Failing row contains (-1, -2).
+psql:pg_tests/compatible/check_constraints.sql:64: NOTICE:  expected failure: new row for relation "t2" violates check constraint "t2_a_check"
+CALL
 ALTER TABLE
-psql:pg_tests/compatible/check_constraints.sql:67: ERROR:  new row for relation "t2" violates check constraint "t2_b_check"
-DETAIL:  Failing row contains (2, 1).
-psql:pg_tests/compatible/check_constraints.sql:73: ERROR:  new row for relation "t2" violates check constraint "t2_check"
-DETAIL:  Failing row contains (0, 0).
+psql:pg_tests/compatible/check_constraints.sql:71: NOTICE:  expected failure: new row for relation "t2" violates check constraint "t2_b_check"
+CALL
+psql:pg_tests/compatible/check_constraints.sql:75: NOTICE:  expected failure: new row for relation "t2" violates check constraint "t2_check"
+CALL
 INSERT 0 1
 CREATE TABLE
 INSERT 0 1
-psql:pg_tests/compatible/check_constraints.sql:88: ERROR:  new row for relation "t3" violates check constraint "t3_check"
-DETAIL:  Failing row contains (2, 3).
-psql:pg_tests/compatible/check_constraints.sql:94: ERROR:  aggregate functions are not allowed in check constraints
-LINE 1: CREATE TABLE t4 (a INT, b INT CHECK (count(*) = 1));
-                                             ^
-psql:pg_tests/compatible/check_constraints.sql:98: ERROR:  cannot use subquery in check constraint
-LINE 1: CREATE TABLE t4 (a INT, b INT CHECK (EXISTS (SELECT * FROM t...
-                                             ^
-psql:pg_tests/compatible/check_constraints.sql:102: ERROR:  argument of CHECK must be type boolean, not type integer
-LINE 1: CREATE TABLE t4 (a INT CHECK(1));
-                                     ^
-psql:pg_tests/compatible/check_constraints.sql:106: ERROR:  argument of CHECK must be type boolean, not type integer
-LINE 1: CREATE TABLE t4 (a INT CHECK(a));
-                                     ^
+psql:pg_tests/compatible/check_constraints.sql:88: NOTICE:  expected failure: new row for relation "t3" violates check constraint "t3_check"
+CALL
+psql:pg_tests/compatible/check_constraints.sql:92: NOTICE:  expected failure: aggregate functions are not allowed in check constraints
+CALL
+psql:pg_tests/compatible/check_constraints.sql:96: NOTICE:  expected failure: cannot use subquery in check constraint
+CALL
+psql:pg_tests/compatible/check_constraints.sql:100: NOTICE:  expected failure: argument of CHECK must be type boolean, not type integer
+CALL
+psql:pg_tests/compatible/check_constraints.sql:104: NOTICE:  expected failure: argument of CHECK must be type boolean, not type integer
+CALL
 CREATE TABLE
 INSERT 0 2
-psql:pg_tests/compatible/check_constraints.sql:118: ERROR:  new row for relation "calls_func" violates check constraint "calls_func_a_check"
-DETAIL:  Failing row contains (-5).
-psql:pg_tests/compatible/check_constraints.sql:124: ERROR:  aggregate functions are not allowed in check constraints
-LINE 1: CREATE TABLE bad (a INT CHECK(sum(a) > 1));
-                                      ^
-psql:pg_tests/compatible/check_constraints.sql:128: ERROR:  window functions are not allowed in check constraints
-LINE 1: CREATE TABLE bad (a INT CHECK(sum(a) OVER () > 1));
-                                      ^
-psql:pg_tests/compatible/check_constraints.sql:134: ERROR:  operator does not exist: boolean - boolean
-LINE 1: CREATE TABLE t4 (a INT CHECK (false - true));
-                                            ^
-HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/check_constraints.sql:138: ERROR:  column "b" does not exist
-LINE 1: CREATE TABLE t4 (a INT, CHECK (a < b), CHECK (a+b+c+d < 20))...
-                                           ^
+psql:pg_tests/compatible/check_constraints.sql:114: NOTICE:  expected failure: new row for relation "calls_func" violates check constraint "calls_func_a_check"
+CALL
+psql:pg_tests/compatible/check_constraints.sql:118: NOTICE:  expected failure: aggregate functions are not allowed in check constraints
+CALL
+psql:pg_tests/compatible/check_constraints.sql:122: NOTICE:  expected failure: window functions are not allowed in check constraints
+CALL
+psql:pg_tests/compatible/check_constraints.sql:126: NOTICE:  expected failure: operator does not exist: boolean - boolean
+CALL
+psql:pg_tests/compatible/check_constraints.sql:130: NOTICE:  expected failure: column "b" does not exist
+CALL
 CREATE TABLE
 INSERT 0 1
-psql:pg_tests/compatible/check_constraints.sql:154: ERROR:  new row for relation "t4" violates check constraint "t4_check"
-DETAIL:  Failing row contains (6, 5, null, null).
+psql:pg_tests/compatible/check_constraints.sql:144: NOTICE:  expected failure: new row for relation "t4" violates check constraint "t4_check"
+CALL
 INSERT 0 1
 INSERT 0 1
-psql:pg_tests/compatible/check_constraints.sql:166: ERROR:  new row for relation "t4" violates check constraint "all"
-DETAIL:  Failing row contains (1, 2, 3, 19).
+psql:pg_tests/compatible/check_constraints.sql:154: NOTICE:  expected failure: new row for relation "t4" violates check constraint "all"
+CALL
  a | b 
 ---+---
  3 | 2
 (1 row)
 
-psql:pg_tests/compatible/check_constraints.sql:175: ERROR:  new row for relation "t3" violates check constraint "t3_check"
-DETAIL:  Failing row contains (3, 3).
-psql:pg_tests/compatible/check_constraints.sql:181: ERROR:  new row for relation "t3" violates check constraint "t3_check"
-DETAIL:  Failing row contains (3, 3).
+psql:pg_tests/compatible/check_constraints.sql:161: NOTICE:  expected failure: new row for relation "t3" violates check constraint "t3_check"
+CALL
+psql:pg_tests/compatible/check_constraints.sql:167: NOTICE:  expected failure: new row for relation "t3" violates check constraint "t3_check"
+CALL
 UPDATE 1
-psql:pg_tests/compatible/check_constraints.sql:192: ERROR:  new row for relation "t4" violates check constraint "t4_check"
-DETAIL:  Failing row contains (2, 2, 3, 4).
+psql:pg_tests/compatible/check_constraints.sql:176: NOTICE:  expected failure: new row for relation "t4" violates check constraint "t4_check"
+CALL
 UPDATE 1
 CREATE TABLE
-psql:pg_tests/compatible/check_constraints.sql:208: ERROR:  new row for relation "t5" violates check constraint "t5_check"
-DETAIL:  Failing row contains (1, 10, 20).
+psql:pg_tests/compatible/check_constraints.sql:190: NOTICE:  expected failure: new row for relation "t5" violates check constraint "t5_check"
+CALL
 INSERT 0 1
-psql:pg_tests/compatible/check_constraints.sql:217: ERROR:  new row for relation "t5" violates check constraint "t5_check"
-DETAIL:  Failing row contains (1, 10, 20).
-psql:pg_tests/compatible/check_constraints.sql:223: ERROR:  new row for relation "t5" violates check constraint "t5_check"
-DETAIL:  Failing row contains (2, 11, 12).
-psql:pg_tests/compatible/check_constraints.sql:230: ERROR:  new row for relation "t5" violates check constraint "t5_check"
-DETAIL:  Failing row contains (2, 11, 12).
+psql:pg_tests/compatible/check_constraints.sql:197: NOTICE:  expected failure: new row for relation "t5" violates check constraint "t5_check"
+CALL
+psql:pg_tests/compatible/check_constraints.sql:201: NOTICE:  expected failure: new row for relation "t5" violates check constraint "t5_check"
+CALL
+psql:pg_tests/compatible/check_constraints.sql:208: NOTICE:  expected failure: new row for relation "t5" violates check constraint "t5_check"
+CALL
 INSERT 0 1
  k | a  | b  
 ---+----+----
@@ -102,21 +93,20 @@ INSERT 0 1
  2 | 11 | 9
 (2 rows)
 
-psql:pg_tests/compatible/check_constraints.sql:250: ERROR:  new row for relation "t5" violates check constraint "t5_check"
-DETAIL:  Failing row contains (2, 11, 12).
-psql:pg_tests/compatible/check_constraints.sql:257: ERROR:  new row for relation "t5" violates check constraint "t5_check"
-DETAIL:  Failing row contains (2, 11, 12).
-psql:pg_tests/compatible/check_constraints.sql:263: ERROR:  new row for relation "t5" violates check constraint "t5_check"
-DETAIL:  Failing row contains (2, 11, 12).
+psql:pg_tests/compatible/check_constraints.sql:226: NOTICE:  expected failure: new row for relation "t5" violates check constraint "t5_check"
+CALL
+psql:pg_tests/compatible/check_constraints.sql:233: NOTICE:  expected failure: new row for relation "t5" violates check constraint "t5_check"
+CALL
+psql:pg_tests/compatible/check_constraints.sql:237: NOTICE:  expected failure: new row for relation "t5" violates check constraint "t5_check"
+CALL
  k | a  | b 
 ---+----+---
  1 | 10 | 9
  2 | 11 | 9
 (2 rows)
 
-psql:pg_tests/compatible/check_constraints.sql:272: ERROR:  cannot use subquery in check constraint
-LINE 1: CREATE TABLE t6 (x INT CHECK (x = (SELECT 1)));
-                                          ^
+psql:pg_tests/compatible/check_constraints.sql:244: NOTICE:  expected failure: cannot use subquery in check constraint
+CALL
 CREATE TABLE
      conname      |        condef         
 ------------------+-----------------------
@@ -154,13 +144,10 @@ CREATE TABLE
  t7_x_check       | CHECK ((x > 0))
 (5 rows)
 
-psql:pg_tests/compatible/check_constraints.sql:324: ERROR:  missing FROM-clause entry for table "different_table"
-LINE 3:   CHECK (different_table.a > 0)
-                 ^
-psql:pg_tests/compatible/check_constraints.sql:333: ERROR:  invalid reference to FROM-clause entry for table "t8"
-LINE 3:   CHECK (different_database.t8.a > 0)
-                 ^
-DETAIL:  There is an entry for table "t8", but it cannot be referenced from this part of the query.
+psql:pg_tests/compatible/check_constraints.sql:296: NOTICE:  expected failure: missing FROM-clause entry for table "different_table"
+CALL
+psql:pg_tests/compatible/check_constraints.sql:305: NOTICE:  expected failure: invalid reference to FROM-clause entry for table "t8"
+CALL
 CREATE SCHEMA
 CREATE TABLE
    conname   |     condef      
@@ -181,14 +168,14 @@ CREATE SCHEMA
 CREATE TABLE
 CREATE TABLE
 INSERT 0 1
-psql:pg_tests/compatible/check_constraints.sql:389: ERROR:  new row for relation "t9" violates check constraint "t9_check"
-DETAIL:  Failing row contains (6, 7, null, null, null).
+psql:pg_tests/compatible/check_constraints.sql:359: NOTICE:  expected failure: new row for relation "t9" violates check constraint "t9_check"
+CALL
 UPDATE 1
-psql:pg_tests/compatible/check_constraints.sql:402: ERROR:  new row for relation "t9" violates check constraint "t9_check"
-DETAIL:  Failing row contains (5, 6, null, null, null).
+psql:pg_tests/compatible/check_constraints.sql:370: NOTICE:  expected failure: new row for relation "t9" violates check constraint "t9_check"
+CALL
 UPDATE 0
-psql:pg_tests/compatible/check_constraints.sql:415: ERROR:  new row for relation "t9" violates check constraint "t9_check"
-DETAIL:  Failing row contains (2, 4, null, null, null).
+psql:pg_tests/compatible/check_constraints.sql:381: NOTICE:  expected failure: new row for relation "t9" violates check constraint "t9_check"
+CALL
 UPDATE 1
 CREATE TABLE
 INSERT 0 1
@@ -202,8 +189,8 @@ ALTER TABLE
 CREATE TABLE
 INSERT 0 1
 CREATE TABLE
-psql:pg_tests/compatible/check_constraints.sql:474: ERROR:  new row for relation "t46675isnotnull" violates check constraint "t46675isnotnull_check"
-DETAIL:  Failing row contains (1, null).
+psql:pg_tests/compatible/check_constraints.sql:438: NOTICE:  expected failure: new row for relation "t46675isnotnull" violates check constraint "t46675isnotnull_check"
+CALL
 CREATE TABLE
 INSERT 0 1
 CREATE TABLE

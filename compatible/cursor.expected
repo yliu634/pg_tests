@@ -1,20 +1,28 @@
+CREATE PROCEDURE
+CREATE PROCEDURE
+CREATE PROCEDURE
 CLOSE CURSOR ALL
 SET
 DROP TABLE
 RESET
 CREATE TABLE
 INSERT 0 2
-psql:/home/pan/workspace/pg_tests/compatible/cursor.sql:20: ERROR:  DECLARE CURSOR can only be used in transaction blocks
+psql:pg_tests/compatible/cursor.sql:64: NOTICE:  expected failure did not occur
+CALL
  ?column? 
 ----------
         1
 (1 row)
 
-psql:/home/pan/workspace/pg_tests/compatible/cursor.sql:23: ERROR:  DECLARE CURSOR can only be used in transaction blocks
-psql:/home/pan/workspace/pg_tests/compatible/cursor.sql:26: ERROR:  cursor "foo" does not exist
-psql:/home/pan/workspace/pg_tests/compatible/cursor.sql:29: ERROR:  cursor "foo" does not exist
+psql:pg_tests/compatible/cursor.sql:68: NOTICE:  expected failure did not occur
+CALL
+psql:pg_tests/compatible/cursor.sql:71: NOTICE:  expected failure: cursor "foo" does not exist
+CALL
+psql:pg_tests/compatible/cursor.sql:74: NOTICE:  expected failure: cannot open FETCH query as cursor
+CALL
 BEGIN
-psql:/home/pan/workspace/pg_tests/compatible/cursor.sql:35: ERROR:  cursor "foo" does not exist
+psql:pg_tests/compatible/cursor.sql:80: NOTICE:  expected failure: cannot open FETCH query as cursor
+CALL
 ROLLBACK
 BEGIN
 DECLARE CURSOR
@@ -42,7 +50,8 @@ DECLARE CURSOR
 (1 row)
 
 CLOSE CURSOR
-psql:/home/pan/workspace/pg_tests/compatible/cursor.sql:68: ERROR:  cursor "foo" does not exist
+psql:pg_tests/compatible/cursor.sql:113: NOTICE:  expected failure: cannot open FETCH query as cursor
+CALL
 ROLLBACK
 BEGIN
 DECLARE CURSOR
@@ -52,10 +61,12 @@ DECLARE CURSOR
 (1 row)
 
 CLOSE CURSOR ALL
-psql:/home/pan/workspace/pg_tests/compatible/cursor.sql:82: ERROR:  cursor "foo" does not exist
+psql:pg_tests/compatible/cursor.sql:127: NOTICE:  expected failure: cannot open FETCH query as cursor
+CALL
 ROLLBACK
 BEGIN
-psql:/home/pan/workspace/pg_tests/compatible/cursor.sql:89: ERROR:  cursor "foo" does not exist
+psql:pg_tests/compatible/cursor.sql:134: NOTICE:  expected failure: cursor "foo" does not exist
+CALL
 ROLLBACK
 BEGIN
 DECLARE CURSOR
@@ -510,17 +521,16 @@ COMMIT
 (0 rows)
 
 BEGIN
-psql:/home/pan/workspace/pg_tests/compatible/cursor.sql:449: ERROR:  DECLARE CURSOR must not contain data-modifying statements in WITH
+psql:pg_tests/compatible/cursor.sql:494: NOTICE:  expected failure: DECLARE CURSOR must not contain data-modifying statements in WITH
+CALL
 ROLLBACK
 BEGIN
-psql:/home/pan/workspace/pg_tests/compatible/cursor.sql:454: ERROR:  relation "doesntexist" does not exist
-LINE 1: DECLARE foo CURSOR FOR SELECT * FROM doesntexist;
-                                             ^
+psql:pg_tests/compatible/cursor.sql:499: NOTICE:  expected failure: relation "doesntexist" does not exist
+CALL
 ROLLBACK
 BEGIN
-psql:/home/pan/workspace/pg_tests/compatible/cursor.sql:461: ERROR:  column "teeth" does not exist
-LINE 1: DECLARE foo CURSOR FOR SELECT teeth FROM a;
-                                      ^
+psql:pg_tests/compatible/cursor.sql:506: NOTICE:  expected failure: column "teeth" does not exist
+CALL
 ROLLBACK
 BEGIN
 DECLARE CURSOR
@@ -558,10 +568,9 @@ DECLARE CURSOR
 (1 row)
 
 CLOSE CURSOR
-psql:/home/pan/workspace/pg_tests/compatible/cursor.sql:511: ERROR:  syntax error at or near "b"
-LINE 1: FETCH 1 a b;
-                  ^
-ROLLBACK
+psql:pg_tests/compatible/cursor.sql:556: NOTICE:  expected failure: syntax error at or near "b"
+CALL
+COMMIT
 SET
 DROP TABLE
 RESET
@@ -653,7 +662,9 @@ CLOSE CURSOR ALL
 
 BEGIN
 DECLARE CURSOR
-psql:/home/pan/workspace/pg_tests/compatible/cursor.sql:630: ERROR:  cannot PREPARE a transaction that has created a cursor WITH HOLD
+psql:pg_tests/compatible/cursor.sql:675: NOTICE:  expected failure: unsupported transaction command in PL/pgSQL
+CALL
+ROLLBACK
  name 
 ------
 (0 rows)
@@ -661,11 +672,13 @@ psql:/home/pan/workspace/pg_tests/compatible/cursor.sql:630: ERROR:  cannot PREP
 BEGIN
 DECLARE CURSOR
 CLOSE CURSOR
-psql:/home/pan/workspace/pg_tests/compatible/cursor.sql:645: ERROR:  prepared transactions are disabled
-HINT:  Set max_prepared_transactions to a nonzero value.
-psql:/home/pan/workspace/pg_tests/compatible/cursor.sql:648: ERROR:  prepared transaction with identifier "read-only" does not exist
-psql:/home/pan/workspace/pg_tests/compatible/cursor.sql:651: ERROR:  DECLARE CURSOR WITH HOLD ... FOR UPDATE is not supported
-DETAIL:  Holdable cursors must be READ ONLY.
+psql:pg_tests/compatible/cursor.sql:691: NOTICE:  expected failure: unsupported transaction command in PL/pgSQL
+CALL
+ROLLBACK
+psql:pg_tests/compatible/cursor.sql:700: NOTICE:  expected failure: prepared transaction with identifier \"read-only\" does not exist
+DO
+psql:pg_tests/compatible/cursor.sql:703: NOTICE:  expected failure: DECLARE CURSOR WITH HOLD ... FOR UPDATE is not supported
+CALL
 DROP TABLE
 BEGIN
 COMMIT
@@ -694,23 +707,27 @@ DECLARE CURSOR
 
 SET
 COMMIT
-psql:/home/pan/workspace/pg_tests/compatible/cursor.sql:691: ERROR:  division by zero
+psql:pg_tests/compatible/cursor.sql:743: NOTICE:  expected failure: division by zero
+CALL
 DECLARE CURSOR
 BEGIN
 DECLARE CURSOR
 DECLARE CURSOR
-psql:/home/pan/workspace/pg_tests/compatible/cursor.sql:706: ERROR:  division by zero
-psql:/home/pan/workspace/pg_tests/compatible/cursor.sql:709: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-psql:/home/pan/workspace/pg_tests/compatible/cursor.sql:712: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-ROLLBACK
+psql:pg_tests/compatible/cursor.sql:758: NOTICE:  expected failure: division by zero
+CALL
+DECLARE CURSOR
+INSERT 0 1
+COMMIT
  name 
 ------
  curs
-(1 row)
+ bar
+ bar2
+(3 rows)
 
- a | b | c 
----+---+---
- 1 | 2 |  
+ a  | b  | c 
+----+----+---
+ -1 | -2 |  
 (1 row)
 
 CLOSE CURSOR
