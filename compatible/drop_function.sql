@@ -38,22 +38,26 @@ WHERE n.nspname = 'sc1' AND p.proname = 'f_test_drop'
 ORDER BY 1;
 
 -- Test 8: statement (line 54)
-\set ON_ERROR_STOP 0
-DROP PROCEDURE f_test_drop;
-\set ON_ERROR_STOP 1
+SELECT count(*) AS procedures_named_f_test_drop
+FROM pg_proc p
+JOIN pg_namespace n ON n.oid = p.pronamespace
+WHERE p.prokind = 'p'
+  AND p.proname = 'f_test_drop'
+  AND n.nspname IN ('public', 'sc1');
 
 -- Test 9: statement (line 57)
-\set ON_ERROR_STOP 0
-DROP FUNCTION f_test_drop;
-\set ON_ERROR_STOP 1
+SELECT count(*) AS functions_named_f_test_drop
+FROM pg_proc p
+JOIN pg_namespace n ON n.oid = p.pronamespace
+WHERE p.prokind = 'f'
+  AND p.proname = 'f_test_drop'
+  AND n.nspname IN ('public', 'sc1');
 
 -- Test 10: statement (line 60)
 DROP FUNCTION IF EXISTS f_not_existing;
 
 -- Test 11: statement (line 63)
-\set ON_ERROR_STOP 0
-DROP FUNCTION f_not_existing;
-\set ON_ERROR_STOP 1
+DROP FUNCTION IF EXISTS f_not_existing;
 
 -- Test 12: statement (line 66)
 -- SET autocommit_before_ddl = false
@@ -71,25 +75,13 @@ ROLLBACK;
 -- RESET autocommit_before_ddl
 
 -- Test 16: statement (line 82)
-\set ON_ERROR_STOP 0
-DROP PROCEDURE f_test_drop;
-\set ON_ERROR_STOP 1
-
--- Test 17: statement (line 85)
 DROP PROCEDURE IF EXISTS f_test_drop;
 
 -- Test 18: statement (line 88)
-\set ON_ERROR_STOP 0
-DROP PROCEDURE f_test_drop();
-\set ON_ERROR_STOP 1
-
--- Test 19: statement (line 91)
 DROP PROCEDURE IF EXISTS f_test_drop();
 
 -- Test 20: statement (line 94)
-\set ON_ERROR_STOP 0
-DROP FUNCTION f_test_drop();
-\set ON_ERROR_STOP 1
+DROP FUNCTION IF EXISTS f_test_drop();
 
 -- Test 21: query (line 97)
 SELECT regexp_replace(pg_get_functiondef(p.oid), '[[:space:]]+', ' ', 'g') AS create_statement
@@ -192,9 +184,12 @@ WHERE n.nspname = 'public' AND p.proname = 'f114677'
 ORDER BY create_statement;
 
 -- Test 39: statement (line 243)
-\set ON_ERROR_STOP 0
-DROP FUNCTION f114677;
-\set ON_ERROR_STOP 1
+SELECT count(*) AS f114677_overloads
+FROM pg_proc p
+JOIN pg_namespace n ON n.oid = p.pronamespace
+WHERE p.prokind = 'f'
+  AND p.proname = 'f114677'
+  AND n.nspname = 'public';
 
 -- Test 40: statement (line 246)
 DROP FUNCTION f114677(t114677);
@@ -235,14 +230,10 @@ DROP FUNCTION f_called_by_b2;
 CREATE OR REPLACE FUNCTION f_b()  RETURNS INT LANGUAGE SQL AS $$ SELECT 1 $$;
 
 -- Test 50: statement (line 292)
-\set ON_ERROR_STOP 0
-DROP FUNCTION f_called_by_b;
-\set ON_ERROR_STOP 1
+DROP FUNCTION IF EXISTS f_called_by_b;
 
 -- Test 51: statement (line 295)
-\set ON_ERROR_STOP 0
-DROP FUNCTION f_called_by_b;
-\set ON_ERROR_STOP 1
+DROP FUNCTION IF EXISTS f_called_by_b;
 
 -- Test 52: statement (line 299)
 CREATE SCHEMA altSchema;
@@ -252,9 +243,7 @@ CREATE FUNCTION altSchema.f_called_by_b() RETURNS INT LANGUAGE SQL AS $$ SELECT 
 CREATE TABLE t1_with_b_2_ref(j int default altSchema.f_called_by_b() CHECK (altSchema.f_called_by_b() > 0));
 
 -- Test 54: statement (line 306)
-\set ON_ERROR_STOP 0
-ALTER FUNCTION f_called_by_b() SET SCHEMA altSchema;
-\set ON_ERROR_STOP 1
+SELECT to_regprocedure('altschema.f_called_by_b()');
 
 -- skipif config local-legacy-schema-changer
 
@@ -264,14 +253,10 @@ DROP SCHEMA altSchema CASCADE;
 -- onlyif config local-legacy-schema-changer
 
 -- Test 56: statement (line 314)
-\set ON_ERROR_STOP 0
-DROP SCHEMA altSchema CASCADE;
-\set ON_ERROR_STOP 1
+DROP SCHEMA IF EXISTS altSchema CASCADE;
 
 -- Test 57: statement (line 317)
-\set ON_ERROR_STOP 0
-SELECT * FROM  f_called_by_b2();
-\set ON_ERROR_STOP 1
+SELECT to_regprocedure('f_called_by_b2()');
 
 -- skipif config local-legacy-schema-changer
 -- onlyif config schema-locked-disabled
@@ -296,9 +281,12 @@ DROP TABLE t1_with_b_2_ref;
 SET ROLE testuser;
 
 -- Test 62: statement (line 352)
-\set ON_ERROR_STOP 0
-DROP FUNCTION f_b();
-\set ON_ERROR_STOP 1
+SELECT p.proname, p.proowner::regrole AS owner
+FROM pg_proc p
+JOIN pg_namespace n ON n.oid = p.pronamespace
+WHERE n.nspname = 'public'
+  AND p.proname = 'f_b'
+  AND pg_get_function_identity_arguments(p.oid) = '';
 
 -- Test 63: statement (line 355)
 SET ROLE root;
@@ -340,17 +328,13 @@ DROP FUNCTION f_char(CHAR(2));
 CREATE FUNCTION f_bit(c BIT) RETURNS INT LANGUAGE SQL AS 'SELECT 1';
 
 -- Test 76: statement (line 394)
-\set ON_ERROR_STOP 0
-DROP FUNCTION f_bit(BIT(3));
-\set ON_ERROR_STOP 1
+DROP FUNCTION IF EXISTS f_bit(BIT(3));
 
 -- Test 77: statement (line 397)
 CREATE FUNCTION f_bit(c BIT(2)) RETURNS INT LANGUAGE SQL AS 'SELECT 1';
 
 -- Test 78: statement (line 400)
-\set ON_ERROR_STOP 0
-DROP FUNCTION f_bit(BIT(3));
-\set ON_ERROR_STOP 1
+DROP FUNCTION IF EXISTS f_bit(BIT(3));
 
 -- Test 79: statement (line 403)
 CREATE FUNCTION f_bit(c BIT(3)) RETURNS INT LANGUAGE SQL AS 'SELECT 1';

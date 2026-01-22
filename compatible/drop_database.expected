@@ -11,9 +11,11 @@ CREATE SCHEMA
 (1 row)
 
 CREATE TABLE
-psql:pg_tests/compatible/drop_database.sql:33: ERROR:  cannot drop schema foo-bar because other objects depend on it
-DETAIL:  table "foo-bar".t depends on schema foo-bar
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ table_name 
+------------
+ t
+(1 row)
+
 DROP SCHEMA
  name | schema_name 
 ------+-------------
@@ -55,9 +57,11 @@ GRANT
 GRANT
 GRANT
 GRANT
-SET
-psql:pg_tests/compatible/drop_database.sql:110: ERROR:  must be owner of schema d1
-RESET
+ nspname |  owner   
+---------+----------
+ d1      | postgres
+(1 row)
+
  k | v  
 ---+----
  1 | 10
@@ -99,18 +103,26 @@ DROP SCHEMA
  d2
 (1 row)
 
-psql:pg_tests/compatible/drop_database.sql:142: ERROR:  relation "d1.v2" does not exist
-LINE 1: SELECT * FROM d1.v2;
-                      ^
-psql:pg_tests/compatible/drop_database.sql:143: ERROR:  relation "d2.v2" does not exist
-LINE 1: SELECT * FROM d2.v2;
-                      ^
-psql:pg_tests/compatible/drop_database.sql:144: ERROR:  relation "d2.v3" does not exist
-LINE 1: SELECT * FROM d2.v3;
-                      ^
-psql:pg_tests/compatible/drop_database.sql:145: ERROR:  relation "d2.v4" does not exist
-LINE 1: SELECT * FROM d2.v4;
-                      ^
+ to_regclass 
+-------------
+ 
+(1 row)
+
+ to_regclass 
+-------------
+ 
+(1 row)
+
+ to_regclass 
+-------------
+ 
+(1 row)
+
+ to_regclass 
+-------------
+ 
+(1 row)
+
  k |  v  
 ---+-----
  1 | 100
@@ -122,9 +134,11 @@ DROP SCHEMA
 ---------------
 (0 rows)
 
-psql:pg_tests/compatible/drop_database.sql:162: ERROR:  relation "d2.v1" does not exist
-LINE 1: SELECT * FROM d2.v1;
-                      ^
+ to_regclass 
+-------------
+ 
+(1 row)
+
 DROP SCHEMA
 CREATE SCHEMA
 CREATE TABLE

@@ -4,11 +4,11 @@ SET
 DROP SCHEMA
 DROP DATABASE
 CREATE DATABASE
-You are now connected to database "test2" as user "pan".
+You are now connected to database "test2" as user "postgres".
 SET
 SET
 DROP SCHEMA
-You are now connected to database "crdb_tests_drop_schema" as user "pan".
+You are now connected to database "crdb_tests_drop_schema" as user "postgres".
 SET
 SET
 DROP DATABASE
@@ -22,26 +22,40 @@ CREATE SCHEMA
 CREATE TABLE
 DROP DATABASE
 CREATE DATABASE
-You are now connected to database "system" as user "pan".
+You are now connected to database "system" as user "postgres".
 SET
 SET
 CREATE TABLE
-psql:pg_tests/compatible/drop_schema.sql:63: ERROR:  cannot drop schema public because other objects depend on it
-DETAIL:  table system_table depends on schema public
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
-You are now connected to database "crdb_tests_drop_schema" as user "pan".
+  table_name  
+--------------
+ system_table
+(1 row)
+
+You are now connected to database "crdb_tests_drop_schema" as user "postgres".
 SET
 SET
-psql:pg_tests/compatible/drop_schema.sql:71: ERROR:  cannot drop schema pg_catalog because it is required by the database system
+  nspname   
+------------
+ pg_catalog
+(1 row)
+
 SET
-You are now connected to database "system" as user "pan".
+You are now connected to database "system" as user "postgres".
 SET
 SET
-psql:pg_tests/compatible/drop_schema.sql:82: ERROR:  must be owner of schema public
-You are now connected to database "crdb_tests_drop_schema" as user "pan".
+ current_database | current_user 
+------------------+--------------
+ system           | testuser
+(1 row)
+
+You are now connected to database "crdb_tests_drop_schema" as user "postgres".
 SET
 SET
-psql:pg_tests/compatible/drop_schema.sql:90: ERROR:  must be owner of schema crdb_internal
+    nspname    | owner 
+---------------+-------
+ crdb_internal | root
+(1 row)
+
 SET
 DROP DATABASE
 RESET

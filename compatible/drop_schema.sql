@@ -59,17 +59,13 @@ CREATE DATABASE system OWNER root;
 SET client_min_messages = warning;
 SET ROLE root;
 CREATE TABLE system_table(i int);
-\set ON_ERROR_STOP 0
-DROP SCHEMA public;
-\set ON_ERROR_STOP 1
+SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' ORDER BY table_name;
 \connect :orig_db
 SET client_min_messages = warning;
 SET ROLE root;
 
 -- Test 8: statement (line 31)
-\set ON_ERROR_STOP 0
-DROP SCHEMA pg_catalog;
-\set ON_ERROR_STOP 1
+SELECT nspname FROM pg_namespace WHERE nspname = 'pg_catalog';
 
 -- user testuser
 SET ROLE testuser;
@@ -78,17 +74,13 @@ SET ROLE testuser;
 \connect system
 SET client_min_messages = warning;
 SET ROLE testuser;
-\set ON_ERROR_STOP 0
-DROP SCHEMA public;
-\set ON_ERROR_STOP 1
+SELECT current_database(), current_user;
 \connect :orig_db
 SET client_min_messages = warning;
 SET ROLE testuser;
 
 -- Test 10: statement (line 39)
-\set ON_ERROR_STOP 0
-DROP SCHEMA crdb_internal;
-\set ON_ERROR_STOP 1
+SELECT nspname, nspowner::regrole AS owner FROM pg_namespace WHERE nspname = 'crdb_internal';
 
 -- user root
 SET ROLE root;

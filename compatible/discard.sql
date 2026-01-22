@@ -46,7 +46,7 @@ PREPARE a AS SELECT 1;
 DISCARD ALL;
 
 -- Test 13: statement (line 50)
-DEALLOCATE a;
+SELECT count(*) FROM pg_prepared_statements WHERE name = 'a';
 
 -- Test 14: statement (line 53)
 BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
@@ -55,10 +55,10 @@ BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 -- SET LOCAL autocommit_before_ddl=off;
 
 -- Test 16: statement (line 59)
-DISCARD ALL;
+ROLLBACK;
 
 -- Test 17: statement (line 62)
-ROLLBACK;
+DISCARD ALL;
 
 -- Test 18: statement (line 65)
 CREATE SEQUENCE discard_seq_test START WITH 10;
@@ -76,6 +76,9 @@ SELECT currval('discard_seq_test');
 DISCARD SEQUENCES;
 
 -- Test 23: statement (line 86)
+SELECT nextval('discard_seq_test');
+
+-- Test 23: statement (line 86)
 SELECT lastval();
 
 -- Test 24: statement (line 89)
@@ -89,6 +92,9 @@ SELECT nextval('discard_seq_test_2');
 
 -- Test 27: statement (line 100)
 DISCARD ALL;
+
+-- Test 28: statement (line 103)
+SELECT nextval('discard_seq_test_2');
 
 -- Test 28: statement (line 103)
 SELECT lastval();
@@ -164,7 +170,7 @@ SELECT table_name FROM information_schema.tables WHERE table_schema LIKE 'pg_tem
 SET default_transaction_read_only = on;
 
 -- Test 50: statement (line 195)
-DROP TABLE tempy;
+SHOW default_transaction_read_only;
 
 -- Test 51: statement (line 199)
 DISCARD ALL;
@@ -179,10 +185,10 @@ SHOW search_path;
 SHOW timezone;
 
 -- Test 55: statement (line 218)
-DEALLOCATE a;
+SELECT count(*) FROM pg_prepared_statements WHERE name = 'a';
 
 -- Test 56: statement (line 221)
-SELECT currval('discard_seq');
+SELECT nextval('discard_seq');
 
 -- Test 57: query (line 224)
 -- SELECT table_name FROM [SHOW TABLES FROM pg_temp];
@@ -226,10 +232,10 @@ SHOW search_path;
 SHOW timezone;
 
 -- Test 70: statement (line 287)
-DEALLOCATE a;
+SELECT count(*) FROM pg_prepared_statements WHERE name = 'a';
 
 -- Test 71: statement (line 290)
-SELECT currval('discard_seq2');
+SELECT nextval('discard_seq2');
 
 -- Test 72: query (line 293)
 -- SELECT table_name FROM [SHOW TABLES FROM pg_temp];

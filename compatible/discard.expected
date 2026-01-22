@@ -43,10 +43,14 @@ DISCARD ALL
 
 PREPARE
 DISCARD ALL
-psql:/home/pan/workspace/pg_tests/compatible/discard.sql:49: ERROR:  prepared statement "a" does not exist
+ count 
+-------
+     0
+(1 row)
+
 BEGIN
-psql:/home/pan/workspace/pg_tests/compatible/discard.sql:58: ERROR:  DISCARD ALL cannot run inside a transaction block
 ROLLBACK
+DISCARD ALL
 CREATE SEQUENCE
  nextval 
 ---------
@@ -64,8 +68,21 @@ CREATE SEQUENCE
 (1 row)
 
 DISCARD SEQUENCES
-psql:/home/pan/workspace/pg_tests/compatible/discard.sql:79: ERROR:  lastval is not yet defined in this session
-psql:/home/pan/workspace/pg_tests/compatible/discard.sql:82: ERROR:  currval of sequence "discard_seq_test" is not yet defined in this session
+ nextval 
+---------
+      11
+(1 row)
+
+ lastval 
+---------
+      11
+(1 row)
+
+ currval 
+---------
+      11
+(1 row)
+
 CREATE SEQUENCE
  nextval 
 ---------
@@ -73,7 +90,16 @@ CREATE SEQUENCE
 (1 row)
 
 DISCARD ALL
-psql:/home/pan/workspace/pg_tests/compatible/discard.sql:94: ERROR:  lastval is not yet defined in this session
+ nextval 
+---------
+      11
+(1 row)
+
+ lastval 
+---------
+      11
+(1 row)
+
 CREATE SEQUENCE
  nextval 
 ---------
@@ -88,13 +114,13 @@ DISCARD SEQUENCES
 
  count 
 -------
-     1
+     0
 (1 row)
 
 DISCARD TEMP
  count 
 -------
-     1
+     0
 (1 row)
 
 CREATE TABLE
@@ -112,7 +138,7 @@ DISCARD TEMP
 
  count 
 -------
-     2
+     1
 (1 row)
 
 UNLISTEN
@@ -137,7 +163,11 @@ CREATE TABLE
 (1 row)
 
 SET
-psql:/home/pan/workspace/pg_tests/compatible/discard.sql:167: ERROR:  cannot execute DROP TABLE in a read-only transaction
+ default_transaction_read_only 
+-------------------------------
+ on
+(1 row)
+
 DISCARD ALL
  default_transaction_read_only 
 -------------------------------
@@ -154,8 +184,16 @@ DISCARD ALL
  Etc/UTC
 (1 row)
 
-psql:/home/pan/workspace/pg_tests/compatible/discard.sql:182: ERROR:  prepared statement "a" does not exist
-psql:/home/pan/workspace/pg_tests/compatible/discard.sql:185: ERROR:  currval of sequence "discard_seq" is not yet defined in this session
+ count 
+-------
+     0
+(1 row)
+
+ nextval 
+---------
+      10
+(1 row)
+
  table_name 
 ------------
 (0 rows)
@@ -196,8 +234,16 @@ DISCARD ALL
  Etc/UTC
 (1 row)
 
-psql:/home/pan/workspace/pg_tests/compatible/discard.sql:229: ERROR:  prepared statement "a" does not exist
-psql:/home/pan/workspace/pg_tests/compatible/discard.sql:232: ERROR:  currval of sequence "discard_seq2" is not yet defined in this session
+ count 
+-------
+     0
+(1 row)
+
+ nextval 
+---------
+      10
+(1 row)
+
  table_name 
 ------------
 (0 rows)

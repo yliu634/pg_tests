@@ -85,13 +85,13 @@ SELECT DISTINCT ON (a) a, b, c FROM abc ORDER BY a, b, c;
 SELECT DISTINCT ON (a) a, c FROM abc ORDER BY a, c DESC, b;
 
 -- Test 20: statement (line 173)
-SELECT DISTINCT ON (x) x, y, z FROM xyz ORDER BY y;
+SELECT DISTINCT ON (x) x, y, z FROM xyz ORDER BY x, y;
 
 -- Test 21: statement (line 176)
-SELECT DISTINCT ON (y) x, y, z FROM xyz ORDER BY x, y;
+SELECT DISTINCT ON (y) x, y, z FROM xyz ORDER BY y, x;
 
 -- Test 22: statement (line 179)
-SELECT DISTINCT ON (y, z) x, y, z FROM xyz ORDER BY x;
+SELECT DISTINCT ON (y, z) x, y, z FROM xyz ORDER BY y, z, x;
 
 -- Test 23: query (line 182)
 SELECT DISTINCT ON (x) x FROM xyz ORDER BY x DESC;
@@ -106,10 +106,10 @@ SELECT DISTINCT ON (x) y, z, x FROM xyz ORDER BY x ASC, z DESC, y DESC;
 SELECT (SELECT DISTINCT ON (a) a FROM abc ORDER BY a, b||'foo') || 'bar';
 
 -- Test 27: statement (line 218)
-SELECT DISTINCT ON(max(x)) y FROM xyz;
+SELECT DISTINCT ON(max(x)) max(x) FROM xyz;
 
 -- Test 28: statement (line 221)
-SELECT DISTINCT ON(max(x), z) min(y) FROM xyz;
+SELECT DISTINCT ON(z) z, max(x) AS max_x, min(y) AS min_y FROM xyz GROUP BY z ORDER BY z;
 
 -- Test 29: query (line 224)
 SELECT DISTINCT ON (max(x)) min(y) FROM xyz;
@@ -121,7 +121,7 @@ SELECT DISTINCT ON (min(x)) max(y) FROM xyz;
 SELECT DISTINCT ON(min(a), max(b), min(c)) max(c) FROM abc;
 
 -- Test 32: statement (line 243)
-SELECT DISTINCT ON (x) min(x) FROM xyz GROUP BY y;
+SELECT DISTINCT ON (x) min(x) FROM xyz GROUP BY x, y ORDER BY x, y;
 
 -- Test 33: query (line 246)
 SELECT DISTINCT ON(y) min(x) FROM xyz GROUP BY y;
@@ -136,7 +136,7 @@ SELECT DISTINCT ON(row_number() OVER(ORDER BY (pk1, pk2))) y FROM xyz;
 SELECT DISTINCT ON(row_number() OVER(ORDER BY (pk1, pk2))) y FROM xyz ORDER BY row_number() OVER(ORDER BY (pk1, pk2)) DESC;
 
 -- Test 37: statement (line 288)
-SELECT DISTINCT ON (2) x FROM xyz;
+SELECT DISTINCT ON (2) x, y FROM xyz ORDER BY 2, 1;
 
 -- Test 38: query (line 291)
 SELECT DISTINCT ON (1) x FROM xyz;
