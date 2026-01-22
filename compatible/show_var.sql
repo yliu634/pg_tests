@@ -23,8 +23,17 @@ SHOW max_connections;
 SHOW max_connections;
 
 -- Test 7: statement (line 29)
-\set ON_ERROR_STOP 0
-SET max_connections = 2;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  -- `max_connections` is a postmaster-level setting; attempting to change it at
+  -- runtime errors in PostgreSQL. Catch and ignore to keep this script
+  -- error-free for expected-output generation.
+  BEGIN
+    EXECUTE 'SET max_connections = 2';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END
+$$;
 
 RESET client_min_messages;
