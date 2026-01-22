@@ -1,0 +1,5 @@
+pg_tests/compatible/update_from.sql
+pg_tests/compatible/user.sql
+pg_tests/compatible/uuid.sql
+pg_tests/compatible/values.sql
+pg_tests/compatible/vectorize_local.sql

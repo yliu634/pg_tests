@@ -1,0 +1,5 @@
+pg_tests/compatible/swap_mutation.sql
+pg_tests/compatible/synthetic_privileges.sql
+pg_tests/compatible/system.sql
+pg_tests/compatible/system_columns.sql
+pg_tests/compatible/temp_table.sql

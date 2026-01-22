@@ -1,0 +1,5 @@
+pg_tests/compatible/tuple_local.sql
+pg_tests/compatible/two_phase_commit.sql
+pg_tests/compatible/txn_as_of.sql
+pg_tests/compatible/txn_retry.sql
+pg_tests/compatible/type_privileges.sql

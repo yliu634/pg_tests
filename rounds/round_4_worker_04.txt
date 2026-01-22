@@ -1,0 +1,5 @@
+pg_tests/compatible/typing.sql
+pg_tests/compatible/udf_calling_udf.sql
+pg_tests/compatible/udf_delete.sql
+pg_tests/compatible/udf_deps.sql
+pg_tests/compatible/udf_in_constraints.sql

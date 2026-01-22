@@ -1,0 +1,5 @@
+pg_tests/compatible/vectorize_overloads.sql
+pg_tests/compatible/vectorize_shutdown.sql
+pg_tests/compatible/vectorize_unsupported.sql
+pg_tests/compatible/vectorize_window.sql
+pg_tests/compatible/virtual_table_privileges.sql

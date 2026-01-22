@@ -1,0 +1,5 @@
+pg_tests/compatible/temp_table_txn.sql
+pg_tests/compatible/tenant.sql
+pg_tests/compatible/tenant_from_tenant_hint.sql
+pg_tests/compatible/tenant_slow_repro.sql
+pg_tests/compatible/time.sql
