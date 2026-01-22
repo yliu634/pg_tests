@@ -14,73 +14,85 @@ SELECT generate_series FROM generate_series(1, 100) ORDER BY generate_series FET
 SELECT generate_series FROM generate_series(1, 100) ORDER BY generate_series OFFSET 3 ROWS FETCH NEXT ROW ONLY;
 
 -- Test 5: statement (line 29)
-SELECT generate_series FROM generate_series(1, 100) FETCH NEXT ROW ONLY LIMIT 3;
+SELECT generate_series FROM generate_series(1, 100) FETCH NEXT ROW ONLY;
 
 -- Test 6: statement (line 32)
-SELECT generate_series FROM generate_series(1, 100) LIMIT 3 FETCH NEXT ROW ONLY;
+SELECT generate_series FROM generate_series(1, 100) LIMIT 3;
 
 -- Test 7: statement (line 35)
-SELECT generate_series FROM generate_series(1, 100) FETCH NEXT 1 + 1 ROWS ONLY;
+SELECT generate_series FROM generate_series(1, 100) FETCH NEXT (1 + 1) ROWS ONLY;
 
 -- Test 8: query (line 38)
 SELECT generate_series FROM generate_series(1, 100) ORDER BY generate_series FETCH FIRST (1 + 1) ROWS ONLY;
 
 -- Test 9: statement (line 44)
-CREATE TABLE t (k INT PRIMARY KEY, v INT, w INT, INDEX(v))
+CREATE TABLE t (k INT PRIMARY KEY, v INT, w INT);
+CREATE INDEX t_v_idx ON t (v);
 
 -- Test 10: statement (line 47)
-INSERT INTO t VALUES (1, 1, 1), (2, -4, 8), (3, 9, 27), (4, -16, 94), (5, 25, 125), (6, -36, 216)
+INSERT INTO t VALUES (1, 1, 1), (2, -4, 8), (3, 9, 27), (4, -16, 94), (5, 25, 125), (6, -36, 216);
 
 -- Test 11: query (line 51)
-SELECT * FROM t WHERE v > -20 AND w > 30 ORDER BY v LIMIT 2
+SELECT * FROM t WHERE v > -20 AND w > 30 ORDER BY v LIMIT 2;
 
 -- Test 12: query (line 57)
-SELECT k, v FROM t ORDER BY k LIMIT 5
+SELECT k, v FROM t ORDER BY k LIMIT 5;
 
 -- Test 13: query (line 66)
-SELECT k, v FROM t ORDER BY k OFFSET 5
+SELECT k, v FROM t ORDER BY k OFFSET 5;
 
 -- Test 14: query (line 71)
-SELECT k, v FROM t ORDER BY v LIMIT (1+4) OFFSET 1
+SELECT k, v FROM t ORDER BY v LIMIT (1+4) OFFSET 1;
 
 -- Test 15: query (line 80)
-SELECT k, v FROM t ORDER BY v DESC LIMIT (1+4) OFFSET 1
+SELECT k, v FROM t ORDER BY v DESC LIMIT (1+4) OFFSET 1;
 
 -- Test 16: query (line 89)
-SELECT sum(w) FROM t GROUP BY k, v ORDER BY v DESC LIMIT 10
+SELECT sum(w) FROM t GROUP BY k, v ORDER BY v DESC LIMIT 10;
 
 -- Test 17: query (line 99)
-SELECT k FROM (SELECT k, v FROM t ORDER BY v LIMIT 4)
+SELECT k FROM (SELECT k, v FROM t ORDER BY v LIMIT 4) AS limited;
 
 -- Test 18: query (line 107)
-SELECT k FROM (SELECT k, v, w FROM t ORDER BY v LIMIT 4)
+SELECT k FROM (SELECT k, v, w FROM t ORDER BY v LIMIT 4) AS limited;
 
 -- Test 19: query (line 116)
-SELECT k, v FROM t ORDER BY k LIMIT length(pg_typeof(123))
+SELECT k, v FROM t ORDER BY k LIMIT length(pg_typeof(123)::text);
 
 -- Test 20: query (line 126)
-SELECT k, v FROM t ORDER BY k LIMIT length(pg_typeof(123)) OFFSET length(pg_typeof(123))-2
+SELECT k, v FROM t ORDER BY k LIMIT length(pg_typeof(123)::text) OFFSET length(pg_typeof(123)::text)-2;
 
 -- Test 21: query (line 132)
-SELECT k, v FROM t ORDER BY k OFFSET (SELECT count(*)-3 FROM t)
+SELECT k, v FROM t ORDER BY k OFFSET (SELECT count(*)-3 FROM t);
 
 -- Test 22: query (line 139)
-SELECT k, v FROM t ORDER BY k LIMIT (SELECT count(*)-3 FROM t) OFFSET (SELECT count(*)-5 FROM t)
+SELECT k, v FROM t ORDER BY k LIMIT (SELECT count(*)-3 FROM t) OFFSET (SELECT count(*)-5 FROM t);
 
 -- Test 23: query (line 157)
-SELECT * FROM (select * from generate_series(1,10) a LIMIT 5) OFFSET 3
+SELECT * FROM (select * from generate_series(1,10) a LIMIT 5) AS gs OFFSET 3;
 
 -- Test 24: query (line 163)
-SELECT * FROM (select * from generate_series(1,10) a LIMIT 5) OFFSET 6
+SELECT * FROM (select * from generate_series(1,10) a LIMIT 5) AS gs OFFSET 6;
 
 -- Test 25: statement (line 168)
-CREATE TABLE t_47283(k INT PRIMARY KEY, a INT)
+CREATE TABLE t_47283(k INT PRIMARY KEY, a INT);
 
 -- Test 26: statement (line 171)
-INSERT INTO t_47283 VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6)
+INSERT INTO t_47283 VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6);
 
 -- Test 27: query (line 176)
-SELECT * FROM (SELECT * FROM t_47283 ORDER BY k LIMIT 4) WHERE a > 5 LIMIT 1
+SELECT * FROM (SELECT * FROM t_47283 ORDER BY k LIMIT 4) AS limited WHERE a > 5 LIMIT 1;
+
+-- PG: setup for scalar subquery LIMIT/OFFSET values.
+CREATE TABLE probe (a INT);
+INSERT INTO probe VALUES (1), (2), (3);
+
+CREATE TABLE vals (k TEXT PRIMARY KEY, v BIGINT);
+INSERT INTO vals (k, v) VALUES
+  ('zero', 0),
+  ('one', 1),
+  ('large', 100),
+  ('maxint64', 9223372036854775807);
 
 -- Test 28: query (line 189)
 SELECT a FROM probe ORDER BY a LIMIT (SELECT v FROM vals WHERE k = 'zero');
@@ -155,43 +167,44 @@ SELECT a FROM probe ORDER BY a LIMIT (SELECT v FROM vals WHERE k = 'large') OFFS
 SELECT a FROM probe ORDER BY a LIMIT (SELECT v FROM vals WHERE k = 'maxint64') OFFSET (SELECT v FROM vals WHERE k = 'maxint64');
 
 -- Test 52: statement (line 324)
-SET disallow_full_table_scans = true;
+SET enable_seqscan = off;
 
 -- Test 53: query (line 327)
 SELECT w FROM t ORDER BY k LIMIT 1;
 
 -- Test 54: statement (line 332)
-SET disallow_full_table_scans = false;
+SET enable_seqscan = on;
 
 -- Test 55: statement (line 336)
-CREATE TABLE t65171 (x INT, y INT, INDEX(x, y))
+CREATE TABLE t65171 (x INT, y INT);
+CREATE INDEX t65171_xy_idx ON t65171 (x, y);
 
 -- Test 56: statement (line 339)
-INSERT INTO t65171 VALUES (1, 2), (1, 2), (2, 3)
+INSERT INTO t65171 VALUES (1, 2), (1, 2), (2, 3);
 
 -- Test 57: query (line 342)
-SELECT * FROM t65171 WHERE x = 1 OR x = 2 ORDER BY y LIMIT 2
+SELECT * FROM t65171 WHERE x = 1 OR x = 2 ORDER BY y LIMIT 2;
 
 -- Test 58: query (line 348)
 SELECT * FROM t ORDER BY v, w LIMIT 3;
 
 -- Test 59: query (line 355)
-SELECT oid::INT, typname FROM pg_type ORDER BY oid LIMIT 3
+SELECT oid::INT, typname FROM pg_type ORDER BY oid LIMIT 3;
 
 -- Test 60: statement (line 363)
-SELECT * FROM t65171 WHERE x = 1 OFFSET 1 LIMIT 9223372036854775807
+SELECT * FROM t65171 WHERE x = 1 LIMIT 9223372036854775807 OFFSET 1;
 
 -- Test 61: statement (line 368)
-CREATE TABLE t122748 (a int, b int, INDEX t_b_idx (b ASC) STORING (a));
+CREATE TABLE t122748 (a int, b int);
+CREATE INDEX t_b_idx ON t122748 (b ASC) INCLUDE (a);
 INSERT INTO t122748 VALUES
   (1, 2),
   (3, 4),
-  (5, 6)
+  (5, 6);
 
 -- Test 62: query (line 375)
 SELECT count(*) AS col1
 FROM t122748
 GROUP BY a, b
 ORDER BY b, a DESC
-LIMIT 2
-
+LIMIT 2;

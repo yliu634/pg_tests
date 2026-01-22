@@ -1,0 +1,30 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+ lock_timeout 
+--------------
+ 0
+(1 row)
+
+SET
+ lock_timeout 
+--------------
+ 1ms
+(1 row)
+
+BEGIN
+UPDATE 1
+COMMIT
+RESET
+ lock_timeout 
+--------------
+ 0
+(1 row)
+
+ k | v 
+---+---
+ 1 | 2
+(1 row)
+
+RESET

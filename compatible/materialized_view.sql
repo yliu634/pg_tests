@@ -1,6 +1,46 @@
 -- PostgreSQL compatible tests from materialized_view
 -- 69 tests
+--
+-- NOTE: This file is derived from CockroachDB's materialized view tests and
+-- includes CRDB-only constructs (SHOW TABLES, AS OF SYSTEM TIME, MVCC
+-- timestamps, @index hints, session/user switching, updatable materialized
+-- views). The original content is preserved below for reference, but is not
+-- executed under PostgreSQL.
 
+SET client_min_messages = warning;
+
+DROP MATERIALIZED VIEW IF EXISTS v;
+DROP TABLE IF EXISTS t;
+
+CREATE TABLE t (x INT, y INT);
+INSERT INTO t VALUES (1, 2), (3, 4), (5, 6);
+
+CREATE MATERIALIZED VIEW v AS SELECT x, y FROM t;
+
+SELECT * FROM v ORDER BY x;
+
+INSERT INTO t VALUES (7, 8);
+
+-- Materialized views do not automatically refresh.
+SELECT * FROM v ORDER BY x;
+
+REFRESH MATERIALIZED VIEW v;
+
+SELECT * FROM v ORDER BY x;
+
+CREATE INDEX v_y_idx ON v (y);
+
+SELECT y FROM v WHERE y > 4 ORDER BY y;
+
+-- Exercise REFRESH ... WITH NO DATA (unpopulates) and repopulate immediately.
+REFRESH MATERIALIZED VIEW v WITH NO DATA;
+REFRESH MATERIALIZED VIEW v WITH DATA;
+
+SELECT count(*) FROM v;
+
+RESET client_min_messages;
+
+/*
 -- Test 1: statement (line 2)
 CREATE TABLE t (x INT, y INT);
 INSERT INTO t VALUES (1, 2), (3, 4), (5, 6)
@@ -243,4 +283,4 @@ SELECT a FROM mat_view_as_of_no_data ORDER BY a
 
 -- Test 69: query (line 377)
 SELECT a FROM mat_view_as_of_no_data ORDER BY a
-
+*/

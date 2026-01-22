@@ -1,0 +1,7 @@
+SET
+                                         notice                                         
+----------------------------------------------------------------------------------------
+ skipped: manual_retry exercises CockroachDB retry protocol (crdb_internal.force_retry)
+(1 row)
+
+RESET
