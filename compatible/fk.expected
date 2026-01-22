@@ -1,0 +1,1922 @@
+CREATE TABLE
+CREATE TABLE
+psql:pg_tests/compatible/fk.sql:20: ERROR:  insert or update on table "child" violates foreign key constraint "child_p_fkey"
+DETAIL:  Key (p)=(1) is not present in table "parent".
+INSERT 0 2
+psql:pg_tests/compatible/fk.sql:26: ERROR:  insert or update on table "child" violates foreign key constraint "child_p_fkey"
+DETAIL:  Key (p)=(3) is not present in table "parent".
+INSERT 0 2
+CREATE TABLE
+INSERT 0 3
+psql:pg_tests/compatible/fk.sql:38: ERROR:  insert or update on table "child" violates foreign key constraint "child_p_fkey"
+DETAIL:  Key (p)=(4) is not present in table "parent".
+INSERT 0 3
+INSERT 0 3
+DROP TABLE
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 1
+DELETE 1
+psql:pg_tests/compatible/fk.sql:71: ERROR:  update or delete on table "parent" violates foreign key constraint "child_p_fkey" on table "child"
+DETAIL:  Key (p)=(1) is still referenced from table "child".
+CREATE TABLE
+DROP TABLE
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:83: ERROR:  update or delete on table "parent" violates foreign key constraint "child_u_u_fkey" on table "child_u"
+DETAIL:  Key (u)=(10) is still referenced from table "child_u".
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 5
+psql:pg_tests/compatible/fk.sql:112: ERROR:  update or delete on table "parent2" violates foreign key constraint "child2_p1_p2_fkey" on table "child2"
+DETAIL:  Key (p1, p2)=(10, 100) is still referenced from table "child2".
+DELETE 1
+DELETE 1
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:139: ERROR:  insert or update on table "child" violates foreign key constraint "child_p_fkey"
+DETAIL:  Key (p)=(10) is not present in table "parent".
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:148: ERROR:  insert or update on table "child" violates foreign key constraint "child_p_fkey"
+DETAIL:  Key (p)=(10) is not present in table "parent".
+TRUNCATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:163: ERROR:  insert or update on table "child" violates foreign key constraint "child_p_fkey"
+DETAIL:  Key (p)=(3) is not present in table "parent".
+psql:pg_tests/compatible/fk.sql:166: ERROR:  insert or update on table "child" violates foreign key constraint "child_p_fkey"
+DETAIL:  Key (p)=(3) is not present in table "parent".
+psql:pg_tests/compatible/fk.sql:169: ERROR:  insert or update on table "child" violates foreign key constraint "child_p_fkey"
+DETAIL:  Key (p)=(3) is not present in table "parent".
+INSERT 0 2
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:193: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO parent VALUES (1, 3);
+        ^
+INSERT 0 2
+ a  | b 
+----+---
+ 10 | 2
+(1 row)
+
+ a | b 
+---+---
+ 1 | 3
+ 2 | 2
+(2 rows)
+
+psql:pg_tests/compatible/fk.sql:205: ERROR:  update or delete on table "parent" violates foreign key constraint "child_b_fkey" on table "child"
+DETAIL:  Key (b)=(2) is still referenced from table "child".
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/fk.sql:217: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO self VALUES (1, 1, 2);
+        ^
+psql:pg_tests/compatible/fk.sql:220: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO self VALUES (1, 1, 1);
+        ^
+psql:pg_tests/compatible/fk.sql:223: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO self VALUES (1, 1, 1);
+        ^
+psql:pg_tests/compatible/fk.sql:226: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO self VALUES (1, 1, 2);
+        ^
+psql:pg_tests/compatible/fk.sql:229: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO self VALUES (1, 2, 2);
+        ^
+psql:pg_tests/compatible/fk.sql:232: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO self(k,a) VALUES (1, 1);
+        ^
+psql:pg_tests/compatible/fk.sql:235: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO self VALUES (1, 1, 2), (2, 2, 1);
+        ^
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:241: ERROR:  insert or update on table "self" violates foreign key constraint "self_b_fkey"
+DETAIL:  Key (b)=(3) is not present in table "self".
+DROP TABLE
+psql:pg_tests/compatible/fk.sql:247: ERROR:  relation "customers" does not exist
+LINE 1: INSERT INTO customers VALUES (1, 'a@co.tld'), (2, 'b@co.tld'...
+                    ^
+psql:pg_tests/compatible/fk.sql:250: ERROR:  relation "products" does not exist
+LINE 1: INSERT INTO products VALUES ('VP-W9QH-W44L', '867072000006',...
+                    ^
+psql:pg_tests/compatible/fk.sql:253: ERROR:  relation "customerz" does not exist
+psql:pg_tests/compatible/fk.sql:256: ERROR:  relation "customers" does not exist
+psql:pg_tests/compatible/fk.sql:259: ERROR:  relation "customers" does not exist
+psql:pg_tests/compatible/fk.sql:262: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW INDEXES FROM unindexed;
+                     ^
+psql:pg_tests/compatible/fk.sql:265: ERROR:  relation "customers" does not exist
+psql:pg_tests/compatible/fk.sql:268: ERROR:  relation "orders" does not exist
+psql:pg_tests/compatible/fk.sql:271: ERROR:  relation "orders" does not exist
+psql:pg_tests/compatible/fk.sql:274: ERROR:  relation "orders" does not exist
+psql:pg_tests/compatible/fk.sql:277: ERROR:  relation "orders" does not exist
+psql:pg_tests/compatible/fk.sql:280: ERROR:  relation "orders" does not exist
+psql:pg_tests/compatible/fk.sql:283: ERROR:  relation "orders" does not exist
+psql:pg_tests/compatible/fk.sql:286: ERROR:  relation "orders" does not exist
+psql:pg_tests/compatible/fk.sql:289: ERROR:  relation "orders" does not exist
+psql:pg_tests/compatible/fk.sql:292: ERROR:  relation "orders" does not exist
+psql:pg_tests/compatible/fk.sql:295: ERROR:  relation "orders" does not exist
+psql:pg_tests/compatible/fk.sql:298: ERROR:  relation "orders" does not exist
+psql:pg_tests/compatible/fk.sql:301: ERROR:  relation "orders" does not exist
+psql:pg_tests/compatible/fk.sql:304: ERROR:  relation "orders" does not exist
+psql:pg_tests/compatible/fk.sql:307: ERROR:  relation "orders" does not exist
+psql:pg_tests/compatible/fk.sql:310: ERROR:  relation "orders" does not exist
+psql:pg_tests/compatible/fk.sql:313: ERROR:  relation "orders" does not exist
+psql:pg_tests/compatible/fk.sql:316: ERROR:  relation "orders" does not exist
+psql:pg_tests/compatible/fk.sql:319: ERROR:  relation "orders" does not exist
+psql:pg_tests/compatible/fk.sql:322: ERROR:  relation "orders" does not exist
+psql:pg_tests/compatible/fk.sql:325: ERROR:  relation "orders" does not exist
+psql:pg_tests/compatible/fk.sql:328: ERROR:  relation "orders" does not exist
+CREATE SCHEMA
+psql:pg_tests/compatible/fk.sql:334: ERROR:  relation "orders" does not exist
+LINE 1: INSERT INTO orders VALUES (1, 1, '780', 2);
+                    ^
+psql:pg_tests/compatible/fk.sql:337: ERROR:  relation "orders" does not exist
+LINE 1: INSERT INTO orders VALUES (2, 2, 'fake', 2);
+                    ^
+psql:pg_tests/compatible/fk.sql:340: ERROR:  relation "products" does not exist
+LINE 1: DELETE FROM products;
+                    ^
+psql:pg_tests/compatible/fk.sql:343: ERROR:  relation "user content.customer reviews" does not exist
+LINE 1: INSERT INTO "user content"."customer reviews" VALUES (1, '78...
+                    ^
+psql:pg_tests/compatible/fk.sql:346: ERROR:  relation "user content.customer reviews" does not exist
+LINE 1: INSERT INTO "user content"."customer reviews" (id, product, ...
+                    ^
+psql:pg_tests/compatible/fk.sql:349: ERROR:  relation "user content.customer reviews" does not exist
+LINE 1: INSERT INTO "user content"."customer reviews" (id, product, ...
+                    ^
+psql:pg_tests/compatible/fk.sql:356: ERROR:  relation "user content.customer reviews" does not exist
+psql:pg_tests/compatible/fk.sql:359: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [SHOW CONSTRAINTS FROM "user content".review_s...
+                      ^
+psql:pg_tests/compatible/fk.sql:362: ERROR:  relation "user content.review_stats" does not exist
+LINE 1: INSERT INTO "user content".review_stats (id, upvotes) VALUES...
+                    ^
+psql:pg_tests/compatible/fk.sql:365: ERROR:  relation "user content.review_stats" does not exist
+LINE 1: INSERT INTO "user content".review_stats (id, upvotes) VALUES...
+                    ^
+psql:pg_tests/compatible/fk.sql:368: ERROR:  relation "user content.customer reviews" does not exist
+LINE 1: DELETE FROM "user content"."customer reviews" WHERE id = 2;
+                    ^
+psql:pg_tests/compatible/fk.sql:371: ERROR:  relation "user content.review_stats" does not exist
+psql:pg_tests/compatible/fk.sql:374: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW CONSTRAINTS FROM "user content".review_stats;
+                         ^
+psql:pg_tests/compatible/fk.sql:377: ERROR:  relation "user content.customer reviews" does not exist
+LINE 1: DELETE FROM "user content"."customer reviews";
+                    ^
+psql:pg_tests/compatible/fk.sql:380: ERROR:  relation "orders" does not exist
+LINE 1: INSERT INTO orders VALUES (2, 1, '790', 2);
+                    ^
+psql:pg_tests/compatible/fk.sql:383: ERROR:  relation "orders" does not exist
+LINE 1: INSERT INTO orders VALUES (2, 1, '780', 43);
+                    ^
+psql:pg_tests/compatible/fk.sql:386: ERROR:  relation "orders" does not exist
+LINE 1: INSERT INTO orders VALUES (2, 1, '780', 1);
+                    ^
+psql:pg_tests/compatible/fk.sql:389: ERROR:  relation "orders" does not exist
+LINE 1: UPDATE orders SET product = '790' WHERE id = 2;
+               ^
+psql:pg_tests/compatible/fk.sql:392: ERROR:  relation "orders" does not exist
+LINE 1: UPDATE orders SET id = 3, product = '790' WHERE id = 2;
+               ^
+psql:pg_tests/compatible/fk.sql:395: ERROR:  relation "orders" does not exist
+LINE 1: UPDATE orders SET id = 3 WHERE id = 2;
+               ^
+psql:pg_tests/compatible/fk.sql:398: ERROR:  relation "orders" does not exist
+LINE 1: UPDATE orders SET id = 2, product = 'VP-W9QH-W44L' WHERE id ...
+               ^
+psql:pg_tests/compatible/fk.sql:401: ERROR:  relation "orders" does not exist
+LINE 1: UPDATE orders SET product = '780' WHERE id = 2;
+               ^
+psql:pg_tests/compatible/fk.sql:404: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE delivery;
+             ^
+psql:pg_tests/compatible/fk.sql:407: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE delivery;
+             ^
+psql:pg_tests/compatible/fk.sql:411: ERROR:  relation "delivery" does not exist
+LINE 1: INSERT INTO delivery ("order", shipment, item) VALUES
+                    ^
+psql:pg_tests/compatible/fk.sql:415: ERROR:  relation "delivery" does not exist
+LINE 1: INSERT INTO delivery ("order", shipment, item) VALUES
+                    ^
+psql:pg_tests/compatible/fk.sql:419: ERROR:  relation "delivery" does not exist
+LINE 1: INSERT INTO delivery ("order", shipment, item) VALUES
+                    ^
+psql:pg_tests/compatible/fk.sql:422: ERROR:  relation "products" does not exist
+LINE 1: DELETE FROM products WHERE sku = 'VP-W9QH-W44L';
+                    ^
+psql:pg_tests/compatible/fk.sql:425: ERROR:  relation "products" does not exist
+LINE 1: UPDATE products SET vendor = '' WHERE sku = '780';
+               ^
+psql:pg_tests/compatible/fk.sql:428: ERROR:  relation "products" does not exist
+LINE 1: UPDATE products SET sku = '770' WHERE sku = '750';
+               ^
+psql:pg_tests/compatible/fk.sql:431: ERROR:  relation "products" does not exist
+LINE 1: UPDATE products SET sku = '770' WHERE sku = '780';
+               ^
+psql:pg_tests/compatible/fk.sql:434: ERROR:  relation "products" does not exist
+LINE 1: UPDATE products SET upc = '885155001450' WHERE sku = '780';
+               ^
+psql:pg_tests/compatible/fk.sql:437: ERROR:  relation "products" does not exist
+LINE 1: UPDATE products SET upc = 'blah' WHERE sku = '780';
+               ^
+psql:pg_tests/compatible/fk.sql:440: ERROR:  relation "delivery" does not exist
+psql:pg_tests/compatible/fk.sql:443: ERROR:  relation "products" does not exist
+LINE 1: UPDATE products SET upc = 'blah' WHERE sku = '780';
+               ^
+psql:pg_tests/compatible/fk.sql:446: ERROR:  relation "delivery" does not exist
+psql:pg_tests/compatible/fk.sql:449: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [SHOW CONSTRAINTS FROM delivery] ORDER BY cons...
+                      ^
+psql:pg_tests/compatible/fk.sql:452: ERROR:  relation "products" does not exist
+LINE 1: UPDATE products SET upc = '885155001450' WHERE sku = '780';
+               ^
+psql:pg_tests/compatible/fk.sql:455: ERROR:  relation "delivery" does not exist
+psql:pg_tests/compatible/fk.sql:458: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [SHOW CONSTRAINTS FROM delivery] ORDER BY cons...
+                      ^
+psql:pg_tests/compatible/fk.sql:462: ERROR:  relation "user content.customer reviews" does not exist
+psql:pg_tests/compatible/fk.sql:465: ERROR:  relation "user content.customer reviews" does not exist
+LINE 1: INSERT INTO "user content"."customer reviews" (id, product, ...
+                    ^
+psql:pg_tests/compatible/fk.sql:477: ERROR:  relation "user content.customer reviews" does not exist
+psql:pg_tests/compatible/fk.sql:489: ERROR:  relation "user content.customer reviews" does not exist
+psql:pg_tests/compatible/fk.sql:492: ERROR:  relation "user content.customer reviews" does not exist
+LINE 1: INSERT INTO "user content"."customer reviews" (id, product, ...
+                    ^
+psql:pg_tests/compatible/fk.sql:495: ERROR:  relation "user content.customer reviews" does not exist
+LINE 1: INSERT INTO "user content"."customer reviews" (id, product, ...
+                    ^
+psql:pg_tests/compatible/fk.sql:498: ERROR:  relation "user content.customer reviews" does not exist
+LINE 1: INSERT INTO "user content"."customer reviews" (id, product, ...
+                    ^
+psql:pg_tests/compatible/fk.sql:501: ERROR:  relation "delivery" does not exist
+psql:pg_tests/compatible/fk.sql:510: ERROR:  relation "orders" does not exist
+psql:pg_tests/compatible/fk.sql:519: ERROR:  relation "products" does not exist
+LINE 1: UPDATE products SET sku = '750', vendor = 'roomba' WHERE sku...
+               ^
+psql:pg_tests/compatible/fk.sql:522: ERROR:  relation "products" does not exist
+LINE 1: UPDATE products SET sku = '780', upc = 'blah' WHERE sku = '7...
+               ^
+psql:pg_tests/compatible/fk.sql:525: ERROR:  relation "products" does not exist
+LINE 1: DELETE FROM products WHERE sku = '750';
+                    ^
+psql:pg_tests/compatible/fk.sql:531: ERROR:  relation "products" does not exist
+psql:pg_tests/compatible/fk.sql:537: ERROR:  relation "delivery" does not exist
+LINE 1: SELECT count(*) FROM delivery;
+                             ^
+psql:pg_tests/compatible/fk.sql:552: ERROR:  relation "products" does not exist
+psql:pg_tests/compatible/fk.sql:567: ERROR:  relation "delivery" does not exist
+LINE 1: SELECT count(*) FROM delivery;
+                             ^
+psql:pg_tests/compatible/fk.sql:582: ERROR:  relation "delivery" does not exist
+psql:pg_tests/compatible/fk.sql:594: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [SHOW CONSTRAINTS FROM orders] ORDER BY constr...
+                      ^
+psql:pg_tests/compatible/fk.sql:597: ERROR:  syntax error at or near "@"
+LINE 1: DROP INDEX products@products_upc_key;
+                           ^
+psql:pg_tests/compatible/fk.sql:602: ERROR:  syntax error at or near "@"
+LINE 1: DROP INDEX products@products_upc_key RESTRICT;
+                           ^
+psql:pg_tests/compatible/fk.sql:607: ERROR:  syntax error at or near "@"
+LINE 1: DROP INDEX products@products_upc_key;
+                           ^
+psql:pg_tests/compatible/fk.sql:612: ERROR:  syntax error at or near "@"
+LINE 1: DROP INDEX products@products_upc_key RESTRICT;
+                           ^
+psql:pg_tests/compatible/fk.sql:615: ERROR:  relation "products" does not exist
+psql:pg_tests/compatible/fk.sql:618: ERROR:  relation "delivery" does not exist
+psql:pg_tests/compatible/fk.sql:621: ERROR:  syntax error at or near "@"
+LINE 1: DROP INDEX products@products_upc_key CASCADE;
+                           ^
+psql:pg_tests/compatible/fk.sql:624: ERROR:  table "products" does not exist
+psql:pg_tests/compatible/fk.sql:627: ERROR:  table "products" does not exist
+psql:pg_tests/compatible/fk.sql:630: ERROR:  table "orders" does not exist
+psql:pg_tests/compatible/fk.sql:633: ERROR:  relation "user content.customer reviews" does not exist
+psql:pg_tests/compatible/fk.sql:636: ERROR:  table "customer reviews" does not exist
+psql:pg_tests/compatible/fk.sql:639: ERROR:  table "orders" does not exist
+psql:pg_tests/compatible/fk.sql:642: ERROR:  table "products" does not exist
+CREATE TABLE
+CREATE TABLE
+psql:pg_tests/compatible/fk.sql:651: ERROR:  syntax error at or near "("
+LINE 1: ...parent_id INT REFERENCES child (parent_id), INDEX (parent_id...
+                                                             ^
+psql:pg_tests/compatible/fk.sql:654: ERROR:  cannot drop table parent because other objects depend on it
+DETAIL:  constraint child_parent_id_fkey on table child depends on table parent
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+DROP TABLE
+psql:pg_tests/compatible/fk.sql:660: ERROR:  relation "child" does not exist
+LINE 1: INSERT INTO child VALUES (2, 2);
+                    ^
+DROP TABLE
+psql:pg_tests/compatible/fk.sql:666: ERROR:  relation "child" does not exist
+LINE 1: INSERT INTO child VALUES (2, 2);
+                    ^
+psql:pg_tests/compatible/fk.sql:669: ERROR:  relation "grandchild" does not exist
+LINE 1: INSERT INTO grandchild VALUES (1, 1);
+                    ^
+psql:pg_tests/compatible/fk.sql:672: ERROR:  syntax error at or near "@"
+LINE 1: DROP INDEX grandchild@grandchild_parent_id_idx;
+                             ^
+psql:pg_tests/compatible/fk.sql:675: ERROR:  table "grandchild" does not exist
+psql:pg_tests/compatible/fk.sql:678: ERROR:  syntax error at or near "("
+LINE 1: ...parent_id INT REFERENCES child (parent_id), INDEX (parent_id...
+                                                             ^
+psql:pg_tests/compatible/fk.sql:681: ERROR:  relation "grandchild" does not exist
+LINE 1: INSERT INTO grandchild VALUES (1, 1);
+                    ^
+psql:pg_tests/compatible/fk.sql:684: ERROR:  syntax error at or near "@"
+LINE 1: DROP INDEX child@child_parent_id_key;
+                        ^
+psql:pg_tests/compatible/fk.sql:687: ERROR:  syntax error at or near "@"
+LINE 1: DROP INDEX child@child_parent_id_key CASCADE;
+                        ^
+psql:pg_tests/compatible/fk.sql:690: ERROR:  relation "grandchild" does not exist
+LINE 1: INSERT INTO grandchild VALUES (1, 1);
+                    ^
+psql:pg_tests/compatible/fk.sql:693: ERROR:  syntax error at or near "("
+LINE 1: ...MARY KEY, manager INT REFERENCES employees, INDEX (manager))...
+                                                             ^
+psql:pg_tests/compatible/fk.sql:696: ERROR:  relation "employees" does not exist
+LINE 1: INSERT INTO employees VALUES (1, NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:699: ERROR:  relation "employees" does not exist
+LINE 1: INSERT INTO employees VALUES (2, 1), (3, 1);
+                    ^
+psql:pg_tests/compatible/fk.sql:702: ERROR:  relation "employees" does not exist
+LINE 1: INSERT INTO employees VALUES (4, 2), (5, 3);
+                    ^
+psql:pg_tests/compatible/fk.sql:705: ERROR:  relation "employees" does not exist
+LINE 1: DELETE FROM employees WHERE id = 2;
+                    ^
+psql:pg_tests/compatible/fk.sql:708: ERROR:  relation "employees" does not exist
+LINE 1: DELETE FROM employees WHERE id > 1;
+                    ^
+psql:pg_tests/compatible/fk.sql:711: ERROR:  table "employees" does not exist
+psql:pg_tests/compatible/fk.sql:714: ERROR:  relation "pairs" does not exist
+LINE 1: INSERT INTO pairs VALUES (1, 100, 'one'), (2, 200, 'two');
+                    ^
+psql:pg_tests/compatible/fk.sql:717: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW INDEXES FROM refpairs_wrong_order;
+                     ^
+psql:pg_tests/compatible/fk.sql:720: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW INDEXES FROM refpairs_c_between;
+                     ^
+psql:pg_tests/compatible/fk.sql:723: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW INDEXES FROM refpairs;
+                     ^
+psql:pg_tests/compatible/fk.sql:726: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE refpairs;
+             ^
+psql:pg_tests/compatible/fk.sql:729: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE refpairs;
+             ^
+psql:pg_tests/compatible/fk.sql:732: ERROR:  relation "refpairs" does not exist
+LINE 1: INSERT INTO refpairs VALUES (100, 'two'), (200, 'two');
+                    ^
+psql:pg_tests/compatible/fk.sql:735: ERROR:  relation "refpairs" does not exist
+LINE 1: INSERT INTO refpairs VALUES (100, 'one', 3), (200, 'two', nu...
+                    ^
+psql:pg_tests/compatible/fk.sql:738: ERROR:  relation "pairs" does not exist
+LINE 1: UPDATE pairs SET dest = 'too' WHERE id = 2;
+               ^
+psql:pg_tests/compatible/fk.sql:741: ERROR:  relation "pairs" does not exist
+LINE 1: DELETE FROM pairs WHERE id = 2;
+                    ^
+psql:pg_tests/compatible/fk.sql:744: ERROR:  relation "pairs" does not exist
+LINE 1: DELETE FROM pairs WHERE id = 1;
+                    ^
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:759: ERROR:  update or delete on table "foo" violates foreign key constraint "bar_id_fkey" on table "bar"
+DETAIL:  Key (id)=(2) is still referenced from table "bar".
+CREATE DATABASE
+psql:pg_tests/compatible/fk.sql:765: ERROR:  schema "otherdb" does not exist
+LINE 1: CREATE TABLE otherdb.othertable (id INT PRIMARY KEY);
+                     ^
+psql:pg_tests/compatible/fk.sql:768: ERROR:  schema "otherdb" does not exist
+psql:pg_tests/compatible/fk.sql:771: ERROR:  relation "crossdb" does not exist
+LINE 1: INSERT INTO crossdb VALUES (2);
+                    ^
+psql:pg_tests/compatible/fk.sql:774: ERROR:  relation "otherdb.othertable" does not exist
+LINE 1: INSERT INTO otherdb.othertable VALUES (1), (2);
+                    ^
+psql:pg_tests/compatible/fk.sql:777: ERROR:  relation "crossdb" does not exist
+LINE 1: INSERT INTO crossdb VALUES (2);
+                    ^
+psql:pg_tests/compatible/fk.sql:780: ERROR:  relation "otherdb.othertable" does not exist
+LINE 1: DELETE FROM otherdb.othertable WHERE id = 2;
+                    ^
+psql:pg_tests/compatible/fk.sql:783: ERROR:  schema "otherdb" does not exist
+psql:pg_tests/compatible/fk.sql:786: ERROR:  schema "otherdb" does not exist
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+psql:pg_tests/compatible/fk.sql:805: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [SHOW CONSTRAINTS FROM domain_modules] ORDER B...
+                      ^
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:811: ERROR:  insert or update on table "domain_modules" violates foreign key constraint "domain_modules_domain_id_fk"
+DETAIL:  Key (domain_id)=(2) is not present in table "domains".
+CREATE TABLE
+CREATE TABLE
+psql:pg_tests/compatible/fk.sql:824: ERROR:  syntax error at or near "skip_on_retry"
+LINE 1: skip_on_retry;
+        ^
+BEGIN
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+COMMIT
+BEGIN
+psql:pg_tests/compatible/fk.sql:845: ERROR:  insert or update on table "tx_leg" violates foreign key constraint "tx_leg_tx_id_fkey"
+DETAIL:  Key (tx_id)=(3) is not present in table "tx".
+ROLLBACK
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+INSERT 0 3
+INSERT 0 1
+INSERT 0 2
+INSERT 0 1
+DELETE 1
+psql:pg_tests/compatible/fk.sql:878: ERROR:  update or delete on table "b" violates foreign key constraint "fk_b" on table "a"
+DETAIL:  Key (id)=(2) is still referenced from table "a".
+psql:pg_tests/compatible/fk.sql:881: ERROR:  update or delete on table "a" violates foreign key constraint "fk_self_id" on table "a"
+DETAIL:  Key (id)=(1) is still referenced from table "a".
+DELETE 2
+DELETE 1
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+BEGIN
+psql:pg_tests/compatible/fk.sql:900: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/fk.sql:908: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/fk.sql:911: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/fk.sql:914: ERROR:  syntax error at or near "@"
+LINE 1: ALTER INDEX refers@b_idx RENAME TO another_idx;
+                          ^
+psql:pg_tests/compatible/fk.sql:919: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE refers;
+             ^
+psql:pg_tests/compatible/fk.sql:922: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE refers;
+             ^
+psql:pg_tests/compatible/fk.sql:925: ERROR:  syntax error at or near "@"
+LINE 1: DROP INDEX refers@another_idx;
+                         ^
+psql:pg_tests/compatible/fk.sql:928: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW TABLES FROM test;
+                    ^
+ROLLBACK
+BEGIN
+psql:pg_tests/compatible/fk.sql:935: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/fk.sql:938: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/fk.sql:941: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+psql:pg_tests/compatible/fk.sql:964: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE employee;
+             ^
+CREATE TABLE
+CREATE TABLE
+psql:pg_tests/compatible/fk.sql:975: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE pkref_b;
+             ^
+psql:pg_tests/compatible/fk.sql:978: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE pkref_b;
+             ^
+psql:pg_tests/compatible/fk.sql:981: ERROR:  relation "test20042" does not exist
+LINE 1: INSERT INTO test20042 (x, y, z) VALUES ('pk1', 'k1', null);
+                    ^
+psql:pg_tests/compatible/fk.sql:984: ERROR:  relation "test20042" does not exist
+LINE 1: INSERT INTO test20042 (x, y, z) VALUES ('pk2', 'k2 ', 'k1');
+                    ^
+psql:pg_tests/compatible/fk.sql:987: ERROR:  relation "test20042" does not exist
+LINE 1: DELETE FROM test20042 WHERE x = 'pk2';
+                    ^
+psql:pg_tests/compatible/fk.sql:990: ERROR:  relation "test20042" does not exist
+LINE 1: DELETE FROM test20042 WHERE x = 'pk1';
+                    ^
+psql:pg_tests/compatible/fk.sql:993: ERROR:  relation "test20045" does not exist
+LINE 1: INSERT INTO test20045 (x, y, z) VALUES ('pk1', NULL, NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:996: ERROR:  relation "test20045" does not exist
+LINE 1: INSERT INTO test20045 (x, y, z) VALUES ('pk2', 'pk1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:999: ERROR:  relation "test20045" does not exist
+LINE 1: INSERT INTO test20045 (x, y, z) VALUES ('pk3', 'pk2', 'pk1')...
+                    ^
+psql:pg_tests/compatible/fk.sql:1002: ERROR:  relation "test20045" does not exist
+LINE 1: DELETE FROM test20045 WHERE x = 'pk3';
+                    ^
+psql:pg_tests/compatible/fk.sql:1005: ERROR:  relation "test20045" does not exist
+LINE 1: DELETE FROM test20045 WHERE x = 'pk2';
+                    ^
+psql:pg_tests/compatible/fk.sql:1008: ERROR:  relation "test20045" does not exist
+LINE 1: DELETE FROM test20045 WHERE x = 'pk1';
+                    ^
+CREATE DATABASE
+psql:pg_tests/compatible/fk.sql:1014: ERROR:  relation "d.a" does not exist
+LINE 1: INSERT INTO d.a VALUES ('a1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1017: ERROR:  relation "d.b" does not exist
+LINE 1: INSERT INTO d.b VALUES ('b1', 'a1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1020: ERROR:  role "testuser" does not exist
+psql:pg_tests/compatible/fk.sql:1023: ERROR:  schema "d" does not exist
+psql:pg_tests/compatible/fk.sql:1025: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/fk.sql:1028: ERROR:  relation "d.a" does not exist
+LINE 1: DELETE FROM d.a WHERE id = 'a1';
+                    ^
+psql:pg_tests/compatible/fk.sql:1030: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/fk.sql:1033: ERROR:  schema "d" does not exist
+psql:pg_tests/compatible/fk.sql:1035: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/fk.sql:1038: ERROR:  relation "d.a" does not exist
+LINE 1: DELETE FROM d.a WHERE id = 'a1';
+                    ^
+psql:pg_tests/compatible/fk.sql:1040: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/fk.sql:1043: ERROR:  schema "d" does not exist
+psql:pg_tests/compatible/fk.sql:1045: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/fk.sql:1048: ERROR:  relation "d.a" does not exist
+LINE 1: DELETE FROM d.a WHERE id = 'a1';
+                    ^
+psql:pg_tests/compatible/fk.sql:1050: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/fk.sql:1053: ERROR:  syntax error at or near "CASCADE"
+LINE 1: DROP DATABASE d CASCADE;
+                        ^
+CREATE TABLE
+CREATE TABLE
+psql:pg_tests/compatible/fk.sql:1070: ERROR:  relation "not_null_table" already exists
+CREATE TABLE
+psql:pg_tests/compatible/fk.sql:1080: ERROR:  relation "primary_key_table" already exists
+psql:pg_tests/compatible/fk.sql:1087: ERROR:  relation "not_null_table" already exists
+ALTER TABLE
+psql:pg_tests/compatible/fk.sql:1097: ERROR:  column "update_not_nullable" referenced in foreign key constraint does not exist
+DROP TABLE
+psql:pg_tests/compatible/fk.sql:1105: ERROR:  relation "primary_key_table" already exists
+ALTER TABLE
+psql:pg_tests/compatible/fk.sql:1115: ERROR:  constraint "not_null_set_null" for relation "primary_key_table" already exists
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/fk.sql:1134: ERROR:  syntax error at or near "("
+LINE 5:  ,INDEX (ref1, ref2)
+                ^
+psql:pg_tests/compatible/fk.sql:1143: ERROR:  syntax error at or near "("
+LINE 5:  ,INDEX (ref1, ref2)
+                ^
+psql:pg_tests/compatible/fk.sql:1152: ERROR:  syntax error at or near "("
+LINE 5:  ,INDEX (ref1, ref2)
+                ^
+psql:pg_tests/compatible/fk.sql:1161: ERROR:  syntax error at or near "("
+LINE 5:  ,INDEX (ref1, ref2)
+                ^
+psql:pg_tests/compatible/fk.sql:1170: ERROR:  syntax error at or near "("
+LINE 5:  ,INDEX (ref1, ref2)
+                ^
+psql:pg_tests/compatible/fk.sql:1179: ERROR:  syntax error at or near "("
+LINE 5:  ,INDEX (ref1, ref2)
+                ^
+CREATE TABLE
+psql:pg_tests/compatible/fk.sql:1195: ERROR:  relation "primary_key_table" already exists
+psql:pg_tests/compatible/fk.sql:1203: ERROR:  relation "primary_key_table" already exists
+psql:pg_tests/compatible/fk.sql:1211: ERROR:  relation "primary_key_table" already exists
+psql:pg_tests/compatible/fk.sql:1214: ERROR:  cannot drop table a because other objects depend on it
+DETAIL:  constraint primary_key_table_ref1_ref2_fkey on table primary_key_table depends on table a
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+psql:pg_tests/compatible/fk.sql:1219: ERROR:  relation "a" already exists
+psql:pg_tests/compatible/fk.sql:1225: ERROR:  number of referencing and referenced columns for foreign key disagree
+psql:pg_tests/compatible/fk.sql:1231: ERROR:  number of referencing and referenced columns for foreign key disagree
+psql:pg_tests/compatible/fk.sql:1236: ERROR:  number of referencing and referenced columns for foreign key disagree
+psql:pg_tests/compatible/fk.sql:1241: ERROR:  relation "primary_key_table" already exists
+CREATE TABLE
+psql:pg_tests/compatible/fk.sql:1253: ERROR:  column "id" referenced in foreign key constraint does not exist
+psql:pg_tests/compatible/fk.sql:1258: ERROR:  column "id" referenced in foreign key constraint does not exist
+DROP TABLE
+psql:pg_tests/compatible/fk.sql:1266: ERROR:  relation "primary_key_table" already exists
+psql:pg_tests/compatible/fk.sql:1271: ERROR:  column "id" referenced in foreign key constraint does not exist
+psql:pg_tests/compatible/fk.sql:1276: ERROR:  column "id" referenced in foreign key constraint does not exist
+psql:pg_tests/compatible/fk.sql:1279: ERROR:  table "delete_no_default_table" does not exist
+psql:pg_tests/compatible/fk.sql:1286: ERROR:  relation "a" already exists
+psql:pg_tests/compatible/fk.sql:1295: ERROR:  syntax error at or near "("
+LINE 5:  ,INDEX (ref1, ref2)
+                ^
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:1304: ERROR:  relation "no_default_table" does not exist
+LINE 1: INSERT INTO no_default_table VALUES (6, 2, 1);
+                    ^
+psql:pg_tests/compatible/fk.sql:1307: ERROR:  relation "no_default_table" does not exist
+LINE 1: SELECT * FROM no_default_table;
+                      ^
+DELETE 1
+psql:pg_tests/compatible/fk.sql:1313: ERROR:  relation "no_default_table" does not exist
+LINE 1: SELECT * FROM no_default_table;
+                      ^
+psql:pg_tests/compatible/fk.sql:1322: ERROR:  syntax error at or near "("
+LINE 5:  ,INDEX (ref1, ref2)
+                ^
+psql:pg_tests/compatible/fk.sql:1325: ERROR:  relation "no_default_table_on_update" does not exist
+LINE 1: INSERT INTO no_default_table_on_update VALUES (0, 4, 3);
+                    ^
+psql:pg_tests/compatible/fk.sql:1328: ERROR:  relation "no_default_table_on_update" does not exist
+LINE 1: SELECT * FROM no_default_table_on_update;
+                      ^
+UPDATE 1
+psql:pg_tests/compatible/fk.sql:1334: ERROR:  relation "no_default_table_on_update" does not exist
+LINE 1: SELECT * FROM no_default_table_on_update;
+                      ^
+psql:pg_tests/compatible/fk.sql:1343: ERROR:  syntax error at or near "("
+LINE 5:  ,INDEX (ref1, ref2)
+                ^
+psql:pg_tests/compatible/fk.sql:1352: ERROR:  syntax error at or near "("
+LINE 5:  ,INDEX (ref1, ref2)
+                ^
+psql:pg_tests/compatible/fk.sql:1361: ERROR:  syntax error at or near "("
+LINE 5:  ,INDEX (ref1, ref2)
+                ^
+psql:pg_tests/compatible/fk.sql:1370: ERROR:  syntax error at or near "("
+LINE 5:  ,INDEX (ref1, ref2)
+                ^
+psql:pg_tests/compatible/fk.sql:1379: ERROR:  syntax error at or near "("
+LINE 5:  ,INDEX (ref1, ref2)
+                ^
+psql:pg_tests/compatible/fk.sql:1384: ERROR:  table "no_default_table" does not exist
+psql:pg_tests/compatible/fk.sql:1387: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x2', 'y1', 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1390: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1393: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1402: ERROR:  relation "b" does not exist
+LINE 4:   (SELECT * FROM b WHERE a_z IS NOT NULL AND a_y IS NOT NULL...
+                         ^
+psql:pg_tests/compatible/fk.sql:1405: ERROR:  table "b" does not exist
+psql:pg_tests/compatible/fk.sql:1408: ERROR:  column "x" of relation "a" does not exist
+LINE 1: INSERT INTO a (x, y) VALUES ('x1', 'y1');
+                       ^
+psql:pg_tests/compatible/fk.sql:1411: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x) VALUES ('x1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1414: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y) VALUES ('y1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1417: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y, a_x) VALUES ('y1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1420: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y, a_x) VALUES (NULL, 'x1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1423: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y) VALUES ('x1', 'y1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1426: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y) VALUES (NULL, NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1429: ERROR:  table "b" does not exist
+psql:pg_tests/compatible/fk.sql:1432: ERROR:  column "x" of relation "a" does not exist
+LINE 1: INSERT INTO a (x, y, z) VALUES ('x1', 'y1', 'z1');
+                       ^
+psql:pg_tests/compatible/fk.sql:1435: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x) VALUES ('x1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1438: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y) VALUES ('y1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1441: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_z) VALUES ('z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1444: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y) VALUES ('x1', 'y1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1447: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y) VALUES (NULL, 'y1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1450: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y) VALUES ('x1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1453: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_z) VALUES ('x1', 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1456: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_z) VALUES (NULL, 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1459: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_z) VALUES ('x1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1462: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y, a_z) VALUES ('y1', 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1465: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y, a_z) VALUES (NULL, 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1468: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y, a_z) VALUES ('y1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1471: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x1', NULL, NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1474: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, 'y1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1477: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, NULL, 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1480: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x1', 'y1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1483: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x1', NULL, 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1486: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, 'y1', 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1489: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, NULL, NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1492: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x2', NULL, NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1495: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, 'y2', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1498: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, NULL, 'z2');
+                    ^
+psql:pg_tests/compatible/fk.sql:1501: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x2', 'y2', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1504: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x2', NULL, 'z2');
+                    ^
+psql:pg_tests/compatible/fk.sql:1507: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, 'y2', 'z2');
+                    ^
+psql:pg_tests/compatible/fk.sql:1510: ERROR:  table "b" does not exist
+psql:pg_tests/compatible/fk.sql:1513: ERROR:  column "x" of relation "a" does not exist
+LINE 1: INSERT INTO a (x, y, z) VALUES ('x1', 'y1', 'z1');
+                       ^
+psql:pg_tests/compatible/fk.sql:1516: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x1', NULL, NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1519: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, 'y1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1522: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, NULL, 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1525: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x1', 'y1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1528: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x1', NULL, 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1531: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, 'y1', 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1534: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, NULL, NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1537: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x2', NULL, NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1540: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, 'y2', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1543: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, NULL, 'z2');
+                    ^
+psql:pg_tests/compatible/fk.sql:1546: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x2', 'y2', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1549: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x2', NULL, 'z2');
+                    ^
+psql:pg_tests/compatible/fk.sql:1552: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, 'y2', 'z2');
+                    ^
+psql:pg_tests/compatible/fk.sql:1555: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1558: ERROR:  table "b" does not exist
+psql:pg_tests/compatible/fk.sql:1561: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x2', 'y1', 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1564: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1570: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1576: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x2', 'y2', 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1579: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1585: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1591: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x2', 'y2', 'z2');
+                    ^
+psql:pg_tests/compatible/fk.sql:1594: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1597: ERROR:  table "b" does not exist
+psql:pg_tests/compatible/fk.sql:1600: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1603: ERROR:  column "x" of relation "a" does not exist
+LINE 1: INSERT INTO a (x, y) VALUES ('x1', 'y1');
+                       ^
+psql:pg_tests/compatible/fk.sql:1606: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x) VALUES ('x1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1609: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y) VALUES ('y1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1612: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y, a_x) VALUES ('y1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1615: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y, a_x) VALUES (NULL, 'x1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1618: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y, a_x) VALUES ('y2', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1621: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y, a_x) VALUES (NULL, 'x2');
+                    ^
+psql:pg_tests/compatible/fk.sql:1624: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y) VALUES ('x1', 'y1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1627: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y) VALUES (NULL, NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1630: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1633: ERROR:  table "b" does not exist
+psql:pg_tests/compatible/fk.sql:1636: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1639: ERROR:  column "x" of relation "a" does not exist
+LINE 1: INSERT INTO a (x, y, z) VALUES ('x1', 'y1', 'z1');
+                       ^
+psql:pg_tests/compatible/fk.sql:1642: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x) VALUES ('x1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1645: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y) VALUES ('y1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1648: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_z) VALUES ('z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1651: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y) VALUES ('x1', 'y1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1654: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y) VALUES (NULL, 'y1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1657: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y) VALUES ('x1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1660: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_z) VALUES ('x1', 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1663: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_z) VALUES (NULL, 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1666: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_z) VALUES ('x1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1669: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y, a_z) VALUES ('y1', 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1672: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y, a_z) VALUES (NULL, 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1675: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y, a_z) VALUES ('y1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1678: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x1', NULL, NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1681: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, 'y1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1684: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, NULL, 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1687: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x1', 'y1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1690: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x1', NULL, 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1693: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, 'y1', 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1696: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x2', NULL, NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1699: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, 'y2', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1702: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, NULL, 'z2');
+                    ^
+psql:pg_tests/compatible/fk.sql:1705: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x2', 'y2', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1708: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x2', NULL, 'z2');
+                    ^
+psql:pg_tests/compatible/fk.sql:1711: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, 'y2', 'z2');
+                    ^
+psql:pg_tests/compatible/fk.sql:1714: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, NULL, NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1717: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1720: ERROR:  table "b" does not exist
+psql:pg_tests/compatible/fk.sql:1723: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1726: ERROR:  column "x" of relation "a" does not exist
+LINE 1: INSERT INTO a (x, y) VALUES ('x1', 'y1');
+                       ^
+psql:pg_tests/compatible/fk.sql:1729: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x) VALUES ('x1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1732: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y) VALUES ('y1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1735: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y, a_x) VALUES ('y1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1738: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y, a_x) VALUES (NULL, 'x1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1741: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y) VALUES ('x1', 'y1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1744: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y) VALUES (NULL, NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1747: ERROR:  table "b" does not exist
+psql:pg_tests/compatible/fk.sql:1750: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1753: ERROR:  column "x" of relation "a" does not exist
+LINE 1: INSERT INTO a (x, y, z) VALUES ('x1', 'y1', 'z1');
+                       ^
+psql:pg_tests/compatible/fk.sql:1756: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x) VALUES ('x1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1759: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y) VALUES ('y1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1762: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_z) VALUES ('z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1765: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y) VALUES ('x1', 'y1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1768: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y) VALUES (NULL, 'y1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1771: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y) VALUES ('x1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1774: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_z) VALUES ('x1', 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1777: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_z) VALUES (NULL, 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1780: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_z) VALUES ('x1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1783: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y, a_z) VALUES ('y1', 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1786: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y, a_z) VALUES (NULL, 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1789: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y, a_z) VALUES ('y1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1792: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x1', NULL, NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1795: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, 'y1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1798: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, NULL, 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1801: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x1', 'y1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1804: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x1', NULL, 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1807: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, 'y1', 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1810: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, NULL, NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1813: ERROR:  table "b" does not exist
+psql:pg_tests/compatible/fk.sql:1816: ERROR:  column "x" of relation "a" does not exist
+LINE 1: INSERT INTO a (x, y, z) VALUES ('x1', 'y1', 'z1');
+                       ^
+psql:pg_tests/compatible/fk.sql:1819: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, NULL, NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1822: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1825: ERROR:  table "b" does not exist
+psql:pg_tests/compatible/fk.sql:1828: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x1', NULL, NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1831: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1837: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1843: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, 'y1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1846: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1852: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1858: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, NULL, 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1861: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1867: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1873: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x1', 'y1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1876: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1882: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1888: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x1', NULL, 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1891: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1897: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1903: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, 'y1', 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1906: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1912: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1918: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x2', 'y1', 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1921: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1927: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1933: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x2', 'y2', 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1936: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1942: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1948: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x2', 'y2', 'z2');
+                    ^
+psql:pg_tests/compatible/fk.sql:1951: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1954: ERROR:  table "b" does not exist
+psql:pg_tests/compatible/fk.sql:1957: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1960: ERROR:  column "x" of relation "a" does not exist
+LINE 1: INSERT INTO a (x, y) VALUES ('x1', 'y1');
+                       ^
+psql:pg_tests/compatible/fk.sql:1963: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x) VALUES ('x1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1966: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y) VALUES ('y1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1969: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y, a_x) VALUES ('y1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1972: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y, a_x) VALUES (NULL, 'x1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1975: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y) VALUES ('x1', 'y1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1978: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y) VALUES (NULL, NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:1981: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1984: ERROR:  table "b" does not exist
+psql:pg_tests/compatible/fk.sql:1987: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:1990: ERROR:  column "x" of relation "a" does not exist
+LINE 1: INSERT INTO a (x, y, z) VALUES ('x1', 'y1', 'z1');
+                       ^
+psql:pg_tests/compatible/fk.sql:1993: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x) VALUES ('x1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1996: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y) VALUES ('y1');
+                    ^
+psql:pg_tests/compatible/fk.sql:1999: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_z) VALUES ('z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:2002: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y) VALUES ('x1', 'y1');
+                    ^
+psql:pg_tests/compatible/fk.sql:2005: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y) VALUES (NULL, 'y1');
+                    ^
+psql:pg_tests/compatible/fk.sql:2008: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y) VALUES ('x1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:2011: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_z) VALUES ('x1', 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:2014: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_z) VALUES (NULL, 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:2017: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_z) VALUES ('x1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:2020: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y, a_z) VALUES ('y1', 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:2023: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y, a_z) VALUES (NULL, 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:2026: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_y, a_z) VALUES ('y1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:2029: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x1', NULL, NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:2032: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, 'y1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:2035: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, NULL, 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:2038: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x1', 'y1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:2041: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x1', NULL, 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:2044: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, 'y1', 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:2047: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, NULL, NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:2050: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2053: ERROR:  table "b" does not exist
+psql:pg_tests/compatible/fk.sql:2056: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x1', NULL, NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:2059: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2062: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2068: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2074: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2077: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, 'y1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:2080: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2083: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2089: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2095: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2098: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, NULL, 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:2101: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2104: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2110: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2116: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2119: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x1', 'y1', NULL);
+                    ^
+psql:pg_tests/compatible/fk.sql:2122: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2125: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2131: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2137: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2140: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x1', NULL, 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:2143: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2146: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2152: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2158: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2161: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES (NULL, 'y1', 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:2164: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2167: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2173: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2179: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2182: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x2', 'y1', 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:2185: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2188: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2194: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2200: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2203: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x2', 'y2', 'z1');
+                    ^
+psql:pg_tests/compatible/fk.sql:2206: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2209: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2215: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2221: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2224: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b (a_x, a_y, a_z) VALUES ('x2', 'y2', 'z2');
+                    ^
+psql:pg_tests/compatible/fk.sql:2227: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2230: ERROR:  relation "b" does not exist
+psql:pg_tests/compatible/fk.sql:2233: ERROR:  table "b" does not exist
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:2251: ERROR:  insert or update on table "child_composite_index" violates foreign key constraint "fk_id"
+DETAIL:  Key (parent_a_id, parent_b_id)=(100, 300) is not present in table "parent_composite_index".
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 1
+ALTER TABLE
+ALTER TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+ALTER TABLE
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+BEGIN
+psql:pg_tests/compatible/fk.sql:2327: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/fk.sql:2328: ERROR:  syntax error at or near "AS"
+LINE 1: ALTER TABLE parentid ADD id INT NOT NULL AS (k + 2) STORED;
+                                                 ^
+psql:pg_tests/compatible/fk.sql:2329: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+CREATE TABLE
+INSERT 0 2
+CREATE TABLE
+INSERT 0 2
+DELETE 1
+DROP TABLE
+psql:pg_tests/compatible/fk.sql:2366: ERROR:  relation "pet" does not exist
+LINE 1: INSERT INTO pet VALUES (0, 'crookshanks');
+                    ^
+psql:pg_tests/compatible/fk.sql:2369: ERROR:  relation "pet" does not exist
+psql:pg_tests/compatible/fk.sql:2372: ERROR:  relation "pet" does not exist
+psql:pg_tests/compatible/fk.sql:2375: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [SHOW CONSTRAINTS FROM pet] ORDER BY constrain...
+                      ^
+psql:pg_tests/compatible/fk.sql:2378: ERROR:  relation "pet" does not exist
+psql:pg_tests/compatible/fk.sql:2381: ERROR:  relation "person" does not exist
+LINE 1: INSERT INTO person VALUES (0, 18, 'Hermione Granger');
+                    ^
+psql:pg_tests/compatible/fk.sql:2384: ERROR:  relation "pet" does not exist
+psql:pg_tests/compatible/fk.sql:2387: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [SHOW CONSTRAINTS FROM pet] ORDER BY constrain...
+                      ^
+psql:pg_tests/compatible/fk.sql:2390: ERROR:  table "person" does not exist
+psql:pg_tests/compatible/fk.sql:2393: ERROR:  table "child" does not exist
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:2408: ERROR:  update or delete on table "parent" violates foreign key constraint "child_p_fkey" on table "child"
+DETAIL:  Key (p)=(1) is still referenced from table "child".
+UPDATE 1
+UPDATE 0
+UPDATE 1
+DELETE 1
+DELETE 2
+INSERT 0 2
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:2432: ERROR:  duplicate key value violates unique constraint "parent_pkey"
+DETAIL:  Key (p)=(3) already exists.
+UPDATE 2
+UPDATE 2
+CREATE TABLE
+INSERT 0 4
+psql:pg_tests/compatible/fk.sql:2447: ERROR:  insert or update on table "self" violates foreign key constraint "self_y_fkey"
+DETAIL:  Key (y)=(5) is not present in table "self".
+psql:pg_tests/compatible/fk.sql:2450: ERROR:  update or delete on table "self" violates foreign key constraint "self_y_fkey" on table "self"
+DETAIL:  Key (x)=(4) is still referenced from table "self".
+TRUNCATE TABLE
+INSERT 0 1
+UPDATE 1
+CREATE TABLE
+INSERT 0 3
+psql:pg_tests/compatible/fk.sql:2483: ERROR:  syntax error at or near "("
+LINE 7:   FAMILY (a, b, c),
+                 ^
+psql:pg_tests/compatible/fk.sql:2486: ERROR:  relation "fam" does not exist
+LINE 1: INSERT INTO fam VALUES (10, 10, 1, 1, 10);
+                    ^
+psql:pg_tests/compatible/fk.sql:2489: ERROR:  relation "fam" does not exist
+LINE 1: UPDATE fam SET d = 3;
+               ^
+psql:pg_tests/compatible/fk.sql:2492: ERROR:  relation "fam" does not exist
+LINE 1: UPDATE fam SET c = 3;
+               ^
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:2505: ERROR:  insert or update on table "match_full" violates foreign key constraint "match_full_a_b_fkey"
+DETAIL:  MATCH FULL does not allow mixing of null and nonnull key values.
+UPDATE 1
+CREATE TABLE
+INSERT 0 1
+UPDATE 1
+psql:pg_tests/compatible/fk.sql:2530: ERROR:  syntax error at or near "("
+LINE 5:   FAMILY (k, a),
+                 ^
+psql:pg_tests/compatible/fk.sql:2536: ERROR:  relation "fam_parent" does not exist
+psql:pg_tests/compatible/fk.sql:2539: ERROR:  relation "fam_parent" does not exist
+LINE 1: INSERT INTO fam_parent VALUES (1, 1, 1);
+                    ^
+psql:pg_tests/compatible/fk.sql:2542: ERROR:  relation "fam_parent" does not exist
+psql:pg_tests/compatible/fk.sql:2543: ERROR:  relation "fam_child" does not exist
+BEGIN
+psql:pg_tests/compatible/fk.sql:2549: ERROR:  relation "fam_parent" does not exist
+LINE 1: UPDATE fam_parent SET b = b+1 WHERE k = 1;
+               ^
+psql:pg_tests/compatible/fk.sql:2551: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/fk.sql:2554: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/fk.sql:2556: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+ROLLBACK
+CREATE TABLE
+CREATE TABLE
+CREATE SEQUENCE
+psql:pg_tests/compatible/fk.sql:2576: ERROR:  relation "messages" does not exist
+psql:pg_tests/compatible/fk.sql:2579: ERROR:  relation "messages" does not exist
+INSERT 0 3
+INSERT 0 3
+psql:pg_tests/compatible/fk.sql:2593: ERROR:  relation "messages" does not exist
+LINE 1: INSERT INTO messages (user_id_1, user_id_2, text) VALUES
+                    ^
+psql:pg_tests/compatible/fk.sql:2597: ERROR:  relation "messages" does not exist
+LINE 1: INSERT INTO messages (user_id_1, user_id_2, text) VALUES
+                    ^
+psql:pg_tests/compatible/fk.sql:2601: ERROR:  syntax error at or near "#"
+LINE 1: # Now try and update the user_id.
+        ^
+psql:pg_tests/compatible/fk.sql:2605: ERROR:  syntax error at or near "#"
+LINE 1: # See that it propagates.
+        ^
+ id | id2 
+----+-----
+  1 |  10
+  2 |  20
+  3 |  30
+(3 rows)
+
+psql:pg_tests/compatible/fk.sql:2611: ERROR:  relation "messages" does not exist
+LINE 1: SELECT user_id_1, user_id_2, text FROM messages ORDER BY mes...
+                                               ^
+DELETE 0
+ id 
+----
+  1
+  2
+  3
+(3 rows)
+
+ id | id2 
+----+-----
+  1 |  10
+  2 |  20
+  3 |  30
+(3 rows)
+
+psql:pg_tests/compatible/fk.sql:2623: ERROR:  relation "messages" does not exist
+LINE 1: SELECT user_id_1, user_id_2, text FROM messages ORDER BY mes...
+                                               ^
+psql:pg_tests/compatible/fk.sql:2626: ERROR:  relation "messages" does not exist
+psql:pg_tests/compatible/fk.sql:2629: ERROR:  insert or update on table "good_users" violates foreign key constraint "good_users_id2_fkey"
+DETAIL:  Key (id2)=(10) is not present in table "users".
+UPDATE 0
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:2643: ERROR:  relation "messages" does not exist
+LINE 1: INSERT INTO messages (user_id_1, user_id_2, text) VALUES
+                    ^
+psql:pg_tests/compatible/fk.sql:2647: ERROR:  relation "messages" does not exist
+LINE 1: INSERT INTO messages (user_id_1, user_id_2, text) VALUES
+                    ^
+psql:pg_tests/compatible/fk.sql:2651: ERROR:  syntax error at or near "#"
+LINE 1: # And sanity check everything.
+        ^
+DELETE 0
+psql:pg_tests/compatible/fk.sql:2657: ERROR:  relation "messages" does not exist
+LINE 1: SELECT user_id_1, user_id_2, text FROM messages ORDER BY mes...
+                                               ^
+psql:pg_tests/compatible/fk.sql:2660: NOTICE:  drop cascades to constraint good_users_id_fkey on table good_users
+DROP TABLE
+DROP TABLE
+psql:pg_tests/compatible/fk.sql:2666: ERROR:  table "messages" does not exist
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:2678: ERROR:  update or delete on table "t1" violates foreign key constraint "fk1" on table "t2"
+DETAIL:  Key (a)=(123) is still referenced from table "t2".
+  a  
+-----
+ 123
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+TRUNCATE TABLE
+TRUNCATE TABLE
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:2717: ERROR:  update or delete on table "t1" violates foreign key constraint "fk1" on table "t2"
+DETAIL:  Key (a)=(123) is still referenced from table "t2".
+  a  
+-----
+ 123
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+TRUNCATE TABLE
+TRUNCATE TABLE
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:2756: ERROR:  update or delete on table "t1" violates foreign key constraint "fk1" on table "t2"
+DETAIL:  Key (a)=(123) is still referenced from table "t2".
+  a  
+-----
+ 123
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+TRUNCATE TABLE
+TRUNCATE TABLE
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:2795: ERROR:  update or delete on table "t1" violates foreign key constraint "fk1" on table "t2"
+DETAIL:  Key (a)=(123) is still referenced from table "t2".
+  a  
+-----
+ 123
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+TRUNCATE TABLE
+TRUNCATE TABLE
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+DELETE 1
+ a 
+---
+(0 rows)
+
+ALTER TABLE
+ALTER TABLE
+TRUNCATE TABLE
+TRUNCATE TABLE
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+DELETE 1
+ a 
+---
+(0 rows)
+
+ALTER TABLE
+ALTER TABLE
+TRUNCATE TABLE
+TRUNCATE TABLE
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:2911: ERROR:  insert or update on table "t2" violates foreign key constraint "fk1"
+DETAIL:  Key (a)=(1) is not present in table "t1".
+  a  
+-----
+ 123
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+TRUNCATE TABLE
+TRUNCATE TABLE
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:2949: ERROR:  insert or update on table "t2" violates foreign key constraint "fk1"
+DETAIL:  Key (a)=(1) is not present in table "t1".
+  a  
+-----
+ 123
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+TRUNCATE TABLE
+TRUNCATE TABLE
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+DELETE 1
+ a 
+---
+  
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+TRUNCATE TABLE
+TRUNCATE TABLE
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:3042: ERROR:  update or delete on table "t1" violates foreign key constraint "fk1" on table "t2"
+DETAIL:  Key (a)=(123) is still referenced from table "t2".
+  a  
+-----
+ 123
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+TRUNCATE TABLE
+TRUNCATE TABLE
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:3081: ERROR:  update or delete on table "t1" violates foreign key constraint "fk1" on table "t2"
+DETAIL:  Key (a)=(123) is still referenced from table "t2".
+  a  
+-----
+ 123
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+TRUNCATE TABLE
+TRUNCATE TABLE
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:3120: ERROR:  update or delete on table "t1" violates foreign key constraint "fk1" on table "t2"
+DETAIL:  Key (a)=(123) is still referenced from table "t2".
+  a  
+-----
+ 123
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+TRUNCATE TABLE
+TRUNCATE TABLE
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:3159: ERROR:  update or delete on table "t1" violates foreign key constraint "fk1" on table "t2"
+DETAIL:  Key (a)=(123) is still referenced from table "t2".
+  a  
+-----
+ 123
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+TRUNCATE TABLE
+TRUNCATE TABLE
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+UPDATE 1
+ a 
+---
+ 2
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+TRUNCATE TABLE
+TRUNCATE TABLE
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+UPDATE 1
+ a 
+---
+ 2
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+TRUNCATE TABLE
+TRUNCATE TABLE
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:3276: ERROR:  insert or update on table "t2" violates foreign key constraint "fk1"
+DETAIL:  Key (a)=(1) is not present in table "t1".
+  a  
+-----
+ 123
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+TRUNCATE TABLE
+TRUNCATE TABLE
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:3315: ERROR:  insert or update on table "t2" violates foreign key constraint "fk1"
+DETAIL:  Key (a)=(1) is not present in table "t1".
+  a  
+-----
+ 123
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+TRUNCATE TABLE
+TRUNCATE TABLE
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+UPDATE 1
+ a 
+---
+  
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+TRUNCATE TABLE
+TRUNCATE TABLE
+DROP TABLE
+DROP TABLE
+psql:pg_tests/compatible/fk.sql:3396: ERROR:  syntax error at or near "("
+LINE 6:   INDEX (k2)
+                ^
+psql:pg_tests/compatible/fk.sql:3404: ERROR:  relation "nonunique_idx_parent" does not exist
+psql:pg_tests/compatible/fk.sql:3407: ERROR:  relation "nonunique_idx_parent" does not exist
+LINE 1: INSERT INTO nonunique_idx_parent VALUES (1, 10);
+                    ^
+psql:pg_tests/compatible/fk.sql:3410: ERROR:  relation "nonunique_idx_child" does not exist
+LINE 1: INSERT INTO nonunique_idx_child VALUES (0, 1, 10);
+                    ^
+psql:pg_tests/compatible/fk.sql:3413: ERROR:  unrecognized configuration parameter "enable_multiple_modifications_of_table"
+CREATE TABLE
+CREATE TABLE
+ ?column? 
+----------
+        1
+(1 row)
+
+psql:pg_tests/compatible/fk.sql:3436: ERROR:  unrecognized configuration parameter "enable_multiple_modifications_of_table"
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:3445: ERROR:  insert or update on table "add_self_fk_fail" violates foreign key constraint "self_fk"
+DETAIL:  Key (b)=(3) is not present in table "add_self_fk_fail".
+DROP TABLE
+CREATE DATABASE
+CREATE DATABASE
+psql:pg_tests/compatible/fk.sql:3463: ERROR:  syntax error at or near "USE"
+LINE 1: USE db1;
+        ^
+psql:pg_tests/compatible/fk.sql:3466: ERROR:  relation "parent" already exists
+CREATE TABLE
+psql:pg_tests/compatible/fk.sql:3472: ERROR:  cross-database references are not implemented: "db1.public.parent"
+psql:pg_tests/compatible/fk.sql:3475: ERROR:  cross-database references are not implemented: "db1.public.child3"
+LINE 1: CREATE TABLE db1.public.child3 (c INT PRIMARY KEY, p INT REF...
+                     ^
+psql:pg_tests/compatible/fk.sql:3478: ERROR:  cross-database references are not implemented: "db2.public.child"
+LINE 1: CREATE TABLE db2.public.child (c INT PRIMARY KEY, p INT REFE...
+                     ^
+CREATE SCHEMA
+psql:pg_tests/compatible/fk.sql:3484: ERROR:  cross-database references are not implemented: "db1.sc1.child"
+LINE 1: CREATE TABLE db1.sc1.child (c INT PRIMARY KEY, p INT REFEREN...
+                     ^
+psql:pg_tests/compatible/fk.sql:3487: ERROR:  syntax error at or near "USE"
+LINE 1: USE db2;
+        ^
+psql:pg_tests/compatible/fk.sql:3490: ERROR:  relation "child" already exists
+psql:pg_tests/compatible/fk.sql:3493: ERROR:  cross-database references are not implemented: "db2.public.child"
+LINE 1: CREATE TABLE db2.public.child (c INT PRIMARY KEY, p INT REFE...
+                     ^
+psql:pg_tests/compatible/fk.sql:3496: ERROR:  relation "child" already exists
+psql:pg_tests/compatible/fk.sql:3499: ERROR:  cross-database references are not implemented: "db1.public.parent"
+psql:pg_tests/compatible/fk.sql:3502: ERROR:  syntax error at or near "USE"
+LINE 1: USE db1;
+        ^
+psql:pg_tests/compatible/fk.sql:3505: ERROR:  cross-database references are not implemented: "db2.public.child"
+psql:pg_tests/compatible/fk.sql:3511: ERROR:  cross-database references are not implemented: "db2.public.child"
+psql:pg_tests/compatible/fk.sql:3514: ERROR:  syntax error at or near "USE"
+LINE 1: USE db2;
+        ^
+psql:pg_tests/compatible/fk.sql:3517: ERROR:  cross-database references are not implemented: "db1.public.parent"
+psql:pg_tests/compatible/fk.sql:3520: ERROR:  zero-length delimited identifier at or near """"
+LINE 1: select * from "".crdb_internal.cross_db_references ORDER BY ...
+                      ^
+psql:pg_tests/compatible/fk.sql:3523: ERROR:  syntax error at or near "USE"
+LINE 1: USE test;
+        ^
+psql:pg_tests/compatible/fk.sql:3533: ERROR:  syntax error at or near "INDEX"
+LINE 3:   UNIQUE INDEX (p) WHERE p > 100,
+                 ^
+psql:pg_tests/compatible/fk.sql:3536: ERROR:  relation "partial_parent" does not exist
+CREATE TABLE
+CREATE TABLE
+psql:pg_tests/compatible/fk.sql:3543: ERROR:  column "rowid" referenced in foreign key constraint does not exist
+DROP TABLE
+psql:pg_tests/compatible/fk.sql:3562: ERROR:  syntax error at or near "INDEX"
+LINE 6:   UNIQUE INDEX ba_idx (b, a),
+                 ^
+psql:pg_tests/compatible/fk.sql:3570: ERROR:  syntax error at or near "("
+LINE 5:   FAMILY (k, b, a)
+                 ^
+psql:pg_tests/compatible/fk.sql:3573: ERROR:  relation "t65890_c" does not exist
+psql:pg_tests/compatible/fk.sql:3576: ERROR:  relation "t65890_c" does not exist
+LINE 1: INSERT INTO t65890_c SELECT 1, 1, 1;
+                    ^
+psql:pg_tests/compatible/fk.sql:3579: ERROR:  relation "t65890_c" does not exist
+psql:pg_tests/compatible/fk.sql:3582: ERROR:  relation "t65890_c" does not exist
+psql:pg_tests/compatible/fk.sql:3587: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [
+                      ^
+psql:pg_tests/compatible/fk.sql:3592: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [
+                      ^
+psql:pg_tests/compatible/fk.sql:3595: ERROR:  relation "t65890_c" does not exist
+LINE 1: INSERT INTO t65890_c (k, b, a) VALUES (1, 2, 3);
+                    ^
+psql:pg_tests/compatible/fk.sql:3598: ERROR:  relation "t65890_c" does not exist
+LINE 1: INSERT INTO t65890_c SELECT 1, 2, 2;
+                    ^
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+ id | x | y | z |   c_str   | a | b | c |  p_str  
+----+---+---+---+-----------+---+---+---+---------
+ 99 | 1 | 3 | 2 | child_val | 1 | 2 | 3 | par_val
+(1 row)
+
+psql:pg_tests/compatible/fk.sql:3642: ERROR:  insert or update on table "reference_constraint_different_order_child" violates foreign key constraint "p_fk"
+DETAIL:  Key (x, y, z)=(1, 2, 3) is not present in table "reference_constraint_different_order_parent".
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/fk.sql:3652: ERROR:  insert or update on table "t3" violates foreign key constraint "t3_b_fkey"
+DETAIL:  Key (b)=(2) is not present in table "t1".
+psql:pg_tests/compatible/fk.sql:3655: ERROR:  insert or update on table "t3" violates foreign key constraint "t3_c_fkey"
+DETAIL:  Key (c)=(2) is not present in table "t2".
+DROP TABLE
+CREATE DATABASE
+psql:pg_tests/compatible/fk.sql:3664: ERROR:  cross-database references are not implemented: "db_type_test.public.child_2"
+psql:pg_tests/compatible/fk.sql:3667: ERROR:  cross-database references are not implemented: "db_type_test.public.child_2"
+DROP DATABASE
+psql:pg_tests/compatible/fk.sql:3673: ERROR:  relation "p76852" does not exist
+LINE 1: INSERT INTO p76852 (p, i) VALUES ('foo', 1);
+                    ^
+psql:pg_tests/compatible/fk.sql:3674: ERROR:  relation "c76852" does not exist
+LINE 1: INSERT INTO c76852 (b, p) VALUES (true, 'foo');
+                    ^
+psql:pg_tests/compatible/fk.sql:3675: ERROR:  relation "p76852" does not exist
+LINE 1: DELETE FROM p76852 WHERE true;
+                    ^
+psql:pg_tests/compatible/fk.sql:3678: ERROR:  syntax error at or near "@"
+LINE 1: SELECT b FROM c76852@idx WHERE b;
+                            ^
+psql:pg_tests/compatible/fk.sql:3681: ERROR:  relation "p76852" does not exist
+LINE 1: INSERT INTO p76852 (p, i) VALUES ('foo', 1);
+                    ^
+psql:pg_tests/compatible/fk.sql:3682: ERROR:  relation "c76852" does not exist
+LINE 1: INSERT INTO c76852 (b, p) VALUES (true, 'foo');
+                    ^
+psql:pg_tests/compatible/fk.sql:3683: ERROR:  relation "p76852" does not exist
+LINE 1: DELETE FROM p76852 WHERE i = 1;
+                    ^
+psql:pg_tests/compatible/fk.sql:3686: ERROR:  syntax error at or near "@"
+LINE 1: SELECT b FROM c76852@idx WHERE b;
+                            ^
+CREATE TABLE
+CREATE TABLE
+BEGIN
+psql:pg_tests/compatible/fk.sql:3704: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/fk.sql:3706: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/fk.sql:3707: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+BEGIN
+psql:pg_tests/compatible/fk.sql:3714: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+psql:pg_tests/compatible/fk.sql:3715: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/fk.sql:3716: ERROR:  syntax error at or near "INDEX"
+LINE 1: ...ERENCES parent80828(id) ON DELETE CASCADE, UNIQUE INDEX (pid...
+                                                             ^
+psql:pg_tests/compatible/fk.sql:3717: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/fk.sql:3718: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/fk.sql:3728: ERROR:  relation "child80828" does not exist
+psql:pg_tests/compatible/fk.sql:3731: ERROR:  relation "parent80828" does not exist
+LINE 1: DELETE FROM parent80828 WHERE id = 1;
+                    ^
+psql:pg_tests/compatible/fk.sql:3740: ERROR:  relation "parent80828" does not exist
+LINE 1: SELECT count(*) FROM parent80828;
+                             ^
+psql:pg_tests/compatible/fk.sql:3743: ERROR:  relation "child80828" does not exist
+LINE 1: SELECT count(*) FROM child80828;
+                             ^
+CREATE TABLE
+CREATE TABLE
+psql:pg_tests/compatible/fk.sql:3750: ERROR:  column "b" referenced in foreign key constraint does not exist
+psql:pg_tests/compatible/fk.sql:3753: ERROR:  schema "sc1" already exists
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+ constraint_catalog | constraint_schema | constraint_name | unique_constraint_catalog | unique_constraint_schema | unique_constraint_name 
+--------------------+-------------------+-----------------+---------------------------+--------------------------+------------------------
+ crdb_tests_fk      | sc2               | child_r_fkey    | crdb_tests_fk             | sc1                      | parent_pkey
+(1 row)
+
+psql:pg_tests/compatible/fk.sql:3763: ERROR:  type "f1" does not exist
+LINE 1: ...l1 CHAR(7), col2 INT4, UNIQUE (col1,col2), FAMILY f1 (pk,col...
+                                                             ^
+psql:pg_tests/compatible/fk.sql:3768: ERROR:  type "f1" does not exist
+LINE 1: ...,t1_fk_col2) REFERENCES t1_fk(col1, col2), FAMILY f1 (pk,t1_...
+                                                             ^
+psql:pg_tests/compatible/fk.sql:3771: ERROR:  type "f1" does not exist
+LINE 1: ...,t1_fk_col2) REFERENCES t1_fk(col1, col2), FAMILY f1 (pk,t1_...
+                                                             ^
+psql:pg_tests/compatible/fk.sql:3774: ERROR:  relation "t2_fk" does not exist
+psql:pg_tests/compatible/fk.sql:3777: ERROR:  relation "t2_fk" does not exist
+psql:pg_tests/compatible/fk.sql:3780: ERROR:  relation "t2_fk" does not exist
+psql:pg_tests/compatible/fk.sql:3783: ERROR:  relation "t2_fk" does not exist
+psql:pg_tests/compatible/fk.sql:3786: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE t2_fk;
+             ^
+psql:pg_tests/compatible/fk.sql:3789: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE t2_fk;
+             ^
+psql:pg_tests/compatible/fk.sql:3792: ERROR:  table "t2_fk" does not exist
+psql:pg_tests/compatible/fk.sql:3793: ERROR:  table "t1_fk" does not exist
