@@ -1,0 +1,7 @@
+SET
+                               notice                                
+---------------------------------------------------------------------
+ skipped: tenant/virtual cluster tests have no PostgreSQL equivalent
+(1 row)
+
+RESET

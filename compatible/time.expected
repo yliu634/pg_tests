@@ -1,0 +1,427 @@
+   time   
+----------
+ 12:00:00
+(1 row)
+
+     time     
+--------------
+ 12:00:00.456
+(1 row)
+
+   time   
+----------
+ 00:00:00
+(1 row)
+
+      time       
+-----------------
+ 23:59:59.999999
+(1 row)
+
+psql:pg_tests/compatible/time.sql:19: ERROR:  date/time field value out of range: "124:00"
+LINE 1: SELECT '124:00'::TIME;
+               ^
+psql:pg_tests/compatible/time.sql:22: ERROR:  date/time field value out of range: "24:00:01"
+LINE 1: SELECT '24:00:01'::TIME;
+               ^
+psql:pg_tests/compatible/time.sql:25: ERROR:  date/time field value out of range: "24:00:00.001"
+LINE 1: SELECT '24:00:00.001'::TIME;
+               ^
+   time   
+----------
+ 12:00:00
+(1 row)
+
+   time   
+----------
+ 12:00:00
+(1 row)
+
+   time   
+----------
+ 12:00:00
+(1 row)
+
+   time   
+----------
+ 12:00:00
+(1 row)
+
+   time   
+----------
+ 12:00:00
+(1 row)
+
+   time   
+----------
+ 17:00:00
+(1 row)
+
+   time   
+----------
+ 12:00:00
+(1 row)
+
+ interval 
+----------
+ 12:00:00
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ 12:00:01
+(1 row)
+
+ ?column? 
+----------
+ 00:00:00
+(1 row)
+
+ ?column? 
+----------
+ 12:00:00
+(1 row)
+
+ ?column? 
+----------
+ 12:00:01
+(1 row)
+
+ ?column? 
+----------
+ 11:59:59
+(1 row)
+
+ ?column? 
+----------
+ 23:59:59
+(1 row)
+
+ ?column? 
+----------
+ 12:00:00
+(1 row)
+
+ ?column? 
+----------
+ 00:00:01
+(1 row)
+
+ ?column?  
+-----------
+ -00:00:01
+(1 row)
+
+      ?column?       
+---------------------
+ 2017-01-01 12:00:00
+(1 row)
+
+      ?column?       
+---------------------
+ 2017-01-01 12:00:00
+(1 row)
+
+      ?column?       
+---------------------
+ 2016-12-31 12:00:00
+(1 row)
+
+CREATE TABLE
+INSERT 0 6
+        t        
+-----------------
+ 00:00:00
+ 00:00:00.000001
+ 11:59:59.999999
+ 12:00:00
+ 12:00:00.000001
+ 23:59:59.999999
+(6 rows)
+
+CREATE TABLE
+INSERT 0 4
+           times            
+----------------------------
+ {}
+ {00:00:00}
+ {00:00:00,12:00:00.000001}
+ {13:00:00}
+(4 rows)
+
+ date_trunc 
+------------
+ 12:00:00
+(1 row)
+
+ date_trunc 
+------------
+ 12:01:00
+(1 row)
+
+ date_trunc 
+------------
+ 12:01:02
+(1 row)
+
+  date_trunc  
+--------------
+ 12:01:02.345
+(1 row)
+
+   date_trunc    
+-----------------
+ 12:01:02.345678
+(1 row)
+
+ date_trunc 
+------------
+ 00:00:00
+(1 row)
+
+ extract 
+---------
+      12
+(1 row)
+
+ extract 
+---------
+       1
+(1 row)
+
+ extract  
+----------
+ 2.345678
+(1 row)
+
+ extract  
+----------
+ 2345.678
+(1 row)
+
+ extract 
+---------
+ 2345678
+(1 row)
+
+   extract    
+--------------
+ 43200.000000
+(1 row)
+
+psql:pg_tests/compatible/time.sql:194: ERROR:  unit "day" not supported for type time without time zone
+ extract 
+---------
+ 2345678
+(1 row)
+
+   extract    
+--------------
+ 43200.000000
+(1 row)
+
+psql:pg_tests/compatible/time.sql:205: ERROR:  unit "day" not supported for type time without time zone
+psql:pg_tests/compatible/time.sql:208: ERROR:  unit "day" not supported for type time without time zone
+psql:pg_tests/compatible/time.sql:214: WARNING:  TIME(7) precision reduced to maximum allowed, 6
+LINE 1: select '1:00:00.001'::TIME(7);
+                              ^
+     time     
+--------------
+ 01:00:00.001
+(1 row)
+
+CREATE TABLE
+INSERT 0 7
+ id |       t        
+----+----------------
+  1 | 12:00:00.12346
+  2 | 12:00:00.12345
+  3 | 12:00:00.1234
+  4 | 12:00:00.123
+  5 | 12:00:00.12
+  6 | 12:00:00.1
+  7 | 12:00:00
+(7 rows)
+
+ column_name |       data_type        
+-------------+------------------------
+ id          | integer
+ t           | time without time zone
+(2 rows)
+
+ALTER TABLE
+INSERT 0 1
+ id  |        t        
+-----+-----------------
+   1 | 12:00:00.12346
+   2 | 12:00:00.12345
+   3 | 12:00:00.1234
+   4 | 12:00:00.123
+   5 | 12:00:00.12
+   6 | 12:00:00.1
+   7 | 12:00:00
+ 100 | 12:00:00.123456
+(8 rows)
+
+ column_name |       data_type        
+-------------+------------------------
+ id          | integer
+ t           | time without time zone
+(2 rows)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+       pg_typeof        |      pg_typeof      |       pg_typeof        |      pg_typeof      
+------------------------+---------------------+------------------------+---------------------
+ time without time zone | time with time zone | time without time zone | time with time zone
+(1 row)
+
+   time   
+----------
+ 01:24:00
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+INSERT 0 3
+SET
+CREATE TABLE
+INSERT 0 2
+SET
+UPDATE 1
+UPDATE 1
+ id 
+----
+  1
+  2
+(2 rows)
+
+CREATE TABLE
+INSERT 0 2
+      a       
+--------------
+ 12:13:14.123
+ 19:21:57.261
+(2 rows)
+
+UPDATE 2
+      a       
+--------------
+ 13:14:16.123
+ 13:14:16.123
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+    a     
+----------
+ 24:00:00
+(1 row)
+
+        a        
+-----------------
+ 23:59:59.999999
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+

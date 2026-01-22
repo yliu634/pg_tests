@@ -1,6 +1,22 @@
 -- PostgreSQL compatible tests from tenant
 -- 18 tests
 
+-- PG-NOT-SUPPORTED: CockroachDB tenant/virtual cluster behavior (and
+-- tenant-scoped privilege checks like `MANAGEVIRTUALCLUSTER` / `SET CLUSTER
+-- SETTING`) has no PostgreSQL equivalent.
+--
+-- The original CockroachDB-derived SQL is preserved below for reference, but
+-- is not executed under PostgreSQL.
+
+SET client_min_messages = warning;
+
+SELECT
+  'skipped: tenant/virtual cluster tests have no PostgreSQL equivalent'
+    AS notice;
+
+RESET client_min_messages;
+
+/*
 -- Test 1: statement (line 134)
 set default_transaction_read_only = on;
 
@@ -60,4 +76,4 @@ CREATE VIEW foo AS SELECT latitude,longitude FROM system.locations
 
 -- Test 18: statement (line 429)
 RESET CLUSTER SETTING sql.restrict_system_interface.enabled
-
+*/

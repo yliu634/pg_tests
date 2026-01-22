@@ -2,7 +2,7 @@
 -- 1 tests
 
 -- Test 1: statement (line 3)
-CREATE TABLE parent_multi (pa INT, pb INT, pc INT, UNIQUE INDEX (pa,pb,pc));
+CREATE TABLE parent_multi (pa INT, pb INT, pc INT, UNIQUE (pa,pb,pc));
 CREATE TABLE child_multi_1 (
   c INT,
   a INT,
@@ -15,4 +15,3 @@ CREATE TABLE child_multi_2 (
   a INT,
   FOREIGN KEY (a,b,c) REFERENCES parent_multi(pa,pb,pc) ON DELETE CASCADE
 );
-
