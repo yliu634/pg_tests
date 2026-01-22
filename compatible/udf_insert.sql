@@ -7,7 +7,7 @@ CREATE TABLE t (a INT PRIMARY KEY, b INT DEFAULT 0);
 -- Test 2: statement (line 4)
 CREATE FUNCTION f_err() RETURNS RECORD AS
 $$
-  INSERT INTO t VALUES (1,2);
+  INSERT INTO t VALUES (1,2) RETURNING *;
 $$ LANGUAGE SQL;
 
 -- Test 3: statement (line 10)
@@ -33,7 +33,7 @@ $$
 $$ LANGUAGE SQL;
 
 -- Test 7: statement (line 35)
-CREATE FUNCTION f_err(i INT, j INT) RETURNS RECORD IMMUTABLE AS
+CREATE OR REPLACE FUNCTION f_err(i INT, j INT) RETURNS RECORD IMMUTABLE AS
 $$
   INSERT INTO t VALUES (i,j) RETURNING *;
 $$ LANGUAGE SQL;
@@ -52,7 +52,9 @@ SELECT f_insert(1,2);
 SELECT f_insert(3,4);
 
 -- Test 11: statement (line 58)
+\set ON_ERROR_STOP 0
 SELECT f_insert(3,4);
+\set ON_ERROR_STOP 1
 
 -- Test 12: query (line 61)
 SELECT * FROM t;
@@ -65,12 +67,12 @@ $$
 $$ LANGUAGE SQL;
 
 -- Test 14: query (line 76)
-SELECT * FROM f_insert_select(5,6) AS t1(a INT, b INT) UNION ALL SELECT * FROM f_insert_select(7,8) AS t2(a INT, b INT)
+SELECT * FROM f_insert_select(5,6) AS t1(a INT, b INT) UNION ALL SELECT * FROM f_insert_select(7,8) AS t2(a INT, b INT);
 
 -- Test 15: statement (line 83)
-CREATE FUNCTION f_returning(a INT, b INT) RETURNS RECORD AS
+CREATE FUNCTION f_returning(p_a INT, p_b INT) RETURNS RECORD AS
 $$
-  INSERT INTO t VALUES (a, b) RETURNING a, b as foo, t.a, test.t.b;
+  INSERT INTO t VALUES (p_a, p_b) RETURNING a, b as foo, a, b;
 $$ LANGUAGE SQL;
 
 -- Test 16: query (line 89)
@@ -111,7 +113,9 @@ $$ LANGUAGE SQL;
 SELECT f_2values(7,8,9,10);
 
 -- Test 25: statement (line 142)
+\set ON_ERROR_STOP 0
 SELECT f_2values(42,42,42,42);
+\set ON_ERROR_STOP 1
 
 -- Test 26: statement (line 145)
 CREATE FUNCTION f_2inserts(i INT, j INT, m INT, n INT) RETURNS SETOF RECORD AS
@@ -125,7 +129,9 @@ $$ LANGUAGE SQL;
 SELECT f_2inserts(11,12,13,14);
 
 -- Test 28: statement (line 159)
+\set ON_ERROR_STOP 0
 SELECT f_2inserts(42,42,42,42);
+\set ON_ERROR_STOP 1
 
 -- Test 29: query (line 163)
 SELECT count(*) FROM t_multi WHERE a = 42;
@@ -149,22 +155,24 @@ $$
 $$ LANGUAGE SQL;
 
 -- Test 34: query (line 192)
-SELECT f_record(1)
+SELECT f_record(1);
 
 -- Test 35: statement (line 197)
 ALTER TABLE t_alter ADD COLUMN b INT DEFAULT 0;
 
 -- Test 36: query (line 200)
-SELECT f_record(2)
+SELECT f_record(2);
 
 -- Test 37: statement (line 205)
 ALTER TABLE t_alter ADD COLUMN c INT;
 
 -- Test 38: query (line 208)
-SELECT f_record(3)
+SELECT f_record(3);
 
 -- Test 39: query (line 213)
+\set ON_ERROR_STOP 0
 SELECT f_int(4);
+\set ON_ERROR_STOP 1
 
 -- Test 40: query (line 218)
 SELECT * FROM t_alter;
@@ -185,21 +193,25 @@ ALTER TABLE t_alter DROP COLUMN c;
 DROP FUNCTION f_drop;
 
 -- Test 45: statement (line 245)
+\set ON_ERROR_STOP 0
 ALTER TABLE t_alter DROP COLUMN c;
 ALTER TABLE t_alter DROP COLUMN b;
+\set ON_ERROR_STOP 1
 
 -- Test 46: statement (line 249)
 ALTER TABLE t_alter DROP COLUMN a;
 
 -- Test 47: query (line 252)
+\set ON_ERROR_STOP 0
 SELECT f_record(6);
+\set ON_ERROR_STOP 1
 
 -- Test 48: statement (line 261)
 CREATE TABLE t_checkb(
   a INT PRIMARY KEY,
   b INT,
   CHECK (b > 1)
-)
+);
 
 -- Test 49: statement (line 268)
 CREATE FUNCTION f_checkb() RETURNS RECORD AS
@@ -208,13 +220,15 @@ $$
 $$ LANGUAGE SQL;
 
 -- Test 50: statement (line 274)
+\set ON_ERROR_STOP 0
 SELECT f_checkb();
+\set ON_ERROR_STOP 1
 
 -- Test 51: statement (line 281)
 CREATE TABLE t146414 (
   a INT NOT NULL,
-  b INT AS (a + 1) VIRTUAL
-)
+  b INT GENERATED ALWAYS AS (a + 1) STORED
+);
 
 -- Test 52: statement (line 287)
 CREATE FUNCTION f146414() RETURNS INT LANGUAGE SQL AS $$
@@ -226,15 +240,17 @@ $$;
 ALTER TABLE t146414 DROP COLUMN b;
 
 -- Test 54: statement (line 296)
-SELECT f146414()
+\set ON_ERROR_STOP 0
+SELECT f146414();
+\set ON_ERROR_STOP 1
 
 -- Test 55: statement (line 303)
 CREATE TABLE t_computed (
   a INT NOT NULL,
-  b INT AS (a + 1) STORED,
-  c INT AS (a * 2) VIRTUAL,
-  INDEX i (a ASC) USING HASH
-)
+  b INT GENERATED ALWAYS AS (a + 1) STORED,
+  c INT GENERATED ALWAYS AS (a * 2) STORED
+);
+CREATE INDEX i ON t_computed USING hash (a);
 
 -- Test 56: statement (line 313)
 CREATE FUNCTION f145098() RETURNS INT LANGUAGE SQL AS $$
@@ -287,14 +303,15 @@ DROP TABLE t_computed;
 -- Test 71: statement (line 377)
 CREATE TABLE t_computed (
   a INT NOT NULL,
-  b INT AS (a + 1) STORED,
-  c INT AS (a * 2) VIRTUAL,
-  INDEX i (a ASC) USING HASH
-)
+  b INT GENERATED ALWAYS AS (a + 1) STORED,
+  c INT GENERATED ALWAYS AS (a * 2) STORED
+);
+CREATE INDEX i ON t_computed USING hash (a);
 
 -- Test 72: statement (line 387)
-SET use_improved_routine_dependency_tracking = false;
-SET use_improved_routine_deps_triggers_and_computed_cols = false;
+-- CockroachDB-only settings.
+-- SET use_improved_routine_dependency_tracking = false;
+-- SET use_improved_routine_deps_triggers_and_computed_cols = false;
 
 -- Test 73: statement (line 391)
 CREATE FUNCTION f145098() RETURNS INT LANGUAGE SQL AS $$
@@ -303,8 +320,8 @@ CREATE FUNCTION f145098() RETURNS INT LANGUAGE SQL AS $$
 $$;
 
 -- Test 74: statement (line 397)
-RESET use_improved_routine_dependency_tracking;
-RESET use_improved_routine_deps_triggers_and_computed_cols;
+-- RESET use_improved_routine_dependency_tracking;
+-- RESET use_improved_routine_deps_triggers_and_computed_cols;
 
 -- Test 75: statement (line 401)
 DROP INDEX i;
@@ -323,13 +340,13 @@ DROP TABLE t_computed;
 
 -- Test 80: statement (line 418)
 CREATE TABLE t_hash_sharded (
-  a INT NOT NULL,
-  INDEX i (a ASC) USING HASH
-)
+  a INT NOT NULL
+);
+CREATE INDEX i ON t_hash_sharded USING hash (a);
 
 -- Test 81: statement (line 424)
 CREATE FUNCTION f145098() RETURNS INT LANGUAGE SQL AS $$
-  INSERT INTO t_hash_sharded VALUES (100) RETURNING crdb_internal_a_shard_16;
+  INSERT INTO t_hash_sharded VALUES (100);
   SELECT 1;
 $$;
 
@@ -344,4 +361,3 @@ DROP FUNCTION f145098;
 
 -- Test 85: statement (line 439)
 DROP TABLE t_hash_sharded;
-

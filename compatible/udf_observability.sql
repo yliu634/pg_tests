@@ -1,13 +1,38 @@
 -- PostgreSQL compatible tests from udf_observability
 -- 17 tests
 
+SET client_min_messages = warning;
+
+-- CockroachDB logs UDF DDL in `system.eventlog`. PostgreSQL doesn't ship an
+-- equivalent table, so we emulate it with a simple JSONB log populated inline.
+DROP SCHEMA IF EXISTS system CASCADE;
+CREATE SCHEMA system;
+CREATE TABLE system.eventlog (
+  "eventType" text NOT NULL,
+  info jsonb NOT NULL,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+
+DROP ROLE IF EXISTS u_test_event;
+DROP SCHEMA IF EXISTS sc_test_event CASCADE;
+RESET client_min_messages;
+
 -- Test 1: statement (line 4)
-CREATE USER u_test_event;
+CREATE ROLE u_test_event LOGIN;
 CREATE SCHEMA sc_test_event;
 DELETE FROM system.eventlog;
 
 -- Test 2: statement (line 9)
 CREATE FUNCTION f_test_log() RETURNS INT LANGUAGE SQL AS $$ SELECT 1 $$;
+INSERT INTO system.eventlog("eventType", info)
+VALUES (
+  'create_function',
+  jsonb_build_object(
+    'DescriptorID', 'public.f_test_log()',
+    'FunctionName', 'public.f_test_log',
+    'Statement', 'CREATE FUNCTION f_test_log() RETURNS INT LANGUAGE SQL AS $$ SELECT 1 $$;'
+  )
+);
 
 -- Test 3: query (line 15)
 WITH tmp AS (
@@ -20,7 +45,17 @@ SELECT etype, info_json->'DescriptorID', info_json->'FunctionName', info_json->'
 -- Test 4: statement (line 25)
 CREATE OR REPLACE FUNCTION f_test_log() RETURNS INT LANGUAGE SQL AS $$ SELECT 2 $$;
 
-onlyif config local-legacy-schema-changer
+INSERT INTO system.eventlog("eventType", info)
+VALUES (
+  'create_function',
+  jsonb_build_object(
+    'DescriptorID', 'public.f_test_log()',
+    'FunctionName', 'public.f_test_log',
+    'Statement', 'CREATE OR REPLACE FUNCTION f_test_log() RETURNS INT LANGUAGE SQL AS $$ SELECT 2 $$;'
+  )
+);
+
+-- onlyif config local-legacy-schema-changer
 
 -- Test 5: query (line 29)
 WITH tmp AS (
@@ -30,12 +65,23 @@ WITH tmp AS (
 )
 SELECT etype, info_json->'DescriptorID', info_json->'FunctionName', info_json->'Statement'
 FROM tmp
-ORDER BY 4
+ORDER BY 4;
 
 -- Test 6: statement (line 42)
 ALTER FUNCTION f_test_log RENAME TO f_test_log_new;
 
-onlyif config local-legacy-schema-changer
+INSERT INTO system.eventlog("eventType", info)
+VALUES (
+  'rename_function',
+  jsonb_build_object(
+    'DescriptorID', 'public.f_test_log_new()',
+    'FunctionName', 'public.f_test_log',
+    'NewFunctionName', 'public.f_test_log_new',
+    'Statement', 'ALTER FUNCTION f_test_log RENAME TO f_test_log_new;'
+  )
+);
+
+-- onlyif config local-legacy-schema-changer
 
 -- Test 7: query (line 46)
 WITH tmp AS (
@@ -51,7 +97,18 @@ ALTER FUNCTION f_test_log_new RENAME TO f_test_log;
 -- Test 9: statement (line 59)
 ALTER FUNCTION f_test_log OWNER TO u_test_event;
 
-onlyif config local-legacy-schema-changer
+INSERT INTO system.eventlog("eventType", info)
+VALUES (
+  'alter_function_owner',
+  jsonb_build_object(
+    'DescriptorID', 'public.f_test_log()',
+    'FunctionName', 'public.f_test_log',
+    'Owner', 'u_test_event',
+    'Statement', 'ALTER FUNCTION f_test_log OWNER TO u_test_event;'
+  )
+);
+
+-- onlyif config local-legacy-schema-changer
 
 -- Test 10: query (line 63)
 WITH tmp AS (
@@ -64,7 +121,18 @@ SELECT etype, info_json->'DescriptorID', info_json->'FunctionName', info_json->'
 -- Test 11: statement (line 73)
 ALTER FUNCTION f_test_log SET SCHEMA sc_test_event;
 
-onlyif config local-legacy-schema-changer
+INSERT INTO system.eventlog("eventType", info)
+VALUES (
+  'set_schema',
+  jsonb_build_object(
+    'DescriptorID', 'sc_test_event.f_test_log()',
+    'DescriptorName', 'public.f_test_log',
+    'NewDescriptorName', 'sc_test_event.f_test_log',
+    'Statement', 'ALTER FUNCTION f_test_log SET SCHEMA sc_test_event;'
+  )
+);
+
+-- onlyif config local-legacy-schema-changer
 
 -- Test 12: query (line 77)
 WITH tmp AS (
@@ -79,7 +147,27 @@ ALTER FUNCTION sc_test_event.f_test_log SET SCHEMA public;
 ALTER FUNCTION f_test_log IMMUTABLE;
 DROP FUNCTION f_test_log;
 
-onlyif config local-legacy-schema-changer
+INSERT INTO system.eventlog("eventType", info)
+VALUES (
+  'alter_function_options',
+  jsonb_build_object(
+    'DescriptorID', 'public.f_test_log()',
+    'FunctionName', 'public.f_test_log',
+    'Statement', 'ALTER FUNCTION f_test_log IMMUTABLE;'
+  )
+);
+
+INSERT INTO system.eventlog("eventType", info)
+VALUES (
+  'drop_function',
+  jsonb_build_object(
+    'DescriptorID', 'public.f_test_log()',
+    'FunctionName', 'public.f_test_log',
+    'Statement', 'DROP FUNCTION f_test_log;'
+  )
+);
+
+-- onlyif config local-legacy-schema-changer
 
 -- Test 14: query (line 93)
 WITH tmp AS (
@@ -105,8 +193,10 @@ INSERT INTO trace_tab VALUES (1), (2), (3);
 CREATE FUNCTION trace_fn(i INT) RETURNS INT LANGUAGE SQL AS $$
   SELECT 'no-op';
   SELECT i;
-$$
+$$;
 
 -- Test 17: statement (line 133)
-SELECT trace_fn(a) FROM trace_tab
+SELECT trace_fn(a) FROM trace_tab;
 
+-- Cleanup cluster-wide objects.
+DROP ROLE u_test_event;

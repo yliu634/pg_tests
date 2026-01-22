@@ -1,0 +1,73 @@
+SET
+DROP SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+DROP ROLE
+DROP SCHEMA
+RESET
+CREATE ROLE
+CREATE SCHEMA
+DELETE 0
+CREATE FUNCTION
+INSERT 0 1
+      etype      |       ?column?        |      ?column?       |                                  ?column?                                  
+-----------------+-----------------------+---------------------+----------------------------------------------------------------------------
+ create_function | "public.f_test_log()" | "public.f_test_log" | "CREATE FUNCTION f_test_log() RETURNS INT LANGUAGE SQL AS $$ SELECT 1 $$;"
+(1 row)
+
+CREATE FUNCTION
+INSERT 0 1
+      etype      |       ?column?        |      ?column?       |                                       ?column?                                        
+-----------------+-----------------------+---------------------+---------------------------------------------------------------------------------------
+ create_function | "public.f_test_log()" | "public.f_test_log" | "CREATE FUNCTION f_test_log() RETURNS INT LANGUAGE SQL AS $$ SELECT 1 $$;"
+ create_function | "public.f_test_log()" | "public.f_test_log" | "CREATE OR REPLACE FUNCTION f_test_log() RETURNS INT LANGUAGE SQL AS $$ SELECT 2 $$;"
+(2 rows)
+
+ALTER FUNCTION
+INSERT 0 1
+      etype      |         ?column?          |      ?column?       |        ?column?         |                       ?column?                        
+-----------------+---------------------------+---------------------+-------------------------+-------------------------------------------------------
+ rename_function | "public.f_test_log_new()" | "public.f_test_log" | "public.f_test_log_new" | "ALTER FUNCTION f_test_log RENAME TO f_test_log_new;"
+(1 row)
+
+ALTER FUNCTION
+ALTER FUNCTION
+INSERT 0 1
+        etype         |       ?column?        |      ?column?       |    ?column?    |                      ?column?                      
+----------------------+-----------------------+---------------------+----------------+----------------------------------------------------
+ alter_function_owner | "public.f_test_log()" | "public.f_test_log" | "u_test_event" | "ALTER FUNCTION f_test_log OWNER TO u_test_event;"
+(1 row)
+
+ALTER FUNCTION
+INSERT 0 1
+   etype    |           ?column?           |      ?column?       |          ?column?          |                       ?column?                        
+------------+------------------------------+---------------------+----------------------------+-------------------------------------------------------
+ set_schema | "sc_test_event.f_test_log()" | "public.f_test_log" | "sc_test_event.f_test_log" | "ALTER FUNCTION f_test_log SET SCHEMA sc_test_event;"
+(1 row)
+
+ALTER FUNCTION
+ALTER FUNCTION
+DROP FUNCTION
+INSERT 0 1
+INSERT 0 1
+         etype          |       ?column?        |      ?column?       |                ?column?                
+------------------------+-----------------------+---------------------+----------------------------------------
+ alter_function_options | "public.f_test_log()" | "public.f_test_log" | "ALTER FUNCTION f_test_log IMMUTABLE;"
+(1 row)
+
+     etype     |       ?column?        |      ?column?       |          ?column?           
+---------------+-----------------------+---------------------+-----------------------------
+ drop_function | "public.f_test_log()" | "public.f_test_log" | "DROP FUNCTION f_test_log;"
+(1 row)
+
+CREATE TABLE
+INSERT 0 3
+CREATE FUNCTION
+ trace_fn 
+----------
+        1
+        2
+        3
+(3 rows)
+
+DROP ROLE

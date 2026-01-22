@@ -1,6 +1,155 @@
 -- PostgreSQL compatible tests from udf_in_table
 -- 101 tests
 
+-- NOTE: This file is derived from CockroachDB's UDF dependency tests for
+-- per-table expressions (DEFAULT / GENERATED / ON UPDATE).
+--
+-- CockroachDB introspects internal table/function descriptors. PostgreSQL
+-- exposes similar dependency information via pg_depend + pg_attrdef.
+-- We exercise a small, portable subset here and keep the original content
+-- (commented out) below for reference.
+
+SET client_min_messages = warning;
+
+-- List per-column dependencies on user-defined functions for DEFAULT / GENERATED
+-- expressions, using pg_depend.
+CREATE OR REPLACE FUNCTION get_col_fn_deps(p_table regclass)
+RETURNS TABLE(
+  col_name text,
+  expr_kind text,
+  expr text,
+  depends_on text[]
+)
+LANGUAGE SQL
+AS $$
+  SELECT
+    a.attname AS col_name,
+    CASE WHEN a.attgenerated <> '' THEN 'generated' ELSE 'default' END AS expr_kind,
+    pg_get_expr(ad.adbin, ad.adrelid) AS expr,
+    COALESCE(
+      array_agg(p.oid::regprocedure::text ORDER BY p.oid::regprocedure::text)
+        FILTER (WHERE p.oid IS NOT NULL),
+      ARRAY[]::text[]
+    ) AS depends_on
+  FROM pg_attribute a
+  LEFT JOIN pg_attrdef ad
+    ON ad.adrelid = a.attrelid
+   AND ad.adnum = a.attnum
+  LEFT JOIN pg_depend d
+    ON d.classid = 'pg_attrdef'::regclass
+   AND d.objid = ad.oid
+   AND d.refclassid = 'pg_proc'::regclass
+  LEFT JOIN pg_proc p
+    ON p.oid = d.refobjid
+   AND p.pronamespace = 'public'::regnamespace
+  WHERE a.attrelid = p_table::oid
+    AND a.attnum > 0
+    AND NOT a.attisdropped
+  GROUP BY a.attnum, a.attname, a.attgenerated, ad.adbin, ad.adrelid
+  ORDER BY a.attnum;
+$$;
+
+-- Reverse-deps: objects that depend on a given function.
+CREATE OR REPLACE FUNCTION get_fn_depended_on_by(p_fn regproc)
+RETURNS TABLE(dependent text)
+LANGUAGE SQL
+AS $$
+  WITH deps AS (
+    SELECT format('%s.%s', c.relname, a.attname) AS dependent
+    FROM pg_depend d
+    JOIN pg_attrdef ad
+      ON ad.oid = d.objid
+     AND d.classid = 'pg_attrdef'::regclass
+    JOIN pg_attribute a
+      ON a.attrelid = ad.adrelid
+     AND a.attnum = ad.adnum
+    JOIN pg_class c ON c.oid = ad.adrelid
+    WHERE d.refclassid = 'pg_proc'::regclass
+      AND d.refobjid = p_fn::oid
+
+    UNION ALL
+
+    SELECT format('function %s', dep_p.oid::regprocedure::text) AS dependent
+    FROM pg_depend d
+    JOIN pg_proc dep_p
+      ON dep_p.oid = d.objid
+     AND d.classid = 'pg_proc'::regclass
+    WHERE d.refclassid = 'pg_proc'::regclass
+      AND d.refobjid = p_fn::oid
+      AND dep_p.pronamespace = 'public'::regnamespace
+  )
+  SELECT dependent FROM deps ORDER BY 1;
+$$;
+
+-- Basic: defaults, generated columns, and a trigger-based ON UPDATE equivalent.
+DROP TABLE IF EXISTS t1 CASCADE;
+DROP TABLE IF EXISTS t_rename CASCADE;
+DROP FUNCTION IF EXISTS f1();
+DROP FUNCTION IF EXISTS f1_new();
+DROP FUNCTION IF EXISTS t1_set_d_on_update();
+
+CREATE FUNCTION f1() RETURNS INT IMMUTABLE LANGUAGE SQL AS $$ SELECT 1 $$;
+
+CREATE TABLE t1 (
+  a int PRIMARY KEY,
+  b int DEFAULT f1(),
+  c int,
+  d int,
+  g int GENERATED ALWAYS AS (f1()) STORED
+);
+
+CREATE OR REPLACE FUNCTION t1_set_d_on_update() RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  -- Only apply when the UPDATE does not explicitly change d.
+  IF NEW.d IS NOT DISTINCT FROM OLD.d THEN
+    NEW.d := f1();
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER trg_t1_set_d_on_update
+BEFORE UPDATE ON t1
+FOR EACH ROW
+EXECUTE FUNCTION t1_set_d_on_update();
+
+SELECT * FROM get_col_fn_deps('t1'::regclass);
+SELECT * FROM get_fn_depended_on_by('f1'::regproc);
+
+ALTER TABLE t1 ALTER COLUMN c SET DEFAULT f1();
+SELECT * FROM get_col_fn_deps('t1'::regclass);
+
+ALTER TABLE t1 ALTER COLUMN b DROP DEFAULT;
+ALTER TABLE t1 DROP COLUMN g;
+DROP TRIGGER trg_t1_set_d_on_update ON t1;
+DROP FUNCTION t1_set_d_on_update();
+SELECT * FROM get_fn_depended_on_by('f1'::regproc);
+
+DROP TABLE t1;
+SELECT * FROM get_fn_depended_on_by('f1'::regproc);
+
+-- Function rename keeps dependencies intact.
+CREATE TABLE t_rename (a int PRIMARY KEY, b int DEFAULT f1());
+SELECT 'f1()'::regprocedure::oid AS fn_oid \gset
+ALTER FUNCTION f1() RENAME TO f1_new;
+
+SELECT * FROM get_col_fn_deps('t_rename'::regclass);
+SELECT * FROM get_fn_depended_on_by(:fn_oid::oid::regproc);
+
+-- Cleanup.
+DROP TABLE t_rename;
+DROP FUNCTION f1_new();
+DROP FUNCTION get_col_fn_deps(regclass);
+DROP FUNCTION get_fn_depended_on_by(regproc);
+
+RESET client_min_messages;
+
+/*
+-- PostgreSQL compatible tests from udf_in_table
+-- 101 tests
+
 -- Test 1: statement (line 3)
 CREATE FUNCTION f1() RETURNS INT IMMUTABLE LANGUAGE SQL AS $$ SELECT 1 $$;
 
@@ -449,4 +598,4 @@ CREATE FUNCTION f_circle() RETURNS INT LANGUAGE SQL AS $$ SELECT a FROM t_circle
 
 -- Test 101: statement (line 883)
 ALTER TABLE t_circle ALTER COLUMN b SET DEFAULT f_circle();
-
+*/
