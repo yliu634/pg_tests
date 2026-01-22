@@ -301,7 +301,6 @@ COMMIT
  foo        | 1min
 (1 row)
 
-psql:pg_tests/compatible/pg_builtins.sql:240: ERROR:  SET requires parameter name
  set_config 
 ------------
  woo
@@ -693,10 +692,11 @@ CREATE TABLE
  -
 (1 row)
 
-psql:pg_tests/compatible/pg_builtins.sql:561: ERROR:  syntax error at or near "-"
-LINE 1: SELECT to_regtype('-3');
-        ^
-CONTEXT:  invalid type name "-3"
+ to_regtype 
+------------
+ 
+(1 row)
+
  to_regtype 
 ------------
  test_type
