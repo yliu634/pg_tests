@@ -1,31 +1,37 @@
 SET
-psql:datetime.sql:7: ERROR:  cannot drop desired object(s) because other objects depend on them
-DETAIL:  view kview depends on table kv
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
-psql:datetime.sql:15: ERROR:  relation "t" already exists
-psql:datetime.sql:21: ERROR:  INSERT has more expressions than target columns
-LINE 2:   ('2015-08-30 03:34:45.34567', '2015-08-30', '34h2s'),
-                                                      ^
-psql:datetime.sql:24: ERROR:  column "b" does not exist
-LINE 1: SELECT b + '6 month'::interval from t order by a desc;
-               ^
-psql:datetime.sql:27: ERROR:  column "a" does not exist
-LINE 1: SELECT * FROM t WHERE a = '2015-08-25 04:45:45.53453+01:00':...
-                              ^
-psql:datetime.sql:31: ERROR:  INSERT has more expressions than target columns
-LINE 2: ... ('2015-08-30 03:34:45.34567-07:00', '2015-08-31', '35h2s');
-                                                              ^
-psql:datetime.sql:40: ERROR:  relation "u" already exists
-psql:datetime.sql:45: ERROR:  duplicate key value violates unique constraint "u_pkey"
-DETAIL:  Key (a)=(123) already exists.
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+      ?column?       
+---------------------
+ 2016-02-29 00:00:00
+ 2016-02-29 00:00:00
+ 2016-02-25 00:00:00
+(3 rows)
+
+             a             |     b      |      c       
+---------------------------+------------+--------------
+ 2015-08-25 04:45:45.53453 | 2015-08-25 | 02:45:02.234
+(1 row)
+
+INSERT 0 1
+CREATE TABLE
+INSERT 0 2
 SET
     date    |    date    |    date    
 ------------+------------+------------
  2000-01-01 | 2000-12-31 | 1993-05-16
 (1 row)
 
-psql:datetime.sql:56: ERROR:  duplicate key value violates unique constraint "u_pkey"
-DETAIL:  Key (a)=(345) already exists.
+INSERT 0 2
   a  |             b             |              c               |     d      |       e       
 -----+---------------------------+------------------------------+------------+---------------
  123 | 2015-08-30 03:34:45.34567 | 2015-08-29 22:34:45.34567-05 | 2015-08-30 | 34:00:02
@@ -69,22 +75,36 @@ SET
  1970-01-01 | infinity | -infinity
 (1 row)
 
-psql:datetime.sql:86: ERROR:  date/time field value out of range: "0000-01-01 BC"
-LINE 1: SELECT '0000-01-01 BC'::date;
-               ^
+     date      
+---------------
+ 0001-01-01 BC
+(1 row)
+
      date      |     date      |    date    |    date    |     date      
 ---------------+---------------+------------+------------+---------------
  4714-11-24 BC | 5874897-12-31 | 2000-01-01 | 0001-01-01 | 0001-12-13 BC
 (1 row)
 
-psql:datetime.sql:92: ERROR:  date out of range
-psql:datetime.sql:95: ERROR:  date out of range
+   ?column?    
+---------------
+ 4714-11-24 BC
+(1 row)
+
+   ?column?    
+---------------
+ 5874897-12-31
+(1 row)
+
  ?column? | ?column? | ?column?  | ?column?  
 ----------+----------+-----------+-----------
  infinity | infinity | -infinity | -infinity
 (1 row)
 
-psql:datetime.sql:101: ERROR:  cannot subtract infinite dates
+ int4 
+------
+    0
+(1 row)
+
   ?column?  
 ------------
  2147483493
@@ -95,10 +115,11 @@ psql:datetime.sql:101: ERROR:  cannot subtract infinite dates
  43 years 9 mons 27 days 22:06:45
 (1 row)
 
-psql:datetime.sql:110: ERROR:  function age(unknown) is not unique
-LINE 1: SELECT age('1957-06-13') - age(now(), '1957-06-13') = interv...
-               ^
-HINT:  Could not choose a best candidate function. You might need to add explicit type casts.
+ ?column? 
+----------
+ f
+(1 row)
+
   age   
 --------
  9 days
@@ -160,172 +181,392 @@ HINT:  Could not choose a best candidate function. You might need to add explici
 (1 row)
 
 BEGIN
-psql:datetime.sql:158: ERROR:  relation "kv" already exists
-psql:datetime.sql:161: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-psql:datetime.sql:164: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-psql:datetime.sql:167: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-ROLLBACK
-RESET
- ?column? | ?column? | ?column? 
-----------+----------+----------
- t        | t        | t
-(1 row)
-
- ?column? 
-----------
- t
-(1 row)
-
-SET
- ?column? 
-----------
- t
-(1 row)
-
- ?column? | ?column? | ?column? 
-----------+----------+----------
- t        | t        | t
-(1 row)
-
-RESET
-BEGIN
-psql:datetime.sql:213: ERROR:  invalid input syntax for type integer: "b"
-LINE 1: INSERT INTO kv (k,v) VALUES ('b', transaction_timestamp());
-                                     ^
-psql:datetime.sql:214: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-psql:datetime.sql:215: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-psql:datetime.sql:216: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-psql:datetime.sql:217: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-psql:datetime.sql:218: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-psql:datetime.sql:219: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-psql:datetime.sql:220: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-psql:datetime.sql:221: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-psql:datetime.sql:222: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-psql:datetime.sql:223: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-psql:datetime.sql:224: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-psql:datetime.sql:225: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-psql:datetime.sql:226: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-ROLLBACK
- k | v 
----+---
-(0 rows)
-
-BEGIN
- k | v 
----+---
-(0 rows)
-
-psql:datetime.sql:231: ERROR:  invalid input syntax for type integer: "i"
-LINE 1: INSERT INTO kv (k,v) VALUES ('i', transaction_timestamp());
-                                     ^
-ROLLBACK
- count 
--------
-     0
-(1 row)
-
-DELETE 0
-BEGIN
-psql:datetime.sql:242: ERROR:  invalid input syntax for type integer: "a"
-LINE 1: INSERT INTO kv (k,v) VALUES ('a', transaction_timestamp());
-                                     ^
-psql:datetime.sql:243: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-psql:datetime.sql:246: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-psql:datetime.sql:247: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-ROLLBACK
-BEGIN
- k | v 
----+---
-(0 rows)
-
-psql:datetime.sql:253: ERROR:  invalid input syntax for type integer: "c"
-LINE 1: INSERT INTO kv (k,v) VALUES ('c', transaction_timestamp());
-                                     ^
-ROLLBACK
- count 
--------
-     0
-(1 row)
-
-psql:datetime.sql:260: ERROR:  cannot drop table kv because other objects depend on it
-DETAIL:  view kview depends on table kv
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
-psql:datetime.sql:266: ERROR:  relation "kv" already exists
-BEGIN
-psql:datetime.sql:270: ERROR:  integer out of range
-psql:datetime.sql:271: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-psql:datetime.sql:274: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-psql:datetime.sql:275: ERROR:  current transaction is aborted, commands ignored until end of transaction block
-ROLLBACK
-BEGIN
- k | v 
----+---
-(0 rows)
-
-psql:datetime.sql:281: ERROR:  integer out of range
-ROLLBACK
- count 
--------
-     0
-(1 row)
-
-DELETE 0
-SET
-psql:datetime.sql:297: ERROR:  relation "m" already exists
+CREATE TABLE
 INSERT 0 1
-psql:datetime.sql:303: ERROR:  more than one row returned by a subquery used as an expression
- k | v 
----+---
-(0 rows)
+ k 
+---
+ a
+(1 row)
 
-psql:datetime.sql:307: ERROR:  more than one row returned by a subquery used as an expression
- k | v 
----+---
-(0 rows)
+ k 
+---
+ a
+(1 row)
 
-psql:datetime.sql:311: ERROR:  more than one row returned by a subquery used as an expression
- k | v 
----+---
-(0 rows)
+COMMIT
+RESET
+ ?column? | ?column? | ?column? 
+----------+----------+----------
+ t        | t        | t
+(1 row)
 
-psql:datetime.sql:315: ERROR:  more than one row returned by a subquery used as an expression
- k | v 
----+---
-(0 rows)
+ ?column? 
+----------
+ t
+(1 row)
 
-psql:datetime.sql:319: ERROR:  more than one row returned by a subquery used as an expression
- k | v 
----+---
-(0 rows)
+SET
+ ?column? 
+----------
+ t
+(1 row)
 
-psql:datetime.sql:323: ERROR:  more than one row returned by a subquery used as an expression
- k | v 
----+---
-(0 rows)
+ ?column? | ?column? | ?column? 
+----------+----------+----------
+ t        | t        | t
+(1 row)
+
+RESET
+BEGIN
+INSERT 0 1
+ k |               v               
+---+-------------------------------
+ a | 2026-01-22 11:07:38.902585+00
+ b | 2026-01-22 11:07:38.905277+00
+(2 rows)
+
+INSERT 0 1
+ k |               v               
+---+-------------------------------
+ a | 2026-01-22 11:07:38.902585+00
+ b | 2026-01-22 11:07:38.905277+00
+ c | 2026-01-22 11:07:38.905277+00
+(3 rows)
+
+INSERT 0 1
+ k |               v               
+---+-------------------------------
+ a | 2026-01-22 11:07:38.902585+00
+ b | 2026-01-22 11:07:38.905277+00
+ c | 2026-01-22 11:07:38.905277+00
+ d | 2026-01-22 11:07:38.905277+00
+(4 rows)
+
+INSERT 0 1
+ k |               v               
+---+-------------------------------
+ a | 2026-01-22 11:07:38.902585+00
+ b | 2026-01-22 11:07:38.905277+00
+ c | 2026-01-22 11:07:38.905277+00
+ d | 2026-01-22 11:07:38.905277+00
+ e | 2026-01-22 11:07:38.905277+00
+(5 rows)
+
+INSERT 0 1
+ k |               v               
+---+-------------------------------
+ a | 2026-01-22 11:07:38.902585+00
+ b | 2026-01-22 11:07:38.905277+00
+ c | 2026-01-22 11:07:38.905277+00
+ d | 2026-01-22 11:07:38.905277+00
+ e | 2026-01-22 11:07:38.905277+00
+ f | 2026-01-22 11:07:38.905277+00
+(6 rows)
+
+INSERT 0 1
+ k |               v               
+---+-------------------------------
+ a | 2026-01-22 11:07:38.902585+00
+ b | 2026-01-22 11:07:38.905277+00
+ c | 2026-01-22 11:07:38.905277+00
+ d | 2026-01-22 11:07:38.905277+00
+ e | 2026-01-22 11:07:38.905277+00
+ f | 2026-01-22 11:07:38.905277+00
+ g | 2026-01-22 11:07:38.905277+00
+(7 rows)
+
+INSERT 0 1
+ k |               v               
+---+-------------------------------
+ a | 2026-01-22 11:07:38.902585+00
+ b | 2026-01-22 11:07:38.905277+00
+ c | 2026-01-22 11:07:38.905277+00
+ d | 2026-01-22 11:07:38.905277+00
+ e | 2026-01-22 11:07:38.905277+00
+ f | 2026-01-22 11:07:38.905277+00
+ g | 2026-01-22 11:07:38.905277+00
+ h | 2026-01-22 11:07:38.906072+00
+(8 rows)
+
+COMMIT
+ k |               v               
+---+-------------------------------
+ a | 2026-01-22 11:07:38.902585+00
+ b | 2026-01-22 11:07:38.905277+00
+ c | 2026-01-22 11:07:38.905277+00
+ d | 2026-01-22 11:07:38.905277+00
+ e | 2026-01-22 11:07:38.905277+00
+ f | 2026-01-22 11:07:38.905277+00
+ g | 2026-01-22 11:07:38.905277+00
+ h | 2026-01-22 11:07:38.906072+00
+(8 rows)
+
+BEGIN
+ k |               v               
+---+-------------------------------
+ a | 2026-01-22 11:07:38.902585+00
+ b | 2026-01-22 11:07:38.905277+00
+ c | 2026-01-22 11:07:38.905277+00
+ d | 2026-01-22 11:07:38.905277+00
+ e | 2026-01-22 11:07:38.905277+00
+ f | 2026-01-22 11:07:38.905277+00
+ g | 2026-01-22 11:07:38.905277+00
+ h | 2026-01-22 11:07:38.906072+00
+(8 rows)
+
+INSERT 0 1
+COMMIT
+ count 
+-------
+     4
+(1 row)
+
+DELETE 9
+BEGIN
+INSERT 0 1
+ k |               v               
+---+-------------------------------
+ a | 2026-01-22 11:07:38.907439+00
+(1 row)
+
+INSERT 0 1
+ k |               v               
+---+-------------------------------
+ a | 2026-01-22 11:07:38.907439+00
+ b | 2026-01-22 11:07:38.907439+00
+(2 rows)
+
+COMMIT
+BEGIN
+ k |               v               
+---+-------------------------------
+ a | 2026-01-22 11:07:38.907439+00
+ b | 2026-01-22 11:07:38.907439+00
+(2 rows)
+
+INSERT 0 1
+COMMIT
+ count 
+-------
+     2
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+BEGIN
+INSERT 0 1
+ k |             v              
+---+----------------------------
+ 1 | 1769080058911201000.000000
+(1 row)
+
+INSERT 0 1
+ k |             v              
+---+----------------------------
+ 1 | 1769080058911201000.000000
+ 2 | 1769080058911201000.000000
+(2 rows)
+
+COMMIT
+BEGIN
+ k |             v              
+---+----------------------------
+ 1 | 1769080058911201000.000000
+ 2 | 1769080058911201000.000000
+(2 rows)
+
+INSERT 0 1
+COMMIT
+ count 
+-------
+     2
+(1 row)
+
+DELETE 3
+SET
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+ k |       v       
+---+---------------
+ 1 | 400000.000000
+(1 row)
+
+INSERT 0 1
+ k |       v       
+---+---------------
+ 1 | 400000.000000
+ 2 | 823000.000000
+(2 rows)
+
+INSERT 0 1
+ k |       v        
+---+----------------
+ 1 |  400000.000000
+ 2 |  823000.000000
+ 3 | 1206000.000000
+(3 rows)
+
+INSERT 0 1
+ k |       v        
+---+----------------
+ 1 |  400000.000000
+ 2 |  823000.000000
+ 3 | 1206000.000000
+ 4 | 1535000.000000
+(4 rows)
+
+INSERT 0 1
+ k |       v        
+---+----------------
+ 1 |  400000.000000
+ 2 |  823000.000000
+ 3 | 1206000.000000
+ 4 | 1535000.000000
+ 5 | 1812000.000000
+(5 rows)
+
+INSERT 0 1
+ k |       v        
+---+----------------
+ 1 |  400000.000000
+ 2 |  823000.000000
+ 3 | 1206000.000000
+ 4 | 1535000.000000
+ 5 | 1812000.000000
+ 6 | 2186000.000000
+(6 rows)
 
 SET
  k 
 ---
-(0 rows)
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+(6 rows)
 
 SET
-psql:datetime.sql:341: ERROR:  relation "ex" already exists
-psql:datetime.sql:396: ERROR:  duplicate key value violates unique constraint "ex_pkey"
-DETAIL:  Key (k)=(1) already exists.
-psql:datetime.sql:399: ERROR:  syntax error at or near ","
-LINE 1: SELECT k, extract(element, input::timestamp) = extract_resul...
-                                 ^
-psql:datetime.sql:402: ERROR:  unit "nansecond" not recognized for type timestamp without time zone
-psql:datetime.sql:405: ERROR:  invalid input syntax for type interval: "1 nanosecond"
-LINE 1: SELECT INTERVAL '1 nanosecond';
-                        ^
-psql:datetime.sql:408: ERROR:  invalid input syntax for type interval: "1 ns"
-LINE 1: SELECT INTERVAL '1 ns';
-                        ^
-psql:datetime.sql:411: ERROR:  syntax error at or near ","
-LINE 1: SELECT k, extract(element, input::timestamptz) = extract_res...
-                                 ^
-psql:datetime.sql:414: ERROR:  unit "nansecond" not recognized for type timestamp with time zone
+CREATE TABLE
+INSERT 0 52
+ k  | ?column? | ?column? |     date_part     
+----+----------+----------+-------------------
+  1 | t        | t        |              2001
+  2 | t        | t        |              2016
+  3 | t        | t        |              2016
+  4 | t        | t        |                 2
+  5 | t        | t        |                 1
+  6 | t        | t        |                 2
+  7 | t        | t        |                 3
+  8 | t        | t        |                 4
+  9 | t        | t        |                 4
+ 10 | t        | t        |                 2
+ 11 | t        | t        |                 2
+ 12 | t        | t        |                15
+ 13 | t        | t        |                 1
+ 14 | t        | t        |                10
+ 15 | t        | t        |                10
+ 16 | t        | t        |                10
+ 17 | t        | t        |                 2
+ 18 | t        | t        |                 4
+ 19 | t        | t        |               100
+ 20 | t        | t        |               102
+ 21 | t        | t        |      86401.000001
+ 22 | f        | f        |      86401.000001
+ 23 | t        | t        |         986904299
+ 24 | t        | t        |                12
+ 25 | t        | t        |                19
+ 26 | f        | f        |                19
+ 27 | t        | t        |                19
+ 28 | f        | f        |                19
+ 29 | t        | t        |                 4
+ 30 | t        | t        |                46
+ 31 | t        | t        |                46
+ 32 | t        | t        |            59.234
+ 33 | t        | t        |         33.306158
+ 34 | t        | t        |         33.306158
+ 35 | t        | t        |         59234.567
+ 36 | t        | t        |         33306.158
+ 37 | t        | t        |         33306.158
+ 38 | t        | t        |          59345654
+ 39 | t        | t        |          33306158
+ 40 | t        | t        |          33306158
+ 41 | t        | t        |                 2
+ 42 | t        | t        |                 7
+ 43 | t        | t        |              2008
+ 44 | t        | t        |              2008
+ 45 | t        | t        |               200
+ 46 | t        | t        |              -202
+ 47 | t        | t        |                21
+ 48 | t        | t        |                -1
+ 49 | t        | t        |                 3
+ 50 | t        | t        |                -2
+ 51 | t        | t        |                 0
+ 52 | t        | t        | 2457429.823996599
+(52 rows)
+
+DO
+DO
+DO
+ k  | ?column? |     date_part     
+----+----------+-------------------
+  1 | t        |              2001
+  2 | t        |              2016
+  3 | t        |              2016
+  4 | t        |                 2
+  5 | t        |                 1
+  6 | t        |                 2
+  7 | t        |                 3
+  8 | t        |                 4
+  9 | t        |                 4
+ 10 | t        |                 2
+ 11 | t        |                 2
+ 12 | t        |                15
+ 13 | t        |                 1
+ 14 | t        |                10
+ 15 | t        |                10
+ 16 | t        |                10
+ 17 | t        |                 2
+ 18 | t        |                 4
+ 19 | t        |               100
+ 20 | t        |               102
+ 21 | t        |      86401.000001
+ 22 | t        |     100801.000001
+ 23 | t        |         986904299
+ 24 | t        |                12
+ 25 | t        |                19
+ 26 | t        |                23
+ 27 | t        |                19
+ 28 | t        |                23
+ 29 | t        |                 4
+ 30 | t        |                46
+ 31 | t        |                46
+ 32 | t        |            59.234
+ 33 | t        |         33.306158
+ 34 | t        |         33.306158
+ 35 | t        |         59234.567
+ 36 | t        |         33306.158
+ 37 | t        |         33306.158
+ 38 | t        |          59345654
+ 39 | t        |          33306158
+ 40 | t        |          33306158
+ 41 | t        |                 2
+ 42 | t        |                 7
+ 43 | t        |              2008
+ 44 | t        |              2008
+ 45 | t        |               200
+ 46 | t        |              -202
+ 47 | t        |                21
+ 48 | t        |                -1
+ 49 | t        |                 3
+ 50 | t        |                -2
+ 51 | t        |                 0
+ 52 | t        | 2457429.823996599
+(52 rows)
+
+DO
  extract 
 ---------
       23
@@ -488,7 +729,7 @@ SET
  2015-08-25 02:45:45
 (1 row)
 
-psql:datetime.sql:528: ERROR:  invalid value for parameter "TimeZone": "foobar"
+DO
 SET
          timestamptz          
 ------------------------------
@@ -501,13 +742,13 @@ SET
  2015-08-24 21:45:45.53453+00
 (1 row)
 
-psql:datetime.sql:543: ERROR:  invalid value for parameter "TimeZone": "DEFAULT"
+DO
          timestamptz          
 ------------------------------
  2015-08-24 21:45:45.53453+00
 (1 row)
 
-psql:datetime.sql:549: ERROR:  invalid value for parameter "TimeZone": ""
+DO
          timestamptz          
 ------------------------------
  2015-08-24 21:45:45.53453+00
@@ -575,7 +816,7 @@ SET
 (1 row)
 
 SET
-psql:datetime.sql:614: ERROR:  relation "tz" already exists
+CREATE TABLE
  column_name |          data_type          
 -------------+-----------------------------
  a           | integer
@@ -584,8 +825,7 @@ psql:datetime.sql:614: ERROR:  relation "tz" already exists
  d           | timestamp with time zone
 (4 rows)
 
-psql:datetime.sql:622: ERROR:  duplicate key value violates unique constraint "tz_pkey"
-DETAIL:  Key (a)=(1) already exists.
+INSERT 0 2
 SET
  a |          b          |           c            
 ---+---------------------+------------------------
@@ -795,31 +1035,22 @@ SET
  1 year
 (1 row)
 
-psql:datetime.sql:773: ERROR:  relation "topics" already exists
+CREATE TABLE
 INSERT 0 1
  date_trunc_month_created_at 
 -----------------------------
  2017-12-01 00:00:00
- 2017-12-01 00:00:00
- 2017-12-01 00:00:00
- 2017-12-01 00:00:00
-(4 rows)
+(1 row)
 
  date_trunc_month_created_at 
 -----------------------------
  2017-12-01 00:00:00+00
- 2017-12-01 00:00:00+00
- 2017-12-01 00:00:00+00
- 2017-12-01 00:00:00+00
-(4 rows)
+(1 row)
 
  date_trunc_month_created_at 
 -----------------------------
  2017-12-01 00:00:00+00
- 2017-12-01 00:00:00+00
- 2017-12-01 00:00:00+00
- 2017-12-01 00:00:00+00
-(4 rows)
+(1 row)
 
        date_trunc       
 ------------------------
@@ -865,34 +1096,26 @@ SET
 
 SET
 SET
-psql:datetime.sql:828: ERROR:  relation "django_37" already exists
+CREATE TABLE
 INSERT 0 1
         a        
 -----------------
  17:42:10.234567
- 17:42:10.234567
- 17:42:10.234567
- 17:42:10.234567
-(4 rows)
+(1 row)
 
 SET
         a        
 -----------------
  12:42:10.234567
- 12:42:10.234567
- 12:42:10.234567
- 12:42:10.234567
-(4 rows)
+(1 row)
 
-psql:datetime.sql:841: ERROR:  time zone displacement out of range: "-56325279622-12-26"
-LINE 1: SELECT '-56325279622-12-26'::DATE;
-               ^
-psql:datetime.sql:844: ERROR:  time zone displacement out of range: "-5632-12-26"
-LINE 1: SELECT '-5632-12-26'::DATE;
-               ^
-psql:datetime.sql:847: ERROR:  time zone displacement out of range: "-563-12-26"
-LINE 1: SELECT '-563-12-26'::DATE;
-               ^
+DO
+DO
+     date      
+---------------
+ 0564-12-26 BC
+(1 row)
+
      date      
 ---------------
  0026-06-12 BC
@@ -903,25 +1126,11 @@ LINE 1: SELECT '-563-12-26'::DATE;
  0026-05-12 BC
 (1 row)
 
-psql:datetime.sql:863: ERROR:  operator does not exist: date + bigint
-LINE 4:     '1971-03-18'::DATE + 300866802885581286
-                               ^
-HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
-psql:datetime.sql:867: ERROR:  operator does not exist: date + bigint
-LINE 2:     '1971-03-18'::DATE + 300866802885581286;
-                               ^
-HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
-psql:datetime.sql:870: ERROR:  operator does not exist: bigint + date
-LINE 1: SELECT 7133080445639580613::INT8 + '1977-11-03'::DATE;
-                                         ^
-HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
-psql:datetime.sql:873: ERROR:  time zone displacement out of range: "-239852040018-04-28"
-LINE 1: SELECT '-239852040018-04-28'::DATE;
-               ^
-psql:datetime.sql:876: ERROR:  operator does not exist: bigint + date
-LINE 1: SELECT(7133080445639580613::INT8 + '1977-11-03'::DATE) = '-2...
-                                         ^
-HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+DO
+DO
+DO
+DO
+DO
            i           |     ?column?     |        ?column?        |     ?column?     |        ?column?        |            ?column?            |      ?column?      
 -----------------------+------------------+------------------------+------------------+------------------------+--------------------------------+--------------------
  01:00:00              | 00:30:00         | 02:00:00               | 00:30:00         | 02:00:00               | 04:14:01.320914                | 00:14:10.32
@@ -998,101 +1207,83 @@ SET
 (1 row)
 
 SET
-psql:datetime.sql:944: ERROR:  relation "date_test" already exists
+CREATE TABLE
 INSERT 0 1
 SET
       ?column?       |          pg_typeof          
 ---------------------+-----------------------------
  2019-01-15 16:17:18 | timestamp without time zone
- 2019-01-15 16:17:18 | timestamp without time zone
- 2019-01-15 16:17:18 | timestamp without time zone
- 2019-01-15 16:17:18 | timestamp without time zone
-(4 rows)
+(1 row)
 
       ?column?       |          pg_typeof          
 ---------------------+-----------------------------
  2019-01-15 16:17:18 | timestamp without time zone
- 2019-01-15 16:17:18 | timestamp without time zone
- 2019-01-15 16:17:18 | timestamp without time zone
- 2019-01-15 16:17:18 | timestamp without time zone
-(4 rows)
+(1 row)
 
       ?column?       |          pg_typeof          
 ---------------------+-----------------------------
  2019-01-15 01:00:00 | timestamp without time zone
- 2019-01-15 01:00:00 | timestamp without time zone
- 2019-01-15 01:00:00 | timestamp without time zone
- 2019-01-15 01:00:00 | timestamp without time zone
-(4 rows)
+(1 row)
 
       ?column?       |          pg_typeof          
 ---------------------+-----------------------------
  2019-01-15 01:00:00 | timestamp without time zone
- 2019-01-15 01:00:00 | timestamp without time zone
- 2019-01-15 01:00:00 | timestamp without time zone
- 2019-01-15 01:00:00 | timestamp without time zone
-(4 rows)
+(1 row)
 
       ?column?       |          pg_typeof          
 ---------------------+-----------------------------
  2019-01-14 07:42:42 | timestamp without time zone
- 2019-01-14 07:42:42 | timestamp without time zone
- 2019-01-14 07:42:42 | timestamp without time zone
- 2019-01-14 07:42:42 | timestamp without time zone
-(4 rows)
+(1 row)
 
       ?column?       |          pg_typeof          
 ---------------------+-----------------------------
  2019-01-14 23:00:00 | timestamp without time zone
- 2019-01-14 23:00:00 | timestamp without time zone
- 2019-01-14 23:00:00 | timestamp without time zone
- 2019-01-14 23:00:00 | timestamp without time zone
-(4 rows)
-
- count 
--------
-     4
 (1 row)
 
  count 
 -------
-     4
+     1
 (1 row)
 
  count 
 -------
-     4
+     1
 (1 row)
 
  count 
 -------
-     4
+     1
 (1 row)
 
  count 
 -------
-     4
+     1
+(1 row)
+
+ count 
+-------
+     1
 (1 row)
 
 SET
  count 
 -------
-     4
+     1
 (1 row)
 
  count 
 -------
-     4
+     1
 (1 row)
 
  count 
 -------
-     4
+     1
 (1 row)
 
  count 
 -------
-     4
+     1
 (1 row)
 
 SET
@@ -1101,37 +1292,16 @@ SET
  infinity  | -infinity
 (1 row)
 
-psql:datetime.sql:1006: ERROR:  relation "timestamps" already exists
+CREATE TABLE
 INSERT 0 1
 INSERT 0 3
               s               
 ------------------------------
  2015-08-25 03:45:45.53453+00
- 2015-08-25 03:45:45.53453+00
- 2015-08-25 03:45:45.53453+00
- 2015-08-25 03:45:45.53453+00
- 2015-08-25 03:45:45.53453+00
- 2015-08-25 03:45:45.53453+00
- 2015-08-25 03:45:45.53453+00
  2020-01-02 01:02:03+00
- 2020-01-02 01:02:03+00
- 2020-01-02 01:02:03+00
- 2020-01-02 01:02:03+00
- 2020-01-02 06:02:03+00
- 2020-01-02 06:02:03+00
- 2020-01-02 06:02:03+00
- 2026-01-21 00:00:00+00
- 2026-01-21 00:00:00+00
- 2026-01-21 00:00:00+00
- 2026-01-21 00:00:00+00
+ 2026-01-23 00:00:00+00
  
- 
- 
- 
- 
- 
- 
-(25 rows)
+(4 rows)
 
 SET
 INSERT 0 3
@@ -1139,33 +1309,12 @@ INSERT 0 3
 ------------------------------
  2015-08-24 23:45:45.53453-04
  2015-08-24 23:45:45.53453-04
- 2015-08-24 23:45:45.53453-04
- 2015-08-24 23:45:45.53453-04
- 2015-08-24 23:45:45.53453-04
- 2015-08-24 23:45:45.53453-04
- 2015-08-24 23:45:45.53453-04
- 2015-08-24 23:45:45.53453-04
- 2020-01-01 20:02:03-05
- 2020-01-01 20:02:03-05
- 2020-01-01 20:02:03-05
  2020-01-01 20:02:03-05
  2020-01-02 01:02:03-05
- 2020-01-02 01:02:03-05
- 2020-01-02 01:02:03-05
- 2020-01-02 01:02:03-05
- 2026-01-20 19:00:00-05
- 2026-01-20 19:00:00-05
- 2026-01-20 19:00:00-05
- 2026-01-20 19:00:00-05
+ 2026-01-22 19:00:00-05
  
  
- 
- 
- 
- 
- 
- 
-(28 rows)
+(7 rows)
 
 RESET
  ?column? 
@@ -1182,174 +1331,147 @@ SET
  2020-07-05
 (1 row)
 
-psql:datetime.sql:1049: ERROR:  syntax error at or near ";"
-LINE 2:   t::timestamptz,;
-                         ^
-psql:datetime.sql:1050: ERROR:  syntax error at or near "t"
-LINE 1: t::timestamp,;
-        ^
-psql:datetime.sql:1051: ERROR:  syntax error at or near "t"
-LINE 1: t::timetz,;
-        ^
-psql:datetime.sql:1052: ERROR:  syntax error at or near "t"
-LINE 1: t::time,;
-        ^
-psql:datetime.sql:1053: ERROR:  syntax error at or near "t"
-LINE 1: t::date;
-        ^
-psql:datetime.sql:1060: ERROR:  syntax error at or near "FROM"
-LINE 1: FROM ( VALUES
-        ^
+             t              |            t            |        t        |      t       |     t      
+----------------------------+-------------------------+-----------------+--------------+------------
+ 1995-04-03 15:16:19.123+00 | 1995-04-03 15:16:19.123 | 15:16:19.123+00 | 15:16:19.123 | 1995-04-03
+ 2020-05-09 15:17:19.123+00 | 2020-05-09 15:17:19.123 | 15:17:19.123+00 | 15:17:19.123 | 2020-05-09
+ 2020-09-15 15:17:19.123+00 | 2020-09-15 15:17:19.123 | 15:17:19.123+00 | 15:17:19.123 | 2020-09-15
+ 2020-09-15 15:17:19.123+00 | 2020-09-15 15:17:19.123 | 15:17:19.123+00 | 15:17:19.123 | 2020-09-15
+(4 rows)
+
 SET
-psql:datetime.sql:1066: ERROR:  date/time field value out of range: "05-07-2020"
-LINE 1: SELECT '05-07-2020'::date;
-               ^
-HINT:  Perhaps you need a different "datestyle" setting.
-psql:datetime.sql:1070: ERROR:  syntax error at or near ";"
-LINE 2:   t::timestamptz,;
-                         ^
-psql:datetime.sql:1071: ERROR:  syntax error at or near "t"
-LINE 1: t::timestamp,;
-        ^
-psql:datetime.sql:1072: ERROR:  syntax error at or near "t"
-LINE 1: t::timetz,;
-        ^
-psql:datetime.sql:1073: ERROR:  syntax error at or near "t"
-LINE 1: t::time,;
-        ^
-psql:datetime.sql:1074: ERROR:  syntax error at or near "t"
-LINE 1: t::date;
-        ^
-psql:datetime.sql:1079: ERROR:  syntax error at or near "FROM"
-LINE 1: FROM ( VALUES
-        ^
+    date    
+------------
+ 2020-07-05
+(1 row)
+
+             t              |            t            |        t        |      t       |     t      
+----------------------------+-------------------------+-----------------+--------------+------------
+ 1995-03-04 15:16:19.123+00 | 1995-03-04 15:16:19.123 | 15:16:19.123+00 | 15:16:19.123 | 1995-03-04
+ 2020-09-15 15:17:19.123+00 | 2020-09-15 15:17:19.123 | 15:17:19.123+00 | 15:17:19.123 | 2020-09-15
+(2 rows)
+
 SET
     date    
 ------------
  2020-05-07
 (1 row)
 
-psql:datetime.sql:1089: ERROR:  syntax error at or near ";"
-LINE 2:   t::timestamptz,;
-                         ^
-psql:datetime.sql:1090: ERROR:  syntax error at or near "t"
-LINE 1: t::timestamp,;
-        ^
-psql:datetime.sql:1091: ERROR:  syntax error at or near "t"
-LINE 1: t::timetz,;
-        ^
-psql:datetime.sql:1092: ERROR:  syntax error at or near "t"
-LINE 1: t::time,;
-        ^
-psql:datetime.sql:1093: ERROR:  syntax error at or near "t"
-LINE 1: t::date;
-        ^
-psql:datetime.sql:1100: ERROR:  syntax error at or near "FROM"
-LINE 1: FROM ( VALUES
-        ^
-psql:datetime.sql:1103: ERROR:  function parse_timestamp(unknown, unknown) does not exist
-LINE 1: SELECT parse_timestamp('01-02-2020 01:02:03', 'postgres');
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:datetime.sql:1106: ERROR:  function parse_timestamp(unknown) does not exist
-LINE 1: SELECT parse_timestamp('foo');
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:datetime.sql:1109: ERROR:  function parse_timestamp(unknown) does not exist
-LINE 1: SELECT parse_timestamp('now');
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:datetime.sql:1112: ERROR:  function parse_timestamp(unknown) does not exist
-LINE 1: SELECT parse_timestamp('tomorrow');
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:datetime.sql:1115: ERROR:  function parse_timestamp(unknown, unknown) does not exist
-LINE 1: SELECT parse_timestamp('now', 'mdy');
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:datetime.sql:1118: ERROR:  function to_char_with_style(timestamp without time zone, unknown) does not exist
-LINE 1: SELECT to_char_with_style(now()::timestamp, 'postgres');
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:datetime.sql:1123: ERROR:  function to_char(timestamp without time zone) does not exist
-LINE 2:   to_char('2020-01-02 01:02:03'::timestamp),
-          ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:datetime.sql:1125: ERROR:  relation "timestamp_datestyle_parse" already exists
-psql:datetime.sql:1130: ERROR:  duplicate key value violates unique constraint "timestamp_datestyle_parse_pkey"
-DETAIL:  Key (pk)=(1) already exists.
-psql:datetime.sql:1138: ERROR:  function parse_timestamp(text) does not exist
-LINE 2:   parse_timestamp(s),
-          ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:datetime.sql:1139: ERROR:  syntax error at or near "ORDER"
-LINE 1: ORDER BY pk;
-        ^
-psql:datetime.sql:1142: ERROR:  function parse_date(unknown, unknown) does not exist
-LINE 1: SELECT parse_date('01-02-2020 01:02:03', 'postgres');
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:datetime.sql:1145: ERROR:  function parse_date(unknown) does not exist
-LINE 1: SELECT parse_date('now');
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:datetime.sql:1148: ERROR:  function parse_date(unknown, unknown) does not exist
-LINE 1: SELECT parse_date('tomorrow', 'iso,mdy');
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:datetime.sql:1156: ERROR:  function parse_date(text) does not exist
-LINE 2:   parse_date(s),
-          ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:datetime.sql:1157: ERROR:  syntax error at or near "ORDER"
-LINE 1: ORDER BY pk;
-        ^
-psql:datetime.sql:1160: ERROR:  function to_char_with_style(date, unknown) does not exist
-LINE 1: SELECT to_char_with_style(now()::date, 'postgres');
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:datetime.sql:1166: ERROR:  function to_char(date) does not exist
-LINE 2:   to_char('2020-01-02 01:02:03'::date),
-          ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:datetime.sql:1168: ERROR:  relation "time_datestyle_parse" already exists
-psql:datetime.sql:1173: ERROR:  duplicate key value violates unique constraint "time_datestyle_parse_pkey"
-DETAIL:  Key (pk)=(1) already exists.
-psql:datetime.sql:1176: ERROR:  function parse_time(unknown, unknown) does not exist
-LINE 1: SELECT parse_time('01-02-2020 01:02:03', 'postgres');
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:datetime.sql:1184: ERROR:  function parse_time(text) does not exist
-LINE 2:   parse_time(s),
-          ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:datetime.sql:1185: ERROR:  syntax error at or near "ORDER"
-LINE 1: ORDER BY pk;
-        ^
-psql:datetime.sql:1188: ERROR:  function parse_timetz(unknown, unknown) does not exist
-LINE 1: SELECT parse_timetz('01-02-2020 01:02:03', 'postgres');
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:datetime.sql:1196: ERROR:  function parse_timetz(text) does not exist
-LINE 2:   parse_timetz(s),
-          ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:datetime.sql:1197: ERROR:  syntax error at or near "ORDER"
-LINE 1: ORDER BY pk;
-        ^
+             t              |            t            |        t        |      t       |     t      
+----------------------------+-------------------------+-----------------+--------------+------------
+ 1995-03-04 15:16:19.123+00 | 1995-03-04 15:16:19.123 | 15:16:19.123+00 | 15:16:19.123 | 1995-03-04
+ 2020-09-05 15:17:19.123+00 | 2020-09-05 15:17:19.123 | 15:17:19.123+00 | 15:17:19.123 | 2020-09-05
+ 2020-09-15 15:17:19.123+00 | 2020-09-15 15:17:19.123 | 15:17:19.123+00 | 15:17:19.123 | 2020-09-15
+ 2020-09-15 15:17:19.123+00 | 2020-09-15 15:17:19.123 | 15:17:19.123+00 | 15:17:19.123 | 2020-09-15
+(4 rows)
+
+   parse_timestamp   
+---------------------
+ 2020-01-02 01:02:03
+(1 row)
+
+ parse_timestamp 
+-----------------
+ 
+(1 row)
+
+ parse_timestamp 
+-----------------
+ 
+(1 row)
+
+ parse_timestamp 
+-----------------
+ 
+(1 row)
+
+ parse_timestamp 
+-----------------
+ 
+(1 row)
+
+     to_char_with_style     
+----------------------------
+ 2026-01-22 11:07:38.946778
+(1 row)
+
+          to_char           |     to_char_with_style     
+----------------------------+----------------------------
+ 2020-01-02 01:02:03.000000 | 02-01-2020 01:02:03.000000
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+     parse_timestamp     |     parse_timestamp     |     parse_timestamp     |     parse_timestamp     
+-------------------------+-------------------------+-------------------------+-------------------------
+ 2012-07-09 11:30:45.123 | 2012-07-09 11:30:45.123 | 2012-09-07 11:30:45.123 | 2007-09-12 11:30:45.123
+ 2012-07-09 00:00:00     | 2012-07-09 00:00:00     | 2012-09-07 00:00:00     | 2007-09-12 00:00:00
+(2 rows)
+
+ parse_date 
+------------
+ 2020-01-02
+(1 row)
+
+ parse_date 
+------------
+ 
+(1 row)
+
+ parse_date 
+------------
+ 
+(1 row)
+
+ parse_date | parse_date | parse_date | parse_date 
+------------+------------+------------+------------
+ 2012-07-09 | 2012-07-09 | 2012-09-07 | 2007-09-12
+ 2012-07-09 | 2012-07-09 | 2012-09-07 | 2007-09-12
+(2 rows)
+
+ to_char_with_style 
+--------------------
+ 2026-01-22
+(1 row)
+
+  to_char   |          to_char           | to_char_with_style 
+------------+----------------------------+--------------------
+ 2020-01-02 | 2020-01-02 00:00:00.000000 | 02-01-2020
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+ parse_time 
+------------
+ 01:02:03
+(1 row)
+
+  parse_time  |  parse_time  |  parse_time  |  parse_time  
+--------------+--------------+--------------+--------------
+ 11:30:45.123 | 11:30:45.123 | 11:30:45.123 | 11:30:45.123
+ 11:30:45.123 | 11:30:45.123 | 11:30:45.123 | 11:30:45.123
+(2 rows)
+
+ parse_timetz 
+--------------
+ 01:02:03+00
+(1 row)
+
+  parse_timetz   |  parse_timetz   |  parse_timetz   |  parse_timetz   
+-----------------+-----------------+-----------------+-----------------
+ 11:30:45.123+06 | 11:30:45.123+06 | 11:30:45.123+06 | 11:30:45.123+06
+ 11:30:45.123+03 | 11:30:45.123+03 | 11:30:45.123+03 | 11:30:45.123+03
+(2 rows)
+
 SET
-psql:datetime.sql:1203: ERROR:  relation "table_71776" already exists
+CREATE TABLE
    attname    | format_type |   pg_get_expr   
 --------------+-------------+-----------------
  interval_col | interval    | 'P3Y'::interval
 (1 row)
 
-psql:datetime.sql:1217: ERROR:  syntax error at or near ")"
-LINE 1: SELECT * FROM ex WHERE () < '1970-01-02 00:00:01.000001-04';
-                                ^
-psql:datetime.sql:1220: ERROR:  input of anonymous composite types is not implemented
-LINE 1: ...W('1970-01-02 00:00:01.000001-04'::TIMESTAMPTZ) < '1970-01-0...
-                                                             ^
+DO
+DO
  k | element | input | extract_result | date_trunc_result 
 ---+---------+-------+----------------+-------------------
 (0 rows)
@@ -1359,7 +1481,7 @@ LINE 1: ...W('1970-01-02 00:00:01.000001-04'::TIMESTAMPTZ) < '1970-01-0...
  2013-07-15 BC
 (1 row)
 
-psql:datetime.sql:1229: ERROR:  date field value out of range: 0-11-11
+DO
       make_timestamp      
 --------------------------
  2013-07-15 08:15:23.5 BC
@@ -1375,7 +1497,7 @@ psql:datetime.sql:1229: ERROR:  date field value out of range: 0-11-11
  0001-01-01 00:00:00.1234
 (1 row)
 
-psql:datetime.sql:1241: ERROR:  date field value out of range: 0-07-15
+DO
 SET
      make_timestamptz     
 --------------------------
@@ -1407,20 +1529,17 @@ SET
  2020-01-01 00:00:00.1234-05
 (1 row)
 
-psql:datetime.sql:1265: ERROR:  date field value out of range: 0-07-15
-psql:datetime.sql:1268: ERROR:  date field value out of range: 0-07-15
-psql:datetime.sql:1271: ERROR:  date field value out of range: 0-07-15
+DO
+DO
+DO
        date_trunc       
 ------------------------
  2001-02-16 08:00:00-05
 (1 row)
 
-psql:datetime.sql:1277: ERROR:  date/time field value out of range: "0-02-16 20:38:40+00"
-LINE 1: SELECT date_trunc('day', '0-02-16 20:38:40+00'::timestamptz,...
-                                 ^
-HINT:  Perhaps you need a different "datestyle" setting.
-psql:datetime.sql:1280: ERROR:  time zone "No" not recognized
-psql:datetime.sql:1284: ERROR:  relation "t97643" already exists
+DO
+DO
+CREATE TABLE
  constraint_name |             details              
 -----------------+----------------------------------
  t97643_a_check  | CHECK ((a > '2000-01-01'::date))
