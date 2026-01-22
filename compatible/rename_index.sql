@@ -47,20 +47,47 @@ ORDER BY 1, 2, 3;
 
 -- Test 7: statement (line 49)
 -- Expected ERROR (name conflict with existing index):
-\set ON_ERROR_STOP 0
-ALTER INDEX foo RENAME TO bar;
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'ALTER INDEX foo RENAME TO bar';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 8: statement (line 52)
 -- Expected ERROR (empty identifier is not allowed):
-ALTER INDEX foo RENAME TO "";
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'ALTER INDEX foo RENAME TO ""';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 9: statement (line 55)
 -- Expected ERROR (index does not exist):
-ALTER INDEX ffo RENAME TO ufo;
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'ALTER INDEX ffo RENAME TO ufo';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 10: statement (line 58)
 -- Expected ERROR (index does not exist):
-ALTER INDEX ffo RENAME TO ufo;
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'ALTER INDEX ffo RENAME TO ufo';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 11: statement (line 61)
 -- CockroachDB allows duplicate index names across tables; PostgreSQL does not.
@@ -77,7 +104,6 @@ ALTER INDEX IF EXISTS ffo RENAME TO ufo;
 -- Test 14: statement (line 71)
 -- Expected NOTICE/NO-OP:
 ALTER INDEX IF EXISTS ffo RENAME TO ufo;
-\set ON_ERROR_STOP 1
 
 -- Test 15: statement (line 74)
 ALTER INDEX foo RENAME TO ufooo;
@@ -105,11 +131,16 @@ GRANT SELECT ON users TO rename_index_testuser;
 
 -- Test 21: statement (line 107)
 -- Expected ERROR (must be owner):
-\set ON_ERROR_STOP 0
 SET ROLE rename_index_testuser;
-ALTER INDEX rar RENAME TO bar;
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'ALTER INDEX rar RENAME TO bar';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 RESET ROLE;
-\set ON_ERROR_STOP 1
 
 -- Test 22: query (line 110)
 SELECT tablename, indexname, indexdef

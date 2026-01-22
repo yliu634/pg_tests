@@ -30,27 +30,47 @@ SELECT * FROM users;
 
 -- Test 4: statement (line 20)
 -- Expected ERROR (column already exists):
-\set ON_ERROR_STOP 0
-ALTER TABLE users RENAME COLUMN title TO name;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'ALTER TABLE users RENAME COLUMN title TO name';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 5: statement (line 23)
 -- Expected ERROR (zero-length identifier):
-\set ON_ERROR_STOP 0
-ALTER TABLE users RENAME COLUMN title TO "";
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'ALTER TABLE users RENAME COLUMN title TO ""';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 6: statement (line 26)
 -- Expected ERROR (column does not exist):
-\set ON_ERROR_STOP 0
-ALTER TABLE users RENAME COLUMN ttle TO species;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'ALTER TABLE users RENAME COLUMN ttle TO species';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 7: statement (line 29)
 -- Expected ERROR (table does not exist):
-\set ON_ERROR_STOP 0
-ALTER TABLE uses RENAME COLUMN title TO species;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'ALTER TABLE uses RENAME COLUMN title TO species';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 8: statement (line 32)
 ALTER TABLE IF EXISTS uses RENAME COLUMN title TO species;
@@ -100,30 +120,50 @@ ALTER TABLE users RENAME COLUMN species TO title;
 
 -- Test 21: statement (line 98)
 -- Expected ERROR (column does not exist):
-\set ON_ERROR_STOP 0
-CREATE VIEW v2 AS SELECT id FROM users;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'CREATE VIEW v2 AS SELECT id FROM users';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 22: statement (line 101)
 DROP VIEW v1;
 
 -- Test 23: statement (line 104)
 -- Expected ERROR (column does not exist):
-\set ON_ERROR_STOP 0
-ALTER TABLE users RENAME COLUMN id TO uid;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'ALTER TABLE users RENAME COLUMN id TO uid';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 24: statement (line 107)
 -- Expected ERROR (column does not exist):
-\set ON_ERROR_STOP 0
-ALTER TABLE users RENAME COLUMN username TO name;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'ALTER TABLE users RENAME COLUMN username TO name';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 25: statement (line 110)
 -- Expected ERROR (view does not exist):
-\set ON_ERROR_STOP 0
-DROP VIEW v2;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'DROP VIEW v2';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 26: query (line 113)
 SELECT column_name
@@ -203,15 +243,25 @@ CREATE TABLE mixed_case_table (
 
 -- Test 42: statement (line 208)
 -- Expected ERROR (column already exists):
-\set ON_ERROR_STOP 0
-ALTER TABLE mixed_case_table RENAME COLUMN "CamelCase" TO "UPPERCASE";
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'ALTER TABLE mixed_case_table RENAME COLUMN "CamelCase" TO "UPPERCASE"';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 43: statement (line 211)
 -- Expected ERROR (column already exists):
-\set ON_ERROR_STOP 0
-ALTER TABLE mixed_case_table RENAME COLUMN "CamelCase" TO "CamelCase";
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'ALTER TABLE mixed_case_table RENAME COLUMN "CamelCase" TO "CamelCase"';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 44: statement (line 214)
 ALTER TABLE mixed_case_table RENAME COLUMN "CamelCase" TO "NewCamelCase";

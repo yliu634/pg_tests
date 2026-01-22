@@ -1,0 +1,90 @@
+SET
+CREATE FUNCTION
+CREATE TABLE
+ conname | contype |             condef              
+---------+---------+---------------------------------
+ cc      | c       | CHECK ((x > 10))
+ cf      | f       | FOREIGN KEY (x) REFERENCES t(x)
+ cu      | u       | UNIQUE (x)
+(3 rows)
+
+ conname | contype |             condef              
+---------+---------+---------------------------------
+ cc      | c       | CHECK ((x > 10))
+ cf      | f       | FOREIGN KEY (x) REFERENCES t(x)
+ cu      | u       | UNIQUE (x)
+(3 rows)
+
+ conname | contype 
+---------+---------
+ cc      | c
+ cf      | f
+ cu      | u
+(3 rows)
+
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ conname | contype |             condef              
+---------+---------+---------------------------------
+ cc2     | c       | CHECK ((x > 10))
+ cf2     | f       | FOREIGN KEY (x) REFERENCES t(x)
+ cu2     | u       | UNIQUE (x)
+(3 rows)
+
+ conname | contype |             condef              
+---------+---------+---------------------------------
+ cc2     | c       | CHECK ((x > 10))
+ cf2     | f       | FOREIGN KEY (x) REFERENCES t(x)
+ cu2     | u       | UNIQUE (x)
+(3 rows)
+
+ conname | contype 
+---------+---------
+ cc2     | c
+ cf2     | f
+ cu2     | u
+(3 rows)
+
+DO
+DO
+DO
+DO
+DO
+DO
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ conname | contype |             condef              
+---------+---------+---------------------------------
+ cc4     | c       | CHECK ((x > 10))
+ cf4     | f       | FOREIGN KEY (x) REFERENCES t(x)
+ cu4     | u       | UNIQUE (x)
+(3 rows)
+
+ conname | contype |             condef              
+---------+---------+---------------------------------
+ cc4     | c       | CHECK ((x > 10))
+ cf4     | f       | FOREIGN KEY (x) REFERENCES t(x)
+ cu4     | u       | UNIQUE (x)
+(3 rows)
+
+ conname | contype 
+---------+---------
+ cc4     | c
+ cf4     | f
+ cu4     | u
+(3 rows)
+
+CREATE TABLE
+ALTER TABLE
+    conname     | contype |       condef        
+----------------+---------+---------------------
+ something_else | p       | PRIMARY KEY (rowid)
+(1 row)
+
+DO
+RESET
