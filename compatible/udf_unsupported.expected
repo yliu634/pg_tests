@@ -1,0 +1,43 @@
+CREATE FUNCTION
+CREATE TABLE
+INSERT 0 1
+ALTER TABLE
+ALTER TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE SCHEMA
+CREATE TYPE
+CREATE TABLE
+CREATE VIEW
+CREATE FUNCTION
+CREATE FUNCTION
+psql:pg_tests/compatible/udf_unsupported.sql:41: ERROR:  function "f_cross_db" already exists with same argument types
+psql:pg_tests/compatible/udf_unsupported.sql:44: ERROR:  function "f_cross_db" already exists with same argument types
+CREATE FUNCTION
+psql:pg_tests/compatible/udf_unsupported.sql:52: ERROR:  function "err" already exists with same argument types
+psql:pg_tests/compatible/udf_unsupported.sql:55: ERROR:  function "err" already exists with same argument types
+psql:pg_tests/compatible/udf_unsupported.sql:58: ERROR:  function "err" already exists with same argument types
+CREATE FUNCTION
+CREATE FUNCTION
+psql:pg_tests/compatible/udf_unsupported.sql:69: ERROR:  function "err" already exists with same argument types
+psql:pg_tests/compatible/udf_unsupported.sql:72: ERROR:  syntax error at or near "1"
+LINE 1: ...ION rec(VARIADIC arr INT[]) RETURNS INT LANGUAGE SQL AS '1';
+                                                                    ^
+psql:pg_tests/compatible/udf_unsupported.sql:75: ERROR:  schema "crdb_internal" does not exist
+CREATE FUNCTION
+CREATE FUNCTION
+psql:pg_tests/compatible/udf_unsupported.sql:84: ERROR:  schema "pg_extension" does not exist
+CREATE TABLE
+CREATE FUNCTION
+CREATE FUNCTION
+psql:pg_tests/compatible/udf_unsupported.sql:102: ERROR:  f_call() is not a procedure
+LINE 1: CALL f_call();
+             ^
+HINT:  To call a function, use SELECT.
+psql:pg_tests/compatible/udf_unsupported.sql:105: ERROR:  return type mismatch in function declared to return integer
+DETAIL:  Function's final statement must be SELECT or INSERT/UPDATE/DELETE RETURNING.
+CONTEXT:  SQL function "f_call"
+psql:pg_tests/compatible/udf_unsupported.sql:108: ERROR:  f_call() is not a procedure
+LINE 1: CALL f_call();
+             ^
+HINT:  To call a function, use SELECT.

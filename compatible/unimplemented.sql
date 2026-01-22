@@ -23,7 +23,9 @@ CREATE TYPE legacy_type AS ENUM ('a', 'b');
 COMMENT ON TYPE legacy_type IS 'test';
 
 -- Test 8: statement (line 32)
+\set ON_ERROR_STOP 0
 DROP owned by public;
+\set ON_ERROR_STOP 1
 
 -- Test 9: statement (line 37)
 CREATE TABLE t (a INT, b INT);
@@ -47,4 +49,3 @@ DROP FUNCTION g;
 
 -- Test 14: statement (line 57)
 DROP TABLE t;
-
