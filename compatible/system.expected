@@ -1,0 +1,264 @@
+CREATE SCHEMA
+psql:pg_tests/compatible/system.sql:9: NOTICE:  table "descriptor" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/system.sql:16: NOTICE:  table "namespace" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/system.sql:22: NOTICE:  table "users" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/system.sql:28: NOTICE:  table "zones" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/system.sql:31: NOTICE:  table "lease" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/system.sql:34: NOTICE:  table "eventlog" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/system.sql:37: NOTICE:  table "rangelog" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/system.sql:40: NOTICE:  table "ui" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/system.sql:43: NOTICE:  table "jobs" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/system.sql:46: NOTICE:  table "settings" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/system.sql:53: NOTICE:  table "role_members" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/system.sql:59: NOTICE:  table "statement_hints" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+DO
+     database      
+-------------------
+ crdb_tests_system
+(1 row)
+
+ schema_name | table_name | type | owner | locality 
+-------------+------------+------+-------+----------
+(0 rows)
+
+ count 
+-------
+     1
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+ id 
+----
+  1
+(1 row)
+
+ id 
+----
+  1
+(1 row)
+
+ ?column? 
+----------
+        0
+(1 row)
+
+ column_name | data_type 
+-------------+-----------
+ id          | integer
+ descriptor  | text
+(2 rows)
+
+ column_name | data_type 
+-------------+-----------
+ username    | text
+(1 row)
+
+ column_name | data_type 
+-------------+-----------
+ id          | integer
+(1 row)
+
+ column_name | data_type 
+-------------+-----------
+ id          | integer
+(1 row)
+
+ column_name | data_type 
+-------------+-----------
+ id          | integer
+(1 row)
+
+ column_name | data_type 
+-------------+-----------
+ id          | integer
+(1 row)
+
+ column_name | data_type 
+-------------+-----------
+ id          | integer
+(1 row)
+
+ column_name | data_type 
+-------------+-----------
+ id          | integer
+(1 row)
+
+ column_name | data_type 
+-------------+-----------
+ id          | integer
+(1 row)
+
+ column_name | data_type 
+-------------+-----------
+ name        | text
+ value       | text
+ valueType   | text
+(3 rows)
+
+ column_name | data_type 
+-------------+-----------
+ role        | text
+ member      | text
+(2 rows)
+
+ username | connect | create | temp 
+----------+---------+--------+------
+ admin    | t       | f      | t
+ root     | t       | f      | t
+ testuser | t       | f      | t
+(3 rows)
+
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+REVOKE
+REVOKE
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+GRANT
+REVOKE
+REVOKE
+REVOKE
+GRANT
+GRANT
+GRANT
+GRANT
+ name 
+------
+(0 rows)
+
+ name 
+------
+(0 rows)
+
+INSERT 0 1
+    name     |   value   
+-------------+-----------
+ somesetting | somevalue
+(1 row)
+
+    name     |   value   
+-------------+-----------
+ somesetting | somevalue
+(1 row)
+
+    name     
+-------------
+ somesetting
+(1 row)
+
+INSERT 0 1
+ role | member 
+------+--------
+(0 rows)
+
+ username 
+----------
+ root
+(1 row)
+
+INSERT 0 1
+          name          | value 
+------------------------+-------
+ sql.defaults.vectorize | 1
+(1 row)
+
+ value 
+-------
+ 1
+(1 row)
+
+ vectorize 
+-----------
+ DEFAULT
+(1 row)
+
+DELETE 1
+ name | value 
+------+-------
+(0 rows)
+
+  value  
+---------
+ DEFAULT
+(1 row)
+
+ vectorize 
+-----------
+ DEFAULT
+(1 row)
+
+ hash | row_id | fingerprint | hint | created_at 
+------+--------+-------------+------+------------
+(0 rows)
+
+INSERT 0 2
+               hash               | row_id | fingerprint |   hint   |       created_at       
+----------------------------------+--------+-------------+----------+------------------------
+ acbd18db4cc2f85cedef654fccc4a4d8 |    100 | foo         | DEADBEEF | 2018-01-01 01:00:00+00
+ 37b51d194a7513e45b56f6524f2d51f2 |    200 | bar         | BEEFDEAD | 2018-01-02 01:00:00+00
+(2 rows)
+
+ row_id | fingerprint |   hint   |       created_at       
+--------+-------------+----------+------------------------
+    100 | foo         | DEADBEEF | 2018-01-01 01:00:00+00
+(1 row)
+
+ row_id | fingerprint |   hint   |       created_at       
+--------+-------------+----------+------------------------
+    200 | bar         | BEEFDEAD | 2018-01-02 01:00:00+00
+(1 row)
+
+ row_id | fingerprint | hint | created_at 
+--------+-------------+------+------------
+(0 rows)
+
+DELETE 1
+ row_id | fingerprint |   hint   |       created_at       
+--------+-------------+----------+------------------------
+    200 | bar         | BEEFDEAD | 2018-01-02 01:00:00+00
+(1 row)
+

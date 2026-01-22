@@ -1,0 +1,145 @@
+CREATE TABLE
+CREATE TABLE
+ table_name |      type       
+------------+-----------------
+ _tmp_a     | table
+ a_temp     | local temporary
+ tbl        | local temporary
+(3 rows)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+   table_name    |   table_type    
+-----------------+-----------------
+ temp_table_test | LOCAL TEMPORARY
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+   table_name    
+-----------------
+ a_temp
+ temp_table_ref
+ temp_table_test
+(3 rows)
+
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+DROP TABLE
+CREATE TABLE
+DROP TABLE
+DROP TABLE
+BEGIN
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+COMMIT
+ a 
+---
+ 1
+ 2
+(2 rows)
+
+ a 
+---
+ 3
+(1 row)
+
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+CREATE VIEW
+ a 
+---
+ 1
+(1 row)
+
+CREATE VIEW
+ a 
+---
+ 2
+(1 row)
+
+CREATE VIEW
+DROP VIEW
+CREATE VIEW
+ a 
+---
+ 2
+(1 row)
+
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP TABLE
+DROP TABLE
+CREATE SEQUENCE
+CREATE TABLE
+INSERT 0 3
+  a  
+-----
+   1
+   2
+ 100
+(3 rows)
+
+CREATE TABLE
+INSERT 0 3
+  a  
+-----
+   3
+   4
+ 101
+(3 rows)
+
+ALTER TABLE
+ALTER TABLE
+DROP SEQUENCE
+CREATE TABLE
+ nextval 
+---------
+       1
+(1 row)
+
+DROP TABLE
+DROP TABLE
+psql:pg_tests/compatible/temp_table.sql:185: NOTICE:  sequence "temp_seq" does not exist, skipping
+DROP SEQUENCE
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+ c0 
+----
+  1
+(1 row)
+
+TRUNCATE TABLE
+INSERT 0 1
+ c0 
+----
+  2
+(1 row)
+
+CREATE TYPE
+CREATE TABLE
+INSERT 0 3
+ALTER TYPE
+DROP TYPE
+DROP TABLE

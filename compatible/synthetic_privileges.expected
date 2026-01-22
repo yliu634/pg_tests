@@ -1,0 +1,191 @@
+CREATE SCHEMA
+CREATE SCHEMA
+psql:pg_tests/compatible/synthetic_privileges.sql:10: NOTICE:  table "cluster_settings" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/synthetic_privileges.sql:19: NOTICE:  table "external_connections" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/synthetic_privileges.sql:25: NOTICE:  table "privileges" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/synthetic_privileges.sql:34: NOTICE:  table "node_statement_statistics" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/synthetic_privileges.sql:43: NOTICE:  table "tables" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/synthetic_privileges.sql:49: NOTICE:  table "feature_usage" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/synthetic_privileges.sql:55: NOTICE:  table "users" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+DO
+             name              | value 
+-------------------------------+-------
+ sql.defaults.default_int_size | 4
+(1 row)
+
+INSERT 0 1
+             name              | value 
+-------------------------------+-------
+ sql.defaults.default_int_size | 4
+(1 row)
+
+INSERT 0 0
+ username | path | privileges | grant_options 
+----------+------+------------+---------------
+(0 rows)
+
+ connection_name | connection_type 
+-----------------+-----------------
+ foo             | nodelocal
+(1 row)
+
+             name              | value 
+-------------------------------+-------
+ sql.defaults.default_int_size | 4
+(1 row)
+
+INSERT 0 0
+ username | path | privileges | grant_options 
+----------+------+------------+---------------
+(0 rows)
+
+ username | path | privileges | grant_options 
+----------+------+------------+---------------
+(0 rows)
+
+ username | path | privileges | grant_options 
+----------+------+------------+---------------
+(0 rows)
+
+ username | path | privileges | grant_options 
+----------+------+------------+---------------
+(0 rows)
+
+ username | path | privileges | grant_options 
+----------+------+------------+---------------
+(0 rows)
+
+ username | path | privileges | grant_options 
+----------+------+------------+---------------
+(0 rows)
+
+             name              | value 
+-------------------------------+-------
+ sql.defaults.default_int_size | 4
+(1 row)
+
+             name              | value 
+-------------------------------+-------
+ sql.defaults.default_int_size | 4
+(1 row)
+
+ username | path | privileges | grant_options 
+----------+------+------------+---------------
+(0 rows)
+
+             name              | value 
+-------------------------------+-------
+ sql.defaults.default_int_size | 4
+(1 row)
+
+ username | path | privileges | grant_options 
+----------+------+------------+---------------
+(0 rows)
+
+ id |  query   | calls 
+----+----------+-------
+  1 | SELECT 1 |     1
+(1 row)
+
+ id |  query   | calls 
+----+----------+-------
+  1 | SELECT 1 |     1
+(1 row)
+
+ username | path | privileges | grant_options 
+----------+------+------------+---------------
+(0 rows)
+
+ id |  query   | calls 
+----+----------+-------
+  1 | SELECT 1 |     1
+(1 row)
+
+ username | path | privileges | grant_options 
+----------+------+------------+---------------
+(0 rows)
+
+ id |  query   | calls 
+----+----------+-------
+  1 | SELECT 1 |     1
+(1 row)
+
+ id |  query   | calls 
+----+----------+-------
+  1 | SELECT 1 |     1
+(1 row)
+
+ username | path | privileges | grant_options 
+----------+------+------------+---------------
+(0 rows)
+
+ id |  query   | calls 
+----+----------+-------
+  1 | SELECT 1 |     1
+(1 row)
+
+ username | path | privileges | grant_options 
+----------+------+------------+---------------
+(0 rows)
+
+GRANT
+ALTER DEFAULT PRIVILEGES
+REVOKE
+ has_table_privilege 
+---------------------
+ f
+(1 row)
+
+BEGIN
+GRANT
+ has_table_privilege 
+---------------------
+ t
+(1 row)
+
+ROLLBACK
+ has_table_privilege 
+---------------------
+ f
+(1 row)
+
+INSERT 0 1
+GRANT ROLE
+UPDATE 0
+ username | path | privileges | grant_options 
+----------+------+------------+---------------
+(0 rows)
+
+INSERT 0 1
+REVOKE ROLE
+DELETE 1
+ ?column? 
+----------
+        1
+(1 row)
+
+ username | hashedPassword | isRole | user_id 
+----------+----------------+--------+---------
+(0 rows)
+
+ username | hashedPassword 
+----------+----------------
+(0 rows)
+
+INSERT 0 1
