@@ -44,7 +44,7 @@ BEGIN
     EXECUTE format('CLOSE %I', name);
     RETURN true;
   EXCEPTION
-    WHEN undefined_cursor THEN
+    WHEN invalid_cursor_name THEN
       RETURN false;
   END;
 END;
@@ -63,32 +63,137 @@ AS $$
 DECLARE
   sev TEXT := upper(coalesce(severity, ''));
   errcode TEXT := NULLIF(sqlstate, '');
+  has_errcode BOOLEAN := errcode IS NOT NULL;
+  has_detail BOOLEAN := detail IS NOT NULL AND detail <> '';
+  has_hint BOOLEAN := hint IS NOT NULL AND hint <> '';
 BEGIN
   IF sev NOT IN ('DEBUG1', 'LOG', 'INFO', 'NOTICE', 'WARNING', 'ERROR') THEN
     RAISE EXCEPTION 'severity % is invalid', severity USING ERRCODE = '22023';
   END IF;
 
   IF sev = 'ERROR' THEN
-    RAISE EXCEPTION '%', msg
-      USING
-        ERRCODE = COALESCE(errcode, 'XXUUU'),
-        DETAIL = NULLIF(detail, ''),
-        HINT = NULLIF(hint, '');
+    -- PostgreSQL rejects NULL values for RAISE ... USING options. Treat
+    -- NULL/empty option values as unset, matching Cockroach behavior.
+    errcode := COALESCE(errcode, 'XXUUU');
+    IF has_detail AND has_hint THEN
+      RAISE EXCEPTION '%', msg USING ERRCODE = errcode, DETAIL = detail, HINT = hint;
+    ELSIF has_detail THEN
+      RAISE EXCEPTION '%', msg USING ERRCODE = errcode, DETAIL = detail;
+    ELSIF has_hint THEN
+      RAISE EXCEPTION '%', msg USING ERRCODE = errcode, HINT = hint;
+    ELSE
+      RAISE EXCEPTION '%', msg USING ERRCODE = errcode;
+    END IF;
   ELSIF sev = 'DEBUG1' THEN
-    RAISE DEBUG '%', msg
-      USING ERRCODE = errcode, DETAIL = NULLIF(detail, ''), HINT = NULLIF(hint, '');
+    IF has_errcode THEN
+      IF has_detail AND has_hint THEN
+        RAISE DEBUG '%', msg USING ERRCODE = errcode, DETAIL = detail, HINT = hint;
+      ELSIF has_detail THEN
+        RAISE DEBUG '%', msg USING ERRCODE = errcode, DETAIL = detail;
+      ELSIF has_hint THEN
+        RAISE DEBUG '%', msg USING ERRCODE = errcode, HINT = hint;
+      ELSE
+        RAISE DEBUG '%', msg USING ERRCODE = errcode;
+      END IF;
+    ELSE
+      IF has_detail AND has_hint THEN
+        RAISE DEBUG '%', msg USING DETAIL = detail, HINT = hint;
+      ELSIF has_detail THEN
+        RAISE DEBUG '%', msg USING DETAIL = detail;
+      ELSIF has_hint THEN
+        RAISE DEBUG '%', msg USING HINT = hint;
+      ELSE
+        RAISE DEBUG '%', msg;
+      END IF;
+    END IF;
   ELSIF sev = 'LOG' THEN
-    RAISE LOG '%', msg
-      USING ERRCODE = errcode, DETAIL = NULLIF(detail, ''), HINT = NULLIF(hint, '');
+    IF has_errcode THEN
+      IF has_detail AND has_hint THEN
+        RAISE LOG '%', msg USING ERRCODE = errcode, DETAIL = detail, HINT = hint;
+      ELSIF has_detail THEN
+        RAISE LOG '%', msg USING ERRCODE = errcode, DETAIL = detail;
+      ELSIF has_hint THEN
+        RAISE LOG '%', msg USING ERRCODE = errcode, HINT = hint;
+      ELSE
+        RAISE LOG '%', msg USING ERRCODE = errcode;
+      END IF;
+    ELSE
+      IF has_detail AND has_hint THEN
+        RAISE LOG '%', msg USING DETAIL = detail, HINT = hint;
+      ELSIF has_detail THEN
+        RAISE LOG '%', msg USING DETAIL = detail;
+      ELSIF has_hint THEN
+        RAISE LOG '%', msg USING HINT = hint;
+      ELSE
+        RAISE LOG '%', msg;
+      END IF;
+    END IF;
   ELSIF sev = 'INFO' THEN
-    RAISE INFO '%', msg
-      USING ERRCODE = errcode, DETAIL = NULLIF(detail, ''), HINT = NULLIF(hint, '');
+    IF has_errcode THEN
+      IF has_detail AND has_hint THEN
+        RAISE INFO '%', msg USING ERRCODE = errcode, DETAIL = detail, HINT = hint;
+      ELSIF has_detail THEN
+        RAISE INFO '%', msg USING ERRCODE = errcode, DETAIL = detail;
+      ELSIF has_hint THEN
+        RAISE INFO '%', msg USING ERRCODE = errcode, HINT = hint;
+      ELSE
+        RAISE INFO '%', msg USING ERRCODE = errcode;
+      END IF;
+    ELSE
+      IF has_detail AND has_hint THEN
+        RAISE INFO '%', msg USING DETAIL = detail, HINT = hint;
+      ELSIF has_detail THEN
+        RAISE INFO '%', msg USING DETAIL = detail;
+      ELSIF has_hint THEN
+        RAISE INFO '%', msg USING HINT = hint;
+      ELSE
+        RAISE INFO '%', msg;
+      END IF;
+    END IF;
   ELSIF sev = 'NOTICE' THEN
-    RAISE NOTICE '%', msg
-      USING ERRCODE = errcode, DETAIL = NULLIF(detail, ''), HINT = NULLIF(hint, '');
+    IF has_errcode THEN
+      IF has_detail AND has_hint THEN
+        RAISE NOTICE '%', msg USING ERRCODE = errcode, DETAIL = detail, HINT = hint;
+      ELSIF has_detail THEN
+        RAISE NOTICE '%', msg USING ERRCODE = errcode, DETAIL = detail;
+      ELSIF has_hint THEN
+        RAISE NOTICE '%', msg USING ERRCODE = errcode, HINT = hint;
+      ELSE
+        RAISE NOTICE '%', msg USING ERRCODE = errcode;
+      END IF;
+    ELSE
+      IF has_detail AND has_hint THEN
+        RAISE NOTICE '%', msg USING DETAIL = detail, HINT = hint;
+      ELSIF has_detail THEN
+        RAISE NOTICE '%', msg USING DETAIL = detail;
+      ELSIF has_hint THEN
+        RAISE NOTICE '%', msg USING HINT = hint;
+      ELSE
+        RAISE NOTICE '%', msg;
+      END IF;
+    END IF;
   ELSIF sev = 'WARNING' THEN
-    RAISE WARNING '%', msg
-      USING ERRCODE = errcode, DETAIL = NULLIF(detail, ''), HINT = NULLIF(hint, '');
+    IF has_errcode THEN
+      IF has_detail AND has_hint THEN
+        RAISE WARNING '%', msg USING ERRCODE = errcode, DETAIL = detail, HINT = hint;
+      ELSIF has_detail THEN
+        RAISE WARNING '%', msg USING ERRCODE = errcode, DETAIL = detail;
+      ELSIF has_hint THEN
+        RAISE WARNING '%', msg USING ERRCODE = errcode, HINT = hint;
+      ELSE
+        RAISE WARNING '%', msg USING ERRCODE = errcode;
+      END IF;
+    ELSE
+      IF has_detail AND has_hint THEN
+        RAISE WARNING '%', msg USING DETAIL = detail, HINT = hint;
+      ELSIF has_detail THEN
+        RAISE WARNING '%', msg USING DETAIL = detail;
+      ELSIF has_hint THEN
+        RAISE WARNING '%', msg USING HINT = hint;
+      ELSE
+        RAISE WARNING '%', msg;
+      END IF;
+    END IF;
   END IF;
 
   RETURN msg;

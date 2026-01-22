@@ -1,58 +1,129 @@
 -- PostgreSQL compatible tests from pg_catalog
 -- 349 tests
 
+--
+-- This file is derived from CockroachDB logic tests and contains many
+-- statements expected to error on PostgreSQL.
+\set ON_ERROR_STOP 0
+SET client_min_messages = warning;
+
+-- Capture current database name for GRANT/REVOKE ON DATABASE statements.
+SELECT current_database() AS db \gset
+
+-- Role used by a few privilege tests in this file.
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'pg_catalog_testuser') THEN
+    CREATE ROLE pg_catalog_testuser LOGIN;
+  END IF;
+END
+$$;
+
+RESET client_min_messages;
+
 -- Test 1: statement (line 5)
-SET distsql_workmem = '64MiB'
+-- CockroachDB-only setting:
+-- SET distsql_workmem = '64MiB';
 
 -- Test 2: query (line 10)
-ALTER DATABASE pg_catalog RENAME TO not_pg_catalog
+ALTER SCHEMA pg_catalog RENAME TO not_pg_catalog;
 
-statement error schema cannot be modified: "pg_catalog"
-CREATE TABLE pg_catalog.t (x INT)
+-- statement error schema cannot be modified: "pg_catalog"
+CREATE TABLE pg_catalog.t (x INT);
 
-query error database "pg_catalog" does not exist
-DROP DATABASE pg_catalog
+-- query error database "pg_catalog" does not exist
+DROP SCHEMA pg_catalog;
 
-query TTTTIT rowsort
-SHOW TABLES FROM pg_catalog
+-- query TTTTIT rowsort
+SELECT
+  n.nspname AS schema_name,
+  c.relname AS table_name,
+  CASE c.relkind
+    WHEN 'r' THEN 'table'
+    WHEN 'p' THEN 'partitioned table'
+    WHEN 'v' THEN 'view'
+    WHEN 'm' THEN 'materialized view'
+    WHEN 'S' THEN 'sequence'
+    ELSE c.relkind::TEXT
+  END AS type,
+  pg_get_userbyid(c.relowner) AS owner,
+  NULL::BIGINT AS estimated_row_count,
+  obj_description(c.oid, 'pg_class') AS comment
+FROM pg_class AS c
+JOIN pg_namespace AS n ON n.oid = c.relnamespace
+WHERE n.nspname = 'pg_catalog'
+  AND c.relkind IN ('r', 'p', 'v', 'm', 'S')
+ORDER BY schema_name, table_name;
 
 -- Test 3: statement (line 154)
-CREATE DATABASE other_db
+CREATE SCHEMA other_db;
 
 -- Test 4: statement (line 157)
-ALTER DATABASE other_db RENAME TO pg_catalog
+ALTER SCHEMA other_db RENAME TO pg_catalog;
 
 -- Test 5: statement (line 160)
-CREATE DATABASE pg_catalog
+CREATE SCHEMA pg_catalog;
 
 -- Test 6: statement (line 163)
-DROP DATABASE pg_catalog
+DROP SCHEMA pg_catalog;
 
 -- Test 7: query (line 169)
-SELECT * FROM pg_catalog.pg_class c WHERE nonexistent_function()
+SELECT * FROM pg_catalog.pg_class c WHERE nonexistent_function();
 
-# Verify pg_catalog handles reflection correctly.
+-- Verify pg_catalog handles reflection correctly.
 
-query TTTTIT rowsort
-SHOW TABLES FROM test.pg_catalog
+-- query TTTTIT rowsort
+SELECT
+  n.nspname AS schema_name,
+  c.relname AS table_name,
+  CASE c.relkind
+    WHEN 'r' THEN 'table'
+    WHEN 'p' THEN 'partitioned table'
+    WHEN 'v' THEN 'view'
+    WHEN 'm' THEN 'materialized view'
+    WHEN 'S' THEN 'sequence'
+    ELSE c.relkind::TEXT
+  END AS type,
+  pg_get_userbyid(c.relowner) AS owner,
+  NULL::BIGINT AS estimated_row_count,
+  obj_description(c.oid, 'pg_class') AS comment
+FROM pg_class AS c
+JOIN pg_namespace AS n ON n.oid = c.relnamespace
+WHERE n.nspname = 'pg_catalog'
+  AND c.relkind IN ('r', 'p', 'v', 'm', 'S')
+ORDER BY schema_name, table_name;
 
 -- Test 8: query (line 307)
-SHOW CREATE TABLE pg_catalog.pg_namespace
+\d+ pg_catalog.pg_namespace
 
 -- Test 9: query (line 319)
-SHOW COLUMNS FROM pg_catalog.pg_namespace
+SELECT column_name, data_type, is_nullable, column_default
+FROM information_schema.columns
+WHERE table_schema = 'pg_catalog' AND table_name = 'pg_namespace'
+ORDER BY ordinal_position;
 
 -- Test 10: query (line 328)
-SHOW INDEXES FROM pg_catalog.pg_namespace
+SELECT indexname, indexdef
+FROM pg_catalog.pg_indexes
+WHERE schemaname = 'pg_catalog' AND tablename = 'pg_namespace'
+ORDER BY indexname;
 
 -- Test 11: query (line 333)
-SHOW CONSTRAINTS FROM pg_catalog.pg_namespace
+SELECT con.conname, con.contype, pg_catalog.pg_get_constraintdef(con.oid, true) AS condef
+FROM pg_catalog.pg_constraint AS con
+JOIN pg_catalog.pg_class AS rel ON rel.oid = con.conrelid
+JOIN pg_catalog.pg_namespace AS n ON n.oid = rel.relnamespace
+WHERE n.nspname = 'pg_catalog' AND rel.relname = 'pg_namespace'
+ORDER BY con.conname;
 
 -- Test 12: query (line 338)
-SHOW GRANTS ON pg_catalog.pg_namespace
+SELECT grantee, privilege_type, is_grantable
+FROM information_schema.role_table_grants
+WHERE table_schema = 'pg_catalog' AND table_name = 'pg_namespace'
+ORDER BY grantee, privilege_type;
 
 -- Test 13: statement (line 347)
-CREATE DATABASE constraint_db
+CREATE SCHEMA constraint_db;
 
 -- Test 14: statement (line 350)
 CREATE TABLE constraint_db.t1 (
@@ -63,159 +134,160 @@ CREATE TABLE constraint_db.t1 (
   d VARCHAR(5),
   e BIT(5),
   f DECIMAL(10,7),
-  g INT AS (a * b) STORED,
+  g INT GENERATED ALWAYS AS (a * b) STORED,
   h CHAR(12)[],
   i VARCHAR(20)[],
   j "char",
-  k VARCHAR(10) COLLATE sv,
-  l INT AS (a * b) VIRTUAL,
+  k VARCHAR(10),
+  l INT GENERATED ALWAYS AS (a * b) STORED,
   m INT GENERATED ALWAYS AS IDENTITY,
-  n INT GENERATED BY DEFAULT AS IDENTITY,
-  UNIQUE INDEX index_key(b, c)
-)
+  n INT GENERATED BY DEFAULT AS IDENTITY
+);
+CREATE UNIQUE INDEX index_key ON constraint_db.t1(b, c);
 
 -- Test 15: statement (line 370)
 CREATE TABLE constraint_db.t2 (
     t1_ID INT,
-    CONSTRAINT fk FOREIGN KEY (t1_ID) REFERENCES constraint_db.t1(a),
-    INDEX (t1_ID)
-)
+    CONSTRAINT fk FOREIGN KEY (t1_ID) REFERENCES constraint_db.t1(a)
+);
+CREATE INDEX t2_t1_id_idx ON constraint_db.t2(t1_id);
 
 -- Test 16: statement (line 386)
-CREATE VIEW constraint_db.v1 AS SELECT p,a,b,c FROM constraint_db.t1
+CREATE VIEW constraint_db.v1 AS SELECT p,a,b,c FROM constraint_db.t1;
 
 -- Test 17: statement (line 409)
-CREATE TYPE constraint_db.mytype AS ENUM ('foo', 'bar', 'baz')
+CREATE TYPE constraint_db.mytype AS ENUM ('foo', 'bar', 'baz');
 
 -- Test 18: query (line 426)
-SELECT nspname, nspowner, nspacl FROM pg_catalog.pg_namespace
+SELECT nspname, nspowner, nspacl FROM pg_catalog.pg_namespace;
 
 -- Test 19: statement (line 439)
-REVOKE ALL ON DATABASE test FROM public;
-REVOKE ALL ON DATABASE test FROM testuser
+REVOKE ALL ON DATABASE :"db" FROM public;
+REVOKE ALL ON DATABASE :"db" FROM pg_catalog_testuser;
 
-user testuser
+SET ROLE pg_catalog_testuser;
 
 -- Test 20: query (line 445)
-SELECT nspname, nspowner, nspacl FROM pg_catalog.pg_namespace
+SELECT nspname, nspowner, nspacl FROM pg_catalog.pg_namespace;
+RESET ROLE;
 
 -- Test 21: statement (line 457)
-GRANT CONNECT ON DATABASE test TO public
+GRANT CONNECT ON DATABASE :"db" TO public;
 
 -- Test 22: query (line 462)
 SELECT oid, datname, datdba, encoding, datcollate, datctype, datistemplate, datallowconn
 FROM pg_catalog.pg_database
-ORDER BY oid
+ORDER BY oid;
 
 -- Test 23: query (line 474)
 SELECT oid, datname, datconnlimit, datlastsysoid, datfrozenxid, datminmxid, dattablespace, datacl
 FROM pg_catalog.pg_database
-ORDER BY oid
+ORDER BY oid;
 
 -- Test 24: query (line 489)
 SELECT oid, datname, datconnlimit, datlastsysoid, datfrozenxid, datminmxid, dattablespace, datacl
 FROM pg_catalog.pg_database
-ORDER BY oid LIMIT 1
+ORDER BY oid LIMIT 1;
 
 -- Test 25: statement (line 501)
-SET DATABASE = constraint_db
+SET search_path TO constraint_db, public;
 
 -- Test 26: query (line 504)
-SELECT * FROM constraint_db.pg_catalog.pg_tables WHERE schemaname = 'public'
+SELECT * FROM pg_catalog.pg_tables WHERE schemaname = current_schema();
 
 -- Test 27: query (line 515)
-SELECT tablename, hasindexes FROM pg_catalog.pg_tables WHERE schemaname = 'information_schema' AND tablename LIKE '%table%'
+SELECT tablename, hasindexes FROM pg_catalog.pg_tables WHERE schemaname = 'information_schema' AND tablename LIKE '%table%';
 
 -- Test 28: query (line 534)
-SELECT oid, spcname, spcowner, spcacl, spcoptions FROM pg_tablespace
+SELECT oid, spcname, spcowner, spcacl, spcoptions FROM pg_tablespace;
 
 -- Test 29: query (line 542)
-SELECT * FROM pg_catalog.pg_views
+SELECT * FROM pg_catalog.pg_views;
 
 -- Test 30: statement (line 550)
-CREATE MATERIALIZED VIEW mv1 AS SELECT 1
+CREATE MATERIALIZED VIEW mv1 AS SELECT 1;
 
 -- Test 31: query (line 553)
-SELECT * FROM pg_catalog.pg_matviews
+SELECT * FROM pg_catalog.pg_matviews;
 
 -- Test 32: query (line 561)
 SELECT c.oid, relname, relnamespace, reltype, reloftype, relowner, relam, relfilenode, reltablespace
 FROM pg_catalog.pg_class c
 JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid
-WHERE n.nspname = 'public'
+WHERE n.nspname = current_schema();
 
 -- Test 33: query (line 594)
 SELECT relname, relpages, reltuples, relallvisible, reltoastrelid, relhasindex, relisshared, relpersistence
 FROM pg_catalog.pg_class c
 JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid
-WHERE n.nspname = 'public'
+WHERE n.nspname = current_schema();
 
 -- Test 34: query (line 627)
 SELECT relname, relistemp, relkind, relnatts, relchecks, relhasoids, relhaspkey
 FROM pg_catalog.pg_class c
 JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid
-WHERE n.nspname = 'public'
+WHERE n.nspname = current_schema();
 
 -- Test 35: query (line 660)
 SELECT relname, relhasrules, relhastriggers, relhassubclass, relfrozenxid, relacl, reloptions, relreplident
 FROM pg_catalog.pg_class c
 JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid
-WHERE n.nspname = 'public'
+WHERE n.nspname = current_schema();
 
 -- Test 36: query (line 695)
 SELECT attrelid, c.relname, attname, atttypid, attstattarget, attlen, attnum, attndims, attcacheoff
 FROM pg_catalog.pg_attribute a
 JOIN pg_catalog.pg_class c ON a.attrelid = c.oid
 JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid
-WHERE n.nspname = 'public'
+WHERE n.nspname = current_schema();
 
 -- Test 37: query (line 768)
 SELECT c.relname, attname, atttypmod, attbyval, attstorage, attalign, attnotnull, atthasdef, attidentity, attgenerated
 FROM pg_catalog.pg_attribute a
 JOIN pg_catalog.pg_class c ON a.attrelid = c.oid
 JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid
-WHERE n.nspname = 'public'
+WHERE n.nspname = current_schema();
 
 -- Test 38: query (line 841)
 SELECT c.relname, attname, attisdropped, attislocal, attinhcount, attacl, attoptions, attfdwoptions
 FROM pg_catalog.pg_attribute a
 JOIN pg_catalog.pg_class c ON a.attrelid = c.oid
 JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid
-WHERE n.nspname = 'public'
+WHERE n.nspname = current_schema();
 
 -- Test 39: statement (line 915)
-CREATE DATABASE relkinds
+CREATE SCHEMA relkinds;
 
 -- Test 40: statement (line 918)
-SET DATABASE = relkinds
+SET search_path TO relkinds, public;
 
 -- Test 41: statement (line 921)
-CREATE TABLE tbl_test (k int primary key, v int)
+CREATE TABLE tbl_test (k int primary key, v int);
 
 -- Test 42: statement (line 924)
-CREATE INDEX tbl_test_v_idx ON tbl_test (v)
+CREATE INDEX tbl_test_v_idx ON tbl_test (v);
 
 -- Test 43: statement (line 927)
-CREATE VIEW view_test AS SELECT k, v FROM tbl_test ORDER BY v
+CREATE VIEW view_test AS SELECT k, v FROM tbl_test ORDER BY v;
 
 -- Test 44: statement (line 930)
-CREATE MATERIALIZED VIEW mv_test AS SELECT 1
+CREATE MATERIALIZED VIEW mv_test AS SELECT 1;
 
 -- Test 45: statement (line 933)
-CREATE SEQUENCE seq_test
+CREATE SEQUENCE seq_test;
 
 -- Test 46: query (line 936)
 SELECT relname, relkind, relreplident
 FROM pg_catalog.pg_class c
 JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid
-WHERE n.nspname = 'public'
-ORDER BY relname
+WHERE n.nspname = current_schema()
+ORDER BY relname;
 
 -- Test 47: statement (line 951)
-DROP DATABASE relkinds
+DROP SCHEMA relkinds;
 
 -- Test 48: statement (line 954)
-SET DATABASE = constraint_db
+SET search_path TO constraint_db, public;
 
 -- Test 49: query (line 958)
 SELECT c.relname, attname, t.typname, attcollation, k.collname
@@ -224,132 +296,132 @@ JOIN pg_catalog.pg_class c ON a.attrelid = c.oid
 JOIN pg_catalog.pg_type t ON a.atttypid = t.oid
 JOIN pg_catalog.pg_collation k ON a.attcollation = k.oid
 JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid
-WHERE n.nspname = 'public'
+WHERE n.nspname = current_schema();
 
 -- Test 50: query (line 984)
 SELECT *
-FROM pg_catalog.pg_am
+FROM pg_catalog.pg_am;
 
 -- Test 51: query (line 994)
 SELECT ad.oid, c.relname, adrelid, adnum, adbin, adsrc, pg_get_expr(ad.adbin, ad.adrelid)
 FROM pg_catalog.pg_attrdef ad
 JOIN pg_catalog.pg_class c ON ad.adrelid = c.oid
 JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid
-WHERE n.nspname = 'public' ORDER BY ad.oid DESC
+WHERE n.nspname = current_schema() ORDER BY ad.oid DESC;
 
 -- Test 52: query (line 1020)
 SELECT crdb_oid, schemaname, tablename, indexname, tablespace
 FROM pg_catalog.pg_indexes
-WHERE schemaname = 'public'
+WHERE schemaname = current_schema();
 
 -- Test 53: query (line 1044)
 SELECT crdb_oid, tablename, indexname, indexdef
 FROM pg_catalog.pg_indexes
-WHERE schemaname = 'public'
-ORDER BY tablename, indexname
+WHERE schemaname = current_schema()
+ORDER BY tablename, indexname;
 
 -- Test 54: query (line 1071)
 SELECT indexrelid, indrelid, indnatts, indisunique, indnullsnotdistinct, indisprimary, indisexclusion
 FROM pg_catalog.pg_index
-WHERE indnkeyatts = 2
+WHERE indnkeyatts = 2;
 
 -- Test 55: query (line 1081)
 SELECT indexrelid, indimmediate, indisclustered, indisvalid, indcheckxmin, indisready
 FROM pg_catalog.pg_index
-WHERE indnkeyatts = 2
+WHERE indnkeyatts = 2;
 
 -- Test 56: query (line 1091)
 SELECT indexrelid, indrelid, indislive, indisreplident, indkey, indcollation, indclass, indoption, indexprs, indpred
 FROM pg_catalog.pg_index
 WHERE indnkeyatts = 2
-ORDER BY indexrelid DESC
+ORDER BY indexrelid DESC;
 
 -- Test 57: query (line 1106)
 SELECT c.relname, i.indkey, i.indexprs, i.indpred
 FROM pg_catalog.pg_index i
 JOIN pg_catalog.pg_class c ON i.indexrelid = c.oid
 WHERE c.relname LIKE 't6_%'
-ORDER BY 1
+ORDER BY 1;
 
 -- Test 58: query (line 1124)
 SELECT *
 FROM pg_catalog.pg_index
-ORDER BY indexrelid
+ORDER BY indexrelid;
 
 -- Test 59: query (line 1275)
 SELECT indexrelid,
        (information_schema._pg_expandarray(indclass)).x AS operator_argument_type_oid,
        (information_schema._pg_expandarray(indclass)).n AS operator_argument_position
 FROM pg_index
-ORDER BY indexrelid, operator_argument_position
+ORDER BY indexrelid, operator_argument_position;
 
 -- Test 60: statement (line 1552)
-SET DATABASE = constraint_db
+SET search_path TO constraint_db, public;
 
 -- Test 61: query (line 1555)
 SELECT * FROM pg_collation
-WHERE collname='en-US'
+WHERE collname='en-US';
 
 -- Test 62: query (line 1565)
 SELECT oid, collname FROM pg_collation
-WHERE collname='en-US'
+WHERE collname='en-US';
 
 -- Test 63: query (line 1579)
 SELECT conname, connamespace, contype, replace(condef, ' ', '_') as condef
 FROM pg_catalog.pg_constraint con
 JOIN pg_catalog.pg_namespace n ON con.connamespace = n.oid
-WHERE n.nspname = 'public'
+WHERE n.nspname = current_schema();
 
 -- Test 64: query (line 1608)
 SELECT conname, contype, condeferrable, condeferred, convalidated, conrelid, contypid, conindid
 FROM pg_catalog.pg_constraint con
 JOIN pg_catalog.pg_namespace n ON con.connamespace = n.oid
-WHERE n.nspname = 'public'
+WHERE n.nspname = current_schema();
 
 -- Test 65: query (line 1637)
 SELECT conname
 FROM pg_catalog.pg_constraint con
 JOIN pg_catalog.pg_namespace n ON con.connamespace = n.oid
-WHERE n.nspname = 'public' AND contype NOT IN ('c', 'f', 'p', 'u')
-ORDER BY con.oid
+WHERE n.nspname = current_schema() AND contype NOT IN ('c', 'f', 'p', 'u')
+ORDER BY con.oid;
 
 -- Test 66: query (line 1645)
 SELECT conname, confrelid, confupdtype, confdeltype, confmatchtype
 FROM pg_catalog.pg_constraint con
 JOIN pg_catalog.pg_namespace n ON con.connamespace = n.oid
-WHERE n.nspname = 'public' AND contype IN ('c', 'p', 'u')
+WHERE n.nspname = current_schema() AND contype IN ('c', 'p', 'u');
 
 -- Test 67: query (line 1670)
 SELECT conname, confrelid, confupdtype, confdeltype, confmatchtype
 FROM pg_catalog.pg_constraint con
 JOIN pg_catalog.pg_namespace n ON con.connamespace = n.oid
-WHERE n.nspname = 'public' AND contype = 'f'
-ORDER BY con.oid
+WHERE n.nspname = current_schema() AND contype = 'f'
+ORDER BY con.oid;
 
 -- Test 68: query (line 1683)
 SELECT conname, conislocal, coninhcount, connoinherit, conkey
 FROM pg_catalog.pg_constraint con
 JOIN pg_catalog.pg_namespace n ON con.connamespace = n.oid
-WHERE n.nspname = 'public'
+WHERE n.nspname = current_schema();
 
 -- Test 69: query (line 1712)
 SELECT conname, confkey, conpfeqop, conppeqop, conffeqop, conexclop, conbin, consrc, pg_get_constraintdef(con.oid) as condef
 FROM pg_catalog.pg_constraint con
 JOIN pg_catalog.pg_namespace n ON con.connamespace = n.oid
-WHERE n.nspname = 'public' AND contype IN ('c', 'p', 'u')
-ORDER BY conname
+WHERE n.nspname = current_schema() AND contype IN ('c', 'p', 'u')
+ORDER BY conname;
 
 -- Test 70: query (line 1738)
 SELECT conname, confkey, conpfeqop, conppeqop, conffeqop, conexclop, conbin, consrc
 FROM pg_catalog.pg_constraint con
 JOIN pg_catalog.pg_namespace n ON con.connamespace = n.oid
-WHERE n.nspname = 'public' AND contype = 'f'
-ORDER BY con.oid
+WHERE n.nspname = current_schema() AND contype = 'f'
+ORDER BY con.oid;
 
 -- Test 71: query (line 1753)
 SELECT classid, objid, objsubid, refclassid, refobjid, refobjsubid, deptype
 FROM pg_catalog.pg_depend
-ORDER BY objid, refobjid, refobjsubid
+ORDER BY objid, refobjid, refobjsubid;
 
 -- Test 72: statement (line 1770)
 CREATE TABLE t_with_pk_seq (a INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, b INT);
@@ -370,7 +442,7 @@ WHERE seq.oid           = dep.objid
   AND seq.relnamespace  = nsp.oid
   AND cons.contype      = 'p'
   AND dep.classid       = 'pg_class'::regclass
-  AND dep.refobjid      = 't_with_pk_seq'::regclass
+  AND dep.refobjid      = 't_with_pk_seq'::regclass;
 
 -- Test 74: query (line 1796)
 SELECT seq_cls.relname AS sequence_name, attr.attname AS column_name, dep.deptype
@@ -379,24 +451,24 @@ JOIN pg_class seq_cls ON seq_cls.oid = dep.objid
 JOIN pg_attribute attr ON attr.attrelid = dep.refobjid AND attr.attnum = dep.refobjsubid
 WHERE dep.refobjid = 't_with_pk_seq'::regclass
   AND dep.deptype = 'i'
-ORDER BY dep.deptype
+ORDER BY dep.deptype;
 
 -- Test 75: query (line 1812)
 SELECT DISTINCT classid, refclassid, cla.relname AS tablename, refcla.relname AS reftablename
 FROM pg_catalog.pg_depend
 JOIN pg_class cla ON classid=cla.oid
-JOIN pg_class refcla ON refclassid=refcla.oid
+JOIN pg_class refcla ON refclassid=refcla.oid;
 
 -- Test 76: query (line 1826)
 SELECT relname, relkind
 FROM pg_depend
 JOIN pg_class ON refobjid=pg_class.oid
-ORDER BY relname
+ORDER BY relname;
 
 -- Test 77: query (line 1847)
 SELECT DISTINCT pg_constraint.contype
 FROM pg_depend
-JOIN pg_constraint ON objid=pg_constraint.oid AND refobjid=pg_constraint.conindid
+JOIN pg_constraint ON objid=pg_constraint.oid AND refobjid=pg_constraint.conindid;
 
 -- Test 78: statement (line 1855)
 CREATE TABLE source_table(a INT PRIMARY KEY, b INT, c INT);
@@ -420,191 +492,191 @@ SELECT
   JOIN pg_attribute ON pg_depend.refobjid    = pg_attribute.attrelid
                    AND pg_depend.refobjsubid = pg_attribute.attnum
   WHERE source_class.relname IN ('source_table', 'depend_view')
-  ORDER BY 3, 4, 5
+  ORDER BY 3, 4, 5;
 
 -- Test 80: query (line 1886)
 SELECT * FROM pg_rewrite WHERE ev_class IN (
   SELECT oid FROM pg_class WHERE relname IN ('depend_view', 'view_dependingon_view')
-) ORDER BY oid
+) ORDER BY oid;
 
 -- Test 81: statement (line 1896)
 CREATE TYPE newtype1 AS ENUM ('v1', 'v2');
-CREATE TYPE newtype2 AS ENUM ('v3', 'v4')
+CREATE TYPE newtype2 AS ENUM ('v3', 'v4');
 
 -- Test 82: query (line 1900)
-SELECT * FROM pg_enum
+SELECT * FROM pg_enum;
 
 -- Test 83: query (line 1914)
 SELECT oid, typname, typnamespace, typowner, typlen, typbyval, typtype
 FROM pg_catalog.pg_type
 WHERE oid < 4194967002 -- exclude implicit types for virtual tables
-ORDER BY oid
+ORDER BY oid;
 
 -- Test 84: query (line 2039)
 SELECT oid, typname, typcategory, typispreferred, typisdefined, typdelim, typrelid, typelem, typarray
 FROM pg_catalog.pg_type
 WHERE oid < 4194967002 -- exclude implicit types for virtual tables
-ORDER BY oid
+ORDER BY oid;
 
 -- Test 85: query (line 2164)
 SELECT oid, typname, typinput, typoutput, typreceive, typsend, typmodin, typmodout, typanalyze
 FROM pg_catalog.pg_type
 WHERE oid < 4194967002 -- exclude implicit types for virtual tables
-ORDER BY oid
+ORDER BY oid;
 
 -- Test 86: query (line 2289)
 SELECT oid, typname, typalign, typstorage, typnotnull, typbasetype, typtypmod
 FROM pg_catalog.pg_type
 WHERE oid < 4194967002 -- exclude implicit types for virtual tables
-ORDER BY oid
+ORDER BY oid;
 
 -- Test 87: query (line 2414)
 SELECT oid, typname, typndims, typcollation, typdefaultbin, typdefault, typacl
 FROM pg_catalog.pg_type
 WHERE oid < 4194967002 -- exclude implicit types for virtual tables
-ORDER BY oid
+ORDER BY oid;
 
 -- Test 88: query (line 2542)
 SELECT oid, typname, typowner, typlen, typbyval, typtype
 FROM pg_catalog.pg_type WHERE typname = 'uuid'
-ORDER BY oid
+ORDER BY oid;
 
 -- Test 89: query (line 2552)
 SELECT oid, typname, typnamespace, typowner, typlen, typbyval, typtype
 FROM pg_catalog.pg_type
-WHERE oid = 1000
+WHERE oid = 1000;
 
 -- Test 90: query (line 2560)
 SELECT oid, typname, typnamespace, typowner, typlen, typbyval, typtype
 FROM pg_catalog.pg_type
-WHERE typname = 'newtype1'
+WHERE typname = 'newtype1';
 
 -- Test 91: query (line 2568)
 SELECT oid, typname, typnamespace, typowner, typlen, typbyval, typtype
 FROM pg_catalog.pg_type
-WHERE oid = 1
+WHERE oid = 1;
 
 -- Test 92: query (line 2575)
 SELECT oid, typname, typnamespace, typowner, typlen, typbyval, typtype
 FROM pg_catalog.pg_type
-WHERE oid = 9999999
+WHERE oid = 9999999;
 
 -- Test 93: query (line 2582)
 SELECT oid, typname, typnamespace, typowner, typlen, typbyval, typtype
 FROM pg_catalog.pg_type
-WHERE typname = 'source_table'
+WHERE typname = 'source_table';
 
 -- Test 94: query (line 2596)
 SELECT oid, typname, typnamespace, typowner, typlen, typbyval, typtype
 FROM pg_catalog.pg_type
-WHERE oid = $sourceid
+WHERE oid = $sourceid;
 
 -- Test 95: query (line 2610)
 SELECT oid, typname, typnamespace, typowner, typlen, typbyval, typtype
 FROM pg_catalog.pg_type
-WHERE oid = $vtableSourceId
+WHERE oid = $vtableSourceId;
 
 -- Test 96: query (line 2620)
 SELECT proname, pronamespace, nspname, proowner, prolang, procost, prorows, provariadic
 FROM pg_catalog.pg_proc p
 JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace
-WHERE proname='substring'
+WHERE proname='substring';
 
 -- Test 97: query (line 2636)
 SELECT proname, prokind, prosecdef, proleakproof
 FROM pg_catalog.pg_proc
-WHERE proname='substring'
+WHERE proname='substring';
 
 -- Test 98: query (line 2651)
 SELECT proname, proisstrict, proretset, provolatile, proparallel
 FROM pg_catalog.pg_proc
-WHERE proname='substring'
+WHERE proname='substring';
 
 -- Test 99: query (line 2667)
 SELECT oid, proname, proretset, prorettype FROM pg_catalog.pg_proc
 WHERE proname IN (
   'jsonb_object_keys', 'generate_series', 'generate_subscripts',
   'json_populate_recordset', 'unnest', 'json_each'
-) ORDER BY 1
+) ORDER BY 1;
 
 -- Test 100: query (line 2687)
 SELECT proname, pronargs, pronargdefaults, prorettype, proargtypes, proallargtypes, proargmodes, proargdefaults
 FROM pg_catalog.pg_proc
 WHERE proname='substring'
-ORDER BY proargtypes
+ORDER BY proargtypes;
 
 -- Test 101: query (line 2703)
 SELECT proname, protrftypes, prosrc, probin, proconfig, proacl
 FROM pg_catalog.pg_proc
-WHERE proname='substring'
+WHERE proname='substring';
 
 -- Test 102: query (line 2718)
 SELECT proname, prosrc, pronamespace, nspname, prorettype, proargtypes
 FROM pg_catalog.pg_proc p
 JOIN pg_catalog.pg_namespace n ON p.pronamespace = n.oid
 WHERE proname='pb_to_json'
-ORDER BY p.oid
+ORDER BY p.oid;
 
 -- Test 103: query (line 2730)
 SELECT proname, prosrc, pronamespace, nspname, prorettype, proargtypes
 FROM pg_catalog.pg_proc p
 JOIN pg_catalog.pg_namespace n ON p.pronamespace = n.oid
 WHERE proname='_pg_char_max_length'
-ORDER BY p.oid
+ORDER BY p.oid;
 
 -- Test 104: query (line 2740)
 SELECT proname, provariadic, pronargs, prorettype, proargtypes, proargmodes, proisstrict
 FROM pg_catalog.pg_proc
-WHERE proname='least'
+WHERE proname='least';
 
 -- Test 105: query (line 2748)
 SELECT proname, provariadic, pronargs, prorettype, proargtypes, proargmodes, proisstrict
 FROM pg_catalog.pg_proc
-WHERE proname='json_extract_path'
+WHERE proname='json_extract_path';
 
 -- Test 106: query (line 2756)
 SELECT proname, provariadic, pronargs, prorettype, proargtypes, proargmodes, proisstrict
 FROM pg_catalog.pg_proc
-WHERE proname='json_extract_path_text'
+WHERE proname='json_extract_path_text';
 
 -- Test 107: query (line 2767)
 SELECT proname, provariadic, pronargs, prorettype, proargtypes, proargmodes
 FROM pg_catalog.pg_proc
-WHERE proname='json_extract_path'
+WHERE proname='json_extract_path';
 
 -- Test 108: statement (line 2777)
-CREATE PROCEDURE pro() LANGUAGE SQL AS 'SELECT 1'
+CREATE PROCEDURE pro() LANGUAGE SQL AS 'SELECT 1';
 
 -- Test 109: query (line 2780)
 SELECT DISTINCT proname, prokind FROM pg_catalog.pg_proc
-WHERE proname IN ('lag', 'abs', 'max', 'pro')
+WHERE proname IN ('lag', 'abs', 'max', 'pro');
 
 -- Test 110: statement (line 2789)
-DROP PROCEDURE pro
+DROP PROCEDURE pro;
 
 -- Test 111: query (line 2793)
-SELECT * from pg_catalog.pg_range
+SELECT * from pg_catalog.pg_range;
 
 -- Test 112: query (line 2800)
 SELECT oid, rolname, rolsuper, rolinherit, rolcreaterole, rolcreatedb, rolcatupdate, rolcanlogin, rolreplication
 FROM pg_catalog.pg_roles
-ORDER BY rolname
+ORDER BY rolname;
 
 -- Test 113: query (line 2811)
 SELECT oid, rolname, rolconnlimit, rolpassword, rolvaliduntil, rolbypassrls, rolconfig
 FROM pg_catalog.pg_roles
-ORDER BY rolname
+ORDER BY rolname;
 
 -- Test 114: statement (line 2826)
-INSERT INTO system.users (username, user_id) VALUES ('non_cached_user', 12345)
+INSERT INTO system.users (username, user_id) VALUES ('non_cached_user', 12345);
 
 -- Test 115: query (line 2829)
 SELECT rolname
 FROM pg_catalog.pg_roles
-ORDER BY rolname
+ORDER BY rolname;
 
 -- Test 116: statement (line 2839)
-DELETE FROM system.users WHERE username = 'non_cached_user'
+DELETE FROM system.users WHERE username = 'non_cached_user';
 
 -- Test 117: statement (line 2843)
 CREATE ROLE test_no_replication;
@@ -617,11 +689,11 @@ GRANT SYSTEM REPLICATIONDEST to test_dst_replication;
 
 -- Test 118: query (line 2852)
 SELECT rolname, rolreplication FROM pg_catalog.pg_roles
-ORDER BY rolname
+ORDER BY rolname;
 
 -- Test 119: query (line 2866)
 SELECT rolname, rolreplication FROM pg_catalog.pg_authid
-ORDER BY rolname
+ORDER BY rolname;
 
 -- Test 120: statement (line 2880)
 DROP ROLE test_no_replication;
@@ -634,12 +706,12 @@ DROP ROLE test_dst_replication;
 
 -- Test 121: query (line 2891)
 SELECT roleid, member, grantor, admin_option
-FROM pg_catalog.pg_auth_members
+FROM pg_catalog.pg_auth_members;
 
 -- Test 122: query (line 2900)
 SELECT usename, usesysid, usecreatedb, usesuper, userepl, usebypassrls, passwd, valuntil, useconfig
 FROM pg_catalog.pg_user
-ORDER BY usename
+ORDER BY usename;
 
 -- Test 123: statement (line 2912)
 CREATE TABLE testtable(x INT, INDEX testtable_x_idx(x));
@@ -658,25 +730,28 @@ WHERE
 OR (c.relname = 'pg_class' AND d.objoid IN (SELECT oid FROM pg_catalog.pg_class WHERE relname IN ('pg_user', 'testtable')))
 OR (c.relname = 'pg_class' AND d.objoid IN (SELECT oid FROM pg_catalog.pg_class WHERE relname IN ('pg_user', 'testtable', 'testtable_x_idx')))
 OR (c.relname = 'pg_namespace' AND d.objoid IN (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = 'testschema'))
-ORDER BY d.objoid, description
+ORDER BY d.objoid, description;
 
 -- Test 125: statement (line 2943)
-COMMENT ON DATABASE defaultdb IS 'mydbcomment'
+COMMENT ON DATABASE defaultdb IS 'mydbcomment';
 
 -- Test 126: query (line 2946)
-SELECT objoid, classoid, description FROM pg_catalog.pg_shdescription
+SELECT objoid, classoid, description FROM pg_catalog.pg_shdescription;
 
 -- Test 127: query (line 2954)
-SELECT * FROM pg_catalog.pg_event_trigger
+SELECT * FROM pg_catalog.pg_event_trigger;
 
 -- Test 128: query (line 2960)
-SELECT * FROM pg_catalog.pg_extension
+SELECT * FROM pg_catalog.pg_extension;
 
 -- Test 129: query (line 2967)
-SELECT * FROM pg_catalog.pg_stat_activity
+SELECT * FROM pg_catalog.pg_stat_activity;
 
 -- Test 130: query (line 2972)
-SHOW COLUMNS FROM pg_catalog.pg_stat_activity
+SELECT column_name, data_type, is_nullable
+FROM information_schema.columns
+WHERE table_schema = 'pg_catalog' AND table_name = 'pg_stat_activity'
+ORDER BY ordinal_position;
 
 -- Test 131: query (line 3259)
 SELECT
@@ -694,97 +769,100 @@ WHERE
     'multiple_active_portals_enabled',
     'kv_transaction_buffered_writes_enabled'
   )
-ORDER BY name
+ORDER BY name;
 
 -- Test 132: query (line 3510)
-SELECT name, source, min_val, max_val, sourcefile, sourceline FROM pg_catalog.pg_settings ORDER BY name
+SELECT name, source, min_val, max_val, sourcefile, sourceline FROM pg_catalog.pg_settings ORDER BY name;
 
 -- Test 133: statement (line 3756)
-CREATE DATABASE seq
+CREATE SCHEMA seq;
 
 -- Test 134: query (line 3759)
-SELECT * FROM pg_catalog.pg_sequence
+SELECT * FROM pg_catalog.pg_sequence;
 
 -- Test 135: statement (line 3763)
-CREATE SEQUENCE foo
+CREATE SEQUENCE foo;
 
 -- Test 136: statement (line 3766)
-CREATE SEQUENCE bar MAXVALUE 10 MINVALUE 5 START 6 INCREMENT 2
+CREATE SEQUENCE bar MAXVALUE 10 MINVALUE 5 START 6 INCREMENT 2;
 
 -- Test 137: query (line 3769)
-SELECT * FROM pg_catalog.pg_sequence
+SELECT * FROM pg_catalog.pg_sequence;
 
 -- Test 138: statement (line 3776)
-DROP DATABASE seq
+DROP SCHEMA seq;
 
 -- Test 139: statement (line 3779)
-SET database = constraint_db
+SET search_path TO constraint_db, public;
 
 -- Test 140: query (line 3783)
-SELECT * FROM pg_catalog.pg_sequence
+SELECT * FROM pg_catalog.pg_sequence;
 
 -- Test 141: query (line 3792)
-SELECT * FROM pg_catalog.pg_operator where oprname='+' and oprleft='float8'::regtype
+SELECT * FROM pg_catalog.pg_operator where oprname='+' and oprleft='float8'::regtype;
 
 -- Test 142: query (line 3800)
-SELECT pg_catalog.pg_get_expr('1', 0), pg_catalog.pg_get_expr('1', 0::OID)
+SELECT pg_catalog.pg_get_expr('1', 0), pg_catalog.pg_get_expr('1', 0::OID);
 
 -- Test 143: query (line 3805)
-SELECT pg_catalog.pg_get_expr('1', 0, true)
+SELECT pg_catalog.pg_get_expr('1', 0, true);
 
 -- Test 144: statement (line 3810)
-SET DATABASE = constraint_db
+SET search_path TO constraint_db, public;
 
 -- Test 145: query (line 3813)
 SELECT def.oid, c.relname, pg_catalog.pg_get_expr(def.adbin, def.adrelid)
 FROM pg_catalog.pg_attrdef def
 JOIN pg_catalog.pg_class c ON def.adrelid = c.oid
 JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid
-WHERE n.nspname = 'public' ORDER BY def.oid DESC
+WHERE n.nspname = current_schema() ORDER BY def.oid DESC;
 
 -- Test 146: statement (line 3841)
-GRANT ALL ON constraint_db.* TO testuser
+GRANT USAGE ON SCHEMA constraint_db TO pg_catalog_testuser;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA constraint_db TO pg_catalog_testuser;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA constraint_db TO pg_catalog_testuser;
 
-user testuser
+SET ROLE pg_catalog_testuser;
 
 -- Test 147: statement (line 3846)
-SET DATABASE = 'constraint_db'
+SET search_path TO constraint_db, public;
 
 -- Test 148: query (line 3849)
-SELECT count(*) FROM pg_catalog.pg_tables WHERE schemaname='public'
+SELECT count(*) FROM pg_catalog.pg_tables WHERE schemaname = current_schema();
 
 -- Test 149: statement (line 3860)
-SET DATABASE = ''
+SET search_path TO '';
 
 -- Test 150: query (line 3863)
-SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname='public' ORDER BY 1
+SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname = current_schema() ORDER BY 1;
 
-query error cannot access virtual schema in anonymous database
-SELECT viewname FROM pg_catalog.pg_views WHERE schemaname='public' ORDER BY 1
+-- query error cannot access virtual schema in anonymous database
+SELECT viewname FROM pg_catalog.pg_views WHERE schemaname = current_schema() ORDER BY 1;
 
-query error cannot access virtual schema in anonymous database
+-- query error cannot access virtual schema in anonymous database
 SELECT relname FROM pg_catalog.pg_class c
 JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid
-WHERE nspname='public'
+WHERE nspname = current_schema();
 
-query error cannot access virtual schema in anonymous database
+-- query error cannot access virtual schema in anonymous database
 SELECT conname FROM pg_catalog.pg_constraint con
 JOIN pg_catalog.pg_namespace n ON con.connamespace = n.oid
-WHERE n.nspname = 'public'
+WHERE n.nspname = current_schema();
 
-query error cannot access virtual schema in anonymous database
-SELECT count(*) FROM pg_catalog.pg_depend
+-- query error cannot access virtual schema in anonymous database
+SELECT count(*) FROM pg_catalog.pg_depend;
 
-statement ok
-SET DATABASE = test
+-- statement ok
+RESET ROLE;
+SET search_path TO public;
 
-## #13567
-## regproc columns display as text but can still be joined against oid columns
-query OTO
+-- #13567
+-- regproc columns display as text but can still be joined against oid columns
+-- query OTO
 SELECT p.oid, p.proname, t.typinput
 FROM pg_proc p
 JOIN pg_type t ON t.typinput = p.oid
-WHERE t.typname = '_int4'
+WHERE t.typname = '_int4';
 
 -- Test 151: query (line 3897)
 SELECT count(*) FROM pg_catalog.pg_index WHERE indkey[0] IS NULL;
@@ -796,31 +874,31 @@ WITH r AS (
 SELECT proname, l.oid::int AS id
 FROM pg_catalog.pg_proc l
 JOIN r on l.oid = r.oid
-ORDER BY id
+ORDER BY id;
 
 -- Test 153: query (line 3914)
-SELECT proname FROM pg_catalog.pg_proc WHERE oid = 0
+SELECT proname FROM pg_catalog.pg_proc WHERE oid = 0;
 
 -- Test 154: query (line 3920)
 SELECT unnest((SELECT proargtypes FROM pg_proc WHERE proname='split_part'));
 
 -- Test 155: statement (line 3929)
-CREATE TABLE types(a timestamptz, b integer)
+CREATE TABLE types(a timestamptz, b integer);
 
 -- Test 156: statement (line 3932)
-PREPARE test_insert_statement (integer, timestamptz) AS INSERT INTO types VALUES ($2, $1)
+PREPARE test_insert_statement (integer, timestamptz) AS INSERT INTO types VALUES ($2, $1);
 
 -- Test 157: statement (line 3935)
-PREPARE test_select_statement AS SELECT * FROM types
+PREPARE test_select_statement AS SELECT * FROM types;
 
 -- Test 158: query (line 3938)
-select name, statement, parameter_types, from_sql from pg_prepared_statements ORDER BY 1, 2
+select name, statement, parameter_types, from_sql from pg_prepared_statements ORDER BY 1, 2;
 
 -- Test 159: statement (line 3946)
-PREPARE args_test_many(int, int) as select $1
+PREPARE args_test_many(int, int) as select $1;
 
 -- Test 160: statement (line 3949)
-PREPARE args_test_few(int) as select $1, $2::int
+PREPARE args_test_few(int) as select $1, $2::int;
 
 -- Test 161: statement (line 3952)
 DROP TABLE IF EXISTS t_prepare;
@@ -835,19 +913,19 @@ PREPARE args_deduce_type(int, int, int, int) AS INSERT INTO t_prepare VALUES ($1
 PREPARE args_deduce_type_1(int) AS SELECT $1::int, $2::varchar(10), $3::varchar(20);
 
 -- Test 165: query (line 3964)
-SELECT name, statement, parameter_types, from_sql FROM pg_prepared_statements WHERE name LIKE 'args_%' ORDER BY 1,2
+SELECT name, statement, parameter_types, from_sql FROM pg_prepared_statements WHERE name LIKE 'args_%' ORDER BY 1,2;
 
 -- Test 166: statement (line 3972)
-DROP TABLE types
+DROP TABLE types;
 
 -- Test 167: query (line 3987)
-SELECT objoid, classoid, objsubid, provider, label FROM pg_catalog.pg_seclabel
+SELECT objoid, classoid, objsubid, provider, label FROM pg_catalog.pg_seclabel;
 
 -- Test 168: query (line 3994)
-SELECT objoid, classoid, provider, label FROM pg_catalog.pg_shseclabel
+SELECT objoid, classoid, provider, label FROM pg_catalog.pg_shseclabel;
 
 -- Test 169: query (line 4001)
-SELECT oid::REGPROC FROM pg_proc WHERE prokind = 'a' EXCEPT SELECT aggfnoid FROM pg_aggregate
+SELECT oid::REGPROC FROM pg_proc WHERE prokind = 'a' EXCEPT SELECT aggfnoid FROM pg_aggregate;
 
 -- Test 170: query (line 4007)
 SELECT c.oid, c.oprname, a.aggsortop FROM pg_aggregate a
@@ -862,14 +940,14 @@ JOIN pg_operator c ON c.oprname = '<' AND b.proargtypes[0] = c.oprleft AND b.pro
 WHERE (b.proname = 'min' OR b.proname = 'bool_and' OR b.proname = 'every') AND c.oid = a.aggsortop;
 
 -- Test 172: query (line 4084)
-SELECT typ.oid, typ.typname FROM pg_attribute att JOIN pg_type typ ON atttypid=typ.oid WHERE attrelid='coltab'::regclass AND attname='a'
+SELECT typ.oid, typ.typname FROM pg_attribute att JOIN pg_type typ ON atttypid=typ.oid WHERE attrelid='coltab'::regclass AND attname='a';
 
 -- Test 173: statement (line 4092)
 CREATE TABLE a (
   id_a_1 INT UNIQUE,
   id_a_2 INT,
   PRIMARY KEY (id_a_1, id_a_2)
-)
+);
 
 -- Test 174: statement (line 4099)
 CREATE TABLE b (
@@ -877,10 +955,10 @@ CREATE TABLE b (
   id_b_2 INT,
   PRIMARY KEY (id_b_1, id_b_2),
   CONSTRAINT my_fkey FOREIGN KEY (id_b_1, id_b_2) REFERENCES a (id_a_1, id_a_2)
-)
+);
 
 -- Test 175: query (line 4107)
-SELECT conkey, confkey FROM pg_catalog.pg_constraint WHERE conname = 'my_fkey'
+SELECT conkey, confkey FROM pg_catalog.pg_constraint WHERE conname = 'my_fkey';
 
 -- Test 176: statement (line 4114)
 DROP TABLE b;
@@ -892,10 +970,10 @@ CREATE TABLE b (
   id_b_3 INT,
   PRIMARY KEY (id_b_1, id_b_2, id_b_3),
   CONSTRAINT my_fkey FOREIGN KEY (id_b_1, id_b_2) REFERENCES a (id_a_1, id_a_2)
-)
+);
 
 -- Test 178: query (line 4126)
-SELECT conkey, confkey FROM pg_catalog.pg_constraint WHERE conname = 'my_fkey'
+SELECT conkey, confkey FROM pg_catalog.pg_constraint WHERE conname = 'my_fkey';
 
 -- Test 179: statement (line 4133)
 DROP TABLE b;
@@ -907,27 +985,27 @@ CREATE TABLE b (
   id_b_3 INT,
   PRIMARY KEY (id_b_1, id_b_2, id_b_3),
   CONSTRAINT my_fkey FOREIGN KEY (id_b_1) REFERENCES a (id_a_1)
-)
+);
 
 -- Test 181: query (line 4145)
-SELECT conkey, confkey FROM pg_catalog.pg_constraint WHERE conname = 'my_fkey'
+SELECT conkey, confkey FROM pg_catalog.pg_constraint WHERE conname = 'my_fkey';
 
 -- Test 182: statement (line 4153)
-CREATE DATABASE d34856
+CREATE SCHEMA d34856;
 
 -- Test 183: statement (line 4156)
 CREATE TABLE d34856.t(x INT);
   CREATE VIEW d34856.v AS SELECT x FROM d34856.t;
-  CREATE SEQUENCE d34856.s
+  CREATE SEQUENCE d34856.s;
 
 -- Test 184: query (line 4162)
-SELECT tablename FROM d34856.pg_catalog.pg_tables WHERE schemaname = 'public'
+SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname = 'd34856';
 
 -- Test 185: statement (line 4167)
-DROP DATABASE d34856 CASCADE
+DROP SCHEMA d34856 CASCADE;
 
 -- Test 186: statement (line 4172)
-CREATE DATABASE d34862; SET database=d34862
+CREATE SCHEMA d34862; SET search_path TO d34862, public;
 
 -- Test 187: statement (line 4175)
 CREATE TABLE t(x INT UNIQUE);
@@ -946,13 +1024,13 @@ CREATE TABLE t(x INT UNIQUE);
   );
 
 -- Test 188: query (line 4191)
-SELECT conname, confupdtype, confdeltype FROM pg_constraint ORDER BY conname
+SELECT conname, confupdtype, confdeltype FROM pg_constraint ORDER BY conname;
 
 -- Test 189: statement (line 4209)
-DROP TABLE u; DROP TABLE t
+DROP TABLE u; DROP TABLE t;
 
 -- Test 190: statement (line 4212)
-CREATE TABLE v(x INT, y INT, UNIQUE (x,y))
+CREATE TABLE v(x INT, y INT, UNIQUE (x,y));
 
 -- Test 191: statement (line 4215)
 CREATE TABLE w(
@@ -962,19 +1040,19 @@ CREATE TABLE w(
   );
 
 -- Test 192: query (line 4222)
-SELECT conname, confmatchtype FROM pg_constraint ORDER BY conname
+SELECT conname, confmatchtype FROM pg_constraint ORDER BY conname;
 
 -- Test 193: statement (line 4231)
-DROP DATABASE d34862 CASCADE; SET database=test
+DROP SCHEMA d34862 CASCADE; SET search_path TO public;
 
 -- Test 194: statement (line 4236)
-CREATE TABLE regression_46450 (id UUID PRIMARY KEY, json JSONB)
+CREATE TABLE regression_46450 (id UUID PRIMARY KEY, json JSONB);
 
 -- Test 195: statement (line 4239)
-CREATE INDEX regression_46450_idx ON regression_46450 USING gin(json)
+CREATE INDEX regression_46450_idx ON regression_46450 USING gin(json);
 
 -- Test 196: query (line 4242)
-select indexdef from pg_indexes where indexname = 'regression_46450_idx'
+select indexdef from pg_indexes where indexname = 'regression_46450_idx';
 
 -- Test 197: statement (line 4249)
 CREATE SCHEMA test_schema;
@@ -982,27 +1060,27 @@ CREATE TABLE test_schema.test (
   a INT PRIMARY KEY,
   b INT
 );
-CREATE index on test_schema.test(b)
+CREATE index on test_schema.test(b);
 
 -- Test 198: query (line 4257)
 SELECT schemaname, tablename, indexname, indexdef
 FROM pg_indexes WHERE schemaname='test_schema' and tablename='test'
-ORDER BY indexname
+ORDER BY indexname;
 
 -- Test 199: statement (line 4269)
-CREATE TABLE hidden_in_vtable_index_test(a int)
+CREATE TABLE hidden_in_vtable_index_test(a int);
 
-let $testid
-SELECT oid FROM pg_class WHERE relname='hidden_in_vtable_index_test'
+-- let $testid
+SELECT oid AS testid FROM pg_class WHERE relname='hidden_in_vtable_index_test' \gset
 
 -- Test 200: statement (line 4275)
-CREATE DATABASE other_db; SET DATABASE = other_db
+CREATE SCHEMA other_db; SET search_path TO other_db, public;
 
 -- Test 201: query (line 4278)
-SELECT oid FROM pg_class WHERE oid=$testid
+SELECT oid FROM pg_class WHERE oid=:testid;
 
 -- Test 202: statement (line 4284)
-SET DATABASE = test
+SET search_path TO public;
 
 -- Test 203: statement (line 4287)
 CREATE TABLE geospatial_table (
@@ -1010,70 +1088,70 @@ CREATE TABLE geospatial_table (
   a geography(geometry, 4326),
   b geometry(point, 4326),
   INVERTED INDEX idxa (a)
-)
+);
 
 -- Test 204: statement (line 4295)
-CREATE INVERTED INDEX idxb ON geospatial_table (b)
+CREATE INVERTED INDEX idxb ON geospatial_table (b);
 
 -- Test 205: query (line 4298)
 SELECT indexname, indexdef
 FROM pg_catalog.pg_indexes
 WHERE tablename = 'geospatial_table'
-ORDER BY indexname
+ORDER BY indexname;
 
 -- Test 206: statement (line 4311)
-SET DATABASE = test
+SET search_path TO public;
 
 -- Test 207: statement (line 4314)
 CREATE TABLE vector_table (
   id UUID PRIMARY KEY,
   a vector(3),
   VECTOR INDEX idxa (a)
-)
+);
 
 -- Test 208: statement (line 4321)
-CREATE VECTOR INDEX idxb ON vector_table (a)
+CREATE VECTOR INDEX idxb ON vector_table (a);
 
 -- Test 209: query (line 4324)
 SELECT indexname, indexdef
 FROM pg_catalog.pg_indexes
 WHERE tablename = 'vector_table'
-ORDER BY indexname
+ORDER BY indexname;
 
 -- Test 210: statement (line 4337)
-SET DATABASE = test
+SET search_path TO public;
 
 -- Test 211: statement (line 4340)
-CREATE TYPE testenum AS ENUM ('foo', 'bar', 'baz')
+CREATE TYPE testenum AS ENUM ('foo', 'bar', 'baz');
 
 -- Test 212: statement (line 4343)
 CREATE TABLE partial_index_table (
   a INT,
-  b testenum,
-  UNIQUE INDEX (a) WHERE a > 0
-)
+  b testenum
+);
+CREATE UNIQUE INDEX partial_index_table_a_pos_idx ON partial_index_table (a) WHERE a > 0;
 
 -- Test 213: statement (line 4350)
-CREATE UNIQUE INDEX ON partial_index_table (a) WHERE b IN ('foo', 'bar')
+CREATE UNIQUE INDEX partial_index_table_a_b_idx ON partial_index_table (a) WHERE b IN ('foo', 'bar');
 
 -- Test 214: query (line 4353)
 SELECT indexname, indexdef
 FROM pg_catalog.pg_indexes
 WHERE tablename = 'partial_index_table'
-ORDER BY indexname
+ORDER BY indexname;
 
 -- Test 215: query (line 4364)
 SELECT conname, condef
 FROM pg_catalog.pg_constraint c JOIN pg_catalog.pg_class t
 ON c.conrelid = t.oid
 WHERE t.relname = 'partial_index_table'
-ORDER BY conname
+ORDER BY conname;
 
 -- Test 216: statement (line 4377)
 CREATE TABLE t46799 (x INT DEFAULT 1, y INT DEFAULT 1);
 
 -- Test 217: query (line 4380)
-SELECT adnum FROM pg_attrdef WHERE adrelid = 't46799'::REGCLASS
+SELECT adnum FROM pg_attrdef WHERE adrelid = 't46799'::REGCLASS;
 
 -- Test 218: statement (line 4387)
 ALTER TABLE t46799 DROP COLUMN y;
@@ -1082,16 +1160,16 @@ ALTER TABLE t46799 DROP COLUMN y;
 ALTER TABLE t46799 ADD COLUMN y INT DEFAULT 1;
 
 -- Test 220: query (line 4394)
-select adnum from pg_attrdef WHERE adrelid = 't46799'::REGCLASS
+select adnum from pg_attrdef WHERE adrelid = 't46799'::REGCLASS;
 
 -- Test 221: statement (line 4402)
-CREATE TABLE jt (a INT PRIMARY KEY); INSERT INTO jt VALUES(1); INSERT INTO jt VALUES('jt'::regclass::int)
+CREATE TABLE jt (a INT PRIMARY KEY); INSERT INTO jt VALUES(1); INSERT INTO jt VALUES('jt'::regclass::int);
 
 -- Test 222: query (line 4405)
-SELECT a, oid, relname FROM jt INNER LOOKUP JOIN pg_class ON a::oid=oid
+SELECT a, oid, relname FROM jt INNER LOOKUP JOIN pg_class ON a::oid=oid;
 
 -- Test 223: query (line 4410)
-SELECT a, oid, relname FROM jt LEFT OUTER LOOKUP JOIN pg_class ON a::oid=oid
+SELECT a, oid, relname FROM jt LEFT OUTER LOOKUP JOIN pg_class ON a::oid=oid;
 
 -- Test 224: statement (line 4417)
 CREATE ROLE role_test_login with LOGIN;
@@ -1127,43 +1205,43 @@ SELECT rolvaliduntil FROM pg_authid WHERE rolname = 'role_test_with_date_timezon
 SELECT rolvaliduntil FROM pg_authid WHERE rolname = 'role_test_nodate';
 
 -- Test 234: statement (line 4469)
-ALTER TABLE pg_catalog.pg_tables RENAME TO pg_catalog.bad
+ALTER TABLE pg_catalog.pg_tables RENAME TO pg_catalog.bad;
 
 -- Test 235: statement (line 4472)
-ALTER TABLE pg_catalog.pg_tables RENAME COLUMN x TO y
+ALTER TABLE pg_catalog.pg_tables RENAME COLUMN x TO y;
 
 -- Test 236: statement (line 4475)
-ALTER TABLE pg_catalog.pg_tables ADD COLUMN x DECIMAL
+ALTER TABLE pg_catalog.pg_tables ADD COLUMN x DECIMAL;
 
 -- Test 237: statement (line 4478)
-ALTER TABLE pg_catalog.pg_tables DROP COLUMN x
+ALTER TABLE pg_catalog.pg_tables DROP COLUMN x;
 
 -- Test 238: statement (line 4481)
-ALTER TABLE pg_catalog.pg_tables ADD CONSTRAINT foo UNIQUE (b)
+ALTER TABLE pg_catalog.pg_tables ADD CONSTRAINT foo UNIQUE (b);
 
 -- Test 239: statement (line 4484)
-ALTER TABLE pg_catalog.pg_tables DROP CONSTRAINT bar
+ALTER TABLE pg_catalog.pg_tables DROP CONSTRAINT bar;
 
 -- Test 240: statement (line 4487)
-ALTER TABLE pg_catalog.pg_tables ALTER COLUMN x SET DEFAULT 'foo'
+ALTER TABLE pg_catalog.pg_tables ALTER COLUMN x SET DEFAULT 'foo';
 
 -- Test 241: statement (line 4490)
-ALTER TABLE pg_catalog.pg_tables ALTER x DROP NOT NULL
+ALTER TABLE pg_catalog.pg_tables ALTER x DROP NOT NULL;
 
 -- Test 242: statement (line 4493)
-CREATE INDEX i on pg_catalog.pg_tables (x)
+CREATE INDEX i on pg_catalog.pg_tables (x);
 
 -- Test 243: statement (line 4496)
-DROP TABLE pg_catalog.pg_tables
+DROP TABLE pg_catalog.pg_tables;
 
 -- Test 244: statement (line 4499)
-DROP INDEX pg_catalog.pg_tables@i
+DROP INDEX pg_catalog.pg_tables@i;
 
 -- Test 245: statement (line 4502)
-GRANT CREATE ON pg_catalog.pg_tables TO root
+GRANT CREATE ON pg_catalog.pg_tables TO root;
 
 -- Test 246: statement (line 4505)
-REVOKE CREATE ON pg_catalog.pg_tables FROM root
+REVOKE CREATE ON pg_catalog.pg_tables FROM root;
 
 -- Test 247: query (line 4554)
 SELECT a.attname, format_type(a.atttypid, a.atttypmod),
@@ -1202,7 +1280,7 @@ WHERE a.attrelid = 'timestamp_with_typmod'::regclass
 ORDER BY a.attnum;
 
 -- Test 250: query (line 4616)
-SELECT attname FROM pg_attribute WHERE attrelid = $testid LIMIT 1
+SELECT attname FROM pg_attribute WHERE attrelid = :testid LIMIT 1;
 
 -- Test 251: statement (line 4622)
 SELECT
@@ -1211,13 +1289,13 @@ FROM
   pg_catalog.pg_type AS t JOIN pg_catalog.pg_namespace AS n ON t.typnamespace = n.oid
 WHERE
   n.nspname != 'pg_toast'
-  AND (t.typrelid = 0 OR (SELECT c.relkind = 'c' FROM pg_catalog.pg_class AS c WHERE c.oid = t.typrelid))
+  AND (t.typrelid = 0 OR (SELECT c.relkind = 'c' FROM pg_catalog.pg_class AS c WHERE c.oid = t.typrelid));
 
 -- Test 252: query (line 4632)
-SELECT oid FROM pg_type WHERE oid IN (19,20,24) ORDER BY oid
+SELECT oid FROM pg_type WHERE oid IN (19,20,24) ORDER BY oid;
 
 -- Test 253: statement (line 4639)
-SELECT * FROM pg_class WHERE oid = 10 OR oid BETWEEN 20 AND 30 OR oid = 40
+SELECT * FROM pg_class WHERE oid = 10 OR oid BETWEEN 20 AND 30 OR oid = 40;
 
 -- Test 254: statement (line 4645)
 CREATE TEMPORARY TABLE test_temp (id UUID PRIMARY KEY);
@@ -1232,7 +1310,7 @@ FROM
 WHERE
   relname IN ('test_temp', 'test_unlogged', 'test_persistent')
 ORDER BY
-  relname
+  relname;
 
 -- Test 256: statement (line 4666)
 CREATE TABLE PARENT_TABLE_A(id UUID PRIMARY KEY);
@@ -1243,7 +1321,7 @@ CREATE TABLE CHILD_TABLE_B(
 );
 
 -- Test 257: query (line 4674)
-SELECT pg_typeof(confkey), pg_typeof(conkey) FROM pg_constraint WHERE conname = 'fk_b_to_a'
+SELECT pg_typeof(confkey), pg_typeof(conkey) FROM pg_constraint WHERE conname = 'fk_b_to_a';
 
 -- Test 258: query (line 4682)
 SELECT count(*)
@@ -1251,35 +1329,35 @@ FROM pg_class c
 JOIN pg_attribute a ON a.attrelid = c.oid
 JOIN pg_type t ON t.oid = a.atttypid
 JOIN pg_namespace n ON n.oid = c.relnamespace
-WHERE n.nspname = 'pg_catalog' AND (t.oid = 1042 OR t.oid = 1014)
+WHERE n.nspname = 'pg_catalog' AND (t.oid = 1042 OR t.oid = 1014);
 
 -- Test 259: query (line 4693)
-SELECT tablename FROM "".pg_catalog.pg_tables
+SELECT tablename FROM "".pg_catalog.pg_tables;
 
-statement ok
-SET DATABASE = "";
+-- statement ok
+SET search_path TO '';
 
-query error cannot access virtual schema in anonymous database
-SELECT tablename FROM pg_catalog.pg_tables
+-- query error cannot access virtual schema in anonymous database
+SELECT tablename FROM pg_catalog.pg_tables;
 
-statement ok
-SET DATABASE = test;
+-- statement ok
+SET search_path TO public;
 
-subtest 58945
+subtest 58945;
 
-statement ok
+-- statement ok
 CREATE TABLE t_hash (
   a INT,
   INDEX t_hash_a_idx (a DESC) USING HASH WITH (bucket_count=8)
 );
 
-query T colnames
+-- query T colnames
 SELECT indoption
 FROM pg_catalog.pg_index
-WHERE indexrelid IN (SELECT crdb_oid FROM pg_catalog.pg_indexes WHERE indexname = 't_hash_a_idx')
+WHERE indexrelid IN (SELECT crdb_oid FROM pg_catalog.pg_indexes WHERE indexname = 't_hash_a_idx');
 
 -- Test 260: query (line 4725)
-SELECT database_name, descriptor_name, descriptor_id from test.crdb_internal.create_statements where descriptor_name = 'pg_views'
+SELECT database_name, descriptor_name, descriptor_id from test.crdb_internal.create_statements where descriptor_name = 'pg_views';
 
 -- Test 261: statement (line 4731)
 CREATE TABLE "indexes_table" (
@@ -1295,7 +1373,7 @@ CREATE INDEX "indexes_include_idx" ON "indexes_table" ("a") INCLUDE ("c", "d");
 SELECT pg_index.indkey, pg_index.indnatts, pg_index.indnkeyatts
 FROM pg_class
 JOIN pg_index ON pg_class.oid = pg_index.indexrelid
-WHERE pg_class.relname = 'indexes_include_idx'
+WHERE pg_class.relname = 'indexes_include_idx';
 
 -- Test 263: query (line 4750)
 SELECT
@@ -1328,28 +1406,28 @@ FROM (
     WHERE c.relname = 'indexes_table'
 ) s2
 GROUP BY indexname, indisunique, indisprimary, amname, exprdef, attoptions
-ORDER BY indexname
+ORDER BY indexname;
 
 -- Test 264: statement (line 4787)
-SET stub_catalog_tables=false
+SET stub_catalog_tables=false;
 
 -- Test 265: statement (line 4790)
-SELECT * FROM pg_seclabel
+SELECT * FROM pg_seclabel;
 
 -- Test 266: statement (line 4793)
-SELECT count(*) FROM pg_depend
+SELECT count(*) FROM pg_depend;
 
 -- Test 267: statement (line 4796)
-SET stub_catalog_tables=true
+SET stub_catalog_tables=true;
 
 -- Test 268: statement (line 4799)
-SELECT * FROM pg_seclabel
+SELECT * FROM pg_seclabel;
 
 -- Test 269: statement (line 4802)
-CREATE SEQUENCE serial START 101 INCREMENT 5
+CREATE SEQUENCE serial START 101 INCREMENT 5;
 
 -- Test 270: query (line 4807)
-SELECT last_value FROM pg_sequences WHERE sequencename = 'serial'
+SELECT last_value FROM pg_sequences WHERE sequencename = 'serial';
 
 -- Test 271: statement (line 4812)
 SELECT nextval('serial');
@@ -1357,16 +1435,16 @@ SELECT nextval('serial');
 SELECT nextval('serial');
 
 -- Test 272: query (line 4818)
-SELECT * FROM pg_sequences WHERE sequencename = 'serial'
+SELECT * FROM pg_sequences WHERE sequencename = 'serial';
 
 -- Test 273: statement (line 4825)
 CREATE USER anyuser;
-GRANT CREATE ON DATABASE test TO anyuser;
+GRANT CREATE ON DATABASE :"db" TO anyuser;
 ALTER SEQUENCE serial OWNER TO anyuser;
 ALTER SEQUENCE serial CACHE 10;
 
 -- Test 274: query (line 4831)
-SELECT sequenceowner, cache_size FROM pg_sequences WHERE sequencename = 'serial'
+SELECT sequenceowner, cache_size FROM pg_sequences WHERE sequencename = 'serial';
 
 -- Test 275: statement (line 4837)
 COMMENT ON SCHEMA test_schema is 'testing schema';
@@ -1374,17 +1452,17 @@ COMMENT ON SCHEMA test_schema is 'testing schema';
 -- Test 276: query (line 4840)
 SELECT obj_description(objoid)
   FROM pg_catalog.pg_description
- WHERE description = 'testing schema'
+ WHERE description = 'testing schema';
 
 -- Test 277: query (line 4849)
 SELECT rolname
 FROM pg_authid WHERE oid IN (
   SELECT refobjid FROM pg_shdepend WHERE deptype = 'p'
-) ORDER BY rolname
+) ORDER BY rolname;
 
 -- Test 278: statement (line 4859)
-CREATE DATABASE sh_db;
-CREATE DATABASE sh_db_root;
+CREATE SCHEMA sh_db;
+CREATE SCHEMA sh_db_root;
 CREATE TABLE sh_db.sh_table_a(id INT);
 CREATE TABLE sh_db_root.sh_table_b(id INT);
 CREATE USER sh_user;
@@ -1392,9 +1470,9 @@ CREATE USER sh_owner;
 GRANT CREATE ON DATABASE sh_db TO sh_owner;
 GRANT SELECT ON sh_db.sh_table_a TO sh_owner;
 ALTER TABLE sh_db.sh_table_a OWNER TO sh_owner;
-ALTER DATABASE sh_db OWNER TO sh_owner;
+ALTER SCHEMA sh_db OWNER TO sh_owner;
 ALTER TABLE sh_db_root.sh_table_b OWNER TO root;
-ALTER DATABASE sh_db_root OWNER TO root;
+ALTER SCHEMA sh_db_root OWNER TO root;
 GRANT SELECT ON sh_db.sh_table_a TO sh_user;
 GRANT SELECT ON sh_db_root.sh_table_b TO sh_user;
 CREATE ROLE sh_role;
@@ -1415,7 +1493,7 @@ JOIN pg_shdepend ON pg_authid.oid = pg_shdepend.refobjid
 JOIN pg_class ON pg_shdepend.objid = pg_class.oid
 JOIN pg_database ON pg_database.oid = pg_shdepend.dbid
 WHERE pg_class.relname IN ('sh_table_a')
-ORDER BY pg_class.relname, pg_authid.rolname
+ORDER BY pg_class.relname, pg_authid.rolname;
 
 -- Test 280: statement (line 4900)
 USE sh_db_root;
@@ -1431,7 +1509,7 @@ JOIN pg_shdepend ON pg_authid.oid = pg_shdepend.refobjid
 JOIN pg_class ON pg_shdepend.objid = pg_class.oid
 JOIN pg_database ON pg_database.oid = pg_shdepend.dbid
 WHERE pg_class.relname IN ('sh_table_b')
-ORDER BY pg_class.relname, pg_authid.rolname
+ORDER BY pg_class.relname, pg_authid.rolname;
 
 -- Test 282: statement (line 4921)
 USE test;
@@ -1445,13 +1523,13 @@ FROM pg_authid
 JOIN pg_shdepend ON pg_authid.oid = pg_shdepend.refobjid
 JOIN pg_database ON pg_shdepend.objid = pg_database.oid
 WHERE pg_database.datname IN ('sh_db', 'sh_db_root')
-ORDER BY pg_database.datname, pg_authid.rolname
+ORDER BY pg_database.datname, pg_authid.rolname;
 
 -- Test 284: statement (line 4942)
 CREATE USER testuser1;
 CREATE USER testuser2;
 CREATE ROLE testrole1;
-CREATE DATABASE foreachroles;
+CREATE SCHEMA foreachroles;
 ALTER USER testuser1 WITH CREATEDB;
 ALTER USER testuser1 SET TimeZone = 'America/Los_Angeles';
 ALTER USER testuser1 SET application_name = 'a';
@@ -1462,19 +1540,19 @@ ALTER USER testuser2 WITH CREATEROLE PASSWORD '123' VALID UNTIL '3022-01-01';
 SELECT usename, usecreatedb, useconfig
 FROM pg_user
 WHERE usename IN ('testuser1', 'testuser2')
-ORDER BY usename
+ORDER BY usename;
 
 -- Test 286: query (line 4963)
 SELECT rolname, rolcreatedb, rolconfig, rolinherit, rolcanlogin, rolvaliduntil
 FROM pg_roles
 WHERE rolname IN ('testuser1', 'testuser2', 'testrole1')
-ORDER BY rolname
+ORDER BY rolname;
 
 -- Test 287: query (line 4974)
 SELECT rolname, rolcreatedb, rolcreaterole, rolinherit, rolcanlogin, rolvaliduntil
 FROM pg_authid
 WHERE rolname IN ('testuser1', 'testuser2', 'testrole1', 'root')
-ORDER BY rolname
+ORDER BY rolname;
 
 -- Test 288: statement (line 4988)
 CREATE USER super_user;
@@ -1488,19 +1566,19 @@ CREATE ROLE regular_role;
 SELECT rolname, rolsuper
 FROM pg_authid
 WHERE rolname IN ('super_user', 'super_role', 'regular_user', 'regular_role', 'root', 'admin')
-ORDER BY rolname
+ORDER BY rolname;
 
 -- Test 290: query (line 5010)
 SELECT rolname, rolsuper
 FROM pg_roles
 WHERE rolname IN ('super_user', 'super_role', 'regular_user', 'regular_role', 'root', 'admin')
-ORDER BY rolname
+ORDER BY rolname;
 
 -- Test 291: query (line 5024)
 SELECT usename, usesuper
 FROM pg_user
 WHERE usename IN ('super_user', 'regular_user', 'root')
-ORDER BY usename
+ORDER BY usename;
 
 -- Test 292: statement (line 5036)
 CREATE USER regression_70180 WITH password '123' VALID UNTIL null;
@@ -1508,7 +1586,7 @@ CREATE USER regression_70180 WITH password '123' VALID UNTIL null;
 -- Test 293: query (line 5039)
 SELECT usename, valuntil
 FROM pg_user
-WHERE usename = 'regression_70180'
+WHERE usename = 'regression_70180';
 
 -- Test 294: statement (line 5048)
 CREATE TABLE stxtbl(a INT, b INT, c INT);
@@ -1531,10 +1609,10 @@ SELECT
   stxkeys,
   stxkind
 FROM pg_statistic_ext
-JOIN pg_class ON pg_statistic_ext.stxrelid = pg_class.oid
+JOIN pg_class ON pg_statistic_ext.stxrelid = pg_class.oid;
 
 -- Test 297: statement (line 5079)
-DROP TABLE test.stxtbl2
+DROP TABLE test.stxtbl2;
 
 -- Test 298: query (line 5082)
 SELECT
@@ -1546,14 +1624,14 @@ SELECT
   stxkeys,
   stxkind
 FROM pg_statistic_ext
-JOIN pg_class ON pg_statistic_ext.stxrelid = pg_class.oid
+JOIN pg_class ON pg_statistic_ext.stxrelid = pg_class.oid;
 
 -- Test 299: query (line 5100)
 SELECT (count(1) = 0) AS PASSED
 FROM pg_shadow
 WHERE EXISTS (
   SELECT 1 FROM pg_authid WHERE oid = usesysid AND NOT rolcanlogin
-)
+);
 
 -- Test 300: query (line 5111)
 SELECT * FROM pg_shadow ORDER BY usename;
@@ -1561,47 +1639,47 @@ SELECT * FROM pg_shadow ORDER BY usename;
 -- Test 301: query (line 5132)
 SELECT bool_and(usename = rolname) PASSED
 FROM pg_shadow
-JOIN pg_authid ON usesysid = oid
+JOIN pg_authid ON usesysid = oid;
 
 -- Test 302: query (line 5142)
 SELECT pg_type.oid
 FROM (SELECT null::OID AS b) AS a
-INNER LOOKUP JOIN pg_type ON pg_type.oid=a.b
+INNER LOOKUP JOIN pg_type ON pg_type.oid=a.b;
 
 -- Test 303: query (line 5151)
 SELECT castsource, casttarget FROM pg_cast WHERE castfunc IS NULL
-ORDER BY oid
+ORDER BY oid;
 
 -- Test 304: query (line 5156)
 SELECT * FROM pg_cast
-ORDER BY oid
+ORDER BY oid;
 
 -- Test 305: statement (line 5331)
-DROP sequence serial
+DROP sequence serial;
 
 -- Test 306: statement (line 5334)
-set default_int_size=4
+set default_int_size=4;
 
 -- Test 307: statement (line 5337)
-CREATE SEQUENCE serial START 101 INCREMENT 5
+CREATE SEQUENCE serial START 101 INCREMENT 5;
 
 -- Test 308: query (line 5340)
-SELECT * FROM pg_sequences WHERE sequencename = 'serial'
+SELECT * FROM pg_sequences WHERE sequencename = 'serial';
 
 -- Test 309: statement (line 5346)
-set default_int_size=8
+set default_int_size=8;
 
 -- Test 310: query (line 5349)
-SELECT * FROM pg_sequences WHERE sequencename = 'serial'
+SELECT * FROM pg_sequences WHERE sequencename = 'serial';
 
 -- Test 311: statement (line 5355)
-DROP sequence serial
+DROP sequence serial;
 
 -- Test 312: statement (line 5358)
-CREATE SEQUENCE serial START 101 INCREMENT 5
+CREATE SEQUENCE serial START 101 INCREMENT 5;
 
 -- Test 313: query (line 5361)
-SELECT * FROM pg_sequences WHERE sequencename = 'serial'
+SELECT * FROM pg_sequences WHERE sequencename = 'serial';
 
 -- Test 314: statement (line 5367)
 CREATE TABLE t (a INT PRIMARY KEY, b INT);
@@ -1674,16 +1752,16 @@ WHERE
     AND NOT EXISTS(SELECT 1 FROM pg_type WHERE typname = ANY (ARRAY['typefoo']) AND a.atttypid = oid);
 
 -- Test 330: query (line 5466)
-SELECT * from pg_timezone_names WHERE name LIKE 'Pacific/Honolulu%'
+SELECT * from pg_timezone_names WHERE name LIKE 'Pacific/Honolulu%';
 
 -- Test 331: query (line 5472)
-SELECT * from pg_timezone_names WHERE name = 'Pacific/Honolulu'
+SELECT * from pg_timezone_names WHERE name = 'Pacific/Honolulu';
 
 -- Test 332: query (line 5477)
-SELECT * from pg_timezone_names WHERE name = 'DoesNotExist'
+SELECT * from pg_timezone_names WHERE name = 'DoesNotExist';
 
 -- Test 333: statement (line 5483)
-CREATE TYPE mytype AS enum('hello')
+CREATE TYPE mytype AS enum('hello');
 
 -- Test 334: query (line 5486)
 SELECT
@@ -1709,7 +1787,7 @@ WHERE
 SELECT d.datname, pg_catalog.pg_get_userbyid(d.datdba) FROM pg_catalog.pg_database d;
 
 -- Test 337: query (line 5518)
-SELECT * FROM pg_language ORDER BY oid
+SELECT * FROM pg_language ORDER BY oid;
 
 -- Test 338: statement (line 5528)
 CREATE TYPE u AS (ufoo int, ubar int);
@@ -1766,14 +1844,14 @@ CREATE TABLE t126042 (
   b BYTES DEFAULT 'f'::BYTES,
   bytes_array BYTES[] DEFAULT '{f}'::BYTES[],
   text_array TEXT[] DEFAULT '{a, b}'::TEXT[]
-)
+);
 
 -- Test 346: query (line 5619)
 SELECT a.attname, pg_get_expr(d.adbin, d.adrelid)
 FROM pg_attribute a
 LEFT JOIN pg_attrdef d ON a.attrelid = d.adrelid AND a.attnum = d.adnum
 WHERE a.attrelid = 't126042'::REGCLASS
-ORDER BY 1
+ORDER BY 1;
 
 -- Test 347: statement (line 5637)
 CREATE TABLE t_indkey_not_visible (
@@ -1783,18 +1861,17 @@ CREATE TABLE t_indkey_not_visible (
   d INT,
   PRIMARY KEY (a DESC, b ASC),
   INDEX idx_c_d (c, d)
-)
+);
 
 -- Test 348: query (line 5647)
 SELECT attname, attishidden
 FROM pg_attribute
 WHERE attrelid = 't_indkey_not_visible'::regclass::oid
-ORDER BY attname
+ORDER BY attname;
 
 -- Test 349: query (line 5659)
 SELECT ix_class.relname, ix.indisprimary, ix.indkey, ix.indoption
 FROM pg_catalog.pg_index ix
 JOIN pg_catalog.pg_class ix_class ON ix.indexrelid = ix_class.oid
 WHERE ix.indrelid = 't_indkey_not_visible'::regclass::oid
-ORDER BY 1
-
+ORDER BY 1;
