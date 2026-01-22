@@ -3,7 +3,12 @@ psql:pg_tests/compatible/set.sql:11: ERROR:  unrecognized configuration paramete
 SET
  table_name 
 ------------
-(0 rows)
+ nocols
+ t
+ t44132
+ t44203
+ xyzw
+(5 rows)
 
 CREATE SCHEMA
 SET
@@ -21,7 +26,12 @@ SET
 
  table_name 
 ------------
-(0 rows)
+ nocols
+ t
+ t44132
+ t44203
+ xyzw
+(5 rows)
 
  table_name 
 ------------
