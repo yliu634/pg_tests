@@ -1,0 +1,30 @@
+ jsonb_path_query_first 
+------------------------
+ 1
+(1 row)
+
+ jsonb_path_query_first 
+------------------------
+ 2
+(1 row)
+
+ jsonb_path_query_first 
+------------------------
+ 
+(1 row)
+
+ jsonb_path_query_first 
+------------------------
+ 
+(1 row)
+
+ jsonb_path_query_first 
+------------------------
+ 
+(1 row)
+
+ jsonb_path_query_first 
+------------------------
+ 
+(1 row)
+
