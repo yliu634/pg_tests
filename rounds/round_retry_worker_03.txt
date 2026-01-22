@@ -1,0 +1,2 @@
+pg_tests/compatible/privilege_builtins.sql
+pg_tests/compatible/procedure_params.sql
