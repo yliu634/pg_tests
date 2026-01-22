@@ -1,0 +1,929 @@
+psql:pg_tests/compatible/cast.sql:6: NOTICE:  table "assn_cast" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 2
+INSERT 0 1
+ c 
+---
+ 1
+(1 row)
+
+INSERT 0 1
+INSERT 0 1
+PREPARE
+INSERT 0 1
+DELETE 7
+INSERT 0 1
+ concat 
+--------
+ " "
+(1 row)
+
+INSERT 0 1
+INSERT 0 2
+INSERT 0 1
+ vc 
+----
+ 1
+(1 row)
+
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 2
+ qc  
+-----
+ abc
+(1 row)
+
+INSERT 0 1
+ qc  
+-----
+ 123
+(1 row)
+
+INSERT 0 1
+INSERT 0 1
+PREPARE
+DELETE 13
+INSERT 0 1
+ qc  
+-----
+ foo
+(1 row)
+
+INSERT 0 1
+INSERT 0 2
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 2
+PREPARE
+INSERT 0 1
+INSERT 0 1
+PREPARE
+INSERT 0 1
+INSERT 0 1
+PREPARE
+INSERT 0 1
+     f4     
+------------
+ 1.8755e+07
+ 1.8755e+07
+(2 rows)
+
+INSERT 0 1
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+PREPARE
+INSERT 0 1
+PREPARE
+INSERT 0 1
+   d    
+--------
+  11.22
+  88.99
+     22
+  99.11
+     33
+     44
+ 123.45
+  67.89
+(8 rows)
+
+psql:pg_tests/compatible/cast.sql:168: ERROR:  cannot determine type of empty array
+LINE 1: INSERT INTO assn_cast(a) VALUES (ARRAY[]);
+                                         ^
+HINT:  Explicitly cast to the desired type, for example ARRAY[]::integer[].
+psql:pg_tests/compatible/cast.sql:171: ERROR:  column "a" is of type numeric[] but expression is of type text[]
+LINE 1: INSERT INTO assn_cast(a) VALUES (ARRAY[NULL]);
+                                         ^
+HINT:  You will need to rewrite or cast the expression.
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+PREPARE
+INSERT 0 1
+psql:pg_tests/compatible/cast.sql:192: ERROR:  column "a" is of type numeric[] but expression is of type text[]
+LINE 1: ...ARE insert_a2 AS INSERT INTO assn_cast(a) VALUES (ARRAY[$1])...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+psql:pg_tests/compatible/cast.sql:195: ERROR:  prepared statement "insert_a2" does not exist
+PREPARE
+INSERT 0 1
+         a         
+-------------------
+ {1.1}
+ {2.88,NULL,15}
+ {3.99,NULL,16.00}
+ {5.55,6.66}
+ {7.77,8.88}
+ {30.12,30.9,32.1}
+(6 rows)
+
+INSERT 0 1
+PREPARE
+INSERT 0 1
+ s 
+---
+ 1
+ 2
+(2 rows)
+
+INSERT 0 1
+PREPARE
+INSERT 0 1
+INSERT 0 1
+PREPARE
+INSERT 0 1
+CREATE TABLE
+psql:pg_tests/compatible/cast.sql:246: ERROR:  smallint out of range
+CREATE TABLE
+psql:pg_tests/compatible/cast.sql:256: ERROR:  value too long for type character(1)
+psql:pg_tests/compatible/cast.sql:259: ERROR:  value too long for type character(2)
+INSERT 0 1
+ c | c2 | qc 
+---+----+----
+ a | ab | b
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+ k | d | d1  
+---+---+-----
+ 1 | 2 | 1.6
+(1 row)
+
+DELETE 35
+INSERT 0 1
+UPDATE 1
+ c 
+---
+ 1
+(1 row)
+
+UPDATE 1
+UPDATE 1
+UPDATE 1
+PREPARE
+UPDATE 1
+UPDATE 1
+ concat 
+--------
+ " "
+(1 row)
+
+ concat 
+--------
+ " "
+(1 row)
+
+UPDATE 1
+ qc  
+-----
+ abc
+(1 row)
+
+UPDATE 1
+UPDATE 1
+PREPARE
+UPDATE 1
+ qc  
+-----
+ foo
+(1 row)
+
+ qc  
+-----
+ foo
+(1 row)
+
+UPDATE 1
+PREPARE
+UPDATE 1
+UPDATE 1
+PREPARE
+UPDATE 1
+   d   
+-------
+ 11.22
+(1 row)
+
+UPDATE 1
+ d  
+----
+ 11
+(1 row)
+
+UPDATE 1
+   d   
+-------
+ 11.22
+(1 row)
+
+UPDATE 1
+PREPARE
+UPDATE 1
+   d    
+--------
+ 123.45
+(1 row)
+
+PREPARE
+UPDATE 1
+   d   
+-------
+ 67.89
+(1 row)
+
+psql:pg_tests/compatible/cast.sql:380: ERROR:  cannot determine type of empty array
+LINE 1: UPDATE assn_cast SET a = ARRAY[] RETURNING a;
+                                 ^
+HINT:  Explicitly cast to the desired type, for example ARRAY[]::integer[].
+psql:pg_tests/compatible/cast.sql:383: ERROR:  column "a" is of type numeric[] but expression is of type text[]
+LINE 1: UPDATE assn_cast SET a = ARRAY[NULL] RETURNING a;
+                                 ^
+HINT:  You will need to rewrite or cast the expression.
+   a   
+-------
+ {1.1}
+(1 row)
+
+UPDATE 1
+       a        
+----------------
+ {2.88,NULL,15}
+(1 row)
+
+UPDATE 1
+         a         
+-------------------
+ {3.99,NULL,16.00}
+(1 row)
+
+UPDATE 1
+      a      
+-------------
+ {5.55,6.66}
+(1 row)
+
+UPDATE 1
+PREPARE
+UPDATE 1
+      a      
+-------------
+ {7.77,8.88}
+(1 row)
+
+psql:pg_tests/compatible/cast.sql:407: ERROR:  column "a" is of type numeric[] but expression is of type text[]
+LINE 1: PREPARE update_a2 AS UPDATE assn_cast SET a = ARRAY[$1];
+                                                      ^
+HINT:  You will need to rewrite or cast the expression.
+psql:pg_tests/compatible/cast.sql:410: ERROR:  prepared statement "update_a2" does not exist
+      a      
+-------------
+ {7.77,8.88}
+(1 row)
+
+PREPARE
+UPDATE 1
+         a         
+-------------------
+ {30.12,30.9,32.1}
+(1 row)
+
+UPDATE 1
+UPDATE 1
+UPDATE 1
+CREATE TABLE
+psql:pg_tests/compatible/cast.sql:444: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_upsert (k, c) VALUES (1, 'abc');
+        ^
+psql:pg_tests/compatible/cast.sql:447: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_upsert (k, c) VALUES (1, 'a');
+        ^
+psql:pg_tests/compatible/cast.sql:450: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_upsert (k, c) VALUES (1, 'def');
+        ^
+psql:pg_tests/compatible/cast.sql:453: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_upsert (k, c) VALUES ('1', 'def');
+        ^
+psql:pg_tests/compatible/cast.sql:456: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_upsert (k, c) VALUES (1, 123);
+        ^
+psql:pg_tests/compatible/cast.sql:459: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_upsert (k, c) VALUES (1, 'b');
+        ^
+psql:pg_tests/compatible/cast.sql:462: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_upsert (k, c) VALUES ('1', 'c');
+        ^
+psql:pg_tests/compatible/cast.sql:465: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_upsert (k, c) VALUES (1, NULL);
+        ^
+psql:pg_tests/compatible/cast.sql:468: ERROR:  syntax error at or near "UPSERT"
+LINE 1: PREPARE upsert_c AS UPSERT INTO assn_cast_upsert (k, c) VALU...
+                            ^
+psql:pg_tests/compatible/cast.sql:471: ERROR:  prepared statement "upsert_c" does not exist
+psql:pg_tests/compatible/cast.sql:474: ERROR:  prepared statement "upsert_c" does not exist
+psql:pg_tests/compatible/cast.sql:477: ERROR:  prepared statement "upsert_c" does not exist
+psql:pg_tests/compatible/cast.sql:480: ERROR:  prepared statement "upsert_c" does not exist
+ k | concat 
+---+--------
+(0 rows)
+
+ k | concat 
+---+--------
+(0 rows)
+
+DELETE 0
+psql:pg_tests/compatible/cast.sql:492: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_upsert (k, qc) VALUES (1, 'a');
+        ^
+psql:pg_tests/compatible/cast.sql:495: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_upsert (k, qc) VALUES (1, 'abc') RETUR...
+        ^
+psql:pg_tests/compatible/cast.sql:498: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_upsert (k, qc) VALUES (1, 1234);
+        ^
+psql:pg_tests/compatible/cast.sql:501: ERROR:  syntax error at or near "UPSERT"
+LINE 1: PREPARE upsert_qc AS UPSERT INTO assn_cast_upsert (k, qc) VA...
+                             ^
+psql:pg_tests/compatible/cast.sql:504: ERROR:  prepared statement "upsert_qc" does not exist
+ qc 
+----
+(0 rows)
+
+ qc 
+----
+(0 rows)
+
+psql:pg_tests/compatible/cast.sql:513: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_upsert (k, i2) VALUES (1, 999999999);
+        ^
+psql:pg_tests/compatible/cast.sql:516: ERROR:  syntax error at or near "UPSERT"
+LINE 1: PREPARE upsert_i2 AS UPSERT INTO assn_cast_upsert (k, i2) VA...
+                             ^
+psql:pg_tests/compatible/cast.sql:519: ERROR:  prepared statement "upsert_i2" does not exist
+psql:pg_tests/compatible/cast.sql:522: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_upsert (k, d) VALUES (1, 11.22) RETURN...
+        ^
+psql:pg_tests/compatible/cast.sql:525: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_upsert (k, d) VALUES (1, 11.22::DECIMA...
+        ^
+psql:pg_tests/compatible/cast.sql:528: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_upsert (k, d) VALUES (1, 11.22::DECIMA...
+        ^
+psql:pg_tests/compatible/cast.sql:531: ERROR:  syntax error at or near "UPSERT"
+LINE 1: PREPARE upsert_d AS UPSERT INTO assn_cast_upsert (k, d) VALU...
+                            ^
+psql:pg_tests/compatible/cast.sql:534: ERROR:  prepared statement "upsert_d" does not exist
+ d 
+---
+(0 rows)
+
+psql:pg_tests/compatible/cast.sql:540: ERROR:  syntax error at or near "UPSERT"
+LINE 1: PREPARE upsert_d2 AS UPSERT INTO assn_cast_upsert (k, d) VAL...
+                             ^
+psql:pg_tests/compatible/cast.sql:543: ERROR:  prepared statement "upsert_d2" does not exist
+ d 
+---
+(0 rows)
+
+psql:pg_tests/compatible/cast.sql:549: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_upsert (k, a) VALUES (1, ARRAY[]) RETU...
+        ^
+psql:pg_tests/compatible/cast.sql:552: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_upsert (k, a) VALUES (1, ARRAY[NULL]) ...
+        ^
+psql:pg_tests/compatible/cast.sql:555: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_upsert (k, a) VALUES (1, ARRAY[1.1]) R...
+        ^
+psql:pg_tests/compatible/cast.sql:558: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_upsert (k, a) VALUES (1, ARRAY[2.88, N...
+        ^
+psql:pg_tests/compatible/cast.sql:561: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_upsert (k, a) VALUES (1, ARRAY[3.99, N...
+        ^
+psql:pg_tests/compatible/cast.sql:564: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_upsert (k, a) VALUES (1, ARRAY[5.55, 6...
+        ^
+psql:pg_tests/compatible/cast.sql:567: ERROR:  syntax error at or near "UPSERT"
+LINE 1: PREPARE upsert_a AS UPSERT INTO assn_cast_upsert (k, a) VALU...
+                            ^
+psql:pg_tests/compatible/cast.sql:570: ERROR:  prepared statement "upsert_a" does not exist
+ a 
+---
+(0 rows)
+
+psql:pg_tests/compatible/cast.sql:576: ERROR:  syntax error at or near "UPSERT"
+LINE 1: PREPARE upsert_a2 AS UPSERT INTO assn_cast_upsert (k, a) VAL...
+                             ^
+psql:pg_tests/compatible/cast.sql:579: ERROR:  prepared statement "upsert_a2" does not exist
+ a 
+---
+(0 rows)
+
+psql:pg_tests/compatible/cast.sql:585: ERROR:  syntax error at or near "UPSERT"
+LINE 1: PREPARE upsert_a3 AS UPSERT INTO assn_cast_upsert (k, a) VAL...
+                             ^
+psql:pg_tests/compatible/cast.sql:588: ERROR:  prepared statement "upsert_a3" does not exist
+ a 
+---
+(0 rows)
+
+CREATE TABLE
+psql:pg_tests/compatible/cast.sql:601: ERROR:  value too long for type character(1)
+INSERT 0 1
+INSERT 0 0
+INSERT 0 0
+INSERT 0 0
+INSERT 0 0
+INSERT 0 0
+INSERT 0 0
+INSERT 0 0
+INSERT 0 0
+ k | d | c 
+---+---+---
+ 1 | 2 | a
+(1 row)
+
+PREPARE
+INSERT 0 0
+INSERT 0 0
+INSERT 0 0
+INSERT 0 0
+psql:pg_tests/compatible/cast.sql:649: ERROR:  duplicate key value violates unique constraint "assn_cast_do_nothing_pkey"
+DETAIL:  Key (k)=(1) already exists.
+ k | d | c 
+---+---+---
+ 1 | 2 | a
+(1 row)
+
+PREPARE
+INSERT 0 0
+INSERT 0 0
+INSERT 0 0
+INSERT 0 0
+psql:pg_tests/compatible/cast.sql:670: ERROR:  duplicate key value violates unique constraint "assn_cast_do_nothing_pkey"
+DETAIL:  Key (k)=(1) already exists.
+ k | d | c 
+---+---+---
+ 1 | 2 | a
+(1 row)
+
+CREATE TABLE
+psql:pg_tests/compatible/cast.sql:683: ERROR:  value too long for type character(1)
+INSERT 0 1
+psql:pg_tests/compatible/cast.sql:689: ERROR:  value too long for type character(1)
+INSERT 0 1
+ k | d | c 
+---+---+---
+ 1 | 2 | b
+(1 row)
+
+PREPARE
+psql:pg_tests/compatible/cast.sql:702: ERROR:  value too long for type character(1)
+psql:pg_tests/compatible/cast.sql:705: ERROR:  value too long for type character(1)
+INSERT 0 1
+ k | d | c 
+---+---+---
+ 1 | 2 | c
+(1 row)
+
+ k 
+---
+ 2
+(1 row)
+
+INSERT 0 1
+ d 
+---
+ 4
+(1 row)
+
+INSERT 0 1
+ d 
+---
+ 5
+(1 row)
+
+INSERT 0 1
+ k | d | c 
+---+---+---
+ 2 | 5 | c
+(1 row)
+
+INSERT 0 1
+psql:pg_tests/compatible/cast.sql:736: ERROR:  duplicate key value violates unique constraint "assn_cast_do_update_c_key"
+DETAIL:  Key (c)=(c) already exists.
+psql:pg_tests/compatible/cast.sql:740: ERROR:  duplicate key value violates unique constraint "assn_cast_do_update_d_key"
+DETAIL:  Key (d)=(5) already exists.
+psql:pg_tests/compatible/cast.sql:744: ERROR:  duplicate key value violates unique constraint "assn_cast_do_update_d_key"
+DETAIL:  Key (d)=(5) already exists.
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+UPDATE 1
+UPDATE 1
+ c | p 
+---+---
+ 1 | 1
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/cast.sql:772: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_c VALUES (2, 10);
+        ^
+psql:pg_tests/compatible/cast.sql:775: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_p VALUES (2.0, 11.22);
+        ^
+psql:pg_tests/compatible/cast.sql:778: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_p VALUES (2.0, 11.00);
+        ^
+psql:pg_tests/compatible/cast.sql:781: ERROR:  duplicate key value violates unique constraint "assn_cast_p_pkey"
+DETAIL:  Key (p)=(2.00) already exists.
+psql:pg_tests/compatible/cast.sql:784: ERROR:  duplicate key value violates unique constraint "assn_cast_p_pkey"
+DETAIL:  Key (p)=(2.00) already exists.
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/cast.sql:796: ERROR:  insert or update on table "assn_cast_c" violates foreign key constraint "assn_cast_c_p_fkey"
+DETAIL:  Key (p)=(3) is not present in table "assn_cast_p".
+UPDATE 1
+ c | p 
+---+---
+ 2 | 3
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/cast.sql:811: ERROR:  insert or update on table "assn_cast_c" violates foreign key constraint "assn_cast_c_d_fkey"
+DETAIL:  Key (d)=(12) is not present in table "assn_cast_p".
+psql:pg_tests/compatible/cast.sql:814: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_p VALUES (3.0, 3.4);
+        ^
+psql:pg_tests/compatible/cast.sql:817: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_p VALUES (3.0, 3.0);
+        ^
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/cast.sql:826: ERROR:  duplicate key value violates unique constraint "assn_cast_p_d_key"
+DETAIL:  Key (d)=(3.00) already exists.
+INSERT 0 1
+psql:pg_tests/compatible/cast.sql:842: ERROR:  syntax error at or near "AS"
+LINE 4:   i2 INT2 AS (i + 9999999) STORED,
+                  ^
+psql:pg_tests/compatible/cast.sql:845: ERROR:  relation "assn_cast_comp" does not exist
+LINE 1: INSERT INTO assn_cast_comp(k, i) VALUES (1, 1);
+                    ^
+psql:pg_tests/compatible/cast.sql:848: ERROR:  relation "assn_cast_comp" does not exist
+LINE 1: INSERT INTO assn_cast_comp(k, t) VALUES (1, 'foo');
+                    ^
+psql:pg_tests/compatible/cast.sql:851: ERROR:  relation "assn_cast_comp" does not exist
+LINE 1: INSERT INTO assn_cast_comp(k, d, d2) VALUES (1, 1.56, 2.78);
+                    ^
+psql:pg_tests/compatible/cast.sql:854: ERROR:  relation "assn_cast_comp" does not exist
+LINE 1: SELECT k, d, d_comp, d2, d2_comp FROM assn_cast_comp;
+                                              ^
+psql:pg_tests/compatible/cast.sql:857: ERROR:  relation "assn_cast_comp" does not exist
+LINE 1: UPDATE assn_cast_comp SET i = 1 WHERE k = 1;
+               ^
+psql:pg_tests/compatible/cast.sql:860: ERROR:  relation "assn_cast_comp" does not exist
+LINE 1: UPDATE assn_cast_comp SET t = 'foo' WHERE k = 1;
+               ^
+psql:pg_tests/compatible/cast.sql:863: ERROR:  relation "assn_cast_comp" does not exist
+LINE 1: UPDATE assn_cast_comp SET d = 3.45, d2 = 4.56 WHERE k = 1;
+               ^
+psql:pg_tests/compatible/cast.sql:866: ERROR:  relation "assn_cast_comp" does not exist
+LINE 1: SELECT k, d, d_comp, d2, d2_comp FROM assn_cast_comp;
+                                              ^
+psql:pg_tests/compatible/cast.sql:869: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_comp (k, i) VALUES (1, 1);
+        ^
+psql:pg_tests/compatible/cast.sql:872: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_comp (k, i) VALUES (2, 2);
+        ^
+psql:pg_tests/compatible/cast.sql:875: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_comp (k, t) VALUES (1, 'foo');
+        ^
+psql:pg_tests/compatible/cast.sql:878: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_comp (k, t) VALUES (2, 'bar');
+        ^
+psql:pg_tests/compatible/cast.sql:881: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_comp (k, d, d2) VALUES (1, 5.43, 7.89)...
+        ^
+psql:pg_tests/compatible/cast.sql:884: ERROR:  relation "assn_cast_comp" does not exist
+LINE 1: SELECT k, d, d_comp, d2, d2_comp FROM assn_cast_comp;
+                                              ^
+psql:pg_tests/compatible/cast.sql:893: ERROR:  syntax error at or near "ON"
+LINE 4:     d DECIMAL(10, 1) ON UPDATE 1.23,
+                             ^
+psql:pg_tests/compatible/cast.sql:896: ERROR:  relation "assn_cast_on_update" does not exist
+LINE 1: INSERT INTO assn_cast_on_update (k, i) VALUES (1, 10);
+                    ^
+psql:pg_tests/compatible/cast.sql:899: ERROR:  relation "assn_cast_on_update" does not exist
+LINE 1: UPDATE assn_cast_on_update SET i = 11 WHERE k = 1;
+               ^
+psql:pg_tests/compatible/cast.sql:902: ERROR:  relation "assn_cast_on_update" does not exist
+LINE 1: SELECT * FROM assn_cast_on_update;
+                      ^
+psql:pg_tests/compatible/cast.sql:905: ERROR:  relation "assn_cast_on_update" does not exist
+LINE 1: UPDATE assn_cast_on_update SET d = NULL, d2 = NULL  WHERE k ...
+               ^
+psql:pg_tests/compatible/cast.sql:908: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_on_update (k, i) VALUES (1, 10);
+        ^
+psql:pg_tests/compatible/cast.sql:911: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO assn_cast_on_update (k, i) VALUES (2, 20);
+        ^
+psql:pg_tests/compatible/cast.sql:914: ERROR:  relation "assn_cast_on_update" does not exist
+LINE 1: SELECT * FROM assn_cast_on_update;
+                      ^
+psql:pg_tests/compatible/cast.sql:917: ERROR:  relation "assn_cast_on_update" does not exist
+LINE 1: INSERT INTO assn_cast_on_update (k, i) VALUES (2, 20) ON CON...
+                    ^
+psql:pg_tests/compatible/cast.sql:920: ERROR:  relation "assn_cast_on_update" does not exist
+LINE 1: SELECT * FROM assn_cast_on_update;
+                      ^
+SELECT 1
+  d  
+-----
+ 1.3
+(1 row)
+
+SELECT 1
+psql:pg_tests/compatible/cast.sql:932: ERROR:  integer out of range
+psql:pg_tests/compatible/cast.sql:935: ERROR:  smallint out of range
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/cast.sql:944: ERROR:  cannot cast type interval to numeric
+LINE 1: ...ROM t0 WHERE t0.c0 BETWEEN t0.c0 AND INTERVAL '-1'::DECIMAL;
+                                                             ^
+psql:pg_tests/compatible/cast.sql:947: ERROR:  cannot cast type interval to numeric
+LINE 1: ...ROM t1 WHERE t1.c0 BETWEEN t1.c0 AND INTERVAL '-1'::DECIMAL;
+                                                             ^
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/cast.sql:956: ERROR:  smallint out of range
+psql:pg_tests/compatible/cast.sql:959: ERROR:  integer out of range
+psql:pg_tests/compatible/cast.sql:962: ERROR:  smallint out of range
+DELETE 1
+INSERT 0 1
+psql:pg_tests/compatible/cast.sql:971: ERROR:  smallint out of range
+psql:pg_tests/compatible/cast.sql:974: ERROR:  integer out of range
+psql:pg_tests/compatible/cast.sql:977: ERROR:  smallint out of range
+psql:pg_tests/compatible/cast.sql:984: ERROR:  syntax error at or near "("
+LINE 4:   INDEX (c, a)
+                ^
+CREATE TABLE
+psql:pg_tests/compatible/cast.sql:993: ERROR:  relation "t66067_a" does not exist
+LINE 1: INSERT INTO t66067_a VALUES (1, 'foo');
+                    ^
+INSERT 0 1
+psql:pg_tests/compatible/cast.sql:999: ERROR:  syntax error at or near "LOOKUP"
+LINE 2: INNER LOOKUP JOIN t66067_a a ON b.a = a.a
+              ^
+psql:pg_tests/compatible/cast.sql:1003: ERROR:  cannot cast type "char" to bytea
+LINE 1: SELECT i, i::"char"::bytea, length(i::"char")
+                           ^
+psql:pg_tests/compatible/cast.sql:1006: ERROR:  "char" out of range
+psql:pg_tests/compatible/cast.sql:1009: ERROR:  "char" out of range
+ int4 | float8 | numeric | bool 
+------+--------+---------+------
+    1 |    1.2 |     2.3 | t
+(1 row)
+
+ i | i | i | i | i | i | i | i | i 
+---+---+---+---+---+---+---+---+---
+ 0 | 0 | 0 | - | - | - | - | - | -
+ 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1
+(2 rows)
+
+psql:pg_tests/compatible/cast.sql:1022: ERROR:  relation "-" does not exist
+psql:pg_tests/compatible/cast.sql:1025: ERROR:  invalid input syntax for type oid: "-"
+psql:pg_tests/compatible/cast.sql:1028: ERROR:  invalid input syntax for type oid: "-"
+LINE 1: SELECT '-'::oid;
+               ^
+ regclass | oid | regproc | oid | regprocedure | oid | regnamespace | oid | regtype | oid | regrole | oid 
+----------+-----+---------+-----+--------------+-----+--------------+-----+---------+-----+---------+-----
+ -        |   0 | -       |   0 | -            |   0 | -            |   0 | -       |   0 | -       |   0
+(1 row)
+
+PREPARE
+psql:pg_tests/compatible/cast.sql:1042: ERROR:  smallint out of range
+PREPARE
+ bpchar 
+--------
+ f
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+ c 
+---
+ f
+(1 row)
+
+PREPARE
+ c 
+---
+ f
+(1 row)
+
+CREATE TABLE
+  d12_3   
+----------
+ 6000.000
+(1 row)
+
+INSERT 0 1
+  d12_3   
+----------
+ 6000.000
+(1 row)
+
+INSERT 0 1
+  d12_3   
+----------
+ 6000.000
+ 6000.000
+(2 rows)
+
+psql:pg_tests/compatible/cast.sql:1081: ERROR:  numeric field overflow
+DETAIL:  A field with precision 4, scale 2 must round to an absolute value less than 10^2.
+psql:pg_tests/compatible/cast.sql:1084: ERROR:  numeric field overflow
+DETAIL:  A field with precision 4, scale 2 must round to an absolute value less than 10^2.
+psql:pg_tests/compatible/cast.sql:1087: ERROR:  CASE/WHEN could not convert type regclass to regnamespace
+LINE 1: select CASE WHEN false THEN 1::REGCLASS ELSE 2::REGNAMESPACE...
+                                    ^
+psql:pg_tests/compatible/cast.sql:1088: ERROR:  CASE/WHEN could not convert type regclass to regproc
+LINE 1: select CASE WHEN false THEN 1::REGCLASS ELSE 2::REGPROC END;
+                                    ^
+psql:pg_tests/compatible/cast.sql:1089: ERROR:  CASE/WHEN could not convert type regclass to regprocedure
+LINE 1: select CASE WHEN false THEN 1::REGCLASS ELSE 2::REGPROCEDURE...
+                                    ^
+psql:pg_tests/compatible/cast.sql:1090: ERROR:  CASE/WHEN could not convert type regclass to regrole
+LINE 1: select CASE WHEN false THEN 1::REGCLASS ELSE 2::REGROLE END;
+                                    ^
+psql:pg_tests/compatible/cast.sql:1091: ERROR:  CASE/WHEN could not convert type regclass to regtype
+LINE 1: select CASE WHEN false THEN 1::REGCLASS ELSE 2::REGTYPE END;
+                                    ^
+psql:pg_tests/compatible/cast.sql:1092: ERROR:  CASE/WHEN could not convert type regnamespace to regclass
+LINE 1: select CASE WHEN false THEN 1::REGNAMESPACE ELSE 2::REGCLASS...
+                                    ^
+psql:pg_tests/compatible/cast.sql:1093: ERROR:  CASE/WHEN could not convert type regnamespace to regproc
+LINE 1: select CASE WHEN false THEN 1::REGNAMESPACE ELSE 2::REGPROC ...
+                                    ^
+psql:pg_tests/compatible/cast.sql:1094: ERROR:  CASE/WHEN could not convert type regnamespace to regprocedure
+LINE 1: select CASE WHEN false THEN 1::REGNAMESPACE ELSE 2::REGPROCE...
+                                    ^
+psql:pg_tests/compatible/cast.sql:1095: ERROR:  CASE/WHEN could not convert type regnamespace to regrole
+LINE 1: select CASE WHEN false THEN 1::REGNAMESPACE ELSE 2::REGROLE ...
+                                    ^
+psql:pg_tests/compatible/cast.sql:1096: ERROR:  CASE/WHEN could not convert type regnamespace to regtype
+LINE 1: select CASE WHEN false THEN 1::REGNAMESPACE ELSE 2::REGTYPE ...
+                                    ^
+psql:pg_tests/compatible/cast.sql:1097: ERROR:  CASE/WHEN could not convert type regproc to regclass
+LINE 1: select CASE WHEN false THEN 1::REGPROC ELSE 2::REGCLASS END;
+                                    ^
+psql:pg_tests/compatible/cast.sql:1098: ERROR:  CASE/WHEN could not convert type regproc to regnamespace
+LINE 1: select CASE WHEN false THEN 1::REGPROC ELSE 2::REGNAMESPACE ...
+                                    ^
+ case 
+------
+ 2
+(1 row)
+
+psql:pg_tests/compatible/cast.sql:1100: ERROR:  CASE/WHEN could not convert type regproc to regrole
+LINE 1: select CASE WHEN false THEN 1::REGPROC ELSE 2::REGROLE END;
+                                    ^
+psql:pg_tests/compatible/cast.sql:1101: ERROR:  CASE/WHEN could not convert type regproc to regtype
+LINE 1: select CASE WHEN false THEN 1::REGPROC ELSE 2::REGTYPE END;
+                                    ^
+psql:pg_tests/compatible/cast.sql:1102: ERROR:  CASE/WHEN could not convert type regprocedure to regclass
+LINE 1: select CASE WHEN false THEN 1::REGPROCEDURE ELSE 2::REGCLASS...
+                                    ^
+psql:pg_tests/compatible/cast.sql:1103: ERROR:  CASE/WHEN could not convert type regprocedure to regnamespace
+LINE 1: select CASE WHEN false THEN 1::REGPROCEDURE ELSE 2::REGNAMES...
+                                    ^
+ case 
+------
+ 2
+(1 row)
+
+psql:pg_tests/compatible/cast.sql:1105: ERROR:  CASE/WHEN could not convert type regprocedure to regrole
+LINE 1: select CASE WHEN false THEN 1::REGPROCEDURE ELSE 2::REGROLE ...
+                                    ^
+psql:pg_tests/compatible/cast.sql:1106: ERROR:  CASE/WHEN could not convert type regprocedure to regtype
+LINE 1: select CASE WHEN false THEN 1::REGPROCEDURE ELSE 2::REGTYPE ...
+                                    ^
+psql:pg_tests/compatible/cast.sql:1107: ERROR:  CASE/WHEN could not convert type regrole to regclass
+LINE 1: select CASE WHEN false THEN 1::REGROLE ELSE 2::REGCLASS END;
+                                    ^
+psql:pg_tests/compatible/cast.sql:1108: ERROR:  CASE/WHEN could not convert type regrole to regnamespace
+LINE 1: select CASE WHEN false THEN 1::REGROLE ELSE 2::REGNAMESPACE ...
+                                    ^
+psql:pg_tests/compatible/cast.sql:1109: ERROR:  CASE/WHEN could not convert type regrole to regproc
+LINE 1: select CASE WHEN false THEN 1::REGROLE ELSE 2::REGPROC END;
+                                    ^
+psql:pg_tests/compatible/cast.sql:1110: ERROR:  CASE/WHEN could not convert type regrole to regprocedure
+LINE 1: select CASE WHEN false THEN 1::REGROLE ELSE 2::REGPROCEDURE ...
+                                    ^
+psql:pg_tests/compatible/cast.sql:1111: ERROR:  CASE/WHEN could not convert type regrole to regtype
+LINE 1: select CASE WHEN false THEN 1::REGROLE ELSE 2::REGTYPE END;
+                                    ^
+psql:pg_tests/compatible/cast.sql:1112: ERROR:  CASE/WHEN could not convert type regtype to regclass
+LINE 1: select CASE WHEN false THEN 1::REGTYPE ELSE 2::REGCLASS END;
+                                    ^
+psql:pg_tests/compatible/cast.sql:1113: ERROR:  CASE/WHEN could not convert type regtype to regnamespace
+LINE 1: select CASE WHEN false THEN 1::REGTYPE ELSE 2::REGNAMESPACE ...
+                                    ^
+psql:pg_tests/compatible/cast.sql:1114: ERROR:  CASE/WHEN could not convert type regtype to regproc
+LINE 1: select CASE WHEN false THEN 1::REGTYPE ELSE 2::REGPROC END;
+                                    ^
+psql:pg_tests/compatible/cast.sql:1115: ERROR:  CASE/WHEN could not convert type regtype to regprocedure
+LINE 1: select CASE WHEN false THEN 1::REGTYPE ELSE 2::REGPROCEDURE ...
+                                    ^
+psql:pg_tests/compatible/cast.sql:1116: ERROR:  CASE/WHEN could not convert type regtype to regrole
+LINE 1: select CASE WHEN false THEN 1::REGTYPE ELSE 2::REGROLE END;
+                                    ^
+    text    |        text         
+------------+---------------------
+ 0.33333334 | -0.3333333333333333
+(1 row)
+
+SET
+ text | text 
+------+------
+ -0.3 | 0.3
+(1 row)
+
+CREATE TABLE
+psql:pg_tests/compatible/cast.sql:1141: ERROR:  syntax error at or near "ON"
+LINE 3:   a TEXT ON UPDATE 'POINT(2.0 2.0)'::GEOMETRY,
+                 ^
+INSERT 0 1
+psql:pg_tests/compatible/cast.sql:1147: ERROR:  relation "upd_assn_cast" does not exist
+LINE 1: INSERT INTO upd_assn_cast(id) VALUES (1);
+                    ^
+psql:pg_tests/compatible/cast.sql:1150: ERROR:  relation "upd_assn_cast" does not exist
+LINE 1: UPDATE upd_assn_cast SET id = 2;
+               ^
+ id | a |  b   | c 
+----+---+------+---
+  1 | 1 | true | f
+(1 row)
+
+psql:pg_tests/compatible/cast.sql:1156: ERROR:  relation "upd_assn_cast" does not exist
+LINE 1: SELECT * from upd_assn_cast;
+                      ^
+psql:pg_tests/compatible/cast.sql:1161: ERROR:  invalid input syntax for type boolean: "foo"
+LINE 2:   a BOOL DEFAULT 'foo'
+                         ^
+psql:pg_tests/compatible/cast.sql:1166: ERROR:  column "a" is of type date but default expression is of type real
+HINT:  You will need to rewrite or cast the expression.
+psql:pg_tests/compatible/cast.sql:1171: ERROR:  column "b" is of type jsonb but default expression is of type character
+HINT:  You will need to rewrite or cast the expression.
+psql:pg_tests/compatible/cast.sql:1176: ERROR:  syntax error at or near "ON"
+LINE 2:   a INT4 ON UPDATE 1.0::BOOL
+                 ^
+psql:pg_tests/compatible/cast.sql:1181: ERROR:  syntax error at or near "ON"
+LINE 2:   a FLOAT4 ON UPDATE '01/02/03'::DATE
+                   ^
+psql:pg_tests/compatible/cast.sql:1186: ERROR:  syntax error at or near "ON"
+LINE 2:   a NUMERIC ON UPDATE '1-2'::INTERVAL
+                    ^
+SELECT 5
+psql:pg_tests/compatible/cast.sql:1204: ERROR:  syntax error at or near "@"
+LINE 4:         t98373@[0];
+                      ^
+CREATE TABLE
+INSERT 0 5
+ f  
+----
+ -2
+  0
+  0
+  2
+  2
+(5 rows)
+
+CREATE TABLE
+  oid  
+-------
+ 49886
+(1 row)
+
+INSERT 0 1
+    r    
+---------
+ t128294
+(1 row)
+

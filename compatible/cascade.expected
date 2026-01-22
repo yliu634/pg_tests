@@ -1,0 +1,1551 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 4
+ c  | p 
+----+---
+  1 | 1
+  2 | 2
+ 10 | 1
+ 20 | 2
+(4 rows)
+
+DELETE 1
+ c  | p 
+----+---
+  1 | 1
+ 10 | 1
+(2 rows)
+
+DELETE 1
+ c | p 
+---+---
+(0 rows)
+
+CREATE TABLE
+INSERT 0 2
+INSERT 0 4
+INSERT 0 3
+DELETE 1
+DELETE 2
+DELETE 1
+DELETE 1
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 4
+INSERT 0 4
+DELETE 1
+ c  | p 
+----+---
+ 20 | 2
+ 21 | 2
+(2 rows)
+
+  g  | c  
+-----+----
+ 200 | 20
+(1 row)
+
+DELETE 1
+ c | p 
+---+---
+(0 rows)
+
+ g | c 
+---+---
+(0 rows)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 4
+INSERT 0 5
+INSERT 0 2
+ pa | pb | pc  
+----+----+-----
+  1 | 10 | 100
+  2 | 20 | 200
+  3 | 30 | 300
+    |    |    
+(4 rows)
+
+ a | b  |  c  
+---+----+-----
+ 1 | 10 | 100
+ 2 | 20 | 200
+ 1 | 10 | 100
+ 2 | 20 | 200
+   |    |    
+(5 rows)
+
+ a | b  |  c  
+---+----+-----
+ 2 | 20 | 200
+ 3 | 30 | 300
+(2 rows)
+
+DELETE 1
+ pa | pb | pc  
+----+----+-----
+  2 | 20 | 200
+  3 | 30 | 300
+    |    |    
+(3 rows)
+
+ a | b  |  c  
+---+----+-----
+ 2 | 20 | 200
+ 2 | 20 | 200
+   |    |    
+(3 rows)
+
+ a | b  |  c  
+---+----+-----
+ 2 | 20 | 200
+ 3 | 30 | 300
+(2 rows)
+
+DELETE 1
+ pa | pb | pc  
+----+----+-----
+  3 | 30 | 300
+    |    |    
+(2 rows)
+
+ a | b | c 
+---+---+---
+   |   |  
+(1 row)
+
+ a | b  |  c  
+---+----+-----
+ 3 | 30 | 300
+(1 row)
+
+DELETE 1
+ pa | pb | pc  
+----+----+-----
+  3 | 30 | 300
+(1 row)
+
+ a | b | c 
+---+---+---
+   |   |  
+(1 row)
+
+ a | b  |  c  
+---+----+-----
+ 3 | 30 | 300
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 9
+DELETE 1
+ a | b 
+---+---
+ 1 |  
+ 2 | 1
+ 3 | 2
+(3 rows)
+
+DELETE 1
+ a | b 
+---+---
+(0 rows)
+
+INSERT 0 1
+INSERT 0 19
+DELETE 1
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 12
+INSERT 0 1
+ delete_no_action | update_no_action | delete_restrict | update_restrict | delete_cascade | update_cascade | delete_null | update_null | delete_default | update_default 
+------------------+------------------+-----------------+-----------------+----------------+----------------+-------------+-------------+----------------+----------------
+                1 |                2 |               3 |               4 |              5 |              6 |           7 |           8 |              9 |             10
+(1 row)
+
+DELETE 1
+ count 
+-------
+     0
+(1 row)
+
+INSERT 0 1
+INSERT 0 1
+UPDATE 1
+ delete_no_action | update_no_action | delete_restrict | update_restrict | delete_cascade | update_cascade | delete_null | update_null | delete_default | update_default 
+------------------+------------------+-----------------+-----------------+----------------+----------------+-------------+-------------+----------------+----------------
+                1 |                2 |               3 |               4 |              5 |           1006 |           7 |           8 |              9 |             10
+(1 row)
+
+DELETE 1
+ delete_no_action | update_no_action | delete_restrict | update_restrict | delete_cascade | update_cascade | delete_null | update_null | delete_default | update_default 
+------------------+------------------+-----------------+-----------------+----------------+----------------+-------------+-------------+----------------+----------------
+                1 |                2 |               3 |               4 |              5 |           1006 |             |           8 |              9 |             10
+(1 row)
+
+UPDATE 1
+ delete_no_action | update_no_action | delete_restrict | update_restrict | delete_cascade | update_cascade | delete_null | update_null | delete_default | update_default 
+------------------+------------------+-----------------+-----------------+----------------+----------------+-------------+-------------+----------------+----------------
+                1 |                2 |               3 |               4 |              5 |           1006 |             |             |              9 |             10
+(1 row)
+
+DELETE 1
+ delete_no_action | update_no_action | delete_restrict | update_restrict | delete_cascade | update_cascade | delete_null | update_null | delete_default | update_default 
+------------------+------------------+-----------------+-----------------+----------------+----------------+-------------+-------------+----------------+----------------
+                1 |                2 |               3 |               4 |              5 |           1006 |             |             |            109 |             10
+(1 row)
+
+UPDATE 1
+ delete_no_action | update_no_action | delete_restrict | update_restrict | delete_cascade | update_cascade | delete_null | update_null | delete_default | update_default 
+------------------+------------------+-----------------+-----------------+----------------+----------------+-------------+-------------+----------------+----------------
+                1 |                2 |               3 |               4 |              5 |           1006 |             |             |            109 |            110
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+INSERT 0 4
+INSERT 0 2
+DELETE 1
+ count | count | count | count | count | count 
+-------+-------+-------+-------+-------+-------
+     0 |     0 |     0 |     0 |     0 |     0
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+DELETE 1
+ count | count | count | count | count 
+-------+-------+-------+-------+-------
+     0 |     0 |     0 |     0 |     0
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+INSERT 0 4
+DELETE 1
+ count | count | count | count | count 
+-------+-------+-------+-------+-------
+     0 |     0 |     0 |     0 |     0
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+INSERT 0 4
+DELETE 1
+ count | count | count | count | count 
+-------+-------+-------+-------+-------
+     0 |     0 |     0 |     0 |     0
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+INSERT 0 4
+INSERT 0 1
+DELETE 1
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+DELETE 1
+ count 
+-------
+     0
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+UPDATE 1
+DELETE 1
+ count 
+-------
+     0
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+UPDATE 1
+DELETE 1
+ count | count 
+-------+-------
+     0 |     0
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+DELETE 1
+ count | count 
+-------+-------
+     0 |     0
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+DELETE 1
+ count 
+-------
+     0
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+DELETE 1
+ count | count | count | count | count 
+-------+-------+-------+-------+-------
+     0 |     0 |     0 |     0 |     0
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 5
+DELETE 3
+ id | a_id 
+----+------
+  2 |     
+  5 |     
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 4
+INSERT 0 4
+INSERT 0 1
+UPDATE 1
+   id    
+---------
+ updated
+(1 row)
+
+   id   |  a_id   
+--------+---------
+ b1-pk1 | updated
+(1 row)
+
+   id   |  a_id   
+--------+---------
+ b2-pk1 | updated
+(1 row)
+
+   id   |  a_id   
+--------+---------
+ c1-pk1 | updated
+ c1-pk2 | updated
+ c1-pk3 | updated
+ c1-pk4 | updated
+(4 rows)
+
+   id   |  a_id   
+--------+---------
+ c2-pk1 | updated
+ c2-pk2 | updated
+ c2-pk3 | updated
+ c2-pk4 | updated
+(4 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+UPDATE 1
+   id    |   id    |   id    |   id    |   id    
+---------+---------+---------+---------+---------
+ updated | updated | updated | updated | updated
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+INSERT 0 4
+UPDATE 1
+  id   | x 
+-------+---
+ a-pk1 | 2
+(1 row)
+
+   id   | a_id  | x | y 
+--------+-------+---+---
+ b1-pk1 | a-pk1 | 2 | 1
+ b1-pk2 | a-pk1 | 2 | 2
+(2 rows)
+
+   id   | a_id  | x | y 
+--------+-------+---+---
+ b2-pk1 | a-pk1 | 2 | 1
+ b2-pk2 | a-pk1 | 2 | 2
+(2 rows)
+
+      id       | b1_id  | x 
+---------------+--------+---
+ c1-pk1-b1-pk1 | b1-pk1 | 2
+ c1-pk2-b1-pk1 | b1-pk1 | 2
+ c1-pk3-b1-pk2 | b1-pk2 | 2
+ c1-pk4-b1-pk2 | b1-pk2 | 2
+(4 rows)
+
+      id       | b1_id  | x 
+---------------+--------+---
+ c2-pk1-b1-pk1 | b1-pk1 | 2
+ c2-pk2-b1-pk1 | b1-pk1 | 2
+ c2-pk3-b1-pk2 | b1-pk2 | 2
+ c2-pk4-b1-pk2 | b1-pk2 | 2
+(4 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+INSERT 0 4
+UPDATE 1
+  id   | x 
+-------+---
+ a-pk1 | 2
+(1 row)
+
+   id   | a_id  | x | y 
+--------+-------+---+---
+ b1-pk1 | a-pk1 | 2 | 1
+ b1-pk2 | a-pk1 | 2 | 2
+(2 rows)
+
+   id   | a_id  | x | y 
+--------+-------+---+---
+ b2-pk1 | a-pk1 | 2 | 1
+ b2-pk2 | a-pk1 | 2 | 2
+(2 rows)
+
+      id       | b1_id  | x 
+---------------+--------+---
+ c1-pk1-b1-pk1 | b1-pk1 | 2
+ c1-pk2-b1-pk1 | b1-pk1 | 2
+ c1-pk3-b1-pk2 | b1-pk2 | 2
+ c1-pk4-b1-pk2 | b1-pk2 | 2
+(4 rows)
+
+      id       | b1_id  | x 
+---------------+--------+---
+ c2-pk1-b1-pk1 | b1-pk1 | 2
+ c2-pk2-b1-pk1 | b1-pk1 | 2
+ c2-pk3-b1-pk2 | b1-pk2 | 2
+ c2-pk4-b1-pk2 | b1-pk2 | 2
+(4 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 4
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+UPDATE 1
+DELETE 1
+INSERT 0 1
+UPDATE 0
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+ id | other_id 
+----+----------
+  1 |         
+  2 |        1
+  3 |        2
+(3 rows)
+
+UPDATE 1
+ id | other_id 
+----+----------
+  1 |         
+  4 |        1
+  3 |        4
+(3 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+ALTER TABLE
+    id    |    id    
+----------+----------
+ original | original
+(1 row)
+
+UPDATE 1
+   id    |   id    
+---------+---------
+ updated | updated
+(1 row)
+
+UPDATE 1
+    id    |    id    
+----------+----------
+ updated2 | updated2
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+UPDATE 1
+UPDATE 1
+UPDATE 1
+      x      |      y      |      z      
+-------------+-------------+-------------
+ pk1-updated |             | 
+ pk2-updated | pk1-updated | 
+ pk3-updated | pk2-updated | pk1-updated
+(3 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+UPDATE 1
+   id    |   id    |   id    |   id    
+---------+---------+---------+---------
+ updated | updated | updated | updated
+(1 row)
+
+  b_id   |  d_id   
+---------+---------
+ updated | updated
+(1 row)
+
+ e_b_id  | e_d_id  
+---------+---------
+ updated | updated
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+UPDATE 1
+   id    |   id    |   id    |   id    
+---------+---------+---------+---------
+ updated | updated | updated | updated
+(1 row)
+
+  d_id   |  c_id   
+---------+---------
+ updated | updated
+(1 row)
+
+ e_d_id  | e_c_id  
+---------+---------
+ updated | updated
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 5
+UPDATE 3
+ id | a_id 
+----+------
+  2 |     
+  5 |     
+  1 |   11
+  4 |   11
+  3 |   12
+(5 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 2
+INSERT 0 1
+UPDATE 3
+ name | id 
+------+----
+ a    | 10
+ a    | 20
+ a    | 30
+ b    | 10
+ b    | 20
+ c    | 10
+(6 rows)
+
+ name | id 
+------+----
+ a    | 10
+ a    | 20
+ a    | 30
+ b    | 10
+ b    | 20
+ c    | 10
+(6 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 5
+INSERT 0 3
+INSERT 0 2
+UPDATE 5
+ name | id1 | id2 
+------+-----+-----
+ a    |  10 |   0
+ a    |  20 |   0
+ a    |  30 |   0
+ a    |  40 |   0
+ a    |  50 |   0
+ b    |  10 |  10
+ b    |  20 |  20
+ b    |  30 |  40
+ c    |  10 |  20
+ c    |  20 |  10
+(10 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+DELETE 1
+   id   | delete_set_null 
+--------+-----------------
+ b1-pk1 | untouched
+ b1-pk2 | untouched
+ b2-pk1 | untouched
+ b2-pk2 | 
+ b3-pk2 | untouched
+ b3-pk1 | 
+ b4-pk1 | 
+ b4-pk2 | 
+(8 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+INSERT 0 4
+INSERT 0 4
+DELETE 1
+      id       | ?column? 
+---------------+----------
+ c1-pk1-b1-pk1 | 
+ c1-pk2-b1-pk1 | 
+ c1-pk3-b1-pk2 | 
+ c1-pk4-b1-pk2 | 
+ c2-pk1-b1-pk1 | 
+ c2-pk2-b1-pk1 | 
+ c2-pk3-b1-pk2 | 
+ c2-pk4-b1-pk2 | 
+ c3-pk1-b2-pk1 | 
+ c3-pk2-b2-pk1 | 
+ c3-pk3-b2-pk2 | 
+ c3-pk4-b2-pk2 | 
+(12 rows)
+
+TRUNCATE TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+DELETE 1
+ count 
+-------
+     1
+(1 row)
+
+  id   |   a_id    
+-------+-----------
+ b2    | untouched
+ b1    | 
+ c3-b2 | untouched
+ c4-b2 | untouched
+ c1-b1 | 
+ c2-b1 | 
+(6 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+DELETE 1
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+UPDATE 1
+   id   | update_set_null 
+--------+-----------------
+ b1-pk1 | untouched
+ b1-pk2 | untouched
+ b2-pk1 | untouched
+ b2-pk2 | 
+ b3-pk2 | untouched
+ b3-pk1 | 
+ b4-pk1 | 
+ b4-pk2 | 
+(8 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+INSERT 0 4
+INSERT 0 4
+UPDATE 1
+      id       | update_cascade 
+---------------+----------------
+ b1-pk2        | untouched
+ b1-pk1        | updated
+ b2-pk2        | untouched
+ b2-pk1        | updated
+ c1-pk3-b1-pk2 | untouched
+ c1-pk4-b1-pk2 | untouched
+ c1-pk1-b1-pk1 | 
+ c1-pk2-b1-pk1 | 
+ c2-pk3-b1-pk2 | untouched
+ c2-pk4-b1-pk2 | untouched
+ c2-pk1-b1-pk1 | 
+ c2-pk2-b1-pk1 | 
+ c3-pk3-b2-pk2 | untouched
+ c3-pk4-b2-pk2 | untouched
+ c3-pk1-b2-pk1 | 
+ c3-pk2-b2-pk1 | 
+(16 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+UPDATE 1
+  id   |   a_id    
+-------+-----------
+ b2    | untouched
+ b1    | updated
+ c3-b2 | untouched
+ c4-b2 | untouched
+ c1-b1 | updated
+ c2-b1 | updated
+(6 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+UPDATE 1
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 6
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+DELETE 1
+   id   | delete_set_default 
+--------+--------------------
+ b1-pk1 | untouched
+ b1-pk2 | untouched
+ b2-pk1 | untouched
+ b2-pk2 | b2-default
+ b3-pk2 | untouched
+ b3-pk1 | b3-default
+ b4-pk1 | b4-default
+ b4-pk2 | b4-default
+(8 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 6
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+DELETE 1
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 3
+INSERT 0 3
+INSERT 0 4
+INSERT 0 4
+INSERT 0 4
+DELETE 1
+      id       |  ?column?  
+---------------+------------
+ a-default     | empty
+ b1-default    | a-default
+ b2-default    | a-default
+ c1-pk1-b1-pk1 | b1-default
+ c1-pk2-b1-pk1 | b1-default
+ c1-pk3-b1-pk2 | b1-default
+ c1-pk4-b1-pk2 | b1-default
+ c2-pk1-b1-pk1 | b1-default
+ c2-pk2-b1-pk1 | b1-default
+ c2-pk3-b1-pk2 | b1-default
+ c2-pk4-b1-pk2 | b1-default
+ c3-pk1-b2-pk1 | b2-default
+ c3-pk2-b2-pk1 | b2-default
+ c3-pk3-b2-pk2 | b2-default
+ c3-pk4-b2-pk2 | b2-default
+(15 rows)
+
+TRUNCATE TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 3
+INSERT 0 3
+INSERT 0 4
+INSERT 0 4
+INSERT 0 4
+DELETE 1
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 2
+INSERT 0 4
+DELETE 1
+    id     
+-----------
+ untouched
+ default
+(2 rows)
+
+  id   |   a_id    
+-------+-----------
+ b2    | untouched
+ b1    | default
+ c3-b2 | untouched
+ c4-b2 | untouched
+ c1-b1 | default
+ c2-b1 | default
+(6 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+DELETE 1
+  id   |   a_id    
+-------+-----------
+ b2    | untouched
+ b1    | 
+ c3-b2 | untouched
+ c4-b2 | untouched
+ c1-b1 | 
+ c2-b1 | 
+(6 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+DELETE 1
+DROP TABLE
+psql:pg_tests/compatible/cascade.sql:1858: ERROR:  relation "a" does not exist
+LINE 1: INSERT INTO a VALUES ('original'), ('default');
+                    ^
+psql:pg_tests/compatible/cascade.sql:1859: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b VALUES ('b1', 'original'), ('b2', 'default');
+                    ^
+psql:pg_tests/compatible/cascade.sql:1862: ERROR:  relation "a" does not exist
+LINE 1: DELETE FROM a WHERE id = 'original';
+                    ^
+psql:pg_tests/compatible/cascade.sql:1865: ERROR:  table "b" does not exist
+psql:pg_tests/compatible/cascade.sql:1868: ERROR:  relation "a" does not exist
+LINE 1: INSERT INTO a VALUES ('original'), ('untouched'), ('b1-defau...
+                    ^
+psql:pg_tests/compatible/cascade.sql:1869: ERROR:  relation "b1" does not exist
+LINE 1: INSERT INTO b1 VALUES ('b1-pk1', 'untouched'), ('b1-pk2', 'u...
+                    ^
+psql:pg_tests/compatible/cascade.sql:1870: ERROR:  relation "b2" does not exist
+LINE 1: INSERT INTO b2 VALUES ('b2-pk1', 'untouched'), ('b2-pk2', 'o...
+                    ^
+psql:pg_tests/compatible/cascade.sql:1871: ERROR:  relation "b3" does not exist
+LINE 1: INSERT INTO b3 VALUES ('b3-pk1', 'original'), ('b3-pk2', 'un...
+                    ^
+psql:pg_tests/compatible/cascade.sql:1872: ERROR:  relation "b3" does not exist
+LINE 1: INSERT INTO b3 VALUES ('b4-pk1', 'original'), ('b4-pk2', 'or...
+                    ^
+psql:pg_tests/compatible/cascade.sql:1875: ERROR:  relation "a" does not exist
+LINE 1: UPDATE a SET id = 'updated' WHERE id = 'original';
+               ^
+psql:pg_tests/compatible/cascade.sql:1885: ERROR:  relation "b1" does not exist
+LINE 1: SELECT id, update_set_null FROM b1
+                                        ^
+psql:pg_tests/compatible/cascade.sql:1888: ERROR:  table "b4" does not exist
+psql:pg_tests/compatible/cascade.sql:1891: ERROR:  relation "a" does not exist
+LINE 1: INSERT INTO a VALUES ('original'), ('untouched'), ('b1-defau...
+                    ^
+psql:pg_tests/compatible/cascade.sql:1892: ERROR:  relation "b1" does not exist
+LINE 1: INSERT INTO b1 VALUES ('b1-pk1', 'untouched'), ('b1-pk2', 'u...
+                    ^
+psql:pg_tests/compatible/cascade.sql:1893: ERROR:  relation "b2" does not exist
+LINE 1: INSERT INTO b2 VALUES ('b2-pk1', 'untouched'), ('b2-pk2', 'o...
+                    ^
+psql:pg_tests/compatible/cascade.sql:1894: ERROR:  relation "b3" does not exist
+LINE 1: INSERT INTO b3 VALUES ('b3-pk1', 'original'), ('b3-pk2', 'un...
+                    ^
+psql:pg_tests/compatible/cascade.sql:1895: ERROR:  relation "b3" does not exist
+LINE 1: INSERT INTO b3 VALUES ('b4-pk1', 'original'), ('b4-pk2', 'or...
+                    ^
+psql:pg_tests/compatible/cascade.sql:1898: ERROR:  relation "a" does not exist
+LINE 1: UPDATE a SET id = 'updated' WHERE id = 'original';
+               ^
+psql:pg_tests/compatible/cascade.sql:1901: ERROR:  table "b4" does not exist
+psql:pg_tests/compatible/cascade.sql:1904: ERROR:  relation "a" does not exist
+LINE 1: INSERT INTO a VALUES ('original'), ('untouched'), ('b1-defau...
+                    ^
+psql:pg_tests/compatible/cascade.sql:1905: ERROR:  relation "b1" does not exist
+LINE 1: INSERT INTO b1 VALUES ('b1-pk1', 'original'), ('b1-pk2', 'un...
+                    ^
+psql:pg_tests/compatible/cascade.sql:1906: ERROR:  relation "b2" does not exist
+LINE 1: INSERT INTO b2 VALUES ('b2-pk1', 'original'), ('b2-pk2', 'un...
+                    ^
+psql:pg_tests/compatible/cascade.sql:1912: ERROR:  relation "c1" does not exist
+LINE 1: INSERT INTO c1 VALUES
+                    ^
+psql:pg_tests/compatible/cascade.sql:1918: ERROR:  relation "c2" does not exist
+LINE 1: INSERT INTO c2 VALUES
+                    ^
+psql:pg_tests/compatible/cascade.sql:1924: ERROR:  relation "c3" does not exist
+LINE 1: INSERT INTO c3 VALUES
+                    ^
+psql:pg_tests/compatible/cascade.sql:1927: ERROR:  relation "a" does not exist
+LINE 1: UPDATE a SET id = 'updated' WHERE id = 'original';
+               ^
+psql:pg_tests/compatible/cascade.sql:1939: ERROR:  relation "b1" does not exist
+LINE 1: SELECT id, update_cascade FROM b1
+                                       ^
+psql:pg_tests/compatible/cascade.sql:1942: ERROR:  table "c3" does not exist
+psql:pg_tests/compatible/cascade.sql:1945: ERROR:  relation "a" does not exist
+LINE 1: INSERT INTO a VALUES ('original'), ('untouched'), ('b1-defau...
+                    ^
+psql:pg_tests/compatible/cascade.sql:1946: ERROR:  relation "b1" does not exist
+LINE 1: INSERT INTO b1 VALUES ('b1-pk1', 'original'), ('b1-pk2', 'un...
+                    ^
+psql:pg_tests/compatible/cascade.sql:1947: ERROR:  relation "b2" does not exist
+LINE 1: INSERT INTO b2 VALUES ('b2-pk1', 'original'), ('b2-pk2', 'un...
+                    ^
+psql:pg_tests/compatible/cascade.sql:1953: ERROR:  relation "c1" does not exist
+LINE 1: INSERT INTO c1 VALUES
+                    ^
+psql:pg_tests/compatible/cascade.sql:1959: ERROR:  relation "c2" does not exist
+LINE 1: INSERT INTO c2 VALUES
+                    ^
+psql:pg_tests/compatible/cascade.sql:1965: ERROR:  relation "c3" does not exist
+LINE 1: INSERT INTO c3 VALUES
+                    ^
+psql:pg_tests/compatible/cascade.sql:1968: ERROR:  relation "a" does not exist
+LINE 1: UPDATE a SET id = 'updated' WHERE id = 'original';
+               ^
+psql:pg_tests/compatible/cascade.sql:1971: ERROR:  table "c3" does not exist
+psql:pg_tests/compatible/cascade.sql:1974: ERROR:  relation "a" does not exist
+LINE 1: INSERT INTO a VALUES ('original'), ('untouched'), ('default'...
+                    ^
+psql:pg_tests/compatible/cascade.sql:1975: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b VALUES ('b1', 'original'), ('b2', 'untouched')...
+                    ^
+psql:pg_tests/compatible/cascade.sql:1981: ERROR:  relation "c" does not exist
+LINE 1: INSERT INTO c VALUES
+                    ^
+psql:pg_tests/compatible/cascade.sql:1984: ERROR:  relation "a" does not exist
+LINE 1: UPDATE a SET id = 'updated' WHERE id = 'original';
+               ^
+psql:pg_tests/compatible/cascade.sql:1989: ERROR:  relation "b" does not exist
+LINE 1: SELECT id, a_id FROM b
+                             ^
+psql:pg_tests/compatible/cascade.sql:1992: ERROR:  table "c" does not exist
+psql:pg_tests/compatible/cascade.sql:1995: ERROR:  relation "a" does not exist
+LINE 1: INSERT INTO a VALUES ('original'), ('untouched'), ('default'...
+                    ^
+psql:pg_tests/compatible/cascade.sql:1996: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b VALUES ('b1', 'original'), ('b2', 'untouched')...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2002: ERROR:  relation "c" does not exist
+LINE 1: INSERT INTO c VALUES
+                    ^
+psql:pg_tests/compatible/cascade.sql:2005: ERROR:  relation "a" does not exist
+LINE 1: UPDATE a SET id = 'updated' WHERE id = 'original';
+               ^
+psql:pg_tests/compatible/cascade.sql:2008: ERROR:  table "c" does not exist
+psql:pg_tests/compatible/cascade.sql:2011: ERROR:  relation "a" does not exist
+LINE 1: INSERT INTO a VALUES ('original'), ('default');
+                    ^
+psql:pg_tests/compatible/cascade.sql:2012: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b VALUES ('b1', 'original'), ('b2', 'default');
+                    ^
+psql:pg_tests/compatible/cascade.sql:2015: ERROR:  relation "a" does not exist
+LINE 1: UPDATE a SET id = 'updated' WHERE id = 'original';
+               ^
+psql:pg_tests/compatible/cascade.sql:2018: ERROR:  table "b" does not exist
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+DELETE 1
+ a  | b 
+----+---
+ 20 |  
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 4
+INSERT 0 4
+ x | y 
+---+---
+ 2 |  
+ 3 | 3
+   | 1
+   |  
+(4 rows)
+
+DELETE 4
+ x | y 
+---+---
+ 2 |  
+   | 1
+   |  
+(3 rows)
+
+ x | y 
+---+---
+(0 rows)
+
+TRUNCATE TABLE
+INSERT 0 4
+INSERT 0 4
+UPDATE 2
+UPDATE 2
+ x  | y  
+----+----
+  5 |   
+ 60 | 60
+    |  4
+    |   
+(4 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 4
+INSERT 0 2
+ x | y 
+---+---
+ 3 | 3
+   |  
+(2 rows)
+
+DELETE 4
+ x | y 
+---+---
+   |  
+(1 row)
+
+ x | y 
+---+---
+(0 rows)
+
+TRUNCATE TABLE
+INSERT 0 4
+INSERT 0 2
+UPDATE 2
+UPDATE 2
+ x  | y  
+----+----
+ 60 | 60
+    |   
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/cascade.sql:2183: ERROR:  insert or update on table "c" violates foreign key constraint "c_x_y_fkey"
+DETAIL:  MATCH FULL does not allow mixing of null and nonnull key values.
+psql:pg_tests/compatible/cascade.sql:2186: ERROR:  insert or update on table "c" violates foreign key constraint "c_x_y_fkey"
+DETAIL:  MATCH FULL does not allow mixing of null and nonnull key values.
+ x | y 
+---+---
+ 2 | 2
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+DELETE 1
+psql:pg_tests/compatible/cascade.sql:2226: ERROR:  insert or update on table "c" violates foreign key constraint "c_x_y_fkey"
+DETAIL:  MATCH FULL does not allow mixing of null and nonnull key values.
+psql:pg_tests/compatible/cascade.sql:2229: ERROR:  insert or update on table "c" violates foreign key constraint "c_x_y_fkey"
+DETAIL:  MATCH FULL does not allow mixing of null and nonnull key values.
+UPDATE 1
+ x | y 
+---+---
+   |  
+   |  
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+ALTER TABLE
+psql:pg_tests/compatible/cascade.sql:2253: ERROR:  new row for relation "self_ab" violates check constraint "self_ab_b_check"
+DETAIL:  Failing row contains (1, 1).
+CONTEXT:  SQL statement "UPDATE ONLY "public"."self_ab" SET "b" = DEFAULT WHERE $1 OPERATOR(pg_catalog.=) "b""
+CREATE TABLE
+INSERT 0 2
+ALTER TABLE
+psql:pg_tests/compatible/cascade.sql:2265: ERROR:  new row for relation "self_ab" violates check constraint "self_ab_b_check"
+DETAIL:  Failing row contains (1, 1).
+CONTEXT:  SQL statement "UPDATE ONLY "public"."self_ab" SET "b" = DEFAULT WHERE $1 OPERATOR(pg_catalog.=) "b""
+DROP TABLE
+CREATE TABLE
+INSERT 0 4
+ALTER TABLE
+ALTER TABLE
+UPDATE 1
+ a | b | c | d 
+---+---+---+---
+ 2 | 3 | 4 | 2
+ 3 | 4 | 2 | 2
+ 4 | 1 | 2 | 3
+ 5 | 2 | 3 | 4
+(4 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 4
+INSERT 0 2
+ pk | p  
+----+----
+  1 |  1
+  2 |  1
+  3 | 20
+  4 | 20
+(4 rows)
+
+INSERT 0 2
+ pk | p  
+----+----
+  3 | 20
+  4 | 20
+  1 | 10
+  2 | 10
+(4 rows)
+
+INSERT 0 1
+ pk | p  
+----+----
+  1 | 10
+  2 | 10
+  3 | 50
+  4 | 50
+(4 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 4
+INSERT 0 1
+ pk | p | q 
+----+---+---
+  3 | 2 | 2
+  4 | 2 | 2
+  1 | 1 |  
+  2 | 1 |  
+(4 rows)
+
+INSERT 0 1
+ pk | p | q  
+----+---+----
+  1 | 1 |   
+  2 | 1 |   
+  3 |   | 20
+  4 |   | 20
+(4 rows)
+
+INSERT 0 1
+ pk | p | q  
+----+---+----
+  1 | 1 |   
+  2 | 1 |   
+  3 |   | 20
+  4 |   | 20
+(4 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 4
+INSERT 0 2
+ pk | p 
+----+---
+  1 | 1
+  2 | 1
+  3 |  
+  4 |  
+(4 rows)
+
+INSERT 0 1
+ pk | p 
+----+---
+  1 | 1
+  2 | 1
+  3 |  
+  4 |  
+(4 rows)
+
+INSERT 0 1
+ pk | p 
+----+---
+  3 |  
+  4 |  
+  1 |  
+  2 |  
+(4 rows)
+
+INSERT 0 1
+ pk | p 
+----+---
+  3 |  
+  4 |  
+  1 |  
+  2 |  
+(4 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 4
+INSERT 0 1
+ pk | p 
+----+---
+  1 | 1
+  2 | 1
+  3 | 2
+  4 | 2
+(4 rows)
+
+INSERT 0 1
+ pk | p 
+----+---
+  1 | 1
+  2 | 1
+  3 | 1
+  4 | 1
+(4 rows)
+
+INSERT 0 2
+ pk | p 
+----+---
+  1 | 1
+  2 | 1
+  3 | 1
+  4 | 1
+(4 rows)
+
+psql:pg_tests/compatible/cascade.sql:2423: ERROR:  update or delete on table "parent" violates foreign key constraint "child_p_fkey" on table "child"
+DETAIL:  Key (p)=(1) is still referenced from table "child".
+DROP TABLE
+BEGIN
+CREATE TABLE
+CREATE TABLE
+INSERT 0 4
+INSERT 0 14
+COMMIT
+DELETE 2
+ p | q 
+---+---
+   |  
+   | 1
+   | 2
+   | 3
+ 1 |  
+ 2 |  
+ 3 |  
+ 2 | 2
+ 2 | 2
+ 3 | 3
+ 3 | 3
+(11 rows)
+
+DELETE 1
+ p | q 
+---+---
+   |  
+   | 1
+   | 2
+   | 3
+ 1 |  
+ 2 |  
+ 3 |  
+ 3 | 3
+ 3 | 3
+(9 rows)
+
+DELETE 1
+ p | q 
+---+---
+   |  
+   | 1
+   | 2
+   | 3
+ 1 |  
+ 2 |  
+ 3 |  
+(7 rows)
+
+DROP TABLE
+BEGIN
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+COMMIT
+PREPARE
+DELETE 1
+ a | b 
+---+---
+ 3 | 4
+(1 row)
+
+ a | p_a 
+---+-----
+ 3 |   3
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+DELETE 0
+BEGIN
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+COMMIT
+UPDATE 1
