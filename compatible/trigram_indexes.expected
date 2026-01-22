@@ -1,0 +1,246 @@
+CREATE EXTENSION
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+INSERT 0 4
+ a |    t     
+---+----------
+ 1 | foozoopa
+ 2 | Foo
+(2 rows)
+
+ a |  t  
+---+-----
+ 2 | Foo
+(1 row)
+
+ a |  t  
+---+-----
+ 2 | Foo
+(1 row)
+
+ a |  t  
+---+-----
+ 2 | Foo
+(1 row)
+
+ a |    t     
+---+----------
+ 1 | foozoopa
+(1 row)
+
+ a |    t     
+---+----------
+ 1 | foozoopa
+(1 row)
+
+ a | t 
+---+---
+(0 rows)
+
+ a | t 
+---+---
+(0 rows)
+
+ a |    t     
+---+----------
+ 1 | foozoopa
+ 3 | blah
+(2 rows)
+
+ a | t 
+---+---
+(0 rows)
+
+ a | t 
+---+---
+(0 rows)
+
+ a |    t     
+---+----------
+ 4 | Приветhi
+(1 row)
+
+ a |    t     
+---+----------
+ 4 | Приветhi
+(1 row)
+
+ a |    t     
+---+----------
+ 4 | Приветhi
+(1 row)
+
+ a |    t     
+---+----------
+ 4 | Приветhi
+(1 row)
+
+ a |    t     
+---+----------
+ 4 | Приветhi
+(1 row)
+
+ similarity | a |  t   
+------------+---+------
+ 0.42857143 | 3 | blah
+(1 row)
+
+ similarity | a | t 
+------------+---+---
+(0 rows)
+
+ similarity | a |    t     
+------------+---+----------
+        0.4 | 1 | foozoopa
+        0.5 | 2 | Foo
+(2 rows)
+
+ similarity | a |  t  
+------------+---+-----
+        0.4 | 2 | Foo
+(1 row)
+
+SET
+ similarity | a |  t  
+------------+---+-----
+        0.5 | 2 | Foo
+(1 row)
+
+SET
+ similarity | a |    t     
+------------+---+----------
+        0.1 | 1 | foozoopa
+        0.2 | 2 | Foo
+(2 rows)
+
+ a |  t  
+---+-----
+ 2 | Foo
+(1 row)
+
+ a | t 
+---+---
+(0 rows)
+
+ a |    t     
+---+----------
+ 1 | foozoopa
+(1 row)
+
+ a |    t     
+---+----------
+ 1 | foozoopa
+ 2 | Foo
+(2 rows)
+
+CREATE TABLE
+INSERT 0 2
+CREATE INDEX
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 2
+ALTER TABLE
+ALTER TABLE
+SELECT 1000
+ANALYZE
+CREATE INDEX
+     a      
+------------
+ foobar 111
+ foobar 367
+ foobar 623
+ foobar 879
+(4 rows)
+
+ANALYZE
+     a      
+------------
+ foobar 111
+ foobar 367
+ foobar 623
+ foobar 879
+(4 rows)
+
+CREATE INDEX
+ANALYZE
+     a      
+------------
+ foobar 111
+ foobar 367
+ foobar 623
+ foobar 879
+(4 rows)
+
+     a      
+------------
+ foobar 367
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+                              create_statement                              
+----------------------------------------------------------------------------
+ CREATE INDEX t86614_a_trgm_idx ON public.t86614 USING gin (a gin_trgm_ops)
+(1 row)
+
+                              create_statement                              
+----------------------------------------------------------------------------
+ CREATE INDEX t86614_a_trgm_idx ON public.t86614 USING gin (a gin_trgm_ops)
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+SET
+CREATE TABLE
+CREATE INDEX
+                                create_statement                                
+--------------------------------------------------------------------------------
+ CREATE INDEX t_112713_t_trgm_idx ON public.t_112713 USING gin (t gin_trgm_ops)
+(1 row)
+
+                                create_statement                                
+--------------------------------------------------------------------------------
+ CREATE INDEX t_112713_t_trgm_idx ON public.t_112713 USING gin (t gin_trgm_ops)
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+ col1_1 
+--------
+(0 rows)
+
+SET
+CREATE TABLE
+CREATE INDEX
+INSERT 0 3
+SET
+ a |  b  
+---+-----
+ 1 | foo
+ 2 | bar
+ 3 | 
+(3 rows)
+
+SET
+ a |  b  
+---+-----
+ 1 | foo
+(1 row)
+
