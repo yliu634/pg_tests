@@ -1,6 +1,185 @@
 -- PostgreSQL compatible tests from plpgsql_builtins
 -- 111 tests
 
+-- CockroachDB exposes helper functions under `crdb_internal.*` for its PL/pgSQL
+-- implementation. PostgreSQL does not have these functions, so provide small
+-- emulations to keep this test file runnable and to capture equivalent output.
+\set ON_ERROR_STOP 0
+
+CREATE SCHEMA IF NOT EXISTS crdb_internal;
+CREATE SEQUENCE IF NOT EXISTS crdb_internal.unnamed_portal_seq;
+
+CREATE OR REPLACE FUNCTION crdb_internal.plpgsql_gen_cursor_name(name TEXT)
+RETURNS TEXT
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  candidate TEXT;
+  n BIGINT;
+BEGIN
+  IF name IS NOT NULL AND name <> '' THEN
+    RETURN name;
+  END IF;
+
+  LOOP
+    n := nextval('crdb_internal.unnamed_portal_seq');
+    candidate := format('<unnamed portal %s>', n);
+    IF NOT EXISTS (SELECT 1 FROM pg_cursors WHERE pg_cursors.name = candidate) THEN
+      RETURN candidate;
+    END IF;
+  END LOOP;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION crdb_internal.plpgsql_close(name TEXT)
+RETURNS BOOL
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  IF name IS NULL THEN
+    RETURN NULL;
+  END IF;
+
+  BEGIN
+    EXECUTE format('CLOSE %I', name);
+    RETURN true;
+  EXCEPTION
+    WHEN undefined_cursor THEN
+      RETURN false;
+  END;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION crdb_internal.plpgsql_raise(
+  severity TEXT,
+  msg TEXT,
+  detail TEXT,
+  hint TEXT,
+  sqlstate TEXT
+)
+RETURNS TEXT
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  sev TEXT := upper(coalesce(severity, ''));
+  errcode TEXT := NULLIF(sqlstate, '');
+BEGIN
+  IF sev NOT IN ('DEBUG1', 'LOG', 'INFO', 'NOTICE', 'WARNING', 'ERROR') THEN
+    RAISE EXCEPTION 'severity % is invalid', severity USING ERRCODE = '22023';
+  END IF;
+
+  IF sev = 'ERROR' THEN
+    RAISE EXCEPTION '%', msg
+      USING
+        ERRCODE = COALESCE(errcode, 'XXUUU'),
+        DETAIL = NULLIF(detail, ''),
+        HINT = NULLIF(hint, '');
+  ELSIF sev = 'DEBUG1' THEN
+    RAISE DEBUG '%', msg
+      USING ERRCODE = errcode, DETAIL = NULLIF(detail, ''), HINT = NULLIF(hint, '');
+  ELSIF sev = 'LOG' THEN
+    RAISE LOG '%', msg
+      USING ERRCODE = errcode, DETAIL = NULLIF(detail, ''), HINT = NULLIF(hint, '');
+  ELSIF sev = 'INFO' THEN
+    RAISE INFO '%', msg
+      USING ERRCODE = errcode, DETAIL = NULLIF(detail, ''), HINT = NULLIF(hint, '');
+  ELSIF sev = 'NOTICE' THEN
+    RAISE NOTICE '%', msg
+      USING ERRCODE = errcode, DETAIL = NULLIF(detail, ''), HINT = NULLIF(hint, '');
+  ELSIF sev = 'WARNING' THEN
+    RAISE WARNING '%', msg
+      USING ERRCODE = errcode, DETAIL = NULLIF(detail, ''), HINT = NULLIF(hint, '');
+  END IF;
+
+  RETURN msg;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION crdb_internal.plpgsql_fetch(
+  cursor_name TEXT,
+  direction INT,
+  count INT,
+  result_types RECORD
+)
+RETURNS JSONB
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  rec RECORD;
+  out JSONB := '[]'::jsonb;
+  i INT;
+BEGIN
+  -- Match Cockroach behavior loosely: NULL inputs yield NULL.
+  IF cursor_name IS NULL OR direction IS NULL OR count IS NULL OR result_types IS NULL THEN
+    RETURN NULL;
+  END IF;
+
+  IF direction = 0 THEN
+    IF count = 0 THEN
+      EXECUTE format('FETCH NEXT FROM %I', cursor_name) INTO rec;
+      IF NOT FOUND THEN
+        RETURN '[]'::jsonb;
+      END IF;
+      RETURN jsonb_build_array(to_jsonb(rec));
+    ELSIF count > 0 THEN
+      FOR i IN 1..count LOOP
+        EXECUTE format('FETCH NEXT FROM %I', cursor_name) INTO rec;
+        EXIT WHEN NOT FOUND;
+        out := out || jsonb_build_array(to_jsonb(rec));
+      END LOOP;
+      RETURN out;
+    ELSE
+      FOR i IN 1..(-count) LOOP
+        EXECUTE format('FETCH PRIOR FROM %I', cursor_name) INTO rec;
+        EXIT WHEN NOT FOUND;
+        out := out || jsonb_build_array(to_jsonb(rec));
+      END LOOP;
+      RETURN out;
+    END IF;
+  ELSIF direction = 1 THEN
+    EXECUTE format('FETCH RELATIVE %s FROM %I', count, cursor_name) INTO rec;
+    IF NOT FOUND THEN
+      RETURN '[]'::jsonb;
+    END IF;
+    RETURN jsonb_build_array(to_jsonb(rec));
+  ELSIF direction = 2 THEN
+    EXECUTE format('FETCH ABSOLUTE %s FROM %I', count, cursor_name) INTO rec;
+    IF NOT FOUND THEN
+      RETURN '[]'::jsonb;
+    END IF;
+    RETURN jsonb_build_array(to_jsonb(rec));
+  ELSIF direction = 3 THEN
+    EXECUTE format('FETCH FIRST FROM %I', cursor_name) INTO rec;
+    IF NOT FOUND THEN
+      RETURN '[]'::jsonb;
+    END IF;
+    RETURN jsonb_build_array(to_jsonb(rec));
+  ELSIF direction = 4 THEN
+    EXECUTE format('FETCH LAST FROM %I', cursor_name) INTO rec;
+    IF NOT FOUND THEN
+      RETURN '[]'::jsonb;
+    END IF;
+    RETURN jsonb_build_array(to_jsonb(rec));
+  ELSIF direction = 5 THEN
+    LOOP
+      EXECUTE format('FETCH NEXT FROM %I', cursor_name) INTO rec;
+      EXIT WHEN NOT FOUND;
+      out := out || jsonb_build_array(to_jsonb(rec));
+    END LOOP;
+    RETURN out;
+  ELSIF direction = 6 THEN
+    LOOP
+      EXECUTE format('FETCH PRIOR FROM %I', cursor_name) INTO rec;
+      EXIT WHEN NOT FOUND;
+      out := out || jsonb_build_array(to_jsonb(rec));
+    END LOOP;
+    RETURN out;
+  END IF;
+
+  RAISE EXCEPTION 'invalid fetch direction %', direction;
+END;
+$$;
+
 -- Test 1: statement (line 3)
 CREATE TABLE xy (x INT, y INT);
 INSERT INTO xy VALUES (1, 2), (3, 4), (5, 6);
@@ -160,51 +339,51 @@ SELECT crdb_internal.plpgsql_raise('NOTICE', '', '', '', '');
 -- Test 52: query (line 280)
 SELECT crdb_internal.plpgsql_raise('NOTICE', '', '', '', 'this_is_not_valid');
 
-query error pgcode 42704 pq: unrecognized exception condition: \"-50\"
+-- query error pgcode 42704 pq: unrecognized exception condition: \"-50\"
 SELECT crdb_internal.plpgsql_raise('NOTICE', '', '', '', '-50');
 
-query error pgcode 22023 pq: severity NOTE is invalid
+-- query error pgcode 22023 pq: severity NOTE is invalid
 SELECT crdb_internal.plpgsql_raise('NOTE', '', '', '', '-50');
 
-# Test severity ERROR.
-query error pgcode XXUUU pq: foo
+-- Test severity ERROR.
+-- query error pgcode XXUUU pq: foo
 SELECT crdb_internal.plpgsql_raise('ERROR', 'foo', '', '', '');
 
-query error pgcode 12345 pq: foo
+-- query error pgcode 12345 pq: foo
 SELECT crdb_internal.plpgsql_raise('ERROR', 'foo', '', '', '12345');
 
-query error pgcode 12345 pq: msg\nHINT: hint\nDETAIL: detail
+-- query error pgcode 12345 pq: msg\nHINT: hint\nDETAIL: detail
 SELECT crdb_internal.plpgsql_raise('ERROR', 'msg', 'detail', 'hint', '12345');
 
-query error pgcode XXUUU pq:
+-- query error pgcode XXUUU pq:
 SELECT crdb_internal.plpgsql_raise('ERROR', '', '', '', '');
 
-# Testing crdb_internal.plpgsql_fetch.
-#
-# Parameters:
-#   Name:         RefCursor
-#   Direction:    Int
-#   Count:        Int
-#   Result Types: Tuple
-#
-# Codes for FETCH directions:
-#   0: FORWARD, BACKWARD, NEXT, PRIOR
-#   1: RELATIVE
-#   2: ABSOLUTE
-#   3: FIRST
-#   4: LAST
-#   5: ALL
-#   6: BACKWARD ALL
-#
-statement error pgcode 34000 pq: cursor \"foo\" does not exist
+-- Testing crdb_internal.plpgsql_fetch.
+--
+-- Parameters:
+--   Name:         RefCursor
+--   Direction:    Int
+--   Count:        Int
+--   Result Types: Tuple
+--
+-- Codes for FETCH directions:
+--   0: FORWARD, BACKWARD, NEXT, PRIOR
+--   1: RELATIVE
+--   2: ABSOLUTE
+--   3: FIRST
+--   4: LAST
+--   5: ALL
+--   6: BACKWARD ALL
+--
+-- statement error pgcode 34000 pq: cursor \"foo\" does not exist
 SELECT crdb_internal.plpgsql_fetch('foo', 0, 1, (NULL::INT, NULL::INT));
 
-# Retrieve rows in descending order.
-statement ok
+-- Retrieve rows in descending order.
+-- statement ok
 BEGIN;
 DECLARE foo CURSOR FOR SELECT * FROM xy ORDER BY x DESC;
 
-query T
+-- query T
 SELECT crdb_internal.plpgsql_fetch('foo', 0, 1, (NULL::INT, NULL::INT));
 
 -- Test 53: query (line 332)
@@ -222,28 +401,28 @@ SELECT crdb_internal.plpgsql_fetch('foo', 0, 1, (NULL::TEXT, NULL::TEXT, NULL::B
 -- Test 57: statement (line 360)
 ABORT;
 BEGIN;
-DECLARE foo CURSOR FOR SELECT * FROM (VALUES ('abc'), ('100'), ('1.01'), ('1.01'), ('t'), ('1'), ('a'));
+DECLARE foo CURSOR FOR SELECT * FROM (VALUES ('abc'), ('100'), ('1.01'), ('1.01'), ('t'), ('1'), ('a')) AS t(v);
 
 -- Test 58: query (line 366)
-SELECT (crdb_internal.plpgsql_fetch('foo', 0, 1, (NULL::BYTES,))).*;
+SELECT crdb_internal.plpgsql_fetch('foo', 0, 1, ROW(NULL::BYTEA));
 
 -- Test 59: query (line 372)
-SELECT (crdb_internal.plpgsql_fetch('foo', 0, 1, (NULL::INT,))).*;
+SELECT crdb_internal.plpgsql_fetch('foo', 0, 1, ROW(NULL::INT));
 
 -- Test 60: query (line 378)
-SELECT (crdb_internal.plpgsql_fetch('foo', 0, 1, (NULL::FLOAT,))).*;
+SELECT crdb_internal.plpgsql_fetch('foo', 0, 1, ROW(NULL::FLOAT));
 
 -- Test 61: query (line 384)
-SELECT (crdb_internal.plpgsql_fetch('foo', 0, 1, (NULL::DECIMAL,))).*;
+SELECT crdb_internal.plpgsql_fetch('foo', 0, 1, ROW(NULL::DECIMAL));
 
 -- Test 62: query (line 390)
-SELECT (crdb_internal.plpgsql_fetch('foo', 0, 1, (NULL::BOOL,))).*;
+SELECT crdb_internal.plpgsql_fetch('foo', 0, 1, ROW(NULL::BOOL));
 
 -- Test 63: query (line 396)
-SELECT (crdb_internal.plpgsql_fetch('foo', 0, 1, (NULL::BIT,))).*;
+SELECT crdb_internal.plpgsql_fetch('foo', 0, 1, ROW(NULL::BIT));
 
 -- Test 64: query (line 402)
-SELECT (crdb_internal.plpgsql_fetch('foo', 0, 1, (NULL::CHAR,))).*;
+SELECT crdb_internal.plpgsql_fetch('foo', 0, 1, ROW(NULL::CHAR));
 
 -- Test 65: statement (line 407)
 ABORT;
@@ -251,19 +430,19 @@ BEGIN;
 DECLARE foo CURSOR FOR SELECT generate_series(0, 10);
 
 -- Test 66: query (line 413)
-SELECT (crdb_internal.plpgsql_fetch('foo', 0, 1, (NULL::BOOL,))).*;
+SELECT crdb_internal.plpgsql_fetch('foo', 0, 1, ROW(NULL::BOOL));
 
 -- Test 67: query (line 419)
-SELECT (crdb_internal.plpgsql_fetch('foo', 0, 1, (NULL::BIT,))).*;
+SELECT crdb_internal.plpgsql_fetch('foo', 0, 1, ROW(NULL::BIT));
 
 -- Test 68: query (line 431)
-SELECT (crdb_internal.plpgsql_fetch('foo', 0, 1, (NULL::CHAR,))).*;
+SELECT crdb_internal.plpgsql_fetch('foo', 0, 1, ROW(NULL::CHAR));
 
 -- Test 69: query (line 437)
-SELECT (crdb_internal.plpgsql_fetch('foo', 0, 1, (NULL::FLOAT,))).*;
+SELECT crdb_internal.plpgsql_fetch('foo', 0, 1, ROW(NULL::FLOAT));
 
 -- Test 70: query (line 443)
-SELECT (crdb_internal.plpgsql_fetch('foo', 0, 1, (NULL::DECIMAL,))).*;
+SELECT crdb_internal.plpgsql_fetch('foo', 0, 1, ROW(NULL::DECIMAL));
 
 -- Test 71: statement (line 448)
 ABORT;
@@ -271,10 +450,10 @@ BEGIN;
 DECLARE foo CURSOR FOR SELECT 5.0101::FLOAT FROM generate_series(1, 5);
 
 -- Test 72: query (line 454)
-SELECT (crdb_internal.plpgsql_fetch('foo', 0, 1, (NULL::DECIMAL,))).*;
+SELECT crdb_internal.plpgsql_fetch('foo', 0, 1, ROW(NULL::DECIMAL));
 
 -- Test 73: query (line 460)
-SELECT (crdb_internal.plpgsql_fetch('foo', 0, 1, (NULL::INT,))).*;
+SELECT crdb_internal.plpgsql_fetch('foo', 0, 1, ROW(NULL::INT));
 
 -- Test 74: statement (line 471)
 ABORT;
@@ -282,10 +461,10 @@ BEGIN;
 DECLARE foo CURSOR FOR SELECT 5.0101::DECIMAL FROM generate_series(1, 5);
 
 -- Test 75: query (line 477)
-SELECT (crdb_internal.plpgsql_fetch('foo', 0, 1, (NULL::FLOAT,))).*;
+SELECT crdb_internal.plpgsql_fetch('foo', 0, 1, ROW(NULL::FLOAT));
 
 -- Test 76: query (line 483)
-SELECT (crdb_internal.plpgsql_fetch('foo', 0, 1, (NULL::INT,))).*;
+SELECT crdb_internal.plpgsql_fetch('foo', 0, 1, ROW(NULL::INT));
 
 -- Test 77: statement (line 495)
 ABORT;
@@ -293,7 +472,7 @@ BEGIN;
 DECLARE foo CURSOR FOR SELECT 'abc';
 
 -- Test 78: statement (line 501)
-SELECT (crdb_internal.plpgsql_fetch('foo', 0, 1, (NULL::CHAR,))).*;
+SELECT crdb_internal.plpgsql_fetch('foo', 0, 1, ROW(NULL::CHAR));
 
 -- Test 79: statement (line 504)
 ABORT;
@@ -301,7 +480,7 @@ BEGIN;
 DECLARE foo CURSOR FOR SELECT '101';
 
 -- Test 80: statement (line 510)
-SELECT (crdb_internal.plpgsql_fetch('foo', 0, 1, (NULL::BIT,))).*;
+SELECT crdb_internal.plpgsql_fetch('foo', 0, 1, ROW(NULL::BIT));
 
 -- Test 81: statement (line 513)
 ABORT;
@@ -309,7 +488,7 @@ BEGIN;
 DECLARE foo CURSOR FOR SELECT 10000000;
 
 -- Test 82: statement (line 519)
-SELECT (crdb_internal.plpgsql_fetch('foo', 0, 1, (NULL::INT2,))).*;
+SELECT crdb_internal.plpgsql_fetch('foo', 0, 1, ROW(NULL::INT2));
 
 -- Test 83: statement (line 523)
 ABORT;
@@ -418,4 +597,3 @@ SELECT crdb_internal.plpgsql_fetch(NULL, NULL, NULL, NULL);
 
 -- Test 111: statement (line 655)
 SELECT crdb_internal.plpgsql_close(NULL);
-

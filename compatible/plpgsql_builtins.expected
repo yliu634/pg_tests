@@ -1,0 +1,449 @@
+CREATE SCHEMA
+CREATE SEQUENCE
+CREATE FUNCTION
+psql:pg_tests/compatible/plpgsql_builtins.sql:51: ERROR:  unrecognized exception condition "undefined_cursor"
+CONTEXT:  compilation of PL/pgSQL function "plpgsql_close" near line 10
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE TABLE
+INSERT 0 3
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 1>
+(1 row)
+
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 2>
+(1 row)
+
+BEGIN
+DECLARE CURSOR
+        name        
+--------------------
+ <unnamed portal 3>
+(1 row)
+
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 4>
+(1 row)
+
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 5>
+(1 row)
+
+CLOSE CURSOR
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 6>
+(1 row)
+
+ROLLBACK
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 7>
+(1 row)
+
+ plpgsql_gen_cursor_name 
+-------------------------
+ foo
+(1 row)
+
+ plpgsql_gen_cursor_name 
+-------------------------
+ bar
+(1 row)
+
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 8>
+(1 row)
+
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 9>
+(1 row)
+
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 10>
+(1 row)
+
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 11>
+(1 row)
+
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 12>
+(1 row)
+
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 13>
+(1 row)
+
+BEGIN
+DECLARE CURSOR
+ name 
+------
+ foo
+(1 row)
+
+psql:pg_tests/compatible/plpgsql_builtins.sql:250: ERROR:  function crdb_internal.plpgsql_close(unknown) does not exist
+LINE 1: SELECT crdb_internal.plpgsql_close('foo');
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/plpgsql_builtins.sql:253: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/plpgsql_builtins.sql:259: ERROR:  function crdb_internal.plpgsql_close(unknown) does not exist
+LINE 1: SELECT crdb_internal.plpgsql_close('foo');
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/plpgsql_builtins.sql:262: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 17 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:265: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 20 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:268: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 23 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:271: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 26 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:274: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 29 at RAISE
+SET
+psql:pg_tests/compatible/plpgsql_builtins.sql:280: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 17 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:283: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 20 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:286: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 23 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:289: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 26 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:292: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 29 at RAISE
+SET
+psql:pg_tests/compatible/plpgsql_builtins.sql:298: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 17 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:301: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 20 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:304: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 23 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:307: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 26 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:310: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 29 at RAISE
+RESET
+psql:pg_tests/compatible/plpgsql_builtins.sql:316: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 26 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:319: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 26 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:322: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 26 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:325: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 29 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:328: NOTICE:  this is a message
+DETAIL:  this is a detail
+HINT:  this is a hint
+   plpgsql_raise   
+-------------------
+ this is a message
+(1 row)
+
+psql:pg_tests/compatible/plpgsql_builtins.sql:331: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 26 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:334: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 26 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:337: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 26 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:340: ERROR:  unrecognized exception condition "this_is_not_valid"
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 26 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:343: ERROR:  unrecognized exception condition "-50"
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 26 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:346: ERROR:  severity NOTE is invalid
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 7 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:350: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 11 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:353: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 11 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:356: ERROR:  msg
+DETAIL:  detail
+HINT:  hint
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 11 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:359: ERROR:  RAISE statement option cannot be null
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 11 at RAISE
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+INSERT 0 5
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+MOVE 3
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+MOVE 3
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+psql:pg_tests/compatible/plpgsql_builtins.sql:599: ERROR:  function crdb_internal.plpgsql_close(unknown) does not exist
+LINE 1: SELECT crdb_internal.plpgsql_close(NULL);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
