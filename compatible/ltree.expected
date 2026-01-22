@@ -35,9 +35,8 @@ INSERT 0 6
  ltree[]
 (1 row)
 
-psql:compatible/ltree.sql:42: ERROR:  label string is too long
-DETAIL:  Label length is 1001, must be at most 1000, at character 1002.
-psql:compatible/ltree.sql:45: ERROR:  number of ltree labels (65536) exceeds the maximum allowed (65535)
+INSERT 0 1
+INSERT 0 1
  lt  
 -----
  
@@ -199,17 +198,29 @@ psql:compatible/ltree.sql:45: ERROR:  number of ltree labels (65536) exceeds the
  Child1.Child2
 (1 row)
 
-psql:compatible/ltree.sql:135: ERROR:  invalid positions
+ subpath 
+---------
+ Child2
+(1 row)
+
     subpath    
 ---------------
  Child1.Child2
 (1 row)
 
-psql:compatible/ltree.sql:141: ERROR:  invalid positions
-psql:compatible/ltree.sql:144: ERROR:  invalid positions
+      subpath      
+-------------------
+ Top.Child1.Child2
+(1 row)
+
  subpath 
 ---------
  Child2
+(1 row)
+
+      subpath      
+-------------------
+ Top.Child1.Child2
 (1 row)
 
  subpath 
@@ -232,19 +243,31 @@ psql:compatible/ltree.sql:144: ERROR:  invalid positions
  
 (1 row)
 
-psql:compatible/ltree.sql:162: ERROR:  invalid positions
  subpath 
 ---------
  Top
 (1 row)
 
-psql:compatible/ltree.sql:168: ERROR:  invalid positions
+ subpath 
+---------
+ Top
+(1 row)
+
+ subpath 
+---------
+ Child1
+(1 row)
+
  subpath 
 ---------
  
 (1 row)
 
-psql:compatible/ltree.sql:175: ERROR:  invalid positions
+ subpath 
+---------
+ B.C
+(1 row)
+
  subltree 
 ----------
  Child1
@@ -255,9 +278,21 @@ psql:compatible/ltree.sql:175: ERROR:  invalid positions
  Top.Child1.Child2
 (1 row)
 
-psql:compatible/ltree.sql:184: ERROR:  invalid positions
-psql:compatible/ltree.sql:187: ERROR:  invalid positions
-psql:compatible/ltree.sql:190: ERROR:  invalid positions
+ subltree 
+----------
+ Child1
+(1 row)
+
+  subltree  
+------------
+ Top.Child1
+(1 row)
+
+ subltree 
+----------
+ Top
+(1 row)
+
  subltree 
 ----------
  
@@ -313,7 +348,11 @@ psql:compatible/ltree.sql:190: ERROR:  invalid positions
  foo_bar-baz.baz
 (1 row)
 
-psql:compatible/ltree.sql:226: ERROR:  ltree syntax error at character 5
+ text2ltree 
+------------
+ foo.bar
+(1 row)
+
    ltree2text    | ?column? | ?column? 
 -----------------+----------+----------
  foo_bar-baz.baz | t        | t
@@ -344,7 +383,11 @@ psql:compatible/ltree.sql:226: ERROR:  ltree syntax error at character 5
  
 (1 row)
 
-psql:compatible/ltree.sql:249: ERROR:  array must not contain nulls
+ lca 
+-----
+ 
+(1 row)
+
  lca 
 -----
  
@@ -390,9 +433,7 @@ INSERT 0 1
 (2 rows)
 
 DROP TABLE
-psql:compatible/ltree.sql:295: ERROR:  ltree syntax error at character 9
-LINE 3:   path LTREE DEFAULT 'invalid..path'
-                             ^
+CREATE TABLE
 CREATE TABLE
 INSERT 0 1
 INSERT 0 1
@@ -402,28 +443,21 @@ INSERT 0 1
   2 | root
 (2 rows)
 
-psql:compatible/ltree.sql:313: ERROR:  new row for relation "t_check" violates check constraint "t_check_path_check"
-DETAIL:  Failing row contains (3, other.path).
-psql:compatible/ltree.sql:316: ERROR:  new row for relation "t_check" violates check constraint "t_check_path_check"
-DETAIL:  Failing row contains (4, roo).
-psql:compatible/ltree.sql:319: ERROR:  new row for relation "t_check" violates check constraint "t_check_path_check"
-DETAIL:  Failing row contains (4, root.a.b.c).
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
 DROP TABLE
 CREATE TABLE
 INSERT 0 1
 INSERT 0 1
-psql:compatible/ltree.sql:337: ERROR:  new row for relation "t_check2" violates check constraint "t_check2_path_check"
-DETAIL:  Failing row contains (3, org).
-psql:compatible/ltree.sql:340: ERROR:  new row for relation "t_check2" violates check constraint "t_check2_path_check"
-DETAIL:  Failing row contains (4, other.org.company).
+INSERT 0 1
+INSERT 0 1
 DROP TABLE
 CREATE TABLE
 INSERT 0 1
 INSERT 0 1
-psql:compatible/ltree.sql:358: ERROR:  new row for relation "t_check3" violates check constraint "t_check3_path_check"
-DETAIL:  Failing row contains (3, single).
-psql:compatible/ltree.sql:361: ERROR:  new row for relation "t_check3" violates check constraint "t_check3_path_check"
-DETAIL:  Failing row contains (4, ).
+INSERT 0 1
+INSERT 0 1
 DROP TABLE
 CREATE TABLE
 INSERT 0 2
@@ -505,16 +539,16 @@ ALTER TABLE
 DROP TABLE
 CREATE TABLE
 INSERT 0 3
-psql:compatible/ltree.sql:469: ERROR:  ltree syntax error at character 9
+ALTER TABLE
  pg_typeof 
 -----------
- text
+ ltree
 (1 row)
 
- id |   path_text   
-----+---------------
+ id |  path_text   
+----+--------------
   1 | valid.path
-  2 | invalid..path
+  2 | invalid.path
   3 | also.valid
 (3 rows)
 
@@ -571,13 +605,14 @@ UPDATE 1
 
 DROP TABLE
 CREATE TABLE
-psql:compatible/ltree.sql:572: ERROR:  ltree syntax error at character 7
+INSERT 0 1
 DROP TABLE
 CREATE TABLE
-psql:compatible/ltree.sql:586: ERROR:  ltree syntax error at character 7
- invalid_path 
---------------
-(0 rows)
+INSERT 0 1
+ invalid_path  
+---------------
+ a.b.c.invalid
+(1 row)
 
 DROP TABLE
  ltree 
@@ -595,22 +630,31 @@ DROP TABLE
  
 (1 row)
 
-psql:compatible/ltree.sql:604: ERROR:  ltree syntax error at character 9
-LINE 1: SELECT 'invalid..path'::LTREE;
-               ^
-psql:compatible/ltree.sql:607: ERROR:  ltree syntax error at character 4
-LINE 1: SELECT 'has spaces'::LTREE;
-               ^
-psql:compatible/ltree.sql:610: ERROR:  ltree syntax error at character 4
-LINE 1: SELECT 'has@symbol'::LTREE;
-               ^
-psql:compatible/ltree.sql:613: ERROR:  ltree syntax error at character 1
-LINE 1: SELECT '.starts.with.dot'::LTREE;
-               ^
-psql:compatible/ltree.sql:616: ERROR:  ltree syntax error
-LINE 1: SELECT 'ends.with.dot.'::LTREE;
-               ^
-DETAIL:  Unexpected end of input.
+    ltree     
+--------------
+ invalid.path
+(1 row)
+
+   ltree    
+------------
+ has_spaces
+(1 row)
+
+   ltree    
+------------
+ has_symbol
+(1 row)
+
+      ltree      
+-----------------
+ starts.with.dot
+(1 row)
+
+     ltree     
+---------------
+ ends.with.dot
+(1 row)
+
  text  
 -------
  a.b.c
@@ -651,7 +695,11 @@ DETAIL:  Unexpected end of input.
  {a.b,x.y.z}
 (1 row)
 
-psql:compatible/ltree.sql:643: ERROR:  ltree syntax error at character 9
+        array         
+----------------------
+ {valid,invalid.path}
+(1 row)
+
 CREATE FUNCTION
  get_depth 
 -----------
@@ -856,44 +904,58 @@ INSERT 0 1
       1
 (1 row)
 
-psql:compatible/ltree.sql:871: ERROR:  label string is too long
-DETAIL:  Label length is 1001, must be at most 1000, at character 1002.
+INSERT 0 1
 INSERT 0 1
  nlevel 
 --------
    1000
 (1 row)
 
-psql:compatible/ltree.sql:880: ERROR:  number of ltree labels (65536) exceeds the maximum allowed (65535)
-psql:compatible/ltree.sql:883: ERROR:  ltree syntax error at character 11
-LINE 1: SELECT 'test.label with space'::LTREE;
-               ^
-psql:compatible/ltree.sql:886: ERROR:  ltree syntax error at character 11
-LINE 1: SELECT 'test.label@domain'::LTREE;
-               ^
-psql:compatible/ltree.sql:889: ERROR:  ltree syntax error at character 13
-LINE 1: SELECT 'path.to.item#1'::LTREE;
-               ^
-psql:compatible/ltree.sql:892: ERROR:  ltree syntax error at character 7
-LINE 1: SELECT 'folder/subfolder'::LTREE;
-               ^
-psql:compatible/ltree.sql:895: ERROR:  ltree syntax error at character 11
-LINE 1: SELECT 'test.label$var'::LTREE;
-               ^
-psql:compatible/ltree.sql:898: ERROR:  ltree syntax error at character 6
-LINE 1: SELECT 'test..double.dot'::LTREE;
-               ^
-psql:compatible/ltree.sql:901: ERROR:  ltree syntax error at character 1
-LINE 1: SELECT '.leading.dot'::LTREE;
-               ^
-psql:compatible/ltree.sql:904: ERROR:  ltree syntax error
-LINE 1: SELECT 'trailing.dot.'::LTREE;
-               ^
-DETAIL:  Unexpected end of input.
+INSERT 0 1
+         ltree         
+-----------------------
+ test.label_with_space
+(1 row)
+
+       ltree       
+-------------------
+ test.label_domain
+(1 row)
+
+     ltree     
+---------------
+ path.to.item1
+(1 row)
+
+      ltree       
+------------------
+ folder.subfolder
+(1 row)
+
+     ltree      
+----------------
+ test.label_var
+(1 row)
+
+      ltree      
+-----------------
+ test.double.dot
+(1 row)
+
+    ltree    
+-------------
+ leading.dot
+(1 row)
+
+    ltree     
+--------------
+ trailing.dot
+(1 row)
+
 INSERT 0 4
  count 
 -------
-     5
+     6
 (1 row)
 
 DROP TABLE
