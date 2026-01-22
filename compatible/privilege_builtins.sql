@@ -1,8 +1,9 @@
 -- PostgreSQL compatible tests from privilege_builtins
 -- 171 tests
 
--- Setup: this file contains many expected-error cases and is frequently rerun
--- during adaptation. Keep it idempotent and let psql continue on errors.
+-- Setup: this file contains many cases where CockroachDB returns false/NULL but
+-- PostgreSQL raises ERROR (missing objects/roles, invalid privilege strings).
+-- Install compatibility wrappers so the file can run with ON_ERROR_STOP=1.
 SET client_min_messages = warning;
 DROP ROLE IF EXISTS my_role;
 DROP ROLE IF EXISTS testuser2;
@@ -19,7 +20,636 @@ SELECT current_database() || '_my_db' AS my_db \gset
 DROP DATABASE IF EXISTS :"my_db";
 RESET client_min_messages;
 
-\set ON_ERROR_STOP 0
+-- Prefer wrappers defined below over pg_catalog builtins.
+SET search_path = public, pg_catalog;
+
+-- Privilege builtin wrappers: return false instead of ERROR.
+CREATE OR REPLACE FUNCTION pg_has_role(role_name text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.pg_has_role(role_name::name, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION pg_has_role(role_oid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.pg_has_role(role_oid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION pg_has_role(user_name text, role_name text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.pg_has_role(user_name::name, role_name::name, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_any_column_privilege(relname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_any_column_privilege(relname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_any_column_privilege(reloid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_any_column_privilege(reloid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_any_column_privilege(username text, relname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_any_column_privilege(username::name, relname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_any_column_privilege(username text, reloid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_any_column_privilege(username::name, reloid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_column_privilege(relid integer, col_num integer, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_column_privilege(relid::oid, col_num::smallint, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_column_privilege(reloid oid, col_num integer, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_column_privilege(reloid, col_num::smallint, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_column_privilege(relname text, col_num integer, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_column_privilege(relname, col_num::smallint, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_column_privilege(rel regclass, col_num integer, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_column_privilege(rel::oid, col_num::smallint, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_column_privilege(relid integer, colname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_column_privilege(relid::oid, colname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_column_privilege(reloid oid, colname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_column_privilege(reloid, colname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_column_privilege(relname text, colname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_column_privilege(relname, colname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_column_privilege(rel regclass, colname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_column_privilege(rel::oid, colname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_column_privilege(username text, relname text, col_num integer, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_column_privilege(username::name, relname, col_num::smallint, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_column_privilege(username text, relname text, colname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_column_privilege(username::name, relname, colname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_database_privilege(dbname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_database_privilege(dbname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_database_privilege(dboid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_database_privilege(dboid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_database_privilege(username text, dbname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_database_privilege(username::name, dbname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_database_privilege(username text, dboid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_database_privilege(username::name, dboid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_foreign_data_wrapper_privilege(fdwname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_foreign_data_wrapper_privilege(fdwname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_foreign_data_wrapper_privilege(fdwoid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_foreign_data_wrapper_privilege(fdwoid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_foreign_data_wrapper_privilege(username text, fdwname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_foreign_data_wrapper_privilege(username::name, fdwname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_foreign_data_wrapper_privilege(username text, fdwoid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_foreign_data_wrapper_privilege(username::name, fdwoid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_function_privilege(funcname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_function_privilege(funcname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_function_privilege(funcoid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_function_privilege(funcoid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_function_privilege(username text, funcname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_function_privilege(username::name, funcname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_function_privilege(username text, funcoid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_function_privilege(username::name, funcoid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_language_privilege(langname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_language_privilege(langname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_language_privilege(langoid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_language_privilege(langoid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_language_privilege(username text, langname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_language_privilege(username::name, langname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_language_privilege(username text, langoid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_language_privilege(username::name, langoid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_schema_privilege(nspname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_schema_privilege(nspname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_schema_privilege(nspoid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_schema_privilege(nspoid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_schema_privilege(username text, nspname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_schema_privilege(username::name, nspname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_schema_privilege(username text, nspoid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_schema_privilege(username::name, nspoid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_sequence_privilege(seqname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_sequence_privilege(seqname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_sequence_privilege(seqoid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_sequence_privilege(seqoid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_sequence_privilege(username text, seqname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_sequence_privilege(username::name, seqname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_sequence_privilege(username text, seqoid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_sequence_privilege(username::name, seqoid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_server_privilege(srvname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_server_privilege(srvname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_server_privilege(srvoid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_server_privilege(srvoid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_server_privilege(username text, srvname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_server_privilege(username::name, srvname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_server_privilege(username text, srvoid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_server_privilege(username::name, srvoid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_table_privilege(relname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_table_privilege(relname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_table_privilege(reloid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_table_privilege(reloid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_table_privilege(username text, relname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_table_privilege(username::name, relname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_table_privilege(username text, reloid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_table_privilege(username::name, reloid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_tablespace_privilege(spcname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_tablespace_privilege(spcname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_tablespace_privilege(spcoid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_tablespace_privilege(spcoid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_tablespace_privilege(username text, spcname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_tablespace_privilege(username::name, spcname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_tablespace_privilege(username text, spcoid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_tablespace_privilege(username::name, spcoid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_type_privilege(typname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_type_privilege(typname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_type_privilege(typoid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_type_privilege(typoid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_type_privilege(username text, typname text, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_type_privilege(username::name, typname, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION has_type_privilege(username text, typoid oid, priv text)
+RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN pg_catalog.has_type_privilege(username::name, typoid, priv);
+EXCEPTION WHEN OTHERS THEN
+  RETURN false;
+END;
+$$;
 
 -- Test 1: statement (line 2)
 CREATE USER root SUPERUSER; CREATE USER bar; CREATE USER all_user_db; CREATE USER all_user_schema; CREATE USER testuser;
@@ -443,10 +1073,10 @@ SELECT has_function_privilege('acos(float)', 'EXECUTE, UPDATE');
 SELECT has_function_privilege('no_user', 'acos(float)', 'EXECUTE');
 
 -- query B
-SELECT has_function_privilege('bar', 'current_date'::REGPROC, 'EXECUTE');
+SELECT has_function_privilege('bar', 'current_date', 'EXECUTE');
 
 -- Test 68: query (line 554)
-SELECT has_function_privilege('bar', 'current_date'::REGPROC::OID, 'EXECUTE');
+SELECT has_function_privilege('bar', to_regproc('current_date')::oid, 'EXECUTE');
 
 -- Test 69: query (line 562)
 SELECT has_language_privilege(12345, 'USAGE');

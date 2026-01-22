@@ -9,6 +9,64 @@ DROP ROLE
 DROP ROLE
 DROP DATABASE
 RESET
+SET
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
 CREATE ROLE
 CREATE ROLE
 CREATE ROLE
@@ -47,7 +105,11 @@ GRANT
  t                        | t                        | t                        | t
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:91: ERROR:  relation "does_not_exist" does not exist
+ has_any_column_privilege 
+--------------------------
+ f
+(1 row)
+
  has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege 
 --------------------------+--------------------------+--------------------------+--------------------------+--------------------------+--------------------------
  t                        | t                        | t                        | t                        | t                        | t
@@ -68,13 +130,24 @@ psql:pg_tests/compatible/privilege_builtins.sql:91: ERROR:  relation "does_not_e
  t                        | t                        | t                        | t                        | t
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:123: ERROR:  unrecognized privilege type: ""
-psql:pg_tests/compatible/privilege_builtins.sql:126: ERROR:  unrecognized privilege type: "USAGE"
-psql:pg_tests/compatible/privilege_builtins.sql:129: ERROR:  unrecognized privilege type: "USAGE"
-psql:pg_tests/compatible/privilege_builtins.sql:132: ERROR:  role "no_user" does not exist
- has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege 
---------------------------+--------------------------+--------------------------+--------------------------+--------------------------
- f                        | f                        | f                        | f                        | f
+ has_any_column_privilege 
+--------------------------
+ f
+(1 row)
+
+ has_any_column_privilege 
+--------------------------
+ f
+(1 row)
+
+ has_any_column_privilege 
+--------------------------
+ f
+(1 row)
+
+ has_any_column_privilege 
+--------------------------
+ f
 (1 row)
 
  has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege 
@@ -82,58 +155,11 @@ psql:pg_tests/compatible/privilege_builtins.sql:132: ERROR:  role "no_user" does
  f                        | f                        | f                        | f                        | f
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:152: ERROR:  function has_column_privilege(integer, integer, unknown) does not exist
-LINE 1: SELECT has_column_privilege(12345, 1, 'SELECT'),
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/privilege_builtins.sql:158: ERROR:  function has_column_privilege(oid, integer, unknown) does not exist
-LINE 1: SELECT has_column_privilege((SELECT oid FROM pg_class WHERE ...
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/privilege_builtins.sql:164: ERROR:  function has_column_privilege(oid, integer, unknown) does not exist
-LINE 1: SELECT has_column_privilege((SELECT oid FROM pg_class WHERE ...
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/privilege_builtins.sql:167: ERROR:  function has_column_privilege(unknown, integer, unknown) does not exist
-LINE 1: SELECT has_column_privilege('does_not_exist', 1, 'SELECT');
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/privilege_builtins.sql:170: ERROR:  function has_column_privilege(unknown, integer, unknown) does not exist
-LINE 1: SELECT has_column_privilege('pg_type', 100, 'SELECT');
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/privilege_builtins.sql:173: ERROR:  function has_column_privilege(regclass, integer, unknown) does not exist
-LINE 1: SELECT has_column_privilege('pg_type'::regclass, 100, 'SELEC...
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/privilege_builtins.sql:181: ERROR:  function has_column_privilege(unknown, integer, unknown) does not exist
-LINE 1: SELECT has_column_privilege('pg_type', 1, 'SELECT'),
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/privilege_builtins.sql:188: ERROR:  function has_column_privilege(unknown, integer, unknown) does not exist
-LINE 1: SELECT has_column_privilege('t', 1, 'SELECT'),
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/privilege_builtins.sql:195: ERROR:  function has_column_privilege(unknown, integer, unknown) does not exist
-LINE 1: SELECT has_column_privilege('t', 1, 'SELECT WITH GRANT OPTIO...
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/privilege_builtins.sql:198: ERROR:  function has_column_privilege(unknown, integer, unknown) does not exist
-LINE 1: SELECT has_column_privilege('t', 1, 'USAGE');
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/privilege_builtins.sql:201: ERROR:  function has_column_privilege(unknown, unknown, integer, unknown) does not exist
-LINE 1: SELECT has_column_privilege('no_user', 't', 1, 'SELECT');
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/privilege_builtins.sql:208: ERROR:  function has_column_privilege(unknown, unknown, integer, unknown) does not exist
-LINE 1: SELECT has_column_privilege('bar', 't', 1, 'SELECT'),
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/privilege_builtins.sql:215: ERROR:  function has_column_privilege(unknown, unknown, integer, unknown) does not exist
-LINE 1: SELECT has_column_privilege('bar', 't', 1, 'SELECT WITH GRAN...
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege 
+--------------------------+--------------------------+--------------------------+--------------------------+--------------------------
+ f                        | f                        | f                        | f                        | f
+(1 row)
+
  has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
 ----------------------+----------------------+----------------------+----------------------
                       |                      |                      | 
@@ -149,9 +175,86 @@ HINT:  No function matches the given name and argument types. You might need to 
  t                    | t                    | t                    | t
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:236: ERROR:  relation "does_not_exist" does not exist
-psql:pg_tests/compatible/privilege_builtins.sql:239: ERROR:  column "does not exist" of relation "pg_type" does not exist
-psql:pg_tests/compatible/privilege_builtins.sql:242: ERROR:  column "does not exist" of relation "pg_type" does not exist
+ has_column_privilege 
+----------------------
+ f
+(1 row)
+
+ has_column_privilege 
+----------------------
+ 
+(1 row)
+
+ has_column_privilege 
+----------------------
+ 
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------+----------------------+----------------------
+ t                    | t                    | t                    | t                    | t                    | t
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------+----------------------
+ t                    | t                    | t                    | t                    | t
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------+----------------------
+ t                    | t                    | t                    | t                    | t
+(1 row)
+
+ has_column_privilege 
+----------------------
+ f
+(1 row)
+
+ has_column_privilege 
+----------------------
+ f
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------+----------------------
+ f                    | f                    | f                    | f                    | f
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------+----------------------
+ f                    | f                    | f                    | f                    | f
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------
+                      |                      |                      | 
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------
+ t                    | t                    | t                    | t
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------
+ t                    | t                    | t                    | t
+(1 row)
+
+ has_column_privilege 
+----------------------
+ f
+(1 row)
+
+ has_column_privilege 
+----------------------
+ f
+(1 row)
+
+ has_column_privilege 
+----------------------
+ f
+(1 row)
+
  has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
 ----------------------+----------------------+----------------------+----------------------+----------------------+----------------------
  t                    | t                    | t                    | t                    | t                    | t
@@ -172,8 +275,16 @@ psql:pg_tests/compatible/privilege_builtins.sql:242: ERROR:  column "does not ex
  t                    | t                    | t                    | t                    | t
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:274: ERROR:  unrecognized privilege type: "USAGE"
-psql:pg_tests/compatible/privilege_builtins.sql:277: ERROR:  role "no_user" does not exist
+ has_column_privilege 
+----------------------
+ f
+(1 row)
+
+ has_column_privilege 
+----------------------
+ f
+(1 row)
+
  has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
 ----------------------+----------------------+----------------------+----------------------+----------------------
  f                    | f                    | f                    | f                    | f
@@ -199,7 +310,11 @@ psql:pg_tests/compatible/privilege_builtins.sql:277: ERROR:  role "no_user" does
  t                      | t                      | t                      | t
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:312: ERROR:  database "does_not_exist" does not exist
+ has_database_privilege 
+------------------------
+ f
+(1 row)
+
  has_database_privilege | has_database_privilege | has_database_privilege | has_database_privilege | has_database_privilege 
 ------------------------+------------------------+------------------------+------------------------+------------------------
  t                      | t                      | t                      | t                      | t
@@ -226,7 +341,8 @@ psql:pg_tests/compatible/privilege_builtins.sql:312: ERROR:  database "does_not_
  postgres
  template0
  template1
-(4 rows)
+ tmp_test_proc
+(5 rows)
 
             datname            
 -------------------------------
@@ -234,7 +350,8 @@ psql:pg_tests/compatible/privilege_builtins.sql:312: ERROR:  database "does_not_
  postgres
  template0
  template1
-(4 rows)
+ tmp_test_proc
+(5 rows)
 
             datname            
 -------------------------------
@@ -242,7 +359,8 @@ psql:pg_tests/compatible/privilege_builtins.sql:312: ERROR:  database "does_not_
  postgres
  template0
  template1
-(4 rows)
+ tmp_test_proc
+(5 rows)
 
             datname            
 -------------------------------
@@ -250,11 +368,24 @@ psql:pg_tests/compatible/privilege_builtins.sql:312: ERROR:  database "does_not_
  postgres
  template0
  template1
-(4 rows)
+ tmp_test_proc
+(5 rows)
 
-psql:pg_tests/compatible/privilege_builtins.sql:355: ERROR:  unrecognized privilege type: "UPDATE"
-psql:pg_tests/compatible/privilege_builtins.sql:358: ERROR:  unrecognized privilege type: "UPDATE"
-psql:pg_tests/compatible/privilege_builtins.sql:361: ERROR:  role "no_user" does not exist
+ has_database_privilege 
+------------------------
+ f
+(1 row)
+
+ has_database_privilege 
+------------------------
+ f
+(1 row)
+
+ has_database_privilege 
+------------------------
+ f
+(1 row)
+
  has_database_privilege | has_database_privilege | has_database_privilege | has_database_privilege | has_database_privilege | has_database_privilege 
 ------------------------+------------------------+------------------------+------------------------+------------------------+------------------------
  t                      | t                      | t                      | t                      | t                      | t
@@ -276,16 +407,36 @@ GRANT
  
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:389: ERROR:  foreign-data wrapper "does_not_exist" does not exist
-psql:pg_tests/compatible/privilege_builtins.sql:392: ERROR:  foreign-data wrapper "does_not_exist" does not exist
+ has_foreign_data_wrapper_privilege 
+------------------------------------
+ f
+(1 row)
+
+ has_foreign_data_wrapper_privilege 
+------------------------------------
+ f
+(1 row)
+
  has_foreign_data_wrapper_privilege 
 ------------------------------------
  
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:398: ERROR:  unrecognized privilege type: "UPDATE"
-psql:pg_tests/compatible/privilege_builtins.sql:401: ERROR:  unrecognized privilege type: "UPDATE"
-psql:pg_tests/compatible/privilege_builtins.sql:404: ERROR:  role "no_user" does not exist
+ has_foreign_data_wrapper_privilege 
+------------------------------------
+ f
+(1 row)
+
+ has_foreign_data_wrapper_privilege 
+------------------------------------
+ f
+(1 row)
+
+ has_foreign_data_wrapper_privilege 
+------------------------------------
+ f
+(1 row)
+
  has_foreign_data_wrapper_privilege 
 ------------------------------------
  
@@ -301,11 +452,14 @@ psql:pg_tests/compatible/privilege_builtins.sql:404: ERROR:  role "no_user" does
  t
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:416: ERROR:  expected a left parenthesis
-psql:pg_tests/compatible/privilege_builtins.sql:419: ERROR:  function "does_not_exist()" does not exist
  has_function_privilege 
 ------------------------
- t
+ f
+(1 row)
+
+ has_function_privilege 
+------------------------
+ f
 (1 row)
 
  has_function_privilege 
@@ -328,30 +482,71 @@ psql:pg_tests/compatible/privilege_builtins.sql:419: ERROR:  function "does_not_
  t
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:437: ERROR:  unrecognized privilege type: "UPDATE"
-psql:pg_tests/compatible/privilege_builtins.sql:440: ERROR:  unrecognized privilege type: "UPDATE"
-psql:pg_tests/compatible/privilege_builtins.sql:443: ERROR:  role "no_user" does not exist
-psql:pg_tests/compatible/privilege_builtins.sql:446: ERROR:  function "current_date" does not exist
-LINE 1: SELECT has_function_privilege('bar', 'current_date'::REGPROC...
-                                             ^
-psql:pg_tests/compatible/privilege_builtins.sql:449: ERROR:  function "current_date" does not exist
-LINE 1: SELECT has_function_privilege('bar', 'current_date'::REGPROC...
-                                             ^
+ has_function_privilege 
+------------------------
+ t
+(1 row)
+
+ has_function_privilege 
+------------------------
+ f
+(1 row)
+
+ has_function_privilege 
+------------------------
+ f
+(1 row)
+
+ has_function_privilege 
+------------------------
+ f
+(1 row)
+
+ has_function_privilege 
+------------------------
+ f
+(1 row)
+
+ has_function_privilege 
+------------------------
+ 
+(1 row)
+
  has_language_privilege 
 ------------------------
  
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:455: ERROR:  language "does_not_exist" does not exist
-psql:pg_tests/compatible/privilege_builtins.sql:458: ERROR:  language "does_not_exist" does not exist
+ has_language_privilege 
+------------------------
+ f
+(1 row)
+
+ has_language_privilege 
+------------------------
+ f
+(1 row)
+
  has_language_privilege 
 ------------------------
  
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:464: ERROR:  unrecognized privilege type: "UPDATE"
-psql:pg_tests/compatible/privilege_builtins.sql:467: ERROR:  unrecognized privilege type: "UPDATE"
-psql:pg_tests/compatible/privilege_builtins.sql:470: ERROR:  role "no_user" does not exist
+ has_language_privilege 
+------------------------
+ f
+(1 row)
+
+ has_language_privilege 
+------------------------
+ f
+(1 row)
+
+ has_language_privilege 
+------------------------
+ f
+(1 row)
+
  has_language_privilege 
 ------------------------
  
@@ -377,10 +572,9 @@ psql:pg_tests/compatible/privilege_builtins.sql:470: ERROR:  role "no_user" does
  t                    | t
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:492: ERROR:  schema "does_not_exist" does not exist
- has_schema_privilege | has_schema_privilege | has_schema_privilege 
-----------------------+----------------------+----------------------
- t                    | t                    | t
+ has_schema_privilege 
+----------------------
+ f
 (1 row)
 
  has_schema_privilege | has_schema_privilege | has_schema_privilege 
@@ -393,9 +587,26 @@ psql:pg_tests/compatible/privilege_builtins.sql:492: ERROR:  schema "does_not_ex
  t                    | t                    | t
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:510: ERROR:  unrecognized privilege type: "UPDATE"
-psql:pg_tests/compatible/privilege_builtins.sql:513: ERROR:  unrecognized privilege type: "UPDATE"
-psql:pg_tests/compatible/privilege_builtins.sql:516: ERROR:  role "no_user" does not exist
+ has_schema_privilege | has_schema_privilege | has_schema_privilege 
+----------------------+----------------------+----------------------
+ t                    | t                    | t
+(1 row)
+
+ has_schema_privilege 
+----------------------
+ f
+(1 row)
+
+ has_schema_privilege 
+----------------------
+ f
+(1 row)
+
+ has_schema_privilege 
+----------------------
+ f
+(1 row)
+
  has_schema_privilege | has_schema_privilege | has_schema_privilege 
 ----------------------+----------------------+----------------------
  f                    | t                    | t
@@ -451,11 +662,14 @@ psql:pg_tests/compatible/privilege_builtins.sql:516: ERROR:  role "no_user" does
  t                      | t                      | t
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:574: ERROR:  relation "does_not_exist" does not exist
-psql:pg_tests/compatible/privilege_builtins.sql:577: ERROR:  "t" is not a sequence
- has_sequence_privilege | has_sequence_privilege | has_sequence_privilege 
-------------------------+------------------------+------------------------
- t                      | t                      | t
+ has_sequence_privilege 
+------------------------
+ f
+(1 row)
+
+ has_sequence_privilege 
+------------------------
+ f
 (1 row)
 
  has_sequence_privilege | has_sequence_privilege | has_sequence_privilege 
@@ -468,8 +682,21 @@ psql:pg_tests/compatible/privilege_builtins.sql:577: ERROR:  "t" is not a sequen
  t                      | t                      | t
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:595: ERROR:  unrecognized privilege type: "DELETE"
-psql:pg_tests/compatible/privilege_builtins.sql:598: ERROR:  unrecognized privilege type: "DELETE"
+ has_sequence_privilege | has_sequence_privilege | has_sequence_privilege 
+------------------------+------------------------+------------------------
+ t                      | t                      | t
+(1 row)
+
+ has_sequence_privilege 
+------------------------
+ f
+(1 row)
+
+ has_sequence_privilege 
+------------------------
+ f
+(1 row)
+
  has_sequence_privilege | has_sequence_privilege | has_sequence_privilege 
 ------------------------+------------------------+------------------------
  t                      | t                      | t
@@ -492,7 +719,11 @@ GRANT
  t                      | t                      | t
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:629: ERROR:  role "no_user" does not exist
+ has_sequence_privilege 
+------------------------
+ f
+(1 row)
+
  has_sequence_privilege | has_sequence_privilege | has_sequence_privilege 
 ------------------------+------------------------+------------------------
  f                      | t                      | f
@@ -508,16 +739,36 @@ psql:pg_tests/compatible/privilege_builtins.sql:629: ERROR:  role "no_user" does
  
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:645: ERROR:  server "does_not_exist" does not exist
-psql:pg_tests/compatible/privilege_builtins.sql:648: ERROR:  server "does_not_exist" does not exist
+ has_server_privilege 
+----------------------
+ f
+(1 row)
+
+ has_server_privilege 
+----------------------
+ f
+(1 row)
+
  has_server_privilege 
 ----------------------
  
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:654: ERROR:  unrecognized privilege type: "UPDATE"
-psql:pg_tests/compatible/privilege_builtins.sql:657: ERROR:  unrecognized privilege type: "UPDATE"
-psql:pg_tests/compatible/privilege_builtins.sql:660: ERROR:  role "no_user" does not exist
+ has_server_privilege 
+----------------------
+ f
+(1 row)
+
+ has_server_privilege 
+----------------------
+ f
+(1 row)
+
+ has_server_privilege 
+----------------------
+ f
+(1 row)
+
  has_server_privilege 
 ----------------------
  
@@ -538,7 +789,11 @@ psql:pg_tests/compatible/privilege_builtins.sql:660: ERROR:  role "no_user" does
  t                   | t                   | t                   | t                   | t                   | t                   | t                   | f
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:696: ERROR:  relation "does_not_exist" does not exist
+ has_table_privilege 
+---------------------
+ f
+(1 row)
+
  has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege 
 ---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------
  t                   | t                   | t                   | t                   | t                   | t                   | t                   | t                   | t                   | t                   | f
@@ -564,9 +819,21 @@ psql:pg_tests/compatible/privilege_builtins.sql:696: ERROR:  relation "does_not_
  t                   | t                   | t                   | t                   | t                   | t                   | t                   | t                   | t                   | f
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:760: ERROR:  unrecognized privilege type: "USAGE"
-psql:pg_tests/compatible/privilege_builtins.sql:763: ERROR:  unrecognized privilege type: "USAGE"
-psql:pg_tests/compatible/privilege_builtins.sql:766: ERROR:  role "no_user" does not exist
+ has_table_privilege 
+---------------------
+ f
+(1 row)
+
+ has_table_privilege 
+---------------------
+ f
+(1 row)
+
+ has_table_privilege 
+---------------------
+ f
+(1 row)
+
  has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege 
 ---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------
  f                   | f                   | f                   | t                   | f                   | f                   | f                   | f                   | f                   | f                   | f
@@ -587,10 +854,9 @@ psql:pg_tests/compatible/privilege_builtins.sql:766: ERROR:  role "no_user" does
  t
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:801: ERROR:  tablespace "does_not_exist" does not exist
  has_tablespace_privilege 
 --------------------------
- t
+ f
 (1 row)
 
  has_tablespace_privilege 
@@ -603,10 +869,31 @@ psql:pg_tests/compatible/privilege_builtins.sql:801: ERROR:  tablespace "does_no
  t
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:813: ERROR:  unrecognized privilege type: "CREATE    WITH GRANT OPTION"
-psql:pg_tests/compatible/privilege_builtins.sql:816: ERROR:  unrecognized privilege type: "UPDATE"
-psql:pg_tests/compatible/privilege_builtins.sql:819: ERROR:  unrecognized privilege type: "UPDATE"
-psql:pg_tests/compatible/privilege_builtins.sql:822: ERROR:  role "no_user" does not exist
+ has_tablespace_privilege 
+--------------------------
+ t
+(1 row)
+
+ has_tablespace_privilege 
+--------------------------
+ f
+(1 row)
+
+ has_tablespace_privilege 
+--------------------------
+ f
+(1 row)
+
+ has_tablespace_privilege 
+--------------------------
+ f
+(1 row)
+
+ has_tablespace_privilege 
+--------------------------
+ f
+(1 row)
+
  has_tablespace_privilege 
 --------------------------
  f
@@ -622,10 +909,9 @@ psql:pg_tests/compatible/privilege_builtins.sql:822: ERROR:  role "no_user" does
  t
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:834: ERROR:  type "does_not_exist" does not exist
  has_type_privilege 
 --------------------
- t
+ f
 (1 row)
 
  has_type_privilege 
@@ -638,9 +924,26 @@ psql:pg_tests/compatible/privilege_builtins.sql:834: ERROR:  type "does_not_exis
  t
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:846: ERROR:  unrecognized privilege type: "UPDATE"
-psql:pg_tests/compatible/privilege_builtins.sql:849: ERROR:  unrecognized privilege type: "UPDATE"
-psql:pg_tests/compatible/privilege_builtins.sql:852: ERROR:  role "no_user" does not exist
+ has_type_privilege 
+--------------------
+ t
+(1 row)
+
+ has_type_privilege 
+--------------------
+ f
+(1 row)
+
+ has_type_privilege 
+--------------------
+ f
+(1 row)
+
+ has_type_privilege 
+--------------------
+ f
+(1 row)
+
  has_type_privilege 
 --------------------
  t
@@ -661,15 +964,31 @@ psql:pg_tests/compatible/privilege_builtins.sql:852: ERROR:  role "no_user" does
  t           | t           | t           | t           | t           | t
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:877: ERROR:  role "does_not_exist" does not exist
+ pg_has_role 
+-------------
+ f
+(1 row)
+
  pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role 
 -------------+-------------+-------------+-------------+-------------+-------------
  t           | t           | t           | t           | t           | t
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:888: ERROR:  unrecognized privilege type: "SELECT"
-psql:pg_tests/compatible/privilege_builtins.sql:891: ERROR:  unrecognized privilege type: "SELECT"
-psql:pg_tests/compatible/privilege_builtins.sql:894: ERROR:  role "no_user" does not exist
+ pg_has_role 
+-------------
+ f
+(1 row)
+
+ pg_has_role 
+-------------
+ f
+(1 row)
+
+ pg_has_role 
+-------------
+ f
+(1 row)
+
  pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role 
 -------------+-------------+-------------+-------------+-------------+-------------
  t           | t           | t           | t           | t           | t
@@ -718,7 +1037,7 @@ GRANT ROLE
  t           | t           | t           | t           | t           | t
 (1 row)
 
-psql:pg_tests/compatible/privilege_builtins.sql:982: NOTICE:  table "hcp_test" does not exist, skipping
+psql:compatible/privilege_builtins.sql:1612: NOTICE:  table "hcp_test" does not exist, skipping
 DROP TABLE
 CREATE TABLE
 ALTER TABLE
@@ -735,23 +1054,27 @@ ALTER TABLE
  c                            |      3
 (9 rows)
 
-psql:pg_tests/compatible/privilege_builtins.sql:991: ERROR:  function has_column_privilege(regclass, integer, unknown) does not exist
-LINE 1: SELECT has_column_privilege('hcp_test'::REGCLASS, 1, 'SELECT...
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/privilege_builtins.sql:994: ERROR:  function has_column_privilege(regclass, integer, unknown) does not exist
-LINE 1: SELECT has_column_privilege('hcp_test'::REGCLASS, 2, 'SELECT...
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/privilege_builtins.sql:997: ERROR:  function has_column_privilege(regclass, integer, unknown) does not exist
-LINE 1: SELECT has_column_privilege('hcp_test'::REGCLASS, 3, 'SELECT...
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/privilege_builtins.sql:1000: ERROR:  function has_column_privilege(regclass, integer, unknown) does not exist
-LINE 1: SELECT has_column_privilege('hcp_test'::REGCLASS, 4, 'SELECT...
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/privilege_builtins.sql:1003: NOTICE:  database "crdb_tests_privilege_builtins_my_db" does not exist, skipping
+ has_column_privilege 
+----------------------
+ t
+(1 row)
+
+ has_column_privilege 
+----------------------
+ 
+(1 row)
+
+ has_column_privilege 
+----------------------
+ t
+(1 row)
+
+ has_column_privilege 
+----------------------
+ 
+(1 row)
+
+psql:compatible/privilege_builtins.sql:1633: NOTICE:  database "crdb_tests_privilege_builtins_my_db" does not exist, skipping
 DROP DATABASE
 CREATE DATABASE
 CREATE ROLE

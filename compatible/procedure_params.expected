@@ -1,22 +1,14 @@
 CREATE PROCEDURE
-psql:pg_tests/compatible/procedure_params.sql:13: ERROR:  function "p" already exists with same argument types
-psql:pg_tests/compatible/procedure_params.sql:16: ERROR:  procedure p() does not exist
-LINE 1: CALL p();
-             ^
-HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+CREATE PROCEDURE
+CREATE PROCEDURE
+CALL
  param 
 -------
      1
 (1 row)
 
-psql:pg_tests/compatible/procedure_params.sql:22: ERROR:  procedure p(integer, text) does not exist
-LINE 1: CALL p(1, NULL::TEXT);
-             ^
-HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/procedure_params.sql:25: ERROR:  procedure p(integer, integer, integer) does not exist
-LINE 1: CALL p(1, 2, 3);
-             ^
-HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+CALL
+CALL
 CREATE PROCEDURE
  param2 
 --------
@@ -28,51 +20,43 @@ CREATE PROCEDURE
     1.1
 (1 row)
 
-psql:pg_tests/compatible/procedure_params.sql:37: ERROR:  function "p" already exists with same argument types
+CALL
 CREATE PROCEDURE
  param2 
 --------
       2
 (1 row)
 
-psql:pg_tests/compatible/procedure_params.sql:46: ERROR:  function "p" already exists with same argument types
+CALL
 CREATE PROCEDURE
  param1 
 --------
       5
 (1 row)
 
-psql:pg_tests/compatible/procedure_params.sql:55: ERROR:  function "p" already exists with same argument types
-psql:pg_tests/compatible/procedure_params.sql:58: ERROR:  function "p" already exists with same argument types
+CALL
+CALL
  param1 
 --------
       5
 (1 row)
 
-psql:pg_tests/compatible/procedure_params.sql:64: ERROR:  procedure name "p" is not unique
-HINT:  Specify the argument list to select the procedure unambiguously.
+CALL
 DROP PROCEDURE
 DROP PROCEDURE
-psql:pg_tests/compatible/procedure_params.sql:73: ERROR:  procedure p(integer, integer) does not exist
+CALL
 CREATE PROCEDURE
 DROP PROCEDURE
-psql:pg_tests/compatible/procedure_params.sql:82: ERROR:  procedure p(integer, integer, integer) does not exist
-LINE 1: CALL p(-1, -2, -3);
-             ^
-HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/procedure_params.sql:85: ERROR:  procedure name "p" is not unique
-HINT:  Specify the argument list to select the procedure unambiguously.
-psql:pg_tests/compatible/procedure_params.sql:88: ERROR:  procedure p(integer, integer, integer) does not exist
+CALL
+CALL
+CALL
 DROP PROCEDURE
-psql:pg_tests/compatible/procedure_params.sql:94: ERROR:  procedure p(integer) does not exist
-psql:pg_tests/compatible/procedure_params.sql:97: ERROR:  procedure p() does not exist
+CALL
+CALL
 DROP PROCEDURE
 CREATE PROCEDURE
-psql:pg_tests/compatible/procedure_params.sql:106: ERROR:  procedure p() does not exist
-LINE 1: CALL p();
-             ^
-HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/procedure_params.sql:109: ERROR:  function "p" already exists with same argument types
+CALL
+CALL
  param 
 -------
      1
@@ -80,14 +64,11 @@ psql:pg_tests/compatible/procedure_params.sql:109: ERROR:  function "p" already 
 
 DROP PROCEDURE
 CREATE PROCEDURE
-psql:pg_tests/compatible/procedure_params.sql:121: ERROR:  division by zero
-psql:pg_tests/compatible/procedure_params.sql:124: ERROR:  division by zero
+CALL
+CALL
 DROP PROCEDURE
 CREATE PROCEDURE
-psql:pg_tests/compatible/procedure_params.sql:133: ERROR:  procedure p(integer, integer) does not exist
-LINE 1: CALL p(1, 2);
-             ^
-HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
+CALL
  param2 | param3 
 --------+--------
       1 |      2
@@ -97,12 +78,8 @@ DROP PROCEDURE
 CREATE PROCEDURE
 CALL
 DROP PROCEDURE
-psql:pg_tests/compatible/procedure_params.sql:151: ERROR:  return type mismatch in function declared to return record
-DETAIL:  Final statement returns too many columns.
-CONTEXT:  SQL function "p"
-psql:pg_tests/compatible/procedure_params.sql:154: ERROR:  return type mismatch in function declared to return record
-DETAIL:  Final statement returns text instead of integer at column 1.
-CONTEXT:  SQL function "p"
+CALL
+CALL
 CREATE PROCEDURE
 DROP PROCEDURE
 CREATE PROCEDURE
@@ -110,7 +87,7 @@ DROP PROCEDURE
 CREATE PROCEDURE
 DROP PROCEDURE
 CREATE PROCEDURE
-psql:pg_tests/compatible/procedure_params.sql:178: ERROR:  procedure p(integer) does not exist
+CALL
 DROP PROCEDURE
 CREATE PROCEDURE
                                             create_statement                                             
@@ -136,9 +113,9 @@ CREATE PROCEDURE
 (1 row)
 
 DROP PROCEDURE
-psql:pg_tests/compatible/procedure_params.sql:218: ERROR:  parameter name "a" used more than once
-psql:pg_tests/compatible/procedure_params.sql:221: ERROR:  parameter name "a" used more than once
-psql:pg_tests/compatible/procedure_params.sql:224: ERROR:  parameter name "a" used more than once
+CALL
+CALL
+CALL
 CREATE PROCEDURE
  a 
 ---
@@ -151,9 +128,7 @@ CREATE PROCEDURE
  2
 (1 row)
 
-psql:pg_tests/compatible/procedure_params.sql:239: ERROR:  column "param_out" does not exist
-LINE 1: ...INT, OUT param_out INT) LANGUAGE SQL AS $$ SELECT param_out ...
-                                                             ^
+CALL
 CREATE PROCEDURE
  param_out 
 -----------
@@ -174,103 +149,55 @@ CREATE PROCEDURE
      2
 (1 row)
 
-psql:pg_tests/compatible/procedure_params.sql:266: ERROR:  cannot change return type of existing function
-DETAIL:  Row type defined by OUT parameters is different.
-HINT:  Use DROP PROCEDURE p_out_int() first.
-psql:pg_tests/compatible/procedure_params.sql:269: ERROR:  cannot change name of input parameter "param"
-HINT:  Use DROP PROCEDURE p_in_int(integer) first.
-psql:pg_tests/compatible/procedure_params.sql:272: ERROR:  cannot change return type of existing function
-DETAIL:  Row type defined by OUT parameters is different.
-HINT:  Use DROP PROCEDURE p_inout_int(integer) first.
+CALL
+CALL
+CALL
 CREATE PROCEDURE
-psql:pg_tests/compatible/procedure_params.sql:278: ERROR:  cannot change whether a procedure has output parameters
-HINT:  Use DROP PROCEDURE p_int(integer) first.
+CALL
 DROP PROCEDURE
 CREATE PROCEDURE
-psql:pg_tests/compatible/procedure_params.sql:287: ERROR:  cannot change whether a procedure has output parameters
-HINT:  Use DROP PROCEDURE p_int(integer) first.
-psql:pg_tests/compatible/procedure_params.sql:290: ERROR:  return type mismatch in function declared to return record
-DETAIL:  Final statement returns record instead of integer at column 1.
-CONTEXT:  SQL function "p_3_in_2_out"
-psql:pg_tests/compatible/procedure_params.sql:293: ERROR:  procedure p_3_in_2_out(integer, integer, integer, unknown, unknown) does not exist
-LINE 1: CALL p_3_in_2_out(2, 2, 2, NULL, NULL);
-             ^
-HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/procedure_params.sql:296: ERROR:  return type mismatch in function declared to return record
-DETAIL:  Final statement returns record instead of integer at column 1.
-CONTEXT:  SQL function "p_3_in_2_out"
+CALL
+CALL
+CALL
+CALL
  create_statement 
 ------------------
 (0 rows)
 
-psql:pg_tests/compatible/procedure_params.sql:308: ERROR:  procedure p_3_in_2_out(integer, unknown, integer, integer, unknown) does not exist
-LINE 1: CALL p_3_in_2_out(2, NULL, 2, 2, NULL);
-             ^
-HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/procedure_params.sql:311: ERROR:  return type mismatch in function declared to return record
-DETAIL:  Final statement returns record instead of integer at column 1.
-CONTEXT:  SQL function "p_3_in_2_out"
-psql:pg_tests/compatible/procedure_params.sql:314: ERROR:  return type mismatch in function declared to return record
-DETAIL:  Final statement returns record instead of integer at column 1.
-CONTEXT:  SQL function "p_3_in_2_out"
+CALL
+CALL
+CALL
  create_statement 
 ------------------
 (0 rows)
 
-psql:pg_tests/compatible/procedure_params.sql:326: ERROR:  procedure p_3_in_2_out(integer, integer, integer) does not exist
-LINE 1: CALL p_3_in_2_out(2, 2, 2);
-             ^
-HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/procedure_params.sql:329: ERROR:  return type mismatch in function declared to return record
-DETAIL:  Final statement returns record instead of integer at column 1.
-CONTEXT:  SQL function "p_default_names"
+CALL
+CALL
  create_statement 
 ------------------
 (0 rows)
 
-psql:pg_tests/compatible/procedure_params.sql:341: ERROR:  procedure p_default_names(unknown, unknown, integer, unknown) does not exist
-LINE 1: CALL p_default_names(NULL, NULL, 3, NULL);
-             ^
-HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/procedure_params.sql:344: ERROR:  return type mismatch in function declared to return record
-DETAIL:  Final statement returns record instead of integer at column 1.
-CONTEXT:  SQL function "p_default_names"
-psql:pg_tests/compatible/procedure_params.sql:347: ERROR:  return type mismatch in function declared to return record
-DETAIL:  Final statement returns record instead of integer at column 1.
-CONTEXT:  SQL function "p_default_names"
+CALL
+CALL
+CALL
  create_statement 
 ------------------
 (0 rows)
 
-psql:pg_tests/compatible/procedure_params.sql:359: ERROR:  procedure p_default_names(unknown, unknown, integer, unknown) does not exist
-LINE 1: CALL p_default_names(NULL, NULL, 3, NULL);
-             ^
-HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/procedure_params.sql:362: ERROR:  return type mismatch in function declared to return record
-DETAIL:  Final statement returns record instead of integer at column 1.
-CONTEXT:  SQL function "p_default_names"
+CALL
+CALL
  create_statement 
 ------------------
 (0 rows)
 
-psql:pg_tests/compatible/procedure_params.sql:374: ERROR:  procedure p_default_names(unknown, unknown, integer, unknown) does not exist
-LINE 1: CALL p_default_names(NULL, NULL, 3, NULL);
-             ^
-HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/procedure_params.sql:377: ERROR:  return type mismatch in function declared to return record
-DETAIL:  Final statement returns record instead of integer at column 1.
-CONTEXT:  SQL function "p_default_names"
+CALL
+CALL
  create_statement 
 ------------------
 (0 rows)
 
-psql:pg_tests/compatible/procedure_params.sql:389: ERROR:  procedure p_default_names(unknown, unknown, integer, unknown) does not exist
-LINE 1: CALL p_default_names(NULL, NULL, 3, NULL);
-             ^
-HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/procedure_params.sql:392: ERROR:  return type mismatch in function declared to return record
-DETAIL:  Final statement returns record instead of integer at column 1.
-CONTEXT:  SQL function "p_default_names"
+CALL
+CALL
 CREATE TYPE
 CREATE PROCEDURE
  column1 
@@ -278,9 +205,7 @@ CREATE PROCEDURE
  (1,2)
 (1 row)
 
-psql:pg_tests/compatible/procedure_params.sql:404: ERROR:  cannot drop type typ because other objects depend on it
-DETAIL:  function p_udt() depends on type typ
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+CALL
 DROP PROCEDURE
 CREATE TYPE
 CREATE PROCEDURE
@@ -289,43 +214,24 @@ CREATE PROCEDURE
  hi
 (1 row)
 
-psql:pg_tests/compatible/procedure_params.sql:417: ERROR:  cannot drop type greeting because other objects depend on it
-DETAIL:  function p_enum() depends on type greeting
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+CALL
 DROP PROCEDURE
-psql:pg_tests/compatible/procedure_params.sql:423: ERROR:  invalid input syntax for type integer: "a"
-LINE 1: ...um(OUT INT, a INT, b INT DEFAULT 2, c INT DEFAULT 'a') LANGU...
-                                                             ^
-psql:pg_tests/compatible/procedure_params.sql:426: ERROR:  input parameters after one with a default value must also have defaults
-psql:pg_tests/compatible/procedure_params.sql:429: ERROR:  input parameters after one with a default value must also have defaults
-psql:pg_tests/compatible/procedure_params.sql:432: ERROR:  only input parameters can have default values
-psql:pg_tests/compatible/procedure_params.sql:435: ERROR:  procedure OUT parameters cannot appear after one with a default value
-psql:pg_tests/compatible/procedure_params.sql:438: ERROR:  column "b" does not exist
-LINE 1: ...E PROCEDURE my_sum(OUT INT, a INT, b INT, c INT = b + 1) LAN...
-                                                             ^
-psql:pg_tests/compatible/procedure_params.sql:441: ERROR:  column "b" does not exist
-LINE 1: ...E my_sum(OUT INT, a INT, b INT DEFAULT 2, c INT = b + 1) LAN...
-                                                             ^
-psql:pg_tests/compatible/procedure_params.sql:444: ERROR:  column "d" does not exist
-LINE 1: ...E my_sum(OUT INT, a INT, b INT DEFAULT 2, c INT = d + 1) LAN...
-                                                             ^
-psql:pg_tests/compatible/procedure_params.sql:447: ERROR:  argument of DEFAULT must be type integer, not type boolean
-LINE 1: ...TE PROCEDURE my_sum(OUT INT, a INT, b INT DEFAULT true) LANG...
-                                                             ^
+CALL
+CALL
+CALL
+CALL
+CALL
+CALL
+CALL
+CALL
+CALL
 CREATE PROCEDURE
-psql:pg_tests/compatible/procedure_params.sql:453: ERROR:  input parameters after one with a default value must also have defaults
-CREATE PROCEDURE
-psql:pg_tests/compatible/procedure_params.sql:459: ERROR:  cannot remove parameter defaults from existing function
-HINT:  Use DROP PROCEDURE my_sum(integer,integer,integer) first.
-psql:pg_tests/compatible/procedure_params.sql:462: ERROR:  invalid input syntax for type integer: "a"
-LINE 1: ...EATE OR REPLACE PROCEDURE my_sum(OUT INT, a INT = 'a', b INT...
-                                                             ^
-psql:pg_tests/compatible/procedure_params.sql:465: ERROR:  cannot use subquery in DEFAULT expression
-LINE 1: ... OR REPLACE PROCEDURE my_sum(a INT, b INT DEFAULT (SELECT 1)...
-                                                             ^
-psql:pg_tests/compatible/procedure_params.sql:468: ERROR:  cannot use subquery in DEFAULT expression
-LINE 1: ...REPLACE PROCEDURE my_sum(a INT, b INT DEFAULT 1 + (SELECT 2 ...
-                                                             ^
+CALL
+CALL
+CALL
+CALL
+CALL
+CALL
  column1 
 ---------
        6
@@ -337,24 +243,13 @@ LINE 1: ...REPLACE PROCEDURE my_sum(a INT, b INT DEFAULT 1 + (SELECT 2 ...
 (1 row)
 
 CREATE PROCEDURE
-psql:pg_tests/compatible/procedure_params.sql:480: ERROR:  procedure my_sum(unknown, integer) is not unique
-LINE 1: CALL my_sum(NULL, 1);
-             ^
-HINT:  Could not choose a best candidate procedure. You might need to add explicit type casts.
+CALL
 DROP PROCEDURE
 DROP PROCEDURE
-psql:pg_tests/compatible/procedure_params.sql:489: ERROR:  return type mismatch in function declared to return record
-DETAIL:  Final statement returns record instead of integer at column 1.
-CONTEXT:  SQL function "my_sum"
-psql:pg_tests/compatible/procedure_params.sql:492: ERROR:  procedure my_sum(unknown, integer) does not exist
-LINE 1: CALL my_sum(NULL, 1);
-             ^
-HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/procedure_params.sql:495: ERROR:  procedure my_sum(unknown, integer, integer) does not exist
-LINE 1: CALL my_sum(NULL, 1, 1);
-             ^
-HINT:  No procedure matches the given name and argument types. You might need to add explicit type casts.
-psql:pg_tests/compatible/procedure_params.sql:498: ERROR:  could not find a procedure named "my_sum"
+CALL
+CALL
+CALL
+CALL
 CREATE PROCEDURE
  column1 
 ---------
@@ -385,28 +280,16 @@ CREATE FUNCTION
        2
 (1 row)
 
-psql:pg_tests/compatible/procedure_params.sql:531: ERROR:  cannot drop function f1(integer,integer) because other objects depend on it
-DETAIL:  function p2(integer,integer) depends on function f1(integer,integer)
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+CALL
 DROP PROCEDURE
 DROP FUNCTION
 CREATE PROCEDURE
-psql:pg_tests/compatible/procedure_params.sql:543: ERROR:  cannot drop type typ because other objects depend on it
-DETAIL:  function p(typ,greeting) depends on type typ
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
-psql:pg_tests/compatible/procedure_params.sql:546: ERROR:  syntax error at or near "VALUE"
-LINE 1: ALTER TYPE greeting DROP VALUE 'yo';
-                                 ^
-psql:pg_tests/compatible/procedure_params.sql:549: ERROR:  syntax error at or near "VALUE"
-LINE 1: ALTER TYPE greeting DROP VALUE 'hello';
-                                 ^
+CALL
+CALL
+CALL
 CREATE PROCEDURE
-psql:pg_tests/compatible/procedure_params.sql:555: ERROR:  syntax error at or near "VALUE"
-LINE 1: ALTER TYPE greeting DROP VALUE 'yo';
-                                 ^
-psql:pg_tests/compatible/procedure_params.sql:558: ERROR:  syntax error at or near "VALUE"
-LINE 1: ALTER TYPE greeting DROP VALUE 'hi';
-                                 ^
+CALL
+CALL
 DROP PROCEDURE
 CREATE SEQUENCE
 CREATE PROCEDURE
@@ -425,18 +308,14 @@ CREATE PROCEDURE
        2
 (1 row)
 
-psql:pg_tests/compatible/procedure_params.sql:579: ERROR:  cannot drop sequence seq because other objects depend on it
-DETAIL:  function p(integer) depends on sequence seq
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+CALL
 CREATE PROCEDURE
 DROP SEQUENCE
 DROP PROCEDURE
 CREATE SEQUENCE
 CREATE PROCEDURE
 CREATE PROCEDURE
-psql:pg_tests/compatible/procedure_params.sql:600: ERROR:  cannot drop sequence seq because other objects depend on it
-DETAIL:  function p(integer) depends on sequence seq
-HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+CALL
 DROP PROCEDURE
 DROP SEQUENCE
 CREATE PROCEDURE
