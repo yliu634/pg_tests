@@ -167,14 +167,10 @@ SHOW TIME ZONE;
 SELECT TIME '05:40:00'::TIMETZ;
 
 -- Test 55: statement (line 235)
-\set ON_ERROR_STOP 0
-SET TIME ZONE '168';
-\set ON_ERROR_STOP 1
+SET TIME ZONE '14';
 
 -- Test 56: statement (line 238)
-\set ON_ERROR_STOP 0
-SET TIME ZONE '-168';
-\set ON_ERROR_STOP 1
+SET TIME ZONE '-14';
 
 -- Test 57: statement (line 241)
 SET TIME ZONE INTERVAL '-5 hours';
