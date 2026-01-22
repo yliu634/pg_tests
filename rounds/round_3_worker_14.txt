@@ -1,0 +1,5 @@
+pg_tests/compatible/set_schema.sql
+pg_tests/compatible/set_time_zone.sql
+pg_tests/compatible/shift.sql
+pg_tests/compatible/show_commit_timestamp.sql
+pg_tests/compatible/show_completions.sql

@@ -1,0 +1,5 @@
+pg_tests/compatible/skip_on_retry.sql
+pg_tests/compatible/split_at.sql
+pg_tests/compatible/sqllite.sql
+pg_tests/compatible/sqlsmith.sql
+pg_tests/compatible/statement_source.sql

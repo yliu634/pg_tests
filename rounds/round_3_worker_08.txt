@@ -1,0 +1,5 @@
+pg_tests/compatible/procedure_schema_change.sql
+pg_tests/compatible/ranges.sql
+pg_tests/compatible/reassign_owned_by.sql
+pg_tests/compatible/record.sql
+pg_tests/compatible/rename_atomic.sql

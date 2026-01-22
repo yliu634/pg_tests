@@ -1,0 +1,5 @@
+pg_tests/compatible/secondary_index_column_families.sql
+pg_tests/compatible/select_index.sql
+pg_tests/compatible/select_index_flags.sql
+pg_tests/compatible/select_search_path.sql
+pg_tests/compatible/select_table_alias.sql

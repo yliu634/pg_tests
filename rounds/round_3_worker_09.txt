@@ -1,0 +1,5 @@
+pg_tests/compatible/rename_column.sql
+pg_tests/compatible/rename_constraint.sql
+pg_tests/compatible/rename_database.sql
+pg_tests/compatible/rename_index.sql
+pg_tests/compatible/rename_sequence.sql

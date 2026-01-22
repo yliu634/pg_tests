@@ -1,0 +1,5 @@
+pg_tests/compatible/mixed_version_can_login.sql
+pg_tests/compatible/mixed_version_stats.sql
+pg_tests/compatible/mixed_version_upgrade_preserve_ttl.sql
+pg_tests/compatible/multi_statement.sql
+pg_tests/compatible/multiregion_invalid_locality.sql

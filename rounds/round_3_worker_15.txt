@@ -1,0 +1,5 @@
+pg_tests/compatible/show_create.sql
+pg_tests/compatible/show_create_all_schemas.sql
+pg_tests/compatible/show_create_all_tables.sql
+pg_tests/compatible/show_create_all_tables_builtin.sql
+pg_tests/compatible/show_default_privileges.sql

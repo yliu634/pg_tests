@@ -1,0 +1,5 @@
+pg_tests/compatible/pgoidtype.sql
+pg_tests/compatible/plpgsql_builtins.sql
+pg_tests/compatible/postgres_jsonb.sql
+pg_tests/compatible/postgresjoin.sql
+pg_tests/compatible/privileges_comments.sql
