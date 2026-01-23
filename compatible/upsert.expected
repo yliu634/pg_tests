@@ -1,0 +1,42 @@
+CREATE TABLE
+INSERT 0 2
+INSERT 0 1
+INSERT 0 1
+ k | v  
+---+----
+ 1 | 10
+ 2 |  2
+ 3 |  3
+(3 rows)
+
+INSERT 0 2
+ k | v  
+---+----
+ 1 | 10
+ 2 | 22
+ 3 |  3
+ 4 |  4
+(4 rows)
+
+ k |  v  
+---+-----
+ 1 | 111
+ 5 |   5
+(2 rows)
+
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+ id | u  |  v  
+----+----+-----
+  1 | 10 | 200
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+ id | a | b |  v  
+----+---+---+-----
+  1 | 1 | 2 | 200
+(1 row)
+
