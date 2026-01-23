@@ -1,0 +1,64 @@
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+ k | v 
+---+---
+ a | b
+(1 row)
+
+BEGIN
+UPDATE 1
+ k | v 
+---+---
+ a | c
+(1 row)
+
+COMMIT
+BEGIN
+UPDATE 1
+ROLLBACK
+ k | v 
+---+---
+ a | c
+(1 row)
+
+BEGIN
+UPDATE 1
+COMMIT
+ k | v 
+---+---
+ a | d
+(1 row)
+
+BEGIN
+SAVEPOINT
+UPDATE 1
+ROLLBACK
+RELEASE
+COMMIT
+ k | v 
+---+---
+ a | d
+(1 row)
+
+BEGIN
+ transaction_isolation 
+-----------------------
+ repeatable read
+(1 row)
+
+COMMIT
+BEGIN
+ transaction_isolation 
+-----------------------
+ serializable
+(1 row)
+
+ transaction_read_only 
+-----------------------
+ on
+(1 row)
+
+COMMIT
+RESET

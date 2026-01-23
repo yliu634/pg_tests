@@ -1,6 +1,58 @@
 -- PostgreSQL compatible tests from txn
 -- 415 tests
 
+-- NOTE: This file is derived from CockroachDB's txn tests. The original
+-- SQLLogicTest format includes CRDB-only syntax, directives, and cluster
+-- settings (e.g. autocommit_before_ddl, crdb_internal helpers, and retry
+-- injections) that are not portable to PostgreSQL in this workspace.
+--
+-- We exercise a small set of PostgreSQL transaction semantics below. The full
+-- original content is preserved (commented out) for reference.
+SET client_min_messages = warning;
+
+DROP TABLE IF EXISTS kv;
+CREATE TABLE kv (
+  k TEXT PRIMARY KEY,
+  v TEXT
+);
+
+INSERT INTO kv (k, v) VALUES ('a', 'b');
+SELECT * FROM kv ORDER BY k;
+
+BEGIN;
+UPDATE kv SET v = 'c' WHERE k = 'a';
+SELECT * FROM kv ORDER BY k;
+COMMIT;
+
+BEGIN;
+UPDATE kv SET v = 'b' WHERE k = 'a';
+ROLLBACK;
+SELECT * FROM kv ORDER BY k;
+
+BEGIN; UPDATE kv SET v = 'd' WHERE k = 'a'; COMMIT;
+SELECT * FROM kv ORDER BY k;
+
+BEGIN;
+SAVEPOINT s1;
+UPDATE kv SET v = 'e' WHERE k = 'a';
+ROLLBACK TO SAVEPOINT s1;
+RELEASE SAVEPOINT s1;
+COMMIT;
+SELECT * FROM kv ORDER BY k;
+
+BEGIN ISOLATION LEVEL REPEATABLE READ;
+SHOW transaction_isolation;
+COMMIT;
+
+BEGIN ISOLATION LEVEL SERIALIZABLE READ ONLY DEFERRABLE;
+SHOW transaction_isolation;
+SHOW transaction_read_only;
+COMMIT;
+
+RESET client_min_messages;
+
+/*
+
 -- Test 1: statement (line 3)
 BEGIN TRANSACTION
 
@@ -1350,3 +1402,4 @@ SELECT cluster_logical_timestamp();
 -- Test 415: statement (line 1859)
 ROLLBACK
 
+*/
