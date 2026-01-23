@@ -1,5 +1,6 @@
 SET
-DROP TABLE
+CREATE FUNCTION
+BEGIN
 CREATE TABLE
 INSERT 0 1
  k | v 
@@ -7,6 +8,7 @@ INSERT 0 1
  a | b
 (1 row)
 
+COMMIT
 BEGIN
 UPDATE 1
  k | v 
@@ -15,8 +17,18 @@ UPDATE 1
 (1 row)
 
 COMMIT
+ k | v 
+---+---
+ a | c
+(1 row)
+
 BEGIN
 UPDATE 1
+ k | v 
+---+---
+ a | b
+(1 row)
+
 ROLLBACK
  k | v 
 ---+---
@@ -25,21 +37,439 @@ ROLLBACK
 
 BEGIN
 UPDATE 1
+ k | v 
+---+---
+ a | b
+(1 row)
+
+ k | v 
+---+---
+ a | b
+(1 row)
+
 COMMIT
+BEGIN
+UPDATE 1
  k | v 
 ---+---
  a | d
 (1 row)
 
-BEGIN
-SAVEPOINT
 UPDATE 1
-ROLLBACK
-RELEASE
 COMMIT
  k | v 
 ---+---
- a | d
+ a | c
+(1 row)
+
+BEGIN
+ count 
+-------
+     1
+(1 row)
+
+UPDATE 1
+ROLLBACK
+ k | v 
+---+---
+ a | c
+(1 row)
+
+BEGIN
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+COMMIT
+UPDATE 1
+UPDATE 1
+psql:compatible/txn.sql:110: WARNING:  there is no transaction in progress
+COMMIT
+INSERT 0 1
+      k      |     v      
+-------------+------------
+ unique_key  | some value
+ a2          | c
+ unique_key2 | some value
+ a           | b
+ x           | y
+(5 rows)
+
+BEGIN
+psql:compatible/txn.sql:120: WARNING:  there is already a transaction in progress
+BEGIN
+ROLLBACK
+BEGIN
+UPDATE 1
+psql:compatible/txn.sql:132: WARNING:  there is already a transaction in progress
+BEGIN
+      k      |     v      
+-------------+------------
+ unique_key  | some value
+ a2          | c
+ unique_key2 | some value
+ x           | y
+ a           | b
+(5 rows)
+
+ROLLBACK
+BEGIN
+COMMIT
+BEGIN
+COMMIT
+SET
+psql:compatible/txn.sql:150: WARNING:  there is no transaction in progress
+COMMIT
+psql:compatible/txn.sql:153: WARNING:  there is no transaction in progress
+ROLLBACK
+SET
+psql:compatible/txn.sql:159: WARNING:  there is no transaction in progress
+COMMIT
+psql:compatible/txn.sql:162: WARNING:  there is no transaction in progress
+ROLLBACK
+SET
+psql:compatible/txn.sql:168: WARNING:  SET TRANSACTION can only be used in transaction blocks
+SET
+SET
+psql:compatible/txn.sql:174: WARNING:  SET TRANSACTION can only be used in transaction blocks
+SET
+BEGIN
+COMMIT
+BEGIN
+psql:compatible/txn.sql:185: WARNING:  there is already a transaction in progress
+BEGIN
+COMMIT
+BEGIN
+COMMIT
+BEGIN
+SET
+COMMIT
+BEGIN
+SET
+COMMIT
+BEGIN
+SET
+SET
+COMMIT
+BEGIN
+UPDATE 1
+SET
+ROLLBACK
+BEGIN
+     k      |     v      
+------------+------------
+ unique_key | some value
+(1 row)
+
+SET
+ROLLBACK
+BEGIN
+ transaction_isolation 
+-----------------------
+ read committed
+(1 row)
+
+ transaction_isolation 
+-----------------------
+ read committed
+(1 row)
+
+SET
+ transaction_isolation 
+-----------------------
+ read committed
+(1 row)
+
+SET
+ transaction_isolation 
+-----------------------
+ repeatable read
+(1 row)
+
+ transaction_isolation 
+-----------------------
+ repeatable read
+(1 row)
+
+COMMIT
+BEGIN
+ transaction_isolation 
+-----------------------
+ read committed
+(1 row)
+
+COMMIT
+SET
+ default_transaction_isolation 
+-------------------------------
+ read committed
+(1 row)
+
+SET
+ default_transaction_isolation 
+-------------------------------
+ read committed
+(1 row)
+
+SET
+ default_transaction_isolation 
+-------------------------------
+ read committed
+(1 row)
+
+ default_transaction_isolation 
+-------------------------------
+ read committed
+(1 row)
+
+SET
+ default_transaction_isolation 
+-------------------------------
+ read committed
+(1 row)
+
+ default_transaction_isolation 
+-------------------------------
+ read committed
+(1 row)
+
+BEGIN
+SET
+ transaction_isolation 
+-----------------------
+ repeatable read
+(1 row)
+
+ transaction_isolation 
+-----------------------
+ repeatable read
+(1 row)
+
+ transaction_isolation 
+-----------------------
+ repeatable read
+(1 row)
+
+ transaction_isolation 
+-----------------------
+ repeatable read
+(1 row)
+
+COMMIT
+BEGIN
+ transaction_isolation 
+-----------------------
+ repeatable read
+(1 row)
+
+ transaction_isolation 
+-----------------------
+ repeatable read
+(1 row)
+
+SET
+ transaction_isolation 
+-----------------------
+ serializable
+(1 row)
+
+COMMIT
+BEGIN
+ transaction_isolation 
+-----------------------
+ read committed
+(1 row)
+
+ transaction_isolation 
+-----------------------
+ read committed
+(1 row)
+
+SET
+ transaction_isolation 
+-----------------------
+ serializable
+(1 row)
+
+SET
+ transaction_isolation 
+-----------------------
+ read committed
+(1 row)
+
+ transaction_isolation 
+-----------------------
+ read committed
+(1 row)
+
+ transaction_isolation 
+-----------------------
+ read committed
+(1 row)
+
+ transaction_isolation 
+-----------------------
+ read committed
+(1 row)
+
+COMMIT
+SET
+SET
+BEGIN
+UPDATE 1
+ROLLBACK
+BEGIN
+UPDATE 1
+ROLLBACK
+BEGIN
+COMMIT
+psql:compatible/txn.sql:503: WARNING:  there is no transaction in progress
+COMMIT
+BEGIN
+COMMIT
+psql:compatible/txn.sql:581: WARNING:  there is no transaction in progress
+COMMIT
+BEGIN
+COMMIT
+ transaction_isolation 
+-----------------------
+ read committed
+(1 row)
+
+ transaction_isolation 
+-----------------------
+ read committed
+(1 row)
+
+ transaction_isolation 
+-----------------------
+ read committed
+(1 row)
+
+psql:compatible/txn.sql:638: WARNING:  there is no transaction in progress
+COMMIT
+ transaction_isolation 
+-----------------------
+ read committed
+(1 row)
+
+ transaction_isolation 
+-----------------------
+ read committed
+(1 row)
+
+psql:compatible/txn.sql:664: WARNING:  there is no transaction in progress
+COMMIT
+SET
+SET
+SET
+ default_transaction_isolation 
+-------------------------------
+ repeatable read
+(1 row)
+
+ default_transaction_isolation 
+-------------------------------
+ repeatable read
+(1 row)
+
+SET
+ default_transaction_isolation 
+-------------------------------
+ read uncommitted
+(1 row)
+
+ default_transaction_isolation 
+-------------------------------
+ read uncommitted
+(1 row)
+
+SET
+ default_transaction_isolation 
+-------------------------------
+ repeatable read
+(1 row)
+
+ default_transaction_isolation 
+-------------------------------
+ repeatable read
+(1 row)
+
+ transaction_isolation 
+-----------------------
+ repeatable read
+(1 row)
+
+SET
+ default_transaction_isolation 
+-------------------------------
+ read committed
+(1 row)
+
+ transaction_isolation 
+-----------------------
+ read committed
+(1 row)
+
+SET
+ default_transaction_isolation 
+-------------------------------
+ serializable
+(1 row)
+
+SET
+ default_transaction_isolation 
+-------------------------------
+ read uncommitted
+(1 row)
+
+ default_transaction_isolation 
+-------------------------------
+ read uncommitted
+(1 row)
+
+SET
+SET
+ default_transaction_isolation 
+-------------------------------
+ read committed
+(1 row)
+
+ default_transaction_isolation 
+-------------------------------
+ read committed
+(1 row)
+
+ default_transaction_isolation 
+-------------------------------
+ read committed
+(1 row)
+
+ default_transaction_isolation 
+-------------------------------
+ read committed
+(1 row)
+
+SET
+ default_transaction_isolation 
+-------------------------------
+ repeatable read
+(1 row)
+
+ default_transaction_isolation 
+-------------------------------
+ repeatable read
+(1 row)
+
+SET
+ default_transaction_isolation 
+-------------------------------
+ repeatable read
+(1 row)
+
+SET
+ default_transaction_isolation 
+-------------------------------
+ repeatable read
 (1 row)
 
 BEGIN
@@ -52,13 +482,243 @@ COMMIT
 BEGIN
  transaction_isolation 
 -----------------------
- serializable
+ read committed
 (1 row)
 
+COMMIT
+BEGIN
+SET
+ transaction_isolation 
+-----------------------
+ repeatable read
+(1 row)
+
+ transaction_isolation 
+-----------------------
+ repeatable read
+(1 row)
+
+COMMIT
+RESET
+ default_transaction_isolation 
+-------------------------------
+ read committed
+(1 row)
+
+ default_transaction_isolation 
+-------------------------------
+ read committed
+(1 row)
+
+BEGIN
+COMMIT
+BEGIN
+ROLLBACK
+BEGIN
+SAVEPOINT
+RELEASE
+COMMIT
+BEGIN
+SAVEPOINT
+ ?column? 
+----------
+        1
+(1 row)
+
+ROLLBACK
+COMMIT
+BEGIN
+ROLLBACK
+BEGIN
+ ?column? 
+----------
+        1
+(1 row)
+
+ROLLBACK
+BEGIN
+SAVEPOINT
+ transaction_isolation 
+-----------------------
+ read committed
+(1 row)
+
+ROLLBACK
+BEGIN
+SAVEPOINT
+ROLLBACK
+BEGIN
+SAVEPOINT
+ ?column? 
+----------
+        1
+(1 row)
+
+ROLLBACK
+ROLLBACK
+BEGIN
+ transaction_read_only 
+-----------------------
+ off
+(1 row)
+
+ transaction_read_only 
+-----------------------
+ off
+(1 row)
+
+ transaction_read_only 
+-----------------------
+ off
+(1 row)
+
+SET
+ transaction_read_only 
+-----------------------
+ on
+(1 row)
+
+SET
+ transaction_read_only 
+-----------------------
+ off
+(1 row)
+
+ROLLBACK
+BEGIN
+ transaction_read_only 
+-----------------------
+ off
+(1 row)
+
+COMMIT
+BEGIN
  transaction_read_only 
 -----------------------
  on
 (1 row)
 
 COMMIT
-RESET
+ default_transaction_read_only 
+-------------------------------
+ off
+(1 row)
+
+SET
+ default_transaction_read_only 
+-------------------------------
+ on
+(1 row)
+
+SET
+ default_transaction_read_only 
+-------------------------------
+ off
+(1 row)
+
+SET
+ default_transaction_read_only 
+-------------------------------
+ on
+(1 row)
+
+SET
+BEGIN
+SAVEPOINT
+ transaction_read_only 
+-----------------------
+ off
+(1 row)
+
+ transaction_read_only 
+-----------------------
+ off
+(1 row)
+
+ROLLBACK
+ transaction_read_only 
+-----------------------
+ off
+(1 row)
+
+COMMIT
+BEGIN
+SET
+CREATE SEQUENCE
+COMMIT
+CREATE TABLE
+INSERT 0 1
+UPDATE 6
+INSERT 0 1
+DELETE 6
+ k | v 
+---+---
+(0 rows)
+
+ k | v 
+---+---
+(0 rows)
+
+ nextval 
+---------
+       1
+(1 row)
+
+ currval 
+---------
+       1
+(1 row)
+
+ setval 
+--------
+      2
+(1 row)
+
+SET
+SET
+BEGIN
+DECLARE CURSOR
+ ?column? 
+----------
+        1
+(1 row)
+
+CLOSE CURSOR
+COMMIT
+BEGIN
+ ?column? 
+----------
+        1
+(1 row)
+
+SET
+SET
+SET
+ IntervalStyle 
+---------------
+ postgres
+(1 row)
+
+SET
+ IntervalStyle 
+---------------
+ postgres
+(1 row)
+
+psql:compatible/txn.sql:1332: WARNING:  there is already a transaction in progress
+BEGIN
+COMMIT
+BEGIN
+ cluster_logical_timestamp 
+---------------------------
+                         0
+(1 row)
+
+ROLLBACK
+BEGIN
+ cluster_logical_timestamp 
+---------------------------
+                         0
+(1 row)
+
+ROLLBACK
