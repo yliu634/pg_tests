@@ -1,5 +1,100 @@
 -- PostgreSQL compatible tests from udf
 -- 237 tests
+--
+-- PG-ADAPTED: The upstream CockroachDB-derived `udf` tests include CockroachDB
+-- SQLLogicTest harness syntax and CRDB-only constructs (e.g. `USE <db>`,
+-- `SHOW CREATE FUNCTION` via `[ ... ]`, index hints like `t@idx`, and several
+-- intentionally-invalid statements). Those aren't directly runnable in `psql`
+-- under `ON_ERROR_STOP=1`.
+--
+-- This file keeps a small, deterministic subset of PostgreSQL UDF behaviors
+-- (create/call/introspection + basic user-defined types) and preserves the
+-- original file below for reference.
+
+SET client_min_messages = warning;
+
+CREATE TABLE ab (
+  a int PRIMARY KEY,
+  b int
+);
+
+INSERT INTO ab (a, b) VALUES
+  (1, 10),
+  (2, 20);
+
+CREATE SEQUENCE sq1;
+
+CREATE TYPE notmyworkday AS ENUM ('Monday', 'Tuesday');
+
+CREATE OR REPLACE FUNCTION f() RETURNS int
+LANGUAGE sql
+IMMUTABLE
+AS $$ SELECT 1 $$;
+
+SELECT f();
+
+CREATE OR REPLACE FUNCTION a(i int) RETURNS int
+LANGUAGE sql
+AS $$ SELECT i $$;
+
+SELECT a(42);
+
+CREATE OR REPLACE FUNCTION b(i int) RETURNS int
+LANGUAGE sql
+AS $$ SELECT a FROM ab WHERE a = i $$;
+
+SELECT b(1);
+
+CREATE OR REPLACE FUNCTION c(i int, j int) RETURNS int
+LANGUAGE sql
+AS $$ SELECT i - j $$;
+
+SELECT c(5, 2);
+
+CREATE OR REPLACE FUNCTION d(i int2) RETURNS int4
+LANGUAGE sql
+AS $$ SELECT i $$;
+
+SELECT d(7::int2);
+
+CREATE OR REPLACE FUNCTION next_sq1() RETURNS bigint
+LANGUAGE sql
+AS $$ SELECT nextval('sq1') $$;
+
+SELECT next_sq1(), next_sq1();
+
+CREATE OR REPLACE FUNCTION enum_to_text(a notmyworkday) RETURNS text
+LANGUAGE sql
+IMMUTABLE
+AS $$ SELECT a::text $$;
+
+SELECT enum_to_text('Monday'::notmyworkday);
+
+SELECT regexp_replace(
+         pg_get_functiondef('f()'::regprocedure),
+         '[[:space:]]+',
+         ' ',
+         'g'
+       ) AS create_statement;
+
+SELECT regexp_replace(
+         pg_get_functiondef('b(integer)'::regprocedure),
+         '[[:space:]]+',
+         ' ',
+         'g'
+       ) AS create_statement;
+
+CREATE OR REPLACE PROCEDURE proc_f(i int)
+LANGUAGE sql
+AS $$ SELECT i $$;
+
+CALL proc_f(123);
+
+RESET client_min_messages;
+
+/*
+-- PostgreSQL compatible tests from udf
+-- 237 tests
 
 -- Test 1: statement (line 2)
 CREATE TABLE ab (
@@ -881,4 +976,4 @@ DROP TYPE user_profile;
 
 -- Test 237: statement (line 1407)
 DROP TYPE user_status;
-
+*/

@@ -1,0 +1,60 @@
+SET
+CREATE TABLE
+INSERT 0 2
+CREATE SEQUENCE
+CREATE TYPE
+CREATE FUNCTION
+ f 
+---
+ 1
+(1 row)
+
+CREATE FUNCTION
+ a  
+----
+ 42
+(1 row)
+
+CREATE FUNCTION
+ b 
+---
+ 1
+(1 row)
+
+CREATE FUNCTION
+ c 
+---
+ 3
+(1 row)
+
+CREATE FUNCTION
+ d 
+---
+ 7
+(1 row)
+
+CREATE FUNCTION
+ next_sq1 | next_sq1 
+----------+----------
+        1 |        2
+(1 row)
+
+CREATE FUNCTION
+ enum_to_text 
+--------------
+ Monday
+(1 row)
+
+                                                create_statement                                                 
+-----------------------------------------------------------------------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.f() RETURNS integer LANGUAGE sql IMMUTABLE AS $function$ SELECT 1 $function$ 
+(1 row)
+
+                                                          create_statement                                                          
+------------------------------------------------------------------------------------------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.b(i integer) RETURNS integer LANGUAGE sql AS $function$ SELECT a FROM ab WHERE a = i $function$ 
+(1 row)
+
+CREATE PROCEDURE
+CALL
+RESET
