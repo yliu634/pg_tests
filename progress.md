@@ -33,3 +33,5 @@
 - Files with ERROR remaining: 46
 - Missing .expected files: 6 (txn, udf, udf_fk, udf_params, upsert, vector_index)
 - Status: INCOMPLETE (see merge_incomplete_small_results.md)
+
+Round Missing-6 prepared: 6 files
