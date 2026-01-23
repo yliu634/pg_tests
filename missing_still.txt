@@ -1,0 +1,5 @@
+# Missing .expected outputs (from missing-6 target set)
+#
+# Verified on: 2026-01-23
+compatible/upsert.expected
+compatible/vector_index.expected

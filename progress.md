@@ -35,3 +35,16 @@
 - Status: INCOMPLETE (see merge_incomplete_small_results.md)
 
 Round Missing-6 prepared: 6 files
+
+## Round Missing-6 Merge Results
+- Date: Fri Jan 23 07:44:09 UTC 2026
+- Target set: 6 (txn, udf, udf_fk, udf_params, upsert, vector_index)
+- Newly generated .expected: 4 (txn, udf, udf_fk, udf_params)
+- Still missing .expected: 2 (upsert, vector_index) (see missing_still.txt)
+- Total SQL files: 457
+- Total .expected files (compatible/): 455
+- Successfully completed (no ERROR in .expected): 409
+- Files with ERROR in .expected: 46
+- Missing .expected files: 2
+- Success rate: 89.50%
+- Status: INCOMPLETE (upsert/vector_index outstanding)
