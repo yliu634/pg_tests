@@ -48,3 +48,13 @@ Round Missing-6 prepared: 6 files
 - Missing .expected files: 2
 - Success rate: 89.50%
 - Status: INCOMPLETE (upsert/vector_index outstanding)
+
+## FINAL COMPLETION
+- Date: Fri Jan 23 08:21:03 UTC 2026
+- Total SQL files: 457
+- Total .expected files (compatible/): 457
+- Missing .expected files: 0
+- Files with ERROR in .expected: 46 (10.07%)
+- Successfully completed (no ERROR in .expected): 411 (89.93%)
+- Status: COMPLETE (all .expected generated; some tests still expect/emit ERROR)
+- Details: final_completion_report.md
