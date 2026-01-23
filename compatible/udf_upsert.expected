@@ -1,0 +1,188 @@
+CREATE TABLE
+CREATE FUNCTION
+ f_ocdn  
+---------
+ (1,1,1)
+(1 row)
+
+ f_ocdn 
+--------
+ 
+(1 row)
+
+ f_ocdn 
+--------
+ 
+(1 row)
+
+ f_ocdn 
+--------
+ 
+(1 row)
+
+ f_ocdn | f_ocdn  | f_ocdn  | f_ocdn 
+--------+---------+---------+--------
+        | (3,2,2) | (6,6,2) | 
+(1 row)
+
+ f_ocdn  
+---------
+ 
+ 
+ 
+ 
+ (5,5,5)
+(5 rows)
+
+ a | b | c 
+---+---+---
+ 1 | 1 | 1
+ 3 | 2 | 2
+ 6 | 6 | 2
+ 5 | 5 | 5
+(4 rows)
+
+CREATE FUNCTION
+ f_ocdn_2vals 
+--------------
+ (7,7,7)
+(1 row)
+
+ a | b | c 
+---+---+---
+ 1 | 1 | 1
+ 3 | 2 | 2
+ 6 | 6 | 2
+ 5 | 5 | 5
+ 7 | 7 | 7
+(5 rows)
+
+CREATE FUNCTION
+ f_multi_ins | f_multi_ins 
+-------------+-------------
+ (1,1,1)     | (1,1,1)
+(1 row)
+
+ f_multi_ins | f_multi_ins 
+-------------+-------------
+ (3,2,2)     | (3,2,2)
+(1 row)
+
+ a | b | c 
+---+---+---
+ 1 | 1 | 1
+ 3 | 2 | 2
+ 6 | 6 | 2
+ 5 | 5 | 5
+ 7 | 7 | 7
+ 4 | 4 | 4
+(6 rows)
+
+CREATE TABLE
+CREATE FUNCTION
+ f_ocdu  
+---------
+ (1,1,1)
+(1 row)
+
+ f_ocdu  
+---------
+ (1,1,2)
+(1 row)
+
+ f_ocdu  
+---------
+ (1,4,3)
+(1 row)
+
+ f_ocdu  
+---------
+ (2,2,6)
+(1 row)
+
+CREATE TABLE
+CREATE FUNCTION
+ f_upsert 
+----------
+ (1,1)
+(1 row)
+
+ f_upsert 
+----------
+ (1,4)
+(1 row)
+
+CREATE FUNCTION
+ f_upsert_2vals 
+----------------
+ (1,9)
+ (2,8)
+(2 rows)
+
+CREATE TABLE
+CREATE FUNCTION
+ f_check_null 
+--------------
+ (1,)
+(1 row)
+
+CREATE FUNCTION
+ f_check_len 
+-------------
+ (2,"abc ")
+(1 row)
+
+CREATE FUNCTION
+ f_check_vals 
+--------------
+ (3,"ab  ")
+(1 row)
+
+ f_check_vals 
+--------------
+ (4,"abc ")
+(1 row)
+
+CREATE TABLE
+CREATE FUNCTION
+ f_check_colerr_null 
+---------------------
+ (1,)
+(1 row)
+
+CREATE FUNCTION
+ f_check_colerr_len 
+--------------------
+ (2,abc)
+(1 row)
+
+CREATE FUNCTION
+ f_check_colerr_vals 
+---------------------
+ (3,"ab ")
+(1 row)
+
+ f_check_colerr_vals 
+---------------------
+ (4,abc)
+(1 row)
+
+CREATE TABLE
+CREATE FUNCTION
+ALTER TABLE
+CREATE FUNCTION
+ f146414 
+---------
+       1
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 3
+DROP FUNCTION
+CREATE FUNCTION
+DROP INDEX
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE

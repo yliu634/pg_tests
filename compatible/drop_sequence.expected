@@ -1,0 +1,227 @@
+SET
+DROP VIEW
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP SCHEMA
+DROP SCHEMA
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+CREATE SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+CREATE SEQUENCE
+DROP SEQUENCE
+CREATE SEQUENCE
+CREATE TABLE
+ column_name |         column_default         
+-------------+--------------------------------
+ i           | nextval('drop_test'::regclass)
+(1 row)
+
+ column_name |         column_default         
+-------------+--------------------------------
+ i           | nextval('drop_test'::regclass)
+(1 row)
+
+ pg_get_serial_sequence 
+------------------------
+ 
+(1 row)
+
+DROP SEQUENCE
+DROP SEQUENCE
+ column_name | column_default 
+-------------+----------------
+ i           | 
+(1 row)
+
+ column_name | column_default 
+-------------+----------------
+ i           | 
+(1 row)
+
+ pg_get_serial_sequence 
+------------------------
+ 
+(1 row)
+
+INSERT 0 1
+CREATE SCHEMA
+CREATE SEQUENCE
+CREATE SEQUENCE
+CREATE TABLE
+ column_name |         column_default          
+-------------+---------------------------------
+ i           | nextval('other_db.s'::regclass)
+ j           | nextval('s'::regclass)
+(2 rows)
+
+ column_name |         column_default          
+-------------+---------------------------------
+ i           | nextval('other_db.s'::regclass)
+ j           | nextval('s'::regclass)
+(2 rows)
+
+ pg_get_serial_sequence | pg_get_serial_sequence 
+------------------------+------------------------
+                        | 
+(1 row)
+
+DROP SCHEMA
+DROP SCHEMA
+ column_name |     column_default     
+-------------+------------------------
+ i           | 
+ j           | nextval('s'::regclass)
+(2 rows)
+
+ column_name |     column_default     
+-------------+------------------------
+ i           | 
+ j           | nextval('s'::regclass)
+(2 rows)
+
+ pg_get_serial_sequence | pg_get_serial_sequence 
+------------------------+------------------------
+                        | 
+(1 row)
+
+INSERT 0 1
+CREATE SCHEMA
+CREATE SEQUENCE
+CREATE TABLE
+ column_name |         column_default          
+-------------+---------------------------------
+ i           | nextval('other_sc.s'::regclass)
+ j           | nextval('s'::regclass)
+(2 rows)
+
+ column_name |         column_default          
+-------------+---------------------------------
+ i           | nextval('other_sc.s'::regclass)
+ j           | nextval('s'::regclass)
+(2 rows)
+
+ pg_get_serial_sequence | pg_get_serial_sequence 
+------------------------+------------------------
+                        | 
+(1 row)
+
+DROP SCHEMA
+DROP SCHEMA
+ column_name |     column_default     
+-------------+------------------------
+ i           | 
+ j           | nextval('s'::regclass)
+(2 rows)
+
+ column_name |     column_default     
+-------------+------------------------
+ i           | 
+ j           | nextval('s'::regclass)
+(2 rows)
+
+ pg_get_serial_sequence | pg_get_serial_sequence 
+------------------------+------------------------
+                        | 
+(1 row)
+
+INSERT 0 1
+CREATE TABLE
+CREATE SEQUENCE
+CREATE TABLE
+ pg_get_serial_sequence 
+------------------------
+ 
+(1 row)
+
+DROP TABLE
+DROP TABLE
+ column_name | column_default 
+-------------+----------------
+ i           | 
+(1 row)
+
+ column_name | column_default 
+-------------+----------------
+ i           | 
+(1 row)
+
+ pg_get_serial_sequence 
+------------------------
+ 
+(1 row)
+
+INSERT 0 1
+CREATE SEQUENCE
+CREATE TABLE
+ALTER SEQUENCE
+ pg_get_serial_sequence 
+------------------------
+ 
+(1 row)
+
+DROP TABLE
+ column_name | column_default 
+-------------+----------------
+ i           | 
+(1 row)
+
+ column_name | column_default 
+-------------+----------------
+ i           | 
+(1 row)
+
+ pg_get_serial_sequence 
+------------------------
+ 
+(1 row)
+
+INSERT 0 1
+CREATE TABLE
+CREATE SEQUENCE
+CREATE TABLE
+ pg_get_serial_sequence 
+------------------------
+ 
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+ column_name | column_default 
+-------------+----------------
+ i           | 
+(1 row)
+
+ column_name | column_default 
+-------------+----------------
+ i           | 
+(1 row)
+
+ pg_get_serial_sequence 
+------------------------
+ 
+(1 row)
+
+INSERT 0 1
+CREATE SEQUENCE
+CREATE VIEW
+DROP SEQUENCE
+DROP SEQUENCE
+ v_dropped 
+-----------
+ t
+(1 row)
+
+RESET

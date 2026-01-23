@@ -1,0 +1,303 @@
+CREATE TABLE
+INSERT 0 4
+CREATE FUNCTION
+ empty 
+-------
+(0 rows)
+
+ b | empty 
+---+-------
+(0 rows)
+
+CREATE FUNCTION
+ all_a 
+-------
+     1
+     2
+     3
+     4
+(4 rows)
+
+ b  | all_a 
+----+-------
+ 10 |     1
+ 10 |     2
+ 10 |     3
+ 10 |     4
+ 20 |     1
+ 20 |     2
+ 20 |     3
+ 20 |     4
+ 30 |     1
+ 30 |     2
+ 30 |     3
+ 30 |     4
+ 40 |     1
+ 40 |     2
+ 40 |     3
+ 40 |     4
+(16 rows)
+
+CREATE FUNCTION
+ b  | all_a | some_a 
+----+-------+--------
+ 10 |     1 |      1
+ 10 |     2 |      2
+ 10 |     3 |       
+ 10 |     4 |       
+ 20 |     1 |      1
+ 20 |     2 |      2
+ 20 |     3 |       
+ 20 |     4 |       
+ 30 |     1 |      1
+ 30 |     2 |      2
+ 30 |     3 |       
+ 30 |     4 |       
+ 40 |     1 |      1
+ 40 |     2 |      2
+ 40 |     3 |       
+ 40 |     4 |       
+(16 rows)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+CREATE FUNCTION
+ all_a_lt 
+----------
+        1
+        2
+(2 rows)
+
+ a | all_a_lt 
+---+----------
+ 2 |        1
+ 3 |        1
+ 3 |        2
+ 4 |        1
+ 4 |        2
+ 4 |        3
+(6 rows)
+
+CREATE FUNCTION
+ array_agg 
+-----------
+ {4,3,2,1}
+(1 row)
+
+ all_a_lt 
+----------
+        1
+        1
+        2
+        1
+        2
+        3
+(6 rows)
+
+CREATE FUNCTION
+ all_a_strict 
+--------------
+(0 rows)
+
+ all_a_strict 
+--------------
+            1
+            2
+            3
+            4
+(4 rows)
+
+CREATE TABLE
+INSERT 0 2
+ all_a_strict 
+--------------
+            1
+            2
+            3
+            4
+(4 rows)
+
+psql:compatible/udf_setof.sql:92: ERROR:  return type mismatch in function declared to return integer
+DETAIL:  Final statement must return exactly one column.
+CONTEXT:  SQL function "err"
+CREATE FUNCTION
+ a | b  
+---+----
+ 1 | 10
+ 2 | 20
+ 3 | 30
+ 4 | 40
+(4 rows)
+
+CREATE FUNCTION
+ a | b  
+---+----
+ 1 | 10
+ 2 | 20
+ 3 | 30
+ 4 | 40
+(4 rows)
+
+CREATE FUNCTION
+ a | b  
+---+----
+ 1 | 10
+ 2 | 20
+ 3 | 30
+ 4 | 40
+(4 rows)
+
+CREATE FUNCTION
+ f128403 
+---------
+ (1,1)
+ (2,2)
+ (3,3)
+ (4,4)
+ (5,5)
+ (6,6)
+ (7,7)
+ (8,8)
+ (9,9)
+ (10,10)
+(10 rows)
+
+ x  | y  
+----+----
+  1 | 1
+  2 | 2
+  3 | 3
+  4 | 4
+  5 | 5
+  6 | 6
+  7 | 7
+  8 | 8
+  9 | 9
+ 10 | 10
+(10 rows)
+
+psql:compatible/udf_setof.sql:134: ERROR:  OUT and INOUT arguments aren't allowed in TABLE functions
+CREATE FUNCTION
+ f_table1 
+----------
+ (1,1)
+ (2,2)
+ (3,3)
+ (4,4)
+ (5,5)
+ (6,6)
+ (7,7)
+ (8,8)
+ (9,9)
+ (10,10)
+(10 rows)
+
+ x  | y  
+----+----
+  1 | 1
+  2 | 2
+  3 | 3
+  4 | 4
+  5 | 5
+  6 | 6
+  7 | 7
+  8 | 8
+  9 | 9
+ 10 | 10
+(10 rows)
+
+CREATE FUNCTION
+ f_table2 
+----------
+        1
+        2
+        3
+        4
+        5
+        6
+        7
+        8
+        9
+       10
+(10 rows)
+
+psql:compatible/udf_setof.sql:160: ERROR:  return type mismatch in function declared to return integer
+DETAIL:  Final statement must return exactly one column.
+CONTEXT:  SQL function "err"
+CREATE FUNCTION
+psql:compatible/udf_setof.sql:168: ERROR:  syntax error at or near "INT"
+LINE 1: SELECT * FROM f145414() AS foo(x, y INT);
+                                            ^
+psql:compatible/udf_setof.sql:173: ERROR:  syntax error at or near ")"
+LINE 1: SELECT * FROM f145414() AS foo(x INT, y);
+                                               ^
+DROP FUNCTION
+CREATE TABLE
+INSERT 0 4
+CREATE FUNCTION
+ f_out_desc 
+------------
+ (4,40)
+ (3,30)
+ (2,20)
+ (1,10)
+(4 rows)
+
+ a | b  
+---+----
+ 4 | 40
+ 3 | 30
+ 2 | 20
+ 1 | 10
+(4 rows)
+
+DROP FUNCTION
+CREATE FUNCTION
+ f_out_asc 
+-----------
+ (1,10)
+ (2,20)
+ (3,30)
+ (4,40)
+(4 rows)
+
+ a | b  
+---+----
+ 1 | 10
+ 2 | 20
+ 3 | 30
+ 4 | 40
+(4 rows)
+
+DROP FUNCTION
+CREATE FUNCTION
+ a | b  
+---+----
+ 4 | 40
+ 3 | 30
+ 2 | 20
+ 1 | 10
+(4 rows)
+
+DROP FUNCTION
+CREATE FUNCTION
+               array_agg               
+---------------------------------------
+ {"(4,40)","(3,30)","(2,20)","(1,10)"}
+(1 row)
+
+DROP FUNCTION
+CREATE FUNCTION
+ a | b  
+---+----
+ 4 | 40
+ 3 | 30
+ 2 | 20
+ 1 | 10
+(4 rows)
+
+DROP FUNCTION
+DROP TABLE

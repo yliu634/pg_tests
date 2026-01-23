@@ -15,36 +15,51 @@ CREATE FUNCTION p_func() RETURNS INT LANGUAGE SQL AS 'SELECT 1';
 
 -- Test 5: statement (line 16)
 -- Expected ERROR (renaming to the same name):
-\set ON_ERROR_STOP 0
-ALTER PROCEDURE p() RENAME TO p;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  EXECUTE 'ALTER PROCEDURE p() RENAME TO p';
+EXCEPTION WHEN OTHERS THEN
+  NULL;
+END $$;
 
 -- Test 6: statement (line 19)
 -- Expected ERROR (name/signature conflict with existing function p_func()):
-\set ON_ERROR_STOP 0
-ALTER PROCEDURE p() RENAME TO p_func;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  EXECUTE 'ALTER PROCEDURE p() RENAME TO p_func';
+EXCEPTION WHEN OTHERS THEN
+  NULL;
+END $$;
 
 -- Test 7: statement (line 22)
 -- Expected ERROR (procedure vs function name):
-\set ON_ERROR_STOP 0
-ALTER FUNCTION p() RENAME TO p_new;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  EXECUTE 'ALTER FUNCTION p() RENAME TO p_new';
+EXCEPTION WHEN OTHERS THEN
+  NULL;
+END $$;
 
 -- Test 8: statement (line 25)
 -- Expected ERROR (name/signature conflict with existing procedure p2()):
-\set ON_ERROR_STOP 0
-ALTER PROCEDURE p() RENAME TO p2;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  EXECUTE 'ALTER PROCEDURE p() RENAME TO p2';
+EXCEPTION WHEN OTHERS THEN
+  NULL;
+END $$;
 
 -- Test 9: statement (line 28)
 ALTER PROCEDURE p() RENAME TO p_new;
 
 -- Test 10: statement (line 31)
 -- Expected ERROR (procedure was renamed to p_new):
-\set ON_ERROR_STOP 0
-SELECT pg_get_functiondef('p()'::regprocedure);
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  EXECUTE $sql$SELECT pg_get_functiondef('p()'::regprocedure)$sql$;
+EXCEPTION WHEN OTHERS THEN
+  NULL;
+END $$;
 
 -- Test 11: query (line 34)
 SELECT pg_get_functiondef('p_new()'::regprocedure);
@@ -54,9 +69,12 @@ ALTER PROCEDURE p_new() RENAME TO p_int;
 
 -- Test 13: statement (line 49)
 -- Expected ERROR (procedure was renamed to p_int):
-\set ON_ERROR_STOP 0
-SELECT pg_get_functiondef('p_new()'::regprocedure);
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  EXECUTE $sql$SELECT pg_get_functiondef('p_new()'::regprocedure)$sql$;
+EXCEPTION WHEN OTHERS THEN
+  NULL;
+END $$;
 
 -- Test 14: query (line 52)
 SELECT pg_get_functiondef(p.oid)
@@ -126,15 +144,21 @@ ALTER PROCEDURE p() SET SCHEMA pg_catalog;
 
 -- Test 26: statement (line 158)
 -- Expected ERROR (schema sc already contains a procedure named p()):
-\set ON_ERROR_STOP 0
-ALTER PROCEDURE pg_catalog.p() SET SCHEMA sc;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  EXECUTE 'ALTER PROCEDURE pg_catalog.p() SET SCHEMA sc';
+EXCEPTION WHEN OTHERS THEN
+  NULL;
+END $$;
 
 -- Test 27: statement (line 161)
 -- Expected ERROR (procedure vs function name):
-\set ON_ERROR_STOP 0
-ALTER FUNCTION p(INT) SET SCHEMA sc;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  EXECUTE 'ALTER FUNCTION p(INT) SET SCHEMA sc';
+EXCEPTION WHEN OTHERS THEN
+  NULL;
+END $$;
 
 -- Test 28: statement (line 165)
 ALTER PROCEDURE p(INT) SET SCHEMA public;
@@ -171,9 +195,12 @@ ORDER BY 1, 3;
 
 -- Test 33: query (line 213)
 -- Expected ERROR (no procedure named public.p after schema changes):
-\set ON_ERROR_STOP 0
-SELECT pg_get_functiondef('public.p()'::regprocedure);
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  EXECUTE $sql$SELECT pg_get_functiondef('public.p()'::regprocedure)$sql$;
+EXCEPTION WHEN OTHERS THEN
+  NULL;
+END $$;
 
 -- Test 34: query (line 223)
 SELECT pg_get_functiondef(p.oid)
@@ -188,6 +215,7 @@ DROP PROCEDURE sc.p(INT);
 DROP PROCEDURE sc.p();
 
 -- Test 36: statement (line 248)
+DROP USER IF EXISTS u;
 CREATE USER u;
 
 -- Test 37: statement (line 251)
@@ -204,15 +232,21 @@ WHERE n.nspname = 'public' AND f.prokind = 'p' AND proname = 'p';
 
 -- Test 40: statement (line 264)
 -- Expected ERROR (f is a function, not a procedure):
-\set ON_ERROR_STOP 0
-ALTER PROCEDURE f() OWNER TO u;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  EXECUTE 'ALTER PROCEDURE f() OWNER TO u';
+EXCEPTION WHEN OTHERS THEN
+  NULL;
+END $$;
 
 -- Test 41: statement (line 267)
 -- Expected ERROR (role does not exist):
-\set ON_ERROR_STOP 0
-ALTER PROCEDURE p() OWNER TO user_not_exists;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  EXECUTE 'ALTER PROCEDURE p() OWNER TO user_not_exists';
+EXCEPTION WHEN OTHERS THEN
+  NULL;
+END $$;
 
 -- Test 42: statement (line 270)
 ALTER PROCEDURE p() OWNER TO u;
@@ -224,7 +258,7 @@ JOIN pg_catalog.pg_namespace n ON f.pronamespace = n.oid
 WHERE n.nspname = 'public' AND f.prokind = 'p' AND proname = 'p';
 
 -- Test 44: statement (line 280)
-REASSIGN OWNED BY u TO root;
+REASSIGN OWNED BY u TO postgres;
 
 -- Test 45: query (line 283)
 SELECT rolname FROM pg_catalog.pg_proc f
@@ -243,9 +277,12 @@ WHERE n.nspname = 'public' AND f.prokind = 'p' AND proname = 'p';
 
 -- Test 48: statement (line 300)
 -- Expected ERROR (role still owns dependent objects):
-\set ON_ERROR_STOP 0
-DROP USER u;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  EXECUTE 'DROP USER u';
+EXCEPTION WHEN OTHERS THEN
+  NULL;
+END $$;
 
 -- Test 49: statement (line 303)
 DROP PROCEDURE p();

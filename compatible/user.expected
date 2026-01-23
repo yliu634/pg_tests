@@ -1,0 +1,193 @@
+SET
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+ is_superuser 
+--------------
+ t
+(1 row)
+
+ username |                options                | member_of 
+----------+---------------------------------------+-----------
+ postgres | {SUPERUSER,CREATEROLE,CREATEDB,LOGIN} | {}
+ testuser | {LOGIN}                               | {}
+(2 rows)
+
+CREATE ROLE
+ username |                options                | member_of 
+----------+---------------------------------------+-----------
+ postgres | {SUPERUSER,CREATEROLE,CREATEDB,LOGIN} | {}
+ testuser | {LOGIN}                               | {}
+ user1    | {LOGIN}                               | {}
+(3 rows)
+
+ username |                options                | member_of 
+----------+---------------------------------------+-----------
+ postgres | {SUPERUSER,CREATEROLE,CREATEDB,LOGIN} | {}
+ testuser | {LOGIN}                               | {}
+ user1    | {LOGIN}                               | {}
+(3 rows)
+
+CREATE ROLE
+DO
+DO
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+ALTER ROLE
+ALTER ROLE
+ username |                options                | member_of 
+----------+---------------------------------------+-----------
+ -foo     | {LOGIN}                               | {}
+ admin    | {LOGIN}                               | {}
+ foo      | {LOGIN}                               | {}
+ foo-bar  | {LOGIN}                               | {}
+ foo☂     | {LOGIN}                               | {}
+ node     | {LOGIN}                               | {}
+ postgres | {SUPERUSER,CREATEROLE,CREATEDB,LOGIN} | {}
+ test     | {LOGIN}                               | {}
+ testuser | {LOGIN}                               | {}
+ user1    | {LOGIN}                               | {}
+ user2    | {LOGIN}                               | {}
+ user3    | {LOGIN}                               | {}
+ Ομηρος   | {LOGIN}                               | {}
+(13 rows)
+
+ current_user | session_user |   user   
+--------------+--------------+----------
+ postgres     | postgres     | postgres
+(1 row)
+
+CREATE ROLE
+GRANT ROLE
+SET
+ is_superuser 
+--------------
+ t
+(1 row)
+
+ is_superuser 
+--------------
+ t
+(1 row)
+
+ username  |                options                | member_of 
+-----------+---------------------------------------+-----------
+ -foo      | {LOGIN}                               | {}
+ admin     | {LOGIN}                               | {}
+ foo       | {LOGIN}                               | {}
+ foo-bar   | {LOGIN}                               | {}
+ foo☂      | {LOGIN}                               | {}
+ node      | {LOGIN}                               | {}
+ postgres  | {SUPERUSER,CREATEROLE,CREATEDB,LOGIN} | {}
+ test      | {LOGIN}                               | {}
+ testuser  | {LOGIN}                               | {}
+ testuser2 | {LOGIN}                               | {admin}
+ user1     | {LOGIN}                               | {}
+ user2     | {LOGIN}                               | {}
+ user3     | {LOGIN}                               | {}
+ Ομηρος    | {LOGIN}                               | {}
+(14 rows)
+
+ current_user | session_user |   user    
+--------------+--------------+-----------
+ testuser2    | testuser2    | testuser2
+(1 row)
+
+SET
+ session_user 
+--------------
+ postgres
+(1 row)
+
+SET
+ session_user 
+--------------
+ postgres
+(1 row)
+
+ALTER ROLE
+SET
+CREATE ROLE
+CREATE ROLE
+SET
+ username |   option   | value 
+----------+------------+-------
+ postgres | CREATEROLE | true
+ testuser | CREATEROLE | true
+ user4    | CREATEROLE | true
+(3 rows)
+
+ is_superuser 
+--------------
+ t
+(1 row)
+
+DROP ROLE
+DROP ROLE
+ min_password_length 
+---------------------
+                  12
+(1 row)
+
+DO
+DO
+CREATE ROLE
+ALTER ROLE
+DROP ROLE
+DROP ROLE
+ session_user 
+--------------
+ postgres
+(1 row)
+
+SET
+DO
+ session_user 
+--------------
+ postgres
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+SET
+REVOKE ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET

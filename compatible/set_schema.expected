@@ -1,0 +1,243 @@
+SET
+CREATE SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE TABLE
+INSERT 0 1
+ALTER TABLE
+ x 
+---
+ 1
+(1 row)
+
+INSERT 0 1
+ x 
+---
+ 1
+ 2
+(2 rows)
+
+ x 
+---
+ 1
+ 2
+(2 rows)
+
+ALTER TABLE
+ x 
+---
+ 1
+ 2
+(2 rows)
+
+INSERT 0 1
+ x 
+---
+ 1
+ 2
+ 2
+(3 rows)
+
+CREATE TABLE
+INSERT 0 1
+ALTER TABLE
+ x 
+---
+ 1
+(1 row)
+
+ x 
+---
+ 1
+(1 row)
+
+CREATE SEQUENCE
+ALTER SEQUENCE
+ last_value | log_cnt | is_called 
+------------+---------+-----------
+          1 |       0 | f
+(1 row)
+
+ last_value | log_cnt | is_called 
+------------+---------+-----------
+          1 |       0 | f
+(1 row)
+
+ALTER SEQUENCE
+CREATE TABLE
+ALTER TABLE
+CREATE VIEW
+ALTER VIEW
+CREATE TABLE
+CREATE VIEW
+ALTER VIEW
+ x 
+---
+(0 rows)
+
+ x 
+---
+(0 rows)
+
+ALTER VIEW
+CREATE TABLE
+CREATE SEQUENCE
+ALTER TABLE
+ALTER SEQUENCE
+ALTER TABLE
+CREATE TABLE
+INSERT 0 1
+BEGIN
+ALTER TABLE
+ x 
+---
+ 1
+(1 row)
+
+ x 
+---
+ 1
+(1 row)
+
+ROLLBACK
+BEGIN
+ALTER TABLE
+COMMIT
+ x 
+---
+ 1
+(1 row)
+
+ x 
+---
+ 1
+(1 row)
+
+CREATE TABLE
+BEGIN
+ALTER TABLE
+ROLLBACK
+ x 
+---
+(0 rows)
+
+ x 
+---
+(0 rows)
+
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE TYPE
+  typ  
+-------
+ hello
+(1 row)
+
+  array  
+---------
+ {hello}
+(1 row)
+
+  typ  
+-------
+ hello
+(1 row)
+
+  typ  
+-------
+ hello
+(1 row)
+
+  array  
+---------
+ {hello}
+(1 row)
+
+  array  
+---------
+ {hello}
+(1 row)
+
+ALTER TYPE
+  typ  
+-------
+ hello
+(1 row)
+
+  array  
+---------
+ {hello}
+(1 row)
+
+  typ  
+-------
+ hello
+(1 row)
+
+  array  
+---------
+ {hello}
+(1 row)
+
+CREATE TYPE
+ALTER TYPE
+ typ2  
+-------
+ hello
+(1 row)
+
+  array  
+---------
+ {hello}
+(1 row)
+
+ typ2  
+-------
+ hello
+(1 row)
+
+  array  
+---------
+ {hello}
+(1 row)
+
+CREATE TYPE
+BEGIN
+ALTER TYPE
+ typ3  
+-------
+ hello
+(1 row)
+
+ROLLBACK
+BEGIN
+ALTER TYPE
+COMMIT
+ typ3  
+-------
+ hello
+(1 row)
+
+ typ3  
+-------
+ hello
+(1 row)
+
+CREATE TYPE
+BEGIN
+ALTER TYPE
+ROLLBACK
+ typ4  
+-------
+ hello
+(1 row)
+
+ typ4  
+-------
+ hello
+(1 row)
+

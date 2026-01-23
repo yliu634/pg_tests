@@ -1,0 +1,54 @@
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+INSERT 0 403
+ pk  
+-----
+ 353
+ 305
+ 249
+ 246
+ 210
+ 203
+ 188
+ 173
+  74
+  13
+(10 rows)
+
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+ pk | col0 
+----+------
+  8 |  221
+  7 |  220
+  6 |  219
+  4 |  216
+  1 |  213
+  0 |  212
+(6 rows)
+
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+ pk | col0 
+----+------
+(0 rows)
+
+ pk | col0 
+----+------
+(0 rows)
+

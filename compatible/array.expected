@@ -1,0 +1,1851 @@
+SET
+CREATE EXTENSION
+psql:pg_tests/compatible/array.sql:9: NOTICE:  collation "en" already exists, skipping
+CREATE COLLATION
+CREATE COLLATION
+CREATE FUNCTION
+ array 
+-------
+ {}
+(1 row)
+
+  array  
+---------
+ {1,2,3}
+(1 row)
+
+CREATE TABLE
+INSERT 0 5
+ array 
+-------
+ {1}
+ {2}
+ {3}
+ {4}
+ {5}
+(5 rows)
+
+   array    
+------------
+ {a,true,1}
+(1 row)
+
+          array           
+--------------------------
+ {"a,","b{","c}",d,"e f"}
+(1 row)
+
+ array  
+--------
+ {"1}"}
+(1 row)
+
+ ?column? | ?column? | ?column? | ?column? | ?column? | ?column? | ?column? 
+----------+----------+----------+----------+----------+----------+----------
+          | NULL     | Null     | null     |          | "        | '
+(1 row)
+
+                 array                 
+---------------------------------------
+ {"","NULL","Null","null",NULL,"\"",'}
+(1 row)
+
+ int4 
+------
+ 
+(1 row)
+
+ ?column? | ?column? 
+----------+----------
+ f        | t
+(1 row)
+
+     array      
+----------------
+ {one,two,fünf}
+(1 row)
+
+   array   
+-----------
+ {foo,bar}
+(1 row)
+
+ array 
+-------
+ {}
+(1 row)
+
+ array 
+-------
+ {}
+ {}
+ {}
+ {}
+ {}
+(5 rows)
+
+ array 
+-------
+ {3}
+(1 row)
+
+  array  
+---------
+ {1,2,1}
+(1 row)
+
+ array 
+-------
+ {{1}}
+(1 row)
+
+ array 
+-------
+ {{1}}
+(1 row)
+
+  array  
+---------
+ {a,b,c}
+(1 row)
+
+   array   
+-----------
+ {"(1,2)"}
+(1 row)
+
+psql:pg_tests/compatible/array.sql:89: ERROR:  subquery must return only one column
+LINE 1: SELECT ARRAY(SELECT 1, 2);
+               ^
+ array 
+-------
+ {}
+(1 row)
+
+  int4   
+---------
+ {1,2,3}
+(1 row)
+
+ varchar 
+---------
+ {he}
+(1 row)
+
+ varchar  
+----------
+ {he,a🐛}
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+    s     
+----------
+ {he}
+ {he,a🐛}
+(2 rows)
+
+  array  
+---------
+ {1,2,3}
+(1 row)
+
+psql:pg_tests/compatible/array.sql:115: ERROR:  cannot cast type integer to uuid
+LINE 1: SELECT ARRAY[1,2,3]::UUID[];
+                     ^
+psql:pg_tests/compatible/array.sql:120: ERROR:  cannot cast type inet to integer
+LINE 1: SELECT ARRAY['8.8.8.8'::INET, '8.8.4.4'::INET]::INT[];
+                     ^
+  array  
+---------
+ {1,2,3}
+(1 row)
+
+ array 
+-------
+ 1 2 3
+(1 row)
+
+ array 
+-------
+ 1 2 3
+(1 row)
+
+ array 
+-------
+ 
+(1 row)
+
+ array 
+-------
+ 
+(1 row)
+
+ text 
+------
+ 
+(1 row)
+
+ array 
+-------
+ b
+(1 row)
+
+ array 
+-------
+ b
+(1 row)
+
+ array 
+-------
+ 
+(1 row)
+
+ array 
+-------
+ c
+(1 row)
+
+ array 
+-------
+      
+(1 row)
+
+ array 
+-------
+      
+(1 row)
+
+ array 
+-------
+     2
+(1 row)
+
+ array 
+-------
+      
+(1 row)
+
+ array 
+-------
+     3
+(1 row)
+
+ array 
+-------
+ 
+(1 row)
+
+ array 
+-------
+ 
+(1 row)
+
+psql:pg_tests/compatible/array.sql:178: ERROR:  invalid input syntax for type integer: "abc"
+LINE 1: SELECT (ARRAY['a', 'b', 'c'])['abc'];
+                                      ^
+psql:pg_tests/compatible/array.sql:183: ERROR:  cannot subscript type integer because it does not support subscripting
+LINE 1: SELECT (123)[2];
+                ^
+  array  
+---------
+ {a,b,c}
+(1 row)
+
+  array  
+---------
+ {a,b,c}
+(1 row)
+
+ array 
+-------
+ {a,b}
+(1 row)
+
+ array 
+-------
+ {a,b}
+(1 row)
+
+ array 
+-------
+ {}
+(1 row)
+
+ a 
+---
+ a
+(1 row)
+
+ a 
+---
+ a
+(1 row)
+
+ array 
+-------
+     2
+(1 row)
+
+ array 
+-------
+     2
+(1 row)
+
+ array 
+-------
+     3
+(1 row)
+
+ array 
+-------
+ c
+(1 row)
+
+         array          
+------------------------
+ {10,9,8,7,6,5,4,3,2,1}
+(1 row)
+
+CREATE TABLE
+INSERT 0 5
+    array    
+-------------
+ {5,4,3,2,1}
+(1 row)
+
+ current_schemas 
+-----------------
+ pg_catalog
+(1 row)
+
+ array 
+-------
+     1
+(1 row)
+
+psql:pg_tests/compatible/array.sql:258: ERROR:  syntax error at or near "["
+LINE 1: SELECT (1,2,3)[1];
+                      ^
+psql:pg_tests/compatible/array.sql:263: ERROR:  syntax error at or near "["
+LINE 1: SELECT ROW (1,2,3)[1];
+                          ^
+  conkey   
+-----------
+ 
+ {3,5,6,1}
+ {2,8,9,3}
+ {2,1}
+ {3,2,4}
+ {2,3,4}
+ {8,9,2}
+ {1,3}
+ {2,3}
+ {2,4}
+ {2,7,3}
+ {1,2,3}
+ {1,2,3,4}
+ {1}
+ {3}
+ {2}
+ {2,3,4,5}
+ {2,20,3}
+ {3,2}
+ {1,2}
+ {3,4}
+ {7,6,2}
+ {1,5}
+(23 rows)
+
+ indkey 
+--------
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      2
+      2
+      1
+      1
+      2
+      9
+      1
+      1
+      2
+      1
+      2
+      8
+      9
+     11
+      2
+      2
+      2
+      2
+      2
+      2
+      2
+      7
+      2
+      2
+      3
+      2
+      3
+     11
+      2
+      2
+      2
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      2
+      2
+      2
+      3
+      2
+      1
+      4
+      2
+      2
+      2
+      2
+      3
+      4
+      1
+      5
+      2
+      2
+      2
+      2
+      2
+      2
+      2
+      2
+      3
+      2
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      2
+      2
+      2
+      3
+      2
+      2
+      3
+      3
+      2
+      2
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      1
+      2
+      1
+      1
+      1
+      1
+(167 rows)
+
+CREATE TABLE
+INSERT 0 5
+ k 
+---
+ 2
+ 4
+(2 rows)
+
+ k 
+---
+ 3
+ 4
+ 5
+(3 rows)
+
+ k 
+---
+ 1
+(1 row)
+
+CREATE TABLE
+DROP TABLE
+CREATE TABLE
+   array   
+-----------
+ {{1,2,3}}
+(1 row)
+
+   array   
+-----------
+ {{1,2,3}}
+(1 row)
+
+CREATE TABLE
+CREATE TABLE
+ array 
+-------
+(0 rows)
+
+CREATE TABLE
+psql:pg_tests/compatible/array.sql:329: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE a;
+             ^
+psql:pg_tests/compatible/array.sql:335: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE a;
+             ^
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+    b    
+---------
+ {1,2,3}
+(1 row)
+
+DELETE 1
+INSERT 0 1
+ b 
+---
+ 
+(1 row)
+
+DELETE 1
+INSERT 0 1
+ b  
+----
+ {}
+(1 row)
+
+DELETE 1
+INSERT 0 1
+    b    
+---------
+ {1,2,3}
+(1 row)
+
+psql:pg_tests/compatible/array.sql:380: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE a;
+             ^
+psql:pg_tests/compatible/array.sql:386: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE a;
+             ^
+psql:pg_tests/compatible/array.sql:392: ERROR:  column "b" is of type integer[] but expression is of type text[]
+LINE 1: INSERT INTO a VALUES (ARRAY['foo']);
+                              ^
+HINT:  You will need to rewrite or cast the expression.
+psql:pg_tests/compatible/array.sql:398: ERROR:  invalid input syntax for type integer: "foo"
+LINE 1: INSERT INTO a VALUES (ARRAY[1, 'foo']);
+                                       ^
+DELETE 1
+INSERT 0 3
+ b 
+---
+ 1
+ 4
+ 6
+(3 rows)
+
+ b 
+---
+ 2
+ 5
+  
+(3 rows)
+
+DELETE 3
+INSERT 0 4
+      b      
+-------------
+ {NULL}
+ {NULL,1}
+ {1,NULL}
+ {NULL,NULL}
+(4 rows)
+
+DELETE 4
+INSERT 0 1
+           b            
+------------------------
+ {1,2,3,4,5,6,7,8,NULL}
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/array.sql:442: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE a;
+             ^
+psql:pg_tests/compatible/array.sql:448: ERROR:  syntax error at or near "CREATE"
+LINE 1: SHOW CREATE TABLE a;
+             ^
+psql:pg_tests/compatible/array.sql:454: ERROR:  smallint out of range
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+       b       
+---------------
+ {foo,bar,baz}
+(1 row)
+
+UPDATE 1
+ b  
+----
+ {}
+(1 row)
+
+DELETE 1
+ b 
+---
+(0 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 5
+   b   
+-------
+ {}
+ {t}
+ {f}
+ {t,t}
+ {f,t}
+(5 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+       b       
+---------------
+ {1.1,2.2,3.3}
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+       b       
+---------------
+ {1.1,2.2,3.3}
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+       b       
+---------------
+ {foo,bar,baz}
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+ count 
+-------
+     1
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+ count 
+-------
+     1
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+         b         
+-------------------
+ {"1 year 2 mons"}
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+ count 
+-------
+     1
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+  b  
+-----
+ {1}
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+     b     
+-----------
+ {hello}
+ {goodbye}
+(2 rows)
+
+INSERT 0 1
+DROP TABLE
+ unnest 
+--------
+ B
+ a
+(2 rows)
+
+ unnest 
+--------
+ a
+ B
+(2 rows)
+
+ ?column?  
+-----------
+ {foo,bar}
+(1 row)
+
+ array_append 
+--------------
+ {foo,bar}
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+DROP TABLE
+ ?column?  
+-----------
+ {a,b,c,d}
+(1 row)
+
+ ?column?  
+-----------
+ {a,b,c,d}
+(1 row)
+
+ ?column?  
+-----------
+ {1,2,3,4}
+(1 row)
+
+ ?column? 
+----------
+ {4}
+(1 row)
+
+ ?column? 
+----------
+ {4}
+(1 row)
+
+   ?column?   
+--------------
+ {1,2,3,NULL}
+(1 row)
+
+ ?column? 
+----------
+ {NULL}
+(1 row)
+
+   ?column?   
+--------------
+ {NULL,1,2,3}
+(1 row)
+
+ ?column? | ?column? 
+----------+----------
+ {NULL}   | {NULL}
+(1 row)
+
+ ?column?  
+-----------
+ {1,2,3,4}
+(1 row)
+
+ ?column? 
+----------
+ {1,2,3}
+(1 row)
+
+ ?column? 
+----------
+ {1,2,3}
+(1 row)
+
+ ?column? | ?column? 
+----------+----------
+          | 
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+UPDATE 1
+UPDATE 1
+UPDATE 1
+UPDATE 1
+     b     
+-----------
+ {1,2,3,4}
+(1 row)
+
+UPDATE 1
+          b          
+---------------------
+ {NULL,1,2,3,4,NULL}
+(1 row)
+
+   ?column?    
+---------------
+ {1,2,3,4,5,6}
+(1 row)
+
+   ?column?    
+---------------
+ {a,b,c,d,e,f}
+(1 row)
+
+ ?column? 
+----------
+ {1,2,3}
+(1 row)
+
+ ?column? 
+----------
+ {4,5,6}
+(1 row)
+
+ ?column? 
+----------
+ 
+(1 row)
+
+CREATE TABLE
+ ?column? 
+----------
+(0 rows)
+
+INSERT 0 1
+ ?column? 
+----------
+ {}
+(1 row)
+
+DROP TABLE
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ 
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ array_append | array_append 
+--------------+--------------
+ {1,2,3,4}    | {1,2,3,NULL}
+(1 row)
+
+ array_append | array_append 
+--------------+--------------
+ {4}          | {NULL}
+(1 row)
+
+ array_prepend | array_prepend 
+---------------+---------------
+ {4,1,2,3}     | {NULL,1,2,3}
+(1 row)
+
+ array_prepend | array_prepend 
+---------------+---------------
+ {4}           | {NULL}
+(1 row)
+
+   array_cat   | array_cat 
+---------------+-----------
+ {1,2,3,4,5,6} | {1,2,3}
+(1 row)
+
+ array_cat | array_cat 
+-----------+-----------
+ {4,5,6}   | 
+(1 row)
+
+ array_remove 
+--------------
+ {1,3}
+(1 row)
+
+ array_remove 
+--------------
+ {1,2,3}
+(1 row)
+
+ array_remove 
+--------------
+ 
+(1 row)
+
+ array_replace 
+---------------
+ {1,2,3,4}
+(1 row)
+
+ array_replace | array_replace 
+---------------+---------------
+ {1,2,3,4}     | 
+(1 row)
+
+ array_position 
+----------------
+               
+(1 row)
+
+ array_position 
+----------------
+              8
+(1 row)
+
+ array_position 
+----------------
+               
+(1 row)
+
+ array_position 
+----------------
+               
+(1 row)
+
+ array_position 
+----------------
+               
+(1 row)
+
+ array_position 
+----------------
+              4
+(1 row)
+
+ array_positions | array_positions 
+-----------------+-----------------
+ {1,2,4}         | {}
+(1 row)
+
+ string_to_array 
+-----------------
+ {a,b,c}
+(1 row)
+
+ string_to_array 
+-----------------
+ {"",a,"",b,c}
+(1 row)
+
+   string_to_array    
+----------------------
+ {"",foo,"",NULL,baz}
+(1 row)
+
+ string_to_array 
+-----------------
+ {xx,NULL,zz}
+(1 row)
+
+ string_to_array 
+-----------------
+ {foo}
+(1 row)
+
+ string_to_array 
+-----------------
+ {}
+(1 row)
+
+ string_to_array 
+-----------------
+ {}
+(1 row)
+
+ string_to_array 
+-----------------
+ {a}
+(1 row)
+
+ string_to_array 
+-----------------
+ 
+(1 row)
+
+ string_to_array 
+-----------------
+ 
+(1 row)
+
+ string_to_array 
+-----------------
+ {a}
+(1 row)
+
+ string_to_array  
+------------------
+ {"","","","",""}
+(1 row)
+
+CREATE FUNCTION
+CREATE TABLE
+INSERT 0 4
+ jsonb_array_to_string_array 
+-----------------------------
+ {}
+ {1,2,3}
+ {foo,bar,z}
+ 
+(4 rows)
+
+ jsonb_array_to_string_array 
+-----------------------------
+ 
+ 
+ 
+ 
+(4 rows)
+
+ jsonb_array_to_string_array 
+-----------------------------
+ {1,2,3}
+(1 row)
+
+ jsonb_array_to_string_array 
+-----------------------------
+ {true,false,false,true}
+(1 row)
+
+ jsonb_array_to_string_array 
+-----------------------------
+ {NULL}
+(1 row)
+
+              jsonb_array_to_string_array              
+-------------------------------------------------------
+ {1,abc,true,"[\"a\", \"b\"]","{\"b\": \"foo\"}",NULL}
+(1 row)
+
+CREATE TABLE
+INSERT 0 3
+                                shared_users                                 
+-----------------------------------------------------------------------------
+ {3ae3560e-d771-4b63-affb-47e8d7853680,6cc1b5c1-fe4f-417d-96bd-afd1feeec34f}
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+CREATE TABLE
+INSERT 0 1
+   y   
+-------
+ {1,2}
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+ a |        b         
+---+------------------
+ 0 | {}
+ 1 | {1}
+ 2 | {1,2}
+ 3 | {1,2,NULL}
+ 4 | {NULL,2,3}
+ 5 | {1,NULL,3}
+ 6 | {NULL}
+ 7 | {NULL,NULL}
+ 8 | {NULL,NULL,NULL}
+(9 rows)
+
+DROP TABLE
+ array | array 
+-------+-------
+ {}    | {}
+(1 row)
+
+ col_1 
+-------
+ {}
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+DROP TABLE
+CREATE TABLE
+ x | y | z 
+---+---+---
+(0 rows)
+
+INSERT 0 2
+     x     |   y   
+-----------+-------
+ {1}       | {1,2}
+ {1,1,1,1} | {2}
+(2 rows)
+
+ x | y 
+---+---
+(0 rows)
+
+     x     |   y   
+-----------+-------
+ {1}       | {1,2}
+ {1,1,1,1} | {2}
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 8
+        x         
+------------------
+ {1}
+ {1,4,5}
+ {1,4,6}
+ {1,NULL,10}
+ {4}
+ {5}
+ {NULL}
+ {NULL,NULL,NULL}
+(8 rows)
+
+    x    
+---------
+ {1,4,6}
+(1 row)
+
+  x  
+-----
+ {1}
+(1 row)
+
+        x         
+------------------
+ {NULL,NULL,NULL}
+ {NULL}
+ {5}
+ {4}
+ {1,NULL,10}
+(5 rows)
+
+    x    
+---------
+ {1,4,5}
+ {1,4,6}
+(2 rows)
+
+        x         
+------------------
+ {NULL,NULL,NULL}
+(1 row)
+
+CREATE INDEX
+  x  
+-----
+ {1}
+(1 row)
+
+        x         
+------------------
+ {1,4,5}
+ {1,4,6}
+ {1,NULL,10}
+ {4}
+ {5}
+ {NULL}
+ {NULL,NULL,NULL}
+(7 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 8
+        x         
+------------------
+ {1}
+ {1,4,5}
+ {1,4,6}
+ {1,NULL,10}
+ {4}
+ {5}
+ {NULL}
+ {NULL,NULL,NULL}
+(8 rows)
+
+        x         
+------------------
+ {NULL,NULL,NULL}
+ {NULL}
+ {5}
+ {4}
+ {1,NULL,10}
+ {1,4,6}
+ {1,4,5}
+ {1}
+(8 rows)
+
+CREATE INDEX
+        x         
+------------------
+ {1}
+ {1,4,5}
+ {1,4,6}
+ {1,NULL,10}
+ {4}
+ {5}
+ {NULL}
+ {NULL,NULL,NULL}
+(8 rows)
+
+        x         
+------------------
+ {NULL,NULL,NULL}
+ {NULL}
+ {5}
+ {4}
+ {1,NULL,10}
+ {1,4,6}
+ {1,4,5}
+ {1}
+(8 rows)
+
+INSERT 0 2
+        x         
+------------------
+ {1}
+ {1,4,5}
+ {1,4,6}
+ {1,NULL,10}
+ {4}
+ {5}
+ {NULL}
+ {NULL,NULL,NULL}
+(8 rows)
+
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/array.sql:1107: ERROR:  duplicate key value violates unique constraint "unique_array_a_key"
+DETAIL:  Key (a)=({1}) already exists.
+INSERT 0 1
+psql:pg_tests/compatible/array.sql:1116: ERROR:  could not create unique index "unique_array_b_idx"
+DETAIL:  Key (b)=({2,3}) is duplicated.
+psql:pg_tests/compatible/array.sql:1122: ERROR:  type "geography[]" does not exist
+LINE 1: CREATE TABLE tbad (x GEOGRAPHY[] PRIMARY KEY);
+                             ^
+CREATE TABLE
+INSERT 0 2
+    x    
+---------
+ {1.00}
+ {1.501}
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 5
+ x |        y         | z 
+---+------------------+---
+ 1 | {1,2,3}          | 3
+ 2 | {4,5}            | 7
+ 2 | {NULL,NULL,NULL} |  
+(3 rows)
+
+ x |   y   | z 
+---+-------+---
+ 2 | {4,5} | 7
+(1 row)
+
+ x 
+---
+  
+  
+ 2
+ 2
+ 1
+(5 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+              x              
+-----------------------------
+ {"\\377","\\000"}
+ {NULL,"\\001","\\001",NULL}
+ {NULL,"\\377"}
+(3 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+              x              
+-----------------------------
+ {"\\377","\\000"}
+ {NULL,"\\001","\\001",NULL}
+ {NULL,"\\377"}
+(3 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 5
+      x      |      y      
+-------------+-------------
+ {}          | {}
+ {}          | {NULL,2}
+ {1,2}       | {3,4}
+ {NULL}      | {}
+ {NULL,NULL} | {NULL,NULL}
+(5 rows)
+
+      x      |      y      
+-------------+-------------
+ {NULL,NULL} | {NULL,NULL}
+(1 row)
+
+psql:pg_tests/compatible/array.sql:1214: NOTICE:  table "t1" does not exist, skipping
+psql:pg_tests/compatible/array.sql:1214: NOTICE:  table "t2" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 3
+   x    
+--------
+ {1,2}
+ {NULL}
+(2 rows)
+
+   x    
+--------
+ {1,2}
+ {NULL}
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 7
+         x         
+-------------------
+ {NULL,NULL}
+ {1,2}
+ {1,2,NULL,4,NULL}
+(3 rows)
+
+     row      
+--------------
+ (2,{-23791})
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+ array_prepend 
+---------------
+ {1}
+(1 row)
+
+ array_append 
+--------------
+ {cat}
+(1 row)
+
+ array_cat 
+-----------
+ {1}
+(1 row)
+
+ array_cat 
+-----------
+ {1}
+(1 row)
+
+ array_remove 
+--------------
+ 
+(1 row)
+
+ array_replace 
+---------------
+ 
+(1 row)
+
+ array_position 
+----------------
+               
+(1 row)
+
+ array_positions 
+-----------------
+ 
+(1 row)
+
+CREATE TABLE
+INSERT 0 5
+   array   
+-----------
+ {"(1,1)"}
+ {"(2,2)"}
+ {"(3,3)"}
+ {"(4,4)"}
+ {"(5,5)"}
+(5 rows)
+
+       array       
+-------------------
+ {"(1,1)","(1,2)"}
+ {"(2,2)","(1,2)"}
+ {"(3,3)","(1,2)"}
+ {"(4,4)","(1,2)"}
+ {"(5,5)","(1,2)"}
+(5 rows)
+
+          array          
+-------------------------
+ {"(1,foo)","(1,one)"}
+ {"(2,foo)","(1,two)"}
+ {"(3,foo)","(1,three)"}
+ {"(4,foo)","(1,four)"}
+ {"(5,foo)","(1,)"}
+(5 rows)
+
+         array_cat         
+---------------------------
+ {"(10,fish)","(1,one)"}
+ {"(10,fish)","(2,two)"}
+ {"(10,fish)","(3,three)"}
+ {"(10,fish)","(4,four)"}
+ {"(10,fish)","(5,)"}
+(5 rows)
+
+      array_cat       
+----------------------
+ {"(1,)","(1,one)"}
+ {"(1,)","(2,two)"}
+ {"(1,)","(3,three)"}
+ {"(1,)","(4,four)"}
+ {"(1,)","(5,)"}
+(5 rows)
+
+     array_cat      
+--------------------
+ {NULL,"(1,one)"}
+ {NULL,"(2,two)"}
+ {NULL,"(3,three)"}
+ {NULL,"(4,four)"}
+ {NULL,"(5,)"}
+(5 rows)
+
+   array_cat    
+----------------
+ {"(1,2)",NULL}
+(1 row)
+
+ array_agg 
+-----------
+ {"(1,2)"}
+(1 row)
+
+                      array_agg                      
+-----------------------------------------------------
+ {"(1,one)","(2,two)","(3,three)","(4,four)","(5,)"}
+(1 row)
+
+       array_append        
+---------------------------
+ {"(10,fish)","(1,one)"}
+ {"(10,fish)","(2,two)"}
+ {"(10,fish)","(3,three)"}
+ {"(10,fish)","(4,four)"}
+ {"(10,fish)","(5,)"}
+(5 rows)
+
+  array_append  
+----------------
+ {"(1,2)",NULL}
+(1 row)
+
+ array_append  
+---------------
+ {"(1,one)"}
+ {"(2,two)"}
+ {"(3,three)"}
+ {"(4,four)"}
+ {"(5,)"}
+(5 rows)
+
+ array_append 
+--------------
+ {NULL}
+(1 row)
+
+             array_prepend              
+----------------------------------------
+ {"(1,one)","(10,fish)","(11,zebra)"}
+ {"(2,two)","(10,fish)","(11,zebra)"}
+ {"(3,three)","(10,fish)","(11,zebra)"}
+ {"(4,four)","(10,fish)","(11,zebra)"}
+ {"(5,)","(10,fish)","(11,zebra)"}
+(5 rows)
+
+          array_prepend          
+---------------------------------
+ {NULL,"(10,fish)","(11,zebra)"}
+(1 row)
+
+ array_prepend 
+---------------
+ {"(1,2)"}
+(1 row)
+
+ array_prepend 
+---------------
+ {NULL}
+(1 row)
+
+       array_remove       
+--------------------------
+ {"(1,cat)","(11,zebra)"}
+(1 row)
+
+             array_remove             
+--------------------------------------
+ {"(1,cat)","(10,fish)","(11,zebra)"}
+(1 row)
+
+ array_remove 
+--------------
+ 
+(1 row)
+
+           array_replace            
+------------------------------------
+ {"(1,cat)","(2,dog)","(11,zebra)"}
+(1 row)
+
+           array_replace            | array_replace 
+------------------------------------+---------------
+ {"(1,cat)","(2,dog)","(11,zebra)"} | 
+(1 row)
+
+ array_position 
+----------------
+              3
+(1 row)
+
+ array_position 
+----------------
+               
+(1 row)
+
+ array_position 
+----------------
+               
+(1 row)
+
+ array_positions 
+-----------------
+ {2,4}
+(1 row)
+
+ array_positions 
+-----------------
+ {}
+(1 row)
+
+ array_positions 
+-----------------
+ 
+(1 row)
+
+psql:pg_tests/compatible/array.sql:1437: ERROR:  cannot compare dissimilar column types unknown and numeric at record column 2
+psql:pg_tests/compatible/array.sql:1443: ERROR:  cannot compare dissimilar column types boolean and unknown at record column 2
+     array_replace      
+------------------------
+ {"(1,cat)","(2,true)"}
+(1 row)
+
+     array_replace      
+------------------------
+ {"(1,cat)","(3,true)"}
+(1 row)
+
+psql:pg_tests/compatible/array.sql:1464: ERROR:  cannot compare dissimilar column types bytea and oid at record column 1
+psql:pg_tests/compatible/array.sql:1469: ERROR:  cannot compare dissimilar column types boolean and unknown at record column 2
+psql:pg_tests/compatible/array.sql:1474: ERROR:  cannot compare dissimilar column types unknown and bytea at record column 2
+     array_remove      
+-----------------------
+ {"(1,cat)","(2,dog)"}
+(1 row)
+
+PREPARE
+  array  
+---------
+ {71394}
+(1 row)
+
+CREATE TYPE
+CREATE TABLE
+INSERT 0 4
+ array  
+--------
+ {a}
+ {b}
+ {c}
+ {NULL}
+(4 rows)
+
+ array_cat  
+------------
+ {a,b,a}
+ {a,b,b}
+ {a,b,c}
+ {a,b,NULL}
+(4 rows)
+
+  array_cat  
+-------------
+ {NULL,a}
+ {NULL,b}
+ {NULL,c}
+ {NULL,NULL}
+(4 rows)
+
+ array_cat 
+-----------
+ {a,NULL}
+(1 row)
+
+ array_agg 
+-----------
+ {a}
+(1 row)
+
+  array_agg   
+--------------
+ {a,b,c,NULL}
+(1 row)
+
+ array_append 
+--------------
+ {a,a}
+ {a,b}
+ {a,c}
+ {a,NULL}
+(4 rows)
+
+ array_append 
+--------------
+ {a,NULL}
+(1 row)
+
+ array_append 
+--------------
+ {a}
+ {b}
+ {c}
+ {NULL}
+(4 rows)
+
+ array_append 
+--------------
+ {NULL}
+(1 row)
+
+ array_prepend 
+---------------
+ {a,a,b}
+ {b,a,b}
+ {c,a,b}
+ {NULL,a,b}
+(4 rows)
+
+ array_prepend 
+---------------
+ {NULL,a}
+(1 row)
+
+ array_prepend 
+---------------
+ {a}
+(1 row)
+
+ array_prepend 
+---------------
+ {NULL}
+(1 row)
+
+ array_remove 
+--------------
+ {b}
+(1 row)
+
+ array_remove 
+--------------
+ {a,b}
+(1 row)
+
+ array_remove 
+--------------
+ 
+(1 row)
+
+ array_replace 
+---------------
+ {a,c}
+(1 row)
+
+ array_replace | array_replace 
+---------------+---------------
+ {a,c}         | 
+(1 row)
+
+ array_position 
+----------------
+              3
+(1 row)
+
+ array_position 
+----------------
+               
+(1 row)
+
+ array_positions 
+-----------------
+ {1,3}
+(1 row)
+
+ array_positions 
+-----------------
+ 
+(1 row)
+
+ indkey 
+--------
+ 1
+(1 row)
+
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+            col_25551             
+----------------------------------
+ {09:20:35.19023,03:23:06.042923}
+ {09:20:35.19023}
+(2 rows)
+

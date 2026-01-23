@@ -1,0 +1,188 @@
+SET
+CREATE SCHEMA
+CREATE SCHEMA
+DROP TABLE
+CREATE TABLE
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DEALLOCATE ALL
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+DO
+ fingerprint | hint_type | details | created_at | row_id 
+-------------+-----------+---------+------------+--------
+(0 rows)
+
+ fingerprint | hint_type | details | created_at | row_id 
+-------------+-----------+---------+------------+--------
+(0 rows)
+
+ fingerprint | hint_type | details | created_at | row_id 
+-------------+-----------+---------+------------+--------
+(0 rows)
+
+ fingerprint | hint_type | details | created_at | row_id 
+-------------+-----------+---------+------------+--------
+(0 rows)
+
+ fingerprint | hint_type | details | created_at | row_id 
+-------------+-----------+---------+------------+--------
+(0 rows)
+
+ fingerprint | hint_type | details | created_at | row_id 
+-------------+-----------+---------+------------+--------
+(0 rows)
+
+ inject_hint 
+-------------
+ t
+(1 row)
+
+ fingerprint | hint_type 
+-------------+-----------
+(0 rows)
+
+ fingerprint | hint_type | details 
+-------------+-----------+---------
+(0 rows)
+
+         fingerprint          | hint_type |                details                
+------------------------------+-----------+---------------------------------------
+ select * from xy where y = _ | hint      | SELECT * FROM xy@xy_y_idx WHERE y = _
+(1 row)
+
+ inject_hint 
+-------------
+ t
+(1 row)
+
+ fingerprint | hint_type | details 
+-------------+-----------+---------
+(0 rows)
+
+ fingerprint | hint_type | details | created_at | row_id 
+-------------+-----------+---------+------------+--------
+(0 rows)
+
+ inject_hint 
+-------------
+ t
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+ fingerprint | hint_type 
+-------------+-----------
+(0 rows)
+
+ fingerprint | hint_type | details 
+-------------+-----------+---------
+(0 rows)
+
+ count 
+-------
+     0
+(1 row)
+
+ fingerprint | hint_type | details | created_at | row_id 
+-------------+-----------+---------+------------+--------
+(0 rows)
+
+ fingerprint | hint_type | details | created_at | row_id 
+-------------+-----------+---------+------------+--------
+(0 rows)
+
+ fingerprint | hint_type | details | created_at | row_id 
+-------------+-----------+---------+------------+--------
+(0 rows)
+
+ fingerprint | hint_type | details | created_at | row_id 
+-------------+-----------+---------+------------+--------
+(0 rows)
+
+PREPARE
+ fingerprint | hint_type | details | created_at | row_id 
+-------------+-----------+---------+------------+--------
+(0 rows)
+
+ inject_hint 
+-------------
+ t
+(1 row)
+
+      fingerprint       | hint_type 
+------------------------+-----------
+ create index on xy (y) | hint
+(1 row)
+
+ inject_hint 
+-------------
+ t
+(1 row)
+
+ fingerprint | hint_type 
+-------------+-----------
+(0 rows)
+
+ fingerprint | hint_type 
+-------------+-----------
+(0 rows)
+
+PREPARE
+ fingerprint | hint_type 
+-------------+-----------
+(0 rows)
+
+ fingerprint | hint_type 
+-------------+-----------
+(0 rows)
+
+ fingerprint | hint_type 
+-------------+-----------
+(0 rows)
+
+ fingerprint | hint_type 
+-------------+-----------
+(0 rows)
+
+ inject_hint 
+-------------
+ t
+(1 row)
+
+ fingerprint | hint_type 
+-------------+-----------
+(0 rows)
+
+ fingerprint | hint_type 
+-------------+-----------
+(0 rows)
+
+CREATE TABLE
+INSERT 0 1
+ fingerprint | hint_type 
+-------------+-----------
+(0 rows)
+
+ fingerprint | hint_type 
+-------------+-----------
+(0 rows)
+
+ fingerprint | hint_type 
+-------------+-----------
+(0 rows)
+
+ fingerprint | hint_type 
+-------------+-----------
+(0 rows)
+
+RESET

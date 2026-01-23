@@ -1,0 +1,81 @@
+SET
+DROP SCHEMA
+DROP ROLE
+CREATE ROLE
+CREATE SCHEMA
+CREATE DOMAIN
+CREATE TYPE
+CREATE TABLE
+CREATE TABLE
+CREATE SEQUENCE
+CREATE VIEW
+CREATE FUNCTION
+INSERT 0 2
+INSERT 0 2
+GRANT
+GRANT
+GRANT
+GRANT
+SET
+    schema_name     
+--------------------
+ information_schema
+ is_test
+(2 rows)
+
+ table_schema | table_name | table_type | is_insertable_into 
+--------------+------------+------------+--------------------
+ is_test      | child      | BASE TABLE | YES
+ is_test      | parent     | BASE TABLE | YES
+ is_test      | v_child    | VIEW       | NO
+(3 rows)
+
+ table_name | ordinal_position | column_name | data_type | is_nullable 
+------------+------------------+-------------+-----------+-------------
+ child      |                1 | id          | integer   | NO
+ child      |                2 | parent_id   | integer   | NO
+ child      |                3 | tags        | ARRAY     | YES
+ parent     |                1 | id          | integer   | NO
+ parent     |                2 | name        | text      | NO
+(5 rows)
+
+ table_name | constraint_name | constraint_type | column_name 
+------------+-----------------+-----------------+-------------
+(0 rows)
+
+ sequence_schema | sequence_name | data_type | start_value | increment 
+-----------------+---------------+-----------+-------------+-----------
+ is_test         | seq           | bigint    | 10          | 1
+(1 row)
+
+ table_schema | table_name | is_updatable 
+--------------+------------+--------------
+ is_test      | v_child    | NO
+(1 row)
+
+ routine_schema | routine_name | routine_type | data_type 
+----------------+--------------+--------------+-----------
+ is_test        | f_add        | FUNCTION     | integer
+(1 row)
+
+ specific_name | ordinal_position | parameter_mode | data_type 
+---------------+------------------+----------------+-----------
+ f_add_24657   |                1 | IN             | integer
+ f_add_24657   |                2 | IN             | integer
+(2 rows)
+
+ user_defined_type_schema | user_defined_type_name | data_type 
+--------------------------+------------------------+-----------
+(0 rows)
+
+   grantee   | table_schema | table_name | privilege_type 
+-------------+--------------+------------+----------------
+ is_testuser | is_test      | child      | SELECT
+ is_testuser | is_test      | parent     | SELECT
+ is_testuser | is_test      | v_child    | SELECT
+(3 rows)
+
+RESET
+DROP SCHEMA
+DROP ROLE
+RESET

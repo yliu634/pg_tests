@@ -1,0 +1,33 @@
+SET
+CREATE SCHEMA
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+DO
+DO
+DO
+DO
+DO
+DO
+ last_error_code |    last_error    
+-----------------+------------------
+ 22012           | division by zero
+ 42601           | syntax error
+(2 rows)
+
+DO
+DO
+ last_error_code |    last_error    
+-----------------+------------------
+ 22012           | division by zero
+ 42601           | syntax error
+(2 rows)
+
+DO
+ last_error_code |    last_error    
+-----------------+------------------
+ 22012           | division by zero
+ 42601           | syntax error
+(2 rows)
+
+RESET

@@ -1,0 +1,5 @@
+pg_tests/compatible/rows_from.sql
+pg_tests/compatible/scale.sql
+pg_tests/compatible/scatter.sql
+pg_tests/compatible/schema_change_feature_flags.sql
+pg_tests/compatible/schema_change_logical_replication.sql

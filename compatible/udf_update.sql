@@ -1,6 +1,13 @@
 -- PostgreSQL compatible tests from udf_update
 -- 84 tests
 
+-- Role used by sqllogictest directives.
+SET client_min_messages = warning;
+DROP ROLE IF EXISTS testuser;
+CREATE ROLE testuser LOGIN;
+GRANT testuser TO postgres;
+RESET client_min_messages;
+
 -- Test 1: statement (line 1)
 CREATE TABLE t (a INT PRIMARY KEY, b INT);
 
@@ -32,10 +39,14 @@ SELECT * FROM t;
 INSERT INTO t VALUES (1, 2),(5,6),(7,8);
 
 -- Test 10: statement (line 41)
+\set ON_ERROR_STOP 0
 SELECT f1(1, 11);
+\set ON_ERROR_STOP 1
 
 -- Test 11: statement (line 44)
+\set ON_ERROR_STOP 0
 SELECT f1(14, 14);
+\set ON_ERROR_STOP 1
 
 -- Test 12: query (line 47)
 SELECT * FROM t;
@@ -80,7 +91,7 @@ CREATE TABLE t3(a) AS SELECT 1::INT;
 -- Test 23: statement (line 109)
 CREATE FUNCTION f4() RETURNS RECORD AS
 $$
-  UPDATE t3 SET a = count(a);
+  UPDATE t3 SET a = (SELECT count(a) FROM t3) RETURNING *;
 $$ LANGUAGE SQL;
 
 -- Test 24: statement (line 115)
@@ -90,13 +101,13 @@ $$
 $$ LANGUAGE SQL;
 
 -- Test 25: query (line 122)
-SELECT f5(count(a)) FROM t3;
+SELECT f5(count(a)::INT) FROM t3;
 
 -- Test 26: statement (line 130)
-CREATE TABLE t_check(x DECIMAL(1,0) CHECK (x >= 1))
+CREATE TABLE t_check(x DECIMAL(1,0) CHECK (x >= 1));
 
 -- Test 27: statement (line 133)
-INSERT INTO t_check VALUES (2)
+INSERT INTO t_check VALUES (2);
 
 -- Test 28: statement (line 136)
 CREATE FUNCTION f_check1(d DECIMAL) RETURNS RECORD AS
@@ -111,7 +122,9 @@ SELECT f_check1(3.5);
 SELECT f_check1(0.5);
 
 -- Test 31: statement (line 152)
+\set ON_ERROR_STOP 0
 SELECT f_check1(0);
+\set ON_ERROR_STOP 1
 
 -- Test 32: statement (line 160)
 CREATE TABLE generated_as_id_t (
@@ -124,10 +137,12 @@ CREATE TABLE generated_as_id_t (
 INSERT INTO generated_as_id_t (a) VALUES (7), (8), (9);
 
 -- Test 34: statement (line 170)
+\set ON_ERROR_STOP 0
 CREATE FUNCTION f_err(i INT, j INT) RETURNS RECORD AS
 $$
   UPDATE generated_as_id_t SET b=i, c=j WHERE a > 6 RETURNING *;
 $$ LANGUAGE SQL;
+\set ON_ERROR_STOP 1
 
 -- Test 35: statement (line 176)
 CREATE FUNCTION f_generated_as_id(j INT) RETURNS RECORD AS
@@ -145,8 +160,10 @@ SELECT f_generated_as_id(1+1);
 SELECT * FROM generated_as_id_t ORDER BY a;
 
 -- Test 39: statement (line 204)
-CREATE TABLE t1_103693(k1 PRIMARY KEY) AS SELECT 1::INT;
-CREATE TABLE t2_103693(k2 PRIMARY KEY, v2) AS SELECT 1::INT, 0::INT;
+CREATE TABLE t1_103693(k1 INT PRIMARY KEY);
+INSERT INTO t1_103693 VALUES (1);
+CREATE TABLE t2_103693(k2 INT PRIMARY KEY, v2 INT);
+INSERT INTO t2_103693 VALUES (1, 0);
 
 -- Test 40: statement (line 208)
 CREATE FUNCTION f_103693(k INT, v INT) RETURNS INT AS
@@ -155,10 +172,11 @@ $$
 $$ LANGUAGE SQL;
 
 -- Test 41: statement (line 214)
-SET streamer_enabled = true
+-- CockroachDB-only setting.
+-- SET streamer_enabled = true;
 
 -- Test 42: query (line 217)
-SELECT f_103693(k2, v2) FROM t1_103693 INNER LOOKUP JOIN t2_103693 ON k1 = k2;
+SELECT f_103693(k2, v2) FROM t1_103693 INNER JOIN t2_103693 ON k1 = k2;
 
 -- Test 43: statement (line 226)
 CREATE TABLE kv (k INT PRIMARY KEY, v INT);
@@ -222,33 +240,36 @@ BEGIN;
 -- Test 59: statement (line 297)
 SELECT f_select_for_update(5);
 
-user testuser
+-- sqllogictest: user testuser
 
 -- Test 60: statement (line 302)
-SET statement_timeout = '10ms'
+SET ROLE testuser;
+
+SET statement_timeout = '10ms';
 
 -- Test 61: query (line 307)
 SELECT * FROM kv WHERE k = 5 FOR UPDATE;
 
-statement ok
-SET statement_timeout = 0
+-- statement ok
+SET statement_timeout = 0;
 
-user root
+RESET ROLE;
+-- sqllogictest: user root
 
-statement ok
+-- statement ok
 SELECT f_update(5,5);
 
-statement ok
+-- statement ok
 END;
 
-query II rowsort
+-- query II rowsort
 SELECT * FROM kv;
 
 -- Test 62: statement (line 332)
 CREATE TABLE t146414 (
   a INT NOT NULL,
-  b INT AS (a + 1) VIRTUAL
-)
+  b INT GENERATED ALWAYS AS (a + 1) STORED
+);
 
 -- Test 63: statement (line 338)
 CREATE FUNCTION f146414() RETURNS INT LANGUAGE SQL AS $$
@@ -260,21 +281,22 @@ $$;
 ALTER TABLE t146414 DROP COLUMN b;
 
 -- Test 65: statement (line 347)
-SELECT f146414()
+\set ON_ERROR_STOP 0
+SELECT f146414();
+\set ON_ERROR_STOP 1
 
 -- Test 66: statement (line 355)
 CREATE TABLE table_drop (
   a INT NOT NULL,
   b INT NOT NULL,
   c INT NOT NULL,
-  d INT AS (a + b) STORED,
-  -- Hash-sharded indexes generate a hidden computed column.
-  INDEX i (b ASC) USING HASH
+  d INT GENERATED ALWAYS AS (a + b) STORED
 );
+CREATE INDEX i ON table_drop (b);
 INSERT INTO table_drop VALUES (1,2,3), (4,5,6), (7,8,9);
 
 -- Test 67: statement (line 366)
-DROP FUNCTION f_update;
+DROP FUNCTION f_update(INT, INT);
 CREATE FUNCTION f_update() RETURNS INT LANGUAGE SQL AS $$
   UPDATE table_drop SET b = b + 1 WHERE a = 1;
   SELECT 1;
@@ -311,7 +333,7 @@ DROP PROCEDURE p158898;
 DROP TABLE t158898;
 
 -- Test 77: statement (line 413)
-CREATE TABLE t158154 (col1 INT8 NOT NULL, col2 TIMESTAMP NOT NULL, computed TIMESTAMP NOT NULL AS (col2) STORED);
+CREATE TABLE t158154 (col1 INT8 NOT NULL, col2 TIMESTAMP NOT NULL, computed TIMESTAMP GENERATED ALWAYS AS (col2) STORED);
 INSERT INTO t158154 (col1, col2) VALUES (1, '2024-01-01');
 
 -- Test 78: statement (line 417)
@@ -320,21 +342,20 @@ CREATE OR REPLACE PROCEDURE p158154() LANGUAGE PLpgSQL AS $proc$
 $proc$;
 
 -- Test 79: statement (line 422)
-CALL p158154()
+CALL p158154();
 
 -- Test 80: query (line 425)
-SELECT * FROM t158154
+SELECT * FROM t158154;
 
 -- Test 81: statement (line 430)
 ALTER TABLE t158154 DROP COLUMN computed, DROP COLUMN col2;
 
 -- Test 82: statement (line 433)
-CALL p158154()
+CALL p158154();
 
 -- Test 83: query (line 436)
-SELECT * FROM t158154
+SELECT * FROM t158154;
 
 -- Test 84: statement (line 441)
 DROP PROCEDURE p158154;
 DROP TABLE t158154;
-

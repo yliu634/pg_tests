@@ -2,10 +2,17 @@
 set -euo pipefail
 
 PG_DB="${PG_DB:-crdb_tests}"
-PG_USER="${PG_USER:-${USER}}"
+PG_USER="${PG_USER:-${USER:-$(id -un)}}"
 PG_HOST="${PG_HOST:-localhost}"
 PG_PORT="${PG_PORT:-5432}"
 PG_ADMIN_DB="${PG_ADMIN_DB:-template1}"
+PG_SUDO_USER="${PG_SUDO_USER:-}"
+
+# Optional: run psql as a different OS user (e.g. postgres) to leverage local peer auth.
+PSQL=(psql)
+if [ -n "$PG_SUDO_USER" ]; then
+  PSQL=(sudo -n -u "$PG_SUDO_USER" psql)
+fi
 
 usage() {
   cat <<'EOF'
@@ -20,6 +27,7 @@ Env (optional):
   PG_HOST      Postgres host (default: localhost)
   PG_PORT      Postgres port (default: 5432)
   PG_ADMIN_DB  Admin db for create/drop (default: template1)
+  PG_SUDO_USER Run psql under this OS user (default: unset)
 EOF
 }
 
@@ -29,13 +37,13 @@ die() {
 }
 
 psql_admin() {
-  psql -X -h "$PG_HOST" -p "$PG_PORT" -U "$PG_USER" -d "$PG_ADMIN_DB" "$@"
+  "${PSQL[@]}" -X -h "$PG_HOST" -p "$PG_PORT" -U "$PG_USER" -d "$PG_ADMIN_DB" "$@"
 }
 
 psql_db() {
   local db="$1"
   shift
-  psql -X -h "$PG_HOST" -p "$PG_PORT" -U "$PG_USER" -d "$db" "$@"
+  "${PSQL[@]}" -X -h "$PG_HOST" -p "$PG_PORT" -U "$PG_USER" -d "$db" "$@"
 }
 
 run_one() (

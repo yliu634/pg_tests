@@ -1,37 +1,55 @@
 -- PostgreSQL compatible tests from txn_retry
 -- 10 tests
 
--- Test 1: statement (line 16)
-SET kv_transaction_buffered_writes_enabled = false;
+SET client_min_messages = warning;
 
--- Test 2: statement (line 19)
-CREATE TABLE test_retry (
-  k INT PRIMARY KEY
-)
+CREATE SCHEMA IF NOT EXISTS test;
+CREATE SCHEMA IF NOT EXISTS crdb_internal;
 
--- Test 3: statement (line 24)
-GRANT ALL ON test_retry TO testuser
+DROP TABLE IF EXISTS test.test_retry;
+DROP ROLE IF EXISTS txn_retry_testuser;
+CREATE ROLE txn_retry_testuser LOGIN;
 
--- Test 4: statement (line 28)
+-- CockroachDB function stub: deterministic and PostgreSQL-friendly.
+CREATE OR REPLACE FUNCTION cluster_logical_timestamp() RETURNS BIGINT LANGUAGE SQL AS $$
+  SELECT 0::bigint;
+$$;
+
+-- CockroachDB retry helper stub: emulate a retryable error.
+CREATE OR REPLACE FUNCTION crdb_internal.force_retry(i INT) RETURNS INT LANGUAGE plpgsql AS $$
 BEGIN
+  RAISE EXCEPTION 'forced retry %', i USING ERRCODE = '40001';
+END
+$$;
 
--- Test 5: statement (line 34)
-SELECT * FROM test.test_retry
+-- Test table.
+CREATE TABLE test.test_retry (
+  k INT PRIMARY KEY
+);
 
-user root
+GRANT ALL ON test.test_retry TO txn_retry_testuser;
 
--- Test 6: statement (line 44)
-SELECT cluster_logical_timestamp(); INSERT INTO test_retry VALUES (1);
+BEGIN;
+SELECT * FROM test.test_retry ORDER BY k;
 
--- Test 7: statement (line 47)
-COMMIT
+-- user root
+SELECT cluster_logical_timestamp();
+INSERT INTO test.test_retry VALUES (1);
+COMMIT;
 
--- Test 8: statement (line 50)
-RESET kv_transaction_buffered_writes_enabled
+-- Expected ERROR (forced retry):
+\set ON_ERROR_STOP 0
+SELECT crdb_internal.force_retry(0);
+\set ON_ERROR_STOP 1
 
--- Test 9: query (line 59)
-SELECT crdb_internal.force_retry(0)
+-- Expected ERROR (forced retry):
+\set ON_ERROR_STOP 0
+SELECT crdb_internal.force_retry(3);
+\set ON_ERROR_STOP 1
 
--- Test 10: query (line 74)
-SELECT crdb_internal.force_retry(3)
+SELECT * FROM test.test_retry ORDER BY k;
 
+DROP TABLE test.test_retry;
+DROP ROLE txn_retry_testuser;
+
+RESET client_min_messages;

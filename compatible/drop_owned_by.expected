@@ -1,0 +1,116 @@
+SET
+DROP SCHEMA
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+DO
+GRANT
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+SET
+CREATE TABLE
+CREATE VIEW
+CREATE SEQUENCE
+CREATE TYPE
+CREATE SCHEMA
+CREATE TABLE
+RESET
+GRANT
+ table_schema |    table_name    | table_type 
+--------------+------------------+------------
+ dob_s        | dob_s_t          | BASE TABLE
+ public       | dob_enums        | VIEW
+ public       | dob_t            | BASE TABLE
+ public       | dob_table_grants | VIEW
+ public       | dob_tables       | VIEW
+ public       | dob_v            | VIEW
+(6 rows)
+
+ schema_name | type_name | enum_label 
+-------------+-----------+------------
+ public      | dob_enum  | a
+ public      | dob_enum  | b
+(2 rows)
+
+ table_schema | table_name |    grantee    | privilege_type 
+--------------+------------+---------------+----------------
+ public       | dob_t      | dob_testuser  | DELETE
+ public       | dob_t      | dob_testuser  | INSERT
+ public       | dob_t      | dob_testuser  | REFERENCES
+ public       | dob_t      | dob_testuser  | SELECT
+ public       | dob_t      | dob_testuser  | TRIGGER
+ public       | dob_t      | dob_testuser  | TRUNCATE
+ public       | dob_t      | dob_testuser  | UPDATE
+ public       | dob_t      | dob_testuser2 | SELECT
+(8 rows)
+
+DROP OWNED
+ table_schema | table_name |   grantee    | privilege_type 
+--------------+------------+--------------+----------------
+ public       | dob_t      | dob_testuser | DELETE
+ public       | dob_t      | dob_testuser | INSERT
+ public       | dob_t      | dob_testuser | REFERENCES
+ public       | dob_t      | dob_testuser | SELECT
+ public       | dob_t      | dob_testuser | TRIGGER
+ public       | dob_t      | dob_testuser | TRUNCATE
+ public       | dob_t      | dob_testuser | UPDATE
+(7 rows)
+
+DROP OWNED
+ table_schema |    table_name    | table_type 
+--------------+------------------+------------
+ public       | dob_enums        | VIEW
+ public       | dob_table_grants | VIEW
+ public       | dob_tables       | VIEW
+(3 rows)
+
+ schema_name | type_name | enum_label 
+-------------+-----------+------------
+(0 rows)
+
+ dob_t_dropped | dob_v_dropped 
+---------------+---------------
+ t             | t
+(1 row)
+
+SET
+CREATE TABLE
+SET
+CREATE TABLE
+RESET
+ table_name 
+------------
+ r1_t
+ r2_t
+(2 rows)
+
+DROP OWNED
+ table_name 
+------------
+(0 rows)
+
+CREATE ROLE
+CREATE FUNCTION
+ALTER FUNCTION
+DROP OWNED
+ dob_udf_dropped 
+-----------------
+ t
+(1 row)
+
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET

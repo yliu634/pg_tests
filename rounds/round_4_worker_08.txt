@@ -1,0 +1,5 @@
+pg_tests/compatible/udf_unsupported.sql
+pg_tests/compatible/udf_update.sql
+pg_tests/compatible/udf_upsert.sql
+pg_tests/compatible/unimplemented.sql
+pg_tests/compatible/unique.sql

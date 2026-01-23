@@ -1,0 +1,1169 @@
+SET
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+   indexname    |                                      indexdef                                      
+----------------+------------------------------------------------------------------------------------
+ t6_a_desc_idx  | CREATE INDEX t6_a_desc_idx ON public.t6 USING btree (a DESC) WHERE (a > 2)
+ t6_a_desc_uidx | CREATE UNIQUE INDEX t6_a_desc_uidx ON public.t6 USING btree (a DESC) WHERE (a > 5)
+ t6_a_idx1      | CREATE INDEX t6_a_idx1 ON public.t6 USING btree (a) WHERE (a > 0)
+ t6_a_idx2      | CREATE INDEX t6_a_idx2 ON public.t6 USING btree (a) WHERE (a > 1)
+ t6_a_uidx1     | CREATE UNIQUE INDEX t6_a_uidx1 ON public.t6 USING btree (a) WHERE (a > 3)
+ t6_a_uidx2     | CREATE UNIQUE INDEX t6_a_uidx2 ON public.t6 USING btree (a) WHERE (a > 4)
+ t6i1           | CREATE INDEX t6i1 ON public.t6 USING btree (a) WHERE (a > 6)
+ t6i2           | CREATE INDEX t6i2 ON public.t6 USING btree (a) WHERE (a > 7)
+ t6i3           | CREATE INDEX t6i3 ON public.t6 USING btree (a DESC) WHERE (a > 8)
+(9 rows)
+
+   indexname    |                                      indexdef                                      
+----------------+------------------------------------------------------------------------------------
+ t6_a_desc_idx  | CREATE INDEX t6_a_desc_idx ON public.t6 USING btree (a DESC) WHERE (a > 2)
+ t6_a_desc_uidx | CREATE UNIQUE INDEX t6_a_desc_uidx ON public.t6 USING btree (a DESC) WHERE (a > 5)
+ t6_a_idx1      | CREATE INDEX t6_a_idx1 ON public.t6 USING btree (a) WHERE (a > 0)
+ t6_a_idx2      | CREATE INDEX t6_a_idx2 ON public.t6 USING btree (a) WHERE (a > 1)
+ t6_a_uidx1     | CREATE UNIQUE INDEX t6_a_uidx1 ON public.t6 USING btree (a) WHERE (a > 3)
+ t6_a_uidx2     | CREATE UNIQUE INDEX t6_a_uidx2 ON public.t6 USING btree (a) WHERE (a > 4)
+ t6i1           | CREATE INDEX t6i1 ON public.t6 USING btree (a) WHERE (a > 6)
+ t6i2           | CREATE INDEX t6i2 ON public.t6 USING btree (a) WHERE (a > 7)
+ t6i3           | CREATE INDEX t6i3 ON public.t6 USING btree (a DESC) WHERE (a > 8)
+(9 rows)
+
+   indexname    |                                      indexdef                                      
+----------------+------------------------------------------------------------------------------------
+ t6_a_desc_idx  | CREATE INDEX t6_a_desc_idx ON public.t6 USING btree (a DESC) WHERE (a > 2)
+ t6_a_desc_uidx | CREATE UNIQUE INDEX t6_a_desc_uidx ON public.t6 USING btree (a DESC) WHERE (a > 5)
+ t6_a_idx1      | CREATE INDEX t6_a_idx1 ON public.t6 USING btree (a) WHERE (a > 0)
+ t6_a_idx2      | CREATE INDEX t6_a_idx2 ON public.t6 USING btree (a) WHERE (a > 1)
+ t6_a_uidx1     | CREATE UNIQUE INDEX t6_a_uidx1 ON public.t6 USING btree (a) WHERE (a > 3)
+ t6_a_uidx2     | CREATE UNIQUE INDEX t6_a_uidx2 ON public.t6 USING btree (a) WHERE (a > 4)
+ t6i1           | CREATE INDEX t6i1 ON public.t6 USING btree (a) WHERE (a > 6)
+ t6i2           | CREATE INDEX t6i2 ON public.t6 USING btree (a) WHERE (a > 7)
+ t6i3           | CREATE INDEX t6i3 ON public.t6 USING btree (a DESC) WHERE (a > 8)
+(9 rows)
+
+   indexname    |                                      indexdef                                      
+----------------+------------------------------------------------------------------------------------
+ t6_a_desc_idx  | CREATE INDEX t6_a_desc_idx ON public.t6 USING btree (a DESC) WHERE (a > 2)
+ t6_a_desc_uidx | CREATE UNIQUE INDEX t6_a_desc_uidx ON public.t6 USING btree (a DESC) WHERE (a > 5)
+ t6_a_idx1      | CREATE INDEX t6_a_idx1 ON public.t6 USING btree (a) WHERE (a > 0)
+ t6_a_idx2      | CREATE INDEX t6_a_idx2 ON public.t6 USING btree (a) WHERE (a > 1)
+ t6_a_uidx1     | CREATE UNIQUE INDEX t6_a_uidx1 ON public.t6 USING btree (a) WHERE (a > 3)
+ t6_a_uidx2     | CREATE UNIQUE INDEX t6_a_uidx2 ON public.t6 USING btree (a) WHERE (a > 4)
+ t6i1           | CREATE INDEX t6i1 ON public.t6 USING btree (a) WHERE (a > 6)
+ t6i2           | CREATE INDEX t6i2 ON public.t6 USING btree (a) WHERE (a > 7)
+ t6i3           | CREATE INDEX t6i3 ON public.t6 USING btree (a DESC) WHERE (a > 8)
+(9 rows)
+
+ALTER TABLE
+   indexname    |                                      indexdef                                      
+----------------+------------------------------------------------------------------------------------
+ t6_a_desc_idx  | CREATE INDEX t6_a_desc_idx ON public.t6 USING btree (b DESC) WHERE (b > 2)
+ t6_a_desc_uidx | CREATE UNIQUE INDEX t6_a_desc_uidx ON public.t6 USING btree (b DESC) WHERE (b > 5)
+ t6_a_idx1      | CREATE INDEX t6_a_idx1 ON public.t6 USING btree (b) WHERE (b > 0)
+ t6_a_idx2      | CREATE INDEX t6_a_idx2 ON public.t6 USING btree (b) WHERE (b > 1)
+ t6_a_uidx1     | CREATE UNIQUE INDEX t6_a_uidx1 ON public.t6 USING btree (b) WHERE (b > 3)
+ t6_a_uidx2     | CREATE UNIQUE INDEX t6_a_uidx2 ON public.t6 USING btree (b) WHERE (b > 4)
+ t6i1           | CREATE INDEX t6i1 ON public.t6 USING btree (b) WHERE (b > 6)
+ t6i2           | CREATE INDEX t6i2 ON public.t6 USING btree (b) WHERE (b > 7)
+ t6i3           | CREATE INDEX t6i3 ON public.t6 USING btree (b DESC) WHERE (b > 8)
+(9 rows)
+
+   indexname    |                                      indexdef                                      
+----------------+------------------------------------------------------------------------------------
+ t6_a_desc_idx  | CREATE INDEX t6_a_desc_idx ON public.t6 USING btree (b DESC) WHERE (b > 2)
+ t6_a_desc_uidx | CREATE UNIQUE INDEX t6_a_desc_uidx ON public.t6 USING btree (b DESC) WHERE (b > 5)
+ t6_a_idx1      | CREATE INDEX t6_a_idx1 ON public.t6 USING btree (b) WHERE (b > 0)
+ t6_a_idx2      | CREATE INDEX t6_a_idx2 ON public.t6 USING btree (b) WHERE (b > 1)
+ t6_a_uidx1     | CREATE UNIQUE INDEX t6_a_uidx1 ON public.t6 USING btree (b) WHERE (b > 3)
+ t6_a_uidx2     | CREATE UNIQUE INDEX t6_a_uidx2 ON public.t6 USING btree (b) WHERE (b > 4)
+ t6i1           | CREATE INDEX t6i1 ON public.t6 USING btree (b) WHERE (b > 6)
+ t6i2           | CREATE INDEX t6i2 ON public.t6 USING btree (b) WHERE (b > 7)
+ t6i3           | CREATE INDEX t6i3 ON public.t6 USING btree (b DESC) WHERE (b > 8)
+(9 rows)
+
+ALTER TABLE
+   indexname    |                                      indexdef                                      
+----------------+------------------------------------------------------------------------------------
+ t6_a_desc_idx  | CREATE INDEX t6_a_desc_idx ON public.t7 USING btree (b DESC) WHERE (b > 2)
+ t6_a_desc_uidx | CREATE UNIQUE INDEX t6_a_desc_uidx ON public.t7 USING btree (b DESC) WHERE (b > 5)
+ t6_a_idx1      | CREATE INDEX t6_a_idx1 ON public.t7 USING btree (b) WHERE (b > 0)
+ t6_a_idx2      | CREATE INDEX t6_a_idx2 ON public.t7 USING btree (b) WHERE (b > 1)
+ t6_a_uidx1     | CREATE UNIQUE INDEX t6_a_uidx1 ON public.t7 USING btree (b) WHERE (b > 3)
+ t6_a_uidx2     | CREATE UNIQUE INDEX t6_a_uidx2 ON public.t7 USING btree (b) WHERE (b > 4)
+ t6i1           | CREATE INDEX t6i1 ON public.t7 USING btree (b) WHERE (b > 6)
+ t6i2           | CREATE INDEX t6i2 ON public.t7 USING btree (b) WHERE (b > 7)
+ t6i3           | CREATE INDEX t6i3 ON public.t7 USING btree (b DESC) WHERE (b > 8)
+(9 rows)
+
+   indexname    |                                      indexdef                                      
+----------------+------------------------------------------------------------------------------------
+ t6_a_desc_idx  | CREATE INDEX t6_a_desc_idx ON public.t7 USING btree (b DESC) WHERE (b > 2)
+ t6_a_desc_uidx | CREATE UNIQUE INDEX t6_a_desc_uidx ON public.t7 USING btree (b DESC) WHERE (b > 5)
+ t6_a_idx1      | CREATE INDEX t6_a_idx1 ON public.t7 USING btree (b) WHERE (b > 0)
+ t6_a_idx2      | CREATE INDEX t6_a_idx2 ON public.t7 USING btree (b) WHERE (b > 1)
+ t6_a_uidx1     | CREATE UNIQUE INDEX t6_a_uidx1 ON public.t7 USING btree (b) WHERE (b > 3)
+ t6_a_uidx2     | CREATE UNIQUE INDEX t6_a_uidx2 ON public.t7 USING btree (b) WHERE (b > 4)
+ t6i1           | CREATE INDEX t6i1 ON public.t7 USING btree (b) WHERE (b > 6)
+ t6i2           | CREATE INDEX t6i2 ON public.t7 USING btree (b) WHERE (b > 7)
+ t6i3           | CREATE INDEX t6i3 ON public.t7 USING btree (b DESC) WHERE (b > 8)
+(9 rows)
+
+CREATE TABLE
+CREATE INDEX
+ALTER TABLE
+ indexname | indexdef 
+-----------+----------
+(0 rows)
+
+ indexname | indexdef 
+-----------+----------
+(0 rows)
+
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+ indexname |                              indexdef                              
+-----------+--------------------------------------------------------------------
+ t10_a_idx | CREATE INDEX t10_a_idx ON public.t10 USING btree (a) WHERE (b > 1)
+(1 row)
+
+ indexname |                              indexdef                              
+-----------+--------------------------------------------------------------------
+ t10_a_idx | CREATE INDEX t10_a_idx ON public.t10 USING btree (a) WHERE (b > 1)
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+ indexname  |                                  indexdef                                  
+------------+----------------------------------------------------------------------------
+ t11_a_uidx | CREATE UNIQUE INDEX t11_a_uidx ON public.t11 USING btree (a) WHERE (b > 0)
+ t11_b_key  | CREATE UNIQUE INDEX t11_b_key ON public.t11 USING btree (b) WHERE (a > 0)
+(2 rows)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+UPDATE 1
+ a | b | c 
+---+---+---
+ 1 | 2 | 1
+(1 row)
+
+ a | b | c 
+---+---+---
+(0 rows)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+ count 
+-------
+     1
+(1 row)
+
+INSERT 0 1
+UPDATE 2
+ a | b 
+---+---
+ 1 | 0
+ 1 | 0
+(2 rows)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 2
+UPDATE 2
+ k | i  
+---+----
+ 3 | 31
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 6
+ k | i | f |  s  | b 
+---+---+---+-----+---
+ 1 | 1 | 1 | foo | t
+ 2 | 2 | 2 | foo | f
+ 3 | 3 | 3 | bar | t
+(3 rows)
+
+  k  |  i  |  f  |  s  | b 
+-----+-----+-----+-----+---
+   1 |   1 |   1 | foo | t
+ 100 | 100 | 100 | foo | t
+(2 rows)
+
+UPDATE 6
+ k | i  | f |  s  | b 
+---+----+---+-----+---
+ 1 | 11 | 1 | foo | t
+ 2 | 12 | 2 | foo | f
+ 3 | 13 | 3 | bar | t
+(3 rows)
+
+UPDATE 6
+  k  |  i  |  f  |  s  | b 
+-----+-----+-----+-----+---
+   1 |  11 |   1 | foo | t
+   3 |  13 |   3 | foo | t
+ 100 | 110 | 100 | foo | t
+ 300 | 310 | 300 | foo | t
+(4 rows)
+
+INSERT 0 1
+  k  |  i  |  f  |  s  | b 
+-----+-----+-----+-----+---
+   1 |  11 |   1 | foo | t
+   3 |  13 |   3 | foo | t
+ 100 | 110 | 100 | foo | t
+(3 rows)
+
+INSERT 0 1
+  k  |  i  |  f  |  s  | b 
+-----+-----+-----+-----+---
+   1 |  11 |   1 | foo | t
+   3 |  13 |   3 | foo | t
+ 100 | 110 | 100 | foo | t
+ 300 | 330 | 300 | foo | t
+(4 rows)
+
+INSERT 0 1
+ k | i  | f |  s  | b 
+---+----+---+-----+---
+ 1 | 11 | 1 | foo | t
+ 2 | 12 | 2 | foo | f
+ 3 | 13 | 3 | foo | t
+(3 rows)
+
+  k  |  i  |  f  |  s  | b 
+-----+-----+-----+-----+---
+   1 |  11 |   1 | foo | t
+   3 |  13 |   3 | foo | t
+ 100 | 110 | 100 | foo | t
+ 300 | 330 | 300 | foo | t
+ 400 | 400 | 400 | foo | t
+(5 rows)
+
+DELETE 1
+ k | i  | f |  s  | b 
+---+----+---+-----+---
+ 2 | 12 | 2 | foo | f
+ 3 | 13 | 3 | foo | t
+(2 rows)
+
+  k  |  i  |  f  |  s  | b 
+-----+-----+-----+-----+---
+   3 |  13 |   3 | foo | t
+ 100 | 110 | 100 | foo | t
+ 300 | 330 | 300 | foo | t
+ 400 | 400 | 400 | foo | t
+(4 rows)
+
+DELETE 1
+ k | i  | f |  s  | b 
+---+----+---+-----+---
+ 3 | 13 | 3 | foo | t
+(1 row)
+
+  k  |  i  |  f  |  s  | b 
+-----+-----+-----+-----+---
+   3 |  13 |   3 | foo | t
+ 100 | 110 | 100 | foo | t
+ 300 | 330 | 300 | foo | t
+ 400 | 400 | 400 | foo | t
+(4 rows)
+
+DELETE 1
+ k | i  | f |  s  | b 
+---+----+---+-----+---
+ 3 | 13 | 3 | foo | t
+(1 row)
+
+  k  |  i  |  f  |  s  | b 
+-----+-----+-----+-----+---
+   3 |  13 |   3 | foo | t
+ 100 | 110 | 100 | foo | t
+ 300 | 330 | 300 | foo | t
+ 400 | 400 | 400 | foo | t
+(4 rows)
+
+CREATE TABLE
+INSERT 0 6
+CREATE INDEX
+ a | b  
+---+----
+ 4 | 40
+ 5 | 50
+ 6 | 60
+(3 rows)
+
+BEGIN
+CREATE TABLE
+INSERT 0 2
+CREATE INDEX
+COMMIT
+ a | b  
+---+----
+ 6 | 60
+(1 row)
+
+CREATE TYPE
+CREATE TABLE
+INSERT 0 2
+CREATE INDEX
+ a |  b  
+---+-----
+ 1 | foo
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+CREATE INDEX
+ a |  b  
+---+-----
+ 1 | foo
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 2
+ALTER TABLE
+ k | a 
+---+---
+ 6 | 6
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+CREATE INDEX
+UPDATE 1
+CREATE INDEX
+ a | b 
+---+---
+ 1 | 1
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 2
+TRUNCATE TABLE
+ a | b 
+---+---
+(0 rows)
+
+INSERT 0 2
+ a | b 
+---+---
+ 7 | 7
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+INSERT 0 2
+INSERT 0 0
+ a | b  
+---+----
+ 1 | -1
+ 1 |  1
+ 2 |  2
+(3 rows)
+
+DELETE 1
+INSERT 0 1
+UPDATE 1
+UPDATE 1
+UPDATE 0
+UPDATE 1
+ a | b 
+---+---
+ 3 | 3
+ 4 | 1
+ 5 | 1
+(3 rows)
+
+DELETE 3
+INSERT 0 1
+ a | b  
+---+----
+ 1 | -1
+(1 row)
+
+INSERT 0 1
+ a | b  
+---+----
+ 1 | -1
+ 1 |  1
+(2 rows)
+
+INSERT 0 2
+INSERT 0 1
+ a |   b   
+---+-------
+ 1 | -1000
+ 1 |  -100
+ 1 |   -10
+ 1 |    -1
+ 1 |     1
+(5 rows)
+
+DELETE 3
+INSERT 0 2
+ a | b  
+---+----
+ 1 | -1
+ 1 |  1
+ 2 | -2
+ 2 |  2
+(4 rows)
+
+INSERT 0 0
+ a | b  
+---+----
+ 1 | -1
+ 1 |  1
+ 2 | -2
+ 2 |  2
+(4 rows)
+
+INSERT 0 1
+ a | b  
+---+----
+ 1 | -1
+ 1 |  1
+ 2 | -2
+ 2 |  2
+ 3 |  3
+(5 rows)
+
+CREATE INDEX
+INSERT 0 0
+ a | b  
+---+----
+ 1 | -1
+ 1 |  1
+ 2 | -2
+ 2 |  2
+ 3 |  3
+(5 rows)
+
+INSERT 0 0
+ a | b  
+---+----
+ 1 | -1
+ 1 |  1
+ 2 | -2
+ 2 |  2
+ 3 |  3
+(5 rows)
+
+INSERT 0 3
+  a  |  b  
+-----+-----
+ -10 |   2
+   1 | -10
+   1 |  -1
+   1 |   1
+   2 |  -2
+   2 |   2
+   3 |   3
+   4 |   4
+(8 rows)
+
+DROP INDEX
+DELETE 8
+INSERT 0 1
+INSERT 0 0
+CREATE INDEX
+INSERT 0 0
+DELETE 1
+DROP INDEX
+CREATE INDEX
+INSERT 0 1
+DROP INDEX
+INSERT 0 0
+INSERT 0 0
+ a | b 
+---+---
+ 1 | 1
+(1 row)
+
+CREATE INDEX
+INSERT 0 1
+INSERT 0 0
+INSERT 0 0
+INSERT 0 1
+DROP INDEX
+DELETE 3
+CREATE INDEX
+INSERT 0 1
+DROP INDEX
+DELETE 1
+INSERT 0 1
+INSERT 0 1
+CREATE INDEX
+INSERT 0 1
+DROP INDEX
+INSERT 0 1
+ a | b  
+---+----
+ 1 | 10
+ 1 | -1
+(2 rows)
+
+INSERT 0 1
+ a | b  
+---+----
+ 1 | -1
+ 1 | 10
+(2 rows)
+
+INSERT 0 2
+INSERT 0 1
+ a |   b   
+---+-------
+ 1 |    -1
+ 1 |    10
+ 1 |   -10
+ 1 |  -100
+ 1 | -1000
+(5 rows)
+
+DELETE 3
+INSERT 0 2
+ a |  b  
+---+-----
+ 1 |  -1
+ 1 | 100
+ 3 |   3
+(3 rows)
+
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+ a |  b  
+---+-----
+ 1 |  -1
+ 3 |   3
+ 4 | 300
+ 1 |  10
+(4 rows)
+
+CREATE INDEX
+INSERT 0 0
+DROP INDEX
+DELETE 4
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 4
+ m 
+---
+ 1
+ 3
+(2 rows)
+
+ m 
+---
+ 1
+(1 row)
+
+ m 
+---
+ 1
+ 3
+(2 rows)
+
+ m 
+---
+ 2
+(1 row)
+
+CREATE TYPE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 3
+ a |  b  
+---+-----
+ 1 | foo
+ 2 | bar
+(2 rows)
+
+UPDATE 1
+UPDATE 1
+ a |  b  
+---+-----
+ 2 | bar
+ 3 | foo
+(2 rows)
+
+DELETE 1
+ a |  b  
+---+-----
+ 3 | foo
+(1 row)
+
+INSERT 0 3
+ a |  b  
+---+-----
+ 1 | foo
+ 2 | bar
+(2 rows)
+
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+INSERT 0 3
+ k |          j           |  s  
+---+----------------------+-----
+ 1 | {"x": "y", "num": 1} | foo
+(1 row)
+
+ k |          j           |  s  
+---+----------------------+-----
+ 1 | {"x": "y", "num": 1} | foo
+(1 row)
+
+ k |          j           |  s  
+---+----------------------+-----
+ 1 | {"x": "y", "num": 1} | foo
+ 3 | {"x": "y", "num": 3} | bar
+(2 rows)
+
+DELETE 1
+ k |          j           |  s  
+---+----------------------+-----
+ 1 | {"x": "y", "num": 1} | foo
+(1 row)
+
+UPDATE 1
+ k |           j           |  s  
+---+-----------------------+-----
+ 1 | {"x": "y", "num": 10} | foo
+(1 row)
+
+UPDATE 1
+UPDATE 1
+ k  |           j           |  s  
+----+-----------------------+-----
+  2 | {"x": "y", "num": 2}  | bar
+ 10 | {"x": "y", "num": 10} | foo
+(2 rows)
+
+UPDATE 1
+ k |          j           |  s  
+---+----------------------+-----
+ 2 | {"x": "y", "num": 2} | bar
+(1 row)
+
+INSERT 0 1
+ k |          j           |  s  
+---+----------------------+-----
+ 2 | {"x": "y", "num": 2} | bar
+ 3 | {"x": "y", "num": 3} | bar
+(2 rows)
+
+INSERT 0 1
+ k |          j           |  s  
+---+----------------------+-----
+ 3 | {"x": "y", "num": 4} | bar
+(1 row)
+
+ k | j | s 
+---+---+---
+(0 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+CREATE INDEX
+ k |          j           |  s  
+---+----------------------+-----
+ 1 | {"x": "y", "num": 1} | foo
+ 3 | {"x": "y", "num": 3} | bar
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+BEGIN
+INSERT 0 3
+CREATE INDEX
+COMMIT
+ k |          j           |  s  
+---+----------------------+-----
+ 1 | {"x": "y", "num": 1} | foo
+ 3 | {"x": "y", "num": 3} | bar
+(2 rows)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+UPDATE 1
+ a | b | c | d 
+---+---+---+---
+ 1 | 2 | 3 | 5
+(1 row)
+
+INSERT 0 1
+ a | b | c | d 
+---+---+---+---
+ 1 | 2 | 3 | 6
+(1 row)
+
+INSERT 0 1
+ a | b | c | d 
+---+---+---+---
+ 1 | 2 | 3 | 7
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 3
+ a | b | c  
+---+---+----
+ 1 | 0 | 10
+ 3 | 0 | 10
+(2 rows)
+
+DELETE 1
+ a | b | c  
+---+---+----
+ 3 | 0 | 10
+(1 row)
+
+UPDATE 1
+UPDATE 1
+ a | b | c  
+---+---+----
+ 2 | 0 | 10
+(1 row)
+
+UPDATE 1
+ a | b | c  
+---+---+----
+ 4 | 0 | 10
+(1 row)
+
+INSERT 0 2
+INSERT 0 1
+ a | b | c  
+---+---+----
+ 4 | 0 | 10
+ 5 | 0 | 10
+(2 rows)
+
+INSERT 0 2
+INSERT 0 0
+ a | b | c  
+---+---+----
+ 4 | 0 | 10
+ 5 | 0 | 10
+ 8 | 0 | 10
+(3 rows)
+
+INSERT 0 3
+ a  | b | c  
+----+---+----
+  4 | 0 | 10
+  5 | 0 | 10
+  8 | 0 | 10
+  7 | 0 | 10
+ 10 | 0 | 10
+(5 rows)
+
+DELETE 8
+DROP INDEX
+CREATE INDEX
+INSERT 0 2
+ a | b | c  
+---+---+----
+ 1 | 1 | 11
+ 2 | 2 | 12
+(2 rows)
+
+INSERT 0 1
+INSERT 0 0
+ a | b | c  
+---+---+----
+ 1 | 1 | 11
+ 2 | 2 | 12
+ 5 | 5 | 15
+(3 rows)
+
+INSERT 0 1
+INSERT 0 2
+INSERT 0 1
+ a  | b | c  
+----+---+----
+  1 | 1 | 11
+  2 | 2 | 12
+  5 | 5 | 15
+ 11 | 6 | 16
+ 12 | 3 | 13
+ 13 | 7 | 17
+ 15 | 8 | 18
+(7 rows)
+
+CREATE TABLE
+BEGIN
+CREATE INDEX
+INSERT 0 2
+ a | b 
+---+---
+ 6 | 6
+(1 row)
+
+UPDATE 2
+ a | b 
+---+---
+ 6 | 7
+(1 row)
+
+DELETE 2
+COMMIT
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+ a | b 
+---+---
+(0 rows)
+
+ a | b 
+---+---
+(0 rows)
+
+ a | b 
+---+---
+(0 rows)
+
+ a | b 
+---+---
+(0 rows)
+
+ a | b 
+---+---
+(0 rows)
+
+ a | b 
+---+---
+(0 rows)
+
+ a | b 
+---+---
+(0 rows)
+
+ a | b 
+---+---
+(0 rows)
+
+ a | b 
+---+---
+(0 rows)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 4
+ a 
+---
+ 3
+ 2
+ 1
+(3 rows)
+
+CREATE TABLE
+CREATE INDEX
+ i 
+---
+(0 rows)
+
+CREATE TABLE
+CREATE INDEX
+ i 
+---
+(0 rows)
+
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 1
+ k 
+---
+(0 rows)
+
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+INSERT 0 2
+UPDATE 1
+ c  | p |  i  
+----+---+-----
+ 10 | 2 | 100
+(1 row)
+
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+INSERT 0 2
+UPDATE 1
+ c  | p | b 
+----+---+---
+ 10 | 2 | t
+(1 row)
+
+INSERT 0 1
+ c  | p | b 
+----+---+---
+ 10 | 3 | t
+(1 row)
+
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 2
+INSERT 0 2
+UPDATE 1
+ c  | p |  i  
+----+---+-----
+ 10 | 3 | 100
+(1 row)
+
+UPDATE 1
+ c | p | i 
+---+---+---
+(0 rows)
+
+CREATE TABLE
+CREATE INDEX
+ALTER TABLE
+ALTER TABLE
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+ k 
+---
+ 1
+(1 row)
+
+INSERT 0 1
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+CREATE TABLE
+CREATE INDEX
+UPDATE 0
+CREATE TABLE
+ b | c 
+---+---
+(0 rows)
+
+CREATE TABLE
+INSERT 0 1
+CREATE INDEX
+ k | ?column? 
+---+----------
+ 1 | t
+(1 row)
+
+CREATE TABLE
+BEGIN
+ALTER TABLE
+CREATE INDEX
+ROLLBACK
+BEGIN
+ALTER TABLE
+CREATE INDEX
+ROLLBACK
+BEGIN
+ALTER TABLE
+CREATE INDEX
+ROLLBACK
+DROP TABLE
+BEGIN
+CREATE TABLE
+ALTER TABLE
+CREATE INDEX
+COMMIT
+ i | k 
+---+---
+(0 rows)
+
+DROP TABLE
+BEGIN
+CREATE TABLE
+ALTER TABLE
+CREATE INDEX
+COMMIT
+ i | k 
+---+---
+(0 rows)
+
+DROP TABLE
+BEGIN
+CREATE TABLE
+ALTER TABLE
+CREATE INDEX
+COMMIT
+ i | k 
+---+---
+(0 rows)
+
+DROP TABLE
+BEGIN
+CREATE TABLE
+ALTER TABLE
+CREATE INDEX
+COMMIT
+ i | k 
+---+---
+(0 rows)
+
+DROP TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+DROP INDEX
+ALTER TABLE
+ALTER TABLE
+DROP INDEX
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+DROP INDEX
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+DROP INDEX
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+ALTER TABLE
+ALTER TABLE
+DROP INDEX
+ALTER TABLE
+ALTER TABLE
+CREATE TYPE
+CREATE TABLE
+CREATE INDEX
+ALTER TABLE
+CREATE INDEX
+DROP INDEX
+DROP INDEX
+DROP TABLE
+DROP TYPE
+CREATE TABLE
+CREATE INDEX
+CREATE PROCEDURE
+CALL
+DROP INDEX
+ALTER TABLE
+CALL
+DROP PROCEDURE
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE PROCEDURE
+CALL
+DROP INDEX
+ALTER TABLE
+CREATE INDEX
+CALL
+DROP PROCEDURE
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE PROCEDURE
+CALL
+DROP INDEX
+ALTER TABLE
+CALL
+DROP PROCEDURE
+DROP TABLE

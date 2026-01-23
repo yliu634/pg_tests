@@ -1,0 +1,965 @@
+SET
+CREATE EXTENSION
+CREATE TABLE
+CREATE TABLE
+INSERT 0 7
+INSERT 0 6
+  lt   
+-------
+ 
+ A
+ A.B
+ A.B.C
+ A.B.D
+ Z
+ 
+(7 rows)
+
+       lta       
+-----------------
+ {}
+ {""}
+ {A,A.B}
+ {A.B.C,A.B.D,Z}
+ {X,Y}
+ 
+(6 rows)
+
+ pg_typeof 
+-----------
+ ltree
+(1 row)
+
+ pg_typeof 
+-----------
+ ltree[]
+(1 row)
+
+INSERT 0 1
+INSERT 0 1
+ lt  
+-----
+ 
+ A
+ A.B
+(3 rows)
+
+  lt   
+-------
+ A.B
+ A.B.C
+ A.B.D
+(3 rows)
+
+   lta   
+---------
+ {""}
+ {A,A.B}
+(2 rows)
+
+       lta       
+-----------------
+ {A,A.B}
+ {A.B.C,A.B.D,Z}
+(2 rows)
+
+ ?column? 
+----------
+ 
+ 
+ A
+ 
+ 
+ 
+(6 rows)
+
+ ?column? 
+----------
+ 
+ 
+ A.B
+ A.B.C
+ 
+ 
+(6 rows)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ 
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ 
+(1 row)
+
+    subpath    
+---------------
+ Child1.Child2
+(1 row)
+
+ subpath 
+---------
+ Child2
+(1 row)
+
+    subpath    
+---------------
+ Child1.Child2
+(1 row)
+
+      subpath      
+-------------------
+ Top.Child1.Child2
+(1 row)
+
+ subpath 
+---------
+ Child2
+(1 row)
+
+      subpath      
+-------------------
+ Top.Child1.Child2
+(1 row)
+
+ subpath 
+---------
+ Child1
+(1 row)
+
+    subpath    
+---------------
+ Child1.Child2
+(1 row)
+
+  subpath   
+------------
+ Top.Child1
+(1 row)
+
+ subpath 
+---------
+ 
+(1 row)
+
+ subpath 
+---------
+ Top
+(1 row)
+
+ subpath 
+---------
+ Top
+(1 row)
+
+ subpath 
+---------
+ Child1
+(1 row)
+
+ subpath 
+---------
+ 
+(1 row)
+
+ subpath 
+---------
+ B.C
+(1 row)
+
+ subltree 
+----------
+ Child1
+(1 row)
+
+     subltree      
+-------------------
+ Top.Child1.Child2
+(1 row)
+
+ subltree 
+----------
+ Child1
+(1 row)
+
+  subltree  
+------------
+ Top.Child1
+(1 row)
+
+ subltree 
+----------
+ Top
+(1 row)
+
+ subltree 
+----------
+ 
+(1 row)
+
+ nlevel 
+--------
+      3
+(1 row)
+
+ nlevel 
+--------
+      0
+(1 row)
+
+ nlevel 
+--------
+       
+(1 row)
+
+ index 
+-------
+    -1
+(1 row)
+
+ index 
+-------
+     2
+(1 row)
+
+ index 
+-------
+     4
+(1 row)
+
+ index 
+-------
+     4
+(1 row)
+
+ index 
+-------
+     2
+(1 row)
+
+ index 
+-------
+      
+(1 row)
+
+   text2ltree    
+-----------------
+ foo_bar-baz.baz
+(1 row)
+
+ text2ltree 
+------------
+ foo.bar
+(1 row)
+
+   ltree2text    | ?column? | ?column? 
+-----------------+----------+----------
+ foo_bar-baz.baz | t        | t
+(1 row)
+
+ lca 
+-----
+ A.B
+(1 row)
+
+ lca 
+-----
+ 
+(1 row)
+
+ lca 
+-----
+ 
+(1 row)
+
+ lca 
+-----
+ 
+(1 row)
+
+ lca 
+-----
+ 
+(1 row)
+
+ lca 
+-----
+ 
+(1 row)
+
+ lca 
+-----
+ 
+(1 row)
+
+ lca 
+-----
+ 
+(1 row)
+
+ lca 
+-----
+ A
+(1 row)
+
+ lca 
+-----
+ A.B
+(1 row)
+
+ lca 
+-----
+ A.B
+(1 row)
+
+ lca 
+-----
+ 
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+ id |     path     | path_null 
+----+--------------+-----------
+  1 | default.path | 
+(1 row)
+
+INSERT 0 1
+ id |     path     | path_null 
+----+--------------+-----------
+  1 | default.path | 
+  2 | custom.path  | 
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+ id |   path   
+----+----------
+  1 | root.a.b
+  2 | root
+(2 rows)
+
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+ALTER TABLE
+ id |  name  | path 
+----+--------+------
+  1 | first  | 
+  2 | second | 
+(2 rows)
+
+INSERT 0 1
+ id |  name  | path  
+----+--------+-------
+  1 | first  | 
+  2 | second | 
+  3 | third  | a.b.c
+(3 rows)
+
+ALTER TABLE
+ id |  name  | path  |     path2     
+----+--------+-------+---------------
+  1 | first  |       | default.value
+  2 | second |       | default.value
+  3 | third  | a.b.c | default.value
+(3 rows)
+
+ALTER TABLE
+ id |  name  |     path2     
+----+--------+---------------
+  1 | first  | default.value
+  2 | second | default.value
+  3 | third  | default.value
+(3 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+CREATE INDEX
+ id | path  
+----+-------
+  1 | a.b
+  2 | a.b.c
+(2 rows)
+
+DROP INDEX
+ id | path  
+----+-------
+  1 | a.b
+  2 | a.b.c
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+ALTER TABLE
+ id | path_text 
+----+-----------
+  1 | a.b.c
+  2 | x.y
+(2 rows)
+
+ pg_typeof 
+-----------
+ ltree
+(1 row)
+
+ALTER TABLE
+ id | path_text 
+----+-----------
+  1 | a.b.c
+  2 | x.y
+(2 rows)
+
+ pg_typeof 
+-----------
+ text
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+ALTER TABLE
+ pg_typeof 
+-----------
+ ltree
+(1 row)
+
+ id |  path_text   
+----+--------------
+  1 | valid.path
+  2 | invalid.path
+  3 | also.valid
+(3 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 4
+CREATE VIEW
+ id |            path             |   name   
+----+-----------------------------+----------
+  1 | org.engineering.backend     | Backend
+  2 | org.engineering.frontend    | Frontend
+  4 | org.engineering.backend.api | API
+(3 rows)
+
+CREATE VIEW
+ id |            path             |   name   | depth |    top_level    
+----+-----------------------------+----------+-------+-----------------
+  1 | org.engineering.backend     | Backend  |     3 | org.engineering
+  2 | org.engineering.frontend    | Frontend |     3 | org.engineering
+  3 | org.sales                   | Sales    |     2 | org.sales
+  4 | org.engineering.backend.api | API      |     4 | org.engineering
+(4 rows)
+
+CREATE VIEW
+ id |   path    | name  
+----+-----------+-------
+  3 | org.sales | Sales
+(1 row)
+
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+ id |   path    | depth | parent_path 
+----+-----------+-------+-------------
+  1 | a.b.c     |     3 | a.b
+  2 | x.y       |     2 | x
+  3 | p.q.r.s.t |     5 | p.q.r.s
+(3 rows)
+
+INSERT 0 1
+ id |  path  | depth | parent_path 
+----+--------+-------+-------------
+  4 | single |     1 | 
+(1 row)
+
+UPDATE 1
+ id |   path    | depth | parent_path 
+----+-----------+-------+-------------
+  1 | a.b.c.d.e |     5 | a.b.c.d
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+ invalid_path  
+---------------
+ a.b.c.invalid
+(1 row)
+
+DROP TABLE
+ ltree 
+-------
+ 
+(1 row)
+
+ ltree 
+-------
+ 
+(1 row)
+
+ ltree 
+-------
+ 
+(1 row)
+
+    ltree     
+--------------
+ invalid.path
+(1 row)
+
+   ltree    
+------------
+ has_spaces
+(1 row)
+
+   ltree    
+------------
+ has_symbol
+(1 row)
+
+      ltree      
+-----------------
+ starts.with.dot
+(1 row)
+
+     ltree     
+---------------
+ ends.with.dot
+(1 row)
+
+ text  
+-------
+ a.b.c
+(1 row)
+
+ text 
+------
+ 
+(1 row)
+
+ text 
+------
+ 
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+  ltree  
+---------
+ foo.bar
+(1 row)
+
+    array    
+-------------
+ {a.b,x.y.z}
+(1 row)
+
+    array    
+-------------
+ {a.b,x.y.z}
+(1 row)
+
+        array         
+----------------------
+ {valid,invalid.path}
+(1 row)
+
+CREATE FUNCTION
+ get_depth 
+-----------
+         4
+(1 row)
+
+ get_depth 
+-----------
+         0
+(1 row)
+
+ get_depth 
+-----------
+          
+(1 row)
+
+CREATE FUNCTION
+    make_path    
+-----------------
+ org.engineering
+(1 row)
+
+ make_path 
+-----------
+ a.b
+(1 row)
+
+CREATE FUNCTION
+ is_descendant 
+---------------
+ t
+(1 row)
+
+ is_descendant 
+---------------
+ f
+(1 row)
+
+ is_descendant 
+---------------
+ f
+(1 row)
+
+CREATE FUNCTION
+ get_parent 
+------------
+ a.b.c
+(1 row)
+
+ get_parent 
+------------
+ 
+(1 row)
+
+ get_parent 
+------------
+ 
+(1 row)
+
+CREATE FUNCTION
+ count_ancestors 
+-----------------
+               4
+(1 row)
+
+ count_ancestors 
+-----------------
+               1
+(1 row)
+
+ count_ancestors 
+-----------------
+               0
+(1 row)
+
+CREATE FUNCTION
+ build_path 
+------------
+ a.b.c
+(1 row)
+
+ build_path 
+------------
+ single
+(1 row)
+
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+CREATE TABLE
+INSERT 0 10
+ id |       path        
+----+-------------------
+  7 | 
+  4 | org
+  3 | org.apple
+ 10 | org.apple.alpha
+  2 | org.apple.beta
+  6 | org.apple.beta.v1
+  8 | org.application
+  1 | org.zoo
+  5 | prod
+  9 | 
+(10 rows)
+
+ id |       path        
+----+-------------------
+  9 | 
+  5 | prod
+  1 | org.zoo
+  8 | org.application
+  6 | org.apple.beta.v1
+  2 | org.apple.beta
+ 10 | org.apple.alpha
+  3 | org.apple
+  4 | org
+  7 | 
+(10 rows)
+
+CREATE INDEX
+ id |       path        
+----+-------------------
+  7 | 
+  4 | org
+  3 | org.apple
+ 10 | org.apple.alpha
+  2 | org.apple.beta
+  6 | org.apple.beta.v1
+  8 | org.application
+  1 | org.zoo
+  5 | prod
+  9 | 
+(10 rows)
+
+ id |       path        
+----+-------------------
+  9 | 
+  5 | prod
+  1 | org.zoo
+  8 | org.application
+  6 | org.apple.beta.v1
+  2 | org.apple.beta
+ 10 | org.apple.alpha
+  3 | org.apple
+  4 | org
+  7 | 
+(10 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 5
+CREATE INDEX
+ id |   path    |  status  
+----+-----------+----------
+  1 | org.sales | active
+  3 | org.sales | inactive
+(2 rows)
+
+ id |          path           | status 
+----+-------------------------+--------
+  2 | org.engineering         | active
+  4 | org.engineering.backend | active
+(2 rows)
+
+CREATE INDEX
+ id |          path           | status 
+----+-------------------------+--------
+  2 | org.engineering         | active
+  4 | org.engineering.backend | active
+  1 | org.sales               | active
+(3 rows)
+
+ id |           path           |  status  
+----+--------------------------+----------
+  5 | org.engineering.frontend | inactive
+  3 | org.sales                | inactive
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 4
+CREATE INDEX
+ id | category | path  | label  
+----+----------+-------+--------
+  1 |        1 | a.b   | first
+  2 |        1 | a.b.c | second
+(2 rows)
+
+ id | category | path | label 
+----+----------+------+-------
+  3 |        2 | a.b  | third
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+ nlevel 
+--------
+      1
+(1 row)
+
+INSERT 0 1
+INSERT 0 1
+ nlevel 
+--------
+   1000
+(1 row)
+
+INSERT 0 1
+         ltree         
+-----------------------
+ test.label_with_space
+(1 row)
+
+       ltree       
+-------------------
+ test.label_domain
+(1 row)
+
+     ltree     
+---------------
+ path.to.item1
+(1 row)
+
+      ltree       
+------------------
+ folder.subfolder
+(1 row)
+
+     ltree      
+----------------
+ test.label_var
+(1 row)
+
+      ltree      
+-----------------
+ test.double.dot
+(1 row)
+
+    ltree    
+-------------
+ leading.dot
+(1 row)
+
+    ltree     
+--------------
+ trailing.dot
+(1 row)
+
+INSERT 0 4
+ count 
+-------
+     6
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 1

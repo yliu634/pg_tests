@@ -1,0 +1,1551 @@
+SET
+CREATE SCHEMA
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE TABLE
+CREATE TABLE
+ generate_series 
+-----------------
+(0 rows)
+
+ generate_series 
+-----------------
+               1
+               2
+               3
+(3 rows)
+
+   generate_series   
+---------------------
+ 2017-11-11 00:00:00
+ 2017-11-11 01:00:00
+ 2017-11-11 02:00:00
+ 2017-11-11 03:00:00
+(4 rows)
+
+   generate_series   
+---------------------
+ 2017-11-11 03:00:00
+ 2017-11-11 02:00:00
+ 2017-11-11 01:00:00
+ 2017-11-11 00:00:00
+(4 rows)
+
+   generate_series   
+---------------------
+ 2017-11-11 03:00:00
+ 2017-11-12 03:00:00
+ 2017-11-13 03:00:00
+ 2017-11-14 03:00:00
+(4 rows)
+
+   generate_series   
+---------------------
+ 2017-01-15 03:00:00
+ 2017-02-15 03:00:00
+ 2017-03-15 03:00:00
+ 2017-04-15 03:00:00
+ 2017-05-15 03:00:00
+ 2017-06-15 03:00:00
+ 2017-07-15 03:00:00
+ 2017-08-15 03:00:00
+ 2017-09-15 03:00:00
+ 2017-10-15 03:00:00
+ 2017-11-15 03:00:00
+(11 rows)
+
+   generate_series   
+---------------------
+ 2016-01-31 03:00:00
+ 2016-02-29 03:00:00
+ 2016-03-29 03:00:00
+ 2016-04-29 03:00:00
+ 2016-05-29 03:00:00
+ 2016-06-29 03:00:00
+ 2016-07-29 03:00:00
+ 2016-08-29 03:00:00
+ 2016-09-29 03:00:00
+ 2016-10-29 03:00:00
+ 2016-11-29 03:00:00
+ 2016-12-29 03:00:00
+(12 rows)
+
+   generate_series   
+---------------------
+ 2016-01-31 03:00:00
+ 2016-03-31 03:00:00
+ 2016-05-31 03:00:00
+ 2016-07-31 03:00:00
+ 2016-09-30 03:00:00
+ 2016-11-30 03:00:00
+(6 rows)
+
+   generate_series   
+---------------------
+ 2016-01-30 22:00:00
+ 2016-03-01 23:00:00
+ 2016-04-03 00:00:00
+ 2016-05-04 01:00:00
+ 2016-06-05 02:00:00
+ 2016-07-06 03:00:00
+ 2016-08-07 04:00:00
+ 2016-09-08 05:00:00
+ 2016-10-09 06:00:00
+ 2016-11-10 07:00:00
+ 2016-12-11 08:00:00
+(11 rows)
+
+   generate_series   
+---------------------
+ 1996-02-29 22:00:00
+ 2000-02-29 22:00:00
+ 2004-02-29 22:00:00
+(3 rows)
+
+ generate_series 
+-----------------
+(0 rows)
+
+ a | b 
+---+---
+ 1 | 1
+ 1 | 2
+ 2 | 1
+ 2 | 2
+(4 rows)
+
+ generate_series 
+-----------------
+               3
+               2
+               1
+(3 rows)
+
+ generate_series 
+-----------------
+(0 rows)
+
+ generate_series 
+-----------------
+               1
+               2
+               3
+(3 rows)
+
+ generate_series 
+-----------------
+               1
+               2
+               3
+(3 rows)
+
+ x 
+---
+ 1
+(1 row)
+
+ generate_series | ordinality 
+-----------------+------------
+               1 |          1
+(1 row)
+
+ x | y 
+---+---
+ 1 | 1
+(1 row)
+
+ column1 
+---------
+       1
+(1 row)
+
+ generate_series 
+-----------------
+               1
+               2
+(2 rows)
+
+ generate_series | generate_series 
+-----------------+-----------------
+               1 |               3
+               2 |               4
+(2 rows)
+
+ generate_series | generate_series 
+-----------------+-----------------
+               1 |               3
+               2 |               4
+(2 rows)
+
+INSERT 0 1
+INSERT 0 1
+  x  |  x   | generate_series | generate_series 
+-----+------+-----------------+-----------------
+ cat | bird |               1 |               3
+ cat | bird |               2 |               4
+(2 rows)
+
+  x  |  x   | a | b 
+-----+------+---+---
+ cat | bird | 1 | 3
+ cat | bird | 1 | 4
+ cat | bird | 2 | 3
+ cat | bird | 2 | 4
+(4 rows)
+
+ r 
+---
+ 4
+ 5
+(2 rows)
+
+ r 
+---
+ 4
+ 5
+(2 rows)
+
+ r  
+----
+  6
+  9
+ 12
+(3 rows)
+
+CREATE TABLE
+INSERT 0 2
+ x | generate_series 
+---+-----------------
+ 0 |               0
+ 0 |               1
+ 0 |               2
+ 0 |               3
+ 1 |               1
+ 1 |               2
+ 1 |               3
+(7 rows)
+
+ unnest 
+--------
+(0 rows)
+
+ unnest 
+--------
+(0 rows)
+
+ unnest 
+--------
+      1
+      2
+(2 rows)
+
+ unnest | unnest 
+--------+--------
+      1 | a
+      2 | b
+(2 rows)
+
+ r 
+---
+ 1
+ 2
+(2 rows)
+
+ r | t 
+---+---
+ 1 | 1
+ 2 | 3
+(2 rows)
+
+ ?column? | ?column? 
+----------+----------
+        1 |        1
+        2 |        3
+(2 rows)
+
+ ascii 
+-------
+    97
+    98
+    99
+(3 rows)
+
+ generate_series 
+-----------------
+               1
+               2
+               3
+               2
+               3
+               3
+(6 rows)
+
+ ?column? 
+----------
+        2
+        4
+        6
+(3 rows)
+
+ val 
+-----
+(0 rows)
+
+ generate_series 
+-----------------
+(0 rows)
+
+ unnest 
+--------
+(0 rows)
+
+ _pg_expandarray 
+-----------------
+(0 rows)
+
+   generate_series    
+----------------------
+  9223372036854775807
+                    0
+ -9223372036854775807
+(3 rows)
+
+  word   | catcode | barelabel |                   catdesc                    |     baredesc      
+---------+---------+-----------+----------------------------------------------+-------------------
+ alter   | U       | t         | unreserved                                   | can be bare label
+ and     | R       | t         | reserved                                     | can be bare label
+ between | C       | t         | unreserved (cannot be function or type name) | can be bare label
+ cross   | T       | t         | reserved (can be function or type name)      | can be bare label
+(4 rows)
+
+ a | b | word | catcode | barelabel | catdesc | baredesc 
+---+---+------+---------+-----------+---------+----------
+(0 rows)
+
+ generate_series 
+-----------------
+               1
+               2
+(2 rows)
+
+ unnest 
+--------
+      1
+(1 row)
+
+ colalias 
+----------
+        1
+(1 row)
+
+ filter_id2 | filter_id 
+------------+-----------
+          1 |         1
+(1 row)
+
+ a |              pg_get_keywords               | c 
+---+--------------------------------------------+---
+ a | (abort,U,t,unreserved,"can be bare label") | c
+(1 row)
+
+ a |                     b                      | c 
+---+--------------------------------------------+---
+ a | (abort,U,t,unreserved,"can be bare label") | c
+(1 row)
+
+ a | b | c 
+---+---+---
+ a | 1 | c
+(1 row)
+
+ upper 
+-------
+ ABC
+(1 row)
+
+   b    | ordinality 
+--------+------------
+ public |          1
+(1 row)
+
+ _pg_expandarray 
+-----------------
+ (1,1)
+(1 row)
+
+ x | n 
+---+---
+ 1 | 1
+(1 row)
+
+ _pg_expandarray 
+-----------------
+(0 rows)
+
+ x | n 
+---+---
+(0 rows)
+
+ x | n 
+---+---
+(0 rows)
+
+ _pg_expandarray 
+-----------------
+(0 rows)
+
+ _pg_expandarray 
+-----------------
+(0 rows)
+
+ x | n 
+---+---
+(0 rows)
+
+ _pg_expandarray 
+-----------------
+ (100,1)
+(1 row)
+
+  x  | n 
+-----+---
+ 100 | 1
+(1 row)
+
+ _pg_expandarray 
+-----------------
+ (2,1)
+ (1,2)
+(2 rows)
+
+ x | n 
+---+---
+ 2 | 1
+ 1 | 2
+(2 rows)
+
+ _pg_expandarray 
+-----------------
+ (3,1)
+ (2,2)
+ (1,3)
+(3 rows)
+
+ x | n 
+---+---
+ 3 | 1
+ 2 | 2
+ 1 | 3
+(3 rows)
+
+ _pg_expandarray 
+-----------------
+ (a,1)
+(1 row)
+
+ x | n 
+---+---
+ a | 1
+(1 row)
+
+ _pg_expandarray 
+-----------------
+ (b,1)
+ (a,2)
+(2 rows)
+
+ x | n 
+---+---
+ b | 1
+ a | 2
+(2 rows)
+
+ _pg_expandarray 
+-----------------
+ (c,1)
+ (b,2)
+ (a,3)
+(3 rows)
+
+ x | n 
+---+---
+ c | 1
+ b | 2
+ a | 3
+(3 rows)
+
+ x 
+---
+ c
+ b
+ a
+(3 rows)
+
+ n 
+---
+ 1
+ 2
+ 3
+(3 rows)
+
+ other 
+-------
+ c
+ b
+ a
+(3 rows)
+
+ x 
+---
+ c
+ b
+ a
+(3 rows)
+
+ n 
+---
+ 1
+ 2
+ 3
+(3 rows)
+
+ other 
+-------
+ c
+ b
+ a
+(3 rows)
+
+ x | n 
+---+---
+ c | 1
+ b | 2
+ a | 3
+(3 rows)
+
+ x | n 
+---+---
+ c | 1
+ b | 2
+ a | 3
+(3 rows)
+
+ n 
+---
+ 1
+ 2
+ 3
+(3 rows)
+
+ x | n 
+---+---
+ 3 | 1
+ 2 | 2
+ 1 | 3
+(3 rows)
+
+    row    
+-----------
+ (3,1,123)
+ (2,2,123)
+ (1,3,123)
+(3 rows)
+
+ generate_subscripts 
+---------------------
+                   1
+                   2
+                   3
+(3 rows)
+
+ generate_subscripts 
+---------------------
+                   1
+                   2
+                   3
+(3 rows)
+
+ generate_subscripts 
+---------------------
+                   1
+                   2
+                   3
+(3 rows)
+
+ generate_subscripts 
+---------------------
+                   3
+                   2
+                   1
+(3 rows)
+
+ s 
+---
+ 1
+ 2
+ 3
+ 4
+(4 rows)
+
+ s 
+---
+ 4
+ 3
+ 2
+ 1
+(4 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+(0 rows)
+
+ generate_subscripts 
+---------------------
+                   1
+(1 row)
+
+ generate_subscripts 
+---------------------
+                   1
+(1 row)
+
+ generate_subscripts 
+---------------------
+                   1
+(1 row)
+
+ generate_subscripts 
+---------------------
+                   1
+(1 row)
+
+  x  
+-----
+ cat
+ cat
+ cat
+(3 rows)
+
+  x  
+-----
+ cat
+ cat
+(2 rows)
+
+  x  
+-----
+ cat
+(1 row)
+
+  x  
+-----
+ cat
+(1 row)
+
+ x 
+---
+(0 rows)
+
+ generate_series 
+-----------------
+               1
+               2
+               3
+(3 rows)
+
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+ALTER TABLE
+ALTER TABLE
+CREATE INDEX
+INSERT 0 3
+ x | generate_series | generate_series 
+---+-----------------+-----------------
+ 3 |               1 |               1
+ 3 |               2 |               2
+ 3 |               3 |                
+ 5 |               1 |               1
+ 5 |               2 |               2
+ 5 |               3 |                
+ 5 |               4 |                
+ 5 |               5 |                
+   |                 |               1
+   |                 |               2
+(10 rows)
+
+ generate_series 
+-----------------
+               1
+               2
+               3
+               1
+               2
+               3
+               4
+               5
+(8 rows)
+
+ count 
+-------
+     8
+(1 row)
+
+         relname          | unnest 
+--------------------------+--------
+ ordered_t                |      1
+ pg_aggregate             |      1
+ pg_am                    |      1
+ pg_am                    |      2
+ pg_amop                  |      1
+ pg_amop                  |      2
+ pg_amop                  |      2
+ pg_amop                  |      3
+ pg_amop                  |      4
+ pg_amop                  |      5
+ pg_amop                  |      6
+ pg_amop                  |      7
+ pg_amproc                |      1
+ pg_amproc                |      2
+ pg_amproc                |      3
+ pg_amproc                |      4
+ pg_amproc                |      5
+ pg_attrdef               |      1
+ pg_attrdef               |      2
+ pg_attrdef               |      3
+ pg_attribute             |      1
+ pg_attribute             |      1
+ pg_attribute             |      2
+ pg_attribute             |      5
+ pg_auth_members          |      1
+ pg_auth_members          |      2
+ pg_auth_members          |      2
+ pg_auth_members          |      3
+ pg_auth_members          |      3
+ pg_auth_members          |      4
+ pg_auth_members          |      4
+ pg_auth_members          |      4
+ pg_authid                |      1
+ pg_authid                |      2
+ pg_cast                  |      1
+ pg_cast                  |      2
+ pg_cast                  |      3
+ pg_class                 |      1
+ pg_class                 |      2
+ pg_class                 |      3
+ pg_class                 |      8
+ pg_class                 |      9
+ pg_collation             |      1
+ pg_collation             |      2
+ pg_collation             |      3
+ pg_collation             |      7
+ pg_constraint            |      1
+ pg_constraint            |      2
+ pg_constraint            |      2
+ pg_constraint            |      3
+ pg_constraint            |      8
+ pg_constraint            |      9
+ pg_constraint            |      9
+ pg_constraint            |     11
+ pg_conversion            |      1
+ pg_conversion            |      1
+ pg_conversion            |      2
+ pg_conversion            |      3
+ pg_conversion            |      3
+ pg_conversion            |      5
+ pg_conversion            |      6
+ pg_database              |      1
+ pg_database              |      2
+ pg_db_role_setting       |      1
+ pg_db_role_setting       |      2
+ pg_default_acl           |      1
+ pg_default_acl           |      2
+ pg_default_acl           |      3
+ pg_default_acl           |      4
+ pg_depend                |      1
+ pg_depend                |      2
+ pg_depend                |      3
+ pg_depend                |      4
+ pg_depend                |      5
+ pg_depend                |      6
+ pg_description           |      1
+ pg_description           |      2
+ pg_description           |      3
+ pg_enum                  |      1
+ pg_enum                  |      2
+ pg_enum                  |      2
+ pg_enum                  |      3
+ pg_enum                  |      4
+ pg_event_trigger         |      1
+ pg_event_trigger         |      2
+ pg_extension             |      1
+ pg_extension             |      2
+ pg_foreign_data_wrapper  |      1
+ pg_foreign_data_wrapper  |      2
+ pg_foreign_server        |      1
+ pg_foreign_server        |      2
+ pg_foreign_table         |      1
+ pg_index                 |      1
+ pg_index                 |      2
+ pg_inherits              |      1
+ pg_inherits              |      2
+ pg_inherits              |      3
+ pg_init_privs            |      1
+ pg_init_privs            |      2
+ pg_init_privs            |      3
+ pg_language              |      1
+ pg_language              |      2
+ pg_largeobject           |      1
+ pg_largeobject           |      2
+ pg_largeobject_metadata  |      1
+ pg_namespace             |      1
+ pg_namespace             |      2
+ pg_opclass               |      1
+ pg_opclass               |      2
+ pg_opclass               |      3
+ pg_opclass               |      4
+ pg_operator              |      1
+ pg_operator              |      2
+ pg_operator              |      3
+ pg_operator              |      8
+ pg_operator              |      9
+ pg_opfamily              |      1
+ pg_opfamily              |      2
+ pg_opfamily              |      3
+ pg_opfamily              |      4
+ pg_parameter_acl         |      1
+ pg_parameter_acl         |      2
+ pg_partitioned_table     |      1
+ pg_policy                |      1
+ pg_policy                |      2
+ pg_policy                |      3
+ pg_proc                  |      1
+ pg_proc                  |      2
+ pg_proc                  |      3
+ pg_proc                  |     20
+ pg_publication           |      1
+ pg_publication           |      2
+ pg_publication_namespace |      1
+ pg_publication_namespace |      2
+ pg_publication_namespace |      3
+ pg_publication_rel       |      1
+ pg_publication_rel       |      2
+ pg_publication_rel       |      2
+ pg_publication_rel       |      3
+ pg_range                 |      1
+ pg_range                 |      3
+ pg_replication_origin    |      1
+ pg_replication_origin    |      2
+ pg_rewrite               |      1
+ pg_rewrite               |      2
+ pg_rewrite               |      3
+ pg_seclabel              |      1
+ pg_seclabel              |      2
+ pg_seclabel              |      3
+ pg_seclabel              |      4
+ pg_sequence              |      1
+ pg_shdepend              |      1
+ pg_shdepend              |      2
+ pg_shdepend              |      3
+ pg_shdepend              |      4
+ pg_shdepend              |      5
+ pg_shdepend              |      6
+ pg_shdescription         |      1
+ pg_shdescription         |      2
+ pg_shseclabel            |      1
+ pg_shseclabel            |      2
+ pg_shseclabel            |      3
+ pg_statistic             |      1
+ pg_statistic             |      2
+ pg_statistic             |      3
+ pg_statistic_ext         |      1
+ pg_statistic_ext         |      2
+ pg_statistic_ext         |      3
+ pg_statistic_ext         |      4
+ pg_statistic_ext_data    |      1
+ pg_statistic_ext_data    |      2
+ pg_subscription          |      1
+ pg_subscription          |      2
+ pg_subscription          |      4
+ pg_subscription_rel      |      1
+ pg_subscription_rel      |      2
+ pg_tablespace            |      1
+ pg_tablespace            |      2
+ pg_transform             |      1
+ pg_transform             |      2
+ pg_transform             |      3
+ pg_trigger               |      1
+ pg_trigger               |      2
+ pg_trigger               |      4
+ pg_trigger               |     11
+ pg_ts_config             |      1
+ pg_ts_config             |      2
+ pg_ts_config             |      3
+ pg_ts_config_map         |      1
+ pg_ts_config_map         |      2
+ pg_ts_config_map         |      3
+ pg_ts_dict               |      1
+ pg_ts_dict               |      2
+ pg_ts_dict               |      3
+ pg_ts_parser             |      1
+ pg_ts_parser             |      2
+ pg_ts_parser             |      3
+ pg_ts_template           |      1
+ pg_ts_template           |      2
+ pg_ts_template           |      3
+ pg_type                  |      1
+ pg_type                  |      2
+ pg_type                  |      3
+ pg_user_mapping          |      1
+ pg_user_mapping          |      2
+ pg_user_mapping          |      3
+ vals                     |      1
+ vals                     |      3
+(208 rows)
+
+         relname          |   e    
+--------------------------+--------
+ ordered_t                | (1,1)
+ pg_aggregate             | (1,1)
+ pg_am                    | (2,1)
+ pg_am                    | (1,1)
+ pg_amop                  | (2,1)
+ pg_amop                  | (3,2)
+ pg_amop                  | (4,3)
+ pg_amop                  | (5,4)
+ pg_amop                  | (2,3)
+ pg_amop                  | (6,2)
+ pg_amop                  | (7,1)
+ pg_amop                  | (1,1)
+ pg_amproc                | (2,1)
+ pg_amproc                | (3,2)
+ pg_amproc                | (4,3)
+ pg_amproc                | (5,4)
+ pg_amproc                | (1,1)
+ pg_attrdef               | (2,1)
+ pg_attrdef               | (3,2)
+ pg_attrdef               | (1,1)
+ pg_attribute             | (1,1)
+ pg_attribute             | (2,2)
+ pg_attribute             | (1,1)
+ pg_attribute             | (5,2)
+ pg_auth_members          | (2,1)
+ pg_auth_members          | (3,2)
+ pg_auth_members          | (4,3)
+ pg_auth_members          | (2,2)
+ pg_auth_members          | (3,1)
+ pg_auth_members          | (4,3)
+ pg_auth_members          | (4,1)
+ pg_auth_members          | (1,1)
+ pg_authid                | (2,1)
+ pg_authid                | (1,1)
+ pg_cast                  | (1,1)
+ pg_cast                  | (2,1)
+ pg_cast                  | (3,2)
+ pg_class                 | (1,1)
+ pg_class                 | (2,1)
+ pg_class                 | (3,2)
+ pg_class                 | (8,2)
+ pg_class                 | (9,1)
+ pg_collation             | (1,1)
+ pg_collation             | (2,1)
+ pg_collation             | (3,3)
+ pg_collation             | (7,2)
+ pg_constraint            | (11,1)
+ pg_constraint            | (2,1)
+ pg_constraint            | (3,2)
+ pg_constraint            | (2,3)
+ pg_constraint            | (8,1)
+ pg_constraint            | (9,2)
+ pg_constraint            | (9,1)
+ pg_constraint            | (1,1)
+ pg_conversion            | (1,4)
+ pg_conversion            | (3,1)
+ pg_conversion            | (5,2)
+ pg_conversion            | (6,3)
+ pg_conversion            | (2,1)
+ pg_conversion            | (3,2)
+ pg_conversion            | (1,1)
+ pg_database              | (2,1)
+ pg_database              | (1,1)
+ pg_db_role_setting       | (1,1)
+ pg_db_role_setting       | (2,2)
+ pg_default_acl           | (2,1)
+ pg_default_acl           | (3,2)
+ pg_default_acl           | (4,3)
+ pg_default_acl           | (1,1)
+ pg_depend                | (1,1)
+ pg_depend                | (2,2)
+ pg_depend                | (3,3)
+ pg_depend                | (4,1)
+ pg_depend                | (5,2)
+ pg_depend                | (6,3)
+ pg_description           | (1,1)
+ pg_description           | (2,2)
+ pg_description           | (3,3)
+ pg_enum                  | (1,1)
+ pg_enum                  | (2,1)
+ pg_enum                  | (4,2)
+ pg_enum                  | (2,1)
+ pg_enum                  | (3,2)
+ pg_event_trigger         | (2,1)
+ pg_event_trigger         | (1,1)
+ pg_extension             | (1,1)
+ pg_extension             | (2,1)
+ pg_foreign_data_wrapper  | (1,1)
+ pg_foreign_data_wrapper  | (2,1)
+ pg_foreign_server        | (1,1)
+ pg_foreign_server        | (2,1)
+ pg_foreign_table         | (1,1)
+ pg_index                 | (2,1)
+ pg_index                 | (1,1)
+ pg_inherits              | (2,1)
+ pg_inherits              | (1,1)
+ pg_inherits              | (3,2)
+ pg_init_privs            | (1,1)
+ pg_init_privs            | (2,2)
+ pg_init_privs            | (3,3)
+ pg_language              | (2,1)
+ pg_language              | (1,1)
+ pg_largeobject           | (1,1)
+ pg_largeobject           | (2,2)
+ pg_largeobject_metadata  | (1,1)
+ pg_namespace             | (2,1)
+ pg_namespace             | (1,1)
+ pg_opclass               | (2,1)
+ pg_opclass               | (3,2)
+ pg_opclass               | (4,3)
+ pg_opclass               | (1,1)
+ pg_operator              | (1,1)
+ pg_operator              | (2,1)
+ pg_operator              | (3,4)
+ pg_operator              | (8,2)
+ pg_operator              | (9,3)
+ pg_opfamily              | (2,1)
+ pg_opfamily              | (3,2)
+ pg_opfamily              | (4,3)
+ pg_opfamily              | (1,1)
+ pg_parameter_acl         | (2,1)
+ pg_parameter_acl         | (1,1)
+ pg_partitioned_table     | (1,1)
+ pg_policy                | (1,1)
+ pg_policy                | (2,2)
+ pg_policy                | (3,1)
+ pg_proc                  | (1,1)
+ pg_proc                  | (2,1)
+ pg_proc                  | (3,3)
+ pg_proc                  | (20,2)
+ pg_publication           | (1,1)
+ pg_publication           | (2,1)
+ pg_publication_namespace | (1,1)
+ pg_publication_namespace | (2,2)
+ pg_publication_namespace | (3,1)
+ pg_publication_rel       | (1,1)
+ pg_publication_rel       | (2,2)
+ pg_publication_rel       | (3,1)
+ pg_publication_rel       | (2,1)
+ pg_range                 | (3,1)
+ pg_range                 | (1,1)
+ pg_replication_origin    | (1,1)
+ pg_replication_origin    | (2,1)
+ pg_rewrite               | (1,1)
+ pg_rewrite               | (2,2)
+ pg_rewrite               | (3,1)
+ pg_seclabel              | (1,1)
+ pg_seclabel              | (2,2)
+ pg_seclabel              | (3,3)
+ pg_seclabel              | (4,4)
+ pg_sequence              | (1,1)
+ pg_shdepend              | (1,1)
+ pg_shdepend              | (2,2)
+ pg_shdepend              | (3,3)
+ pg_shdepend              | (4,4)
+ pg_shdepend              | (5,1)
+ pg_shdepend              | (6,2)
+ pg_shdescription         | (1,1)
+ pg_shdescription         | (2,2)
+ pg_shseclabel            | (1,1)
+ pg_shseclabel            | (2,2)
+ pg_shseclabel            | (3,3)
+ pg_statistic             | (1,1)
+ pg_statistic             | (2,2)
+ pg_statistic             | (3,3)
+ pg_statistic_ext         | (2,1)
+ pg_statistic_ext         | (1,1)
+ pg_statistic_ext         | (3,1)
+ pg_statistic_ext         | (4,2)
+ pg_statistic_ext_data    | (1,1)
+ pg_statistic_ext_data    | (2,2)
+ pg_subscription          | (1,1)
+ pg_subscription          | (2,1)
+ pg_subscription          | (4,2)
+ pg_subscription_rel      | (1,2)
+ pg_subscription_rel      | (2,1)
+ pg_tablespace            | (1,1)
+ pg_tablespace            | (2,1)
+ pg_transform             | (1,1)
+ pg_transform             | (2,1)
+ pg_transform             | (3,2)
+ pg_trigger               | (11,1)
+ pg_trigger               | (2,1)
+ pg_trigger               | (4,2)
+ pg_trigger               | (1,1)
+ pg_ts_config             | (2,1)
+ pg_ts_config             | (3,2)
+ pg_ts_config             | (1,1)
+ pg_ts_config_map         | (1,1)
+ pg_ts_config_map         | (2,2)
+ pg_ts_config_map         | (3,3)
+ pg_ts_dict               | (2,1)
+ pg_ts_dict               | (3,2)
+ pg_ts_dict               | (1,1)
+ pg_ts_parser             | (2,1)
+ pg_ts_parser             | (3,2)
+ pg_ts_parser             | (1,1)
+ pg_ts_template           | (2,1)
+ pg_ts_template           | (3,2)
+ pg_ts_template           | (1,1)
+ pg_type                  | (1,1)
+ pg_type                  | (2,1)
+ pg_type                  | (3,2)
+ pg_user_mapping          | (1,1)
+ pg_user_mapping          | (2,1)
+ pg_user_mapping          | (3,2)
+ vals                     | (1,1)
+ vals                     | (3,2)
+(208 rows)
+
+CREATE TABLE
+INSERT 0 2
+ x | ?column? 
+---+----------
+ 1 | 123
+ 1 | 456
+ 2 | 111
+ 2 | 222
+(4 rows)
+
+ tbl  | idx | n 
+------+-----+---
+ vals | woo | 1
+ vals | woo | 2
+(2 rows)
+
+ attname | atttypid | atttypmod 
+---------+----------+-----------
+ x       |       23 |        -1
+(1 row)
+
+ table_cat | table_schem | table_name | column_name | key_seq | pk_name 
+-----------+-------------+------------+-------------+---------+---------
+           | public      | j          | x           |       1 | j_pkey
+(1 row)
+
+ unnest 
+--------
+ (1,2)
+ (3,4)
+(2 rows)
+
+ a | b 
+---+---
+ 1 | 2
+ 3 | 4
+(2 rows)
+
+ a | b 
+---+---
+ 1 | 2
+ 3 | 4
+(2 rows)
+
+ a | b 
+---+---
+ 1 | 2
+ 3 | 4
+(2 rows)
+
+ i | s 
+---+---
+ 1 | a
+ 2 | b
+(2 rows)
+
+ i | s |  f  
+---+---+-----
+ 1 | a | 1.1
+ 2 |   | 2.2
+   |   | 3.3
+(3 rows)
+
+ unnest | unnest 
+--------+--------
+      1 | a
+      2 | b
+(2 rows)
+
+ unnest | unnest | unnest 
+--------+--------+--------
+      1 | a      |    1.1
+      2 |        |    2.2
+        |        |    3.3
+(3 rows)
+
+ a | b 
+---+---
+ 1 | 3
+ 2 | 4
+   | 5
+(3 rows)
+
+ unnest 
+--------
+      1
+      2
+      3
+      1
+      2
+      3
+      1
+      2
+      3
+(9 rows)
+
+ unnest 
+--------
+       
+      2
+      3
+       
+      2
+      3
+       
+      2
+      3
+(9 rows)
+
+ unnest 
+--------
+      1
+      2
+       
+      1
+      2
+       
+      1
+      2
+       
+(9 rows)
+
+ unnest 
+--------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+(9 rows)
+
+CREATE TABLE
+INSERT 0 5
+ x | y 
+---+---
+ 1 | 1
+ 2 | 2
+ 3 | 4
+ 4 | 8
+ 5 |  
+(5 rows)
+
+ x | y 
+---+---
+ 1 | 1
+ 2 | 2
+ 3 | 4
+(3 rows)
+
+ unnest | unnest 
+--------+--------
+      1 | one
+      2 | two
+      3 | 
+      4 | 
+(4 rows)
+
+ unnest 
+--------
+ 001
+ 010
+ 011
+(3 rows)
+
+ unnest 
+--------
+ 
+ 010
+ 011
+(3 rows)
+
+ a | b 
+---+---
+(0 rows)
+
+ a | b 
+---+---
+ 1 |  
+ 2 |  
+(2 rows)
+
+ unnest | unnest 
+--------+--------
+(0 rows)
+
+ a 
+---
+ 1
+ 2
+  
+(3 rows)
+
+CREATE TABLE
+INSERT 0 3
+ unnest 
+--------
+ (1,2)
+ (3,4)
+ (5,6)
+(3 rows)
+
+ a | b 
+---+---
+ 1 | 2
+ 3 | 4
+ 5 | 6
+(3 rows)
+
+SET
+CREATE TABLE
+INSERT 0 1
+     c1      | hostmask | hostmask | ordinality 
+-------------+----------+----------+------------
+ 192.168.0.1 | 0.0.0.0  | 0.0.0.0  |          1
+(1 row)
+
+CREATE FUNCTION
+     c1      | f95615 | f95615 | ordinality 
+-------------+--------+--------+------------
+ 192.168.0.1 |    1.1 |    1.1 |          1
+(1 row)
+
+RESET
+CREATE TABLE
+INSERT 0 4
+ ?column? | c1 | c2 
+----------+----+----
+        1 |  3 |  6
+        1 |  4 |  7
+(2 rows)
+
+ case 
+------
+    0
+(1 row)
+
+ case 
+------
+    3
+(1 row)
+
+ max_series 
+------------
+          3
+(1 row)
+
+ coalesce 
+----------
+       10
+(1 row)
+
+ case 
+------
+    1
+(1 row)
+
+ coalesce 
+----------
+        1
+(1 row)
+
+ case 
+------
+   15
+(1 row)
+
+ coalesce 
+----------
+       15
+(1 row)
+
+ case 
+------
+   15
+   15
+   15
+   15
+   15
+(5 rows)
+
+ coalesce 
+----------
+       15
+       15
+       15
+       15
+       15
+(5 rows)
+
+ case 
+------
+    0
+    0
+    0
+    0
+    0
+(5 rows)
+
+ coalesce 
+----------
+        1
+(1 row)
+
+ nullif 
+--------
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+      4
+       
+       
+       
+      4
+      5
+(18 rows)
+
+ unnest 
+--------
+(0 rows)
+
+ a | b | c 
+---+---+---
+(0 rows)
+
+ unnest 
+--------
+      1
+(1 row)
+
+ a | b | c 
+---+---+---
+ 1 | 2 | 3
+(1 row)
+
+ unnest 
+--------
+(0 rows)
+
+ a | b | c 
+---+---+---
+(0 rows)
+
+ _pg_expandarray 
+-----------------
+(0 rows)
+
+ a | b | c 
+---+---+---
+ 1 | 2 | 3
+(1 row)
+
+ a | b | c 
+---+---+---
+ 1 |   |  
+(1 row)
+
+ a | b | c 
+---+---+---
+ 1 | 2 | 3
+(1 row)
+
+ a | b | c 
+---+---+---
+   |   | 3
+(1 row)
+

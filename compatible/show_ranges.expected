@@ -1,0 +1,144 @@
+SET
+DROP SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+INSERT 0 2
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE FUNCTION
+CREATE VIEW
+CREATE VIEW
+ start_key | end_key | range_id 
+-----------+---------+----------
+(0 rows)
+
+ start_key |  end_key  | range_id 
+-----------+-----------+----------
+ /System/0 | /System/1 |        1
+ /Table/50 | /Table/51 |        2
+(2 rows)
+
+ start_key | end_key | range_id | lease_holder 
+-----------+---------+----------+--------------
+(0 rows)
+
+ start_key | raw_start_key | end_key | raw_end_key | range_id 
+-----------+---------------+---------+-------------+----------
+(0 rows)
+
+ start_key | raw_start_key | end_key | raw_end_key | range_id | lease_holder 
+-----------+---------------+---------+-------------+----------+--------------
+(0 rows)
+
+ start_key | raw_start_key_hex |  end_key  | raw_end_key_hex | range_id | lease_holder 
+-----------+-------------------+-----------+-----------------+----------+--------------
+ /System/0 | 00                | /System/1 | 01              |        1 | n1
+ /Table/50 | 32                | /Table/51 | 33              |        2 | n1
+(2 rows)
+
+ start_key | end_key | range_id | database_name | schema_name | table_name | table_id | table_start_key | table_end_key 
+-----------+---------+----------+---------------+-------------+------------+----------+-----------------+---------------
+(0 rows)
+
+ start_key | end_key | range_id | lease_holder | database_name | schema_name | table_name | table_id | table_start_key | table_end_key 
+-----------+---------+----------+--------------+---------------+-------------+------------+----------+-----------------+---------------
+(0 rows)
+
+ start_key | raw_start_key | end_key | raw_end_key | range_id | database_name | schema_name | table_name | table_id | table_start_key | raw_table_start_key | table_end_key | raw_table_end_key 
+-----------+---------------+---------+-------------+----------+---------------+-------------+------------+----------+-----------------+---------------------+---------------+-------------------
+(0 rows)
+
+ start_key |  end_key  | range_id | database_name | schema_name | table_name | table_id | table_start_key | raw_table_start_key_hex | table_end_key | raw_table_end_key_hex 
+-----------+-----------+----------+---------------+-------------+------------+----------+-----------------+-------------------------+---------------+-----------------------
+ /System/0 | /System/1 |        1 | system        | public      | repl_meta  |        1 | /Table/1        | 10                      | /Table/2      | 20
+ /Table/50 | /Table/51 |        2 | test          | public      | repl_user  |       50 | /Table/50       | 32                      | /Table/51     | 33
+(2 rows)
+
+ start_key | end_key | range_id | database_name | schema_name | table_name | table_id | index_name | index_id | index_start_key | index_end_key 
+-----------+---------+----------+---------------+-------------+------------+----------+------------+----------+-----------------+---------------
+(0 rows)
+
+ start_key | end_key | range_id | lease_holder | database_name | schema_name | table_name | table_id | index_name | index_id | index_start_key | index_end_key 
+-----------+---------+----------+--------------+---------------+-------------+------------+----------+------------+----------+-----------------+---------------
+(0 rows)
+
+ start_key | raw_start_key | end_key | raw_end_key | range_id | database_name | schema_name | table_name | table_id | index_name | index_id | index_start_key | raw_index_start_key | index_end_key | raw_index_end_key 
+-----------+---------------+---------+-------------+----------+---------------+-------------+------------+----------+------------+----------+-----------------+---------------------+---------------+-------------------
+(0 rows)
+
+ start_key | raw_start_key | end_key | raw_end_key | range_id | lease_holder | database_name | schema_name | table_name | table_id | index_name | index_id | index_start_key | raw_index_start_key | index_end_key | raw_index_end_key 
+-----------+---------------+---------+-------------+----------+--------------+---------------+-------------+------------+----------+------------+----------+-----------------+---------------------+---------------+-------------------
+(0 rows)
+
+ start_key |  end_key  | range_id | database_name | schema_name | table_name | table_id | index_name | index_id | index_start_key | raw_index_start_key_hex | index_end_key | raw_index_end_key_hex 
+-----------+-----------+----------+---------------+-------------+------------+----------+------------+----------+-----------------+-------------------------+---------------+-----------------------
+ /System/0 | /System/1 |        1 | system        | public      | repl_meta  |        1 | primary    |        1 | /Index/1        | 11                      | /Index/2      | 21
+ /Table/50 | /Table/51 |        2 | test          | public      | repl_user  |       50 | idx        |        2 | /Index/50       | 34                      | /Index/51     | 35
+(2 rows)
+
+ start_key |  end_key  | range_id | database_name | schema_name | table_name | table_id | index_name | index_id | index_start_key | index_end_key 
+-----------+-----------+----------+---------------+-------------+------------+----------+------------+----------+-----------------+---------------
+ /System/0 | /System/1 |        1 | system        | public      | repl_meta  |        1 | primary    |        1 | /Index/1        | /Index/2
+ /Table/50 | /Table/51 |        2 | test          | public      | repl_user  |       50 | idx        |        2 | /Index/50       | /Index/51
+(2 rows)
+
+CREATE TABLE
+  start_key   |     end_key      | range_id 
+--------------+------------------+----------
+ /Table/v0/68 | /Table/v0/68/end |        1
+(1 row)
+
+ database_name 
+---------------
+ system
+ test
+(2 rows)
+
+ database_name 
+---------------
+ system
+ test
+(2 rows)
+
+ database_name 
+---------------
+ system
+ test
+(2 rows)
+
+ table_name 
+------------
+ repl_meta
+ repl_user
+(2 rows)
+
+ table_id 
+----------
+        1
+       50
+(2 rows)
+
+ schema_name 
+-------------
+ public
+ public
+(2 rows)
+
+ index_name 
+------------
+ primary
+ idx
+(2 rows)
+
+DROP SCHEMA
+RESET

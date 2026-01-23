@@ -1,0 +1,26 @@
+CREATE TYPE
+SELECT 1
+ _enum |       col       
+-------+-----------------
+ hello | ("(hello,0)",0)
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+                  QUERY PLAN                   
+-----------------------------------------------
+ Hash Join
+   Hash Cond: (t1.x = t2.x)
+   ->  Seq Scan on t1
+   ->  Hash
+         ->  Seq Scan on t2
+               Filter: (y = 'hello'::greeting)
+(6 rows)
+
+ x 
+---
+ 0
+(1 row)
+

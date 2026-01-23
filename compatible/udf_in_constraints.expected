@@ -1,0 +1,87 @@
+SET
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE TABLE
+ constraint_name |  constraint_def   
+-----------------+-------------------
+ chk_b           | CHECK (f1(b) > 1)
+(1 row)
+
+ dependent_table | dependent_constraint 
+-----------------+----------------------
+ t1              | chk_b
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+ constraint_name |       constraint_def        
+-----------------+-----------------------------
+ chk_b           | CHECK (f1(b) > 1)
+ cka             | CHECK (f1(a) > 1)
+ ckb             | CHECK (f1(b) > 2) NOT VALID
+(3 rows)
+
+ dependent_table | dependent_constraint 
+-----------------+----------------------
+ t1              | chk_b
+ t1              | cka
+ t1              | ckb
+(3 rows)
+
+psql:compatible/udf_in_constraints.sql:59: ERROR:  cannot drop function f1(integer) because other objects depend on it
+DETAIL:  constraint chk_b on table t1 depends on function f1(integer)
+constraint cka on table t1 depends on function f1(integer)
+constraint ckb on table t1 depends on function f1(integer)
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ALTER TABLE
+ dependent_table | dependent_constraint 
+-----------------+----------------------
+ t1              | chk_b
+ t1              | ckb
+(2 rows)
+
+ALTER TABLE
+ dependent_table | dependent_constraint 
+-----------------+----------------------
+ t1              | chk_b
+(1 row)
+
+ALTER TABLE
+ dependent_table | dependent_constraint 
+-----------------+----------------------
+(0 rows)
+
+DROP FUNCTION
+DROP TABLE
+CREATE SCHEMA
+CREATE FUNCTION
+CREATE TABLE
+ constraint_name |    constraint_def     
+-----------------+-----------------------
+ chk_sc1         | CHECK (sc1.f1(b) > 1)
+(1 row)
+
+ dependent_table | dependent_constraint 
+-----------------+----------------------
+ t2              | chk_sc1
+(1 row)
+
+ALTER FUNCTION
+ constraint_name |    constraint_def     
+-----------------+-----------------------
+ chk_sc1         | CHECK (sc1.f2(b) > 1)
+(1 row)
+
+ dependent_table | dependent_constraint 
+-----------------+----------------------
+ t2              | chk_sc1
+(1 row)
+
+psql:compatible/udf_in_constraints.sql:93: ERROR:  cannot drop function sc1.f2(integer) because other objects depend on it
+DETAIL:  constraint chk_sc1 on table t2 depends on function sc1.f2(integer)
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+DROP TABLE
+DROP FUNCTION
+DROP SCHEMA
+RESET

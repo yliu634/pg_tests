@@ -1,0 +1,5 @@
+pg_tests/compatible/discard.sql
+pg_tests/compatible/distinct_on.sql
+pg_tests/compatible/drop_database.sql
+pg_tests/compatible/drop_function.sql
+pg_tests/compatible/drop_schema.sql

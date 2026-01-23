@@ -1,0 +1,5 @@
+pg_tests/compatible/generator_probe_ranges.sql
+pg_tests/compatible/generic.sql
+pg_tests/compatible/geospatial.sql
+pg_tests/compatible/geospatial_bbox.sql
+pg_tests/compatible/geospatial_index.sql

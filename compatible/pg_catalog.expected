@@ -1,0 +1,2278 @@
+SET
+psql:pg_tests/compatible/pg_catalog.sql:20: ERROR:  role name "pg_catalog_testuser" is reserved
+DETAIL:  Role names starting with "pg_" are reserved.
+CONTEXT:  SQL statement "CREATE ROLE pg_catalog_testuser LOGIN"
+PL/pgSQL function inline_code_block line 4 at SQL statement
+RESET
+ALTER SCHEMA
+psql:pg_tests/compatible/pg_catalog.sql:32: ERROR:  schema "pg_catalog" does not exist
+LINE 1: CREATE TABLE pg_catalog.t (x INT);
+                     ^
+psql:pg_tests/compatible/pg_catalog.sql:35: ERROR:  schema "pg_catalog" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:56: ERROR:  schema "pg_catalog" does not exist
+LINE 13:   NULL::BIGINT AS estimated_row_count,
+                 ^
+CREATE SCHEMA
+psql:pg_tests/compatible/pg_catalog.sql:62: ERROR:  unacceptable schema name "pg_catalog"
+DETAIL:  The prefix "pg_" is reserved for system schemas.
+psql:pg_tests/compatible/pg_catalog.sql:65: ERROR:  unacceptable schema name "pg_catalog"
+DETAIL:  The prefix "pg_" is reserved for system schemas.
+psql:pg_tests/compatible/pg_catalog.sql:68: ERROR:  schema "pg_catalog" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:71: ERROR:  relation "pg_catalog.pg_class" does not exist
+LINE 1: SELECT * FROM pg_catalog.pg_class c WHERE nonexistent_functi...
+                      ^
+psql:pg_tests/compatible/pg_catalog.sql:94: ERROR:  schema "pg_catalog" does not exist
+LINE 13:   NULL::BIGINT AS estimated_row_count,
+                 ^
+psql:pg_tests/compatible/pg_catalog.sql:97: ERROR:  relation "pg_catalog.pg_class" does not exist
+LINE 4: FROM pg_catalog.pg_class c
+             ^
+ column_name | data_type | is_nullable | column_default 
+-------------+-----------+-------------+----------------
+(0 rows)
+
+psql:pg_tests/compatible/pg_catalog.sql:109: ERROR:  relation "pg_catalog.pg_indexes" does not exist
+LINE 2: FROM pg_catalog.pg_indexes
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:117: ERROR:  relation "pg_catalog.pg_constraint" does not exist
+LINE 2: FROM pg_catalog.pg_constraint AS con
+             ^
+ grantee | privilege_type | is_grantable 
+---------+----------------+--------------
+(0 rows)
+
+CREATE SCHEMA
+psql:pg_tests/compatible/pg_catalog.sql:145: ERROR:  schema "pg_catalog" does not exist
+LINE 2:   p FLOAT PRIMARY KEY,
+            ^
+psql:pg_tests/compatible/pg_catalog.sql:146: ERROR:  relation "constraint_db.t1" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:152: ERROR:  schema "pg_catalog" does not exist
+LINE 2:     t1_ID INT,
+                  ^
+psql:pg_tests/compatible/pg_catalog.sql:153: ERROR:  relation "constraint_db.t2" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:156: ERROR:  relation "constraint_db.t1" does not exist
+LINE 1: ...EATE VIEW constraint_db.v1 AS SELECT p,a,b,c FROM constraint...
+                                                             ^
+CREATE TYPE
+psql:pg_tests/compatible/pg_catalog.sql:162: ERROR:  relation "pg_catalog.pg_namespace" does not exist
+LINE 1: SELECT nspname, nspowner, nspacl FROM pg_catalog.pg_namespac...
+                                              ^
+REVOKE
+psql:pg_tests/compatible/pg_catalog.sql:166: ERROR:  role "pg_catalog_testuser" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:168: ERROR:  role "pg_catalog_testuser" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:171: ERROR:  relation "pg_catalog.pg_namespace" does not exist
+LINE 1: SELECT nspname, nspowner, nspacl FROM pg_catalog.pg_namespac...
+                                              ^
+RESET
+GRANT
+psql:pg_tests/compatible/pg_catalog.sql:180: ERROR:  relation "pg_catalog.pg_database" does not exist
+LINE 2: FROM pg_catalog.pg_database
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:185: ERROR:  relation "pg_catalog.pg_database" does not exist
+LINE 2: FROM pg_catalog.pg_database
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:190: ERROR:  relation "pg_catalog.pg_database" does not exist
+LINE 2: FROM pg_catalog.pg_database
+             ^
+SET
+psql:pg_tests/compatible/pg_catalog.sql:196: ERROR:  relation "pg_catalog.pg_tables" does not exist
+LINE 1: SELECT * FROM pg_catalog.pg_tables WHERE schemaname = curren...
+                      ^
+psql:pg_tests/compatible/pg_catalog.sql:199: ERROR:  relation "pg_catalog.pg_tables" does not exist
+LINE 1: SELECT tablename, hasindexes FROM pg_catalog.pg_tables WHERE...
+                                          ^
+ oid  |  spcname   | spcowner | spcacl | spcoptions 
+------+------------+----------+--------+------------
+ 1663 | pg_default |       10 |        | 
+ 1664 | pg_global  |       10 |        | 
+(2 rows)
+
+psql:pg_tests/compatible/pg_catalog.sql:205: ERROR:  relation "pg_catalog.pg_views" does not exist
+LINE 1: SELECT * FROM pg_catalog.pg_views;
+                      ^
+SELECT 1
+psql:pg_tests/compatible/pg_catalog.sql:211: ERROR:  relation "pg_catalog.pg_matviews" does not exist
+LINE 1: SELECT * FROM pg_catalog.pg_matviews;
+                      ^
+psql:pg_tests/compatible/pg_catalog.sql:217: ERROR:  relation "pg_catalog.pg_class" does not exist
+LINE 2: FROM pg_catalog.pg_class c
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:223: ERROR:  relation "pg_catalog.pg_class" does not exist
+LINE 2: FROM pg_catalog.pg_class c
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:229: ERROR:  relation "pg_catalog.pg_class" does not exist
+LINE 2: FROM pg_catalog.pg_class c
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:235: ERROR:  relation "pg_catalog.pg_class" does not exist
+LINE 2: FROM pg_catalog.pg_class c
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:242: ERROR:  relation "pg_catalog.pg_attribute" does not exist
+LINE 2: FROM pg_catalog.pg_attribute a
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:249: ERROR:  relation "pg_catalog.pg_attribute" does not exist
+LINE 2: FROM pg_catalog.pg_attribute a
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:256: ERROR:  relation "pg_catalog.pg_attribute" does not exist
+LINE 2: FROM pg_catalog.pg_attribute a
+             ^
+CREATE SCHEMA
+SET
+psql:pg_tests/compatible/pg_catalog.sql:265: ERROR:  schema "pg_catalog" does not exist
+LINE 1: CREATE TABLE tbl_test (k int primary key, v int);
+                                 ^
+psql:pg_tests/compatible/pg_catalog.sql:268: ERROR:  relation "tbl_test" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:271: ERROR:  relation "tbl_test" does not exist
+LINE 1: CREATE VIEW view_test AS SELECT k, v FROM tbl_test ORDER BY ...
+                                                  ^
+SELECT 1
+CREATE SEQUENCE
+psql:pg_tests/compatible/pg_catalog.sql:284: ERROR:  relation "pg_catalog.pg_class" does not exist
+LINE 2: FROM pg_catalog.pg_class c
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:287: ERROR:  cannot drop schema relkinds because other objects depend on it
+DETAIL:  materialized view mv_test depends on schema relkinds
+sequence seq_test depends on schema relkinds
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+SET
+psql:pg_tests/compatible/pg_catalog.sql:299: ERROR:  relation "pg_catalog.pg_attribute" does not exist
+LINE 2: FROM pg_catalog.pg_attribute a
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:303: ERROR:  relation "pg_catalog.pg_am" does not exist
+LINE 2: FROM pg_catalog.pg_am;
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:310: ERROR:  relation "pg_catalog.pg_attrdef" does not exist
+LINE 2: FROM pg_catalog.pg_attrdef ad
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:315: ERROR:  relation "pg_catalog.pg_indexes" does not exist
+LINE 2: FROM pg_catalog.pg_indexes
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:321: ERROR:  relation "pg_catalog.pg_indexes" does not exist
+LINE 2: FROM pg_catalog.pg_indexes
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:326: ERROR:  relation "pg_catalog.pg_index" does not exist
+LINE 2: FROM pg_catalog.pg_index
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:331: ERROR:  relation "pg_catalog.pg_index" does not exist
+LINE 2: FROM pg_catalog.pg_index
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:337: ERROR:  relation "pg_catalog.pg_index" does not exist
+LINE 2: FROM pg_catalog.pg_index
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:344: ERROR:  relation "pg_catalog.pg_index" does not exist
+LINE 2: FROM pg_catalog.pg_index i
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:349: ERROR:  relation "pg_catalog.pg_index" does not exist
+LINE 2: FROM pg_catalog.pg_index
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:356: ERROR:  schema "pg_catalog" does not exist
+LINE 3:         from pg_catalog.generate_series(pg_catalog.array_low...
+                                                ^
+QUERY:  select $1[s],
+        s operator(pg_catalog.-) pg_catalog.array_lower($1,1) operator(pg_catalog.+) 1
+        from pg_catalog.generate_series(pg_catalog.array_lower($1,1),
+                                        pg_catalog.array_upper($1,1),
+                                        1) as g(s)
+CONTEXT:  SQL function "_pg_expandarray" during startup
+SET
+ oid | collname | collnamespace | collowner | collprovider | collisdeterministic | collencoding | collcollate | collctype | colliculocale | collicurules | collversion 
+-----+----------+---------------+-----------+--------------+---------------------+--------------+-------------+-----------+---------------+--------------+-------------
+(0 rows)
+
+ oid | collname 
+-----+----------
+(0 rows)
+
+psql:pg_tests/compatible/pg_catalog.sql:373: ERROR:  relation "pg_catalog.pg_constraint" does not exist
+LINE 2: FROM pg_catalog.pg_constraint con
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:379: ERROR:  relation "pg_catalog.pg_constraint" does not exist
+LINE 2: FROM pg_catalog.pg_constraint con
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:386: ERROR:  relation "pg_catalog.pg_constraint" does not exist
+LINE 2: FROM pg_catalog.pg_constraint con
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:392: ERROR:  relation "pg_catalog.pg_constraint" does not exist
+LINE 2: FROM pg_catalog.pg_constraint con
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:399: ERROR:  relation "pg_catalog.pg_constraint" does not exist
+LINE 2: FROM pg_catalog.pg_constraint con
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:405: ERROR:  relation "pg_catalog.pg_constraint" does not exist
+LINE 2: FROM pg_catalog.pg_constraint con
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:412: ERROR:  relation "pg_catalog.pg_constraint" does not exist
+LINE 2: FROM pg_catalog.pg_constraint con
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:419: ERROR:  relation "pg_catalog.pg_constraint" does not exist
+LINE 2: FROM pg_catalog.pg_constraint con
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:424: ERROR:  relation "pg_catalog.pg_depend" does not exist
+LINE 2: FROM pg_catalog.pg_depend
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:427: ERROR:  schema "pg_catalog" does not exist
+LINE 1: CREATE TABLE t_with_pk_seq (a INT GENERATED ALWAYS AS IDENTI...
+                                      ^
+psql:pg_tests/compatible/pg_catalog.sql:445: ERROR:  relation "t_with_pk_seq" does not exist
+LINE 16:   AND dep.refobjid      = 't_with_pk_seq'::regclass;
+                                   ^
+psql:pg_tests/compatible/pg_catalog.sql:454: ERROR:  relation "t_with_pk_seq" does not exist
+LINE 5: WHERE dep.refobjid = 't_with_pk_seq'::regclass
+                             ^
+psql:pg_tests/compatible/pg_catalog.sql:460: ERROR:  relation "pg_catalog.pg_depend" does not exist
+LINE 2: FROM pg_catalog.pg_depend
+             ^
+                relname                | relkind 
+---------------------------------------+---------
+ _pg_foreign_data_wrappers             | v
+ _pg_foreign_data_wrappers             | v
+ _pg_foreign_data_wrappers             | v
+ _pg_foreign_data_wrappers             | v
+ _pg_foreign_data_wrappers             | v
+ _pg_foreign_data_wrappers             | v
+ _pg_foreign_data_wrappers             | v
+ _pg_foreign_data_wrappers             | v
+ _pg_foreign_data_wrappers             | v
+ _pg_foreign_servers                   | v
+ _pg_foreign_servers                   | v
+ _pg_foreign_servers                   | v
+ _pg_foreign_servers                   | v
+ _pg_foreign_servers                   | v
+ _pg_foreign_servers                   | v
+ _pg_foreign_servers                   | v
+ _pg_foreign_servers                   | v
+ _pg_foreign_servers                   | v
+ _pg_foreign_servers                   | v
+ _pg_foreign_servers                   | v
+ _pg_foreign_servers                   | v
+ _pg_foreign_servers                   | v
+ _pg_foreign_servers                   | v
+ _pg_foreign_servers                   | v
+ _pg_foreign_servers                   | v
+ _pg_foreign_table_columns             | v
+ _pg_foreign_table_columns             | v
+ _pg_foreign_table_columns             | v
+ _pg_foreign_table_columns             | v
+ _pg_foreign_table_columns             | v
+ _pg_foreign_table_columns             | v
+ _pg_foreign_tables                    | v
+ _pg_foreign_tables                    | v
+ _pg_foreign_tables                    | v
+ _pg_foreign_tables                    | v
+ _pg_foreign_tables                    | v
+ _pg_foreign_tables                    | v
+ _pg_foreign_tables                    | v
+ _pg_foreign_tables                    | v
+ _pg_foreign_tables                    | v
+ _pg_foreign_tables                    | v
+ _pg_foreign_tables                    | v
+ _pg_user_mappings                     | v
+ _pg_user_mappings                     | v
+ _pg_user_mappings                     | v
+ _pg_user_mappings                     | v
+ _pg_user_mappings                     | v
+ _pg_user_mappings                     | v
+ _pg_user_mappings                     | v
+ _pg_user_mappings                     | v
+ _pg_user_mappings                     | v
+ _pg_user_mappings                     | v
+ _pg_user_mappings                     | v
+ administrable_role_authorizations     | v
+ administrable_role_authorizations     | v
+ applicable_roles                      | v
+ applicable_roles                      | v
+ applicable_roles                      | v
+ applicable_roles                      | v
+ applicable_roles                      | v
+ attributes                            | v
+ attributes                            | v
+ attributes                            | v
+ attributes                            | v
+ attributes                            | v
+ character_sets                        | v
+ character_sets                        | v
+ check_constraint_routine_usage        | v
+ check_constraint_routine_usage        | v
+ check_constraints                     | v
+ check_constraints                     | v
+ collation_character_set_applicability | v
+ collation_character_set_applicability | v
+ collations                            | v
+ collations                            | v
+ column_column_usage                   | v
+ column_column_usage                   | v
+ column_domain_usage                   | v
+ column_domain_usage                   | v
+ column_options                        | v
+ column_options                        | v
+ column_privileges                     | v
+ column_privileges                     | v
+ column_privileges                     | v
+ column_privileges                     | v
+ column_privileges                     | v
+ column_privileges                     | v
+ column_privileges                     | v
+ column_privileges                     | v
+ column_privileges                     | v
+ column_privileges                     | v
+ column_udt_usage                      | v
+ column_udt_usage                      | v
+ columns                               | v
+ columns                               | v
+ columns                               | v
+ columns                               | v
+ columns                               | v
+ constraint_column_usage               | v
+ constraint_column_usage               | v
+ constraint_table_usage                | v
+ constraint_table_usage                | v
+ data_type_privileges                  | v
+ data_type_privileges                  | v
+ data_type_privileges                  | v
+ data_type_privileges                  | v
+ data_type_privileges                  | v
+ data_type_privileges                  | v
+ domain_constraints                    | v
+ domain_constraints                    | v
+ domain_udt_usage                      | v
+ domain_udt_usage                      | v
+ domains                               | v
+ domains                               | v
+ domains                               | v
+ domains                               | v
+ domains                               | v
+ element_types                         | v
+ element_types                         | v
+ enabled_roles                         | v
+ enabled_roles                         | v
+ enabled_roles                         | v
+ enabled_roles                         | v
+ enabled_roles                         | v
+ enabled_roles                         | v
+ enabled_roles                         | v
+ foreign_data_wrapper_options          | v
+ foreign_data_wrapper_options          | v
+ foreign_data_wrappers                 | v
+ foreign_data_wrappers                 | v
+ foreign_server_options                | v
+ foreign_server_options                | v
+ foreign_servers                       | v
+ foreign_servers                       | v
+ foreign_table_options                 | v
+ foreign_table_options                 | v
+ foreign_tables                        | v
+ foreign_tables                        | v
+ information_schema_catalog_name       | v
+ information_schema_catalog_name       | v
+ key_column_usage                      | v
+ key_column_usage                      | v
+ mv1                                   | m
+ mv1                                   | m
+ mv_test                               | m
+ mv_test                               | m
+ parameters                            | v
+ parameters                            | v
+ parameters                            | v
+ parameters                            | v
+ parameters                            | v
+ pg_available_extension_versions       | v
+ pg_available_extension_versions       | v
+ pg_available_extensions               | v
+ pg_available_extensions               | v
+ pg_backend_memory_contexts            | v
+ pg_backend_memory_contexts            | v
+ pg_config                             | v
+ pg_config                             | v
+ pg_cursors                            | v
+ pg_cursors                            | v
+ pg_file_settings                      | v
+ pg_file_settings                      | v
+ pg_group                              | v
+ pg_group                              | v
+ pg_hba_file_rules                     | v
+ pg_hba_file_rules                     | v
+ pg_ident_file_mappings                | v
+ pg_ident_file_mappings                | v
+ pg_indexes                            | v
+ pg_indexes                            | v
+ pg_locks                              | v
+ pg_locks                              | v
+ pg_matviews                           | v
+ pg_matviews                           | v
+ pg_policies                           | v
+ pg_policies                           | v
+ pg_prepared_statements                | v
+ pg_prepared_statements                | v
+ pg_prepared_xacts                     | v
+ pg_prepared_xacts                     | v
+ pg_publication_tables                 | v
+ pg_publication_tables                 | v
+ pg_replication_origin_status          | v
+ pg_replication_origin_status          | v
+ pg_replication_slots                  | v
+ pg_replication_slots                  | v
+ pg_replication_slots                  | v
+ pg_replication_slots                  | v
+ pg_roles                              | v
+ pg_roles                              | v
+ pg_rules                              | v
+ pg_rules                              | v
+ pg_seclabels                          | v
+ pg_seclabels                          | v
+ pg_sequences                          | v
+ pg_sequences                          | v
+ pg_settings                           | v
+ pg_settings                           | v
+ pg_settings                           | v
+ pg_settings                           | v
+ pg_settings                           | v
+ pg_settings                           | v
+ pg_settings                           | v
+ pg_settings                           | v
+ pg_shadow                             | v
+ pg_shadow                             | v
+ pg_shadow                             | v
+ pg_shadow                             | v
+ pg_shadow                             | v
+ pg_shadow                             | v
+ pg_shadow                             | v
+ pg_shadow                             | v
+ pg_shadow                             | v
+ pg_shadow                             | v
+ pg_shmem_allocations                  | v
+ pg_shmem_allocations                  | v
+ pg_stat_activity                      | v
+ pg_stat_activity                      | v
+ pg_stat_all_indexes                   | v
+ pg_stat_all_indexes                   | v
+ pg_stat_all_indexes                   | v
+ pg_stat_all_indexes                   | v
+ pg_stat_all_indexes                   | v
+ pg_stat_all_indexes                   | v
+ pg_stat_all_indexes                   | v
+ pg_stat_all_indexes                   | v
+ pg_stat_all_indexes                   | v
+ pg_stat_all_indexes                   | v
+ pg_stat_all_indexes                   | v
+ pg_stat_all_indexes                   | v
+ pg_stat_all_indexes                   | v
+ pg_stat_all_indexes                   | v
+ pg_stat_all_indexes                   | v
+ pg_stat_all_indexes                   | v
+ pg_stat_all_indexes                   | v
+ pg_stat_all_indexes                   | v
+ pg_stat_all_indexes                   | v
+ pg_stat_all_indexes                   | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_all_tables                    | v
+ pg_stat_archiver                      | v
+ pg_stat_archiver                      | v
+ pg_stat_bgwriter                      | v
+ pg_stat_bgwriter                      | v
+ pg_stat_database                      | v
+ pg_stat_database                      | v
+ pg_stat_database_conflicts            | v
+ pg_stat_database_conflicts            | v
+ pg_stat_gssapi                        | v
+ pg_stat_gssapi                        | v
+ pg_stat_io                            | v
+ pg_stat_io                            | v
+ pg_stat_progress_analyze              | v
+ pg_stat_progress_analyze              | v
+ pg_stat_progress_basebackup           | v
+ pg_stat_progress_basebackup           | v
+ pg_stat_progress_cluster              | v
+ pg_stat_progress_cluster              | v
+ pg_stat_progress_copy                 | v
+ pg_stat_progress_copy                 | v
+ pg_stat_progress_create_index         | v
+ pg_stat_progress_create_index         | v
+ pg_stat_progress_vacuum               | v
+ pg_stat_progress_vacuum               | v
+ pg_stat_recovery_prefetch             | v
+ pg_stat_recovery_prefetch             | v
+ pg_stat_replication                   | v
+ pg_stat_replication                   | v
+ pg_stat_replication_slots             | v
+ pg_stat_replication_slots             | v
+ pg_stat_slru                          | v
+ pg_stat_slru                          | v
+ pg_stat_ssl                           | v
+ pg_stat_ssl                           | v
+ pg_stat_subscription                  | v
+ pg_stat_subscription                  | v
+ pg_stat_subscription_stats            | v
+ pg_stat_subscription_stats            | v
+ pg_stat_sys_indexes                   | v
+ pg_stat_sys_indexes                   | v
+ pg_stat_sys_tables                    | v
+ pg_stat_sys_tables                    | v
+ pg_stat_user_functions                | v
+ pg_stat_user_functions                | v
+ pg_stat_user_indexes                  | v
+ pg_stat_user_indexes                  | v
+ pg_stat_user_tables                   | v
+ pg_stat_user_tables                   | v
+ pg_stat_wal                           | v
+ pg_stat_wal                           | v
+ pg_stat_wal_receiver                  | v
+ pg_stat_wal_receiver                  | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_all_tables               | v
+ pg_stat_xact_sys_tables               | v
+ pg_stat_xact_sys_tables               | v
+ pg_stat_xact_user_functions           | v
+ pg_stat_xact_user_functions           | v
+ pg_stat_xact_user_tables              | v
+ pg_stat_xact_user_tables              | v
+ pg_statio_all_indexes                 | v
+ pg_statio_all_indexes                 | v
+ pg_statio_all_indexes                 | v
+ pg_statio_all_indexes                 | v
+ pg_statio_all_indexes                 | v
+ pg_statio_all_indexes                 | v
+ pg_statio_all_indexes                 | v
+ pg_statio_all_indexes                 | v
+ pg_statio_all_indexes                 | v
+ pg_statio_all_indexes                 | v
+ pg_statio_all_indexes                 | v
+ pg_statio_all_indexes                 | v
+ pg_statio_all_indexes                 | v
+ pg_statio_all_indexes                 | v
+ pg_statio_all_indexes                 | v
+ pg_statio_all_indexes                 | v
+ pg_statio_all_sequences               | v
+ pg_statio_all_sequences               | v
+ pg_statio_all_sequences               | v
+ pg_statio_all_sequences               | v
+ pg_statio_all_sequences               | v
+ pg_statio_all_sequences               | v
+ pg_statio_all_sequences               | v
+ pg_statio_all_sequences               | v
+ pg_statio_all_sequences               | v
+ pg_statio_all_sequences               | v
+ pg_statio_all_sequences               | v
+ pg_statio_all_sequences               | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_all_tables                  | v
+ pg_statio_sys_indexes                 | v
+ pg_statio_sys_indexes                 | v
+ pg_statio_sys_sequences               | v
+ pg_statio_sys_sequences               | v
+ pg_statio_sys_tables                  | v
+ pg_statio_sys_tables                  | v
+ pg_statio_user_indexes                | v
+ pg_statio_user_indexes                | v
+ pg_statio_user_sequences              | v
+ pg_statio_user_sequences              | v
+ pg_statio_user_tables                 | v
+ pg_statio_user_tables                 | v
+ pg_stats                              | v
+ pg_stats                              | v
+ pg_stats_ext                          | v
+ pg_stats_ext                          | v
+ pg_stats_ext_exprs                    | v
+ pg_stats_ext_exprs                    | v
+ pg_tables                             | v
+ pg_tables                             | v
+ pg_timezone_abbrevs                   | v
+ pg_timezone_abbrevs                   | v
+ pg_timezone_names                     | v
+ pg_timezone_names                     | v
+ pg_toast_13440                        | t
+ pg_toast_13440                        | t
+ pg_toast_13445                        | t
+ pg_toast_13445                        | t
+ pg_toast_13450                        | t
+ pg_toast_13450                        | t
+ pg_toast_13455                        | t
+ pg_toast_13455                        | t
+ pg_user                               | v
+ pg_user                               | v
+ pg_user_mappings                      | v
+ pg_user_mappings                      | v
+ pg_views                              | v
+ pg_views                              | v
+ referential_constraints               | v
+ referential_constraints               | v
+ role_column_grants                    | v
+ role_column_grants                    | v
+ role_routine_grants                   | v
+ role_routine_grants                   | v
+ role_table_grants                     | v
+ role_table_grants                     | v
+ role_udt_grants                       | v
+ role_udt_grants                       | v
+ role_usage_grants                     | v
+ role_usage_grants                     | v
+ routine_column_usage                  | v
+ routine_column_usage                  | v
+ routine_privileges                    | v
+ routine_privileges                    | v
+ routine_privileges                    | v
+ routine_privileges                    | v
+ routine_privileges                    | v
+ routine_privileges                    | v
+ routine_privileges                    | v
+ routine_privileges                    | v
+ routine_privileges                    | v
+ routine_privileges                    | v
+ routine_privileges                    | v
+ routine_privileges                    | v
+ routine_routine_usage                 | v
+ routine_routine_usage                 | v
+ routine_sequence_usage                | v
+ routine_sequence_usage                | v
+ routine_table_usage                   | v
+ routine_table_usage                   | v
+ routines                              | v
+ routines                              | v
+ routines                              | v
+ routines                              | v
+ routines                              | v
+ schemata                              | v
+ schemata                              | v
+ sequences                             | v
+ sequences                             | v
+ sql_features                          | r
+ sql_features                          | r
+ sql_implementation_info               | r
+ sql_implementation_info               | r
+ sql_parts                             | r
+ sql_parts                             | r
+ sql_sizing                            | r
+ sql_sizing                            | r
+ table_constraints                     | v
+ table_constraints                     | v
+ table_privileges                      | v
+ table_privileges                      | v
+ table_privileges                      | v
+ table_privileges                      | v
+ table_privileges                      | v
+ table_privileges                      | v
+ table_privileges                      | v
+ table_privileges                      | v
+ table_privileges                      | v
+ table_privileges                      | v
+ tables                                | v
+ tables                                | v
+ transforms                            | v
+ transforms                            | v
+ triggered_update_columns              | v
+ triggered_update_columns              | v
+ triggers                              | v
+ triggers                              | v
+ udt_privileges                        | v
+ udt_privileges                        | v
+ udt_privileges                        | v
+ udt_privileges                        | v
+ udt_privileges                        | v
+ udt_privileges                        | v
+ udt_privileges                        | v
+ udt_privileges                        | v
+ udt_privileges                        | v
+ usage_privileges                      | v
+ usage_privileges                      | v
+ usage_privileges                      | v
+ usage_privileges                      | v
+ usage_privileges                      | v
+ usage_privileges                      | v
+ usage_privileges                      | v
+ usage_privileges                      | v
+ usage_privileges                      | v
+ usage_privileges                      | v
+ user_defined_types                    | v
+ user_defined_types                    | v
+ user_mapping_options                  | v
+ user_mapping_options                  | v
+ user_mappings                         | v
+ user_mappings                         | v
+ view_column_usage                     | v
+ view_column_usage                     | v
+ view_routine_usage                    | v
+ view_routine_usage                    | v
+ view_table_usage                      | v
+ view_table_usage                      | v
+ views                                 | v
+ views                                 | v
+(569 rows)
+
+ contype 
+---------
+(0 rows)
+
+psql:pg_tests/compatible/pg_catalog.sql:474: ERROR:  schema "pg_catalog" does not exist
+LINE 1: CREATE TABLE source_table(a INT PRIMARY KEY, b INT, c INT);
+                                    ^
+psql:pg_tests/compatible/pg_catalog.sql:475: ERROR:  relation "source_table" does not exist
+LINE 1: CREATE VIEW depend_view AS SELECT b, c FROM source_table;
+                                                    ^
+psql:pg_tests/compatible/pg_catalog.sql:476: ERROR:  relation "depend_view" does not exist
+LINE 1: ...TE VIEW view_dependingon_view AS SELECT b, c FROM depend_vie...
+                                                             ^
+ depend_catalog | source_catalog | source | depend | column_name | deptype 
+----------------+----------------+--------+--------+-------------+---------
+(0 rows)
+
+ oid | rulename | ev_class | ev_type | ev_enabled | is_instead | ev_qual | ev_action 
+-----+----------+----------+---------+------------+------------+---------+-----------
+(0 rows)
+
+CREATE TYPE
+CREATE TYPE
+  oid  | enumtypid | enumsortorder | enumlabel 
+-------+-----------+---------------+-----------
+ 24602 |     24601 |             1 | foo
+ 24604 |     24601 |             2 | bar
+ 24606 |     24601 |             3 | baz
+ 24620 |     24618 |             1 | v1
+ 24622 |     24618 |             2 | v2
+ 24626 |     24624 |             1 | v3
+ 24628 |     24624 |             2 | v4
+(7 rows)
+
+psql:pg_tests/compatible/pg_catalog.sql:513: ERROR:  relation "pg_catalog.pg_type" does not exist
+LINE 2: FROM pg_catalog.pg_type
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:519: ERROR:  relation "pg_catalog.pg_type" does not exist
+LINE 2: FROM pg_catalog.pg_type
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:525: ERROR:  relation "pg_catalog.pg_type" does not exist
+LINE 2: FROM pg_catalog.pg_type
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:531: ERROR:  relation "pg_catalog.pg_type" does not exist
+LINE 2: FROM pg_catalog.pg_type
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:537: ERROR:  relation "pg_catalog.pg_type" does not exist
+LINE 2: FROM pg_catalog.pg_type
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:542: ERROR:  relation "pg_catalog.pg_type" does not exist
+LINE 2: FROM pg_catalog.pg_type WHERE typname = 'uuid'
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:547: ERROR:  relation "pg_catalog.pg_type" does not exist
+LINE 2: FROM pg_catalog.pg_type
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:552: ERROR:  relation "pg_catalog.pg_type" does not exist
+LINE 2: FROM pg_catalog.pg_type
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:557: ERROR:  relation "pg_catalog.pg_type" does not exist
+LINE 2: FROM pg_catalog.pg_type
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:562: ERROR:  relation "pg_catalog.pg_type" does not exist
+LINE 2: FROM pg_catalog.pg_type
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:567: ERROR:  relation "pg_catalog.pg_type" does not exist
+LINE 2: FROM pg_catalog.pg_type
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:572: ERROR:  syntax error at or near "$"
+LINE 3: WHERE oid = $sourceid;
+                    ^
+psql:pg_tests/compatible/pg_catalog.sql:577: ERROR:  syntax error at or near "$"
+LINE 3: WHERE oid = $vtableSourceId;
+                    ^
+psql:pg_tests/compatible/pg_catalog.sql:583: ERROR:  relation "pg_catalog.pg_proc" does not exist
+LINE 2: FROM pg_catalog.pg_proc p
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:588: ERROR:  relation "pg_catalog.pg_proc" does not exist
+LINE 2: FROM pg_catalog.pg_proc
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:593: ERROR:  relation "pg_catalog.pg_proc" does not exist
+LINE 2: FROM pg_catalog.pg_proc
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:600: ERROR:  relation "pg_catalog.pg_proc" does not exist
+LINE 1: SELECT oid, proname, proretset, prorettype FROM pg_catalog.p...
+                                                        ^
+psql:pg_tests/compatible/pg_catalog.sql:606: ERROR:  relation "pg_catalog.pg_proc" does not exist
+LINE 2: FROM pg_catalog.pg_proc
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:611: ERROR:  relation "pg_catalog.pg_proc" does not exist
+LINE 2: FROM pg_catalog.pg_proc
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:618: ERROR:  relation "pg_catalog.pg_proc" does not exist
+LINE 2: FROM pg_catalog.pg_proc p
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:625: ERROR:  relation "pg_catalog.pg_proc" does not exist
+LINE 2: FROM pg_catalog.pg_proc p
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:630: ERROR:  relation "pg_catalog.pg_proc" does not exist
+LINE 2: FROM pg_catalog.pg_proc
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:635: ERROR:  relation "pg_catalog.pg_proc" does not exist
+LINE 2: FROM pg_catalog.pg_proc
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:640: ERROR:  relation "pg_catalog.pg_proc" does not exist
+LINE 2: FROM pg_catalog.pg_proc
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:645: ERROR:  relation "pg_catalog.pg_proc" does not exist
+LINE 2: FROM pg_catalog.pg_proc
+             ^
+CREATE PROCEDURE
+psql:pg_tests/compatible/pg_catalog.sql:652: ERROR:  relation "pg_catalog.pg_proc" does not exist
+LINE 1: SELECT DISTINCT proname, prokind FROM pg_catalog.pg_proc
+                                              ^
+DROP PROCEDURE
+psql:pg_tests/compatible/pg_catalog.sql:658: ERROR:  relation "pg_catalog.pg_range" does not exist
+LINE 1: SELECT * from pg_catalog.pg_range;
+                      ^
+psql:pg_tests/compatible/pg_catalog.sql:663: ERROR:  relation "pg_catalog.pg_roles" does not exist
+LINE 2: FROM pg_catalog.pg_roles
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:668: ERROR:  relation "pg_catalog.pg_roles" does not exist
+LINE 2: FROM pg_catalog.pg_roles
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:671: ERROR:  relation "system.users" does not exist
+LINE 1: INSERT INTO system.users (username, user_id) VALUES ('non_ca...
+                    ^
+psql:pg_tests/compatible/pg_catalog.sql:676: ERROR:  relation "pg_catalog.pg_roles" does not exist
+LINE 2: FROM pg_catalog.pg_roles
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:679: ERROR:  relation "system.users" does not exist
+LINE 1: DELETE FROM system.users WHERE username = 'non_cached_user';
+                    ^
+CREATE ROLE
+CREATE ROLE
+psql:pg_tests/compatible/pg_catalog.sql:684: ERROR:  syntax error at or near "REPLICATION"
+LINE 1: GRANT SYSTEM REPLICATION to test_replication;
+                     ^
+CREATE ROLE
+psql:pg_tests/compatible/pg_catalog.sql:686: ERROR:  syntax error at or near "REPLICATIONSOURCE"
+LINE 1: GRANT SYSTEM REPLICATIONSOURCE to test_src_replication;
+                     ^
+CREATE ROLE
+psql:pg_tests/compatible/pg_catalog.sql:688: ERROR:  syntax error at or near "REPLICATIONDEST"
+LINE 1: GRANT SYSTEM REPLICATIONDEST to test_dst_replication;
+                     ^
+psql:pg_tests/compatible/pg_catalog.sql:692: ERROR:  relation "pg_catalog.pg_roles" does not exist
+LINE 1: SELECT rolname, rolreplication FROM pg_catalog.pg_roles
+                                            ^
+psql:pg_tests/compatible/pg_catalog.sql:696: ERROR:  relation "pg_catalog.pg_authid" does not exist
+LINE 1: SELECT rolname, rolreplication FROM pg_catalog.pg_authid
+                                            ^
+DROP ROLE
+psql:pg_tests/compatible/pg_catalog.sql:700: ERROR:  syntax error at or near "REPLICATION"
+LINE 1: REVOKE SYSTEM REPLICATION FROM test_replication;
+                      ^
+psql:pg_tests/compatible/pg_catalog.sql:701: ERROR:  syntax error at or near "REPLICATIONSOURCE"
+LINE 1: REVOKE SYSTEM REPLICATIONSOURCE FROM test_src_replication;
+                      ^
+psql:pg_tests/compatible/pg_catalog.sql:702: ERROR:  syntax error at or near "REPLICATIONDEST"
+LINE 1: REVOKE SYSTEM REPLICATIONDEST FROM test_dst_replication;
+                      ^
+DROP ROLE
+DROP ROLE
+DROP ROLE
+psql:pg_tests/compatible/pg_catalog.sql:709: ERROR:  relation "pg_catalog.pg_auth_members" does not exist
+LINE 2: FROM pg_catalog.pg_auth_members;
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:714: ERROR:  relation "pg_catalog.pg_user" does not exist
+LINE 2: FROM pg_catalog.pg_user
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:717: ERROR:  schema "pg_catalog" does not exist
+LINE 1: CREATE TABLE testtable(x INT, INDEX testtable_x_idx(x));
+                                 ^
+psql:pg_tests/compatible/pg_catalog.sql:718: ERROR:  relation "testtable" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:719: ERROR:  relation "testtable" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:720: ERROR:  relation "testtable_x_idx" does not exist
+CREATE SCHEMA
+COMMENT
+psql:pg_tests/compatible/pg_catalog.sql:733: ERROR:  relation "pg_catalog.pg_description" does not exist
+LINE 2:   FROM pg_catalog.pg_description d
+               ^
+psql:pg_tests/compatible/pg_catalog.sql:736: WARNING:  database "defaultdb" does not exist
+COMMENT
+psql:pg_tests/compatible/pg_catalog.sql:739: ERROR:  relation "pg_catalog.pg_shdescription" does not exist
+LINE 1: SELECT objoid, classoid, description FROM pg_catalog.pg_shde...
+                                                  ^
+psql:pg_tests/compatible/pg_catalog.sql:742: ERROR:  relation "pg_catalog.pg_event_trigger" does not exist
+LINE 1: SELECT * FROM pg_catalog.pg_event_trigger;
+                      ^
+psql:pg_tests/compatible/pg_catalog.sql:745: ERROR:  relation "pg_catalog.pg_extension" does not exist
+LINE 1: SELECT * FROM pg_catalog.pg_extension;
+                      ^
+psql:pg_tests/compatible/pg_catalog.sql:748: ERROR:  relation "pg_catalog.pg_stat_activity" does not exist
+LINE 1: SELECT * FROM pg_catalog.pg_stat_activity;
+                      ^
+ column_name | data_type | is_nullable 
+-------------+-----------+-------------
+(0 rows)
+
+psql:pg_tests/compatible/pg_catalog.sql:772: ERROR:  relation "pg_catalog.pg_settings" does not exist
+LINE 4:   pg_catalog.pg_settings
+          ^
+psql:pg_tests/compatible/pg_catalog.sql:775: ERROR:  relation "pg_catalog.pg_settings" does not exist
+LINE 1: ...ce, min_val, max_val, sourcefile, sourceline FROM pg_catalog...
+                                                             ^
+CREATE SCHEMA
+psql:pg_tests/compatible/pg_catalog.sql:781: ERROR:  relation "pg_catalog.pg_sequence" does not exist
+LINE 1: SELECT * FROM pg_catalog.pg_sequence;
+                      ^
+CREATE SEQUENCE
+CREATE SEQUENCE
+psql:pg_tests/compatible/pg_catalog.sql:790: ERROR:  relation "pg_catalog.pg_sequence" does not exist
+LINE 1: SELECT * FROM pg_catalog.pg_sequence;
+                      ^
+DROP SCHEMA
+SET
+psql:pg_tests/compatible/pg_catalog.sql:799: ERROR:  relation "pg_catalog.pg_sequence" does not exist
+LINE 1: SELECT * FROM pg_catalog.pg_sequence;
+                      ^
+psql:pg_tests/compatible/pg_catalog.sql:802: ERROR:  relation "pg_catalog.pg_operator" does not exist
+LINE 1: SELECT * FROM pg_catalog.pg_operator where oprname='+' and o...
+                      ^
+psql:pg_tests/compatible/pg_catalog.sql:805: ERROR:  schema "pg_catalog" does not exist
+LINE 1: SELECT pg_catalog.pg_get_expr('1', 0), pg_catalog.pg_get_exp...
+               ^
+psql:pg_tests/compatible/pg_catalog.sql:808: ERROR:  schema "pg_catalog" does not exist
+LINE 1: SELECT pg_catalog.pg_get_expr('1', 0, true);
+               ^
+SET
+psql:pg_tests/compatible/pg_catalog.sql:818: ERROR:  relation "pg_catalog.pg_attrdef" does not exist
+LINE 2: FROM pg_catalog.pg_attrdef def
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:821: ERROR:  role "pg_catalog_testuser" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:822: ERROR:  role "pg_catalog_testuser" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:823: ERROR:  role "pg_catalog_testuser" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:825: ERROR:  role "pg_catalog_testuser" does not exist
+SET
+psql:pg_tests/compatible/pg_catalog.sql:831: ERROR:  relation "pg_catalog.pg_tables" does not exist
+LINE 1: SELECT count(*) FROM pg_catalog.pg_tables WHERE schemaname =...
+                             ^
+SET
+psql:pg_tests/compatible/pg_catalog.sql:837: ERROR:  relation "pg_catalog.pg_tables" does not exist
+LINE 1: SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname ...
+                              ^
+psql:pg_tests/compatible/pg_catalog.sql:840: ERROR:  relation "pg_catalog.pg_views" does not exist
+LINE 1: SELECT viewname FROM pg_catalog.pg_views WHERE schemaname = ...
+                             ^
+psql:pg_tests/compatible/pg_catalog.sql:845: ERROR:  relation "pg_catalog.pg_class" does not exist
+LINE 1: SELECT relname FROM pg_catalog.pg_class c
+                            ^
+psql:pg_tests/compatible/pg_catalog.sql:850: ERROR:  relation "pg_catalog.pg_constraint" does not exist
+LINE 1: SELECT conname FROM pg_catalog.pg_constraint con
+                            ^
+psql:pg_tests/compatible/pg_catalog.sql:853: ERROR:  relation "pg_catalog.pg_depend" does not exist
+LINE 1: SELECT count(*) FROM pg_catalog.pg_depend;
+                             ^
+RESET
+SET
+ oid | proname  | typinput 
+-----+----------+----------
+ 750 | array_in | array_in
+(1 row)
+
+psql:pg_tests/compatible/pg_catalog.sql:868: ERROR:  relation "pg_catalog.pg_index" does not exist
+LINE 1: SELECT count(*) FROM pg_catalog.pg_index WHERE indkey[0] IS ...
+                             ^
+psql:pg_tests/compatible/pg_catalog.sql:877: ERROR:  relation "pg_catalog.pg_proc" does not exist
+LINE 2: ...ELECT oid, c FROM (SELECT oid, count(*) as c FROM pg_catalog...
+                                                             ^
+psql:pg_tests/compatible/pg_catalog.sql:880: ERROR:  relation "pg_catalog.pg_proc" does not exist
+LINE 1: SELECT proname FROM pg_catalog.pg_proc WHERE oid = 0;
+                            ^
+ unnest 
+--------
+     25
+     25
+     23
+(3 rows)
+
+psql:pg_tests/compatible/pg_catalog.sql:886: ERROR:  schema "pg_catalog" does not exist
+LINE 1: CREATE TABLE types(a timestamptz, b integer);
+                                            ^
+psql:pg_tests/compatible/pg_catalog.sql:889: ERROR:  schema "pg_catalog" does not exist
+LINE 1: PREPARE test_insert_statement (integer, timestamptz) AS INSE...
+                                       ^
+psql:pg_tests/compatible/pg_catalog.sql:892: ERROR:  relation "types" does not exist
+LINE 1: PREPARE test_select_statement AS SELECT * FROM types;
+                                                       ^
+ name | statement | parameter_types | from_sql 
+------+-----------+-----------------+----------
+(0 rows)
+
+psql:pg_tests/compatible/pg_catalog.sql:898: ERROR:  schema "pg_catalog" does not exist
+LINE 1: PREPARE args_test_many(int, int) as select $1;
+                               ^
+psql:pg_tests/compatible/pg_catalog.sql:901: ERROR:  schema "pg_catalog" does not exist
+LINE 1: PREPARE args_test_few(int) as select $1, $2::int;
+                              ^
+psql:pg_tests/compatible/pg_catalog.sql:904: NOTICE:  table "t_prepare" does not exist, skipping
+DROP TABLE
+psql:pg_tests/compatible/pg_catalog.sql:907: ERROR:  schema "pg_catalog" does not exist
+LINE 1: CREATE TABLE t_prepare (x int, y varchar(10), z int2);
+                                  ^
+psql:pg_tests/compatible/pg_catalog.sql:910: ERROR:  schema "pg_catalog" does not exist
+LINE 1: PREPARE args_deduce_type(int, int, int, int) AS INSERT INTO ...
+                                 ^
+psql:pg_tests/compatible/pg_catalog.sql:913: ERROR:  schema "pg_catalog" does not exist
+LINE 1: PREPARE args_deduce_type_1(int) AS SELECT $1::int, $2::varch...
+                                   ^
+ name | statement | parameter_types | from_sql 
+------+-----------+-----------------+----------
+(0 rows)
+
+psql:pg_tests/compatible/pg_catalog.sql:919: ERROR:  table "types" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:922: ERROR:  relation "pg_catalog.pg_seclabel" does not exist
+LINE 1: ... objoid, classoid, objsubid, provider, label FROM pg_catalog...
+                                                             ^
+psql:pg_tests/compatible/pg_catalog.sql:925: ERROR:  relation "pg_catalog.pg_shseclabel" does not exist
+LINE 1: SELECT objoid, classoid, provider, label FROM pg_catalog.pg_...
+                                                      ^
+ oid 
+-----
+(0 rows)
+
+ oid  | oprname | aggsortop 
+------+---------+-----------
+  413 | >       |       413
+  521 | >       |       521
+  520 | >       |       520
+  610 | >       |       610
+  623 | >       |       623
+  674 | >       |       674
+ 1097 | >       |      1097
+ 1112 | >       |      1112
+ 1554 | >       |      1554
+  903 | >       |       903
+ 2064 | >       |      2064
+ 1324 | >       |      1324
+ 1334 | >       |      1334
+  666 | >       |       666
+ 1756 | >       |      1756
+ 1073 | >       |      1073
+ 1060 | >       |      1060
+ 2800 | >       |      2800
+ 3519 | >       |      3519
+ 1205 | >       |      1205
+ 3225 | >       |      3225
+ 5074 | >       |      5074
+   59 | >       |        59
+(23 rows)
+
+ oid  | oprname | aggsortop 
+------+---------+-----------
+  412 | <       |       412
+   97 | <       |        97
+   95 | <       |        95
+  609 | <       |       609
+  622 | <       |       622
+  672 | <       |       672
+ 1095 | <       |      1095
+ 1110 | <       |      1110
+ 1552 | <       |      1552
+  902 | <       |       902
+ 2062 | <       |      2062
+ 1322 | <       |      1322
+ 1332 | <       |      1332
+  664 | <       |       664
+ 1754 | <       |      1754
+ 1072 | <       |      1072
+ 1058 | <       |      1058
+ 2799 | <       |      2799
+ 3518 | <       |      3518
+ 1203 | <       |      1203
+ 3224 | <       |      3224
+ 5073 | <       |      5073
+   58 | <       |        58
+   58 | <       |        58
+(24 rows)
+
+psql:pg_tests/compatible/pg_catalog.sql:943: ERROR:  relation "coltab" does not exist
+LINE 1: ...IN pg_type typ ON atttypid=typ.oid WHERE attrelid='coltab'::...
+                                                             ^
+psql:pg_tests/compatible/pg_catalog.sql:950: ERROR:  schema "pg_catalog" does not exist
+LINE 2:   id_a_1 INT UNIQUE,
+                 ^
+psql:pg_tests/compatible/pg_catalog.sql:958: ERROR:  schema "pg_catalog" does not exist
+LINE 2:   id_b_1 INT,
+                 ^
+psql:pg_tests/compatible/pg_catalog.sql:961: ERROR:  relation "pg_catalog.pg_constraint" does not exist
+LINE 1: SELECT conkey, confkey FROM pg_catalog.pg_constraint WHERE c...
+                                    ^
+psql:pg_tests/compatible/pg_catalog.sql:964: ERROR:  table "b" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:973: ERROR:  schema "pg_catalog" does not exist
+LINE 2:   id_b_1 INT,
+                 ^
+psql:pg_tests/compatible/pg_catalog.sql:976: ERROR:  relation "pg_catalog.pg_constraint" does not exist
+LINE 1: SELECT conkey, confkey FROM pg_catalog.pg_constraint WHERE c...
+                                    ^
+psql:pg_tests/compatible/pg_catalog.sql:979: ERROR:  table "b" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:988: ERROR:  schema "pg_catalog" does not exist
+LINE 2:   id_b_1 INT,
+                 ^
+psql:pg_tests/compatible/pg_catalog.sql:991: ERROR:  relation "pg_catalog.pg_constraint" does not exist
+LINE 1: SELECT conkey, confkey FROM pg_catalog.pg_constraint WHERE c...
+                                    ^
+CREATE SCHEMA
+psql:pg_tests/compatible/pg_catalog.sql:997: ERROR:  schema "pg_catalog" does not exist
+LINE 1: CREATE TABLE d34856.t(x INT);
+                                ^
+psql:pg_tests/compatible/pg_catalog.sql:998: ERROR:  relation "d34856.t" does not exist
+LINE 1: CREATE VIEW d34856.v AS SELECT x FROM d34856.t;
+                                              ^
+CREATE SEQUENCE
+psql:pg_tests/compatible/pg_catalog.sql:1002: ERROR:  relation "pg_catalog.pg_tables" does not exist
+LINE 1: SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname ...
+                              ^
+psql:pg_tests/compatible/pg_catalog.sql:1005: NOTICE:  drop cascades to sequence d34856.s
+DROP SCHEMA
+CREATE SCHEMA
+SET
+psql:pg_tests/compatible/pg_catalog.sql:1011: ERROR:  schema "pg_catalog" does not exist
+LINE 1: CREATE TABLE t(x INT UNIQUE);
+                         ^
+psql:pg_tests/compatible/pg_catalog.sql:1024: ERROR:  schema "pg_catalog" does not exist
+LINE 2:     a INT REFERENCES t(x) ON DELETE NO ACTION,
+              ^
+                    conname                     | confupdtype | confdeltype 
+------------------------------------------------+-------------+-------------
+ cardinal_number_domain_check                   |             |  
+ pg_aggregate_fnoid_index                       |             |  
+ pg_am_name_index                               |             |  
+ pg_am_oid_index                                |             |  
+ pg_amop_fam_strat_index                        |             |  
+ pg_amop_oid_index                              |             |  
+ pg_amop_opr_fam_index                          |             |  
+ pg_amproc_fam_proc_index                       |             |  
+ pg_amproc_oid_index                            |             |  
+ pg_attrdef_adrelid_adnum_index                 |             |  
+ pg_attrdef_oid_index                           |             |  
+ pg_attribute_relid_attnam_index                |             |  
+ pg_attribute_relid_attnum_index                |             |  
+ pg_auth_members_member_role_index              |             |  
+ pg_auth_members_oid_index                      |             |  
+ pg_auth_members_role_member_index              |             |  
+ pg_authid_oid_index                            |             |  
+ pg_authid_rolname_index                        |             |  
+ pg_cast_oid_index                              |             |  
+ pg_cast_source_target_index                    |             |  
+ pg_class_oid_index                             |             |  
+ pg_class_relname_nsp_index                     |             |  
+ pg_collation_name_enc_nsp_index                |             |  
+ pg_collation_oid_index                         |             |  
+ pg_constraint_conrelid_contypid_conname_index  |             |  
+ pg_constraint_oid_index                        |             |  
+ pg_conversion_default_index                    |             |  
+ pg_conversion_name_nsp_index                   |             |  
+ pg_conversion_oid_index                        |             |  
+ pg_database_datname_index                      |             |  
+ pg_database_oid_index                          |             |  
+ pg_db_role_setting_databaseid_rol_index        |             |  
+ pg_default_acl_oid_index                       |             |  
+ pg_default_acl_role_nsp_obj_index              |             |  
+ pg_description_o_c_o_index                     |             |  
+ pg_enum_oid_index                              |             |  
+ pg_enum_typid_label_index                      |             |  
+ pg_enum_typid_sortorder_index                  |             |  
+ pg_event_trigger_evtname_index                 |             |  
+ pg_event_trigger_oid_index                     |             |  
+ pg_extension_name_index                        |             |  
+ pg_extension_oid_index                         |             |  
+ pg_foreign_data_wrapper_name_index             |             |  
+ pg_foreign_data_wrapper_oid_index              |             |  
+ pg_foreign_server_name_index                   |             |  
+ pg_foreign_server_oid_index                    |             |  
+ pg_foreign_table_relid_index                   |             |  
+ pg_index_indexrelid_index                      |             |  
+ pg_inherits_relid_seqno_index                  |             |  
+ pg_init_privs_o_c_o_index                      |             |  
+ pg_language_name_index                         |             |  
+ pg_language_oid_index                          |             |  
+ pg_largeobject_loid_pn_index                   |             |  
+ pg_largeobject_metadata_oid_index              |             |  
+ pg_namespace_nspname_index                     |             |  
+ pg_namespace_oid_index                         |             |  
+ pg_opclass_am_name_nsp_index                   |             |  
+ pg_opclass_oid_index                           |             |  
+ pg_operator_oid_index                          |             |  
+ pg_operator_oprname_l_r_n_index                |             |  
+ pg_opfamily_am_name_nsp_index                  |             |  
+ pg_opfamily_oid_index                          |             |  
+ pg_parameter_acl_oid_index                     |             |  
+ pg_parameter_acl_parname_index                 |             |  
+ pg_partitioned_table_partrelid_index           |             |  
+ pg_policy_oid_index                            |             |  
+ pg_policy_polrelid_polname_index               |             |  
+ pg_proc_oid_index                              |             |  
+ pg_proc_proname_args_nsp_index                 |             |  
+ pg_publication_namespace_oid_index             |             |  
+ pg_publication_namespace_pnnspid_pnpubid_index |             |  
+ pg_publication_oid_index                       |             |  
+ pg_publication_pubname_index                   |             |  
+ pg_publication_rel_oid_index                   |             |  
+ pg_publication_rel_prrelid_prpubid_index       |             |  
+ pg_range_rngmultitypid_index                   |             |  
+ pg_range_rngtypid_index                        |             |  
+ pg_replication_origin_roiident_index           |             |  
+ pg_replication_origin_roname_index             |             |  
+ pg_rewrite_oid_index                           |             |  
+ pg_rewrite_rel_rulename_index                  |             |  
+ pg_seclabel_object_index                       |             |  
+ pg_sequence_seqrelid_index                     |             |  
+ pg_shdescription_o_c_index                     |             |  
+ pg_shseclabel_object_index                     |             |  
+ pg_statistic_ext_data_stxoid_inh_index         |             |  
+ pg_statistic_ext_name_index                    |             |  
+ pg_statistic_ext_oid_index                     |             |  
+ pg_statistic_relid_att_inh_index               |             |  
+ pg_subscription_oid_index                      |             |  
+ pg_subscription_rel_srrelid_srsubid_index      |             |  
+ pg_subscription_subname_index                  |             |  
+ pg_tablespace_oid_index                        |             |  
+ pg_tablespace_spcname_index                    |             |  
+ pg_transform_oid_index                         |             |  
+ pg_transform_type_lang_index                   |             |  
+ pg_trigger_oid_index                           |             |  
+ pg_trigger_tgrelid_tgname_index                |             |  
+ pg_ts_config_cfgname_index                     |             |  
+ pg_ts_config_map_index                         |             |  
+ pg_ts_config_oid_index                         |             |  
+ pg_ts_dict_dictname_index                      |             |  
+ pg_ts_dict_oid_index                           |             |  
+ pg_ts_parser_oid_index                         |             |  
+ pg_ts_parser_prsname_index                     |             |  
+ pg_ts_template_oid_index                       |             |  
+ pg_ts_template_tmplname_index                  |             |  
+ pg_type_oid_index                              |             |  
+ pg_type_typname_nsp_index                      |             |  
+ pg_user_mapping_oid_index                      |             |  
+ pg_user_mapping_user_server_index              |             |  
+ yes_or_no_check                                |             |  
+(112 rows)
+
+psql:pg_tests/compatible/pg_catalog.sql:1030: ERROR:  table "u" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1030: ERROR:  table "t" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1033: ERROR:  schema "pg_catalog" does not exist
+LINE 1: CREATE TABLE v(x INT, y INT, UNIQUE (x,y));
+                         ^
+psql:pg_tests/compatible/pg_catalog.sql:1040: ERROR:  schema "pg_catalog" does not exist
+LINE 2:   a INT, b INT, c INT, d INT,
+            ^
+                    conname                     | confmatchtype 
+------------------------------------------------+---------------
+ cardinal_number_domain_check                   |  
+ pg_aggregate_fnoid_index                       |  
+ pg_am_name_index                               |  
+ pg_am_oid_index                                |  
+ pg_amop_fam_strat_index                        |  
+ pg_amop_oid_index                              |  
+ pg_amop_opr_fam_index                          |  
+ pg_amproc_fam_proc_index                       |  
+ pg_amproc_oid_index                            |  
+ pg_attrdef_adrelid_adnum_index                 |  
+ pg_attrdef_oid_index                           |  
+ pg_attribute_relid_attnam_index                |  
+ pg_attribute_relid_attnum_index                |  
+ pg_auth_members_member_role_index              |  
+ pg_auth_members_oid_index                      |  
+ pg_auth_members_role_member_index              |  
+ pg_authid_oid_index                            |  
+ pg_authid_rolname_index                        |  
+ pg_cast_oid_index                              |  
+ pg_cast_source_target_index                    |  
+ pg_class_oid_index                             |  
+ pg_class_relname_nsp_index                     |  
+ pg_collation_name_enc_nsp_index                |  
+ pg_collation_oid_index                         |  
+ pg_constraint_conrelid_contypid_conname_index  |  
+ pg_constraint_oid_index                        |  
+ pg_conversion_default_index                    |  
+ pg_conversion_name_nsp_index                   |  
+ pg_conversion_oid_index                        |  
+ pg_database_datname_index                      |  
+ pg_database_oid_index                          |  
+ pg_db_role_setting_databaseid_rol_index        |  
+ pg_default_acl_oid_index                       |  
+ pg_default_acl_role_nsp_obj_index              |  
+ pg_description_o_c_o_index                     |  
+ pg_enum_oid_index                              |  
+ pg_enum_typid_label_index                      |  
+ pg_enum_typid_sortorder_index                  |  
+ pg_event_trigger_evtname_index                 |  
+ pg_event_trigger_oid_index                     |  
+ pg_extension_name_index                        |  
+ pg_extension_oid_index                         |  
+ pg_foreign_data_wrapper_name_index             |  
+ pg_foreign_data_wrapper_oid_index              |  
+ pg_foreign_server_name_index                   |  
+ pg_foreign_server_oid_index                    |  
+ pg_foreign_table_relid_index                   |  
+ pg_index_indexrelid_index                      |  
+ pg_inherits_relid_seqno_index                  |  
+ pg_init_privs_o_c_o_index                      |  
+ pg_language_name_index                         |  
+ pg_language_oid_index                          |  
+ pg_largeobject_loid_pn_index                   |  
+ pg_largeobject_metadata_oid_index              |  
+ pg_namespace_nspname_index                     |  
+ pg_namespace_oid_index                         |  
+ pg_opclass_am_name_nsp_index                   |  
+ pg_opclass_oid_index                           |  
+ pg_operator_oid_index                          |  
+ pg_operator_oprname_l_r_n_index                |  
+ pg_opfamily_am_name_nsp_index                  |  
+ pg_opfamily_oid_index                          |  
+ pg_parameter_acl_oid_index                     |  
+ pg_parameter_acl_parname_index                 |  
+ pg_partitioned_table_partrelid_index           |  
+ pg_policy_oid_index                            |  
+ pg_policy_polrelid_polname_index               |  
+ pg_proc_oid_index                              |  
+ pg_proc_proname_args_nsp_index                 |  
+ pg_publication_namespace_oid_index             |  
+ pg_publication_namespace_pnnspid_pnpubid_index |  
+ pg_publication_oid_index                       |  
+ pg_publication_pubname_index                   |  
+ pg_publication_rel_oid_index                   |  
+ pg_publication_rel_prrelid_prpubid_index       |  
+ pg_range_rngmultitypid_index                   |  
+ pg_range_rngtypid_index                        |  
+ pg_replication_origin_roiident_index           |  
+ pg_replication_origin_roname_index             |  
+ pg_rewrite_oid_index                           |  
+ pg_rewrite_rel_rulename_index                  |  
+ pg_seclabel_object_index                       |  
+ pg_sequence_seqrelid_index                     |  
+ pg_shdescription_o_c_index                     |  
+ pg_shseclabel_object_index                     |  
+ pg_statistic_ext_data_stxoid_inh_index         |  
+ pg_statistic_ext_name_index                    |  
+ pg_statistic_ext_oid_index                     |  
+ pg_statistic_relid_att_inh_index               |  
+ pg_subscription_oid_index                      |  
+ pg_subscription_rel_srrelid_srsubid_index      |  
+ pg_subscription_subname_index                  |  
+ pg_tablespace_oid_index                        |  
+ pg_tablespace_spcname_index                    |  
+ pg_transform_oid_index                         |  
+ pg_transform_type_lang_index                   |  
+ pg_trigger_oid_index                           |  
+ pg_trigger_tgrelid_tgname_index                |  
+ pg_ts_config_cfgname_index                     |  
+ pg_ts_config_map_index                         |  
+ pg_ts_config_oid_index                         |  
+ pg_ts_dict_dictname_index                      |  
+ pg_ts_dict_oid_index                           |  
+ pg_ts_parser_oid_index                         |  
+ pg_ts_parser_prsname_index                     |  
+ pg_ts_template_oid_index                       |  
+ pg_ts_template_tmplname_index                  |  
+ pg_type_oid_index                              |  
+ pg_type_typname_nsp_index                      |  
+ pg_user_mapping_oid_index                      |  
+ pg_user_mapping_user_server_index              |  
+ yes_or_no_check                                |  
+(112 rows)
+
+DROP SCHEMA
+SET
+CREATE TABLE
+CREATE INDEX
+                                   indexdef                                    
+-------------------------------------------------------------------------------
+ CREATE INDEX regression_46450_idx ON public.regression_46450 USING gin (json)
+(1 row)
+
+CREATE SCHEMA
+psql:pg_tests/compatible/pg_catalog.sql:1062: ERROR:  schema "pg_catalog" does not exist
+LINE 2:   a INT PRIMARY KEY,
+            ^
+psql:pg_tests/compatible/pg_catalog.sql:1063: ERROR:  relation "test_schema.test" does not exist
+ schemaname | tablename | indexname | indexdef 
+------------+-----------+-----------+----------
+(0 rows)
+
+psql:pg_tests/compatible/pg_catalog.sql:1071: ERROR:  schema "pg_catalog" does not exist
+LINE 1: CREATE TABLE hidden_in_vtable_index_test(a int);
+                                                   ^
+psql:pg_tests/compatible/pg_catalog.sql:1074: error: no rows returned for \gset
+psql:pg_tests/compatible/pg_catalog.sql:1077: ERROR:  schema "other_db" already exists
+SET
+psql:pg_tests/compatible/pg_catalog.sql:1080: ERROR:  syntax error at or near ":"
+LINE 1: SELECT oid FROM pg_class WHERE oid=:testid;
+                                           ^
+SET
+psql:pg_tests/compatible/pg_catalog.sql:1091: ERROR:  syntax error at or near "idxa"
+LINE 5:   INVERTED INDEX idxa (a)
+                         ^
+psql:pg_tests/compatible/pg_catalog.sql:1094: ERROR:  syntax error at or near "INVERTED"
+LINE 1: CREATE INVERTED INDEX idxb ON geospatial_table (b);
+               ^
+psql:pg_tests/compatible/pg_catalog.sql:1100: ERROR:  relation "pg_catalog.pg_indexes" does not exist
+LINE 2: FROM pg_catalog.pg_indexes
+             ^
+SET
+psql:pg_tests/compatible/pg_catalog.sql:1110: ERROR:  syntax error at or near "idxa"
+LINE 4:   VECTOR INDEX idxa (a)
+                       ^
+psql:pg_tests/compatible/pg_catalog.sql:1113: ERROR:  syntax error at or near "VECTOR"
+LINE 1: CREATE VECTOR INDEX idxb ON vector_table (a);
+               ^
+psql:pg_tests/compatible/pg_catalog.sql:1119: ERROR:  relation "pg_catalog.pg_indexes" does not exist
+LINE 2: FROM pg_catalog.pg_indexes
+             ^
+SET
+CREATE TYPE
+psql:pg_tests/compatible/pg_catalog.sql:1131: ERROR:  schema "pg_catalog" does not exist
+LINE 2:   a INT,
+            ^
+psql:pg_tests/compatible/pg_catalog.sql:1132: ERROR:  relation "partial_index_table" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1135: ERROR:  relation "partial_index_table" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1141: ERROR:  relation "pg_catalog.pg_indexes" does not exist
+LINE 2: FROM pg_catalog.pg_indexes
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:1148: ERROR:  relation "pg_catalog.pg_constraint" does not exist
+LINE 2: FROM pg_catalog.pg_constraint c JOIN pg_catalog.pg_class t
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:1151: ERROR:  schema "pg_catalog" does not exist
+LINE 1: CREATE TABLE t46799 (x INT DEFAULT 1, y INT DEFAULT 1);
+                               ^
+psql:pg_tests/compatible/pg_catalog.sql:1154: ERROR:  relation "t46799" does not exist
+LINE 1: SELECT adnum FROM pg_attrdef WHERE adrelid = 't46799'::REGCL...
+                                                     ^
+psql:pg_tests/compatible/pg_catalog.sql:1157: ERROR:  relation "t46799" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1160: ERROR:  relation "t46799" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1163: ERROR:  relation "t46799" does not exist
+LINE 1: select adnum from pg_attrdef WHERE adrelid = 't46799'::REGCL...
+                                                     ^
+psql:pg_tests/compatible/pg_catalog.sql:1166: ERROR:  schema "pg_catalog" does not exist
+LINE 1: CREATE TABLE jt (a INT PRIMARY KEY);
+                           ^
+psql:pg_tests/compatible/pg_catalog.sql:1166: ERROR:  relation "jt" does not exist
+LINE 1: INSERT INTO jt VALUES(1);
+                    ^
+psql:pg_tests/compatible/pg_catalog.sql:1166: ERROR:  relation "jt" does not exist
+LINE 1: INSERT INTO jt VALUES('jt'::regclass::int);
+                    ^
+psql:pg_tests/compatible/pg_catalog.sql:1169: ERROR:  syntax error at or near "LOOKUP"
+LINE 1: SELECT a, oid, relname FROM jt INNER LOOKUP JOIN pg_class ON...
+                                             ^
+psql:pg_tests/compatible/pg_catalog.sql:1172: ERROR:  syntax error at or near "LOOKUP"
+LINE 1: SELECT a, oid, relname FROM jt LEFT OUTER LOOKUP JOIN pg_cla...
+                                                  ^
+CREATE ROLE
+CREATE ROLE
+ rolcanlogin 
+-------------
+ t
+(1 row)
+
+ rolcanlogin 
+-------------
+ f
+(1 row)
+
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+     rolvaliduntil      
+------------------------
+ 2021-01-01 00:00:00+00
+(1 row)
+
+     rolvaliduntil      
+------------------------
+ 2020-12-31 22:00:00+00
+(1 row)
+
+ rolvaliduntil 
+---------------
+ 
+(1 row)
+
+     rolvaliduntil      
+------------------------
+ 2021-01-01 00:00:00+00
+(1 row)
+
+     rolvaliduntil      
+------------------------
+ 2020-12-31 22:00:00+00
+(1 row)
+
+ rolvaliduntil 
+---------------
+ 
+(1 row)
+
+psql:pg_tests/compatible/pg_catalog.sql:1208: ERROR:  syntax error at or near "."
+LINE 1: ALTER TABLE pg_catalog.pg_tables RENAME TO pg_catalog.bad;
+                                                             ^
+psql:pg_tests/compatible/pg_catalog.sql:1211: ERROR:  schema "pg_catalog" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1214: ERROR:  schema "pg_catalog" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1217: ERROR:  schema "pg_catalog" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1220: ERROR:  schema "pg_catalog" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1223: ERROR:  schema "pg_catalog" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1226: ERROR:  schema "pg_catalog" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1229: ERROR:  schema "pg_catalog" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1232: ERROR:  schema "pg_catalog" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1235: ERROR:  schema "pg_catalog" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1238: ERROR:  syntax error at or near "@"
+LINE 1: DROP INDEX pg_catalog.pg_tables@i;
+                                       ^
+psql:pg_tests/compatible/pg_catalog.sql:1241: ERROR:  schema "pg_catalog" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1244: ERROR:  schema "pg_catalog" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1255: ERROR:  relation "default_arrays" does not exist
+LINE 7: WHERE a.attrelid = 'default_arrays'::regclass
+                           ^
+psql:pg_tests/compatible/pg_catalog.sql:1269: ERROR:  schema "pg_catalog" does not exist
+LINE 2:  a time(1) NULL,
+           ^
+psql:pg_tests/compatible/pg_catalog.sql:1280: ERROR:  relation "timestamp_with_typmod" does not exist
+LINE 7: WHERE a.attrelid = 'timestamp_with_typmod'::regclass
+                           ^
+psql:pg_tests/compatible/pg_catalog.sql:1283: ERROR:  syntax error at or near ":"
+LINE 1: SELECT attname FROM pg_attribute WHERE attrelid = :testid LI...
+                                                          ^
+psql:pg_tests/compatible/pg_catalog.sql:1292: ERROR:  relation "pg_catalog.pg_type" does not exist
+LINE 4:   pg_catalog.pg_type AS t JOIN pg_catalog.pg_namespace AS n ...
+          ^
+ oid 
+-----
+  19
+  20
+  24
+(3 rows)
+
+ oid | relname | relnamespace | reltype | reloftype | relowner | relam | relfilenode | reltablespace | relpages | reltuples | relallvisible | reltoastrelid | relhasindex | relisshared | relpersistence | relkind | relnatts | relchecks | relhasrules | relhastriggers | relhassubclass | relrowsecurity | relforcerowsecurity | relispopulated | relreplident | relispartition | relrewrite | relfrozenxid | relminmxid | relacl | reloptions | relpartbound 
+-----+---------+--------------+---------+-----------+----------+-------+-------------+---------------+----------+-----------+---------------+---------------+-------------+-------------+----------------+---------+----------+-----------+-------------+----------------+----------------+----------------+---------------------+----------------+--------------+----------------+------------+--------------+------------+--------+------------+--------------
+(0 rows)
+
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+psql:pg_tests/compatible/pg_catalog.sql:1313: ERROR:  relation "pg_catalog.pg_class" does not exist
+LINE 4:   pg_catalog.pg_class
+          ^
+CREATE TABLE
+psql:pg_tests/compatible/pg_catalog.sql:1321: ERROR:  schema "pg_catalog" does not exist
+ pg_typeof | pg_typeof 
+-----------+-----------
+(0 rows)
+
+ count 
+-------
+     0
+(1 row)
+
+psql:pg_tests/compatible/pg_catalog.sql:1335: ERROR:  zero-length delimited identifier at or near """"
+LINE 1: SELECT tablename FROM "".pg_catalog.pg_tables;
+                              ^
+SET
+psql:pg_tests/compatible/pg_catalog.sql:1341: ERROR:  relation "pg_catalog.pg_tables" does not exist
+LINE 1: SELECT tablename FROM pg_catalog.pg_tables;
+                              ^
+SET
+psql:pg_tests/compatible/pg_catalog.sql:1346: ERROR:  syntax error at or near "subtest"
+LINE 1: subtest 58945;
+        ^
+psql:pg_tests/compatible/pg_catalog.sql:1352: ERROR:  syntax error at or near "DESC"
+LINE 3:   INDEX t_hash_a_idx (a DESC) USING HASH WITH (bucket_count=...
+                                ^
+psql:pg_tests/compatible/pg_catalog.sql:1357: ERROR:  relation "pg_catalog.pg_index" does not exist
+LINE 2: FROM pg_catalog.pg_index
+             ^
+psql:pg_tests/compatible/pg_catalog.sql:1360: ERROR:  cross-database references are not implemented: "test.crdb_internal.create_statements"
+LINE 1: ...atabase_name, descriptor_name, descriptor_id from test.crdb_...
+                                                             ^
+psql:pg_tests/compatible/pg_catalog.sql:1369: ERROR:  schema "pg_catalog" does not exist
+LINE 2:     "id" integer NOT NULL PRIMARY KEY DEFAULT unique_rowid()...
+                 ^
+psql:pg_tests/compatible/pg_catalog.sql:1370: ERROR:  relation "indexes_table" does not exist
+ indkey | indnatts | indnkeyatts 
+--------+----------+-------------
+(0 rows)
+
+ indexname | array_agg | indisunique | indisprimary | array_agg | amname | exprdef | attoptions 
+-----------+-----------+-------------+--------------+-----------+--------+---------+------------
+(0 rows)
+
+psql:pg_tests/compatible/pg_catalog.sql:1412: ERROR:  unrecognized configuration parameter "stub_catalog_tables"
+ objoid | classoid | objsubid | provider | label 
+--------+----------+----------+----------+-------
+(0 rows)
+
+ count 
+-------
+  1752
+(1 row)
+
+psql:pg_tests/compatible/pg_catalog.sql:1421: ERROR:  unrecognized configuration parameter "stub_catalog_tables"
+ objoid | classoid | objsubid | provider | label 
+--------+----------+----------+----------+-------
+(0 rows)
+
+CREATE SEQUENCE
+ last_value 
+------------
+           
+(1 row)
+
+ nextval 
+---------
+     101
+(1 row)
+
+ nextval 
+---------
+     106
+(1 row)
+
+ nextval 
+---------
+     111
+(1 row)
+
+ schemaname | sequencename | sequenceowner | data_type | start_value | min_value |      max_value      | increment_by | cycle | cache_size | last_value 
+------------+--------------+---------------+-----------+-------------+-----------+---------------------+--------------+-------+------------+------------
+ public     | serial       | postgres      | bigint    |         101 |         1 | 9223372036854775807 |            5 | f     |          1 |        111
+(1 row)
+
+CREATE ROLE
+GRANT
+ALTER SEQUENCE
+ALTER SEQUENCE
+ sequenceowner | cache_size 
+---------------+------------
+ anyuser       |         10
+(1 row)
+
+COMMENT
+psql:pg_tests/compatible/pg_catalog.sql:1455: ERROR:  relation "pg_catalog.pg_description" does not exist
+LINE 2:   FROM pg_catalog.pg_description
+               ^
+ rolname 
+---------
+(0 rows)
+
+CREATE SCHEMA
+CREATE SCHEMA
+psql:pg_tests/compatible/pg_catalog.sql:1466: ERROR:  schema "pg_catalog" does not exist
+LINE 1: CREATE TABLE sh_db.sh_table_a(id INT);
+                                         ^
+psql:pg_tests/compatible/pg_catalog.sql:1467: ERROR:  schema "pg_catalog" does not exist
+LINE 1: CREATE TABLE sh_db_root.sh_table_b(id INT);
+                                              ^
+CREATE ROLE
+CREATE ROLE
+psql:pg_tests/compatible/pg_catalog.sql:1470: ERROR:  database "sh_db" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1471: ERROR:  relation "sh_db.sh_table_a" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1472: ERROR:  relation "sh_db.sh_table_a" does not exist
+ALTER SCHEMA
+psql:pg_tests/compatible/pg_catalog.sql:1474: ERROR:  relation "sh_db_root.sh_table_b" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1475: ERROR:  role "root" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1476: ERROR:  relation "sh_db.sh_table_a" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1477: ERROR:  relation "sh_db_root.sh_table_b" does not exist
+CREATE ROLE
+psql:pg_tests/compatible/pg_catalog.sql:1479: ERROR:  relation "sh_db.sh_table_a" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1480: ERROR:  relation "sh_db_root.sh_table_b" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1481: ERROR:  database "sh_db" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1482: ERROR:  database "sh_db_root" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1483: ERROR:  syntax error at or near "USE"
+LINE 1: USE sh_db;
+        ^
+ relname | rolname | deptype | datname 
+---------+---------+---------+---------
+(0 rows)
+
+psql:pg_tests/compatible/pg_catalog.sql:1499: ERROR:  syntax error at or near "USE"
+LINE 1: USE sh_db_root;
+        ^
+ relname | rolname | deptype | datname 
+---------+---------+---------+---------
+(0 rows)
+
+psql:pg_tests/compatible/pg_catalog.sql:1515: ERROR:  syntax error at or near "USE"
+LINE 1: USE test;
+        ^
+ datname | rolname | deptype 
+---------+---------+---------
+(0 rows)
+
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE SCHEMA
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+psql:pg_tests/compatible/pg_catalog.sql:1536: ERROR:  database "foreachroles" does not exist
+ALTER ROLE
+  usename  | usecreatedb |                     useconfig                     
+-----------+-------------+---------------------------------------------------
+ testuser1 | t           | {TimeZone=America/Los_Angeles,application_name=a}
+ testuser2 | f           | 
+(2 rows)
+
+  rolname  | rolcreatedb |                     rolconfig                     | rolinherit | rolcanlogin |     rolvaliduntil      
+-----------+-------------+---------------------------------------------------+------------+-------------+------------------------
+ testrole1 | f           |                                                   | t          | f           | 
+ testuser1 | t           | {TimeZone=America/Los_Angeles,application_name=a} | t          | t           | 
+ testuser2 | f           |                                                   | t          | t           | 3022-01-01 00:00:00+00
+(3 rows)
+
+  rolname  | rolcreatedb | rolcreaterole | rolinherit | rolcanlogin |     rolvaliduntil      
+-----------+-------------+---------------+------------+-------------+------------------------
+ testrole1 | f           | f             | t          | f           | 
+ testuser1 | t           | f             | t          | t           | 
+ testuser2 | f           | t             | t          | t           | 3022-01-01 00:00:00+00
+(3 rows)
+
+CREATE ROLE
+psql:pg_tests/compatible/pg_catalog.sql:1559: ERROR:  role "admin" does not exist
+CREATE ROLE
+CREATE ROLE
+psql:pg_tests/compatible/pg_catalog.sql:1562: ERROR:  role "admin" does not exist
+CREATE ROLE
+   rolname    | rolsuper 
+--------------+----------
+ regular_role | f
+ regular_user | f
+ super_role   | f
+ super_user   | f
+(4 rows)
+
+   rolname    | rolsuper 
+--------------+----------
+ regular_role | f
+ regular_user | f
+ super_role   | f
+ super_user   | f
+(4 rows)
+
+   usename    | usesuper 
+--------------+----------
+ regular_user | f
+ super_user   | f
+(2 rows)
+
+psql:pg_tests/compatible/pg_catalog.sql:1584: ERROR:  syntax error at or near "null"
+LINE 1: ... USER regression_70180 WITH password '123' VALID UNTIL null;
+                                                                  ^
+ usename | valuntil 
+---------+----------
+(0 rows)
+
+psql:pg_tests/compatible/pg_catalog.sql:1592: ERROR:  schema "pg_catalog" does not exist
+LINE 1: CREATE TABLE stxtbl(a INT, b INT, c INT);
+                              ^
+psql:pg_tests/compatible/pg_catalog.sql:1593: ERROR:  relation "stxtbl" does not exist
+CREATE SCHEMA
+psql:pg_tests/compatible/pg_catalog.sql:1597: ERROR:  schema "pg_catalog" does not exist
+LINE 1: CREATE TABLE test.stxtbl2(a INT, b INT, c INT);
+                                    ^
+psql:pg_tests/compatible/pg_catalog.sql:1598: ERROR:  relation "test.stxtbl2" does not exist
+SELECT 100
+ANALYZE
+ relname | stxname | stxnamespace | stxowner | stxstattarget | stxkeys | stxkind 
+---------+---------+--------------+----------+---------------+---------+---------
+(0 rows)
+
+psql:pg_tests/compatible/pg_catalog.sql:1615: ERROR:  table "stxtbl2" does not exist
+ relname | stxname | stxnamespace | stxowner | stxstattarget | stxkeys | stxkind 
+---------+---------+--------------+----------+---------------+---------+---------
+(0 rows)
+
+ passed 
+--------
+ t
+(1 row)
+
+           usename            | usesysid | usecreatedb | usesuper | userepl | usebypassrls |                                                                passwd                                                                 |        valuntil        |                     useconfig                     
+------------------------------+----------+-------------+----------+---------+--------------+---------------------------------------------------------------------------------------------------------------------------------------+------------------------+---------------------------------------------------
+ anyuser                      |    24691 | f           | f        | f       | f            |                                                                                                                                       |                        | 
+ postgres                     |       10 | t           | t        | t       | t            |                                                                                                                                       |                        | 
+ regular_user                 |    24703 | f           | f        | f       | f            |                                                                                                                                       |                        | 
+ role_test_login              |    24657 | f           | f        | f       | f            |                                                                                                                                       |                        | 
+ role_test_nodate             |    24661 | f           | f        | f       | f            |                                                                                                                                       |                        | 
+ role_test_with_date          |    24659 | f           | f        | f       | f            |                                                                                                                                       | 2021-01-01 00:00:00+00 | 
+ role_test_with_date_timezone |    24660 | f           | f        | f       | f            |                                                                                                                                       | 2020-12-31 22:00:00+00 | 
+ sh_owner                     |    24696 | f           | f        | f       | f            |                                                                                                                                       |                        | 
+ sh_user                      |    24695 | f           | f        | f       | f            |                                                                                                                                       |                        | 
+ super_user                   |    24702 | f           | f        | f       | f            |                                                                                                                                       |                        | 
+ testuser1                    |    24698 | t           | f        | f       | f            |                                                                                                                                       |                        | {TimeZone=America/Los_Angeles,application_name=a}
+ testuser2                    |    24699 | f           | f        | f       | f            | SCRAM-SHA-256$4096:uzph3wdTc8jAZq+TbGOvsg==$1IEgNDBMc1v8q/NruJwPSb2YPGSzjI51ImRwDqg5Acc=:MGFGdXY/WLp7QXuDPpv/qzvWwQySob/Q4WAHfT7qPXc= | 3022-01-01 00:00:00+00 | 
+(12 rows)
+
+ passed 
+--------
+ t
+(1 row)
+
+psql:pg_tests/compatible/pg_catalog.sql:1647: ERROR:  syntax error at or near "LOOKUP"
+LINE 3: INNER LOOKUP JOIN pg_type ON pg_type.oid=a.b;
+              ^
+ castsource | casttarget 
+------------+------------
+(0 rows)
+
+  oid  | castsource | casttarget | castfunc | castcontext | castmethod 
+-------+------------+------------+----------+-------------+------------
+ 10000 |         20 |         21 |      714 | a           | f
+ 10001 |         20 |         23 |      480 | a           | f
+ 10002 |         20 |        700 |      652 | i           | f
+ 10003 |         20 |        701 |      482 | i           | f
+ 10004 |         20 |       1700 |     1781 | i           | f
+ 10005 |         21 |         20 |      754 | i           | f
+ 10006 |         21 |         23 |      313 | i           | f
+ 10007 |         21 |        700 |      236 | i           | f
+ 10008 |         21 |        701 |      235 | i           | f
+ 10009 |         21 |       1700 |     1782 | i           | f
+ 10010 |         23 |         20 |      481 | i           | f
+ 10011 |         23 |         21 |      314 | a           | f
+ 10012 |         23 |        700 |      318 | i           | f
+ 10013 |         23 |        701 |      316 | i           | f
+ 10014 |         23 |       1700 |     1740 | i           | f
+ 10015 |        700 |         20 |      653 | a           | f
+ 10016 |        700 |         21 |      238 | a           | f
+ 10017 |        700 |         23 |      319 | a           | f
+ 10018 |        700 |        701 |      311 | i           | f
+ 10019 |        700 |       1700 |     1742 | a           | f
+ 10020 |        701 |         20 |      483 | a           | f
+ 10021 |        701 |         21 |      237 | a           | f
+ 10022 |        701 |         23 |      317 | a           | f
+ 10023 |        701 |        700 |      312 | a           | f
+ 10024 |        701 |       1700 |     1743 | a           | f
+ 10025 |       1700 |         20 |     1779 | a           | f
+ 10026 |       1700 |         21 |     1783 | a           | f
+ 10027 |       1700 |         23 |     1744 | a           | f
+ 10028 |       1700 |        700 |     1745 | i           | f
+ 10029 |       1700 |        701 |     1746 | i           | f
+ 10030 |        790 |       1700 |     3823 | a           | f
+ 10031 |       1700 |        790 |     3824 | a           | f
+ 10032 |         23 |        790 |     3811 | a           | f
+ 10033 |         20 |        790 |     3812 | a           | f
+ 10034 |         23 |         16 |     2557 | e           | f
+ 10035 |         16 |         23 |     2558 | e           | f
+ 10036 |       5069 |         28 |     5071 | e           | f
+ 10037 |         20 |         26 |     1287 | i           | f
+ 10038 |         21 |         26 |      313 | i           | f
+ 10039 |         23 |         26 |        0 | i           | b
+ 10040 |         26 |         20 |     1288 | a           | f
+ 10041 |         26 |         23 |        0 | a           | b
+ 10042 |         26 |         24 |        0 | i           | b
+ 10043 |         24 |         26 |        0 | i           | b
+ 10044 |         20 |         24 |     1287 | i           | f
+ 10045 |         21 |         24 |      313 | i           | f
+ 10046 |         23 |         24 |        0 | i           | b
+ 10047 |         24 |         20 |     1288 | a           | f
+ 10048 |         24 |         23 |        0 | a           | b
+ 10049 |         24 |       2202 |        0 | i           | b
+ 10050 |       2202 |         24 |        0 | i           | b
+ 10051 |         26 |       2202 |        0 | i           | b
+ 10052 |       2202 |         26 |        0 | i           | b
+ 10053 |         20 |       2202 |     1287 | i           | f
+ 10054 |         21 |       2202 |      313 | i           | f
+ 10055 |         23 |       2202 |        0 | i           | b
+ 10056 |       2202 |         20 |     1288 | a           | f
+ 10057 |       2202 |         23 |        0 | a           | b
+ 10058 |         26 |       2203 |        0 | i           | b
+ 10059 |       2203 |         26 |        0 | i           | b
+ 10060 |         20 |       2203 |     1287 | i           | f
+ 10061 |         21 |       2203 |      313 | i           | f
+ 10062 |         23 |       2203 |        0 | i           | b
+ 10063 |       2203 |         20 |     1288 | a           | f
+ 10064 |       2203 |         23 |        0 | a           | b
+ 10065 |       2203 |       2204 |        0 | i           | b
+ 10066 |       2204 |       2203 |        0 | i           | b
+ 10067 |         26 |       2204 |        0 | i           | b
+ 10068 |       2204 |         26 |        0 | i           | b
+ 10069 |         20 |       2204 |     1287 | i           | f
+ 10070 |         21 |       2204 |      313 | i           | f
+ 10071 |         23 |       2204 |        0 | i           | b
+ 10072 |       2204 |         20 |     1288 | a           | f
+ 10073 |       2204 |         23 |        0 | a           | b
+ 10074 |         26 |       2205 |        0 | i           | b
+ 10075 |       2205 |         26 |        0 | i           | b
+ 10076 |         20 |       2205 |     1287 | i           | f
+ 10077 |         21 |       2205 |      313 | i           | f
+ 10078 |         23 |       2205 |        0 | i           | b
+ 10079 |       2205 |         20 |     1288 | a           | f
+ 10080 |       2205 |         23 |        0 | a           | b
+ 10081 |         26 |       4191 |        0 | i           | b
+ 10082 |       4191 |         26 |        0 | i           | b
+ 10083 |         20 |       4191 |     1287 | i           | f
+ 10084 |         21 |       4191 |      313 | i           | f
+ 10085 |         23 |       4191 |        0 | i           | b
+ 10086 |       4191 |         20 |     1288 | a           | f
+ 10087 |       4191 |         23 |        0 | a           | b
+ 10088 |         26 |       2206 |        0 | i           | b
+ 10089 |       2206 |         26 |        0 | i           | b
+ 10090 |         20 |       2206 |     1287 | i           | f
+ 10091 |         21 |       2206 |      313 | i           | f
+ 10092 |         23 |       2206 |        0 | i           | b
+ 10093 |       2206 |         20 |     1288 | a           | f
+ 10094 |       2206 |         23 |        0 | a           | b
+ 10095 |         26 |       3734 |        0 | i           | b
+ 10096 |       3734 |         26 |        0 | i           | b
+ 10097 |         20 |       3734 |     1287 | i           | f
+ 10098 |         21 |       3734 |      313 | i           | f
+ 10099 |         23 |       3734 |        0 | i           | b
+ 10100 |       3734 |         20 |     1288 | a           | f
+ 10101 |       3734 |         23 |        0 | a           | b
+ 10102 |         26 |       3769 |        0 | i           | b
+ 10103 |       3769 |         26 |        0 | i           | b
+ 10104 |         20 |       3769 |     1287 | i           | f
+ 10105 |         21 |       3769 |      313 | i           | f
+ 10106 |         23 |       3769 |        0 | i           | b
+ 10107 |       3769 |         20 |     1288 | a           | f
+ 10108 |       3769 |         23 |        0 | a           | b
+ 10109 |         25 |       2205 |     1079 | i           | f
+ 10110 |       1043 |       2205 |     1079 | i           | f
+ 10111 |         26 |       4096 |        0 | i           | b
+ 10112 |       4096 |         26 |        0 | i           | b
+ 10113 |         20 |       4096 |     1287 | i           | f
+ 10114 |         21 |       4096 |      313 | i           | f
+ 10115 |         23 |       4096 |        0 | i           | b
+ 10116 |       4096 |         20 |     1288 | a           | f
+ 10117 |       4096 |         23 |        0 | a           | b
+ 10118 |         26 |       4089 |        0 | i           | b
+ 10119 |       4089 |         26 |        0 | i           | b
+ 10120 |         20 |       4089 |     1287 | i           | f
+ 10121 |         21 |       4089 |      313 | i           | f
+ 10122 |         23 |       4089 |        0 | i           | b
+ 10123 |       4089 |         20 |     1288 | a           | f
+ 10124 |       4089 |         23 |        0 | a           | b
+ 10125 |         25 |       1042 |        0 | i           | b
+ 10126 |         25 |       1043 |        0 | i           | b
+ 10127 |       1042 |         25 |      401 | i           | f
+ 10128 |       1042 |       1043 |      401 | i           | f
+ 10129 |       1043 |         25 |        0 | i           | b
+ 10130 |       1043 |       1042 |        0 | i           | b
+ 10131 |         18 |         25 |      946 | i           | f
+ 10132 |         18 |       1042 |      860 | a           | f
+ 10133 |         18 |       1043 |      946 | a           | f
+ 10134 |         19 |         25 |      406 | i           | f
+ 10135 |         19 |       1042 |      408 | a           | f
+ 10136 |         19 |       1043 |     1401 | a           | f
+ 10137 |         25 |         18 |      944 | a           | f
+ 10138 |       1042 |         18 |      944 | a           | f
+ 10139 |       1043 |         18 |      944 | a           | f
+ 10140 |         25 |         19 |      407 | i           | f
+ 10141 |       1042 |         19 |      409 | i           | f
+ 10142 |       1043 |         19 |     1400 | i           | f
+ 10143 |         18 |         23 |       77 | e           | f
+ 10144 |         23 |         18 |       78 | e           | f
+ 10145 |        194 |         25 |        0 | i           | b
+ 10146 |       3361 |         17 |        0 | i           | b
+ 10147 |       3361 |         25 |        0 | i           | i
+ 10148 |       3402 |         17 |        0 | i           | b
+ 10149 |       3402 |         25 |        0 | i           | i
+ 10150 |       5017 |         17 |        0 | i           | b
+ 10151 |       5017 |         25 |        0 | i           | i
+ 10152 |       1082 |       1114 |     2024 | i           | f
+ 10153 |       1082 |       1184 |     1174 | i           | f
+ 10154 |       1083 |       1186 |     1370 | i           | f
+ 10155 |       1083 |       1266 |     2047 | i           | f
+ 10156 |       1114 |       1082 |     2029 | a           | f
+ 10157 |       1114 |       1083 |     1316 | a           | f
+ 10158 |       1114 |       1184 |     2028 | i           | f
+ 10159 |       1184 |       1082 |     1178 | a           | f
+ 10160 |       1184 |       1083 |     2019 | a           | f
+ 10161 |       1184 |       1114 |     2027 | a           | f
+ 10162 |       1184 |       1266 |     1388 | a           | f
+ 10163 |       1186 |       1083 |     1419 | a           | f
+ 10164 |       1266 |       1083 |     2046 | a           | f
+ 10165 |        600 |        603 |     4091 | a           | f
+ 10166 |        601 |        600 |     1532 | e           | f
+ 10167 |        602 |        604 |     1449 | a           | f
+ 10168 |        603 |        600 |     1534 | e           | f
+ 10169 |        603 |        601 |     1541 | e           | f
+ 10170 |        603 |        604 |     1448 | a           | f
+ 10171 |        603 |        718 |     1479 | e           | f
+ 10172 |        604 |        600 |     1540 | e           | f
+ 10173 |        604 |        602 |     1447 | a           | f
+ 10174 |        604 |        603 |     1446 | e           | f
+ 10175 |        604 |        718 |     1474 | e           | f
+ 10176 |        718 |        600 |     1416 | e           | f
+ 10177 |        718 |        603 |     1480 | e           | f
+ 10178 |        718 |        604 |     1544 | e           | f
+ 10179 |        829 |        774 |     4123 | i           | f
+ 10180 |        774 |        829 |     4124 | i           | f
+ 10181 |        650 |        869 |        0 | i           | b
+ 10182 |        869 |        650 |     1715 | a           | f
+ 10183 |       1560 |       1562 |        0 | i           | b
+ 10184 |       1562 |       1560 |        0 | i           | b
+ 10185 |         20 |       1560 |     2075 | e           | f
+ 10186 |         23 |       1560 |     1683 | e           | f
+ 10187 |       1560 |         20 |     2076 | e           | f
+ 10188 |       1560 |         23 |     1684 | e           | f
+ 10189 |        650 |         25 |      730 | a           | f
+ 10190 |        869 |         25 |      730 | a           | f
+ 10191 |         16 |         25 |     2971 | a           | f
+ 10192 |        142 |         25 |        0 | a           | b
+ 10193 |         25 |        142 |     2896 | e           | f
+ 10194 |        650 |       1043 |      730 | a           | f
+ 10195 |        869 |       1043 |      730 | a           | f
+ 10196 |         16 |       1043 |     2971 | a           | f
+ 10197 |        142 |       1043 |        0 | a           | b
+ 10198 |       1043 |        142 |     2896 | e           | f
+ 10199 |        650 |       1042 |      730 | a           | f
+ 10200 |        869 |       1042 |      730 | a           | f
+ 10201 |         16 |       1042 |     2971 | a           | f
+ 10202 |        142 |       1042 |        0 | a           | b
+ 10203 |       1042 |        142 |     2896 | e           | f
+ 10204 |       1042 |       1042 |      668 | i           | f
+ 10205 |       1043 |       1043 |      669 | i           | f
+ 10206 |       1083 |       1083 |     1968 | i           | f
+ 10207 |       1114 |       1114 |     1961 | i           | f
+ 10208 |       1184 |       1184 |     1967 | i           | f
+ 10209 |       1186 |       1186 |     1200 | i           | f
+ 10210 |       1266 |       1266 |     1969 | i           | f
+ 10211 |       1560 |       1560 |     1685 | i           | f
+ 10212 |       1562 |       1562 |     1687 | i           | f
+ 10213 |       1700 |       1700 |     1703 | i           | f
+ 10214 |        114 |       3802 |        0 | a           | i
+ 10215 |       3802 |        114 |        0 | a           | i
+ 10216 |       3802 |         16 |     3556 | e           | f
+ 10217 |       3802 |       1700 |     3449 | e           | f
+ 10218 |       3802 |         21 |     3450 | e           | f
+ 10219 |       3802 |         23 |     3451 | e           | f
+ 10220 |       3802 |         20 |     3452 | e           | f
+ 10221 |       3802 |        700 |     3453 | e           | f
+ 10222 |       3802 |        701 |     2580 | e           | f
+ 10223 |       3904 |       4451 |     4281 | e           | f
+ 10224 |       3926 |       4536 |     4296 | e           | f
+ 10225 |       3906 |       4532 |     4284 | e           | f
+ 10226 |       3912 |       4535 |     4293 | e           | f
+ 10227 |       3908 |       4533 |     4287 | e           | f
+ 10228 |       3910 |       4534 |     4290 | e           | f
+(229 rows)
+
+DROP SEQUENCE
+psql:pg_tests/compatible/pg_catalog.sql:1661: ERROR:  unrecognized configuration parameter "default_int_size"
+CREATE SEQUENCE
+ schemaname | sequencename | sequenceowner | data_type | start_value | min_value |      max_value      | increment_by | cycle | cache_size | last_value 
+------------+--------------+---------------+-----------+-------------+-----------+---------------------+--------------+-------+------------+------------
+ public     | serial       | postgres      | bigint    |         101 |         1 | 9223372036854775807 |            5 | f     |          1 |           
+(1 row)
+
+psql:pg_tests/compatible/pg_catalog.sql:1670: ERROR:  unrecognized configuration parameter "default_int_size"
+ schemaname | sequencename | sequenceowner | data_type | start_value | min_value |      max_value      | increment_by | cycle | cache_size | last_value 
+------------+--------------+---------------+-----------+-------------+-----------+---------------------+--------------+-------+------------+------------
+ public     | serial       | postgres      | bigint    |         101 |         1 | 9223372036854775807 |            5 | f     |          1 |           
+(1 row)
+
+DROP SEQUENCE
+CREATE SEQUENCE
+ schemaname | sequencename | sequenceowner | data_type | start_value | min_value |      max_value      | increment_by | cycle | cache_size | last_value 
+------------+--------------+---------------+-----------+-------------+-----------+---------------------+--------------+-------+------------+------------
+ public     | serial       | postgres      | bigint    |         101 |         1 | 9223372036854775807 |            5 | f     |          1 |           
+(1 row)
+
+psql:pg_tests/compatible/pg_catalog.sql:1685: ERROR:  schema "pg_catalog" does not exist
+LINE 1: CREATE TABLE t (a INT PRIMARY KEY, b INT);
+                          ^
+psql:pg_tests/compatible/pg_catalog.sql:1686: ERROR:  relation "t" does not exist
+LINE 1: INSERT INTO t VALUES (1, 2), (2, 3);
+                    ^
+BEGIN
+psql:pg_tests/compatible/pg_catalog.sql:1692: ERROR:  relation "t" does not exist
+LINE 1: DECLARE "a"" b'c" CURSOR FOR TABLE t;
+                                           ^
+psql:pg_tests/compatible/pg_catalog.sql:1693: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/pg_catalog.sql:1694: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/pg_catalog.sql:1697: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+psql:pg_tests/compatible/pg_catalog.sql:1703: ERROR:  table "t" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1706: ERROR:  schema "pg_catalog" does not exist
+LINE 1: CREATE TABLE t1(x int, y int primary key);
+                          ^
+psql:pg_tests/compatible/pg_catalog.sql:1709: ERROR:  schema "pg_catalog" does not exist
+LINE 1: CREATE TABLE t2(x int, y int);
+                          ^
+psql:pg_tests/compatible/pg_catalog.sql:1712: ERROR:  schema "pg_catalog" does not exist
+LINE 1: CREATE TABLE t3(x int, y int);
+                          ^
+psql:pg_tests/compatible/pg_catalog.sql:1715: ERROR:  relation "t3" does not exist
+ attnum | attname 
+--------+---------
+(0 rows)
+
+ attnum | attname 
+--------+---------
+(0 rows)
+
+ attnum | attname 
+--------+---------
+(0 rows)
+
+psql:pg_tests/compatible/pg_catalog.sql:1730: ERROR:  schema "pg_catalog" does not exist
+LINE 1: CREATE TABLE t91012 (id INT, a_id INT);
+                                ^
+ count 
+-------
+     0
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+       name       | abbrev | utc_offset | is_dst 
+------------------+--------+------------+--------
+ Pacific/Honolulu | HST    | -10:00:00  | f
+(1 row)
+
+       name       | abbrev | utc_offset | is_dst 
+------------------+--------+------------+--------
+ Pacific/Honolulu | HST    | -10:00:00  | f
+(1 row)
+
+ name | abbrev | utc_offset | is_dst 
+------+--------+------------+--------
+(0 rows)
+
+CREATE TYPE
+ count 
+-------
+     2
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+psql:pg_tests/compatible/pg_catalog.sql:1787: ERROR:  relation "pg_catalog.pg_database" does not exist
+LINE 1: ...atname, pg_catalog.pg_get_userbyid(d.datdba) FROM pg_catalog...
+                                                             ^
+  oid  | lanname  | lanowner | lanispl | lanpltrusted | lanplcallfoid | laninline | lanvalidator | lanacl 
+-------+----------+----------+---------+--------------+---------------+-----------+--------------+--------
+    12 | internal |       10 | f       | f            |             0 |         0 |         2246 | 
+    13 | c        |       10 | f       | f            |             0 |         0 |         2247 | 
+    14 | sql      |       10 | f       | t            |             0 |         0 |         2248 | 
+ 13612 | plpgsql  |       10 | t       | t            |         13609 |     13610 |        13611 | 
+(4 rows)
+
+psql:pg_tests/compatible/pg_catalog.sql:1793: ERROR:  schema "pg_catalog" does not exist
+psql:pg_tests/compatible/pg_catalog.sql:1803: ERROR:  relation "pg_catalog.pg_class" does not exist
+LINE 6:     pg_catalog.pg_class
+            ^
+psql:pg_tests/compatible/pg_catalog.sql:1813: ERROR:  relation "pg_catalog.pg_class" does not exist
+LINE 6:     pg_catalog.pg_class
+            ^
+psql:pg_tests/compatible/pg_catalog.sql:1823: ERROR:  relation "pg_catalog.pg_attribute" does not exist
+LINE 6:     pg_catalog.pg_attribute
+            ^
+psql:pg_tests/compatible/pg_catalog.sql:1833: ERROR:  relation "pg_catalog.pg_attribute" does not exist
+LINE 6:     pg_catalog.pg_attribute
+            ^
+psql:pg_tests/compatible/pg_catalog.sql:1836: ERROR:  relation "pg_catalog.pg_type" does not exist
+LINE 1: SELECT typname, typrelid FROM pg_catalog.pg_type WHERE typre...
+                                      ^
+psql:pg_tests/compatible/pg_catalog.sql:1839: ERROR:  relation "pg_catalog.pg_type" does not exist
+LINE 1: SELECT typname, typrelid, typarray FROM pg_catalog.pg_type W...
+                                                ^
+psql:pg_tests/compatible/pg_catalog.sql:1847: ERROR:  type "bytes" does not exist
+LINE 3:   b BYTES DEFAULT 'f'::BYTES,
+            ^
+psql:pg_tests/compatible/pg_catalog.sql:1854: ERROR:  relation "t126042" does not exist
+LINE 4: WHERE a.attrelid = 't126042'::REGCLASS
+                           ^
+psql:pg_tests/compatible/pg_catalog.sql:1864: ERROR:  syntax error at or near "VISIBLE"
+LINE 2:   a INT NOT VISIBLE,
+                    ^
+psql:pg_tests/compatible/pg_catalog.sql:1870: ERROR:  column "attishidden" does not exist
+LINE 1: SELECT attname, attishidden
+                        ^
+psql:pg_tests/compatible/pg_catalog.sql:1877: ERROR:  relation "pg_catalog.pg_index" does not exist
+LINE 2: FROM pg_catalog.pg_index ix
+             ^

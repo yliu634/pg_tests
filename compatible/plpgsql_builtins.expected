@@ -1,0 +1,540 @@
+CREATE SCHEMA
+CREATE SEQUENCE
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE TABLE
+INSERT 0 3
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 1>
+(1 row)
+
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 2>
+(1 row)
+
+BEGIN
+DECLARE CURSOR
+        name        
+--------------------
+ <unnamed portal 3>
+(1 row)
+
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 4>
+(1 row)
+
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 5>
+(1 row)
+
+CLOSE CURSOR
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 6>
+(1 row)
+
+ROLLBACK
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 7>
+(1 row)
+
+ plpgsql_gen_cursor_name 
+-------------------------
+ foo
+(1 row)
+
+ plpgsql_gen_cursor_name 
+-------------------------
+ bar
+(1 row)
+
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 8>
+(1 row)
+
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 9>
+(1 row)
+
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 10>
+(1 row)
+
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 11>
+(1 row)
+
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 12>
+(1 row)
+
+ plpgsql_gen_cursor_name 
+-------------------------
+ <unnamed portal 13>
+(1 row)
+
+BEGIN
+DECLARE CURSOR
+ name 
+------
+ foo
+(1 row)
+
+ plpgsql_close 
+---------------
+ t
+(1 row)
+
+ name 
+------
+(0 rows)
+
+ROLLBACK
+ plpgsql_close 
+---------------
+ f
+(1 row)
+
+ plpgsql_raise 
+---------------
+ foo
+(1 row)
+
+ plpgsql_raise 
+---------------
+ foo
+(1 row)
+
+psql:pg_tests/compatible/plpgsql_builtins.sql:373: INFO:  foo
+ plpgsql_raise 
+---------------
+ foo
+(1 row)
+
+psql:pg_tests/compatible/plpgsql_builtins.sql:376: NOTICE:  foo
+ plpgsql_raise 
+---------------
+ foo
+(1 row)
+
+psql:pg_tests/compatible/plpgsql_builtins.sql:379: WARNING:  foo
+ plpgsql_raise 
+---------------
+ foo
+(1 row)
+
+SET
+psql:pg_tests/compatible/plpgsql_builtins.sql:385: DEBUG:  foo
+ plpgsql_raise 
+---------------
+ foo
+(1 row)
+
+psql:pg_tests/compatible/plpgsql_builtins.sql:388: LOG:  foo
+ plpgsql_raise 
+---------------
+ foo
+(1 row)
+
+psql:pg_tests/compatible/plpgsql_builtins.sql:391: INFO:  foo
+ plpgsql_raise 
+---------------
+ foo
+(1 row)
+
+psql:pg_tests/compatible/plpgsql_builtins.sql:394: NOTICE:  foo
+ plpgsql_raise 
+---------------
+ foo
+(1 row)
+
+psql:pg_tests/compatible/plpgsql_builtins.sql:397: WARNING:  foo
+ plpgsql_raise 
+---------------
+ foo
+(1 row)
+
+SET
+ plpgsql_raise 
+---------------
+ foo
+(1 row)
+
+ plpgsql_raise 
+---------------
+ foo
+(1 row)
+
+psql:pg_tests/compatible/plpgsql_builtins.sql:409: INFO:  foo
+ plpgsql_raise 
+---------------
+ foo
+(1 row)
+
+ plpgsql_raise 
+---------------
+ foo
+(1 row)
+
+psql:pg_tests/compatible/plpgsql_builtins.sql:415: WARNING:  foo
+ plpgsql_raise 
+---------------
+ foo
+(1 row)
+
+RESET
+psql:pg_tests/compatible/plpgsql_builtins.sql:421: NOTICE:  bar
+DETAIL:  this is a detail
+ plpgsql_raise 
+---------------
+ bar
+(1 row)
+
+psql:pg_tests/compatible/plpgsql_builtins.sql:424: NOTICE:  baz
+HINT:  this is a hint
+ plpgsql_raise 
+---------------
+ baz
+(1 row)
+
+psql:pg_tests/compatible/plpgsql_builtins.sql:427: NOTICE:  division by zero
+  plpgsql_raise   
+------------------
+ division by zero
+(1 row)
+
+psql:pg_tests/compatible/plpgsql_builtins.sql:430: WARNING:  invalid password
+  plpgsql_raise   
+------------------
+ invalid password
+(1 row)
+
+psql:pg_tests/compatible/plpgsql_builtins.sql:433: NOTICE:  this is a message
+DETAIL:  this is a detail
+HINT:  this is a hint
+   plpgsql_raise   
+-------------------
+ this is a message
+(1 row)
+
+psql:pg_tests/compatible/plpgsql_builtins.sql:436: NOTICE:  division by zero msg
+    plpgsql_raise     
+----------------------
+ division by zero msg
+(1 row)
+
+psql:pg_tests/compatible/plpgsql_builtins.sql:439: NOTICE:  
+DETAIL:  message is empty
+ plpgsql_raise 
+---------------
+ 
+(1 row)
+
+psql:pg_tests/compatible/plpgsql_builtins.sql:442: NOTICE:  
+ plpgsql_raise 
+---------------
+ 
+(1 row)
+
+psql:pg_tests/compatible/plpgsql_builtins.sql:445: ERROR:  unrecognized exception condition "this_is_not_valid"
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 101 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:448: ERROR:  unrecognized exception condition "-50"
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 101 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:451: ERROR:  severity NOTE is invalid
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 10 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:455: ERROR:  foo
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 24 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:458: ERROR:  foo
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 24 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:461: ERROR:  msg
+DETAIL:  detail
+HINT:  hint
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 18 at RAISE
+psql:pg_tests/compatible/plpgsql_builtins.sql:464: ERROR:  
+CONTEXT:  PL/pgSQL function crdb_internal.plpgsql_raise(text,text,text,text,text) line 24 at RAISE
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+INSERT 0 5
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+MOVE 3
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+MOVE 3
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ROLLBACK
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_fetch 
+---------------
+ 
+(1 row)
+
+ plpgsql_close 
+---------------
+ 
+(1 row)
+

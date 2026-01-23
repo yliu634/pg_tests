@@ -1,0 +1,1240 @@
+CREATE ROLE
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:15: ERROR:  syntax error at or near "NOT"
+LINE 1: CREATE ROLE IF NOT EXISTS root;
+                       ^
+psql:pg_tests/compatible/role.sql:18: ERROR:  syntax error at or near "NOT"
+LINE 1: CREATE ROLE IF NOT EXISTS admin;
+                       ^
+DROP ROLE
+DROP ROLE
+psql:pg_tests/compatible/role.sql:27: ERROR:  role "admin" does not exist
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:33: ERROR:  syntax error at or near "["
+LINE 1: select username, options, member_of from [SHOW ROLES];
+                                                 ^
+psql:pg_tests/compatible/role.sql:36: ERROR:  role "myrole" already exists
+psql:pg_tests/compatible/role.sql:39: ERROR:  syntax error at or near "NOT"
+LINE 1: CREATE ROLE IF NOT EXISTS myrole;
+                       ^
+psql:pg_tests/compatible/role.sql:42: ERROR:  role "myrole" already exists
+DROP ROLE
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:51: ERROR:  syntax error at or near "NOT"
+LINE 1: CREATE USER IF NOT EXISTS myrole;
+                       ^
+psql:pg_tests/compatible/role.sql:54: ERROR:  role "admin" does not exist
+psql:pg_tests/compatible/role.sql:57: ERROR:  syntax error at or near "["
+LINE 1: select username, options, member_of from [SHOW ROLES];
+                                                 ^
+DROP ROLE
+psql:pg_tests/compatible/role.sql:63: ERROR:  syntax error at or near "["
+LINE 1: select username, options, member_of from [SHOW ROLES];
+                                                 ^
+psql:pg_tests/compatible/role.sql:66: ERROR:  role "myrole" does not exist
+psql:pg_tests/compatible/role.sql:69: NOTICE:  role "myrole" does not exist, skipping
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:84: ERROR:  role "rolee" does not exist
+psql:pg_tests/compatible/role.sql:87: NOTICE:  role "rolee" does not exist, skipping
+DROP ROLE
+DROP ROLE
+psql:pg_tests/compatible/role.sql:93: ERROR:  syntax error at or near "["
+LINE 1: select username, options, member_of from [SHOW ROLES];
+                                                 ^
+psql:pg_tests/compatible/role.sql:96: ERROR:  unrecognized configuration parameter "roles"
+CREATE ROLE
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:105: ERROR:  syntax error at or near "ON"
+LINE 1: SHOW GRANTS ON ROLE;
+                    ^
+ grantee | role_name | is_grantable 
+---------+-----------+--------------
+(0 rows)
+
+  grantee   |      role_name       | is_grantable 
+------------+----------------------+--------------
+ postgres   | pg_database_owner    | NO
+ pg_monitor | pg_read_all_settings | NO
+ pg_monitor | pg_read_all_stats    | NO
+ pg_monitor | pg_stat_scan_tables  | NO
+ postgres   | testuser             | NO
+(5 rows)
+
+          role_name          
+-----------------------------
+ postgres
+ pg_database_owner
+ pg_read_all_data
+ pg_write_all_data
+ pg_monitor
+ pg_read_all_settings
+ pg_read_all_stats
+ pg_stat_scan_tables
+ pg_read_server_files
+ pg_write_server_files
+ pg_execute_server_program
+ pg_signal_backend
+ pg_checkpoint
+ pg_use_reserved_connections
+ pg_create_subscription
+ testuser
+ testuser2
+ testrole
+(18 rows)
+
+psql:pg_tests/compatible/role.sql:117: ERROR:  role "unknownuser" does not exist
+psql:pg_tests/compatible/role.sql:120: ERROR:  role "unknownrole" does not exist
+GRANT ROLE
+psql:pg_tests/compatible/role.sql:125: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+GRANT ROLE
+psql:pg_tests/compatible/role.sql:131: ERROR:  relation "system.role_members" does not exist
+LINE 1: SELECT role, member, "isAdmin" FROM system.role_members;
+                                            ^
+psql:pg_tests/compatible/role.sql:134: ERROR:  syntax error at or near "ON"
+LINE 1: SHOW GRANTS ON ROLE;
+                    ^
+psql:pg_tests/compatible/role.sql:137: NOTICE:  role "testuser2" has already been granted membership in role "testrole" by role "postgres"
+GRANT ROLE
+psql:pg_tests/compatible/role.sql:139: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+GRANT ROLE
+CREATE ROLE
+GRANT ROLE
+GRANT ROLE
+psql:pg_tests/compatible/role.sql:154: ERROR:  relation "system.role_members" does not exist
+LINE 1: SELECT role, member, "isAdmin" FROM system.role_members;
+                                            ^
+psql:pg_tests/compatible/role.sql:157: ERROR:  zero-length delimited identifier at or near """"
+LINE 1: SELECT * FROM "".crdb_internal.kv_inherited_role_members;
+                      ^
+psql:pg_tests/compatible/role.sql:160: ERROR:  syntax error at or near "ON"
+LINE 1: SHOW GRANTS ON ROLE FOR child_role;
+                    ^
+SET
+GRANT ROLE
+ grantee  | role_name | is_grantable 
+----------+-----------+--------------
+ testuser | testrole  | YES
+(1 row)
+
+RESET
+DROP ROLE
+psql:pg_tests/compatible/role.sql:175: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+  grantee  | role_name | is_grantable 
+-----------+-----------+--------------
+ testuser2 | testrole  | YES
+ testuser  | testrole  | YES
+(2 rows)
+
+  grantee   |      role_name       | is_grantable 
+------------+----------------------+--------------
+ postgres   | pg_database_owner    | NO
+ pg_monitor | pg_read_all_settings | NO
+ pg_monitor | pg_read_all_stats    | NO
+ pg_monitor | pg_stat_scan_tables  | NO
+ postgres   | testuser             | NO
+ testuser2  | testrole             | NO
+ testuser2  | testrole             | YES
+ testuser   | testrole             | YES
+(8 rows)
+
+          role_name          
+-----------------------------
+ postgres
+ pg_database_owner
+ pg_read_all_data
+ pg_write_all_data
+ pg_monitor
+ pg_read_all_settings
+ pg_read_all_stats
+ pg_stat_scan_tables
+ pg_read_server_files
+ pg_write_server_files
+ pg_execute_server_program
+ pg_signal_backend
+ pg_checkpoint
+ pg_use_reserved_connections
+ pg_create_subscription
+ testuser
+ testuser2
+ testrole
+(18 rows)
+
+psql:pg_tests/compatible/role.sql:187: ERROR:  role "admin" does not exist
+psql:pg_tests/compatible/role.sql:190: ERROR:  relation "system.role_members" does not exist
+LINE 1: SELECT role, member, "isAdmin" FROM system.role_members;
+                                            ^
+psql:pg_tests/compatible/role.sql:193: ERROR:  syntax error at or near "ON"
+LINE 1: SHOW GRANTS ON ROLE;
+                    ^
+psql:pg_tests/compatible/role.sql:196: ERROR:  syntax error at or near "ON"
+LINE 1: SHOW GRANTS ON ROLE admin;
+                    ^
+psql:pg_tests/compatible/role.sql:199: ERROR:  syntax error at or near "ON"
+LINE 1: SHOW GRANTS ON ROLE FOR testuser;
+                    ^
+psql:pg_tests/compatible/role.sql:202: ERROR:  syntax error at or near "ON"
+LINE 1: SHOW GRANTS ON ROLE testrole FOR testuser2;
+                    ^
+psql:pg_tests/compatible/role.sql:205: ERROR:  syntax error at or near "ON"
+LINE 1: SHOW GRANTS ON ROLE foo,testrole;
+                    ^
+psql:pg_tests/compatible/role.sql:208: ERROR:  syntax error at or near "ON"
+LINE 1: SHOW GRANTS ON ROLE FOR testuser, testuser2;
+                    ^
+psql:pg_tests/compatible/role.sql:211: ERROR:  syntax error at or near "ON"
+LINE 1: SHOW GRANTS ON ROLE admin, testrole FOR root, testuser2;
+                    ^
+psql:pg_tests/compatible/role.sql:214: ERROR:  role "testuser" cannot be dropped because some objects depend on it
+DETAIL:  privileges for membership of role testuser2 in role testrole
+psql:pg_tests/compatible/role.sql:217: ERROR:  role "testuser" already exists
+psql:pg_tests/compatible/role.sql:220: ERROR:  relation "system.role_members" does not exist
+LINE 1: SELECT role, member, "isAdmin" FROM system.role_members;
+                                            ^
+DROP ROLE
+psql:pg_tests/compatible/role.sql:226: ERROR:  relation "system.role_members" does not exist
+LINE 1: SELECT role, member, "isAdmin" FROM system.role_members;
+                                            ^
+psql:pg_tests/compatible/role.sql:229: ERROR:  role "admin" does not exist
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+GRANT ROLE
+psql:pg_tests/compatible/role.sql:247: ERROR:  role "roleb" is a member of role "rolea"
+GRANT ROLE
+GRANT ROLE
+psql:pg_tests/compatible/role.sql:256: ERROR:  role "rolea" is a member of role "rolea"
+psql:pg_tests/compatible/role.sql:259: ERROR:  role "roleb" is a member of role "rolea"
+psql:pg_tests/compatible/role.sql:262: ERROR:  role "rolec" is a member of role "rolea"
+psql:pg_tests/compatible/role.sql:265: ERROR:  role "roled" is a member of role "rolea"
+CREATE ROLE
+GRANT ROLE
+GRANT ROLE
+GRANT ROLE
+psql:pg_tests/compatible/role.sql:279: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+ grantee | role_name | is_grantable 
+---------+-----------+--------------
+ roleb   | rolea     | YES
+(1 row)
+
+  grantee   |      role_name       | is_grantable 
+------------+----------------------+--------------
+ postgres   | pg_database_owner    | NO
+ pg_monitor | pg_read_all_settings | NO
+ pg_monitor | pg_read_all_stats    | NO
+ pg_monitor | pg_stat_scan_tables  | NO
+ postgres   | testuser             | NO
+ roleb      | rolea                | YES
+ rolec      | roleb                | NO
+ roled      | rolec                | NO
+ testuser   | rolec                | NO
+ testuser   | roled                | NO
+(10 rows)
+
+          role_name          
+-----------------------------
+ postgres
+ pg_database_owner
+ pg_read_all_data
+ pg_write_all_data
+ pg_monitor
+ pg_read_all_settings
+ pg_read_all_stats
+ pg_stat_scan_tables
+ pg_read_server_files
+ pg_write_server_files
+ pg_execute_server_program
+ pg_signal_backend
+ pg_checkpoint
+ pg_use_reserved_connections
+ pg_create_subscription
+ testuser
+ testuser2
+ rolea
+ roleb
+ rolec
+ roled
+ rolee
+(22 rows)
+
+GRANT ROLE
+GRANT ROLE
+GRANT ROLE
+GRANT ROLE
+ grantee | role_name | is_grantable 
+---------+-----------+--------------
+ roleb   | rolea     | YES
+(1 row)
+
+  grantee   |      role_name       | is_grantable 
+------------+----------------------+--------------
+ postgres   | pg_database_owner    | NO
+ pg_monitor | pg_read_all_settings | NO
+ pg_monitor | pg_read_all_stats    | NO
+ pg_monitor | pg_stat_scan_tables  | NO
+ postgres   | testuser             | NO
+ rolee      | rolea                | NO
+ roleb      | rolea                | YES
+ rolee      | roleb                | NO
+ rolec      | roleb                | NO
+ rolee      | rolec                | NO
+ roled      | rolec                | NO
+ testuser   | rolec                | NO
+ rolee      | roled                | NO
+ testuser   | roled                | NO
+(14 rows)
+
+          role_name          
+-----------------------------
+ postgres
+ pg_database_owner
+ pg_read_all_data
+ pg_write_all_data
+ pg_monitor
+ pg_read_all_settings
+ pg_read_all_stats
+ pg_stat_scan_tables
+ pg_read_server_files
+ pg_write_server_files
+ pg_execute_server_program
+ pg_signal_backend
+ pg_checkpoint
+ pg_use_reserved_connections
+ pg_create_subscription
+ testuser
+ testuser2
+ rolea
+ roleb
+ rolec
+ roled
+ rolee
+(22 rows)
+
+psql:pg_tests/compatible/role.sql:312: ERROR:  relation "system.role_members" does not exist
+LINE 1: SELECT role, member, "isAdmin" FROM system.role_members;
+                                            ^
+DROP ROLE
+DROP ROLE
+psql:pg_tests/compatible/role.sql:321: ERROR:  relation "system.role_members" does not exist
+LINE 1: SELECT role, member, "isAdmin" FROM system.role_members;
+                                            ^
+psql:pg_tests/compatible/role.sql:324: ERROR:  syntax error at or near "["
+LINE 1: select username, options, member_of from [SHOW ROLES];
+                                                 ^
+DROP ROLE
+DROP ROLE
+DROP ROLE
+psql:pg_tests/compatible/role.sql:336: ERROR:  role "root" does not exist
+psql:pg_tests/compatible/role.sql:339: ERROR:  role "root" does not exist
+psql:pg_tests/compatible/role.sql:342: ERROR:  role "unknownuser" does not exist
+psql:pg_tests/compatible/role.sql:345: ERROR:  role "root" does not exist
+psql:pg_tests/compatible/role.sql:348: ERROR:  CURRENT_USER cannot be used as a role name here
+LINE 1: CREATE ROLE CURRENT_USER;
+                    ^
+psql:pg_tests/compatible/role.sql:351: ERROR:  SESSION_USER cannot be used as a role name here
+LINE 1: CREATE ROLE SESSION_USER;
+                    ^
+CREATE ROLE
+CREATE ROLE
+GRANT ROLE
+psql:pg_tests/compatible/role.sql:363: ERROR:  zero-length delimited identifier at or near """"
+LINE 1: GRANT rolea TO "";
+                       ^
+psql:pg_tests/compatible/role.sql:366: ERROR:  zero-length delimited identifier at or near """"
+LINE 1: REVOKE rolea FROM "";
+                          ^
+psql:pg_tests/compatible/role.sql:369: ERROR:  zero-length delimited identifier at or near """"
+LINE 1: GRANT "" TO rolea;
+              ^
+psql:pg_tests/compatible/role.sql:372: ERROR:  zero-length delimited identifier at or near """"
+LINE 1: REVOKE "" FROM rolea;
+               ^
+psql:pg_tests/compatible/role.sql:375: ERROR:  relation "system.role_members" does not exist
+LINE 1: SELECT role, member, "isAdmin" FROM system.role_members;
+                                            ^
+psql:pg_tests/compatible/role.sql:378: ERROR:  role "root" does not exist
+psql:pg_tests/compatible/role.sql:380: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/role.sql:383: ERROR:  relation "system.role_members" does not exist
+LINE 1: SELECT role, member, "isAdmin" FROM system.role_members;
+                                            ^
+ grantee  | role_name | is_grantable 
+----------+-----------+--------------
+ testuser | rolea     | YES
+ testuser | roleb     | YES
+(2 rows)
+
+  grantee   |      role_name       | is_grantable 
+------------+----------------------+--------------
+ postgres   | pg_database_owner    | NO
+ pg_monitor | pg_read_all_settings | NO
+ pg_monitor | pg_read_all_stats    | NO
+ pg_monitor | pg_stat_scan_tables  | NO
+ postgres   | testuser             | NO
+ testuser   | rolea                | YES
+ testuser   | roleb                | YES
+(7 rows)
+
+          role_name          
+-----------------------------
+ postgres
+ pg_database_owner
+ pg_read_all_data
+ pg_write_all_data
+ pg_monitor
+ pg_read_all_settings
+ pg_read_all_stats
+ pg_stat_scan_tables
+ pg_read_server_files
+ pg_write_server_files
+ pg_execute_server_program
+ pg_signal_backend
+ pg_checkpoint
+ pg_use_reserved_connections
+ pg_create_subscription
+ testuser
+ testuser2
+ rolea
+ roleb
+(19 rows)
+
+ grantee  | role_name | is_grantable 
+----------+-----------+--------------
+ testuser | rolea     | YES
+ testuser | roleb     | YES
+(2 rows)
+
+  grantee   |      role_name       | is_grantable 
+------------+----------------------+--------------
+ postgres   | pg_database_owner    | NO
+ pg_monitor | pg_read_all_settings | NO
+ pg_monitor | pg_read_all_stats    | NO
+ pg_monitor | pg_stat_scan_tables  | NO
+ postgres   | testuser             | NO
+ testuser   | rolea                | YES
+ testuser   | roleb                | YES
+(7 rows)
+
+          role_name          
+-----------------------------
+ postgres
+ pg_database_owner
+ pg_read_all_data
+ pg_write_all_data
+ pg_monitor
+ pg_read_all_settings
+ pg_read_all_stats
+ pg_stat_scan_tables
+ pg_read_server_files
+ pg_write_server_files
+ pg_execute_server_program
+ pg_signal_backend
+ pg_checkpoint
+ pg_use_reserved_connections
+ pg_create_subscription
+ testuser
+ testuser2
+ rolea
+ roleb
+(19 rows)
+
+REVOKE ROLE
+psql:pg_tests/compatible/role.sql:407: ERROR:  role "root" does not exist
+psql:pg_tests/compatible/role.sql:410: ERROR:  role "root" does not exist
+psql:pg_tests/compatible/role.sql:412: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/role.sql:415: ERROR:  relation "system.role_members" does not exist
+LINE 1: SELECT role, member, "isAdmin" FROM system.role_members;
+                                            ^
+psql:pg_tests/compatible/role.sql:418: ERROR:  role "root" does not exist
+psql:pg_tests/compatible/role.sql:421: ERROR:  relation "system.role_members" does not exist
+LINE 1: SELECT role, member, "isAdmin" FROM system.role_members;
+                                            ^
+psql:pg_tests/compatible/role.sql:424: NOTICE:  role "testuser" has already been granted membership in role "roleb" by role "postgres"
+GRANT ROLE
+psql:pg_tests/compatible/role.sql:427: ERROR:  relation "system.role_members" does not exist
+LINE 1: SELECT role, member, "isAdmin" FROM system.role_members;
+                                            ^
+REVOKE ROLE
+psql:pg_tests/compatible/role.sql:433: ERROR:  relation "system.role_members" does not exist
+LINE 1: SELECT role, member, "isAdmin" FROM system.role_members;
+                                            ^
+CREATE DATABASE
+psql:pg_tests/compatible/role.sql:438: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+CREATE DATABASE
+DROP DATABASE
+psql:pg_tests/compatible/role.sql:447: ERROR:  role "admin" does not exist
+psql:pg_tests/compatible/role.sql:449: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+CREATE ROLE
+GRANT ROLE
+psql:pg_tests/compatible/role.sql:458: ERROR:  role "admin" does not exist
+psql:pg_tests/compatible/role.sql:460: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/role.sql:463: ERROR:  relation "system.role_members" does not exist
+LINE 1: SELECT role, member, "isAdmin" FROM system.role_members;
+                                            ^
+psql:pg_tests/compatible/role.sql:466: ERROR:  database "db2" already exists
+psql:pg_tests/compatible/role.sql:468: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/role.sql:471: ERROR:  database "db1" does not exist
+psql:pg_tests/compatible/role.sql:474: ERROR:  role "admin" does not exist
+psql:pg_tests/compatible/role.sql:477: ERROR:  syntax error at or near "."
+LINE 1: CREATE SCHEMA db2.s1;
+                         ^
+psql:pg_tests/compatible/role.sql:479: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/role.sql:482: ERROR:  relation "system.role_members" does not exist
+LINE 1: SELECT * FROM system.role_members;
+                      ^
+psql:pg_tests/compatible/role.sql:485: ERROR:  schema "db2" does not exist
+LINE 1: CREATE TABLE db2.foo (k int);
+                     ^
+psql:pg_tests/compatible/role.sql:488: ERROR:  cross-database references are not implemented: "db2.s1.foo"
+LINE 1: CREATE TABLE db2.s1.foo (k int);
+                     ^
+psql:pg_tests/compatible/role.sql:490: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/role.sql:493: ERROR:  relation "system.role_members" does not exist
+LINE 1: SELECT role, member, "isAdmin" FROM system.role_members;
+                                            ^
+GRANT
+psql:pg_tests/compatible/role.sql:498: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/role.sql:501: ERROR:  syntax error at or near "ON"
+LINE 1: SHOW GRANTS ON DATABASE db2;
+                    ^
+psql:pg_tests/compatible/role.sql:504: ERROR:  relation "db2.foo" does not exist
+LINE 1: INSERT INTO db2.foo VALUES (1),(2),(3);
+                    ^
+psql:pg_tests/compatible/role.sql:507: ERROR:  relation "db2.foo" does not exist
+LINE 1: SELECT * FROM db2.foo;
+                      ^
+GRANT ROLE
+REVOKE ROLE
+GRANT ROLE
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:520: ERROR:  role "admin" does not exist
+psql:pg_tests/compatible/role.sql:522: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/role.sql:525: ERROR:  role "admin" does not exist
+psql:pg_tests/compatible/role.sql:528: ERROR:  role "admin" does not exist
+psql:pg_tests/compatible/role.sql:530: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/role.sql:533: ERROR:  role "admin" does not exist
+psql:pg_tests/compatible/role.sql:535: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/role.sql:538: ERROR:  role "admin" does not exist
+psql:pg_tests/compatible/role.sql:541: ERROR:  role "admin" does not exist
+psql:pg_tests/compatible/role.sql:543: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+DROP ROLE
+psql:pg_tests/compatible/role.sql:548: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/role.sql:551: ERROR:  schema "db2" does not exist
+psql:pg_tests/compatible/role.sql:554: ERROR:  schema "db2" does not exist
+DROP ROLE
+psql:pg_tests/compatible/role.sql:560: ERROR:  relation "system.role_members" does not exist
+LINE 1: SELECT role, member, "isAdmin" FROM system.role_members;
+                                            ^
+psql:pg_tests/compatible/role.sql:563: ERROR:  role "newgroup" cannot be dropped because some objects depend on it
+DETAIL:  privileges for database db2
+REVOKE
+DROP ROLE
+psql:pg_tests/compatible/role.sql:572: ERROR:  role name "public" is reserved
+LINE 1: CREATE USER public;
+                    ^
+psql:pg_tests/compatible/role.sql:575: ERROR:  role name "public" is reserved
+LINE 1: CREATE ROLE public;
+                    ^
+psql:pg_tests/compatible/role.sql:578: ERROR:  role name "none" is reserved
+LINE 1: CREATE ROLE "none";
+                    ^
+psql:pg_tests/compatible/role.sql:581: ERROR:  role name "pg_otan" is reserved
+DETAIL:  Role names starting with "pg_" are reserved.
+CREATE ROLE
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:590: ERROR:  cannot use special role specifier in DROP ROLE
+psql:pg_tests/compatible/role.sql:593: ERROR:  cannot use special role specifier in DROP ROLE
+psql:pg_tests/compatible/role.sql:596: ERROR:  role "testuser" does not exist
+psql:pg_tests/compatible/role.sql:599: ERROR:  role "public" does not exist
+psql:pg_tests/compatible/role.sql:602: ERROR:  role "testuser" does not exist
+psql:pg_tests/compatible/role.sql:605: ERROR:  role "public" does not exist
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:611: ERROR:  relation "system.role_members" does not exist
+LINE 1: SELECT role, member, "isAdmin" FROM system.role_members;
+                                            ^
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:616: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:621: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/role.sql:624: ERROR:  role "rolef" already exists
+DROP ROLE
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:633: ERROR:  conflicting or redundant options
+LINE 1: CREATE ROLE rolewithcreate WITH NOCREATEROLE CREATEROLE;
+                                                     ^
+psql:pg_tests/compatible/role.sql:636: ERROR:  conflicting or redundant options
+LINE 1: CREATE ROLE rolewithcreate NOCREATEROLE CREATEROLE;
+                                                ^
+psql:pg_tests/compatible/role.sql:639: ERROR:  conflicting or redundant options
+LINE 1: CREATE ROLE rolewithcreate REPLICATION NOREPLICATION;
+                                               ^
+psql:pg_tests/compatible/role.sql:642: ERROR:  conflicting or redundant options
+LINE 1: ALTER ROLE testrole WITH CREATEROLE NOCREATEROLE;
+                                            ^
+psql:pg_tests/compatible/role.sql:645: ERROR:  conflicting or redundant options
+LINE 1: ALTER ROLE testrole CREATEROLE NOCREATEROLE;
+                                       ^
+psql:pg_tests/compatible/role.sql:648: ERROR:  unrecognized role option "controljob"
+LINE 1: ALTER ROLE testrole CONTROLJOB NOCONTROLJOB;
+                            ^
+psql:pg_tests/compatible/role.sql:651: ERROR:  conflicting or redundant options
+LINE 1: CREATE ROLE rolewithcreate WITH CREATEROLE CREATEROLE;
+                                                   ^
+psql:pg_tests/compatible/role.sql:654: ERROR:  conflicting or redundant options
+LINE 1: CREATE ROLE rolewithcreate WITH NOCREATEROLE NOCREATEROLE;
+                                                     ^
+psql:pg_tests/compatible/role.sql:657: ERROR:  conflicting or redundant options
+LINE 1: ALTER ROLE testrole WITH CREATEROLE CREATEROLE;
+                                            ^
+psql:pg_tests/compatible/role.sql:660: ERROR:  conflicting or redundant options
+LINE 1: ALTER ROLE testrole WITH NOCREATEROLE NOCREATEROLE;
+                                              ^
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:672: ERROR:  syntax error at or near "NOT"
+LINE 1: CREATE ROLE IF NOT EXISTS rolewithcreate2 WITH CREATEROLE;
+                       ^
+psql:pg_tests/compatible/role.sql:675: ERROR:  syntax error at or near "NOT"
+LINE 1: CREATE ROLE IF NOT EXISTS anotherrolewithcreate2 CREATEROLE;
+                       ^
+psql:pg_tests/compatible/role.sql:678: ERROR:  syntax error at or near "NOT"
+LINE 1: CREATE ROLE IF NOT EXISTS rolewithoutcreate2 WITH NOCREATERO...
+                       ^
+psql:pg_tests/compatible/role.sql:681: ERROR:  relation "system.role_members" does not exist
+LINE 1: SELECT role, member, "isAdmin" FROM system.role_members;
+                                            ^
+CREATE ROLE
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:689: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/role.sql:692: ERROR:  unrecognized role option "createlogin"
+LINE 1: ALTER USER testuser CREATEROLE CREATELOGIN;
+                                       ^
+psql:pg_tests/compatible/role.sql:694: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+CREATE ROLE
+ALTER ROLE
+DROP ROLE
+psql:pg_tests/compatible/role.sql:706: ERROR:  syntax error at or near "NOT"
+LINE 1: CREATE ROLE IF NOT EXISTS roleg;
+                       ^
+psql:pg_tests/compatible/role.sql:709: ERROR:  syntax error at or near "NOT"
+LINE 1: CREATE ROLE IF NOT EXISTS roleg;
+                       ^
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:715: ERROR:  role "admin" does not exist
+psql:pg_tests/compatible/role.sql:718: ERROR:  role "roleg" does not exist
+psql:pg_tests/compatible/role.sql:720: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+ALTER ROLE
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:729: ERROR:  role "admin" does not exist
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:735: ERROR:  role "roleg" does not exist
+psql:pg_tests/compatible/role.sql:738: ERROR:  role "roleg" does not exist
+psql:pg_tests/compatible/role.sql:741: ERROR:  syntax error at or near "NOT"
+LINE 1: CREATE ROLE IF NOT EXISTS rolewithcreate WITH CREATEROLE;
+                       ^
+CREATE ROLE
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:749: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/role.sql:752: ERROR:  role "rolek" does not exist
+psql:pg_tests/compatible/role.sql:755: ERROR:  syntax error at or near "EXISTS"
+LINE 1: ALTER ROLE IF EXISTS rolek CREATEROLE;
+                      ^
+psql:pg_tests/compatible/role.sql:758: ERROR:  syntax error at or near "EXISTS"
+LINE 1: ALTER USER IF EXISTS rolek NOCREATEROLE;
+                      ^
+CREATE ROLE
+ALTER ROLE
+GRANT ROLE
+psql:pg_tests/compatible/role.sql:769: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:775: ERROR:  relation "system.role_options" does not exist
+LINE 1: DELETE FROM system.role_options WHERE NOT username in ('root...
+                    ^
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:781: ERROR:  relation "system.role_options" does not exist
+LINE 1: SELECT username, option, value FROM system.role_options;
+                                            ^
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:787: ERROR:  relation "system.role_options" does not exist
+LINE 1: SELECT username, option, value FROM system.role_options;
+                                            ^
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:793: ERROR:  relation "system.role_options" does not exist
+LINE 1: SELECT username, option, value FROM system.role_options ORDE...
+                                            ^
+psql:pg_tests/compatible/role.sql:796: ERROR:  syntax error at or near "NULL"
+LINE 1: ALTER ROLE rolewithlogin VALID UNTIL NULL;
+                                             ^
+psql:pg_tests/compatible/role.sql:799: ERROR:  relation "system.role_options" does not exist
+LINE 1: SELECT username, option, value FROM system.role_options ORDE...
+                                            ^
+DROP ROLE
+psql:pg_tests/compatible/role.sql:805: ERROR:  relation "system.role_options" does not exist
+LINE 1: SELECT username, option, value FROM system.role_options;
+                                            ^
+psql:pg_tests/compatible/role.sql:808: ERROR:  conflicting or redundant options
+LINE 1: CREATE ROLE thisshouldntwork LOGIN NOLOGIN;
+                                           ^
+psql:pg_tests/compatible/role.sql:811: ERROR:  conflicting or redundant options
+LINE 1: CREATE ROLE thisshouldntwork LOGIN LOGIN;
+                                           ^
+DROP ROLE
+psql:pg_tests/compatible/role.sql:817: ERROR:  syntax error at or near "ON"
+LINE 1: SHOW GRANTS ON ROLE;
+                    ^
+psql:pg_tests/compatible/role.sql:820: ERROR:  syntax error at or near "ON"
+LINE 1: SHOW GRANTS ON ROLE admin;
+                    ^
+psql:pg_tests/compatible/role.sql:823: ERROR:  syntax error at or near "ON"
+LINE 1: SHOW GRANTS ON ROLE FOR root;
+                    ^
+psql:pg_tests/compatible/role.sql:826: ERROR:  syntax error at or near "ON"
+LINE 1: SHOW GRANTS ON ROLE admin FOR root;
+                    ^
+psql:pg_tests/compatible/role.sql:829: ERROR:  syntax error at or near "ON"
+LINE 1: SHOW GRANTS ON ROLE FOR testuser;
+                    ^
+psql:pg_tests/compatible/role.sql:832: ERROR:  syntax error at or near "ON"
+LINE 1: SHOW GRANTS ON ROLE testuser,admin FOR testuser,admin;
+                    ^
+psql:pg_tests/compatible/role.sql:835: ERROR:  role name "public" is reserved
+LINE 1: CREATE USER public;
+                    ^
+psql:pg_tests/compatible/role.sql:838: ERROR:  cannot use special role specifier in DROP ROLE
+CREATE DATABASE
+CREATE DATABASE
+REVOKE
+psql:pg_tests/compatible/role.sql:848: ERROR:  schema "publicdb" does not exist
+LINE 1: CREATE TABLE publicdb.publictable (k int);
+                     ^
+psql:pg_tests/compatible/role.sql:851: ERROR:  schema "publicdb" does not exist
+LINE 1: CREATE TABLE publicdb.privatetable (k int);
+                     ^
+psql:pg_tests/compatible/role.sql:854: ERROR:  schema "privatedb" does not exist
+LINE 1: CREATE TABLE privatedb.publictable (k int);
+                     ^
+psql:pg_tests/compatible/role.sql:857: ERROR:  schema "privatedb" does not exist
+LINE 1: CREATE TABLE privatedb.privatetable (k int);
+                     ^
+GRANT
+psql:pg_tests/compatible/role.sql:863: ERROR:  schema "publicdb" does not exist
+psql:pg_tests/compatible/role.sql:866: ERROR:  schema "privatedb" does not exist
+psql:pg_tests/compatible/role.sql:868: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/role.sql:871: ERROR:  unrecognized configuration parameter "databases"
+psql:pg_tests/compatible/role.sql:874: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW TABLES FROM publicdb;
+                    ^
+psql:pg_tests/compatible/role.sql:877: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW TABLES FROM privatedb;
+                    ^
+psql:pg_tests/compatible/role.sql:880: ERROR:  relation "publicdb.publictable" does not exist
+LINE 1: SELECT * FROM publicdb.publictable;
+                      ^
+psql:pg_tests/compatible/role.sql:883: ERROR:  relation "publicdb.privatetable" does not exist
+LINE 1: SELECT * FROM publicdb.privatetable;
+                      ^
+psql:pg_tests/compatible/role.sql:886: ERROR:  relation "privatedb.publictable" does not exist
+LINE 1: SELECT * FROM privatedb.publictable;
+                      ^
+psql:pg_tests/compatible/role.sql:889: ERROR:  relation "privatedb.privatetable" does not exist
+LINE 1: SELECT * FROM privatedb.privatetable;
+                      ^
+psql:pg_tests/compatible/role.sql:892: ERROR:  relation "publicdb.publictable" does not exist
+LINE 1: INSERT INTO publicdb.publictable VALUES (1);
+                    ^
+psql:pg_tests/compatible/role.sql:894: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/role.sql:897: ERROR:  schema "publicdb" does not exist
+psql:pg_tests/compatible/role.sql:899: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/role.sql:902: ERROR:  relation "publicdb.publictable" does not exist
+LINE 1: INSERT INTO publicdb.publictable VALUES (1);
+                    ^
+psql:pg_tests/compatible/role.sql:904: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/role.sql:907: ERROR:  schema "publicdb" does not exist
+psql:pg_tests/compatible/role.sql:909: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/role.sql:912: ERROR:  relation "publicdb.publictable" does not exist
+LINE 1: SELECT * FROM publicdb.publictable;
+                      ^
+psql:pg_tests/compatible/role.sql:915: ERROR:  relation "publicdb.publictable" does not exist
+LINE 1: INSERT INTO publicdb.publictable VALUES (1);
+                    ^
+psql:pg_tests/compatible/role.sql:918: ERROR:  syntax error at or near "FROM"
+LINE 1: SHOW TABLES FROM publicdb;
+                    ^
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:922: ERROR:  role "admin" does not exist
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:925: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+DROP ROLE
+ALTER ROLE
+DROP ROLE
+DROP ROLE
+psql:pg_tests/compatible/role.sql:935: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:941: ERROR:  role "testuser3" already exists
+CREATE ROLE
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:950: ERROR:  role "testuser4" already exists
+psql:pg_tests/compatible/role.sql:953: ERROR:  role "testuser2" already exists
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:965: ERROR:  unrecognized role option "createlogin"
+LINE 1: ALTER USER testuser2 CREATELOGIN;
+                             ^
+psql:pg_tests/compatible/role.sql:968: ERROR:  unrecognized role option "nocreatelogin"
+LINE 1: ALTER USER testuser2 NOCREATELOGIN;
+                             ^
+ALTER ROLE
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:977: ERROR:  unrecognized role option "createlogin"
+LINE 1: ALTER ROLE otherrole CREATELOGIN;
+                             ^
+psql:pg_tests/compatible/role.sql:980: ERROR:  unrecognized role option "nocreatelogin"
+LINE 1: ALTER ROLE otherrole NOCREATELOGIN;
+                             ^
+ALTER ROLE
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:989: ERROR:  unrecognized role option "createlogin"
+LINE 1: CREATE ROLE otherrole2 CREATELOGIN;
+                               ^
+psql:pg_tests/compatible/role.sql:992: ERROR:  unrecognized role option "nocreatelogin"
+LINE 1: CREATE ROLE otherrole2 NOCREATELOGIN;
+                               ^
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:997: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/role.sql:1000: ERROR:  unrecognized role option "createlogin"
+LINE 1: ALTER ROLE testuser CREATELOGIN;
+                            ^
+psql:pg_tests/compatible/role.sql:1002: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:1008: ERROR:  role "testuser3" already exists
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:1023: ERROR:  unrecognized role option "createlogin"
+LINE 1: ALTER USER testuser3 CREATELOGIN;
+                             ^
+psql:pg_tests/compatible/role.sql:1026: ERROR:  unrecognized role option "nocreatelogin"
+LINE 1: ALTER USER testuser3 NOCREATELOGIN;
+                             ^
+psql:pg_tests/compatible/role.sql:1029: ERROR:  unrecognized role option "createlogin"
+LINE 1: ALTER ROLE otherrole CREATELOGIN;
+                             ^
+psql:pg_tests/compatible/role.sql:1032: ERROR:  unrecognized role option "nocreatelogin"
+LINE 1: ALTER ROLE otherrole NOCREATELOGIN;
+                             ^
+ALTER ROLE
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:1041: ERROR:  unrecognized role option "createlogin"
+LINE 1: CREATE ROLE otherrole2 CREATELOGIN;
+                               ^
+psql:pg_tests/compatible/role.sql:1044: ERROR:  unrecognized role option "nocreatelogin"
+LINE 1: CREATE ROLE otherrole3 NOCREATELOGIN;
+                               ^
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:1050: ERROR:  unrecognized role option "nocreatelogin"
+LINE 1: ALTER USER testuser NOCREATELOGIN;
+                            ^
+psql:pg_tests/compatible/role.sql:1053: ERROR:  syntax error at or near "SETTING"
+LINE 1: SHOW CLUSTER SETTING sql.auth.change_own_password.enabled;
+                     ^
+CREATE ROLE
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:1062: ERROR:  role "testuser5" already exists
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:1083: ERROR:  unrecognized role option "createlogin"
+LINE 1: ALTER ROLE otherrole CREATELOGIN;
+                             ^
+psql:pg_tests/compatible/role.sql:1086: ERROR:  unrecognized role option "nocreatelogin"
+LINE 1: ALTER ROLE otherrole NOCREATELOGIN;
+                             ^
+ALTER ROLE
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:1095: ERROR:  unrecognized role option "createlogin"
+LINE 1: CREATE ROLE otherrole4 CREATELOGIN;
+                               ^
+psql:pg_tests/compatible/role.sql:1098: ERROR:  unrecognized role option "nocreatelogin"
+LINE 1: CREATE ROLE otherrole4 NOCREATELOGIN;
+                               ^
+psql:pg_tests/compatible/role.sql:1101: ERROR:  role "otherrole4" already exists
+psql:pg_tests/compatible/role.sql:1103: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/role.sql:1106: ERROR:  syntax error at or near "SETTING"
+LINE 1: SET CLUSTER SETTING sql.auth.change_own_password.enabled = t...
+                    ^
+psql:pg_tests/compatible/role.sql:1108: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:1125: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+SET
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:1134: ERROR:  permission denied to alter role
+DETAIL:  To change another role's password, the current user must have the CREATEROLE attribute and the ADMIN option on the role.
+RESET
+DROP ROLE
+psql:pg_tests/compatible/role.sql:1143: ERROR:  unrecognized role option "provisionsrc"
+LINE 1: CREATE USER testuser with PROVISIONSRC 'ldap:example.com';
+                                  ^
+psql:pg_tests/compatible/role.sql:1146: ERROR:  unrecognized role option "provisionsrc"
+LINE 1: ALTER ROLE testuser WITH PROVISIONSRC 'ldap:example.com';
+                                 ^
+psql:pg_tests/compatible/role.sql:1149: ERROR:  role "testuser" does not exist
+psql:pg_tests/compatible/role.sql:1152: ERROR:  role "testuser" does not exist
+psql:pg_tests/compatible/role.sql:1155: ERROR:  unrecognized role option "provisionsrc"
+LINE 1: ALTER USER testuser PROVISIONSRC 'ldap:example2.com';
+                            ^
+RESET
+psql:pg_tests/compatible/role.sql:1160: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/role.sql:1163: ERROR:  role "testuser" does not exist
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:1169: ERROR:  unrecognized role option "provisionsrc"
+LINE 1: ALTER USER testuser PROVISIONSRC 'ldap:example2.com';
+                            ^
+psql:pg_tests/compatible/role.sql:1172: ERROR:  role "testuser" does not exist
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:1178: ERROR:  role "testuser" does not exist
+psql:pg_tests/compatible/role.sql:1180: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/role.sql:1183: ERROR:  role "testuser" does not exist
+CREATE ROLE
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:1190: ERROR:  relation "system.role_options" does not exist
+LINE 1: SELECT option, value FROM system.role_options WHERE username...
+                                  ^
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:1196: ERROR:  relation "system.role_options" does not exist
+LINE 1: SELECT  option, value FROM system.role_options WHERE usernam...
+                                   ^
+DROP ROLE
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:1202: ERROR:  relation "system.role_options" does not exist
+LINE 1: SELECT  option, value FROM system.role_options WHERE usernam...
+                                   ^
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:1208: ERROR:  relation "system.role_options" does not exist
+LINE 1: SELECT option, value FROM system.role_options WHERE username...
+                                  ^
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:1212: ERROR:  role "admin" does not exist
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:1215: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:1221: ERROR:  syntax error at or near "SETTING"
+LINE 1: SET CLUSTER SETTING server.user_login.password_encryption = ...
+                    ^
+                                ?column?                                 
+-------------------------------------------------------------------------
+ CRDB-BCRYPT$2a$10$vcmoIBvgeHjgScVHWRMWI.Z3v03WMixAw2bBS6qZihljSUuwi88Yq
+(1 row)
+
+CREATE ROLE
+CREATE ROLE
+                                                               ?column?                                                                
+---------------------------------------------------------------------------------------------------------------------------------------
+ SCRAM-SHA-256$4096:B5VaTCvCLDzZxSYL829oVA==$3Ako3mNxNtdsaSOJl0Av3i6vyV2OiSP9Ly7famdFSbw=:d7BfSmrtjwbF74mSoOhQiDSpoIvlakXKdpBNb3Meunc=
+(1 row)
+
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:1239: ERROR:  syntax error at or near "SETTING"
+LINE 1: SET CLUSTER SETTING server.user_login.store_client_pre_hashe...
+                    ^
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:1251: ERROR:  relation "system.users" does not exist
+LINE 1: ...RDB-BCRYPT'||"hashedPassword" = '$bcrypt_pw' FROM system.use...
+                                                             ^
+psql:pg_tests/compatible/role.sql:1254: ERROR:  syntax error at or near "SETTING"
+LINE 1: RESET CLUSTER SETTING server.user_login.store_client_pre_has...
+                      ^
+psql:pg_tests/compatible/role.sql:1257: ERROR:  syntax error at or near "SETTING"
+LINE 1: SET CLUSTER SETTING server.user_login.password_hashes.defaul...
+                    ^
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:1263: ERROR:  relation "system.users" does not exist
+LINE 1: ...ECT username, substr("hashedPassword", 1, 7) FROM system.use...
+                                                             ^
+psql:pg_tests/compatible/role.sql:1266: ERROR:  syntax error at or near "SETTING"
+LINE 1: RESET CLUSTER SETTING server.user_login.password_hashes.defa...
+                      ^
+psql:pg_tests/compatible/role.sql:1269: ERROR:  syntax error at or near "SETTING"
+LINE 1: SET CLUSTER SETTING server.user_login.password_encryption = ...
+                    ^
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:1275: ERROR:  relation "system.users" does not exist
+LINE 1: ...CT username, substr("hashedPassword", 1, 20) FROM system.use...
+                                                             ^
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:1281: ERROR:  relation "system.users" does not exist
+LINE 1: ...CT username, substr("hashedPassword", 1, 20) FROM system.use...
+                                                             ^
+psql:pg_tests/compatible/role.sql:1284: ERROR:  syntax error at or near "SETTING"
+LINE 1: SET CLUSTER SETTING server.user_login.password_hashes.defaul...
+                    ^
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:1290: ERROR:  relation "system.users" does not exist
+LINE 1: ...CT username, substr("hashedPassword", 1, 20) FROM system.use...
+                                                             ^
+psql:pg_tests/compatible/role.sql:1293: ERROR:  syntax error at or near "SETTING"
+LINE 1: RESET CLUSTER SETTING server.user_login.password_encryption;
+                      ^
+psql:pg_tests/compatible/role.sql:1296: ERROR:  syntax error at or near "SETTING"
+LINE 1: RESET CLUSTER SETTING server.user_login.password_hashes.defa...
+                      ^
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:1301: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:1306: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/role.sql:1309: ERROR:  syntax error at or near "CREATEROLE"
+LINE 1: GRANT SYSTEM CREATEROLE TO testuser;
+                     ^
+psql:pg_tests/compatible/role.sql:1311: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/role.sql:1314: ERROR:  role "u_create_role_priv" already exists
+psql:pg_tests/compatible/role.sql:1316: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/role.sql:1319: ERROR:  syntax error at or near "CREATEROLE"
+LINE 1: REVOKE SYSTEM CREATEROLE FROM testuser;
+                      ^
+psql:pg_tests/compatible/role.sql:1321: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+DROP ROLE
+psql:pg_tests/compatible/role.sql:1326: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+CREATE ROLE
+GRANT ROLE
+psql:pg_tests/compatible/role.sql:1335: ERROR:  syntax error at or near "CREATEROLE"
+LINE 1: GRANT SYSTEM CREATEROLE TO parent_with_createrole;
+                     ^
+psql:pg_tests/compatible/role.sql:1337: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/role.sql:1340: ERROR:  role "u_create_role_priv" does not exist
+psql:pg_tests/compatible/role.sql:1342: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/role.sql:1345: ERROR:  syntax error at or near "CREATEROLE"
+LINE 1: REVOKE SYSTEM CREATEROLE FROM parent_with_createrole;
+                      ^
+DROP ROLE
+psql:pg_tests/compatible/role.sql:1351: ERROR:  unrecognized role option "nocreatelogin"
+LINE 1: ALTER ROLE testuser CREATEROLE NOCREATELOGIN;
+                                       ^
+psql:pg_tests/compatible/role.sql:1353: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:1358: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/role.sql:1361: ERROR:  syntax error at or near "CREATELOGIN"
+LINE 1: GRANT SYSTEM CREATELOGIN TO testuser;
+                     ^
+psql:pg_tests/compatible/role.sql:1363: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/role.sql:1366: ERROR:  role "u_create_login_priv" already exists
+DROP ROLE
+psql:pg_tests/compatible/role.sql:1371: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/role.sql:1374: ERROR:  syntax error at or near "CREATELOGIN"
+LINE 1: REVOKE SYSTEM CREATELOGIN FROM testuser;
+                      ^
+psql:pg_tests/compatible/role.sql:1376: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:1381: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+CREATE ROLE
+psql:pg_tests/compatible/role.sql:1387: ERROR:  syntax error at or near "CREATELOGIN"
+LINE 1: GRANT SYSTEM CREATELOGIN TO creator_of_logins;
+                     ^
+GRANT ROLE
+psql:pg_tests/compatible/role.sql:1392: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/role.sql:1395: ERROR:  role "u_create_login_priv" already exists
+DROP ROLE
+psql:pg_tests/compatible/role.sql:1400: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/role.sql:1403: ERROR:  syntax error at or near "CREATELOGIN"
+LINE 1: REVOKE SYSTEM CREATELOGIN FROM creator_of_logins;
+                      ^
+DROP ROLE
+ALTER ROLE
+ALTER ROLE
+psql:pg_tests/compatible/role.sql:1414: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+CREATE DATABASE
+psql:pg_tests/compatible/role.sql:1419: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/role.sql:1422: ERROR:  syntax error at or near "CREATEDB"
+LINE 1: GRANT SYSTEM CREATEDB TO testuser;
+                     ^
+psql:pg_tests/compatible/role.sql:1424: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/role.sql:1427: ERROR:  database "db_create_db_priv" already exists
+psql:pg_tests/compatible/role.sql:1429: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+psql:pg_tests/compatible/role.sql:1432: ERROR:  syntax error at or near "CREATEDB"
+LINE 1: REVOKE SYSTEM CREATEDB FROM testuser;
+                      ^
+psql:pg_tests/compatible/role.sql:1434: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+ALTER DATABASE
+psql:pg_tests/compatible/role.sql:1439: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+CREATE ROLE
+GRANT ROLE
+psql:pg_tests/compatible/role.sql:1448: ERROR:  syntax error at or near "CREATEDB"
+LINE 1: GRANT SYSTEM CREATEDB TO creator_of_databases;
+                     ^
+psql:pg_tests/compatible/role.sql:1450: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/role.sql:1453: ERROR:  database "db_create_db_priv" does not exist
+psql:pg_tests/compatible/role.sql:1455: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+DROP DATABASE
+psql:pg_tests/compatible/role.sql:1461: ERROR:  syntax error at or near "CREATEDB"
+LINE 1: REVOKE SYSTEM CREATEDB FROM creator_of_databases;
+                      ^
+DROP ROLE
+psql:pg_tests/compatible/role.sql:1467: ERROR:  unrecognized role option "subject"
+LINE 1: ALTER ROLE testuser SUBJECT 'foo';
+                            ^
+psql:pg_tests/compatible/role.sql:1470: ERROR:  unrecognized role option "provisionsrc"
+LINE 1: ALTER ROLE testuser PROVISIONSRC 'ldap:ldap.example.com';
+                            ^
+CREATE DATABASE
+psql:pg_tests/compatible/role.sql:1474: ERROR:  syntax error at or near "USE"
+LINE 1: USE block_db;
+        ^
+CREATE TABLE
+CREATE TYPE
+CREATE FUNCTION
+CREATE ROLE
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+psql:pg_tests/compatible/role.sql:1486: ERROR:  role "block_user" cannot be dropped because some objects depend on it
+DETAIL:  privileges for schema public
+privileges for database block_db
+privileges for table t
+privileges for type typ
+privileges for function f()
+psql:pg_tests/compatible/role.sql:1489: ERROR:  syntax error at or near "USE"
+LINE 1: USE defaultdb;
+        ^

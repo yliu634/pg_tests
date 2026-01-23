@@ -1,6 +1,21 @@
 -- PostgreSQL compatible tests from manual_retry
 -- 51 tests
+--
+-- PG-NOT-SUPPORTED: CockroachDB "manual retry" uses the Cockroach transaction
+-- retry protocol (SAVEPOINT cockroach_restart, crdb_internal.force_retry, SHOW
+-- TRANSACTION STATUS, force_savepoint_restart) which has no PostgreSQL
+-- equivalent. The original tests are preserved below for reference, but are
+-- not executed under PostgreSQL.
 
+SET client_min_messages = warning;
+
+SELECT
+  'skipped: manual_retry exercises CockroachDB retry protocol (crdb_internal.force_retry)'
+    AS notice;
+
+RESET client_min_messages;
+
+/*
 -- Test 1: statement (line 4)
 CREATE SEQUENCE s
 
@@ -170,4 +185,4 @@ RESET force_savepoint_restart
 
 -- Test 51: query (line 228)
 show session force_savepoint_restart
-
+*/

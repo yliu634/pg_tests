@@ -1,0 +1,86 @@
+SET
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+GRANT ROLE
+GRANT ROLE
+CREATE SCHEMA
+CREATE SCHEMA
+GRANT
+GRANT
+ sequences_in_s 
+----------------
+              0
+(1 row)
+
+CREATE SEQUENCE
+CREATE SEQUENCE
+CREATE TABLE
+CREATE TABLE
+ testuser_select_s_q 
+---------------------
+ f
+(1 row)
+
+SET
+ current_user_select_s_q 
+-------------------------
+ f
+(1 row)
+
+RESET
+GRANT
+ testuser_select_s_q | testuser_select_s2_q 
+---------------------+----------------------
+ t                   | f
+(1 row)
+
+GRANT
+ testuser_usage_s_q 
+--------------------
+ t
+(1 row)
+
+GRANT
+ testuser_select_s_q | testuser_select_s2_q | testuser2_select_s_q | testuser2_select_s2_q 
+---------------------+----------------------+----------------------+-----------------------
+ t                   | t                    | t                    | t
+(1 row)
+
+GRANT
+ testuser_usage_s_q | testuser_usage_s2_q | testuser2_usage_s_q | testuser2_usage_s2_q 
+--------------------+---------------------+---------------------+----------------------
+ t                  | t                   | t                   | t
+(1 row)
+
+CREATE ROLE
+GRANT ROLE
+GRANT
+ testuser3_select_s2_t | testuser3_usage_s2_q 
+-----------------------+----------------------
+ t                     | f
+(1 row)
+
+ALTER DEFAULT PRIVILEGES
+CREATE SCHEMA
+CREATE SCHEMA
+GRANT
+CREATE SEQUENCE
+CREATE SEQUENCE
+ testuser_usage_s3_q | testuser2_usage_s3_q 
+---------------------+----------------------
+ f                   | f
+(1 row)
+
+ testuser3_usage_s3_q | testuser3_usage_s4_q 
+----------------------+----------------------
+ t                    | t
+(1 row)
+
+RESET

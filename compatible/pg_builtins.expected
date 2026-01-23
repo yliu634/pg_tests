@@ -1,0 +1,841 @@
+SET
+ grantor | grantee | privilege_type | is_grantable 
+---------+---------+----------------+--------------
+(0 rows)
+
+ grantor | grantee | privilege_type | is_grantable 
+---------+---------+----------------+--------------
+(0 rows)
+
+ grantor  | grantee  | privilege_type | is_grantable 
+----------+----------+----------------+--------------
+ postgres | postgres | USAGE          | f
+(1 row)
+
+ has_table_privilege 
+---------------------
+ 
+(1 row)
+
+CREATE TYPE
+ format_type 
+-------------
+ typ(0)
+(1 row)
+
+ format_type 
+-------------
+ ???
+(1 row)
+
+ pg_column_size 
+----------------
+              8
+(1 row)
+
+ pg_column_size 
+----------------
+              4
+(1 row)
+
+ pg_column_size 
+----------------
+             32
+(1 row)
+
+ pg_column_size 
+----------------
+              6
+(1 row)
+
+ pg_column_size 
+----------------
+              1
+(1 row)
+
+ pg_column_size 
+----------------
+              2
+(1 row)
+
+ pg_column_size 
+----------------
+             30
+(1 row)
+
+ pg_column_size 
+----------------
+              1
+(1 row)
+
+ pg_column_size 
+----------------
+               
+(1 row)
+
+CREATE TABLE
+CREATE TYPE
+CREATE FUNCTION
+CREATE SCHEMA
+CREATE TABLE
+CREATE TYPE
+CREATE FUNCTION
+CREATE SCHEMA
+CREATE TABLE
+CREATE TYPE
+CREATE FUNCTION
+SET
+     relname      | pg_table_is_visible 
+------------------+---------------------
+ is_visible       | t
+ is_visible_pkey  | t
+ not_visible      | f
+ not_visible_pkey | f
+(4 rows)
+
+ pg_table_is_visible 
+---------------------
+ f
+(1 row)
+
+ pg_table_is_visible 
+---------------------
+ 
+(1 row)
+
+ pg_table_is_visible 
+---------------------
+ 
+(1 row)
+
+     typname      | pg_type_is_visible 
+------------------+--------------------
+ int8             | t
+ _date            | t
+ visible_type     | t
+ not_visible_type | f
+(4 rows)
+
+ pg_type_is_visible 
+--------------------
+ f
+(1 row)
+
+ pg_type_is_visible 
+--------------------
+ 
+(1 row)
+
+ pg_type_is_visible 
+--------------------
+ 
+(1 row)
+
+     proname      | pg_function_is_visible 
+------------------+------------------------
+ array_length     | t
+ visible_func     | t
+ not_visible_func | f
+(3 rows)
+
+ pg_function_is_visible 
+------------------------
+ f
+(1 row)
+
+ pg_function_is_visible 
+------------------------
+ 
+(1 row)
+
+ pg_function_is_visible 
+------------------------
+ 
+(1 row)
+
+ pg_get_partkeydef | pg_get_partkeydef 
+-------------------+-------------------
+                   | 
+(1 row)
+
+CREATE TABLE
+CREATE VIEW
+      relname      |       attname       | attnum | pg_relation_is_updatable | pg_column_is_updatable 
+-------------------+---------------------+--------+--------------------------+------------------------
+ is_updatable      | tableoid            |     -6 |                       28 | f
+ is_updatable      | cmax                |     -5 |                       28 | f
+ is_updatable      | xmax                |     -4 |                       28 | f
+ is_updatable      | cmin                |     -3 |                       28 | f
+ is_updatable      | xmin                |     -2 |                       28 | f
+ is_updatable      | ctid                |     -1 |                       28 | f
+ is_updatable      | a                   |      1 |                       28 | t
+ is_updatable      | b                   |      2 |                       28 | t
+ is_updatable      | c                   |      3 |                       28 | t
+ is_updatable_view | a                   |      1 |                       28 | t
+ is_updatable_view | b                   |      2 |                       28 | t
+ pg_class          | tableoid            |     -6 |                       28 | f
+ pg_class          | cmax                |     -5 |                       28 | f
+ pg_class          | xmax                |     -4 |                       28 | f
+ pg_class          | cmin                |     -3 |                       28 | f
+ pg_class          | xmin                |     -2 |                       28 | f
+ pg_class          | ctid                |     -1 |                       28 | f
+ pg_class          | oid                 |      1 |                       28 | t
+ pg_class          | relname             |      2 |                       28 | t
+ pg_class          | relnamespace        |      3 |                       28 | t
+ pg_class          | reltype             |      4 |                       28 | t
+ pg_class          | reloftype           |      5 |                       28 | t
+ pg_class          | relowner            |      6 |                       28 | t
+ pg_class          | relam               |      7 |                       28 | t
+ pg_class          | relfilenode         |      8 |                       28 | t
+ pg_class          | reltablespace       |      9 |                       28 | t
+ pg_class          | relpages            |     10 |                       28 | t
+ pg_class          | reltuples           |     11 |                       28 | t
+ pg_class          | relallvisible       |     12 |                       28 | t
+ pg_class          | reltoastrelid       |     13 |                       28 | t
+ pg_class          | relhasindex         |     14 |                       28 | t
+ pg_class          | relisshared         |     15 |                       28 | t
+ pg_class          | relpersistence      |     16 |                       28 | t
+ pg_class          | relkind             |     17 |                       28 | t
+ pg_class          | relnatts            |     18 |                       28 | t
+ pg_class          | relchecks           |     19 |                       28 | t
+ pg_class          | relhasrules         |     20 |                       28 | t
+ pg_class          | relhastriggers      |     21 |                       28 | t
+ pg_class          | relhassubclass      |     22 |                       28 | t
+ pg_class          | relrowsecurity      |     23 |                       28 | t
+ pg_class          | relforcerowsecurity |     24 |                       28 | t
+ pg_class          | relispopulated      |     25 |                       28 | t
+ pg_class          | relreplident        |     26 |                       28 | t
+ pg_class          | relispartition      |     27 |                       28 | t
+ pg_class          | relrewrite          |     28 |                       28 | t
+ pg_class          | relfrozenxid        |     29 |                       28 | t
+ pg_class          | relminmxid          |     30 |                       28 | t
+ pg_class          | relacl              |     31 |                       28 | t
+ pg_class          | reloptions          |     32 |                       28 | t
+ pg_class          | relpartbound        |     33 |                       28 | t
+(50 rows)
+
+ count 
+-------
+     0
+(1 row)
+
+             description              | value 
+--------------------------------------+-------
+ relation does not exist              | 0
+ relation does not exist              | false
+ relation exists, but column does not | true
+ system column                        | false
+(4 rows)
+
+ current_setting 
+-----------------
+ 0
+(1 row)
+
+ current_setting 
+-----------------
+ 0
+(1 row)
+
+ coalesce 
+----------
+ OK
+(1 row)
+
+ current_setting 
+-----------------
+ 
+(1 row)
+
+ current_setting |  current_setting   
+-----------------+--------------------
+ 0               | public, pg_catalog
+(1 row)
+
+ current_setting 
+-----------------
+ 
+(1 row)
+
+ current_setting 
+-----------------
+ 
+(1 row)
+
+PREPARE
+ current_setting 
+-----------------
+ 
+(1 row)
+
+BEGIN
+SET
+ current_setting 
+-----------------
+ foo
+(1 row)
+
+COMMIT
+ current_setting 
+-----------------
+ 0
+(1 row)
+
+ application_name 
+------------------
+ psql
+(1 row)
+
+ set_config 
+------------
+ woo
+(1 row)
+
+ application_name 
+------------------
+ woo
+(1 row)
+
+ set_config | set_config 
+------------+------------
+ foo        | 1min
+(1 row)
+
+ set_config 
+------------
+ woo
+(1 row)
+
+ current_setting 
+-----------------
+ foo
+(1 row)
+
+BEGIN
+ set_config 
+------------
+ woo
+(1 row)
+
+ current_setting | current_setting 
+-----------------+-----------------
+ woo             | 1min
+(1 row)
+
+COMMIT
+ current_setting 
+-----------------
+ foo
+(1 row)
+
+ set_config 
+------------
+ woo
+(1 row)
+
+ set_config 
+------------
+ 0
+(1 row)
+
+ set_config 
+------------
+ 
+(1 row)
+
+ search_path 
+-------------
+ 
+(1 row)
+
+RESET
+ pg_my_temp_schema 
+-------------------
+                 0
+(1 row)
+
+CREATE TABLE
+ ?column? 
+----------
+ f
+(1 row)
+
+CREATE TABLE
+ ?column? 
+----------
+ f
+(1 row)
+
+ pg_is_other_temp_schema 
+-------------------------
+ f
+(1 row)
+
+ pg_is_other_temp_schema 
+-------------------------
+ f
+(1 row)
+
+   user   | pg_is_other_temp_schema 
+----------+-------------------------
+ postgres | f
+(1 row)
+
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+GRANT ROLE
+SET
+   user   | pg_is_other_temp_schema 
+----------+-------------------------
+ testuser | f
+(1 row)
+
+RESET
+CREATE TABLE
+ typname | _pg_truetypid | _pg_truetypmod 
+---------+---------------+----------------
+ text    |            25 |             -1
+ oid     |            26 |             -1
+ tid     |            27 |             -1
+ xid     |            28 |             -1
+ xid     |            28 |             -1
+ cid     |            29 |             -1
+ cid     |            29 |             -1
+ float8  |           701 |             -1
+ bpchar  |          1042 |             -1
+ varchar |          1043 |             68
+ bit     |          1560 |              1
+ varbit  |          1562 |             16
+ numeric |          1700 |         786438
+(13 rows)
+
+ typname | _pg_char_max_length 
+---------+---------------------
+ text    |                    
+ oid     |                    
+ tid     |                    
+ xid     |                    
+ xid     |                    
+ cid     |                    
+ cid     |                    
+ float8  |                    
+ bpchar  |                    
+ varchar |                  64
+ bit     |                   1
+ varbit  |                  16
+ numeric |                    
+(13 rows)
+
+ typname | _pg_char_max_length 
+---------+---------------------
+ text    |                    
+ oid     |                    
+ tid     |                    
+ xid     |                    
+ xid     |                    
+ cid     |                    
+ cid     |                    
+ float8  |                    
+ bpchar  |                    
+ varchar |                  64
+ bit     |                   1
+ varbit  |                  16
+ numeric |                    
+(13 rows)
+
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE VIEW
+    relname     |   indkey    
+----------------+-------------
+ indexed_pkey   | [0:0]={1}
+ indexed_ca_idx | [0:1]={3,1}
+ indexed_bd_idx | [0:1]={2,4}
+(3 rows)
+
+    relname     |   indkey    | input | _pg_index_position 
+----------------+-------------+-------+--------------------
+ indexed_pkey   | [0:0]={1}   |     1 |                  1
+ indexed_pkey   | [0:0]={1}   |     2 |                   
+ indexed_pkey   | [0:0]={1}   |     3 |                   
+ indexed_pkey   | [0:0]={1}   |     4 |                   
+ indexed_ca_idx | [0:1]={3,1} |     1 |                  2
+ indexed_ca_idx | [0:1]={3,1} |     2 |                   
+ indexed_ca_idx | [0:1]={3,1} |     3 |                  1
+ indexed_ca_idx | [0:1]={3,1} |     4 |                   
+ indexed_bd_idx | [0:1]={2,4} |     1 |                   
+ indexed_bd_idx | [0:1]={2,4} |     2 |                  1
+ indexed_bd_idx | [0:1]={2,4} |     3 |                   
+ indexed_bd_idx | [0:1]={2,4} |     4 |                  2
+(12 rows)
+
+CREATE TABLE
+ attname  | typname | _pg_numeric_precision | _pg_numeric_precision_radix | _pg_numeric_scale 
+----------+---------+-----------------------+-----------------------------+-------------------
+ a        | int2    |                    16 |                           2 |                 0
+ b        | int4    |                    32 |                           2 |                 0
+ c        | int8    |                    64 |                           2 |                 0
+ cmax     | cid     |                       |                             |                  
+ cmin     | cid     |                       |                             |                  
+ ctid     | tid     |                       |                             |                  
+ d        | float4  |                    24 |                           2 |                  
+ e        | float4  |                    24 |                           2 |                  
+ f        | float8  |                    53 |                           2 |                  
+ g        | float8  |                    53 |                           2 |                  
+ h        | float8  |                    53 |                           2 |                  
+ i        | numeric |                    12 |                          10 |                 2
+ j        | numeric |                     4 |                          10 |                 4
+ tableoid | oid     |                       |                             |                  
+ xmax     | xid     |                       |                             |                  
+ xmin     | xid     |                       |                             |                  
+(16 rows)
+
+ option_name | option_value 
+-------------+--------------
+ b           | 
+ a           | 
+(2 rows)
+
+ option_name | option_value 
+-------------+--------------
+(0 rows)
+
+ option_name | option_value 
+-------------+--------------
+ a           | 
+ b           | c
+             | d
+ e           | f=g
+(4 rows)
+
+ option_name | option_value 
+-------------+--------------
+(0 rows)
+
+ option_name | option_value 
+-------------+--------------
+ a           | 
+ b           | c
+             | d
+ e           | f=g
+(4 rows)
+
+CREATE TYPE
+DROP ROLE
+CREATE ROLE
+CREATE TABLE
+ to_regclass 
+-------------
+ pg_roles
+(1 row)
+
+ to_regclass 
+-------------
+ 4294967230
+(1 row)
+
+ to_regclass 
+-------------
+ 
+(1 row)
+
+ to_regclass 
+-------------
+ 
+(1 row)
+
+ to_regclass 
+-------------
+ pg_policy
+(1 row)
+
+ to_regclass 
+-------------
+ t1
+(1 row)
+
+ to_regnamespace 
+-----------------
+ 
+(1 row)
+
+ to_regnamespace 
+-----------------
+ public
+(1 row)
+
+ to_regnamespace 
+-----------------
+ 1330834471
+(1 row)
+
+ to_regnamespace 
+-----------------
+ 
+(1 row)
+
+ to_regnamespace 
+-----------------
+ 
+(1 row)
+
+ to_regnamespace 
+-----------------
+ 
+(1 row)
+
+ to_regproc 
+------------
+ 
+(1 row)
+
+ to_regproc 
+------------
+ version
+(1 row)
+
+ to_regproc 
+------------
+ bit_in
+(1 row)
+
+ to_regprocedure 
+-----------------
+ 
+(1 row)
+
+ to_regprocedure 
+-----------------
+ 
+(1 row)
+
+ to_regprocedure 
+-----------------
+ 
+(1 row)
+
+ to_regprocedure 
+-----------------
+ version()
+(1 row)
+
+ to_regprocedure 
+-----------------
+ 961893967
+(1 row)
+
+ to_regprocedure 
+-----------------
+ -
+(1 row)
+
+ to_regprocedure 
+-----------------
+ 
+(1 row)
+
+ to_regrole 
+------------
+ 
+(1 row)
+
+ to_regrole 
+------------
+ test_role
+(1 row)
+
+ to_regrole 
+------------
+ 
+(1 row)
+
+ to_regrole 
+------------
+ 1546506610
+(1 row)
+
+ to_regrole 
+------------
+ -
+(1 row)
+
+ to_regrole 
+------------
+ 
+(1 row)
+
+ to_regtype 
+------------
+ interval
+(1 row)
+
+ to_regtype 
+------------
+ integer
+(1 row)
+
+ to_regtype 
+------------
+ 
+(1 row)
+
+ to_regtype 
+------------
+ interval
+(1 row)
+
+ to_regtype 
+------------
+ -
+(1 row)
+
+ to_regtype 
+------------
+ 
+(1 row)
+
+ to_regtype 
+------------
+ test_type
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+                                           pg_get_indexdef                                           
+-----------------------------------------------------------------------------------------------------
+ CREATE INDEX expr_idx ON public.expr_idx_tbl USING btree (id, ((json ->> 'bar'::text)), length(id))
+(1 row)
+
+ k |                                      pg_get_indexdef                                       
+---+--------------------------------------------------------------------------------------------
+ 0 | CREATE INDEX expr_idx ON expr_idx_tbl USING btree (id, (json ->> 'bar'::text), length(id))
+ 1 | id
+ 2 | (json ->> 'bar'::text)
+ 3 | length(id)
+ 4 | 
+(5 rows)
+
+CREATE TABLE
+CREATE TABLE
+SET
+ i | pg_get_indexdef 
+---+-----------------
+(0 rows)
+
+DROP TABLE
+DROP TABLE
+RESET
+CREATE SCHEMA
+CREATE TABLE
+ col_description 
+-----------------
+ 
+(1 row)
+
+DROP TABLE
+DROP SCHEMA
+ nameconcatoid 
+---------------
+ cat_2
+(1 row)
+
+                          nameconcatoid                          
+-----------------------------------------------------------------
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab_200
+(1 row)
+
+                          nameconcatoid                          
+-----------------------------------------------------------------
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbb_2
+(1 row)
+
+                          nameconcatoid                          | length 
+-----------------------------------------------------------------+--------
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa_2 |     63
+(1 row)
+
+ _pg_char_octet_length 
+-----------------------
+            1073741824
+(1 row)
+
+ _pg_char_octet_length 
+-----------------------
+                      
+(1 row)
+
+CREATE TYPE
+ attname | typname | _pg_char_octet_length 
+---------+---------+-----------------------
+ ufoo    | bpchar  |                     4
+(1 row)
+
+DROP TYPE
+ pg_encoding_max_length 
+------------------------
+                      4
+(1 row)
+
+ pg_encoding_max_length 
+------------------------
+                      3
+(1 row)
+
+ _pg_datetime_precision 
+------------------------
+                      0
+(1 row)
+
+ _pg_datetime_precision 
+------------------------
+                      6
+(1 row)
+
+ _pg_datetime_precision 
+------------------------
+                      5
+(1 row)
+
+ _pg_datetime_precision 
+------------------------
+                      6
+(1 row)
+
+ _pg_datetime_precision 
+------------------------
+                      5
+(1 row)
+
+ _pg_datetime_precision 
+------------------------
+                       
+(1 row)
+
+ _pg_datetime_precision 
+------------------------
+                       
+(1 row)
+
+ _pg_interval_type 
+-------------------
+ 
+(1 row)
+
+CREATE TYPE
+ attname | typname  | _pg_interval_type 
+---------+----------+-------------------
+ ubar    | interval | HOUR TO MINUTE
+ ufoo    | interval | 
+(2 rows)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+ to_regclass 
+-------------
+ i144384
+(1 row)
+

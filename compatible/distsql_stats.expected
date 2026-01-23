@@ -1,0 +1,63 @@
+SET
+CREATE FUNCTION
+CREATE TABLE
+CREATE INDEX
+INSERT 0 256
+ table_name | column_name | row_count | distinct_count | null_count 
+------------+-------------+-----------+----------------+------------
+ data       | a           |       256 |              4 |          0
+ data       | b           |       256 |              4 |          0
+ data       | c           |       256 |              4 |          0
+ data       | d           |       256 |              4 |          0
+ data       | e           |       256 |              2 |          0
+(5 rows)
+
+ buckets 
+---------
+       2
+(1 row)
+
+ bucket | lower_bound | upper_bound |  n  
+--------+-------------+-------------+-----
+      1 | 1           | 2           | 128
+      2 | 3           | 4           | 128
+(2 rows)
+
+ buckets 
+---------
+       3
+(1 row)
+
+ bucket | lower_bound | upper_bound | n  
+--------+-------------+-------------+----
+      1 | 1           | 2           | 86
+      2 | 2           | 3           | 85
+      3 | 3           | 4           | 85
+(3 rows)
+
+CREATE TABLE
+INSERT 0 20000
+ buckets 
+---------
+      10
+(1 row)
+
+ buckets 
+---------
+     500
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+ table_name | injected_row_count 
+------------+--------------------
+ big        |             100000
+(1 row)
+
+UPDATE 1
+ table_name | injected_row_count 
+------------+--------------------
+ big        |         1000000000
+(1 row)
+
+RESET

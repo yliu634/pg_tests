@@ -1,0 +1,122 @@
+CREATE TABLE
+CREATE TABLE
+ attname | format_type | pg_get_expr | attnotnull | atttypid | atttypmod 
+---------+-------------+-------------+------------+----------+-----------
+ id      | integer     |             | t          |       23 |        -1
+(1 row)
+
+ enum_name | enum_value 
+-----------+------------
+(0 rows)
+
+INSERT 0 2
+      name      | primary | unique | indkey |     column_indexes      |                column_names                 |                                definition                                 
+----------------+---------+--------+--------+-------------------------+---------------------------------------------+---------------------------------------------------------------------------
+ customers_pkey | t       | t      | 1      | {-6,-5,-4,-3,-2,-1,1,2} | {tableoid,cmax,xmax,cmin,xmin,ctid,name,id} | CREATE UNIQUE INDEX customers_pkey ON public.customers USING btree (name)
+(1 row)
+
+ attname | data_type 
+---------+-----------
+ id      | integer
+(1 row)
+
+CREATE TABLE
+ to_table | column | primary_key |    name     | on_update | on_delete 
+----------+--------+-------------+-------------+-----------+-----------
+ a        | a_id   | id          | b_a_id_fkey | a         | a
+(1 row)
+
+ oid  
+------
+ 1700
+(1 row)
+
+ oid  
+------
+ 1043
+(1 row)
+
+CREATE INDEX
+ count 
+-------
+     1
+(1 row)
+
+CREATE TABLE
+ attname 
+---------
+ a
+ b
+(2 rows)
+
+CREATE TABLE
+ attname | format_type | pg_get_expr | attnotnull | atttypid | atttypmod | collname | comment 
+---------+-------------+-------------+------------+----------+-----------+----------+---------
+ a       | integer     |             | t          |       23 |        -1 |          | 
+(1 row)
+
+ name |  tid  | primarykey | allownull | autoincrement 
+------+-------+------------+-----------+---------------
+ a    | 24844 | t          | f         | f
+(1 row)
+
+ nspname |  relname  | attname | atttypid | attnotnull | atttypmod | attlen | attnum | adsrc | description | typbasetype | typtype 
+---------+-----------+---------+----------+------------+-----------+--------+--------+-------+-------------+-------------+---------
+ public  | a         | id      |       23 | t          |        -1 |      4 |      1 |       |             |           0 | b
+ public  | customers | name    |       25 | t          |        -1 |     -1 |      1 |       |             |           0 | b
+ public  | customers | id      |       23 | f          |        -1 |      4 |      2 |       |             |           0 | b
+ public  | b         | id      |       23 | f          |        -1 |      4 |      1 |       |             |           0 | b
+ public  | b         | a_id    |       23 | f          |        -1 |      4 |      2 |       |             |           0 | b
+ public  | c         | a       |       23 | t          |        -1 |      4 |      1 |       |             |           0 | b
+ public  | c         | b       |       23 | t          |        -1 |      4 |      2 |       |             |           0 | b
+ public  | metatest  | a       |       23 | t          |        -1 |      4 |      1 |       |             |           0 | b
+(8 rows)
+
+  array_agg  
+-------------
+ {metatest}
+ {c}
+ {a}
+ {customers}
+(4 rows)
+
+ parentschema | parenttable | parentcolumn | childschema | childtable | childcolumn 
+--------------+-------------+--------------+-------------+------------+-------------
+ public       | a           | id           | public      | b          | a_id
+(1 row)
+
+CREATE TABLE
+     typname      | typnamespace | typtype | typcategory | typnotnull | typelem | typlen | typbasetype | typtypmod | typdefaultbin 
+------------------+--------------+---------+-------------+------------+---------+--------+-------------+-----------+---------------
+ regression_66576 |         2200 | c       | C           | f          |       0 |     -1 |           0 |        -1 | 
+(1 row)
+
+ reltype 
+---------
+   24851
+(1 row)
+
+     typname      
+------------------
+ regression_66576
+(1 row)
+
+     relname      
+------------------
+ regression_66576
+(1 row)
+
+CREATE TABLE
+CREATE TABLE
+ table_schema | table_name | foreign_table_schema | foreign_table_name | is_self | constraint_name | cols_and_fcols | one_to_one 
+--------------+------------+----------------------+--------------------+---------+-----------------+----------------+------------
+ public       | b          | public               | a                  | f       | b_a_id_fkey     | {"(a_id,id)"}  | f
+ public       | src        | public               | dst                | f       | src_d_fkey      | {"(d,a)"}      | f
+(2 rows)
+
+CREATE TABLE
+ nspname |       relname        | typname | basetypname | attname | description | collname | attisdropped | attidentity | attgenerated | attcompression | formatted_typname | formatted_basetypname | typtype | elemtypname | nullable | default | seqtype | seqstart | seqmin |       seqmax        | seqincrement | seqcycle | seqcache 
+---------+----------------------+---------+-------------+---------+-------------+----------+--------------+-------------+--------------+----------------+-------------------+-----------------------+---------+-------------+----------+---------+---------+----------+--------+---------------------+--------------+----------+----------
+ public  | efcore_identity_test | int8    |             | id      |             |          | f            | d           |              |                | bigint            |                       | b       |             | f        |         | bigint  |        1 |      1 | 9223372036854775807 |            1 | f        |        1
+(1 row)
+

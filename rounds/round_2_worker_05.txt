@@ -1,0 +1,5 @@
+pg_tests/compatible/event_log.sql
+pg_tests/compatible/event_log_legacy.sql
+pg_tests/compatible/exclude_data_from_backup.sql
+pg_tests/compatible/experimental_distsql_planning.sql
+pg_tests/compatible/experimental_distsql_planning_5node.sql

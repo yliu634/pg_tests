@@ -1,0 +1,5 @@
+pg_tests/compatible/distsql_tenant_locality.sql
+pg_tests/compatible/distsql_union.sql
+pg_tests/compatible/do.sql
+pg_tests/compatible/drop_database.sql
+pg_tests/compatible/drop_function.sql

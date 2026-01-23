@@ -1,0 +1,5 @@
+pg_tests/compatible/grant_schema.sql
+pg_tests/compatible/grant_sequence.sql
+pg_tests/compatible/grant_table.sql
+pg_tests/compatible/grant_type.sql
+pg_tests/compatible/group_join.sql

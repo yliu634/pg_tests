@@ -1,0 +1,143 @@
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+INSERT 0 5
+ k |  a  |  b  |  c   | comp 
+---+-----+-----+------+------
+ 1 |  10 | 100 | Foo  |  110
+ 3 |  10 | 100 | foo  |  110
+ 5 | 100 |  10 | Food |  110
+(3 rows)
+
+ k | a  |  b  |  c  | comp 
+---+----+-----+-----+------
+ 2 | 20 | 200 | FOO |  220
+ 4 | 40 | 400 | BAR |  440
+(2 rows)
+
+ k | a  |  b  |  c  | comp 
+---+----+-----+-----+------
+ 1 | 10 | 100 | Foo |  110
+ 2 | 20 | 200 | FOO |  220
+ 3 | 10 | 100 | foo |  110
+(3 rows)
+
+ k |  a  |  b  |  c   | comp 
+---+-----+-----+------+------
+ 1 |  10 | 100 | Foo  |  110
+ 2 |  20 | 200 | FOO  |  220
+ 3 |  10 | 100 | foo  |  110
+ 5 | 100 |  10 | Food |  110
+(4 rows)
+
+ k | a  |  b  |  c  | comp 
+---+----+-----+-----+------
+ 2 | 20 | 200 | FOO |  220
+(1 row)
+
+ k | a  |  b  |  c  | comp 
+---+----+-----+-----+------
+ 1 | 10 | 100 | Foo |  110
+ 3 | 10 | 100 | foo |  110
+(2 rows)
+
+ k | a  |  b  |  c  | comp 
+---+----+-----+-----+------
+ 1 | 10 | 100 | Foo |  110
+ 2 | 20 | 200 | FOO |  220
+ 3 | 10 | 100 | foo |  110
+ 4 | 40 | 400 | BAR |  440
+(4 rows)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 4
+ a |     j      
+---+------------
+ 2 | {"a": "b"}
+(1 row)
+
+ a |      j       
+---+--------------
+ 2 | {"a": "b"}
+ 3 | {"a": "bye"}
+(2 rows)
+
+ a |       j        
+---+----------------
+ 1 | {"a": "hello"}
+ 2 | {"a": "b"}
+ 3 | {"a": "bye"}
+ 4 | {"a": "json"}
+(4 rows)
+
+ a |       j        
+---+----------------
+ 1 | {"a": "hello"}
+ 2 | {"a": "b"}
+ 3 | {"a": "bye"}
+(3 rows)
+
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+INSERT 0 33
+           j            
+------------------------
+ {"a": "x"}
+ {"a": ["x", "y", "z"]}
+ {"a": ["x", "y", "z"]}
+ {"a": [1, "x"]}
+ {"a": [1, "x"]}
+(5 rows)
+
+               j               
+-------------------------------
+ {"a": {"b": "x"}}
+ {"a": {"b": ["x", "y", "z"]}}
+ {"a": {"b": [1, "x"]}}
+(3 rows)
+
+ i |           j            
+---+------------------------
+ 1 | {"a": "x"}
+ 1 | {"a": ["x", "y", "z"]}
+ 1 | {"a": [1, "x"]}
+(3 rows)
+
+ i |           j            
+---+------------------------
+ 1 | {"a": "x"}
+ 1 | {"a": ["x", "y", "z"]}
+ 1 | {"a": [1, "x"]}
+(3 rows)
+
+CREATE TABLE
+INSERT 0 2
+INSERT 0 0
+INSERT 0 1
+ k | a  |  b  | ab_sum 
+---+----+-----+--------
+ 1 | 10 |  90 |    100
+ 2 | 20 | 200 |    220
+(2 rows)
+
+CREATE TABLE
+CREATE INDEX
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+DELETE 1
+ALTER TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 0
+ k |     j      | j_a 
+---+------------+-----
+ 1 | {"a": "b"} | b
+(1 row)
+

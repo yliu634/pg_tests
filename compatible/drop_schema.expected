@@ -1,0 +1,62 @@
+SET
+DO
+SET
+DROP SCHEMA
+DROP DATABASE
+CREATE DATABASE
+You are now connected to database "test2" as user "postgres".
+SET
+SET
+DROP SCHEMA
+You are now connected to database "crdb_tests_drop_schema" as user "postgres".
+SET
+SET
+DROP DATABASE
+CREATE SCHEMA
+CREATE TYPE
+BEGIN
+ALTER TYPE
+DROP SCHEMA
+COMMIT
+CREATE SCHEMA
+CREATE TABLE
+DROP DATABASE
+CREATE DATABASE
+You are now connected to database "system" as user "postgres".
+SET
+SET
+CREATE TABLE
+  table_name  
+--------------
+ system_table
+(1 row)
+
+You are now connected to database "crdb_tests_drop_schema" as user "postgres".
+SET
+SET
+  nspname   
+------------
+ pg_catalog
+(1 row)
+
+SET
+You are now connected to database "system" as user "postgres".
+SET
+SET
+ current_database | current_user 
+------------------+--------------
+ system           | testuser
+(1 row)
+
+You are now connected to database "crdb_tests_drop_schema" as user "postgres".
+SET
+SET
+    nspname    | owner 
+---------------+-------
+ crdb_internal | root
+(1 row)
+
+SET
+DROP DATABASE
+RESET
+RESET

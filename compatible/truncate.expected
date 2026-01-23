@@ -1,0 +1,144 @@
+CREATE TABLE
+INSERT 0 4
+ k | v 
+---+---
+ 1 | 2
+ 3 | 4
+ 5 | 6
+ 7 | 8
+(4 rows)
+
+CREATE VIEW
+ k | v 
+---+---
+ 1 | 2
+ 3 | 4
+ 5 | 6
+ 7 | 8
+(4 rows)
+
+TRUNCATE TABLE
+ k | v 
+---+---
+(0 rows)
+
+TRUNCATE TABLE
+ k | v 
+---+---
+(0 rows)
+
+ k | v 
+---+---
+(0 rows)
+
+CREATE TABLE
+TRUNCATE TABLE
+INSERT 0 1
+DROP TABLE
+CREATE SEQUENCE
+CREATE TABLE
+TRUNCATE TABLE
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+CREATE FUNCTION
+CREATE VIEW
+ c0 
+----
+  0
+  1
+  2
+(3 rows)
+
+ get_min_t0 
+------------
+          0
+(1 row)
+
+ALTER TABLE
+TRUNCATE TABLE
+ALTER TABLE
+ c0 
+----
+(0 rows)
+
+ get_min_t0 
+------------
+           
+(1 row)
+
+ALTER TABLE
+psql:pg_tests/compatible/truncate.sql:98: NOTICE:  index "t0_c0_key" does not exist, skipping
+DROP INDEX
+ c0 
+----
+(0 rows)
+
+ get_min_t0 
+------------
+           
+(1 row)
+
+psql:pg_tests/compatible/truncate.sql:107: NOTICE:  drop cascades to view v0
+DROP TABLE
+SELECT 1
+SET
+      QUERY PLAN      
+----------------------
+ Delete on tt
+   ->  Seq Scan on tt
+(2 rows)
+
+RESET
+ ?column? 
+----------
+ foo
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+COMMENT
+COMMENT
+COMMENT
+TRUNCATE TABLE
+ column_name |       comment        
+-------------+----------------------
+ x           | 'hi'); DROP TABLE t;
+ y           | 
+ z           | comm"en"t2
+(3 rows)
+
+ index_name |  comment  
+------------+-----------
+ i1         | 
+ i2         | comm'ent3
+ i3         | 
+(3 rows)
+
+DROP TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE INDEX
+DROP INDEX
+CREATE INDEX
+DROP INDEX
+CREATE INDEX
+COMMENT
+COMMENT
+ column_name | comment 
+-------------+---------
+ x           | 
+ y           | hello1
+ z           | 
+(3 rows)
+
+ index_name | comment 
+------------+---------
+ i          | hello2
+(1 row)
+

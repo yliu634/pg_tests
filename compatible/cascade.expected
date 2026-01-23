@@ -1,0 +1,1629 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 4
+ c  | p 
+----+---
+  1 | 1
+  2 | 2
+ 10 | 1
+ 20 | 2
+(4 rows)
+
+DELETE 1
+ c  | p 
+----+---
+  1 | 1
+ 10 | 1
+(2 rows)
+
+DELETE 1
+ c | p 
+---+---
+(0 rows)
+
+CREATE TABLE
+INSERT 0 2
+INSERT 0 4
+INSERT 0 3
+DELETE 1
+psql:pg_tests/compatible/cascade.sql:55: ERROR:  update or delete on table "child" violates foreign key constraint "grandchild_c_fkey" on table "grandchild"
+DETAIL:  Key (c)=(10) is still referenced from table "grandchild".
+DELETE 2
+psql:pg_tests/compatible/cascade.sql:63: ERROR:  update or delete on table "child" violates foreign key constraint "grandchild_c_fkey" on table "grandchild"
+DETAIL:  Key (c)=(11) is still referenced from table "grandchild".
+DELETE 1
+DELETE 1
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 4
+INSERT 0 4
+DELETE 1
+ c  | p 
+----+---
+ 20 | 2
+ 21 | 2
+(2 rows)
+
+  g  | c  
+-----+----
+ 200 | 20
+(1 row)
+
+DELETE 1
+ c | p 
+---+---
+(0 rows)
+
+ g | c 
+---+---
+(0 rows)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 4
+INSERT 0 5
+INSERT 0 2
+ pa | pb | pc  
+----+----+-----
+  1 | 10 | 100
+  2 | 20 | 200
+  3 | 30 | 300
+    |    |    
+(4 rows)
+
+ a | b  |  c  
+---+----+-----
+ 1 | 10 | 100
+ 2 | 20 | 200
+ 1 | 10 | 100
+ 2 | 20 | 200
+   |    |    
+(5 rows)
+
+ a | b  |  c  
+---+----+-----
+ 2 | 20 | 200
+ 3 | 30 | 300
+(2 rows)
+
+DELETE 1
+ pa | pb | pc  
+----+----+-----
+  2 | 20 | 200
+  3 | 30 | 300
+    |    |    
+(3 rows)
+
+ a | b  |  c  
+---+----+-----
+ 2 | 20 | 200
+ 2 | 20 | 200
+   |    |    
+(3 rows)
+
+ a | b  |  c  
+---+----+-----
+ 2 | 20 | 200
+ 3 | 30 | 300
+(2 rows)
+
+DELETE 1
+ pa | pb | pc  
+----+----+-----
+  3 | 30 | 300
+    |    |    
+(2 rows)
+
+ a | b | c 
+---+---+---
+   |   |  
+(1 row)
+
+ a | b  |  c  
+---+----+-----
+ 3 | 30 | 300
+(1 row)
+
+DELETE 1
+ pa | pb | pc  
+----+----+-----
+  3 | 30 | 300
+(1 row)
+
+ a | b | c 
+---+---+---
+   |   |  
+(1 row)
+
+ a | b  |  c  
+---+----+-----
+ 3 | 30 | 300
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 9
+DELETE 1
+ a | b 
+---+---
+ 1 |  
+ 2 | 1
+ 3 | 2
+(3 rows)
+
+DELETE 1
+ a | b 
+---+---
+(0 rows)
+
+INSERT 0 1
+INSERT 0 19
+SET
+DELETE 1
+RESET
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 12
+INSERT 0 1
+ delete_no_action | update_no_action | delete_restrict | update_restrict | delete_cascade | update_cascade | delete_null | update_null | delete_default | update_default 
+------------------+------------------+-----------------+-----------------+----------------+----------------+-------------+-------------+----------------+----------------
+                1 |                2 |               3 |               4 |              5 |              6 |           7 |           8 |              9 |             10
+(1 row)
+
+psql:pg_tests/compatible/cascade.sql:254: ERROR:  update or delete on table "a" violates foreign key constraint "b_delete_no_action_fkey" on table "b"
+DETAIL:  Key (id)=(1) is still referenced from table "b".
+psql:pg_tests/compatible/cascade.sql:259: ERROR:  update or delete on table "a" violates foreign key constraint "b_update_no_action_fkey" on table "b"
+DETAIL:  Key (id)=(2) is still referenced from table "b".
+psql:pg_tests/compatible/cascade.sql:264: ERROR:  update or delete on table "a" violates foreign key constraint "b_delete_restrict_fkey" on table "b"
+DETAIL:  Key (id)=(3) is still referenced from table "b".
+psql:pg_tests/compatible/cascade.sql:269: ERROR:  update or delete on table "a" violates foreign key constraint "b_update_restrict_fkey" on table "b"
+DETAIL:  Key (id)=(4) is still referenced from table "b".
+DELETE 1
+ count 
+-------
+     0
+(1 row)
+
+INSERT 0 1
+INSERT 0 1
+UPDATE 1
+ delete_no_action | update_no_action | delete_restrict | update_restrict | delete_cascade | update_cascade | delete_null | update_null | delete_default | update_default 
+------------------+------------------+-----------------+-----------------+----------------+----------------+-------------+-------------+----------------+----------------
+                1 |                2 |               3 |               4 |              5 |           1006 |           7 |           8 |              9 |             10
+(1 row)
+
+psql:pg_tests/compatible/cascade.sql:290: ERROR:  duplicate key value violates unique constraint "a_pkey"
+DETAIL:  Key (id)=(1) already exists.
+DELETE 1
+ delete_no_action | update_no_action | delete_restrict | update_restrict | delete_cascade | update_cascade | delete_null | update_null | delete_default | update_default 
+------------------+------------------+-----------------+-----------------+----------------+----------------+-------------+-------------+----------------+----------------
+                1 |                2 |               3 |               4 |              5 |           1006 |             |           8 |              9 |             10
+(1 row)
+
+UPDATE 1
+ delete_no_action | update_no_action | delete_restrict | update_restrict | delete_cascade | update_cascade | delete_null | update_null | delete_default | update_default 
+------------------+------------------+-----------------+-----------------+----------------+----------------+-------------+-------------+----------------+----------------
+                1 |                2 |               3 |               4 |              5 |           1006 |             |             |              9 |             10
+(1 row)
+
+DELETE 1
+ delete_no_action | update_no_action | delete_restrict | update_restrict | delete_cascade | update_cascade | delete_null | update_null | delete_default | update_default 
+------------------+------------------+-----------------+-----------------+----------------+----------------+-------------+-------------+----------------+----------------
+                1 |                2 |               3 |               4 |              5 |           1006 |             |             |            109 |             10
+(1 row)
+
+UPDATE 1
+ delete_no_action | update_no_action | delete_restrict | update_restrict | delete_cascade | update_cascade | delete_null | update_null | delete_default | update_default 
+------------------+------------------+-----------------+-----------------+----------------+----------------+-------------+-------------+----------------+----------------
+                1 |                2 |               3 |               4 |              5 |           1006 |             |             |            109 |            110
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+INSERT 0 4
+INSERT 0 2
+DELETE 1
+ count | count | count | count | count | count 
+-------+-------+-------+-------+-------+-------
+     0 |     0 |     0 |     0 |     0 |     0
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+DELETE 1
+ count | count | count | count | count 
+-------+-------+-------+-------+-------
+     0 |     0 |     0 |     0 |     0
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+INSERT 0 4
+DELETE 1
+ count | count | count | count | count 
+-------+-------+-------+-------+-------
+     0 |     0 |     0 |     0 |     0
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+INSERT 0 4
+DELETE 1
+ count | count | count | count | count 
+-------+-------+-------+-------+-------
+     0 |     0 |     0 |     0 |     0
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+INSERT 0 4
+INSERT 0 1
+psql:pg_tests/compatible/cascade.sql:596: ERROR:  update or delete on table "c2" violates foreign key constraint "d_delete_restrict_fkey" on table "d"
+DETAIL:  Key (id)=(c2-pk4-b1-pk2) is still referenced from table "d".
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+DELETE 1
+ count 
+-------
+     0
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+UPDATE 1
+DELETE 1
+ count 
+-------
+     0
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+UPDATE 1
+DELETE 1
+ count | count 
+-------+-------
+     0 |     0
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+DELETE 1
+ count | count 
+-------+-------
+     0 |     0
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+DELETE 1
+ count 
+-------
+     0
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+DELETE 1
+ count | count | count | count | count 
+-------+-------+-------+-------+-------
+     0 |     0 |     0 |     0 |     0
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 5
+DELETE 3
+ id | a_id 
+----+------
+  2 |     
+  5 |     
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 4
+INSERT 0 4
+INSERT 0 1
+UPDATE 1
+   id    
+---------
+ updated
+(1 row)
+
+   id   | update_cascade 
+--------+----------------
+ b1-pk1 | updated
+(1 row)
+
+   id   | update_cascade 
+--------+----------------
+ b2-pk1 | updated
+(1 row)
+
+   id   | update_cascade 
+--------+----------------
+ c1-pk1 | updated
+ c1-pk2 | updated
+ c1-pk3 | updated
+ c1-pk4 | updated
+(4 rows)
+
+   id   | update_cascade 
+--------+----------------
+ c2-pk1 | updated
+ c2-pk2 | updated
+ c2-pk3 | updated
+ c2-pk4 | updated
+(4 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+UPDATE 1
+   id    |   id    |   id    |   id    |   id    
+---------+---------+---------+---------+---------
+ updated | updated | updated | updated | updated
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+INSERT 0 4
+UPDATE 1
+  id   | x 
+-------+---
+ a-pk1 | 2
+(1 row)
+
+   id   | a_id  | x | y 
+--------+-------+---+---
+ b1-pk1 | a-pk1 | 2 | 1
+ b1-pk2 | a-pk1 | 2 | 2
+(2 rows)
+
+   id   | a_id  | x | y 
+--------+-------+---+---
+ b2-pk1 | a-pk1 | 2 | 1
+ b2-pk2 | a-pk1 | 2 | 2
+(2 rows)
+
+      id       |  b_id  | x 
+---------------+--------+---
+ c1-pk1-b1-pk1 | b1-pk1 | 2
+ c1-pk2-b1-pk1 | b1-pk1 | 2
+ c1-pk3-b1-pk2 | b1-pk2 | 2
+ c1-pk4-b1-pk2 | b1-pk2 | 2
+(4 rows)
+
+      id       |  b_id  | x 
+---------------+--------+---
+ c2-pk1-b1-pk1 | b1-pk1 | 2
+ c2-pk2-b1-pk1 | b1-pk1 | 2
+ c2-pk3-b1-pk2 | b1-pk2 | 2
+ c2-pk4-b1-pk2 | b1-pk2 | 2
+(4 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+INSERT 0 4
+UPDATE 1
+  id   | x 
+-------+---
+ a-pk1 | 2
+(1 row)
+
+   id   | a_id  | x | y 
+--------+-------+---+---
+ b1-pk1 | a-pk1 | 2 | 1
+ b1-pk2 | a-pk1 | 2 | 2
+(2 rows)
+
+   id   | a_id  | x | y 
+--------+-------+---+---
+ b2-pk1 | a-pk1 | 2 | 1
+ b2-pk2 | a-pk1 | 2 | 2
+(2 rows)
+
+      id       |  b_id  | x 
+---------------+--------+---
+ c1-pk1-b1-pk1 | b1-pk1 | 2
+ c1-pk2-b1-pk1 | b1-pk1 | 2
+ c1-pk3-b1-pk2 | b1-pk2 | 2
+ c1-pk4-b1-pk2 | b1-pk2 | 2
+(4 rows)
+
+      id       |  b_id  | x 
+---------------+--------+---
+ c2-pk1-b1-pk1 | b1-pk1 | 2
+ c2-pk2-b1-pk1 | b1-pk1 | 2
+ c2-pk3-b1-pk2 | b1-pk2 | 2
+ c2-pk4-b1-pk2 | b1-pk2 | 2
+(4 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 4
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/cascade.sql:1104: ERROR:  update or delete on table "c2" violates foreign key constraint "d1_update_restrict_fkey" on table "d1"
+DETAIL:  Key (update_cascade)=(original) is still referenced from table "d1".
+DELETE 1
+INSERT 0 1
+psql:pg_tests/compatible/cascade.sql:1115: ERROR:  update or delete on table "c3" violates foreign key constraint "d2_id_fkey" on table "d2"
+DETAIL:  Key (id)=(original) is still referenced from table "d2".
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+ id | other_id 
+----+----------
+  1 |         
+  2 |        1
+  3 |        2
+(3 rows)
+
+UPDATE 1
+ id | other_id 
+----+----------
+  1 |         
+  4 |        1
+  3 |        4
+(3 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+ALTER TABLE
+    id    |    id    
+----------+----------
+ original | original
+(1 row)
+
+UPDATE 1
+   id    |   id    
+---------+---------
+ updated | updated
+(1 row)
+
+UPDATE 1
+    id    |    id    
+----------+----------
+ updated2 | updated2
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+UPDATE 1
+UPDATE 1
+UPDATE 1
+      x      |      y      |      z      
+-------------+-------------+-------------
+ pk1-updated |             | 
+ pk2-updated | pk1-updated | 
+ pk3-updated | pk2-updated | pk1-updated
+(3 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+UPDATE 1
+   id    |   id    |   id    |   id    
+---------+---------+---------+---------
+ updated | updated | updated | updated
+(1 row)
+
+  b_id   |  d_id   
+---------+---------
+ updated | updated
+(1 row)
+
+ e_b_id  | e_d_id  
+---------+---------
+ updated | updated
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+UPDATE 1
+   id    |   id    |   id    |   id    
+---------+---------+---------+---------
+ updated | updated | updated | updated
+(1 row)
+
+  d_id   |  c_id   
+---------+---------
+ updated | updated
+(1 row)
+
+ e_d_id  | e_c_id  
+---------+---------
+ updated | updated
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 5
+UPDATE 3
+ id | a_id 
+----+------
+  2 |     
+  5 |     
+  1 |   11
+  4 |   11
+  3 |   12
+(5 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 2
+INSERT 0 1
+UPDATE 3
+ name | id 
+------+----
+ a    | 10
+ a    | 20
+ a    | 30
+ b    | 10
+ b    | 20
+ c    | 10
+(6 rows)
+
+psql:pg_tests/compatible/cascade.sql:1372: ERROR:  new row for relation "c" violates check constraint "less_than_100"
+DETAIL:  Failing row contains (100).
+CONTEXT:  SQL statement "UPDATE ONLY "public"."c" SET "id" = $1 WHERE $2 OPERATOR(pg_catalog.=) "id""
+psql:pg_tests/compatible/cascade.sql:1377: ERROR:  new row for relation "b" violates check constraint "less_than_1000"
+DETAIL:  Failing row contains (10000).
+CONTEXT:  SQL statement "UPDATE ONLY "public"."b" SET "id" = $1 WHERE $2 OPERATOR(pg_catalog.=) "id""
+psql:pg_tests/compatible/cascade.sql:1382: ERROR:  new row for relation "b" violates check constraint "less_than_1000"
+DETAIL:  Failing row contains (20000).
+CONTEXT:  SQL statement "UPDATE ONLY "public"."b" SET "id" = $1 WHERE $2 OPERATOR(pg_catalog.=) "id""
+psql:pg_tests/compatible/cascade.sql:1387: ERROR:  new row for relation "c" violates check constraint "no_99"
+DETAIL:  Failing row contains (99).
+CONTEXT:  SQL statement "UPDATE ONLY "public"."c" SET "id" = $1 WHERE $2 OPERATOR(pg_catalog.=) "id""
+UPDATE 1
+UPDATE 1
+UPDATE 1
+ name |   id   
+------+--------
+ a    |     10
+ a    |    999
+ a    | 100000
+ b    |     10
+ b    |    999
+ c    |     10
+(6 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 5
+INSERT 0 3
+INSERT 0 2
+UPDATE 5
+ name | id1 | id2 
+------+-----+-----
+ a    |  10 |   0
+ a    |  20 |   0
+ a    |  30 |   0
+ a    |  40 |   0
+ a    |  50 |   0
+ b    |  10 |  10
+ b    |  20 |  20
+ b    |  30 |  40
+ c    |  10 |  20
+ c    |  20 |  10
+(10 rows)
+
+psql:pg_tests/compatible/cascade.sql:1451: ERROR:  new row for relation "c" violates check constraint "less_than_100"
+DETAIL:  Failing row contains (100, 20).
+CONTEXT:  SQL statement "UPDATE ONLY "public"."c" SET "id1" = $1 WHERE $2 OPERATOR(pg_catalog.=) "id1""
+psql:pg_tests/compatible/cascade.sql:1456: ERROR:  new row for relation "c" violates check constraint "less_than_100"
+DETAIL:  Failing row contains (100, 20).
+CONTEXT:  SQL statement "UPDATE ONLY "public"."c" SET "id1" = $1 WHERE $2 OPERATOR(pg_catalog.=) "id1""
+psql:pg_tests/compatible/cascade.sql:1461: ERROR:  new row for relation "b" violates check constraint "less_than_1000"
+DETAIL:  Failing row contains (1000, 40).
+CONTEXT:  SQL statement "UPDATE ONLY "public"."b" SET "id1" = $1 WHERE $2 OPERATOR(pg_catalog.=) "id1""
+psql:pg_tests/compatible/cascade.sql:1469: ERROR:  new row for relation "b" violates check constraint "less_than_1000"
+DETAIL:  Failing row contains (30, 1000).
+CONTEXT:  SQL statement "UPDATE ONLY "public"."b" SET "id2" = $1 WHERE $2 OPERATOR(pg_catalog.=) "id2""
+UPDATE 1
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+DELETE 1
+   id   | delete_set_null 
+--------+-----------------
+ b1-pk1 | untouched
+ b1-pk2 | untouched
+ b2-pk1 | untouched
+ b2-pk2 | 
+ b3-pk2 | untouched
+ b3-pk1 | 
+ b4-pk1 | 
+ b4-pk2 | 
+(8 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+INSERT 0 4
+INSERT 0 4
+DELETE 1
+      id       | ?column? 
+---------------+----------
+ c1-pk1-b1-pk1 | 
+ c1-pk2-b1-pk1 | 
+ c1-pk3-b1-pk2 | 
+ c1-pk4-b1-pk2 | 
+ c2-pk1-b1-pk1 | 
+ c2-pk2-b1-pk1 | 
+ c2-pk3-b1-pk2 | 
+ c2-pk4-b1-pk2 | 
+ c3-pk1-b2-pk1 | 
+ c3-pk2-b2-pk1 | 
+ c3-pk3-b2-pk2 | 
+ c3-pk4-b2-pk2 | 
+(12 rows)
+
+TRUNCATE TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+DELETE 1
+ count 
+-------
+     1
+(1 row)
+
+  id   |   a_id    
+-------+-----------
+ b2    | untouched
+ b1    | 
+ c3-b2 | untouched
+ c4-b2 | untouched
+ c1-b1 | 
+ c2-b1 | 
+(6 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+psql:pg_tests/compatible/cascade.sql:1692: ERROR:  null value in column "b_a_id" of relation "c" violates not-null constraint
+DETAIL:  Failing row contains (c1-b1, null).
+CONTEXT:  SQL statement "UPDATE ONLY "public"."c" SET "b_a_id" = $1 WHERE $2 OPERATOR(pg_catalog.=) "b_a_id""
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+UPDATE 1
+   id   | update_set_null 
+--------+-----------------
+ b1-pk1 | untouched
+ b1-pk2 | untouched
+ b2-pk1 | untouched
+ b2-pk2 | 
+ b3-pk2 | untouched
+ b3-pk1 | 
+ b4-pk1 | 
+ b4-pk2 | 
+(8 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+INSERT 0 4
+INSERT 0 4
+UPDATE 1
+      id       | update_cascade 
+---------------+----------------
+ b1-pk2        | untouched
+ b1-pk1        | updated
+ b2-pk2        | untouched
+ b2-pk1        | updated
+ c1-pk3-b1-pk2 | untouched
+ c1-pk4-b1-pk2 | untouched
+ c1-pk1-b1-pk1 | 
+ c1-pk2-b1-pk1 | 
+ c2-pk3-b1-pk2 | untouched
+ c2-pk4-b1-pk2 | untouched
+ c2-pk1-b1-pk1 | 
+ c2-pk2-b1-pk1 | 
+ c3-pk3-b2-pk2 | untouched
+ c3-pk4-b2-pk2 | untouched
+ c3-pk1-b2-pk1 | 
+ c3-pk2-b2-pk1 | 
+(16 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+UPDATE 1
+  id   |   a_id    
+-------+-----------
+ b2    | untouched
+ b1    | 
+ c3-b2 | untouched
+ c4-b2 | untouched
+ c1-b1 | 
+ c2-b1 | 
+(6 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+psql:pg_tests/compatible/cascade.sql:1867: ERROR:  null value in column "b_a_id" of relation "c" violates not-null constraint
+DETAIL:  Failing row contains (c1-b1, null).
+CONTEXT:  SQL statement "UPDATE ONLY "public"."c" SET "b_a_id" = $1 WHERE $2 OPERATOR(pg_catalog.=) "b_a_id""
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 6
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+DELETE 1
+   id   | delete_set_default 
+--------+--------------------
+ b1-pk1 | untouched
+ b1-pk2 | untouched
+ b2-pk1 | untouched
+ b2-pk2 | b2-default
+ b3-pk2 | untouched
+ b3-pk1 | b3-default
+ b4-pk1 | b4-default
+ b4-pk2 | b4-default
+(8 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 6
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+psql:pg_tests/compatible/cascade.sql:1947: ERROR:  insert or update on table "b3" violates foreign key constraint "b3_delete_set_default_fkey"
+DETAIL:  Key (delete_set_default)=(missing) is not present in table "a".
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 3
+INSERT 0 3
+INSERT 0 4
+INSERT 0 4
+INSERT 0 4
+DELETE 1
+      id       |  ?column?  
+---------------+------------
+ a-default     | empty
+ b1-default    | a-default
+ b2-default    | a-default
+ c1-pk1-b1-pk1 | b1-default
+ c1-pk2-b1-pk1 | b1-default
+ c1-pk3-b1-pk2 | b1-default
+ c1-pk4-b1-pk2 | b1-default
+ c2-pk1-b1-pk1 | b1-default
+ c2-pk2-b1-pk1 | b1-default
+ c2-pk3-b1-pk2 | b1-default
+ c2-pk4-b1-pk2 | b1-default
+ c3-pk1-b2-pk1 | b2-default
+ c3-pk2-b2-pk1 | b2-default
+ c3-pk3-b2-pk2 | b2-default
+ c3-pk4-b2-pk2 | b2-default
+(15 rows)
+
+TRUNCATE TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 3
+INSERT 0 3
+INSERT 0 4
+INSERT 0 4
+INSERT 0 4
+psql:pg_tests/compatible/cascade.sql:2113: ERROR:  insert or update on table "c2" violates foreign key constraint "c2_delete_set_default_fkey"
+DETAIL:  Key (delete_set_default)=(missing) is not present in table "b1".
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 2
+INSERT 0 4
+DELETE 1
+    id     
+-----------
+ untouched
+ default
+(2 rows)
+
+  id   |   a_id    
+-------+-----------
+ b2    | untouched
+ b1    | default
+ c3-b2 | untouched
+ c4-b2 | untouched
+ c1-b1 | default
+ c2-b1 | default
+(6 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+DELETE 1
+  id   |   a_id    
+-------+-----------
+ b2    | untouched
+ b1    | 
+ c3-b2 | untouched
+ c4-b2 | untouched
+ c1-b1 | 
+ c2-b1 | 
+(6 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 4
+psql:pg_tests/compatible/cascade.sql:2217: ERROR:  null value in column "b_a_id" of relation "c" violates not-null constraint
+DETAIL:  Failing row contains (c1-b1, null).
+CONTEXT:  SQL statement "UPDATE ONLY "public"."c" SET "b_a_id" = $1 WHERE $2 OPERATOR(pg_catalog.=) "b_a_id""
+DROP TABLE
+psql:pg_tests/compatible/cascade.sql:2224: ERROR:  relation "a" does not exist
+LINE 1: INSERT INTO a VALUES ('original'), ('default');
+                    ^
+psql:pg_tests/compatible/cascade.sql:2225: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b VALUES ('b1', 'original'), ('b2', 'default');
+                    ^
+psql:pg_tests/compatible/cascade.sql:2228: ERROR:  relation "a" does not exist
+LINE 1: DELETE FROM a WHERE id = 'original';
+                    ^
+psql:pg_tests/compatible/cascade.sql:2231: ERROR:  table "b" does not exist
+psql:pg_tests/compatible/cascade.sql:2234: ERROR:  relation "a" does not exist
+LINE 1: INSERT INTO a VALUES ('original'), ('untouched'), ('b1-defau...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2235: ERROR:  relation "b1" does not exist
+LINE 1: INSERT INTO b1 VALUES ('b1-pk1', 'untouched'), ('b1-pk2', 'u...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2236: ERROR:  relation "b2" does not exist
+LINE 1: INSERT INTO b2 VALUES ('b2-pk1', 'untouched'), ('b2-pk2', 'o...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2237: ERROR:  relation "b3" does not exist
+LINE 1: INSERT INTO b3 VALUES ('b3-pk1', 'original'), ('b3-pk2', 'un...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2238: ERROR:  relation "b3" does not exist
+LINE 1: INSERT INTO b3 VALUES ('b4-pk1', 'original'), ('b4-pk2', 'or...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2241: ERROR:  relation "a" does not exist
+LINE 1: UPDATE a SET id = 'updated' WHERE id = 'original';
+               ^
+psql:pg_tests/compatible/cascade.sql:2251: ERROR:  relation "b1" does not exist
+LINE 1: SELECT id, update_set_null FROM b1
+                                        ^
+psql:pg_tests/compatible/cascade.sql:2254: ERROR:  table "b4" does not exist
+psql:pg_tests/compatible/cascade.sql:2257: ERROR:  relation "a" does not exist
+LINE 1: INSERT INTO a VALUES ('original'), ('untouched'), ('b1-defau...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2258: ERROR:  relation "b1" does not exist
+LINE 1: INSERT INTO b1 VALUES ('b1-pk1', 'untouched'), ('b1-pk2', 'u...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2259: ERROR:  relation "b2" does not exist
+LINE 1: INSERT INTO b2 VALUES ('b2-pk1', 'untouched'), ('b2-pk2', 'o...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2260: ERROR:  relation "b3" does not exist
+LINE 1: INSERT INTO b3 VALUES ('b3-pk1', 'original'), ('b3-pk2', 'un...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2261: ERROR:  relation "b3" does not exist
+LINE 1: INSERT INTO b3 VALUES ('b4-pk1', 'original'), ('b4-pk2', 'or...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2264: ERROR:  relation "a" does not exist
+LINE 1: UPDATE a SET id = 'updated' WHERE id = 'original';
+               ^
+psql:pg_tests/compatible/cascade.sql:2267: ERROR:  table "b4" does not exist
+psql:pg_tests/compatible/cascade.sql:2270: ERROR:  relation "a" does not exist
+LINE 1: INSERT INTO a VALUES ('original'), ('untouched'), ('b1-defau...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2271: ERROR:  relation "b1" does not exist
+LINE 1: INSERT INTO b1 VALUES ('b1-pk1', 'original'), ('b1-pk2', 'un...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2272: ERROR:  relation "b2" does not exist
+LINE 1: INSERT INTO b2 VALUES ('b2-pk1', 'original'), ('b2-pk2', 'un...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2278: ERROR:  relation "c1" does not exist
+LINE 1: INSERT INTO c1 VALUES
+                    ^
+psql:pg_tests/compatible/cascade.sql:2284: ERROR:  relation "c2" does not exist
+LINE 1: INSERT INTO c2 VALUES
+                    ^
+psql:pg_tests/compatible/cascade.sql:2290: ERROR:  relation "c3" does not exist
+LINE 1: INSERT INTO c3 VALUES
+                    ^
+psql:pg_tests/compatible/cascade.sql:2293: ERROR:  relation "a" does not exist
+LINE 1: UPDATE a SET id = 'updated' WHERE id = 'original';
+               ^
+psql:pg_tests/compatible/cascade.sql:2305: ERROR:  relation "b1" does not exist
+LINE 1: SELECT id, update_cascade FROM b1
+                                       ^
+psql:pg_tests/compatible/cascade.sql:2308: ERROR:  table "c3" does not exist
+psql:pg_tests/compatible/cascade.sql:2311: ERROR:  relation "a" does not exist
+LINE 1: INSERT INTO a VALUES ('original'), ('untouched'), ('b1-defau...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2312: ERROR:  relation "b1" does not exist
+LINE 1: INSERT INTO b1 VALUES ('b1-pk1', 'original'), ('b1-pk2', 'un...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2313: ERROR:  relation "b2" does not exist
+LINE 1: INSERT INTO b2 VALUES ('b2-pk1', 'original'), ('b2-pk2', 'un...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2319: ERROR:  relation "c1" does not exist
+LINE 1: INSERT INTO c1 VALUES
+                    ^
+psql:pg_tests/compatible/cascade.sql:2325: ERROR:  relation "c2" does not exist
+LINE 1: INSERT INTO c2 VALUES
+                    ^
+psql:pg_tests/compatible/cascade.sql:2331: ERROR:  relation "c3" does not exist
+LINE 1: INSERT INTO c3 VALUES
+                    ^
+psql:pg_tests/compatible/cascade.sql:2334: ERROR:  relation "a" does not exist
+LINE 1: UPDATE a SET id = 'updated' WHERE id = 'original';
+               ^
+psql:pg_tests/compatible/cascade.sql:2337: ERROR:  table "c3" does not exist
+psql:pg_tests/compatible/cascade.sql:2340: ERROR:  relation "a" does not exist
+LINE 1: INSERT INTO a VALUES ('original'), ('untouched'), ('default'...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2341: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b VALUES ('b1', 'original'), ('b2', 'untouched')...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2347: ERROR:  relation "c" does not exist
+LINE 1: INSERT INTO c VALUES
+                    ^
+psql:pg_tests/compatible/cascade.sql:2350: ERROR:  relation "a" does not exist
+LINE 1: UPDATE a SET id = 'updated' WHERE id = 'original';
+               ^
+psql:pg_tests/compatible/cascade.sql:2355: ERROR:  relation "b" does not exist
+LINE 1: SELECT id, a_id FROM b
+                             ^
+psql:pg_tests/compatible/cascade.sql:2358: ERROR:  table "c" does not exist
+psql:pg_tests/compatible/cascade.sql:2361: ERROR:  relation "a" does not exist
+LINE 1: INSERT INTO a VALUES ('original'), ('untouched'), ('default'...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2362: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b VALUES ('b1', 'original'), ('b2', 'untouched')...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2368: ERROR:  relation "c" does not exist
+LINE 1: INSERT INTO c VALUES
+                    ^
+psql:pg_tests/compatible/cascade.sql:2371: ERROR:  relation "a" does not exist
+LINE 1: UPDATE a SET id = 'updated' WHERE id = 'original';
+               ^
+psql:pg_tests/compatible/cascade.sql:2374: ERROR:  table "c" does not exist
+psql:pg_tests/compatible/cascade.sql:2377: ERROR:  relation "a" does not exist
+LINE 1: INSERT INTO a VALUES ('original'), ('default');
+                    ^
+psql:pg_tests/compatible/cascade.sql:2378: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b VALUES ('b1', 'original'), ('b2', 'default');
+                    ^
+psql:pg_tests/compatible/cascade.sql:2381: ERROR:  relation "a" does not exist
+LINE 1: UPDATE a SET id = 'updated' WHERE id = 'original';
+               ^
+psql:pg_tests/compatible/cascade.sql:2384: ERROR:  table "b" does not exist
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+DELETE 1
+ a  | b 
+----+---
+ 20 |  
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+psql:pg_tests/compatible/cascade.sql:2419: ERROR:  syntax error at or near "("
+LINE 4:  ,INDEX (x, y)
+                ^
+INSERT 0 4
+psql:pg_tests/compatible/cascade.sql:2423: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b VALUES (NULL, NULL), (NULL, 1), (2, NULL), (3,...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2426: ERROR:  relation "b" does not exist
+LINE 1: SELECT * FROM b ORDER BY x, y;
+                      ^
+DELETE 4
+psql:pg_tests/compatible/cascade.sql:2432: ERROR:  relation "b" does not exist
+LINE 1: SELECT * FROM b ORDER BY x, y;
+                      ^
+ x | y 
+---+---
+(0 rows)
+
+psql:pg_tests/compatible/cascade.sql:2444: ERROR:  relation "b" does not exist
+INSERT 0 4
+psql:pg_tests/compatible/cascade.sql:2446: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b VALUES (NULL, NULL), (NULL, 4), (5, NULL), (6,...
+                    ^
+UPDATE 2
+UPDATE 2
+psql:pg_tests/compatible/cascade.sql:2459: ERROR:  relation "b" does not exist
+LINE 1: SELECT * FROM b ORDER BY x, y;
+                      ^
+psql:pg_tests/compatible/cascade.sql:2462: ERROR:  table "b" does not exist
+psql:pg_tests/compatible/cascade.sql:2469: ERROR:  relation "a" already exists
+psql:pg_tests/compatible/cascade.sql:2477: ERROR:  syntax error at or near "("
+LINE 4:  ,INDEX (x, y)
+                ^
+INSERT 0 4
+psql:pg_tests/compatible/cascade.sql:2481: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b VALUES (NULL, NULL), (3, 3);
+                    ^
+psql:pg_tests/compatible/cascade.sql:2484: ERROR:  relation "b" does not exist
+LINE 1: SELECT * FROM b ORDER BY x, y;
+                      ^
+DELETE 8
+psql:pg_tests/compatible/cascade.sql:2490: ERROR:  relation "b" does not exist
+LINE 1: SELECT * FROM b ORDER BY x, y;
+                      ^
+ x | y 
+---+---
+(0 rows)
+
+psql:pg_tests/compatible/cascade.sql:2502: ERROR:  relation "b" does not exist
+INSERT 0 4
+psql:pg_tests/compatible/cascade.sql:2504: ERROR:  relation "b" does not exist
+LINE 1: INSERT INTO b VALUES (NULL, NULL), (6, 6);
+                    ^
+UPDATE 2
+UPDATE 2
+psql:pg_tests/compatible/cascade.sql:2517: ERROR:  relation "b" does not exist
+LINE 1: SELECT * FROM b ORDER BY x, y;
+                      ^
+psql:pg_tests/compatible/cascade.sql:2520: ERROR:  table "b" does not exist
+psql:pg_tests/compatible/cascade.sql:2527: ERROR:  relation "a" already exists
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+psql:pg_tests/compatible/cascade.sql:2551: ERROR:  insert or update on table "c" violates foreign key constraint "c_x_y_fkey"
+DETAIL:  MATCH FULL does not allow mixing of null and nonnull key values.
+psql:pg_tests/compatible/cascade.sql:2554: ERROR:  insert or update on table "c" violates foreign key constraint "c_x_y_fkey"
+DETAIL:  MATCH FULL does not allow mixing of null and nonnull key values.
+ x  | y  
+----+----
+    |   
+    | 40
+ 50 |   
+ 60 | 60
+  2 |  2
+(5 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+DELETE 1
+psql:pg_tests/compatible/cascade.sql:2594: ERROR:  insert or update on table "c" violates foreign key constraint "c_x_y_fkey"
+DETAIL:  MATCH FULL does not allow mixing of null and nonnull key values.
+psql:pg_tests/compatible/cascade.sql:2597: ERROR:  insert or update on table "c" violates foreign key constraint "c_x_y_fkey"
+DETAIL:  MATCH FULL does not allow mixing of null and nonnull key values.
+UPDATE 1
+ x | y 
+---+---
+   |  
+   |  
+(2 rows)
+
+DROP TABLE
+psql:pg_tests/compatible/cascade.sql:2613: ERROR:  syntax error at or near "("
+LINE 4:   INDEX (b)
+                ^
+psql:pg_tests/compatible/cascade.sql:2616: ERROR:  relation "self_ab" does not exist
+LINE 1: INSERT INTO self_ab VALUES (1, 2), (2, 2);
+                    ^
+psql:pg_tests/compatible/cascade.sql:2619: ERROR:  relation "self_ab" does not exist
+psql:pg_tests/compatible/cascade.sql:2622: ERROR:  relation "self_ab" does not exist
+LINE 1: UPDATE self_ab SET a = 3 WHERE a = 2;
+               ^
+CREATE TABLE
+INSERT 0 2
+psql:pg_tests/compatible/cascade.sql:2631: ERROR:  relation "self_ab" does not exist
+UPDATE 1
+psql:pg_tests/compatible/cascade.sql:2637: ERROR:  table "self_ab" does not exist
+psql:pg_tests/compatible/cascade.sql:2648: ERROR:  syntax error at or near "("
+LINE 6:   INDEX (c),
+                ^
+psql:pg_tests/compatible/cascade.sql:2651: ERROR:  relation "self_abcd" does not exist
+LINE 1: INSERT INTO self_abcd VALUES (1, 2, 3, 4), (4, 1, 2, 3), (3,...
+                    ^
+psql:pg_tests/compatible/cascade.sql:2654: ERROR:  relation "self_abcd" does not exist
+psql:pg_tests/compatible/cascade.sql:2655: ERROR:  relation "self_abcd" does not exist
+psql:pg_tests/compatible/cascade.sql:2658: ERROR:  relation "self_abcd" does not exist
+LINE 1: UPDATE self_abcd SET a = 5 WHERE a = 1;
+               ^
+psql:pg_tests/compatible/cascade.sql:2661: ERROR:  relation "self_abcd" does not exist
+LINE 1: SELECT * FROM self_abcd ORDER BY (a, b, c, d);
+                      ^
+psql:pg_tests/compatible/cascade.sql:2664: ERROR:  table "self_abcd" does not exist
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 4
+psql:pg_tests/compatible/cascade.sql:2677: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO parent VALUES (2, 20), (3, 3);
+        ^
+ pk | p 
+----+---
+  1 | 1
+  2 | 1
+  3 | 2
+  4 | 2
+(4 rows)
+
+INSERT 0 2
+ pk | p  
+----+----
+  3 |  2
+  4 |  2
+  1 | 10
+  2 | 10
+(4 rows)
+
+INSERT 0 1
+ pk | p  
+----+----
+  3 |  2
+  4 |  2
+  1 | 10
+  2 | 10
+(4 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 4
+psql:pg_tests/compatible/cascade.sql:2708: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO parent(pk, p) VALUES (1, 1);
+        ^
+ pk | p | q 
+----+---+---
+  1 | 1 | 1
+  2 | 1 | 1
+  3 | 2 | 2
+  4 | 2 | 2
+(4 rows)
+
+psql:pg_tests/compatible/cascade.sql:2714: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO parent(pk, q) VALUES (2, 20);
+        ^
+ pk | p | q 
+----+---+---
+  1 | 1 | 1
+  2 | 1 | 1
+  3 | 2 | 2
+  4 | 2 | 2
+(4 rows)
+
+psql:pg_tests/compatible/cascade.sql:2720: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO parent VALUES (1, 10, 10);
+        ^
+ pk | p | q 
+----+---+---
+  1 | 1 | 1
+  2 | 1 | 1
+  3 | 2 | 2
+  4 | 2 | 2
+(4 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 4
+psql:pg_tests/compatible/cascade.sql:2739: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO parent VALUES (2, 20), (3, 3);
+        ^
+ pk | p 
+----+---
+  1 | 1
+  2 | 1
+  3 | 2
+  4 | 2
+(4 rows)
+
+psql:pg_tests/compatible/cascade.sql:2745: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO parent VALUES (1, 1);
+        ^
+ pk | p 
+----+---
+  1 | 1
+  2 | 1
+  3 | 2
+  4 | 2
+(4 rows)
+
+psql:pg_tests/compatible/cascade.sql:2751: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO parent(pk) VALUES (1);
+        ^
+ pk | p 
+----+---
+  1 | 1
+  2 | 1
+  3 | 2
+  4 | 2
+(4 rows)
+
+INSERT 0 1
+ pk | p 
+----+---
+  3 | 2
+  4 | 2
+  1 |  
+  2 |  
+(4 rows)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 4
+psql:pg_tests/compatible/cascade.sql:2776: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO parent VALUES (2, 2);
+        ^
+ pk | p 
+----+---
+  1 | 1
+  2 | 1
+  3 | 2
+  4 | 2
+(4 rows)
+
+psql:pg_tests/compatible/cascade.sql:2782: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO parent(pk) VALUES (2);
+        ^
+ pk | p 
+----+---
+  1 | 1
+  2 | 1
+  3 | 2
+  4 | 2
+(4 rows)
+
+psql:pg_tests/compatible/cascade.sql:2788: ERROR:  syntax error at or near "UPSERT"
+LINE 1: UPSERT INTO parent VALUES (2, 20), (3, 3);
+        ^
+ pk | p 
+----+---
+  1 | 1
+  2 | 1
+  3 | 2
+  4 | 2
+(4 rows)
+
+psql:pg_tests/compatible/cascade.sql:2794: ERROR:  update or delete on table "parent" violates foreign key constraint "child_p_fkey" on table "child"
+DETAIL:  Key (p)=(1) is still referenced from table "child".
+DROP TABLE
+psql:pg_tests/compatible/cascade.sql:2800: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+BEGIN
+CREATE TABLE
+CREATE TABLE
+INSERT 0 4
+INSERT 0 14
+COMMIT
+psql:pg_tests/compatible/cascade.sql:2828: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+DELETE 2
+ p | q 
+---+---
+   |  
+   | 1
+   | 2
+   | 3
+ 1 |  
+ 2 |  
+ 3 |  
+ 2 | 2
+ 2 | 2
+ 3 | 3
+ 3 | 3
+(11 rows)
+
+DELETE 1
+ p | q 
+---+---
+   |  
+   | 1
+   | 2
+   | 3
+ 1 |  
+ 2 |  
+ 3 |  
+ 3 | 3
+ 3 | 3
+(9 rows)
+
+DELETE 1
+ p | q 
+---+---
+   |  
+   | 1
+   | 2
+   | 3
+ 1 |  
+ 2 |  
+ 3 |  
+(7 rows)
+
+DROP TABLE
+psql:pg_tests/compatible/cascade.sql:2852: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+BEGIN
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+COMMIT
+psql:pg_tests/compatible/cascade.sql:2863: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+PREPARE
+DELETE 1
+ a | b 
+---+---
+ 3 | 4
+(1 row)
+
+ a | p_a 
+---+-----
+ 3 |   3
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+DELETE 0
+psql:pg_tests/compatible/cascade.sql:2888: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+BEGIN
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+COMMIT
+psql:pg_tests/compatible/cascade.sql:2910: ERROR:  unrecognized configuration parameter "autocommit_before_ddl"
+UPDATE 1

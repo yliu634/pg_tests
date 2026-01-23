@@ -1,0 +1,267 @@
+SET
+CREATE TABLE
+INSERT 0 5
+CREATE INDEX
+CREATE INDEX
+ n | a | b 
+---+---+---
+ 1 | 4 | 1
+(1 row)
+
+ n | a | b 
+---+---+---
+ 3 | 5 | 2
+(1 row)
+
+ n | a | b |  c  
+---+---+---+-----
+ 1 | 4 | 1 | bar
+(1 row)
+
+ n | a | b |  c  
+---+---+---+-----
+ 2 | 4 | 2 | bar
+(1 row)
+
+ n | a | b |  c  
+---+---+---+-----
+ 3 | 5 | 2 | foo
+(1 row)
+
+ n | a | b 
+---+---+---
+ 1 | 4 | 1
+(1 row)
+
+ n | a | b 
+---+---+---
+ 1 | 4 | 1
+(1 row)
+
+ n | a | b 
+---+---+---
+ 3 | 5 | 2
+(1 row)
+
+DROP INDEX
+DROP INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+ n | a | b 
+---+---+---
+ 1 | 4 | 1
+(1 row)
+
+ n 
+---
+ 4
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 1
+INSERT 0 1
+ k 
+---
+ 1
+ 2
+(2 rows)
+
+CREATE INDEX
+CREATE INDEX
+ k 
+---
+ 1
+ 2
+(2 rows)
+
+CREATE TABLE
+CREATE INDEX
+ indexname 
+-----------
+ d_pkey
+ foo_inv
+(2 rows)
+
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+ANALYZE
+ a  |                   b                   
+----+---------------------------------------
+ 31 | {"a": {"b": "c", "d": "e"}, "f": "g"}
+(1 row)
+
+ a  |                   b                   
+----+---------------------------------------
+ 31 | {"a": {"b": "c", "d": "e"}, "f": "g"}
+(1 row)
+
+ a |          b           
+---+----------------------
+ 7 | {"a": "b", "c": "d"}
+(1 row)
+
+ a | b 
+---+---
+(0 rows)
+
+ a | b 
+---+---
+(0 rows)
+
+ a | b 
+---+---
+(0 rows)
+
+ a  |               b               
+----+-------------------------------
+ 16 | [{"a": {"b": [1, [2]]}}, "d"]
+(1 row)
+
+ a  |               b               
+----+-------------------------------
+ 16 | [{"a": {"b": [1, [2]]}}, "d"]
+(1 row)
+
+ a  |               b               
+----+-------------------------------
+ 16 | [{"a": {"b": [1, [2]]}}, "d"]
+(1 row)
+
+ n | a | b |  c  
+---+---+---+-----
+ 5 | 3 | 7 | foo
+(1 row)
+
+ n | a | b |  c  
+---+---+---+-----
+ 5 | 3 | 7 | foo
+(1 row)
+
+ n | a | b |  c  
+---+---+---+-----
+ 5 | 3 | 7 | foo
+(1 row)
+
+ n | a | b |  c  
+---+---+---+-----
+ 5 | 3 | 7 | foo
+(1 row)
+
+ n | a | b |  c  
+---+---+---+-----
+ 5 | 3 | 7 | foo
+(1 row)
+
+ n | a | b |  c  
+---+---+---+-----
+ 5 | 3 | 7 | foo
+(1 row)
+
+ n | a | b |  c  
+---+---+---+-----
+ 5 | 3 | 7 | foo
+(1 row)
+
+ n | a | b |  c  
+---+---+---+-----
+ 5 | 3 | 7 | foo
+(1 row)
+
+DROP INDEX
+ n | a | b |  c  
+---+---+---+-----
+ 5 | 3 | 7 | foo
+(1 row)
+
+ n | a | b |  c  
+---+---+---+-----
+ 5 | 3 | 7 | foo
+(1 row)
+
+ indexname |                        indexdef                        
+-----------+--------------------------------------------------------
+ a_idx     | CREATE INDEX a_idx ON public.a USING btree (a)
+ a_pkey    | CREATE UNIQUE INDEX a_pkey ON public.a USING btree (n)
+ b_idx     | CREATE INDEX b_idx ON public.a USING btree (b)
+(3 rows)
+
+ n | a | b |  c  
+---+---+---+-----
+ 5 | 3 | 7 | foo
+(1 row)
+
+ n | a | b |  c  
+---+---+---+-----
+ 5 | 3 | 7 | foo
+(1 row)
+
+ n | a | b |  c  
+---+---+---+-----
+ 5 | 3 | 7 | foo
+(1 row)
+
+ n | a | b |  c  
+---+---+---+-----
+ 5 | 3 | 7 | foo
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 1
+ count 
+-------
+     1
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 1
+ d 
+---
+ 4
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 2
+ c | l | r  
+---+---+----
+ 1 | 1 | -1
+(1 row)
+
+RESET

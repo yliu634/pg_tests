@@ -1,0 +1,183 @@
+SET
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE SCHEMA
+CREATE FUNCTION
+SET
+                                                    create_statement                                                    
+------------------------------------------------------------------------------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.f_test_drop() RETURNS integer LANGUAGE sql AS $function$ SELECT 1 $function$ 
+ CREATE OR REPLACE FUNCTION public.f_test_drop(integer) RETURNS integer LANGUAGE sql AS $function$ SELECT 1 $function$ 
+(2 rows)
+
+                                                  create_statement                                                   
+---------------------------------------------------------------------------------------------------------------------
+ CREATE OR REPLACE FUNCTION sc1.f_test_drop(integer) RETURNS integer LANGUAGE sql AS $function$ SELECT 1 $function$ 
+(1 row)
+
+ procedures_named_f_test_drop 
+------------------------------
+                            0
+(1 row)
+
+ functions_named_f_test_drop 
+-----------------------------
+                           3
+(1 row)
+
+DROP FUNCTION
+DROP FUNCTION
+BEGIN
+DROP FUNCTION
+DROP FUNCTION
+COMMIT
+psql:pg_tests/compatible/drop_function.sql:72: WARNING:  there is no transaction in progress
+ROLLBACK
+DROP PROCEDURE
+DROP PROCEDURE
+DROP FUNCTION
+                                                    create_statement                                                    
+------------------------------------------------------------------------------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.f_test_drop(integer) RETURNS integer LANGUAGE sql AS $function$ SELECT 1 $function$ 
+(1 row)
+
+                                                  create_statement                                                   
+---------------------------------------------------------------------------------------------------------------------
+ CREATE OR REPLACE FUNCTION sc1.f_test_drop(integer) RETURNS integer LANGUAGE sql AS $function$ SELECT 1 $function$ 
+(1 row)
+
+DROP FUNCTION
+ create_statement 
+------------------
+(0 rows)
+
+                                                  create_statement                                                   
+---------------------------------------------------------------------------------------------------------------------
+ CREATE OR REPLACE FUNCTION sc1.f_test_drop(integer) RETURNS integer LANGUAGE sql AS $function$ SELECT 1 $function$ 
+(1 row)
+
+DROP FUNCTION
+ create_statement 
+------------------
+(0 rows)
+
+CREATE FUNCTION
+CREATE FUNCTION
+                                                create_statement                                                 
+-----------------------------------------------------------------------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.f_test_drop() RETURNS integer LANGUAGE sql AS $function$ SELECT 1 $function$ 
+(1 row)
+
+                                               create_statement                                               
+--------------------------------------------------------------------------------------------------------------
+ CREATE OR REPLACE FUNCTION sc1.f_test_drop() RETURNS integer LANGUAGE sql AS $function$ SELECT 1 $function$ 
+(1 row)
+
+BEGIN
+DROP FUNCTION
+DROP FUNCTION
+COMMIT
+ create_statement 
+------------------
+(0 rows)
+
+ create_statement 
+------------------
+(0 rows)
+
+SET
+DROP SCHEMA
+CREATE TYPE
+CREATE TYPE
+CREATE FUNCTION
+CREATE FUNCTION
+                                                    create_statement                                                     
+-------------------------------------------------------------------------------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.f114677(v t114677) RETURNS integer LANGUAGE sql AS $function$ SELECT 0; $function$ 
+ CREATE OR REPLACE FUNCTION public.f114677(v t114677_2) RETURNS integer LANGUAGE sql AS $function$ SELECT 1; $function$ 
+(2 rows)
+
+ f114677_overloads 
+-------------------
+                 2
+(1 row)
+
+DROP FUNCTION
+                                                    create_statement                                                     
+-------------------------------------------------------------------------------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.f114677(v t114677_2) RETURNS integer LANGUAGE sql AS $function$ SELECT 1; $function$ 
+(1 row)
+
+DROP FUNCTION
+ create_statement 
+------------------
+(0 rows)
+
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+CREATE FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+CREATE SCHEMA
+CREATE FUNCTION
+CREATE TABLE
+      to_regprocedure      
+---------------------------
+ altschema.f_called_by_b()
+(1 row)
+
+DROP SCHEMA
+DROP SCHEMA
+ to_regprocedure 
+-----------------
+ 
+(1 row)
+
+ column_name | data_type | column_default 
+-------------+-----------+----------------
+ j           | integer   | 
+(1 row)
+
+ column_name | data_type | column_default 
+-------------+-----------+----------------
+ j           | integer   | 
+(1 row)
+
+DROP FUNCTION
+DROP TABLE
+SET
+ proname |  owner   
+---------+----------
+ f_b     | postgres
+(1 row)
+
+SET
+DROP FUNCTION
+CREATE FUNCTION
+DROP FUNCTION
+CREATE FUNCTION
+DROP FUNCTION
+CREATE FUNCTION
+DROP FUNCTION
+CREATE FUNCTION
+DROP FUNCTION
+CREATE FUNCTION
+DROP FUNCTION
+CREATE FUNCTION
+DROP FUNCTION
+CREATE FUNCTION
+DROP FUNCTION
+CREATE FUNCTION
+DROP FUNCTION
+CREATE FUNCTION
+DROP FUNCTION
+CREATE FUNCTION
+DROP FUNCTION
+RESET

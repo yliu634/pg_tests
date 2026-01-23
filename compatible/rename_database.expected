@@ -1,0 +1,55 @@
+SET
+You are now connected to database "postgres" as user "postgres".
+psql:pg_tests/compatible/rename_database.sql:9: NOTICE:  database "crdb_tests_rename_database_test" does not exist, skipping
+DROP DATABASE
+psql:pg_tests/compatible/rename_database.sql:10: NOTICE:  database "crdb_tests_rename_database_u" does not exist, skipping
+DROP DATABASE
+psql:pg_tests/compatible/rename_database.sql:11: NOTICE:  database "crdb_tests_rename_database_t" does not exist, skipping
+DROP DATABASE
+psql:pg_tests/compatible/rename_database.sql:12: NOTICE:  database "crdb_tests_rename_database_v" does not exist, skipping
+DROP DATABASE
+psql:pg_tests/compatible/rename_database.sql:13: NOTICE:  role "rename_database_testuser" does not exist, skipping
+DROP ROLE
+CREATE ROLE
+CREATE DATABASE
+You are now connected to database "crdb_tests_rename_database_test" as user "postgres".
+CREATE TABLE
+INSERT 0 4
+ k | v 
+---+---
+ 1 | 2
+ 3 | 4
+ 5 | 6
+ 7 | 8
+(4 rows)
+
+You are now connected to database "postgres" as user "postgres".
+ALTER DATABASE
+You are now connected to database "crdb_tests_rename_database_u" as user "postgres".
+ k | v 
+---+---
+ 1 | 2
+ 3 | 4
+ 5 | 6
+ 7 | 8
+(4 rows)
+
+You are now connected to database "postgres" as user "postgres".
+DO
+DO
+DO
+CREATE DATABASE
+SET
+DO
+RESET
+ALTER DATABASE
+           datname            
+------------------------------
+ crdb_tests_rename_database_u
+ crdb_tests_rename_database_v
+(2 rows)
+
+DROP DATABASE
+DROP DATABASE
+DROP ROLE
+RESET

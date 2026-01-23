@@ -1,0 +1,259 @@
+SET
+DROP SCHEMA
+DROP SCHEMA
+DROP ROLE
+CREATE ROLE
+CREATE SCHEMA
+CREATE SCHEMA
+CREATE FUNCTION
+RESET
+ expect_error 
+--------------
+ t
+(1 row)
+
+psql:pg_tests/compatible/rename_table.sql:35: NOTICE:  relation "foo" does not exist, skipping
+ALTER TABLE
+CREATE TABLE
+INSERT 0 2
+ k | v 
+---+---
+ 1 | 2
+ 3 | 4
+(2 rows)
+
+ table_name | table_type 
+------------+------------
+ kv         | BASE TABLE
+(1 row)
+
+ALTER TABLE
+ expect_error 
+--------------
+ t
+(1 row)
+
+ k | v 
+---+---
+ 1 | 2
+ 3 | 4
+(2 rows)
+
+ table_name | table_type 
+------------+------------
+ new_kv     | BASE TABLE
+(1 row)
+
+ grantee  | privilege_type 
+----------+----------------
+ postgres | DELETE
+ postgres | INSERT
+ postgres | REFERENCES
+ postgres | SELECT
+ postgres | TRIGGER
+ postgres | TRUNCATE
+ postgres | UPDATE
+(7 rows)
+
+ expect_error 
+--------------
+ t
+(1 row)
+
+ expect_error 
+--------------
+ t
+(1 row)
+
+ expect_error 
+--------------
+ t
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+ expect_error 
+--------------
+ t
+(1 row)
+
+CREATE TABLE
+CREATE TABLE
+SET
+SET
+ expect_error 
+--------------
+ t
+(1 row)
+
+SET
+RESET
+ALTER TABLE
+GRANT
+psql:pg_tests/compatible/rename_table.sql:122: NOTICE:  schema "test2" already exists, skipping
+CREATE SCHEMA
+SET
+SET
+ALTER TABLE
+SET
+RESET
+GRANT
+ expect_error 
+--------------
+ t
+(1 row)
+
+ table_name | table_type 
+------------+------------
+ new_kv     | BASE TABLE
+ t2         | BASE TABLE
+(2 rows)
+
+ALTER TABLE
+ALTER TABLE
+GRANT
+ALTER TABLE
+SET
+SET
+ table_name | table_type 
+------------+------------
+ new_kv     | BASE TABLE
+(1 row)
+
+ table_name | table_type 
+------------+------------
+ t          | BASE TABLE
+(1 row)
+
+CREATE TABLE
+CREATE VIEW
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+SET
+RESET
+BEGIN
+CREATE SCHEMA
+CREATE TABLE
+INSERT 0 1
+COMMIT
+INSERT 0 1
+ expect_error 
+--------------
+ t
+(1 row)
+
+BEGIN
+CREATE SCHEMA
+CREATE TABLE
+INSERT 0 1
+ROLLBACK
+ expect_error 
+--------------
+ t
+(1 row)
+
+BEGIN
+CREATE TABLE
+INSERT 0 1
+ROLLBACK
+ expect_error 
+--------------
+ t
+(1 row)
+
+ expect_error 
+--------------
+ t
+(1 row)
+
+SET
+ table_name | table_type 
+------------+------------
+ kv         | BASE TABLE
+(1 row)
+
+ expect_error 
+--------------
+ t
+(1 row)
+
+ expect_error 
+--------------
+ t
+(1 row)
+
+ expect_error 
+--------------
+ t
+(1 row)
+
+ table_name | table_type 
+------------+------------
+ kv         | BASE TABLE
+(1 row)
+
+RESET
+CREATE SCHEMA
+CREATE SCHEMA
+SET
+CREATE SCHEMA
+SET
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+psql:pg_tests/compatible/rename_table.sql:299: NOTICE:  relation "tbl2" does not exist, skipping
+ALTER TABLE
+psql:pg_tests/compatible/rename_table.sql:302: NOTICE:  relation "tbl1" does not exist, skipping
+ALTER TABLE
+psql:pg_tests/compatible/rename_table.sql:305: NOTICE:  relation "tbl2" does not exist, skipping
+ALTER TABLE
+RESET
+DROP SCHEMA
+DROP SCHEMA
+psql:pg_tests/compatible/rename_table.sql:313: NOTICE:  drop cascades to table newdb_newsc.tbl1
+DROP SCHEMA
+psql:pg_tests/compatible/rename_table.sql:314: NOTICE:  drop cascades to table newdb.tbl2
+DROP SCHEMA
+CREATE SCHEMA
+CREATE SCHEMA
+SET
+CREATE TYPE
+CREATE TABLE
+ expect_error 
+--------------
+ t
+(1 row)
+
+CREATE TABLE
+BEGIN
+ALTER TABLE
+ expect_error 
+--------------
+ t
+(1 row)
+
+ROLLBACK
+BEGIN
+ALTER TABLE
+ expect_error 
+--------------
+ t
+(1 row)
+
+ROLLBACK
+RESET
+psql:pg_tests/compatible/rename_table.sql:363: NOTICE:  drop cascades to 3 other objects
+DETAIL:  drop cascades to type olddb.typ
+drop cascades to table olddb.tbl
+drop cascades to table olddb.tbl2
+DROP SCHEMA
+DROP SCHEMA
+CREATE SCHEMA
+SET
+CREATE SCHEMA
+CREATE TABLE
+CREATE SCHEMA
+ALTER TABLE

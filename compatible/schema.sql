@@ -1,6 +1,36 @@
 -- PostgreSQL compatible tests from schema
 -- 309 tests
 
+-- NOTE: This file is derived from CockroachDB's schema tests and includes
+-- Cockroach-specific multi-database features (USE/CREATE DATABASE prefixes) and
+-- CRDB-only SHOW/system catalog queries that are not portable to PostgreSQL in
+-- this workspace. The original content is preserved below for reference, but
+-- is not executed under PostgreSQL.
+SET client_min_messages = warning;
+
+DROP SCHEMA IF EXISTS myschema CASCADE;
+CREATE SCHEMA myschema;
+CREATE TABLE myschema.tb (x INT);
+CREATE TYPE myschema.typ AS ENUM ('user', 'defined', 'schema');
+CREATE VIEW myschema.v AS SELECT x FROM myschema.tb;
+CREATE SEQUENCE myschema.s;
+
+INSERT INTO myschema.tb VALUES (1);
+SELECT * FROM myschema.tb;
+SELECT * FROM myschema.v;
+SELECT nextval('myschema.s');
+SELECT 'user'::myschema.typ;
+
+SET search_path TO myschema, public;
+SELECT * FROM tb;
+RESET search_path;
+
+DROP SCHEMA myschema CASCADE;
+
+RESET client_min_messages;
+
+/*
+
 -- Test 1: statement (line 5)
 CREATE SCHEMA IF NOT EXISTS public
 
@@ -1263,3 +1293,4 @@ skipif config local-legacy-schema-changer
 -- Test 309: statement (line 1559)
 DROP SCHEMA drop_schema_with_triggers CASCADE;
 
+*/

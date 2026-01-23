@@ -1,0 +1,5 @@
+pg_tests/compatible/family.sql
+pg_tests/compatible/feature_counts.sql
+pg_tests/compatible/fk.sql
+pg_tests/compatible/float.sql
+pg_tests/compatible/format.sql

@@ -1,0 +1,119 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TYPE
+DROP TYPE
+DROP TYPE
+DROP TYPE
+DROP TYPE
+DROP TYPE
+DROP SCHEMA
+RESET
+CREATE TYPE
+DROP TYPE
+CREATE TYPE
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+  row  | a | b 
+-------+---+---
+ (1,2) | 1 | 2
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+INSERT 0 1
+INSERT 0 2
+   a   | a | b 
+-------+---+---
+       |   |  
+ (1,2) | 1 | 2
+ (1,)  | 1 |  
+ (1,2) | 1 | 2
+ (1,)  | 1 |  
+(5 rows)
+
+psql:pg_tests/compatible/composite_types.sql:68: NOTICE:  drop cascades to column a of table tab
+DROP TYPE
+CREATE TYPE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+          x          
+---------------------
+ ("{1,2,3}","{a,b}")
+ ("{4,5}","{c,d,e}")
+(2 rows)
+
+    a    |    b    
+---------+---------
+ {1,2,3} | {a,b}
+ {4,5}   | {c,d,e}
+(2 rows)
+
+DROP TABLE
+DROP TYPE
+CREATE TYPE
+CREATE TABLE
+INSERT 0 1
+               a               
+-------------------------------
+ {"(1,2)","(3,4)",NULL,"(5,)"}
+(1 row)
+
+DROP TABLE
+CREATE TYPE
+DROP TABLE
+psql:pg_tests/compatible/composite_types.sql:124: NOTICE:  drop cascades to 2 other objects
+DETAIL:  drop cascades to column t2 of composite type t2
+drop cascades to column t1 of composite type t2
+DROP TYPE
+CREATE TYPE
+DROP TYPE
+CREATE TYPE
+CREATE TABLE
+CREATE TYPE
+psql:pg_tests/compatible/composite_types.sql:148: NOTICE:  drop cascades to column e of composite type t
+DROP TYPE
+DROP TYPE
+CREATE TYPE
+CREATE TABLE
+ALTER TABLE
+DROP TYPE
+CREATE TYPE
+DROP TABLE
+CREATE TABLE
+DROP TABLE
+DROP TYPE
+CREATE TYPE
+CREATE TABLE
+CREATE INDEX
+DROP TABLE
+DROP TYPE
+CREATE TYPE
+CREATE TABLE
+ALTER TABLE
+DROP TYPE
+DROP TABLE
+CREATE TYPE
+CREATE TYPE
+CREATE SCHEMA
+CREATE TYPE
+CREATE TYPE
+ typname 
+---------
+ ct1
+ t2
+(2 rows)
+
+DROP TYPE
+DROP TYPE
+DROP SCHEMA
+DROP TYPE
+DROP TYPE

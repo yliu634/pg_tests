@@ -1,0 +1,63 @@
+SET
+DROP SCHEMA
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE SCHEMA
+SET
+CREATE TABLE
+CREATE TYPE
+CREATE FUNCTION
+RESET
+   schema    |       owner       
+-------------+-------------------
+ reassign_sc | reassign_old_role
+(1 row)
+
+ relname | relkind |       owner       
+---------+---------+-------------------
+ t       | r       | reassign_old_role
+(1 row)
+
+ typname |       owner       
+---------+-------------------
+ _t      | reassign_old_role
+ _typ    | reassign_old_role
+ t       | reassign_old_role
+ typ     | reassign_old_role
+(4 rows)
+
+ proname |       owner       
+---------+-------------------
+ f       | reassign_old_role
+(1 row)
+
+REASSIGN OWNED
+   schema    |       owner       
+-------------+-------------------
+ reassign_sc | reassign_new_role
+(1 row)
+
+ relname | relkind |       owner       
+---------+---------+-------------------
+ t       | r       | reassign_new_role
+(1 row)
+
+ typname |       owner       
+---------+-------------------
+ _t      | reassign_new_role
+ _typ    | reassign_new_role
+ t       | reassign_new_role
+ typ     | reassign_new_role
+(4 rows)
+
+ proname |       owner       
+---------+-------------------
+ f       | reassign_new_role
+(1 row)
+
+DROP SCHEMA
+DROP ROLE
+DROP ROLE
+RESET

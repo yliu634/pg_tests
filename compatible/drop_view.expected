@@ -1,0 +1,114 @@
+SET
+CREATE PROCEDURE
+DROP DATABASE
+DROP ROLE
+CREATE ROLE
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP VIEW
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+CREATE VIEW
+CREATE VIEW
+ table_name | table_type 
+------------+------------
+ a          | BASE TABLE
+ b          | VIEW
+ c          | VIEW
+(3 rows)
+
+CALL
+CALL
+CALL
+CREATE VIEW
+CREATE VIEW
+CALL
+GRANT
+ table_name | table_type 
+------------+------------
+ a          | BASE TABLE
+ b          | VIEW
+ c          | VIEW
+ d          | VIEW
+ diamond    | VIEW
+(5 rows)
+
+DROP VIEW
+DROP VIEW
+RESET
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+GRANT
+GRANT
+GRANT
+ table_name | table_type 
+------------+------------
+ a          | BASE TABLE
+ b          | VIEW
+ c          | VIEW
+ testuser1  | VIEW
+ testuser2  | VIEW
+ testuser3  | VIEW
+(6 rows)
+
+REVOKE
+SET
+CALL
+ table_name | table_type 
+------------+------------
+ testuser1  | VIEW
+ testuser2  | VIEW
+ testuser3  | VIEW
+(3 rows)
+
+CALL
+CALL
+CALL
+ table_name | table_type 
+------------+------------
+ testuser1  | VIEW
+ testuser2  | VIEW
+ testuser3  | VIEW
+(3 rows)
+
+CALL
+RESET
+GRANT
+GRANT
+GRANT
+CALL
+SET
+CALL
+RESET
+DROP TABLE
+ table_name | table_type 
+------------+------------
+(0 rows)
+
+CREATE VIEW
+CREATE VIEW
+CALL
+DROP VIEW
+CREATE VIEW
+CREATE VIEW
+CALL
+DROP VIEW
+CREATE DATABASE
+You are now connected to database "a" as user "postgres".
+CREATE TABLE
+CREATE TABLE
+CREATE VIEW
+CREATE VIEW
+You are now connected to database "crdb_tests_drop_view" as user "postgres".
+DROP DATABASE
+RESET

@@ -1,0 +1,7 @@
+SET
+                                  notice                                   
+---------------------------------------------------------------------------
+ skipped: tenant_from_tenant_hint uses CockroachDB tenant/cluster settings
+(1 row)
+
+RESET

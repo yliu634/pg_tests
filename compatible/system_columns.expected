@@ -1,0 +1,112 @@
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+ ?column? 
+----------
+ t
+(1 row)
+
+INSERT 0 1
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? | ?column? | ?column? | ?column? 
+----------+----------+----------+----------
+ t        | t        | t        | t
+(1 row)
+
+UPDATE 1
+ ?column? 
+----------
+ t
+ t
+(2 rows)
+
+ x | y | z 
+---+---+---
+ 2 | 3 | 4
+ 1 | 2 | 5
+(2 rows)
+
+ x | y | z | x | y | z 
+---+---+---+---+---+---
+ 2 | 3 | 4 | 2 | 3 | 4
+ 1 | 2 | 5 | 1 | 2 | 5
+(2 rows)
+
+UPDATE 1
+ x | y | z 
+---+---+---
+ 2 | 3 | 4
+ 1 | 2 | 6
+(2 rows)
+
+DELETE 1
+ x | y | z 
+---+---+---
+ 1 | 2 | 6
+(1 row)
+
+ x | y | foo 
+---+---+-----
+ 1 | 2 | t
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+ ?column? | x | x 
+----------+---+---
+ t        | 1 | 1
+(1 row)
+
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+ tableoid | x 
+----------+---
+    24785 | 1
+    24785 | 2
+(2 rows)
+
+ tableoid | x 
+----------+---
+    24790 | 1
+    24790 | 2
+(2 rows)
+
+ tableoid | x | tableoid | x 
+----------+---+----------+---
+    24785 | 1 |    24790 | 1
+    24785 | 2 |    24790 | 2
+(2 rows)
+
+ tableoid | x | tableoid | x 
+----------+---+----------+---
+    24785 | 1 |    24790 | 1
+    24785 | 2 |    24790 | 2
+(2 rows)
+
+ tableoid | ?column? 
+----------+----------
+    24785 | t
+    24785 | t
+(2 rows)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+ tableoid | x 
+----------+---
+    24795 | 1
+(1 row)
+
+DO

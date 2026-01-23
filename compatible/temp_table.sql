@@ -2,71 +2,85 @@
 -- 141 tests
 
 -- Test 1: statement (line 3)
-SET CLUSTER SETTING sql.cross_db_views.enabled = TRUE
+-- CockroachDB-only: SET CLUSTER SETTING sql.cross_db_views.enabled = TRUE;
 
 -- Test 2: statement (line 6)
-CREATE TEMP TABLE a_temp(a INT PRIMARY KEY)
+CREATE TEMP TABLE a_temp(a INT PRIMARY KEY);
 
 -- Test 3: statement (line 14)
-CREATE TEMP TABLE tbl (a int)
+CREATE TEMP TABLE tbl (a int);
+SELECT pg_my_temp_schema() AS temp_schema_oid \gset
 
 -- Test 4: query (line 17)
-SELECT table_name, type FROM [SHOW TABLES]
+SELECT
+  table_name,
+  CASE table_type WHEN 'BASE TABLE' THEN 'table' WHEN 'VIEW' THEN 'view' ELSE lower(table_type) END AS type
+FROM information_schema.tables
+WHERE table_schema = 'public' OR table_schema LIKE 'pg_temp_%'
+ORDER BY table_name;
 
 -- Test 5: query (line 26)
-SELECT nspname LIKE 'pg_temp%' FROM pg_namespace where oid = $tempSchemaOID
+SELECT nspname LIKE 'pg_temp%' FROM pg_namespace WHERE oid = :temp_schema_oid;
 
 -- Test 6: statement (line 31)
-DROP TABLE tbl
+DROP TABLE tbl;
 
 -- Test 7: statement (line 36)
-CREATE TEMP TABLE temp_table_test (a timetz PRIMARY KEY) ON COMMIT PRESERVE ROWS
+CREATE TEMP TABLE temp_table_test (a timetz PRIMARY KEY) ON COMMIT PRESERVE ROWS;
 
 -- Test 8: statement (line 39)
-CREATE TEMP TABLE temp_table_ref (a timetz PRIMARY KEY)
+CREATE TEMP TABLE temp_table_ref (a timetz PRIMARY KEY);
 
 -- Test 9: statement (line 42)
-ALTER TABLE temp_table_ref ADD CONSTRAINT fk_temp FOREIGN KEY (a) REFERENCES temp_table_test(a)
+ALTER TABLE temp_table_ref ADD CONSTRAINT fk_temp FOREIGN KEY (a) REFERENCES temp_table_test(a);
 
 -- Test 10: query (line 45)
-SELECT table_name, table_type FROM information_schema.tables WHERE table_name = 'temp_table_test' AND table_schema LIKE 'pg_temp_%'
+SELECT table_name, table_type FROM information_schema.tables WHERE table_name = 'temp_table_test' AND table_schema LIKE 'pg_temp_%';
 
 -- Test 11: query (line 51)
-SELECT count(1) FROM pg_namespace WHERE nspname LIKE 'pg_temp_%'
+SELECT count(1) FROM pg_namespace WHERE nspname LIKE 'pg_temp_%';
 
 -- Test 12: query (line 56)
-SELECT table_name FROM [SHOW TABLES FROM pg_temp]
+SELECT table_name
+FROM information_schema.tables
+WHERE table_schema LIKE 'pg_temp_%'
+ORDER BY table_name;
 
 -- Test 13: statement (line 62)
-DROP TABLE temp_table_ref CASCADE; DROP TABLE temp_table_test CASCADE
+DROP TABLE temp_table_ref CASCADE;
+DROP TABLE temp_table_test CASCADE;
 
 -- Test 14: statement (line 68)
-CREATE TEMP TABLE a (a int)
+CREATE TEMP TABLE a (a int PRIMARY KEY);
 
 -- Test 15: statement (line 71)
-CREATE TEMP TABLE b (c int NOT NULL PRIMARY KEY, FOREIGN KEY (c) REFERENCES a ON UPDATE SET NULL)
+CREATE TEMP TABLE b (c int NOT NULL PRIMARY KEY, FOREIGN KEY (c) REFERENCES a ON UPDATE SET NULL);
 
 -- Test 16: statement (line 74)
-CREATE TEMP TABLE b (c int DEFAULT NULL PRIMARY KEY, FOREIGN KEY (c) REFERENCES a ON UPDATE SET DEFAULT)
+DROP TABLE b;
+CREATE TEMP TABLE b (c int DEFAULT NULL PRIMARY KEY, FOREIGN KEY (c) REFERENCES a ON UPDATE SET DEFAULT);
 
 -- Test 17: statement (line 77)
-DROP TABLE a
+DROP TABLE b;
+DROP TABLE a;
 
 -- Test 18: statement (line 83)
 BEGIN;
 CREATE TABLE table_a (a int); CREATE TEMP TABLE table_a (a int);
 INSERT INTO table_a VALUES (1); INSERT INTO pg_temp.table_a VALUES (2); INSERT INTO public.table_a VALUES (3);
-COMMIT
+COMMIT;
 
 -- Test 19: query (line 89)
-SELECT * FROM pg_temp.table_a ORDER BY a
+SELECT * FROM pg_temp.table_a ORDER BY a;
 
 -- Test 20: query (line 95)
-SELECT * FROM public.table_a ORDER BY a
+SELECT * FROM public.table_a ORDER BY a;
 
 -- Test 21: statement (line 100)
-DROP TABLE pg_temp.table_a; DROP TABLE public.table_a
+DROP TABLE pg_temp.table_a;
+DROP TABLE public.table_a;
 
+/*
 -- Test 22: statement (line 106)
 CREATE DATABASE bob; USE bob; CREATE TEMP TABLE a(a int); USE defaultdb
 
@@ -87,105 +101,115 @@ DROP VIEW a_view; ALTER DATABASE bob RENAME TO alice
 
 -- Test 28: statement (line 124)
 DROP DATABASE alice CASCADE
+*/
 
 -- Test 29: statement (line 130)
-CREATE TABLE permanent_table(a int); CREATE TEMP TABLE temp_table(a int)
+CREATE TABLE permanent_table(a int);
+CREATE TEMP TABLE temp_table(a int);
 
 -- Test 30: statement (line 133)
-INSERT INTO permanent_table VALUES (1); INSERT INTO temp_table VALUES (2)
+INSERT INTO permanent_table VALUES (1);
+INSERT INTO temp_table VALUES (2);
 
 -- Test 31: statement (line 136)
-CREATE TEMP VIEW view_on_permanent AS SELECT a FROM permanent_table
+CREATE TEMP VIEW view_on_permanent AS SELECT a FROM permanent_table;
 
 -- Test 32: query (line 139)
-SELECT * from pg_temp.view_on_permanent
+SELECT * from pg_temp.view_on_permanent;
 
 -- Test 33: statement (line 144)
-CREATE TEMP VIEW view_on_temp AS SELECT a FROM temp_table
+CREATE TEMP VIEW view_on_temp AS SELECT a FROM temp_table;
 
 -- Test 34: query (line 147)
-SELECT * from pg_temp.view_on_temp
+SELECT * from pg_temp.view_on_temp;
 
 -- Test 35: query (line 155)
-CREATE VIEW upgrade_temp_view AS SELECT a FROM temp_table
+CREATE TEMP VIEW upgrade_temp_view AS SELECT a FROM temp_table;
 
 -- Test 36: statement (line 161)
-CREATE VIEW upgrade_temp_view AS SELECT a FROM temp_table
+DROP VIEW upgrade_temp_view;
+CREATE TEMP VIEW upgrade_temp_view AS SELECT a FROM temp_table;
 
 -- Test 37: query (line 165)
-SELECT * from pg_temp.upgrade_temp_view
+SELECT * from pg_temp.upgrade_temp_view;
 
 -- Test 38: statement (line 170)
-DROP VIEW view_on_temp; DROP VIEW view_on_permanent; DROP VIEW upgrade_temp_view
+DROP VIEW view_on_temp;
+DROP VIEW view_on_permanent;
+DROP VIEW upgrade_temp_view;
 
 -- Test 39: statement (line 173)
-DROP TABLE permanent_table; DROP TABLE temp_table
+DROP TABLE permanent_table;
+DROP TABLE temp_table;
 
 -- Test 40: statement (line 179)
-CREATE TEMP SEQUENCE temp_seq; CREATE TABLE a (a int DEFAULT nextval('temp_seq'))
+CREATE TEMP SEQUENCE temp_seq;
+CREATE TABLE a (a int DEFAULT nextval('temp_seq'));
 
 -- Test 41: statement (line 182)
-INSERT INTO a VALUES (default), (default), (100)
+INSERT INTO a VALUES (default), (default), (100);
 
 -- Test 42: query (line 185)
-SELECT * FROM a ORDER BY a
+SELECT * FROM a ORDER BY a;
 
 -- Test 43: statement (line 193)
-CREATE TABLE perm_table(a int DEFAULT nextval('pg_temp.temp_seq'))
+CREATE TABLE perm_table(a int DEFAULT nextval('pg_temp.temp_seq'));
 
 -- Test 44: statement (line 196)
-INSERT INTO perm_table VALUES (default), (default), (101)
+INSERT INTO perm_table VALUES (default), (default), (101);
 
 -- Test 45: query (line 199)
-SELECT * FROM perm_table ORDER BY a
+SELECT * FROM perm_table ORDER BY a;
 
 -- Test 46: statement (line 206)
-ALTER TABLE a ALTER COLUMN a DROP DEFAULT
+ALTER TABLE a ALTER COLUMN a DROP DEFAULT;
 
 -- Test 47: statement (line 209)
-DROP SEQUENCE pg_temp.temp_seq
+ALTER TABLE perm_table ALTER COLUMN a DROP DEFAULT;
+DROP SEQUENCE IF EXISTS pg_temp.temp_seq;
 
 -- Test 48: statement (line 213)
-SET serial_normalization='sql_sequence'
+-- CockroachDB-only: SET serial_normalization='sql_sequence'
 
 -- Test 49: statement (line 216)
-CREATE TEMP TABLE ref_temp_table (a SERIAL)
+CREATE TEMP TABLE ref_temp_table (a SERIAL);
 
 -- Test 50: query (line 219)
-SELECT nextval('pg_temp.ref_temp_table_a_seq')
+SELECT nextval('pg_temp.ref_temp_table_a_seq');
 
 -- Test 51: statement (line 224)
-DROP TABLE perm_table; DROP TABLE ref_temp_table
+DROP TABLE perm_table;
+DROP TABLE ref_temp_table;
 
 -- Test 52: statement (line 227)
-DROP SEQUENCE pg_temp.temp_seq; DROP TABLE a
+DROP SEQUENCE IF EXISTS pg_temp.temp_seq;
+DROP TABLE a;
 
 -- Test 53: query (line 230)
-SELECT table_id, name, state
-FROM crdb_internal.tables WHERE name
-LIKE 'ref_temp_table%' AND state = 'PUBLIC'
+-- CockroachDB-only: crdb_internal.tables
 
 -- Test 54: statement (line 236)
-SET serial_normalization='rowid'
+-- CockroachDB-only: SET serial_normalization='rowid'
 
 -- Test 55: statement (line 241)
-CREATE TABLE a (a int) ON COMMIT PRESERVE ROWS
+-- CockroachDB-only (ON COMMIT applies to TEMP tables in PostgreSQL): CREATE TABLE a (a int) ON COMMIT PRESERVE ROWS
 
 -- Test 56: statement (line 246)
 CREATE TEMP TABLE regression_47030(c0 INT); INSERT INTO regression_47030 VALUES (1);
 
 -- Test 57: query (line 249)
-SELECT * FROM regression_47030
+SELECT * FROM regression_47030;
 
 -- Test 58: statement (line 254)
-TRUNCATE regression_47030
+TRUNCATE regression_47030;
 
 -- Test 59: statement (line 257)
-INSERT INTO regression_47030 VALUES (2)
+INSERT INTO regression_47030 VALUES (2);
 
 -- Test 60: query (line 260)
-SELECT * FROM regression_47030
+SELECT * FROM regression_47030;
 
+/*
 -- Test 61: statement (line 268)
 CREATE TEMP TABLE regression_48233(a int)
 
@@ -438,9 +462,10 @@ RESET database
 
 -- Test 134: statement (line 602)
 DROP DATABASE database_142783
+*/
 
 -- Test 135: statement (line 610)
-USE defaultdb;
+-- CockroachDB-only: USE defaultdb;
 
 -- Test 136: statement (line 613)
 create type my_enum as enum ('value1', 'value2');
@@ -459,4 +484,3 @@ DROP TYPE my_enum;
 
 -- Test 141: statement (line 628)
 DROP TABLE tmp_table;
-

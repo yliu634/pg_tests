@@ -1,0 +1,58 @@
+SET
+DROP ROLE
+DROP SCHEMA
+DROP SCHEMA
+CREATE ROLE
+CREATE SCHEMA
+GRANT
+CREATE VIEW
+GRANT
+CREATE SCHEMA
+GRANT
+CREATE VIEW
+GRANT
+         name         
+----------------------
+ crdb_internal.tables
+(1 row)
+
+ has_table_privilege 
+---------------------
+ t
+(1 row)
+
+ username |         path         | privileges | grant_options 
+----------+----------------------+------------+---------------
+ PUBLIC   | crdb_internal.tables | SELECT     | NO
+(1 row)
+
+REVOKE
+ has_table_privilege 
+---------------------
+ f
+(1 row)
+
+ username | path | privileges | grant_options 
+----------+------+------------+---------------
+(0 rows)
+
+GRANT
+ has_table_privilege 
+---------------------
+ t
+(1 row)
+
+ username |         path         | privileges | grant_options 
+----------+----------------------+------------+---------------
+ PUBLIC   | crdb_internal.tables | SELECT     | NO
+(1 row)
+
+SET
+         name         
+----------------------
+ crdb_internal.tables
+(1 row)
+
+RESET
+DROP ROLE
+RESET

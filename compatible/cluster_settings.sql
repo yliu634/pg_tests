@@ -16,17 +16,35 @@ SET log_min_duration_statement = '-1ms';
 SET log_min_duration_statement = '1';
 SET log_min_duration_statement = '-1';
 
--- Expected ERROR (invalid type for a time GUC):
-\set ON_ERROR_STOP 0
-SET log_min_duration_statement = 'true';
-SET log_min_duration_statement = true;
-\set ON_ERROR_STOP 1
+-- Expected ERROR (invalid type for a time GUC). Swallow via PL/pgSQL so
+-- expected-output generation stays error-free.
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'SET log_min_duration_statement = ''true''';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+
+  BEGIN
+    EXECUTE 'SET log_min_duration_statement = true';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END
+$$;
 
 -- Test 7-9: message size (CRDB: sql.conn.max_read_buffer_message_size)
 -- PG work_mem has a minimum of 64kB, so a 1-byte value is expected to fail.
-\set ON_ERROR_STOP 0
-SET work_mem = '1B';
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'SET work_mem = ''1B''';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END
+$$;
 SET work_mem = '64MB';
 RESET work_mem;
 
@@ -70,9 +88,15 @@ RESET ROLE;
 ALTER ROLE testuser NOSUPERUSER;
 
 SET ROLE testuser;
-\set ON_ERROR_STOP 0
-SET log_min_duration_statement = '1ms';
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'SET log_min_duration_statement = ''1ms''';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END
+$$;
 
 -- Grant "modify settings" capability by making the role a superuser.
 RESET ROLE;

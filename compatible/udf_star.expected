@@ -1,0 +1,213 @@
+SET
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+psql:compatible/udf_star.sql:89: ERROR:  column reference "a" is ambiguous
+LINE 3:   SELECT a FROM (SELECT * FROM (SELECT a FROM t_onecol) AS f...
+                 ^
+         proname          |                                           prosrc                                            
+--------------------------+---------------------------------------------------------------------------------------------
+ f_allcolsel              |                                                                                            +
+                          |   SELECT t_twocol.* FROM t_twocol;                                                         +
+                          | 
+ f_allcolsel_alias        |                                                                                            +
+                          |   SELECT t1.* FROM t_twocol AS t1, t_twocol AS t2 WHERE t1.a = t2.a;                       +
+                          | 
+ f_anon_subqueries        |                                                                                            +
+                          |   SELECT * FROM (SELECT a FROM t_onecol) AS t1 JOIN (SELECT a FROM t_twocol) AS t2 ON true;+
+                          |   SELECT 1;                                                                                +
+                          | 
+ f_exprstar               |                                                                                            +
+                          |   SELECT (t_onecol).* FROM t_onecol;                                                       +
+                          | 
+ f_subquery               |                                                                                            +
+                          |   SELECT * FROM (SELECT a FROM (SELECT * FROM t_onecol) AS foo) AS bar;                    +
+                          | 
+ f_subquery_unaliased     |                                                                                            +
+                          |   SELECT * FROM (SELECT a FROM (SELECT * FROM t_onecol) AS foo) AS bar;                    +
+                          | 
+ f_tuplestar              |                                                                                            +
+                          |   SELECT (t_twocol).* FROM t_twocol;                                                       +
+                          | 
+ f_unqualified_doublestar |                                                                                            +
+                          |   SELECT *, * FROM t_onecol;                                                               +
+                          |   SELECT 1;                                                                                +
+                          | 
+ f_unqualified_multicol   |                                                                                            +
+                          |   SELECT *, a FROM t_onecol;                                                               +
+                          |   SELECT 1;                                                                                +
+                          | 
+ f_unqualified_onecol     |                                                                                            +
+                          |   SELECT * FROM t_onecol;                                                                  +
+                          | 
+ f_unqualified_twocol     |                                                                                            +
+                          |   SELECT * FROM t_twocol;                                                                  +
+                          | 
+(11 rows)
+
+                           pg_get_functiondef                            
+-------------------------------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.f_subquery()                         +
+  RETURNS integer                                                       +
+  LANGUAGE sql                                                          +
+ AS $function$                                                          +
+   SELECT * FROM (SELECT a FROM (SELECT * FROM t_onecol) AS foo) AS bar;+
+ $function$                                                             +
+ 
+(1 row)
+
+                          pg_get_functiondef                          
+----------------------------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.f_allcolsel_alias()               +
+  RETURNS t_twocol                                                   +
+  LANGUAGE sql                                                       +
+ AS $function$                                                       +
+   SELECT t1.* FROM t_twocol AS t1, t_twocol AS t2 WHERE t1.a = t2.a;+
+ $function$                                                          +
+ 
+(1 row)
+
+ f_unqualified_onecol 
+----------------------
+                    1
+(1 row)
+
+ f_subquery 
+------------
+          1
+(1 row)
+
+ f_exprstar 
+------------
+          1
+(1 row)
+
+ALTER TABLE
+psql:compatible/udf_star.sql:116: ERROR:  return type mismatch in function declared to return integer
+DETAIL:  Final statement must return exactly one column.
+CONTEXT:  SQL function "f_unqualified_onecol" during startup
+ f_subquery 
+------------
+          1
+(1 row)
+
+ALTER TABLE
+ f_unqualified_twocol 
+----------------------
+ (1,2)
+(1 row)
+
+ f_allcolsel 
+-------------
+ (1,2)
+(1 row)
+
+ f_allcolsel_alias 
+-------------------
+ (1,2)
+(1 row)
+
+ALTER TABLE
+ f_unqualified_twocol 
+----------------------
+ (1,2,5)
+(1 row)
+
+ALTER TABLE
+ f_unqualified_twocol 
+----------------------
+ (1,2)
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE VIEW
+psql:compatible/udf_star.sql:166: ERROR:  cannot drop column b of table t_twocol_prime because other objects depend on it
+DETAIL:  view v_twocol_b depends on column b of table t_twocol_prime
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+DROP FUNCTION
+DROP FUNCTION
+ALTER TABLE
+DROP TABLE
+         proname          |                                           prosrc                                            
+--------------------------+---------------------------------------------------------------------------------------------
+ f_allcolsel              |                                                                                            +
+                          |   SELECT t_twocol.* FROM t_twocol;                                                         +
+                          | 
+ f_anon_subqueries        |                                                                                            +
+                          |   SELECT * FROM (SELECT a FROM t_onecol) AS t1 JOIN (SELECT a FROM t_twocol) AS t2 ON true;+
+                          |   SELECT 1;                                                                                +
+                          | 
+ f_exprstar               |                                                                                            +
+                          |   SELECT (t_onecol).* FROM t_onecol;                                                       +
+                          | 
+ f_subquery               |                                                                                            +
+                          |   SELECT * FROM (SELECT a FROM (SELECT * FROM t_onecol) AS foo) AS bar;                    +
+                          | 
+ f_subquery_unaliased     |                                                                                            +
+                          |   SELECT * FROM (SELECT a FROM (SELECT * FROM t_onecol) AS foo) AS bar;                    +
+                          | 
+ f_unqualified_doublestar |                                                                                            +
+                          |   SELECT *, * FROM t_onecol;                                                               +
+                          |   SELECT 1;                                                                                +
+                          | 
+ f_unqualified_multicol   |                                                                                            +
+                          |   SELECT *, a FROM t_onecol;                                                               +
+                          |   SELECT 1;                                                                                +
+                          | 
+ f_unqualified_onecol     |                                                                                            +
+                          |   SELECT * FROM t_onecol;                                                                  +
+                          | 
+ f_unqualified_twocol     |                                                                                            +
+                          |   SELECT * FROM t_twocol;                                                                  +
+                          | 
+(9 rows)
+
+         proname          |                                           prosrc                                            
+--------------------------+---------------------------------------------------------------------------------------------
+ f_allcolsel              |                                                                                            +
+                          |   SELECT t_twocol.* FROM t_twocol;                                                         +
+                          | 
+ f_anon_subqueries        |                                                                                            +
+                          |   SELECT * FROM (SELECT a FROM t_onecol) AS t1 JOIN (SELECT a FROM t_twocol) AS t2 ON true;+
+                          |   SELECT 1;                                                                                +
+                          | 
+ f_exprstar               |                                                                                            +
+                          |   SELECT (t_onecol).* FROM t_onecol;                                                       +
+                          | 
+ f_subquery               |                                                                                            +
+                          |   SELECT * FROM (SELECT a FROM (SELECT * FROM t_onecol) AS foo) AS bar;                    +
+                          | 
+ f_subquery_unaliased     |                                                                                            +
+                          |   SELECT * FROM (SELECT a FROM (SELECT * FROM t_onecol) AS foo) AS bar;                    +
+                          | 
+ f_unqualified_doublestar |                                                                                            +
+                          |   SELECT *, * FROM t_onecol;                                                               +
+                          |   SELECT 1;                                                                                +
+                          | 
+ f_unqualified_multicol   |                                                                                            +
+                          |   SELECT *, a FROM t_onecol;                                                               +
+                          |   SELECT 1;                                                                                +
+                          | 
+ f_unqualified_onecol     |                                                                                            +
+                          |   SELECT * FROM t_onecol;                                                                  +
+                          | 
+ f_unqualified_twocol     |                                                                                            +
+                          |   SELECT * FROM t_twocol;                                                                  +
+                          | 
+(9 rows)
+
+RESET

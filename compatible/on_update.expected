@@ -1,0 +1,83 @@
+SET
+CREATE FUNCTION
+DROP TABLE
+CREATE TABLE
+CREATE TRIGGER
+INSERT 0 1
+  p  |       k       
+-----+---------------
+ pk1 | to_be_changed
+(1 row)
+
+UPDATE 1
+  p  |    k    
+-----+---------
+ pk2 | regress
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TRIGGER
+INSERT 0 1
+  p  |    k    
+-----+---------
+ pk1 | default
+(1 row)
+
+UPDATE 1
+  p  |    k    
+-----+---------
+ pk2 | regress
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE TRIGGER
+INSERT 0 1
+  p  |  j   |    k    
+-----+------+---------
+ pk1 | val1 | whatevs
+(1 row)
+
+INSERT 0 2
+  p  |  j   |    k    
+-----+------+---------
+ pk1 | val2 | regress
+ pk2 | val3 | whatevs
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+  p  |       k       
+-----+---------------
+ pk1 | to_be_changed
+(1 row)
+
+UPDATE 1
+  p  |       k       
+-----+---------------
+ pk2 | to_be_changed
+(1 row)
+
+CREATE TRIGGER
+UPDATE 1
+  p  |    k    
+-----+---------
+ pk3 | regress
+(1 row)
+
+DROP TRIGGER
+UPDATE 1
+UPDATE 1
+  p  |         k         
+-----+-------------------
+ pk4 | should_not_change
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP FUNCTION
+RESET

@@ -1,0 +1,75 @@
+SET
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+UPDATE 1
+ y | z | w 
+---+---+---
+ 2 |   |  
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+ y | z | v 
+---+---+---
+ 2 | 1 | 1
+(1 row)
+
+INSERT 0 1
+ y | z  | v  
+---+----+----
+ 2 | 20 | 20
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 2
+INSERT 0 2
+ y  |   z    | w  
+----+--------+----
+ 3  |    5.0 | 16
+ 6  |   7.00 |  8
+ 10 | 11.000 | 12
+(3 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 3
+CREATE INDEX
+ y  | z  | w  | v  
+----+----+----+----
+  2 |  3 |  4 |  5
+  7 |  8 |  9 | 10
+ 12 | 13 | 14 | 15
+(3 rows)
+
+DROP INDEX
+ x  | y  | z  | w  | v  
+----+----+----+----+----
+  1 |  2 |  3 |  4 |  5
+  6 |  7 |  8 |  9 | 10
+ 11 | 12 | 13 | 14 | 15
+(3 rows)
+
+ALTER TABLE
+CREATE INDEX
+ y  | z  | w  | v  | u  
+----+----+----+----+----
+  2 |  3 |  4 |  5 | 20
+  7 |  8 |  9 | 10 | 20
+ 12 | 13 | 14 | 15 | 20
+(3 rows)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+ y | z 
+---+---
+   | 2
+(1 row)
+
+RESET

@@ -1,0 +1,54 @@
+SET
+RESET
+DROP MATERIALIZED VIEW
+DROP VIEW
+DROP VIEW
+DROP SCHEMA
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE SCHEMA
+CREATE VIEW
+CREATE VIEW
+SELECT 1
+ALTER VIEW
+ALTER VIEW
+ALTER MATERIALIZED VIEW
+ name |  owner   
+------+----------
+ vx   | testuser
+(1 row)
+
+ name |  owner   
+------+----------
+ s.vx | testuser
+(1 row)
+
+ name |  owner   
+------+----------
+ mvx  | testuser
+(1 row)
+
+ALTER VIEW
+ALTER MATERIALIZED VIEW
+ name |   owner   
+------+-----------
+ vx   | testuser2
+(1 row)
+
+ name |   owner   
+------+-----------
+ mvx  | testuser2
+(1 row)
+
+RESET
+DROP MATERIALIZED VIEW
+DROP VIEW
+DROP VIEW
+DROP SCHEMA
+DROP OWNED
+DROP OWNED
+DROP ROLE
+DROP ROLE
+RESET

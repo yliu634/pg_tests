@@ -1,156 +1,62 @@
 -- PostgreSQL compatible tests from txn_as_of
 -- 51 tests
 
--- Test 1: statement (line 6)
-CREATE TABLE t (i INT)
+SET client_min_messages = warning;
 
--- Test 2: statement (line 9)
-INSERT INTO t VALUES (2)
+-- Ensure deterministic output for now().
+CREATE OR REPLACE FUNCTION now() RETURNS TIMESTAMP STABLE LANGUAGE SQL AS $$
+  SELECT TIMESTAMP '1999-12-31 23:59:59.999999';
+$$;
+SET search_path = public, pg_catalog;
 
--- Test 3: statement (line 17)
-SET CLUSTER SETTING kv.gc_ttl.strict_enforcement.enabled = false
+-- Setup
+DROP TABLE IF EXISTS t;
+CREATE TABLE t (i INT);
+INSERT INTO t VALUES (2);
 
--- Test 4: statement (line 23)
-COMMIT
+-- CockroachDB cluster setting; no PostgreSQL equivalent.
+-- SET CLUSTER SETTING kv.gc_ttl.strict_enforcement.enabled = false;
 
--- Test 5: statement (line 29)
-COMMIT
+SELECT * FROM t ORDER BY i;
 
--- Test 6: query (line 35)
-SELECT * FROM t
+INSERT INTO t VALUES (3);
+INSERT INTO t VALUES (3);
 
--- Test 7: statement (line 40)
-COMMIT
+SELECT * FROM t ORDER BY i;
 
--- Test 8: query (line 46)
-SELECT * FROM t
-
--- Test 9: statement (line 51)
-COMMIT
-
--- Test 10: statement (line 63)
-COMMIT
-
--- Test 11: statement (line 69)
-COMMIT
-
--- Test 12: statement (line 75)
-COMMIT
-
--- Test 13: statement (line 81)
-COMMIT
-
--- Test 14: statement (line 89)
-INSERT INTO t VALUES (3)
-
--- Test 15: statement (line 92)
-COMMIT
-
--- Test 16: statement (line 98)
-INSERT INTO t VALUES (3)
-
--- Test 17: statement (line 101)
-COMMIT
-
--- Test 18: query (line 110)
-SELECT * FROM t
-
--- Test 19: statement (line 115)
-COMMIT
-
--- Test 20: statement (line 124)
-SELECT * FROM t
-
--- Test 21: statement (line 127)
-COMMIT
-
--- Test 22: statement (line 136)
-COMMIT
-
--- Test 23: statement (line 142)
-BEGIN
-
--- Test 24: statement (line 148)
-COMMIT
-
--- Test 25: statement (line 162)
-COMMIT
-
--- Test 26: query (line 174)
-SELECT * FROM (SELECT now())
-
--- Test 27: statement (line 179)
-COMMIT
-
--- Test 28: statement (line 188)
+-- Savepoint-based retry pattern (CockroachDB client convention).
+BEGIN;
 SAVEPOINT cockroach_restart;
-
--- Test 29: query (line 191)
-SELECT * FROM (SELECT now())
-
--- Test 30: statement (line 196)
+SELECT * FROM (SELECT now());
 ROLLBACK TO SAVEPOINT cockroach_restart;
-
--- Test 31: query (line 199)
-SELECT * FROM (SELECT now())
-
--- Test 32: statement (line 204)
-RELEASE SAVEPOINT cockroach_restart
-
--- Test 33: statement (line 207)
+SELECT * FROM (SELECT now());
+RELEASE SAVEPOINT cockroach_restart;
 COMMIT;
 
--- Test 34: statement (line 213)
 BEGIN;
-
--- Test 35: statement (line 219)
 SAVEPOINT cockroach_restart;
-
--- Test 36: query (line 222)
-SELECT * FROM (SELECT now())
-
--- Test 37: statement (line 227)
+SELECT * FROM (SELECT now());
 ROLLBACK TO SAVEPOINT cockroach_restart;
-
--- Test 38: query (line 230)
-SELECT * FROM (SELECT now())
-
--- Test 39: statement (line 235)
-RELEASE SAVEPOINT cockroach_restart
-
--- Test 40: statement (line 238)
+SELECT * FROM (SELECT now());
+RELEASE SAVEPOINT cockroach_restart;
 COMMIT;
 
--- Test 41: statement (line 244)
 BEGIN;
-
--- Test 42: statement (line 250)
 SAVEPOINT cockroach_restart;
-
--- Test 43: statement (line 253)
-SELCT;
-
--- Test 44: statement (line 256)
+-- Expected ERROR (division by zero):
+\set ON_ERROR_STOP 0
+SELECT 1/0;
+\set ON_ERROR_STOP 1
 ROLLBACK TO SAVEPOINT cockroach_restart;
+SELECT * FROM (SELECT now());
+RELEASE SAVEPOINT cockroach_restart;
+COMMIT;
 
--- Test 45: query (line 259)
-SELECT * FROM (SELECT now())
+BEGIN;
+ROLLBACK;
 
--- Test 46: statement (line 264)
-RELEASE SAVEPOINT cockroach_restart
+BEGIN;
+ROLLBACK;
 
--- Test 47: statement (line 267)
-COMMIT
-
--- Test 48: statement (line 276)
-BEGIN
-
--- Test 49: statement (line 282)
-ROLLBACK
-
--- Test 50: statement (line 288)
-BEGIN
-
--- Test 51: statement (line 294)
-ROLLBACK
-
+RESET search_path;
+RESET client_min_messages;

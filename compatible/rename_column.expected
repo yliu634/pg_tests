@@ -1,0 +1,173 @@
+SET
+DROP VIEW
+DROP VIEW
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 2
+ uid | name  | title 
+-----+-------+-------
+   1 | tom   | cat
+   2 | jerry | rat
+(2 rows)
+
+DO
+DO
+DO
+DO
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ id | name  | species 
+----+-------+---------
+  1 | tom   | cat
+  2 | jerry | rat
+(2 rows)
+
+ALTER TABLE
+ id | username | species 
+----+----------+---------
+  1 | tom      | cat
+  2 | jerry    | rat
+(2 rows)
+
+ indexname  |                                    indexdef                                     
+------------+---------------------------------------------------------------------------------
+ bar        | CREATE UNIQUE INDEX bar ON public.users USING btree (id, username)
+ users_foo  | CREATE INDEX users_foo ON public.users USING btree (username) INCLUDE (species)
+ users_pkey | CREATE UNIQUE INDEX users_pkey ON public.users USING btree (id)
+(3 rows)
+
+CREATE VIEW
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+DO
+DROP VIEW
+DO
+DO
+DO
+ column_name 
+-------------
+ name
+ title
+ uid
+(3 rows)
+
+ column_name 
+-------------
+ name
+ title
+ uid
+(3 rows)
+
+ title 
+-------
+ cat
+ rat
+(2 rows)
+
+CREATE TABLE
+BEGIN
+ALTER TABLE
+ALTER TABLE
+COMMIT
+BEGIN
+ALTER TABLE
+ALTER TABLE
+COMMIT
+BEGIN
+ALTER TABLE
+ALTER TABLE
+COMMIT
+BEGIN
+CREATE INDEX
+ALTER TABLE
+COMMIT
+INSERT 0 1
+ j | k 
+---+---
+ 1 | 2
+(1 row)
+
+CREATE TABLE
+DO
+DO
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+  column_name  
+---------------
+ NewCamelCase
+ SnakeCase
+ decimal_value
+(3 rows)
+
+CREATE TABLE
+INSERT 0 2
+BEGIN
+ALTER TABLE
+ALTER TABLE
+COMMIT
+ b_old | b  | a 
+-------+----+---
+     1 | 10 | 0
+     2 | 20 | 0
+(2 rows)
+
+          indexname           |                                                indexdef                                                
+------------------------------+--------------------------------------------------------------------------------------------------------
+ rename_add_alter_pk_tbl_pkey | CREATE UNIQUE INDEX rename_add_alter_pk_tbl_pkey ON public.rename_add_alter_pk_tbl USING btree (b_old)
+(1 row)
+
+ column_name | data_type | is_nullable | column_default 
+-------------+-----------+-------------+----------------
+ b_old       | integer   | NO          | 
+ b           | integer   | YES         | 
+ a           | integer   | NO          | 0
+(3 rows)
+
+UPDATE 1
+BEGIN
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+COMMIT
+ b_old | b_orig | a  | b  
+-------+--------+----+----
+   100 |      1 |  0 | 10
+   100 |      2 | 10 | 20
+(2 rows)
+
+           conname            | pg_get_constraintdef 
+------------------------------+----------------------
+ rename_add_alter_pk_tbl_pkey | PRIMARY KEY (a)
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+ column_name | data_type | is_nullable 
+-------------+-----------+-------------
+ a           | integer   | NO
+ b           | date      | NO
+ c           | integer   | NO
+ d           | integer   | NO
+(4 rows)
+
+ALTER TABLE
+ column_name | data_type | is_nullable 
+-------------+-----------+-------------
+ a           | integer   | NO
+ b           | date      | NO
+ c           | integer   | NO
+ rename_d    | integer   | NO
+(4 rows)
+
+RESET

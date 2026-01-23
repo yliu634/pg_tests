@@ -1,0 +1,6 @@
+CREATE TABLE
+psql:pg_tests/compatible/distsql_builtin.sql:11: WARNING:  TIMESTAMP(7) precision reduced to maximum allowed, 6
+ c 
+---
+(0 rows)
+

@@ -124,9 +124,15 @@ SET application_name = 'valuetest';
 SELECT sin(1.23);
 
 -- Test 22: statement (line 92)
-\set ON_ERROR_STOP 0
-SELECT sqrt(-1.0);
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  -- This would normally ERROR; catch it so the script can continue.
+  PERFORM sqrt(-1.0);
+EXCEPTION
+  WHEN others THEN
+    RAISE NOTICE 'expected error: %', SQLERRM;
+END
+$$;
 
 -- Test 23: statement (line 97)
 SELECT key
@@ -158,9 +164,15 @@ SELECT ROW(1,2,3,4,5) FROM test WHERE FALSE;
 SELECT x FROM test WHERE y IN (4, 5, 6, 7, 8);
 
 -- Test 32: statement (line 135)
-\set ON_ERROR_STOP 0
-SELECT x FROM test WHERE y = 1/z;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  -- This would normally ERROR; catch it so the script can continue.
+  PERFORM x FROM test WHERE y = 1/z;
+EXCEPTION
+  WHEN others THEN
+    RAISE NOTICE 'expected error: %', SQLERRM;
+END
+$$;
 
 -- Test 33: statement (line 140)
 -- SET CLUSTER SETTING debug.panic_on_failed_assertions.enabled = true;

@@ -1,0 +1,2 @@
+pg_tests/compatible/partial_index.sql
+pg_tests/compatible/pg_builtins.sql

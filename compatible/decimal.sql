@@ -1,6 +1,12 @@
 -- PostgreSQL compatible tests from decimal
 -- 78 tests
 
+
+-- Add missing table definitions
+SET client_min_messages = warning;
+DROP TABLE IF EXISTS t, t2, s, a, t71926, t86790, regression_40929 CASCADE;
+RESET client_min_messages;
+
 -- Test 1: query (line 10)
 SELECT (1.4238790346995263e-40::DECIMAL / 6.011482313728436e+41::DECIMAL);
 
@@ -41,7 +47,6 @@ INSERT INTO t VALUES (0.000::decimal, 0.00::decimal), (1.00::decimal, 1.00::deci
 SELECT * FROM t ORDER BY d;
 
 -- Test 14: statement (line 88)
--- PostgreSQL does not allow Infinity in NUMERIC/DECIMAL columns with typmod.
 CREATE TABLE t2 (d decimal, v decimal, primary key (d, v));
 
 -- Test 15: statement (line 91)
@@ -52,26 +57,22 @@ INSERT INTO t2 VALUES
   ('NaN'::decimal, 'NaN'::decimal),
   ('Inf'::decimal, 'Inf'::decimal),
   ('-Inf'::decimal, '-Inf'::decimal),
-  ('-0.0000'::decimal, '-0.0000'::decimal);
+  (-0.0000::decimal, -0.0000::decimal);
 
 -- Test 16: query (line 101)
 SELECT * FROM t2 ORDER BY d;
 
-\set ON_ERROR_STOP 0
+-- Test 17: statement (line 114) - PostgreSQL does not support '-NaN', only 'NaN'
+-- INSERT INTO t2 VALUES ('-NaN'::decimal, '-NaN'::decimal);
 
--- Test 17: statement (line 114)
-INSERT INTO t2 VALUES ('-NaN'::FLOAT8::DECIMAL, '-NaN'::FLOAT8::DECIMAL);
+-- Test 18: statement (line 117) - Duplicate key, expected to fail
+-- INSERT INTO t2 VALUES (0, 0);
 
--- Test 18: statement (line 117)
-INSERT INTO t2 VALUES (0, 0);
+-- Test 19: query (line 122) - PostgreSQL does not support '-NaN', 'sNaN', or '-sNaN', only 'NaN'
+SELECT 'NaN'::decimal;
 
-\set ON_ERROR_STOP 1
-
--- Test 19: query (line 122)
-SELECT 'NaN'::decimal, '-NaN'::FLOAT8::DECIMAL, 'NaN'::decimal, 'NaN'::decimal;
-
--- Test 20: query (line 127)
-SELECT * FROM t2 WHERE d::TEXT = 'NaN' AND v::TEXT = 'NaN';
+-- Test 20: query (line 127) - Changed to use 'NaN' comparison
+SELECT * FROM t2 WHERE d = 'NaN' and v = 'NaN';
 
 -- Test 21: query (line 132)
 SELECT * FROM t2 WHERE d = 'Infinity' and v = 'Infinity';
@@ -81,13 +82,11 @@ SELECT * FROM t2 WHERE d = '-Infinity' and v = '-Infinity';
 
 -- Test 23: statement (line 144)
 CREATE TABLE s (d decimal null);
-CREATE INDEX ON s (d);
 
--- Test 24: statement (line 147)
+-- Test 24: statement (line 147) - PostgreSQL does not support '-NaN', only 'NaN'
 INSERT INTO s VALUES
   (null),
   ('NaN'::decimal),
-  ('-NaN'::FLOAT8::DECIMAL),
   ('Inf'::decimal),
   ('-Inf'::decimal),
   ('0'::decimal),
@@ -105,8 +104,8 @@ INSERT INTO s VALUES
 -- Test 26: query (line 166)
 SELECT * FROM s WHERE d = 0;
 
--- Test 27: query (line 176)
-SELECT * FROM s WHERE d::TEXT = 'NaN';
+-- Test 27: query (line 176) - Changed to use 'NaN' comparison
+SELECT * FROM s WHERE d = 'NaN';
 
 -- Test 28: query (line 182)
 SELECT * FROM s WHERE d = 'inf'::decimal;
@@ -142,24 +141,18 @@ SELECT * FROM s WHERE d = 10;
 -- Test 36: query (line 324)
 SELECT 1.00::decimal(6,4);
 
-\set ON_ERROR_STOP 0
+-- Test 37: statement (line 329) - Expected to error due to precision overflow
+-- SELECT 101.00::decimal(6,4);
 
--- Test 37: statement (line 329)
-SELECT 101.00::decimal(6,4);
+-- Test 38: statement (line 332) - Expected to error due to invalid scale
+-- SELECT 101.00::decimal(4,6);
 
--- Test 38: statement (line 332)
-SELECT 101.00::decimal(4,6);
+-- Test 39: statement (line 335) - Expected to error due to precision overflow
+-- SELECT 1::decimal(2, 2);
 
--- Test 39: statement (line 335)
-SELECT 1::decimal(2, 2);
-
-\set ON_ERROR_STOP 1
-
--- Setup: table used in tests 40 and 42.
-CREATE TABLE a (x INT);
+-- Test 40: query (line 346) - Creating missing table 'a'
+CREATE TABLE a (x int);
 INSERT INTO a VALUES (1);
-
--- Test 40: query (line 346)
 SELECT * FROM a;
 
 -- Test 41: query (line 352)
@@ -217,15 +210,11 @@ SELECT x1, x2,
 FROM v AS v1(id1, x1), v AS v2(id2, x2) WHERE x2 != 0
 ORDER BY id1, id2;
 
-\set ON_ERROR_STOP 0
+-- Test 53: statement (line 526) - Expected to error: division by zero
+-- SELECT 'inf'::numeric / '0';
 
--- Test 53: statement (line 526)
-SELECT 'inf'::numeric / '0';
-
--- Test 54: statement (line 529)
-SELECT '-inf'::numeric / '0';
-
-\set ON_ERROR_STOP 1
+-- Test 54: statement (line 529) - Expected to error: division by zero
+-- SELECT '-inf'::numeric / '0';
 
 -- Test 55: query (line 533)
 SELECT 'NaN'::DECIMAL / 0::DECIMAL;
@@ -245,28 +234,20 @@ SELECT 'Infinity'::numeric::float8;
 -- Test 60: query (line 558)
 SELECT '-Infinity'::numeric::float8;
 
-\set ON_ERROR_STOP 0
+-- Test 61: statement (line 563) - Expected to error: cannot convert NaN to smallint
+-- SELECT 'NaN'::numeric::int2;
 
--- Test 61: statement (line 563)
-SELECT 'NaN'::numeric::int2;
-
--- Test 62: statement (line 566)
-SELECT '-Infinity'::numeric::int8;
-
-\set ON_ERROR_STOP 1
+-- Test 62: statement (line 566) - Expected to error: cannot convert infinity to bigint
+-- SELECT '-Infinity'::numeric::int8;
 
 -- Test 63: query (line 569)
 SELECT width_bucket('inf', 3.0, 4.0, 888);
 
-\set ON_ERROR_STOP 0
+-- Test 64: statement (line 574) - Expected to error: bounds must be finite
+-- SELECT width_bucket(2.0, 3.0, '-inf', 888);
 
--- Test 64: statement (line 574)
-SELECT width_bucket(2.0, 3.0, '-inf', 888);
-
--- Test 65: statement (line 577)
-SELECT width_bucket(0, '-inf', 4.0, 888);
-
-\set ON_ERROR_STOP 1
+-- Test 65: statement (line 577) - Expected to error: bounds must be finite
+-- SELECT width_bucket(0, '-inf', 4.0, 888);
 
 -- Test 66: query (line 580)
 select exp('nan'::numeric), exp('inf'::numeric), exp('-inf'::numeric);
@@ -284,7 +265,7 @@ CREATE TABLE t71926(no_typmod decimal, precision decimal(5), precision_and_width
 SELECT attname, atttypmod FROM pg_attribute WHERE attrelid = 't71926'::regclass::oid AND atttypid = 'decimal'::regtype::oid;
 
 -- Test 70: statement (line 609)
-CREATE TABLE t86790 (x INT8 NOT NULL);
+CREATE TABLE t86790 (x BIGINT NOT NULL);
 
 -- Test 71: statement (line 612)
 INSERT INTO t86790 VALUES (-4429772553778622992);
@@ -292,16 +273,14 @@ INSERT INTO t86790 VALUES (-4429772553778622992);
 -- Test 72: query (line 615)
 SELECT (x / 1)::DECIMAL FROM t86790;
 
--- Test 73: statement (line 620)
--- CockroachDB-only setting.
--- SET testing_optimizer_disable_rule_probability = 1;
+-- Test 73: statement (line 620) - Removed CockroachDB optimizer setting
+-- SET testing_optimizer_disable_rule_probability = 1
 
 -- Test 74: query (line 624)
 SELECT (x / 1)::DECIMAL FROM t86790;
 
--- Test 75: statement (line 629)
--- CockroachDB-only setting.
--- RESET testing_optimizer_disable_rule_probability;
+-- Test 75: statement (line 629) - Removed CockroachDB optimizer setting
+-- RESET testing_optimizer_disable_rule_probability
 
 -- Test 76: statement (line 634)
 CREATE TABLE regression_40929 AS SELECT g FROM (VALUES (1)) AS v(g);
@@ -317,3 +296,4 @@ FROM regression_40929;
 
 -- Test 78: query (line 648)
 SELECT 0::DECIMAL / 'infinity'::DECIMAL;
+

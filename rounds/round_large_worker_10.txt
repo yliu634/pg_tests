@@ -1,0 +1,2 @@
+pg_tests/compatible/statement_hint_builtins.sql
+pg_tests/compatible/subquery.sql

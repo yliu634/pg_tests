@@ -1,0 +1,67 @@
+SET
+CREATE FUNCTION
+SET
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+ i 
+---
+ 2
+(1 row)
+
+INSERT 0 1
+INSERT 0 1
+ i 
+---
+ 2
+ 3
+ 3
+(3 rows)
+
+BEGIN
+SAVEPOINT
+            now             
+----------------------------
+ 1999-12-31 23:59:59.999999
+(1 row)
+
+ROLLBACK
+            now             
+----------------------------
+ 1999-12-31 23:59:59.999999
+(1 row)
+
+RELEASE
+COMMIT
+BEGIN
+SAVEPOINT
+            now             
+----------------------------
+ 1999-12-31 23:59:59.999999
+(1 row)
+
+ROLLBACK
+            now             
+----------------------------
+ 1999-12-31 23:59:59.999999
+(1 row)
+
+RELEASE
+COMMIT
+BEGIN
+SAVEPOINT
+psql:pg_tests/compatible/txn_as_of.sql:48: ERROR:  division by zero
+ROLLBACK
+            now             
+----------------------------
+ 1999-12-31 23:59:59.999999
+(1 row)
+
+RELEASE
+COMMIT
+BEGIN
+ROLLBACK
+BEGIN
+ROLLBACK
+RESET
+RESET

@@ -1,0 +1,5 @@
+pg_tests/compatible/parallel_stmts_compat.sql
+pg_tests/compatible/partitioning.sql
+pg_tests/compatible/pg_catalog_pg_default_acl.sql
+pg_tests/compatible/pg_lsn.sql
+pg_tests/compatible/pgcrypto_builtins.sql

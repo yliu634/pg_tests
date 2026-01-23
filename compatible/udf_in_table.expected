@@ -1,0 +1,69 @@
+SET
+CREATE FUNCTION
+CREATE FUNCTION
+DROP TABLE
+DROP TABLE
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+CREATE FUNCTION
+CREATE TABLE
+CREATE FUNCTION
+CREATE TRIGGER
+ col_name | expr_kind | expr | depends_on 
+----------+-----------+------+------------
+ a        | default   |      | {}
+ b        | default   | f1() | {f1()}
+ c        | default   |      | {}
+ d        | default   |      | {}
+ g        | generated | f1() | {f1()}
+(5 rows)
+
+ dependent 
+-----------
+ t1.b
+ t1.g
+(2 rows)
+
+ALTER TABLE
+ col_name | expr_kind | expr | depends_on 
+----------+-----------+------+------------
+ a        | default   |      | {}
+ b        | default   | f1() | {f1()}
+ c        | default   | f1() | {f1()}
+ d        | default   |      | {}
+ g        | generated | f1() | {f1()}
+(5 rows)
+
+ALTER TABLE
+ALTER TABLE
+DROP TRIGGER
+DROP FUNCTION
+ dependent 
+-----------
+ t1.c
+(1 row)
+
+DROP TABLE
+ dependent 
+-----------
+(0 rows)
+
+CREATE TABLE
+ALTER FUNCTION
+ col_name | expr_kind |   expr   | depends_on 
+----------+-----------+----------+------------
+ a        | default   |          | {}
+ b        | default   | f1_new() | {f1_new()}
+(2 rows)
+
+ dependent  
+------------
+ t_rename.b
+(1 row)
+
+DROP TABLE
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+RESET

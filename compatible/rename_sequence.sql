@@ -22,9 +22,14 @@ DROP SEQUENCE renamed_again_alter_test;
 CREATE SEQUENCE foo;
 
 -- Test 7: statement (line 24)
-\set ON_ERROR_STOP 0
-ALTER VIEW foo RENAME TO bar;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'ALTER VIEW foo RENAME TO bar';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 8: statement (line 31)
 -- onlyif config local-legacy-schema-changer

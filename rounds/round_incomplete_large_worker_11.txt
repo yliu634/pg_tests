@@ -1,0 +1,2 @@
+pg_tests/compatible/row_level_security.sql
+pg_tests/compatible/schema_change_in_txn.sql

@@ -1,0 +1,5 @@
+pg_tests/compatible/void.sql
+pg_tests/compatible/where.sql
+pg_tests/compatible/workload_indexrecs.sql
+pg_tests/compatible/zero.sql
+pg_tests/compatible/zigzag_join.sql

@@ -1,0 +1,5 @@
+pg_tests/compatible/apply_join.sql
+pg_tests/compatible/array.sql
+pg_tests/compatible/as_of.sql
+pg_tests/compatible/auto_span_config_reconciliation_job.sql
+pg_tests/compatible/bit.sql

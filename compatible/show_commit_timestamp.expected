@@ -1,0 +1,89 @@
+SET
+CREATE SCHEMA
+CREATE SEQUENCE
+CREATE TABLE
+CREATE FUNCTION
+DROP TABLE
+CREATE TABLE
+BEGIN
+INSERT 0 1
+COMMIT
+ ts_matches_row 
+----------------
+ t
+(1 row)
+
+ i | ts 
+---+----
+ 1 |  1
+(1 row)
+
+BEGIN
+SAVEPOINT
+INSERT 0 1
+RELEASE
+COMMIT
+ ts_stable_within_tx 
+---------------------
+ t
+(1 row)
+
+ i | ts 
+---+----
+ 2 |  2
+(1 row)
+
+INSERT 0 1
+ i | ts 
+---+----
+ 3 |  3
+(1 row)
+
+BEGIN
+SAVEPOINT
+INSERT 0 1
+ROLLBACK
+COMMIT
+ ts_stable_across_savepoint_rollback 
+-------------------------------------
+ t
+(1 row)
+
+BEGIN
+INSERT 0 1
+ROLLBACK
+ rows_i4 
+---------
+       0
+(1 row)
+
+CREATE FUNCTION
+BEGIN
+COMMIT
+ func_ts_stable 
+----------------
+ t
+(1 row)
+
+BEGIN
+PREPARE
+ show_commit_timestamp 
+-----------------------
+                     7
+(1 row)
+
+ show_commit_timestamp 
+-----------------------
+                     7
+(1 row)
+
+DEALLOCATE
+COMMIT
+ ts 
+----
+  8
+(1 row)
+
+DROP FUNCTION
+DROP TABLE
+RESET

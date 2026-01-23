@@ -1,0 +1,393 @@
+SET
+CREATE TABLE
+INSERT 0 3
+CREATE FUNCTION
+ f_one 
+-------
+ (1)
+(1 row)
+
+psql:pg_tests/compatible/udf_record.sql:24: ERROR:  a column definition list is required for functions returning "record"
+LINE 1: SELECT * FROM f_one();
+                      ^
+ a 
+---
+ 1
+(1 row)
+
+CREATE FUNCTION
+                      f_const                       
+----------------------------------------------------
+ (1,2.0,"welcome roacher","2021-07-12 17:02:10+00")
+(1 row)
+
+CREATE FUNCTION
+    f_arr    
+-------------
+ ("{1,2,3}")
+(1 row)
+
+CREATE FUNCTION
+     f_tuple     
+-----------------
+ (4,5,"(6,7,8)")
+(1 row)
+
+CREATE FUNCTION
+   f_multituple    
+-------------------
+ ("(1,2)","(3,4)")
+(1 row)
+
+CREATE FUNCTION
+             pg_get_functiondef              
+---------------------------------------------
+ CREATE OR REPLACE FUNCTION public.f_table()+
+  RETURNS record                            +
+  LANGUAGE sql                              +
+ AS $function$                              +
+   SELECT * FROM t ORDER BY a LIMIT 1;      +
+ $function$                                 +
+ 
+(1 row)
+
+ f_table 
+---------
+ (1,5)
+(1 row)
+
+CREATE FUNCTION
+ f_multitable 
+--------------
+ (1,5,1,5)
+(1 row)
+
+CREATE FUNCTION
+ f_setof 
+---------
+ (1,5)
+ (2,6)
+ (3,7)
+(3 rows)
+
+CREATE FUNCTION
+ f_row 
+-------
+ (1.1)
+(1 row)
+
+ALTER TABLE
+ f_table 
+---------
+ (1,5,0)
+(1 row)
+
+DROP DATABASE
+CREATE DATABASE
+CREATE TABLE
+CREATE FUNCTION
+          pg_get_functiondef           
+---------------------------------------
+ CREATE OR REPLACE FUNCTION public.f()+
+  RETURNS integer                     +
+  LANGUAGE sql                        +
+ AS $function$                        +
+   SELECT * FROM t1;                  +
+ $function$                           +
+ 
+(1 row)
+
+DROP DATABASE
+CREATE FUNCTION
+  f_tup  
+---------
+ (1,2,3)
+(1 row)
+
+psql:pg_tests/compatible/udf_record.sql:142: ERROR:  a column definition list is required for functions returning "record"
+LINE 1: SELECT * FROM f_tup();
+                      ^
+ a | b | c 
+---+---+---
+ 1 | 2 | 3
+(1 row)
+
+CREATE FUNCTION
+  f_col  
+---------
+ (1,2,3)
+(1 row)
+
+ a | b | c 
+---+---+---
+ 1 | 2 | 3
+(1 row)
+
+ column1 
+---------
+ (1,2,3)
+(1 row)
+
+CREATE TABLE
+INSERT 0 3
+CREATE FUNCTION
+ a | b  
+---+----
+ 1 | 10
+(1 row)
+
+CREATE TYPE
+CREATE FUNCTION
+ f_udt 
+-------
+ a
+(1 row)
+
+CREATE FUNCTION
+ f_udt 
+-------
+ a
+(1 row)
+
+ a | b 
+---+---
+ 1 | 5
+ 2 | 6
+ 3 | 7
+(3 rows)
+
+CREATE FUNCTION
+ a | b  
+---+----
+ 1 | 10
+ 2 |  4
+ 3 | 32
+(3 rows)
+
+CREATE FUNCTION
+ a | b | c 
+---+---+---
+ 1 | 2 | 3
+(1 row)
+
+CREATE FUNCTION
+ a | b  
+---+----
+ 1 | 10
+ 2 |  4
+ 3 | 32
+(3 rows)
+
+CREATE FUNCTION
+ a | b 
+---+---
+ 1 | 2
+(1 row)
+
+ a | b 
+---+---
+   |  
+(1 row)
+
+ f_strict_arg 
+--------------
+ (1,2)
+(1 row)
+
+CREATE FUNCTION
+ a | b 
+---+---
+ 1 | 2
+ 1 | 2
+ 1 | 2
+(3 rows)
+
+ a | b 
+---+---
+(0 rows)
+
+CREATE TABLE
+INSERT 0 2
+ input | a | b 
+-------+---+---
+       |   |  
+(1 row)
+
+ input | a | b 
+-------+---+---
+(0 rows)
+
+CREATE FUNCTION
+ a | b 
+---+---
+ 1 | 2
+(1 row)
+
+CREATE FUNCTION
+ f_amb_setof 
+-------------
+(0 rows)
+
+ a | b 
+---+---
+(0 rows)
+
+CREATE FUNCTION
+ f_amb 
+-------
+ 
+(1 row)
+
+ a | b 
+---+---
+   |  
+(1 row)
+
+CREATE FUNCTION
+  a  |  b  
+-----+-----
+ (a) | foo
+ (a) | bar
+(2 rows)
+
+CREATE TABLE
+INSERT 0 1
+CREATE FUNCTION
+ imp_const_tup | ?column? | pg_typeof 
+---------------+----------+-----------
+ (11,22,b)     | t        | imp
+(1 row)
+
+CREATE FUNCTION
+ imp_const_cast | ?column? | pg_typeof 
+----------------+----------+-----------
+ (11,22,b)      | t        | imp
+(1 row)
+
+CREATE FUNCTION
+ imp_const | ?column? | pg_typeof 
+-----------+----------+-----------
+ (11,22,b) | t        | imp
+(1 row)
+
+CREATE FUNCTION
+ imp_const_unnamed | ?column? | pg_typeof 
+-------------------+----------+-----------
+ (11,22,b)         | t        | imp
+(1 row)
+
+CREATE FUNCTION
+ imp_tup | ?column? 
+---------+----------
+ (1,2,a) | t
+(1 row)
+
+CREATE FUNCTION
+   imp   | ?column? 
+---------+----------
+ (1,2,a) | t
+(1 row)
+
+CREATE FUNCTION
+ imp_star | ?column? 
+----------+----------
+ (1,2,a)  | t
+(1 row)
+
+INSERT 0 1
+CREATE FUNCTION
+ imp_tup_ordered | ?column? 
+-----------------+----------
+ (100,200,z)     | t
+(1 row)
+
+CREATE FUNCTION
+ imp_ordered | ?column? 
+-------------+----------
+ (100,200,z) | t
+(1 row)
+
+CREATE FUNCTION
+ imp_identity | imp_identity 
+--------------+--------------
+ (1,2,a)      | (1,2,a)
+(1 row)
+
+CREATE FUNCTION
+ imp_a | imp_a 
+-------+-------
+     2 |     2
+(1 row)
+
+CREATE FUNCTION
+ imp_cast | ?column? | pg_typeof 
+----------+----------+-----------
+ (1,2,3)  | t        | imp
+(1 row)
+
+psql:pg_tests/compatible/udf_record.sql:422: ERROR:  cannot cast type record to imp
+DETAIL:  Input has too few columns.
+CONTEXT:  SQL function "err"
+psql:pg_tests/compatible/udf_record.sql:427: ERROR:  return type mismatch in function declared to return imp
+DETAIL:  Final statement returns too few columns.
+CONTEXT:  SQL function "err"
+CREATE FUNCTION
+psql:pg_tests/compatible/udf_record.sql:437: ERROR:  return type mismatch in function declared to return integer
+DETAIL:  Actual return type is imp.
+CONTEXT:  SQL function "err"
+CREATE TYPE
+CREATE TYPE
+CREATE FUNCTION
+psql:pg_tests/compatible/udf_record.sql:449: ERROR:  a column definition list is redundant for a function returning a named composite type
+LINE 1: SELECT * FROM f() AS g(bar bar_typ);
+                               ^
+DROP FUNCTION
+CREATE FUNCTION
+psql:pg_tests/compatible/udf_record.sql:460: ERROR:  a column definition list is only allowed for functions returning "record"
+LINE 1: SELECT * FROM f() AS g(bar FLOAT);
+                               ^
+DROP FUNCTION
+CREATE FUNCTION
+psql:pg_tests/compatible/udf_record.sql:471: ERROR:  a column definition list is redundant for a function with OUT parameters
+LINE 1: SELECT * FROM f() AS g(bar bar_typ);
+                               ^
+DROP FUNCTION
+CREATE FUNCTION
+psql:pg_tests/compatible/udf_record.sql:482: ERROR:  function return row and query-specified return row do not match
+DETAIL:  Returned row contains 2 attributes, but query expects 1.
+psql:pg_tests/compatible/udf_record.sql:485: ERROR:  function return row and query-specified return row do not match
+DETAIL:  Returned row contains 2 attributes, but query expects 3.
+DROP FUNCTION
+CREATE FUNCTION
+psql:pg_tests/compatible/udf_record.sql:496: ERROR:  a column definition list is required for functions returning "record"
+LINE 1: SELECT * FROM f();
+                      ^
+psql:pg_tests/compatible/udf_record.sql:499: ERROR:  a column definition list is required for functions returning "record"
+LINE 1: SELECT * FROM f() AS g(bar, baz);
+                      ^
+DROP FUNCTION
+CREATE FUNCTION
+psql:pg_tests/compatible/udf_record.sql:510: ERROR:  return type mismatch in function declared to return record
+DETAIL:  Final statement returns boolean instead of integer at column 1.
+CONTEXT:  SQL function "f" during startup
+CREATE FUNCTION
+  x   
+------
+ 1.99
+(1 row)
+
+ x 
+---
+ 2
+(1 row)
+
+psql:pg_tests/compatible/udf_record.sql:524: ERROR:  return type mismatch in function declared to return record
+DETAIL:  Final statement returns numeric instead of timestamp without time zone at column 1.
+CONTEXT:  SQL function "f113186" during startup
+CREATE FUNCTION
+  f1  | f2  
+------+-----
+ 1.00 | one
+ 2.00 | two
+(2 rows)
+

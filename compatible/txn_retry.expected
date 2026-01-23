@@ -1,0 +1,34 @@
+SET
+CREATE SCHEMA
+CREATE SCHEMA
+DROP TABLE
+DROP ROLE
+CREATE ROLE
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE TABLE
+GRANT
+BEGIN
+ k 
+---
+(0 rows)
+
+ cluster_logical_timestamp 
+---------------------------
+                         0
+(1 row)
+
+INSERT 0 1
+COMMIT
+psql:pg_tests/compatible/txn_retry.sql:42: ERROR:  forced retry 0
+CONTEXT:  PL/pgSQL function crdb_internal.force_retry(integer) line 3 at RAISE
+psql:pg_tests/compatible/txn_retry.sql:47: ERROR:  forced retry 3
+CONTEXT:  PL/pgSQL function crdb_internal.force_retry(integer) line 3 at RAISE
+ k 
+---
+ 1
+(1 row)
+
+DROP TABLE
+DROP ROLE
+RESET

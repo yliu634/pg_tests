@@ -1,0 +1,5 @@
+pg_tests/compatible/namespace.sql
+pg_tests/compatible/no_primary_key.sql
+pg_tests/compatible/numeric_references.sql
+pg_tests/compatible/on_update.sql
+pg_tests/compatible/operator.sql

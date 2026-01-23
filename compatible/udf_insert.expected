@@ -1,0 +1,233 @@
+CREATE TABLE
+CREATE FUNCTION
+CREATE FUNCTION
+ f_void 
+--------
+ 
+(1 row)
+
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+ f_insert 
+----------
+ (1,2)
+(1 row)
+
+ f_insert 
+----------
+ (3,4)
+(1 row)
+
+psql:compatible/udf_insert.sql:56: ERROR:  duplicate key value violates unique constraint "t_pkey"
+DETAIL:  Key (a)=(3) already exists.
+CONTEXT:  SQL function "f_insert" statement 1
+ a | b 
+---+---
+ 0 | 1
+ 1 | 2
+ 3 | 4
+(3 rows)
+
+CREATE FUNCTION
+ a | b 
+---+---
+ 5 | 6
+ 5 | 6
+ 7 | 8
+(3 rows)
+
+CREATE FUNCTION
+  f_returning  
+---------------
+ (15,16,15,16)
+(1 row)
+
+CREATE FUNCTION
+ f_returning_star 
+------------------
+ (17,18)
+(1 row)
+
+ a  | b  
+----+----
+ 19 | 20
+(1 row)
+
+CREATE FUNCTION
+ f_default 
+-----------
+ (21,0)
+(1 row)
+
+CREATE TABLE
+CREATE FUNCTION
+ f_2values 
+-----------
+ (7,8)
+ (9,10)
+(2 rows)
+
+psql:compatible/udf_insert.sql:117: ERROR:  duplicate key value violates unique constraint "t_multi_pkey"
+DETAIL:  Key (a)=(42) already exists.
+CONTEXT:  SQL function "f_2values" statement 1
+CREATE FUNCTION
+ f_2inserts 
+------------
+ (11,12)
+ (13,14)
+(2 rows)
+
+psql:compatible/udf_insert.sql:133: ERROR:  duplicate key value violates unique constraint "t_multi_pkey"
+DETAIL:  Key (a)=(42) already exists.
+CONTEXT:  SQL function "f_2inserts" statement 2
+ count 
+-------
+     0
+(1 row)
+
+CREATE TABLE
+CREATE FUNCTION
+ f_int 
+-------
+     0
+(1 row)
+
+CREATE FUNCTION
+ f_record 
+----------
+ (1)
+(1 row)
+
+ALTER TABLE
+ f_record 
+----------
+ (2,0)
+(1 row)
+
+ALTER TABLE
+ f_record 
+----------
+ (3,0,)
+(1 row)
+
+psql:compatible/udf_insert.sql:174: ERROR:  return type mismatch in function declared to return integer
+DETAIL:  Final statement must return exactly one column.
+CONTEXT:  SQL function "f_int" during startup
+ a | b | c 
+---+---+---
+ 0 | 0 |  
+ 1 | 0 |  
+ 2 | 0 |  
+ 3 | 0 |  
+(4 rows)
+
+CREATE FUNCTION
+   f_drop    
+-------------
+ (5,100,101)
+(1 row)
+
+ALTER TABLE
+DROP FUNCTION
+psql:compatible/udf_insert.sql:197: ERROR:  column "c" of relation "t_alter" does not exist
+ALTER TABLE
+ALTER TABLE
+psql:compatible/udf_insert.sql:206: ERROR:  INSERT has more expressions than target columns
+LINE 2:   INSERT INTO t_alter VALUES (i) RETURNING *;
+                                      ^
+QUERY:  
+  INSERT INTO t_alter VALUES (i) RETURNING *;
+
+CONTEXT:  SQL function "f_record" during startup
+CREATE TABLE
+CREATE FUNCTION
+psql:compatible/udf_insert.sql:224: ERROR:  new row for relation "t_checkb" violates check constraint "t_checkb_b_check"
+DETAIL:  Failing row contains (1, 0).
+CONTEXT:  SQL function "f_checkb" statement 1
+CREATE TABLE
+CREATE FUNCTION
+ALTER TABLE
+psql:compatible/udf_insert.sql:244: ERROR:  column "b" does not exist
+LINE 2:   INSERT INTO t146414 (a) VALUES (100) RETURNING b;
+                                                         ^
+QUERY:  
+  INSERT INTO t146414 (a) VALUES (100) RETURNING b;
+  SELECT 1;
+
+CONTEXT:  SQL function "f146414" during startup
+CREATE TABLE
+CREATE INDEX
+CREATE FUNCTION
+ f145098 
+---------
+       1
+(1 row)
+
+  a  |  b  |  c  
+-----+-----+-----
+ 100 | 101 | 200
+(1 row)
+
+DROP INDEX
+ f145098 
+---------
+       1
+(1 row)
+
+  a  |  b  |  c  
+-----+-----+-----
+ 100 | 101 | 200
+ 100 | 101 | 200
+(2 rows)
+
+ALTER TABLE
+ f145098 
+---------
+       1
+(1 row)
+
+  a  |  b  
+-----+-----
+ 100 | 101
+ 100 | 101
+ 100 | 101
+(3 rows)
+
+ALTER TABLE
+ f145098 
+---------
+       1
+(1 row)
+
+  a  
+-----
+ 100
+ 100
+ 100
+ 100
+(4 rows)
+
+ALTER TABLE
+DROP FUNCTION
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE FUNCTION
+DROP INDEX
+ALTER TABLE
+ALTER TABLE
+DROP FUNCTION
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE FUNCTION
+DROP INDEX
+ f145098 
+---------
+       1
+(1 row)
+
+DROP FUNCTION
+DROP TABLE

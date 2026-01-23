@@ -1,0 +1,119 @@
+SET
+DROP SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+CREATE FUNCTION
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+CREATE INDEX
+CREATE SCHEMA
+CREATE TABLE
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+DROP SCHEMA
+CREATE INDEX
+ encode | start_pretty | encode | end_pretty | replicas | lease_holder 
+--------+--------------+--------+------------+----------+--------------
+(0 rows)
+
+ encode | start_pretty | encode | end_pretty | replicas | lease_holder 
+--------+--------------+--------+------------+----------+--------------
+(0 rows)
+
+CREATE SCHEMA
+CREATE TABLE
+ feature_name 
+--------------
+(0 rows)
+
+CREATE TABLE
+ start_key | end_key 
+-----------+---------
+(0 rows)
+
+ start_key | end_key 
+-----------+---------
+(0 rows)
+
+ start_key | end_key 
+-----------+---------
+(0 rows)
+
+CREATE TABLE
+CREATE INDEX
+ start_key | end_key 
+-----------+---------
+(0 rows)
+
+ start_key | end_key 
+-----------+---------
+(0 rows)
+
+ start_key | end_key 
+-----------+---------
+(0 rows)
+
+ start_key | end_key 
+-----------+---------
+(0 rows)
+
+ start_key | end_key 
+-----------+---------
+(0 rows)
+
+ start_key | end_key 
+-----------+---------
+(0 rows)
+
+ start_key | end_key 
+-----------+---------
+(0 rows)
+
+CREATE TABLE
+ start_key | end_key 
+-----------+---------
+(0 rows)
+
+CREATE TABLE
+CREATE INDEX
+ start_key | end_key 
+-----------+---------
+(0 rows)
+
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+DROP INDEX
+DROP INDEX
+CREATE INDEX
+ idx 
+-----
+(0 rows)
+
+ pretty_key 
+------------
+(0 rows)
+
+ start_key | end_key 
+-----------+---------
+(0 rows)
+
+ range_stats 
+-------------
+(0 rows)
+
+CREATE TABLE
+ start_key | end_key 
+-----------+---------
+(0 rows)
+
+CREATE TABLE
+CREATE INDEX
+ start_key | end_key 
+-----------+---------
+(0 rows)
+
+RESET

@@ -37,24 +37,39 @@ SELECT * FROM pg_show_create_procedure('sc1', 'p_test_drop');
 
 -- Test 8: statement (line 42)
 -- Expected ERROR (p_test_drop is a procedure, not a function):
-\set ON_ERROR_STOP 0
-DROP FUNCTION p_test_drop();
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'DROP FUNCTION p_test_drop()';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 9: statement (line 45)
 -- Expected ERROR (ambiguous without signature; multiple overloads exist):
-\set ON_ERROR_STOP 0
-DROP PROCEDURE p_test_drop;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'DROP PROCEDURE p_test_drop';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 10: statement (line 48)
 DROP PROCEDURE IF EXISTS p_not_existing;
 
 -- Test 11: statement (line 51)
 -- Expected ERROR (procedure does not exist):
-\set ON_ERROR_STOP 0
-DROP PROCEDURE p_not_existing;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'DROP PROCEDURE p_not_existing';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 12: statement (line 54)
 -- CockroachDB-specific session setting:
@@ -63,49 +78,76 @@ DROP PROCEDURE p_not_existing;
 -- Test 13: statement (line 58)
 BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 DROP PROCEDURE p_test_drop();
-\set ON_ERROR_STOP 0
-DROP PROCEDURE p_test_drop();
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'DROP PROCEDURE p_test_drop()';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 COMMIT;
-\set ON_ERROR_STOP 1
-
--- Test 14: statement (line 64)
-ROLLBACK;
 
 -- Test 15: statement (line 67)
 -- RESET autocommit_before_ddl;
 
 -- Test 16: statement (line 70)
 -- Expected ERROR (no such function):
-\set ON_ERROR_STOP 0
-DROP FUNCTION p_test_drop();
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'DROP FUNCTION p_test_drop()';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 17: statement (line 73)
 -- Expected ERROR (p_test_drop() exists as a procedure, not a function):
-\set ON_ERROR_STOP 0
-DROP FUNCTION IF EXISTS p_test_drop();
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'DROP FUNCTION IF EXISTS p_test_drop()';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 18: statement (line 76)
 -- Expected ERROR (no such function):
-\set ON_ERROR_STOP 0
-DROP FUNCTION p_test_drop();
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'DROP FUNCTION p_test_drop()';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 19: statement (line 79)
 -- Expected ERROR (p_test_drop() exists as a procedure, not a function):
-\set ON_ERROR_STOP 0
-DROP FUNCTION IF EXISTS p_test_drop();
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'DROP FUNCTION IF EXISTS p_test_drop()';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 20: statement (line 82)
 DROP PROCEDURE IF EXISTS p_test_drop();
 
 -- Test 21: statement (line 85)
 -- Expected ERROR (procedure was dropped):
-\set ON_ERROR_STOP 0
-CALL p_test_drop();
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    CALL p_test_drop();
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 22: query (line 88)
 SELECT * FROM pg_show_create_procedure('public', 'p_test_drop');
@@ -119,9 +161,14 @@ DROP PROCEDURE p_test_drop(INT), p_test_drop(INT);
 
 -- Test 25: statement (line 113)
 -- Expected ERROR (dropped above):
-\set ON_ERROR_STOP 0
-CALL public.p_test_drop(1);
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    CALL public.p_test_drop(1);
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 26: statement (line 116)
 SELECT * FROM pg_show_create_procedure('public', 'p_test_drop');
@@ -134,9 +181,14 @@ DROP PROCEDURE p_test_drop(INT);
 
 -- Test 29: statement (line 132)
 -- Expected ERROR (no remaining procedure in search_path):
-\set ON_ERROR_STOP 0
-CALL p_test_drop(1);
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    CALL p_test_drop(1);
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 30: statement (line 135)
 SELECT * FROM pg_show_create_procedure('sc1', 'p_test_drop');

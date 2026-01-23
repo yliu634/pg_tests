@@ -1,0 +1,323 @@
+CREATE PROCEDURE
+CREATE PROCEDURE
+CREATE PROCEDURE
+CALL
+ param 
+-------
+     1
+(1 row)
+
+CALL
+CALL
+CREATE PROCEDURE
+ param2 
+--------
+      1
+(1 row)
+
+ param2 
+--------
+    1.1
+(1 row)
+
+CALL
+CREATE PROCEDURE
+ param2 
+--------
+      2
+(1 row)
+
+CALL
+CREATE PROCEDURE
+ param1 
+--------
+      5
+(1 row)
+
+CALL
+CALL
+ param1 
+--------
+      5
+(1 row)
+
+CALL
+DROP PROCEDURE
+DROP PROCEDURE
+CALL
+CREATE PROCEDURE
+DROP PROCEDURE
+CALL
+CALL
+CALL
+DROP PROCEDURE
+CALL
+CALL
+DROP PROCEDURE
+CREATE PROCEDURE
+CALL
+CALL
+ param 
+-------
+     1
+(1 row)
+
+DROP PROCEDURE
+CREATE PROCEDURE
+CALL
+CALL
+DROP PROCEDURE
+CREATE PROCEDURE
+CALL
+ param2 | param3 
+--------+--------
+      1 |      2
+(1 row)
+
+DROP PROCEDURE
+CREATE PROCEDURE
+CALL
+DROP PROCEDURE
+CALL
+CALL
+CREATE PROCEDURE
+DROP PROCEDURE
+CREATE PROCEDURE
+DROP PROCEDURE
+CREATE PROCEDURE
+DROP PROCEDURE
+CREATE PROCEDURE
+CALL
+DROP PROCEDURE
+CREATE PROCEDURE
+                                            create_statement                                             
+---------------------------------------------------------------------------------------------------------
+ CREATE OR REPLACE PROCEDURE public.p(IN p1 integer, INOUT p2 integer, INOUT p3 integer, OUT p4 integer)+
+  LANGUAGE sql                                                                                          +
+ AS $procedure$                                                                                         +
+ SELECT p2, p3, p1;                                                                                     +
+ $procedure$                                                                                            +
+ 
+(1 row)
+
+DROP PROCEDURE
+CREATE PROCEDURE
+                    create_statement                     
+---------------------------------------------------------
+ CREATE OR REPLACE PROCEDURE public.p(OUT param integer)+
+  LANGUAGE sql                                          +
+ AS $procedure$                                         +
+ SELECT 1;                                              +
+ $procedure$                                            +
+ 
+(1 row)
+
+DROP PROCEDURE
+CALL
+CALL
+CALL
+CREATE PROCEDURE
+ a 
+---
+ 1
+(1 row)
+
+CREATE PROCEDURE
+ a 
+---
+ 2
+(1 row)
+
+CALL
+CREATE PROCEDURE
+ param_out 
+-----------
+         2
+(1 row)
+
+CREATE PROCEDURE
+ param 
+-------
+     1
+(1 row)
+
+CREATE PROCEDURE
+CALL
+CREATE PROCEDURE
+ param 
+-------
+     2
+(1 row)
+
+CALL
+CALL
+CALL
+CREATE PROCEDURE
+CALL
+DROP PROCEDURE
+CREATE PROCEDURE
+CALL
+CALL
+CALL
+CALL
+ create_statement 
+------------------
+(0 rows)
+
+CALL
+CALL
+CALL
+ create_statement 
+------------------
+(0 rows)
+
+CALL
+CALL
+ create_statement 
+------------------
+(0 rows)
+
+CALL
+CALL
+CALL
+ create_statement 
+------------------
+(0 rows)
+
+CALL
+CALL
+ create_statement 
+------------------
+(0 rows)
+
+CALL
+CALL
+ create_statement 
+------------------
+(0 rows)
+
+CALL
+CALL
+CREATE TYPE
+CREATE PROCEDURE
+ column1 
+---------
+ (1,2)
+(1 row)
+
+CALL
+DROP PROCEDURE
+CREATE TYPE
+CREATE PROCEDURE
+ greeting 
+----------
+ hi
+(1 row)
+
+CALL
+DROP PROCEDURE
+CALL
+CALL
+CALL
+CALL
+CALL
+CALL
+CALL
+CALL
+CALL
+CREATE PROCEDURE
+CALL
+CALL
+CALL
+CALL
+CALL
+CALL
+ column1 
+---------
+       6
+(1 row)
+
+ column1 
+---------
+       5
+(1 row)
+
+CREATE PROCEDURE
+CALL
+DROP PROCEDURE
+DROP PROCEDURE
+CALL
+CALL
+CALL
+CALL
+CREATE PROCEDURE
+ column1 
+---------
+ foo
+(1 row)
+
+DROP PROCEDURE
+CREATE FUNCTION
+CREATE PROCEDURE
+ column1 
+---------
+       4
+(1 row)
+
+ column1 
+---------
+       2
+(1 row)
+
+CREATE FUNCTION
+ column1 
+---------
+       3
+(1 row)
+
+ column1 
+---------
+       2
+(1 row)
+
+CALL
+DROP PROCEDURE
+DROP FUNCTION
+CREATE PROCEDURE
+CALL
+CALL
+CALL
+CREATE PROCEDURE
+CALL
+CALL
+DROP PROCEDURE
+CREATE SEQUENCE
+CREATE PROCEDURE
+ column1 
+---------
+       1
+(1 row)
+
+ column1 
+---------
+       1
+(1 row)
+
+ column1 
+---------
+       2
+(1 row)
+
+CALL
+CREATE PROCEDURE
+DROP SEQUENCE
+DROP PROCEDURE
+CREATE SEQUENCE
+CREATE PROCEDURE
+CREATE PROCEDURE
+CALL
+DROP PROCEDURE
+DROP SEQUENCE
+CREATE PROCEDURE
+CREATE PROCEDURE
+DROP PROCEDURE

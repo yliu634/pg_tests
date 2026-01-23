@@ -1,0 +1,88 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+RESET
+CREATE TABLE
+INSERT 0 2
+ a | b | v 
+---+---+---
+ 1 | 1 | 2
+ 2 | 2 | 4
+(2 rows)
+
+psql:pg_tests/compatible/virtual_columns.sql:26: ERROR:  cannot insert a non-DEFAULT value into column "v"
+DETAIL:  Column "v" is a generated column.
+UPDATE 1
+ a | b  | v  
+---+----+----
+ 1 | 11 | 12
+ 2 |  2 |  4
+(2 rows)
+
+INSERT 0 1
+ a | b  | v  
+---+----+----
+ 1 | 11 | 12
+ 2 | 20 | 22
+(2 rows)
+
+CREATE INDEX
+ a 
+---
+(0 rows)
+
+CREATE TABLE
+INSERT 0 4
+ a | b | c | v  | w 
+---+---+---+----+---
+ 1 | 1 | 1 |  2 | 2
+ 2 | 8 | 2 | 10 | 3
+ 3 | 3 | 3 |  6 | 4
+ 4 | 6 | 4 | 10 | 5
+(4 rows)
+
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+INSERT 0 3
+psql:pg_tests/compatible/virtual_columns.sql:68: ERROR:  duplicate key value violates unique constraint "uniq_partial_v_idx"
+DETAIL:  Key (v)=(22) already exists.
+ a | b  | v  
+---+----+----
+ 1 | 10 | 11
+ 2 | 20 | 22
+ 3 | 21 | 24
+(3 rows)
+
+CREATE TABLE
+INSERT 0 3
+ALTER TABLE
+ a | b  | v  
+---+----+----
+ 1 | 10 | 11
+ 2 | 20 | 22
+ 3 | 30 | 33
+(3 rows)
+
+CREATE TABLE
+INSERT 0 3
+ k |     jv     
+---+------------
+ 1 | {"b": "c"}
+ 2 | {"b": "d"}
+ 3 | 
+(3 rows)
+
+ k 
+---
+ 1
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE

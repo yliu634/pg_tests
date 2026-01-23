@@ -1,0 +1,5 @@
+pg_tests/compatible/udf_schema_change.sql
+pg_tests/compatible/udf_security.sql
+pg_tests/compatible/udf_setof.sql
+pg_tests/compatible/udf_star.sql
+pg_tests/compatible/udf_subquery.sql

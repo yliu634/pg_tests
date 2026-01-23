@@ -1,0 +1,1 @@
+pg_tests/compatible/zone_config_system_tenant.sql

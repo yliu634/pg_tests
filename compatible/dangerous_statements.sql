@@ -2,10 +2,14 @@
 -- 22 tests
 
 -- Test 1: statement (line 1)
+SET client_min_messages = warning;
+DROP TABLE IF EXISTS foo;
+RESET client_min_messages;
+
 CREATE TABLE foo(x INT);
 
 -- Test 2: statement (line 4)
--- CockroachDB/MySQL compatibility setting; not supported in PostgreSQL.
+-- PostgreSQL doesn't have sql_safe_updates, but these are valid queries regardless
 -- SET sql_safe_updates = true;
 
 -- Test 3: statement (line 7)
@@ -16,10 +20,9 @@ UPDATE foo SET x = 3 WHERE x = 2;
 
 -- Test 5: statement (line 13)
 WITH target AS (
-  SELECT ctid FROM foo ORDER BY x LIMIT 1
+    SELECT ctid FROM foo ORDER BY x LIMIT 1
 )
-UPDATE foo SET x = 3
-WHERE ctid IN (SELECT ctid FROM target);
+UPDATE foo SET x = 3 WHERE ctid IN (SELECT ctid FROM target);
 
 -- Test 6: statement (line 16)
 DELETE FROM foo;
@@ -29,10 +32,9 @@ DELETE FROM foo WHERE x = 2;
 
 -- Test 8: statement (line 22)
 WITH target AS (
-  SELECT ctid FROM foo ORDER BY x LIMIT 1
+    SELECT ctid FROM foo ORDER BY x LIMIT 1
 )
-DELETE FROM foo
-WHERE ctid IN (SELECT ctid FROM target);
+DELETE FROM foo WHERE ctid IN (SELECT ctid FROM target);
 
 -- Test 9: statement (line 25)
 SELECT * FROM foo FOR UPDATE;
@@ -53,13 +55,13 @@ SELECT * FROM foo ORDER BY x LIMIT 1 FOR UPDATE;
 (SELECT * FROM foo WHERE x = 2) FOR UPDATE;
 
 -- Test 15: statement (line 43)
-SELECT * FROM (SELECT * FROM foo WHERE x = 2) AS sub FOR UPDATE;
+SELECT * FROM (SELECT * FROM foo WHERE x = 2) AS subq FOR UPDATE;
 
 -- Test 16: statement (line 46)
-SELECT * FROM (SELECT * FROM (SELECT * FROM foo) AS sub0 WHERE x = 2) AS sub1 FOR UPDATE;
+SELECT * FROM (SELECT * FROM (SELECT * FROM foo) AS subq1 WHERE x = 2) AS subq2 FOR UPDATE;
 
 -- Test 17: statement (line 49)
-SELECT * FROM (SELECT * FROM foo FOR UPDATE) AS sub WHERE x = 2 FOR UPDATE;
+SELECT * FROM (SELECT * FROM foo FOR UPDATE) AS subq WHERE x = 2 FOR UPDATE;
 
 -- Test 18: statement (line 52)
 SELECT * FROM (SELECT * FROM foo WHERE x = 2 FOR UPDATE) m, (SELECT * FROM foo) n FOR SHARE;
@@ -68,11 +70,11 @@ SELECT * FROM (SELECT * FROM foo WHERE x = 2 FOR UPDATE) m, (SELECT * FROM foo) 
 SELECT * FROM (SELECT * FROM foo FOR SHARE) m, (SELECT * FROM foo) n WHERE m.x = n.x;
 
 -- Test 20: statement (line 58)
-SELECT * FROM (SELECT * FROM (SELECT * FROM foo) AS sub0 WHERE x > 1) AS sub1 WHERE x > 2 FOR UPDATE;
+SELECT * FROM (SELECT * FROM (SELECT * FROM foo) AS subq1 WHERE x > 1) AS subq2 WHERE x > 2 FOR UPDATE;
 
 -- Test 21: statement (line 61)
 ALTER TABLE foo DROP COLUMN x;
 
 -- Test 22: statement (line 64)
--- CockroachDB `SET database` is not supported in PostgreSQL.
+-- PostgreSQL doesn't support SET database
 -- SET database = '';

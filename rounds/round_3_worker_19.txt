@@ -1,0 +1,5 @@
+pg_tests/compatible/statement_statistics.sql
+pg_tests/compatible/statement_statistics_errors.sql
+pg_tests/compatible/statement_statistics_errors_redacted.sql
+pg_tests/compatible/storing.sql
+pg_tests/compatible/strict_ddl_atomicity.sql

@@ -1,0 +1,5 @@
+pg_tests/compatible/order_by.sql
+pg_tests/compatible/ordinal_references.sql
+pg_tests/compatible/orms.sql
+pg_tests/compatible/overlaps.sql
+pg_tests/compatible/owner.sql

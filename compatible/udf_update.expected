@@ -1,0 +1,274 @@
+SET
+DROP ROLE
+CREATE ROLE
+GRANT ROLE
+RESET
+CREATE TABLE
+CREATE FUNCTION
+ f1 
+----
+ 
+(1 row)
+
+ f1 
+----
+ 
+(1 row)
+
+INSERT 0 1
+  f1   
+-------
+ (1,1)
+(1 row)
+
+  f1   
+-------
+ (3,4)
+(1 row)
+
+ a | b 
+---+---
+ 3 | 4
+(1 row)
+
+INSERT 0 3
+psql:compatible/udf_update.sql:43: ERROR:  duplicate key value violates unique constraint "t_pkey"
+DETAIL:  Key (a)=(1) already exists.
+CONTEXT:  SQL function "f1" statement 1
+psql:compatible/udf_update.sql:48: ERROR:  duplicate key value violates unique constraint "t_pkey"
+DETAIL:  Key (a)=(14) already exists.
+CONTEXT:  SQL function "f1" statement 1
+ a | b 
+---+---
+ 3 | 4
+ 1 | 2
+ 5 | 6
+ 7 | 8
+(4 rows)
+
+CREATE FUNCTION
+ f2 
+----
+ 
+(1 row)
+
+   f2   
+--------
+ (5,32)
+(1 row)
+
+  f2   |   f2   
+-------+--------
+ (5,9) | (7,11)
+(1 row)
+
+   f2   
+--------
+ (1,16)
+ (1,17)
+(2 rows)
+
+ a | b  
+---+----
+ 3 |  4
+ 5 |  9
+ 7 | 11
+ 1 | 17
+(4 rows)
+
+CREATE TABLE
+INSERT 0 3
+CREATE FUNCTION
+ a | b | c 
+---+---+---
+ 3 | 3 | 3
+ 3 | 3 | 6
+(2 rows)
+
+SELECT 1
+CREATE FUNCTION
+CREATE FUNCTION
+ f5 
+----
+  1
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+CREATE FUNCTION
+ f_check1 
+----------
+ (4)
+(1 row)
+
+ f_check1 
+----------
+ (1)
+(1 row)
+
+psql:compatible/udf_update.sql:126: ERROR:  new row for relation "t_check" violates check constraint "t_check_x_check"
+DETAIL:  Failing row contains (0).
+CONTEXT:  SQL function "f_check1" statement 1
+CREATE TABLE
+INSERT 0 3
+psql:compatible/udf_update.sql:144: ERROR:  column "b" can only be updated to DEFAULT
+DETAIL:  Column "b" is an identity column defined as GENERATED ALWAYS.
+CONTEXT:  SQL function "f_err"
+CREATE FUNCTION
+ a | b | c 
+---+---+---
+ 7 | 1 | 1
+ 8 | 2 | 2
+ 9 | 3 | 3
+(3 rows)
+
+ f_generated_as_id 
+-------------------
+ (7,4,2)
+(1 row)
+
+ a | b | c 
+---+---+---
+ 7 | 4 | 2
+ 8 | 5 | 2
+ 9 | 6 | 2
+(3 rows)
+
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+CREATE FUNCTION
+ f_103693 
+----------
+        1
+(1 row)
+
+CREATE TABLE
+INSERT 0 3
+GRANT
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+ f_select_and_update 
+---------------------
+ 
+(1 row)
+
+ k | v 
+---+---
+ 3 | 4
+ 5 | 6
+ 1 | 1
+(3 rows)
+
+BEGIN
+ k | v 
+---+---
+ 3 | 4
+(1 row)
+
+ f_update 
+----------
+ 
+(1 row)
+
+COMMIT
+ k | v 
+---+---
+ 5 | 6
+ 1 | 1
+ 3 | 3
+(3 rows)
+
+BEGIN
+ k | v 
+---+---
+ 5 | 6
+(1 row)
+
+ f_update 
+----------
+ 
+(1 row)
+
+ROLLBACK
+ k | v 
+---+---
+ 5 | 6
+ 1 | 1
+ 3 | 3
+(3 rows)
+
+BEGIN
+ f_select_for_update 
+---------------------
+ (5,6)
+(1 row)
+
+SET
+SET
+ k | v 
+---+---
+ 5 | 6
+(1 row)
+
+SET
+RESET
+ f_update 
+----------
+ 
+(1 row)
+
+COMMIT
+ k | v 
+---+---
+ 1 | 1
+ 3 | 3
+ 5 | 5
+(3 rows)
+
+CREATE TABLE
+CREATE FUNCTION
+ALTER TABLE
+psql:compatible/udf_update.sql:285: ERROR:  column "b" does not exist
+LINE 2:   UPDATE t146414 SET a = a + 1 WHERE a = 1 RETURNING b;
+                                                             ^
+QUERY:  
+  UPDATE t146414 SET a = a + 1 WHERE a = 1 RETURNING b;
+  SELECT 1;
+
+CONTEXT:  SQL function "f146414" during startup
+CREATE TABLE
+CREATE INDEX
+INSERT 0 3
+DROP FUNCTION
+CREATE FUNCTION
+DROP INDEX
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE TABLE
+CREATE PROCEDURE
+ALTER TABLE
+DROP PROCEDURE
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+CREATE PROCEDURE
+CALL
+ col1 |        col2         |      computed       
+------+---------------------+---------------------
+    2 | 2024-01-01 00:00:00 | 2024-01-01 00:00:00
+(1 row)
+
+ALTER TABLE
+CALL
+ col1 
+------
+    3
+(1 row)
+
+DROP PROCEDURE
+DROP TABLE

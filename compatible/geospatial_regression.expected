@@ -1,0 +1,11 @@
+SET
+CREATE EXTENSION
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+ st_asencodedpolyline 
+----------------------
+ f|hxEgzunK{vyz@ysxbB
+(1 row)
+
+RESET

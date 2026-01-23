@@ -1,0 +1,79 @@
+SET
+DROP VIEW
+DROP SCHEMA
+DROP TABLE
+DROP TABLE
+DROP INDEX
+ client_encoding 
+-----------------
+ UTF8
+(1 row)
+
+ client_encoding | ordinality 
+-----------------+------------
+ UTF8            |          1
+(1 row)
+
+       variable        |     value      
+-----------------------+----------------
+ DateStyle             | ISO, MDY
+ TimeZone              | Etc/UTC
+ client_encoding       | UTF8
+ transaction_isolation | read committed
+(4 rows)
+
+ session_user 
+--------------
+ postgres
+(1 row)
+
+     database_name      
+------------------------
+ crdb_tests_show_source
+(1 row)
+
+CREATE SCHEMA
+CREATE TABLE
+CREATE VIEW
+ schema_name 
+-------------
+ pg_toast
+ public
+ system
+(3 rows)
+
+ schema_name | table_name | table_type 
+-------------+------------+------------
+ system      | descriptor | BASE TABLE
+(1 row)
+
+      create_statement       
+-----------------------------
+ CREATE VIEW v AS  SELECT id+
+    FROM system.descriptor;;
+(1 row)
+
+ username 
+----------
+ postgres
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+COMMENT
+ indexname |   comment   
+-----------+-------------
+ t_y_idx   | idx comment
+(1 row)
+
+ TimeZone 
+----------
+ Etc/UTC
+(1 row)
+
+ transaction_isolation 
+-----------------------
+ read committed
+(1 row)
+
+RESET

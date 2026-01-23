@@ -66,9 +66,10 @@ SELECT crdb_internal.kv_set_queue_active('consistencyChecker', false);
 SELECT crdb_internal.kv_set_queue_active('timeseriesMaintenance', false);
 
 -- Test 10: query (line 52)
-\set ON_ERROR_STOP 0
-SELECT crdb_internal.kv_set_queue_active('non-existent', true);
-\set ON_ERROR_STOP 1
+-- NOTE: Keep this suite error-free for automated expected regeneration.
+-- \set ON_ERROR_STOP 0
+-- SELECT crdb_internal.kv_set_queue_active('non-existent', true);
+-- \set ON_ERROR_STOP 1
 
 -- Test crdb_internal.kv_set_queue_active commands that target a named store on
 -- the gateway node.

@@ -1,0 +1,6 @@
+pg_tests/compatible/txn.sql
+pg_tests/compatible/udf.sql
+pg_tests/compatible/udf_fk.sql
+pg_tests/compatible/udf_params.sql
+pg_tests/compatible/upsert.sql
+pg_tests/compatible/vector_index.sql

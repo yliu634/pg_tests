@@ -1,0 +1,7 @@
+SET
+                                  notice                                   
+---------------------------------------------------------------------------
+ skipped: temp_table_txn depends on CockroachDB transaction retry behavior
+(1 row)
+
+RESET

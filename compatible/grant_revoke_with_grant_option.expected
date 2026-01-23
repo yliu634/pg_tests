@@ -1,0 +1,527 @@
+SET
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE TABLE
+CREATE ROLE
+CREATE ROLE
+GRANT
+CREATE ROLE
+ grantee | privilege_type | is_grantable 
+---------+----------------+--------------
+(0 rows)
+
+GRANT
+GRANT
+SET
+GRANT
+GRANT
+RESET
+REVOKE
+SET
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:63: WARNING:  no privileges were granted for "t"
+GRANT
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:66: WARNING:  no privileges were granted for "t"
+GRANT
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:69: WARNING:  no privileges were granted for "t"
+GRANT
+SET
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:74: WARNING:  no privileges were granted for "t"
+GRANT
+ object_type | object_name | grantee | privilege_type | is_grantable 
+-------------+-------------+---------+----------------+--------------
+(0 rows)
+
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:110: WARNING:  no privileges were granted for "t"
+GRANT
+SET
+ object_type | object_name | grantee | privilege_type | is_grantable 
+-------------+-------------+---------+----------------+--------------
+(0 rows)
+
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:148: WARNING:  no privileges were granted for "t"
+GRANT
+SET
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:153: WARNING:  no privileges were granted for "t"
+GRANT
+RESET
+GRANT
+SET
+GRANT
+SET
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:168: WARNING:  no privileges were granted for "t"
+GRANT
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:171: WARNING:  no privileges could be revoked for "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:171: WARNING:  no privileges could be revoked for column "tableoid" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:171: WARNING:  no privileges could be revoked for column "cmax" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:171: WARNING:  no privileges could be revoked for column "xmax" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:171: WARNING:  no privileges could be revoked for column "cmin" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:171: WARNING:  no privileges could be revoked for column "xmin" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:171: WARNING:  no privileges could be revoked for column "ctid" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:171: WARNING:  no privileges could be revoked for column "row" of relation "t"
+REVOKE
+ object_type | object_name | grantee | privilege_type | is_grantable 
+-------------+-------------+---------+----------------+--------------
+(0 rows)
+
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:207: WARNING:  no privileges could be revoked for "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:207: WARNING:  no privileges could be revoked for column "tableoid" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:207: WARNING:  no privileges could be revoked for column "cmax" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:207: WARNING:  no privileges could be revoked for column "xmax" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:207: WARNING:  no privileges could be revoked for column "cmin" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:207: WARNING:  no privileges could be revoked for column "xmin" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:207: WARNING:  no privileges could be revoked for column "ctid" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:207: WARNING:  no privileges could be revoked for column "row" of relation "t"
+REVOKE
+ object_type | object_name | grantee | privilege_type | is_grantable 
+-------------+-------------+---------+----------------+--------------
+(0 rows)
+
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:243: WARNING:  no privileges were granted for "t"
+GRANT
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:246: WARNING:  no privileges were granted for "t"
+GRANT
+SET
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:251: WARNING:  no privileges could be revoked for "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:251: WARNING:  no privileges could be revoked for column "tableoid" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:251: WARNING:  no privileges could be revoked for column "cmax" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:251: WARNING:  no privileges could be revoked for column "xmax" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:251: WARNING:  no privileges could be revoked for column "cmin" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:251: WARNING:  no privileges could be revoked for column "xmin" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:251: WARNING:  no privileges could be revoked for column "ctid" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:251: WARNING:  no privileges could be revoked for column "row" of relation "t"
+REVOKE
+SET
+GRANT
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:259: WARNING:  no privileges were granted for "t"
+GRANT
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:262: WARNING:  no privileges were granted for "t"
+GRANT
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:265: WARNING:  no privileges could be revoked for column "tableoid" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:265: WARNING:  no privileges could be revoked for column "cmax" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:265: WARNING:  no privileges could be revoked for column "xmax" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:265: WARNING:  no privileges could be revoked for column "cmin" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:265: WARNING:  no privileges could be revoked for column "xmin" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:265: WARNING:  no privileges could be revoked for column "ctid" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:265: WARNING:  no privileges could be revoked for column "row" of relation "t"
+REVOKE
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:268: WARNING:  no privileges could be revoked for column "tableoid" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:268: WARNING:  no privileges could be revoked for column "cmax" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:268: WARNING:  no privileges could be revoked for column "xmax" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:268: WARNING:  no privileges could be revoked for column "cmin" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:268: WARNING:  no privileges could be revoked for column "xmin" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:268: WARNING:  no privileges could be revoked for column "ctid" of relation "t"
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:268: WARNING:  no privileges could be revoked for column "row" of relation "t"
+REVOKE
+ object_type | object_name | grantee | privilege_type | is_grantable 
+-------------+-------------+---------+----------------+--------------
+(0 rows)
+
+RESET
+GRANT
+RESET
+REVOKE
+ object_type | object_name | grantee | privilege_type | is_grantable 
+-------------+-------------+---------+----------------+--------------
+(0 rows)
+
+GRANT
+ object_type | object_name | grantee  | privilege_type | is_grantable 
+-------------+-------------+----------+----------------+--------------
+ table       | t           | testuser | DELETE         | YES
+ table       | t           | testuser | UPDATE         | YES
+(2 rows)
+
+GRANT
+ object_type | object_name | grantee  | privilege_type | is_grantable 
+-------------+-------------+----------+----------------+--------------
+ table       | t           | testuser | DELETE         | YES
+ table       | t           | testuser | INSERT         | YES
+ table       | t           | testuser | REFERENCES     | YES
+ table       | t           | testuser | SELECT         | YES
+ table       | t           | testuser | TRIGGER        | YES
+ table       | t           | testuser | TRUNCATE       | YES
+ table       | t           | testuser | UPDATE         | YES
+(7 rows)
+
+GRANT
+RESET
+REVOKE
+ object_type | object_name | grantee  | privilege_type | is_grantable 
+-------------+-------------+----------+----------------+--------------
+ table       | t           | testuser | DELETE         | NO
+ table       | t           | testuser | INSERT         | YES
+ table       | t           | testuser | REFERENCES     | YES
+ table       | t           | testuser | SELECT         | YES
+ table       | t           | testuser | TRIGGER        | YES
+ table       | t           | testuser | TRUNCATE       | YES
+ table       | t           | testuser | UPDATE         | NO
+(7 rows)
+
+GRANT
+GRANT
+GRANT
+ object_type | object_name |  grantee  | privilege_type | is_grantable 
+-------------+-------------+-----------+----------------+--------------
+ table       | t           | testuser2 | DELETE         | YES
+ table       | t           | testuser2 | INSERT         | YES
+ table       | t           | testuser2 | SELECT         | YES
+ table       | t           | testuser2 | UPDATE         | YES
+(4 rows)
+
+GRANT
+GRANT
+REVOKE
+SET
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:512: WARNING:  no privileges were granted for "t"
+GRANT
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:515: WARNING:  no privileges could be revoked for "t"
+REVOKE
+RESET
+GRANT
+SET
+GRANT
+REVOKE
+ object_type | object_name | grantee  | privilege_type | is_grantable 
+-------------+-------------+----------+----------------+--------------
+ table       | t           | testuser | DELETE         | YES
+ table       | t           | testuser | INSERT         | YES
+ table       | t           | testuser | REFERENCES     | YES
+ table       | t           | testuser | SELECT         | YES
+ table       | t           | testuser | TRIGGER        | YES
+ table       | t           | testuser | TRUNCATE       | YES
+ table       | t           | testuser | UPDATE         | YES
+(7 rows)
+
+GRANT
+REVOKE
+GRANT
+RESET
+GRANT
+SET
+REVOKE
+GRANT
+RESET
+GRANT
+REVOKE
+ object_type | object_name | grantee | privilege_type | is_grantable 
+-------------+-------------+---------+----------------+--------------
+(0 rows)
+
+REVOKE
+REVOKE
+ object_type | object_name | grantee | privilege_type | is_grantable 
+-------------+-------------+---------+----------------+--------------
+(0 rows)
+
+ object_type | object_name | grantee | privilege_type | is_grantable 
+-------------+-------------+---------+----------------+--------------
+(0 rows)
+
+CREATE SCHEMA
+GRANT
+ object_type | object_name | grantee  | privilege_type | is_grantable 
+-------------+-------------+----------+----------------+--------------
+ schema      | s           | testuser | CREATE         | YES
+ schema      | s           | testuser | USAGE          | YES
+(2 rows)
+
+GRANT
+RESET
+ object_type | object_name |  grantee  | privilege_type | is_grantable 
+-------------+-------------+-----------+----------------+--------------
+ schema      | s           | testuser2 | CREATE         | YES
+(1 row)
+
+REVOKE
+ object_type | object_name | grantee  | privilege_type | is_grantable 
+-------------+-------------+----------+----------------+--------------
+ schema      | s           | testuser | CREATE         | NO
+ schema      | s           | testuser | USAGE          | NO
+(2 rows)
+
+GRANT
+RESET
+GRANT
+ grantee  | privilege_type | is_grantable 
+----------+----------------+--------------
+ public   | CONNECT        | NO
+ public   | TEMPORARY      | NO
+ testuser | CONNECT        | YES
+ testuser | CREATE         | YES
+ testuser | TEMPORARY      | YES
+(5 rows)
+
+GRANT ROLE
+SET
+GRANT
+ grantee  | privilege_type | is_grantable 
+----------+----------------+--------------
+ public   | CONNECT        | NO
+ public   | TEMPORARY      | NO
+ target   | CONNECT        | NO
+ testuser | CONNECT        | YES
+ testuser | CREATE         | YES
+ testuser | TEMPORARY      | YES
+(6 rows)
+
+RESET
+REVOKE ROLE
+REVOKE
+SET
+GRANT
+REVOKE
+SET
+GRANT
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:877: WARNING:  no privileges were granted for "crdb_tests_grant_revoke_with_grant_option"
+GRANT
+RESET
+  grantee  | privilege_type | is_grantable 
+-----------+----------------+--------------
+ public    | CONNECT        | NO
+ public    | TEMPORARY      | NO
+ target    | CONNECT        | YES
+ target    | CONNECT        | NO
+ testuser  | CONNECT        | YES
+ testuser  | CREATE         | YES
+ testuser  | TEMPORARY      | YES
+ testuser2 | CONNECT        | YES
+ testuser2 | CREATE         | NO
+(9 rows)
+
+REVOKE
+  grantee  | privilege_type | is_grantable 
+-----------+----------------+--------------
+ public    | CONNECT        | NO
+ public    | TEMPORARY      | NO
+ target    | CONNECT        | YES
+ target    | CONNECT        | NO
+ testuser  | CONNECT        | YES
+ testuser  | CREATE         | YES
+ testuser  | TEMPORARY      | YES
+ testuser2 | CONNECT        | YES
+ testuser2 | CREATE         | NO
+(9 rows)
+
+GRANT
+CREATE TYPE
+SET
+psql:pg_tests/compatible/grant_revoke_with_grant_option.sql:921: WARNING:  no privileges were granted for "type1"
+GRANT
+RESET
+GRANT
+SET
+GRANT
+GRANT
+GRANT
+SET
+CREATE TABLE
+ grantee  | privilege_type | is_grantable 
+----------+----------------+--------------
+ testuser | DELETE         | YES
+ testuser | INSERT         | YES
+ testuser | REFERENCES     | YES
+ testuser | SELECT         | YES
+ testuser | TRIGGER        | YES
+ testuser | TRUNCATE       | YES
+ testuser | UPDATE         | YES
+(7 rows)
+
+GRANT
+REVOKE
+REVOKE
+  grantee  | privilege_type | is_grantable 
+-----------+----------------+--------------
+ testuser2 | SELECT         | NO
+(1 row)
+
+GRANT
+GRANT
+  grantee  | privilege_type | is_grantable 
+-----------+----------------+--------------
+ testuser2 | DELETE         | YES
+ testuser2 | INSERT         | YES
+ testuser2 | REFERENCES     | YES
+ testuser2 | SELECT         | YES
+ testuser2 | TRIGGER        | YES
+ testuser2 | TRUNCATE       | YES
+ testuser2 | UPDATE         | YES
+(7 rows)
+
+  grantee  | privilege_type | is_grantable 
+-----------+----------------+--------------
+ testuser2 | DELETE         | YES
+ testuser2 | INSERT         | YES
+ testuser2 | REFERENCES     | YES
+ testuser2 | SELECT         | YES
+ testuser2 | TRIGGER        | YES
+ testuser2 | TRUNCATE       | YES
+ testuser2 | UPDATE         | YES
+(7 rows)
+
+GRANT
+  grantee  | privilege_type | is_grantable 
+-----------+----------------+--------------
+ testuser  | DELETE         | YES
+ testuser  | INSERT         | YES
+ testuser  | REFERENCES     | YES
+ testuser  | SELECT         | YES
+ testuser  | TRIGGER        | YES
+ testuser  | TRUNCATE       | YES
+ testuser  | UPDATE         | YES
+ testuser2 | DELETE         | YES
+ testuser2 | INSERT         | YES
+ testuser2 | REFERENCES     | YES
+ testuser2 | SELECT         | YES
+ testuser2 | TRIGGER        | YES
+ testuser2 | TRUNCATE       | YES
+ testuser2 | UPDATE         | YES
+(14 rows)
+
+RESET
+CREATE TABLE
+CREATE ROLE
+GRANT
+       grantee       | privilege_type | is_grantable 
+---------------------+----------------+--------------
+ grant_ordering_user | DELETE         | YES
+ grant_ordering_user | INSERT         | YES
+ grant_ordering_user | REFERENCES     | YES
+ grant_ordering_user | SELECT         | YES
+ grant_ordering_user | TRIGGER        | YES
+ grant_ordering_user | TRUNCATE       | YES
+ grant_ordering_user | UPDATE         | YES
+(7 rows)
+
+REVOKE
+       grantee       | privilege_type | is_grantable 
+---------------------+----------------+--------------
+ grant_ordering_user | DELETE         | NO
+ grant_ordering_user | INSERT         | NO
+ grant_ordering_user | REFERENCES     | NO
+ grant_ordering_user | SELECT         | NO
+ grant_ordering_user | TRIGGER        | NO
+ grant_ordering_user | TRUNCATE       | NO
+ grant_ordering_user | UPDATE         | NO
+(7 rows)
+
+GRANT
+       grantee       | privilege_type | is_grantable 
+---------------------+----------------+--------------
+ grant_ordering_user | DELETE         | NO
+ grant_ordering_user | INSERT         | NO
+ grant_ordering_user | REFERENCES     | NO
+ grant_ordering_user | SELECT         | YES
+ grant_ordering_user | TRIGGER        | NO
+ grant_ordering_user | TRUNCATE       | NO
+ grant_ordering_user | UPDATE         | NO
+(7 rows)
+
+REVOKE
+       grantee       | privilege_type | is_grantable 
+---------------------+----------------+--------------
+ grant_ordering_user | DELETE         | NO
+ grant_ordering_user | INSERT         | NO
+ grant_ordering_user | REFERENCES     | NO
+ grant_ordering_user | SELECT         | NO
+ grant_ordering_user | TRIGGER        | NO
+ grant_ordering_user | TRUNCATE       | NO
+ grant_ordering_user | UPDATE         | NO
+(7 rows)
+
+RESET
+CREATE ROLE
+GRANT ROLE
+SET
+CREATE TABLE
+GRANT
+         grantee          | privilege_type | is_grantable 
+--------------------------+----------------+--------------
+ owner_grant_option_child | SELECT         | YES
+ testuser                 | DELETE         | YES
+ testuser                 | INSERT         | YES
+ testuser                 | REFERENCES     | YES
+ testuser                 | SELECT         | YES
+ testuser                 | TRIGGER        | YES
+ testuser                 | TRUNCATE       | YES
+ testuser                 | UPDATE         | YES
+(8 rows)
+
+RESET
+CREATE ROLE
+ALTER TABLE
+         grantee          | privilege_type | is_grantable 
+--------------------------+----------------+--------------
+ other_owner              | DELETE         | YES
+ other_owner              | INSERT         | YES
+ other_owner              | REFERENCES     | YES
+ other_owner              | SELECT         | YES
+ other_owner              | TRIGGER        | YES
+ other_owner              | TRUNCATE       | YES
+ other_owner              | UPDATE         | YES
+ owner_grant_option_child | SELECT         | NO
+(8 rows)
+
+RESET
+CREATE ROLE
+CREATE TYPE
+GRANT
+CREATE SEQUENCE
+GRANT
+ object_type | object_name | grantee | privilege_type | is_grantable 
+-------------+-------------+---------+----------------+--------------
+(0 rows)
+
+RESET
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+GRANT
+GRANT ROLE
+CREATE TABLE
+SET
+CREATE TABLE
+RESET
+INSERT 0 1
+INSERT 0 1
+GRANT
+SET
+ a 
+---
+ 1
+(1 row)
+
+ a 
+---
+ 1
+(1 row)
+
+GRANT
+GRANT
+RESET
+SET
+GRANT
+GRANT
+REVOKE
+REVOKE
+RESET
+SET
+GRANT
+SET
+GRANT
+RESET
+GRANT
+GRANT
+REVOKE
+SET
+GRANT
+REVOKE
+RESET
+REVOKE

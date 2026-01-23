@@ -3,6 +3,28 @@
 
 \set ON_ERROR_STOP 1
 
+SET client_min_messages = warning;
+CREATE EXTENSION IF NOT EXISTS postgis;
+RESET client_min_messages;
+
+-- Helper: run a query expected to error without emitting psql ERROR output.
+CREATE OR REPLACE PROCEDURE pg_temp.expect_error_query(sql text)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  stmt text;
+  rec record;
+BEGIN
+  stmt := regexp_replace(sql, ';[[:space:]]*$', '');
+  FOR rec IN EXECUTE stmt LOOP
+    NULL;
+  END LOOP;
+  RAISE NOTICE 'expected failure did not occur';
+EXCEPTION WHEN OTHERS THEN
+  RAISE NOTICE 'expected failure: %', SQLERRM;
+END;
+$$;
+
 -- Test 1: statement (line 5)
 CREATE TABLE box2d_encoding_test(
   id int primary key,
@@ -21,33 +43,23 @@ SELECT * FROM box2d_encoding_test ORDER BY id ASC;
 
 -- Test 4: statement (line 27)
 -- Expected error: arguments must be points.
-\set ON_ERROR_STOP 0
-SELECT ST_MakeBox2D('LINESTRING(0 0, 1 1)', 'POINT(1 0)');
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error_query($sql$SELECT ST_MakeBox2D('LINESTRING(0 0, 1 1)', 'POINT(1 0)');$sql$);
 
 -- Test 5: statement (line 30)
 -- Expected error: arguments must be points.
-\set ON_ERROR_STOP 0
-SELECT ST_MakeBox2D('POINT(1 0)', 'LINESTRING(0 0, 1 1)');
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error_query($sql$SELECT ST_MakeBox2D('POINT(1 0)', 'LINESTRING(0 0, 1 1)');$sql$);
 
 -- Test 6: statement (line 33)
 -- Expected error: empty points are rejected.
-\set ON_ERROR_STOP 0
-SELECT ST_MakeBox2D('POINT(1 0)', 'POINT EMPTY');
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error_query($sql$SELECT ST_MakeBox2D('POINT(1 0)', 'POINT EMPTY');$sql$);
 
 -- Test 7: statement (line 36)
 -- Expected error: empty points are rejected.
-\set ON_ERROR_STOP 0
-SELECT ST_MakeBox2D('POINT EMPTY', 'POINT (1 0)');
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error_query($sql$SELECT ST_MakeBox2D('POINT EMPTY', 'POINT (1 0)');$sql$);
 
 -- Test 8: statement (line 39)
 -- Expected error: mixed SRID geometries.
-\set ON_ERROR_STOP 0
-SELECT ST_MakeBox2D('SRID=4326;POINT(1 0)', 'SRID=3857;POINT(1 0)');
-\set ON_ERROR_STOP 1
+CALL pg_temp.expect_error_query($sql$SELECT ST_MakeBox2D('SRID=4326;POINT(1 0)', 'SRID=3857;POINT(1 0)');$sql$);
 
 -- Test 9: query (line 42)
 SELECT ST_MakeBox2D(a::geometry, b::geometry) FROM ( VALUES

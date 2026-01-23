@@ -1,0 +1,2 @@
+pg_tests/compatible/row_level_ttl.sql
+pg_tests/compatible/schema.sql

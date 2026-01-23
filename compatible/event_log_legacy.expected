@@ -1,0 +1,329 @@
+SET
+DROP SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+CREATE ROLE
+DO
+DROP ROLE
+ reportingID | eventType | ?column? 
+-------------+-----------+----------
+(0 rows)
+
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+ count 
+-------
+     0
+(1 row)
+
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+ALTER TABLE
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+ ?column? 
+----------
+(0 rows)
+
+ reportingID 
+-------------
+(0 rows)
+
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+INSERT 0 2
+ALTER TABLE
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+CREATE INDEX
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+CREATE INDEX
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+DROP INDEX
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+TRUNCATE TABLE
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+CREATE TABLE
+ALTER TABLE
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+CREATE SCHEMA
+CREATE SCHEMA
+CREATE SCHEMA
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+CREATE TABLE
+CREATE TABLE
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+CREATE SCHEMA
+ALTER SCHEMA
+DROP SCHEMA
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+DROP TABLE
+CREATE SEQUENCE
+ALTER SEQUENCE
+DROP SEQUENCE
+ eventType | reportingID | ?column? 
+-----------+-------------+----------
+(0 rows)
+
+CREATE VIEW
+DROP VIEW
+ eventType | reportingID | ?column? 
+-----------+-------------+----------
+(0 rows)
+
+CREATE TABLE
+CREATE TABLE
+CREATE VIEW
+CREATE SEQUENCE
+CREATE DATABASE
+CREATE SCHEMA
+CREATE ROLE
+CREATE ROLE
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+REVOKE
+REVOKE
+REVOKE
+GRANT
+GRANT
+GRANT
+GRANT
+REVOKE
+REVOKE
+REVOKE
+REVOKE
+ reportingID | ?column? | eventType 
+-------------+----------+-----------
+(0 rows)
+
+DROP DATABASE
+DROP SEQUENCE
+DROP SCHEMA
+DROP VIEW
+DROP TABLE
+DROP TABLE
+DROP ROLE
+DROP ROLE
+CREATE SCHEMA
+CREATE ROLE
+CREATE SCHEMA
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+ALTER SCHEMA
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+DROP SCHEMA
+DROP ROLE
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+CREATE ROLE
+DROP ROLE
+ reportingID | eventType | ?column? 
+-------------+-----------+----------
+(0 rows)
+
+CREATE TYPE
+ reportingID | eventType | ?column? 
+-------------+-----------+----------
+(0 rows)
+
+ALTER TYPE
+ALTER TYPE
+CREATE SCHEMA
+ALTER TYPE
+ALTER TYPE
+ALTER TYPE
+ reportingID | eventType | ?column? 
+-------------+-----------+----------
+(0 rows)
+
+DROP TYPE
+ reportingID | eventType | ?column? 
+-------------+-----------+----------
+(0 rows)
+
+CREATE TABLE
+COMMENT
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+CREATE INDEX
+COMMENT
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+COMMENT
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+CREATE SCHEMA
+COMMENT
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+DROP SCHEMA
+ALTER TABLE
+CREATE SEQUENCE
+CREATE SCHEMA
+ALTER SEQUENCE
+CREATE VIEW
+ALTER VIEW
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+CREATE TABLE
+CREATE VIEW
+CREATE VIEW
+DROP TABLE
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+CREATE TABLE
+CREATE INDEX
+CREATE VIEW
+CREATE VIEW
+DROP INDEX
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+CREATE TABLE
+DROP VIEW
+CREATE VIEW
+CREATE VIEW
+ALTER TABLE
+ reportingID | ?column? 
+-------------+----------
+(0 rows)
+
+RESET

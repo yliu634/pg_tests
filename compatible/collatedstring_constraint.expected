@@ -1,0 +1,51 @@
+CREATE COLLATION
+CREATE TABLE
+INSERT 0 1
+DO
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+ a 
+---
+ a
+ b
+(2 rows)
+
+ a 
+---
+ A
+ b
+ p
+(3 rows)
+
+   b    
+--------
+ apple
+ banana
+ pear
+(3 rows)
+
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+DO
+ a 
+---
+ a
+ b
+(2 rows)
+
+ a 
+---
+ A
+ b
+(2 rows)
+
+   b    
+--------
+ apple
+ banana
+(2 rows)
+

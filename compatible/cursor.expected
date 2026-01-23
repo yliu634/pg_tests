@@ -1,0 +1,740 @@
+CREATE PROCEDURE
+CREATE PROCEDURE
+CREATE PROCEDURE
+CLOSE CURSOR ALL
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+INSERT 0 2
+psql:pg_tests/compatible/cursor.sql:64: NOTICE:  expected failure did not occur
+CALL
+ ?column? 
+----------
+        1
+(1 row)
+
+psql:pg_tests/compatible/cursor.sql:68: NOTICE:  expected failure did not occur
+CALL
+psql:pg_tests/compatible/cursor.sql:71: NOTICE:  expected failure: cursor "foo" does not exist
+CALL
+psql:pg_tests/compatible/cursor.sql:74: NOTICE:  expected failure: cannot open FETCH query as cursor
+CALL
+BEGIN
+psql:pg_tests/compatible/cursor.sql:80: NOTICE:  expected failure: cannot open FETCH query as cursor
+CALL
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ a | b 
+---+---
+ 1 | 2
+(1 row)
+
+ a | b 
+---+---
+ 2 | 3
+(1 row)
+
+ a | b 
+---+---
+(0 rows)
+
+CLOSE CURSOR
+COMMIT
+BEGIN
+DECLARE CURSOR
+ a | b 
+---+---
+ 1 | 2
+(1 row)
+
+CLOSE CURSOR
+psql:pg_tests/compatible/cursor.sql:113: NOTICE:  expected failure: cannot open FETCH query as cursor
+CALL
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ a | b 
+---+---
+ 1 | 2
+(1 row)
+
+CLOSE CURSOR ALL
+psql:pg_tests/compatible/cursor.sql:127: NOTICE:  expected failure: cannot open FETCH query as cursor
+CALL
+ROLLBACK
+BEGIN
+psql:pg_tests/compatible/cursor.sql:134: NOTICE:  expected failure: cursor "foo" does not exist
+CALL
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+INSERT 0 1
+ a | b 
+---+---
+ 1 | 2
+ 2 | 3
+(2 rows)
+
+CLOSE CURSOR
+DECLARE CURSOR
+ a | b 
+---+---
+ 1 | 2
+ 2 | 3
+ 3 | 4
+(3 rows)
+
+COMMIT
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+INSERT 0 11
+BEGIN
+INSERT 0 1
+DECLARE CURSOR
+INSERT 0 1
+  a  |   b    
+-----+--------
+ 100 | blargh
+(1 row)
+
+  a  |  b   
+-----+------
+ 101 | argh
+(1 row)
+
+INSERT 0 1
+  a  |   b   
+-----+-------
+ 101 | argh
+ 102 | argh2
+(2 rows)
+
+ a | b 
+---+---
+(0 rows)
+
+COMMIT
+  a  |   b   
+-----+-------
+ 101 | argh
+ 102 | argh2
+(2 rows)
+
+BEGIN
+DECLARE CURSOR
+ a | b 
+---+---
+ 1 | 2
+ 2 | 3
+ 3 | 4
+(3 rows)
+
+ a | b 
+---+---
+(0 rows)
+
+CLOSE CURSOR
+DECLARE CURSOR
+ a | b 
+---+---
+ 1 | 2
+ 2 | 3
+ 3 | 4
+(3 rows)
+
+ a | b 
+---+---
+(0 rows)
+
+COMMIT
+INSERT 0 97
+BEGIN
+DECLARE CURSOR
+ a | b 
+---+---
+(0 rows)
+
+ a | b 
+---+---
+(0 rows)
+
+ a | b 
+---+---
+ 1 | 2
+(1 row)
+
+ a | b 
+---+---
+ 1 | 2
+(1 row)
+
+ a | b 
+---+---
+ 2 | 3
+(1 row)
+
+ a | b 
+---+---
+ 3 | 4
+(1 row)
+
+ a | b 
+---+---
+ 4 | 5
+ 5 | 6
+ 6 | 7
+(3 rows)
+
+ a | b  
+---+----
+ 7 |  8
+ 8 |  9
+ 9 | 10
+(3 rows)
+
+ a  | b  
+----+----
+ 12 | 13
+(1 row)
+
+ a  | b  
+----+----
+ 13 | 14
+(1 row)
+
+ a  | b  
+----+----
+ 13 | 14
+(1 row)
+
+ a  | b  
+----+----
+ 14 | 15
+(1 row)
+
+ a  | b  
+----+----
+ 14 | 15
+(1 row)
+
+ a  | b  
+----+----
+ 16 | 17
+(1 row)
+
+  a  |  b  
+-----+-----
+ 100 | 101
+(1 row)
+
+ a | b 
+---+---
+(0 rows)
+
+ a | b 
+---+---
+(0 rows)
+
+COMMIT
+BEGIN
+DECLARE CURSOR
+ a | b 
+---+---
+(0 rows)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ a | b 
+---+---
+(0 rows)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ a | b 
+---+---
+(0 rows)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+  a  |  b  
+-----+-----
+ 100 | 101
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+  a  |  b  
+-----+-----
+ 100 | 101
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ a  | b  
+----+----
+  1 |  2
+  2 |  3
+  3 |  4
+  4 |  5
+  5 |  6
+  6 |  7
+  7 |  8
+  8 |  9
+  9 | 10
+ 10 | 11
+(10 rows)
+
+ a | b  
+---+----
+ 9 | 10
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ a  | b  
+----+----
+  1 |  2
+  2 |  3
+  3 |  4
+  4 |  5
+  5 |  6
+  6 |  7
+  7 |  8
+  8 |  9
+  9 | 10
+ 10 | 11
+(10 rows)
+
+ a | b  
+---+----
+ 9 | 10
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ a  | b  
+----+----
+  1 |  2
+  2 |  3
+  3 |  4
+  4 |  5
+  5 |  6
+  6 |  7
+  7 |  8
+  8 |  9
+  9 | 10
+ 10 | 11
+(10 rows)
+
+ a | b 
+---+---
+ 1 | 2
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+  a  |  b  
+-----+-----
+ 100 | 101
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ a | b 
+---+---
+(0 rows)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ a | b 
+---+---
+(0 rows)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+MOVE 0
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+MOVE 0
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+MOVE 0
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+MOVE 1
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+MOVE 1
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+MOVE 10
+MOVE 1
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+MOVE 10
+MOVE 1
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+MOVE 10
+MOVE 1
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+MOVE 1
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+MOVE 0
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+MOVE 0
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ a | b 
+---+---
+ 1 | 2
+(1 row)
+
+MOVE 1
+ a | b 
+---+---
+ 3 | 4
+(1 row)
+
+MOVE 10
+ a  | b  
+----+----
+ 14 | 15
+(1 row)
+
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+MOVE 0
+MOVE 1
+ a | b 
+---+---
+ 1 | 2
+(1 row)
+
+MOVE 1
+MOVE 1
+ a | b 
+---+---
+ 3 | 4
+(1 row)
+
+MOVE 3
+ a | b 
+---+---
+ 7 | 8
+(1 row)
+
+MOVE 1
+ a  | b  
+----+----
+ 11 | 12
+(1 row)
+
+MOVE 1
+ a  | b  
+----+----
+ 13 | 14
+(1 row)
+
+MOVE 1
+MOVE 1
+ a  | b  
+----+----
+ 16 | 17
+(1 row)
+
+MOVE 1
+ a | b 
+---+---
+(0 rows)
+
+ROLLBACK
+ name | statement | is_holdable | is_binary | is_scrollable | creation_time 
+------+-----------+-------------+-----------+---------------+---------------
+(0 rows)
+
+BEGIN
+DECLARE CURSOR
+ name |                     statement                      | is_scrollable | is_holdable | is_binary | ?column? 
+------+----------------------------------------------------+---------------+-------------+-----------+----------
+ foo  | DECLARE foo CURSOR FOR SELECT * FROM a ORDER BY a; | t             | f           | f         | t
+(1 row)
+
+DECLARE CURSOR
+                     statement                      
+----------------------------------------------------
+ DECLARE foo CURSOR FOR SELECT * FROM a ORDER BY a;
+ DECLARE bar CURSOR FOR SELECT 1,2,3;
+(2 rows)
+
+CLOSE CURSOR
+ name |              statement               | is_scrollable | is_holdable | is_binary 
+------+--------------------------------------+---------------+-------------+-----------
+ bar  | DECLARE bar CURSOR FOR SELECT 1,2,3; | f             | f           | f
+(1 row)
+
+ROLLBACK
+ name | statement | is_scrollable | is_holdable | is_binary 
+------+-----------+---------------+-------------+-----------
+(0 rows)
+
+BEGIN
+DECLARE CURSOR
+ name |              statement               | is_scrollable | is_holdable | is_binary 
+------+--------------------------------------+---------------+-------------+-----------
+ bar  | DECLARE bar CURSOR FOR SELECT 1,2,3; | f             | f           | f
+(1 row)
+
+COMMIT
+ name | statement | is_scrollable | is_holdable | is_binary 
+------+-----------+---------------+-------------+-----------
+(0 rows)
+
+BEGIN
+psql:pg_tests/compatible/cursor.sql:494: NOTICE:  expected failure: DECLARE CURSOR must not contain data-modifying statements in WITH
+CALL
+ROLLBACK
+BEGIN
+psql:pg_tests/compatible/cursor.sql:499: NOTICE:  expected failure: relation "doesntexist" does not exist
+CALL
+ROLLBACK
+BEGIN
+psql:pg_tests/compatible/cursor.sql:506: NOTICE:  expected failure: column "teeth" does not exist
+CALL
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+ ?column? 
+----------
+        1
+(1 row)
+
+ALTER TABLE
+ROLLBACK
+BEGIN
+DECLARE CURSOR
+CLOSE CURSOR
+ALTER TABLE
+COMMIT
+BEGIN
+DECLARE CURSOR
+ ?column? 
+----------
+        1
+(1 row)
+
+CLOSE CURSOR
+DECLARE CURSOR
+ ?column? 
+----------
+        2
+(1 row)
+
+CLOSE CURSOR
+DECLARE CURSOR
+ ?column? 
+----------
+        3
+(1 row)
+
+CLOSE CURSOR
+psql:pg_tests/compatible/cursor.sql:556: NOTICE:  expected failure: syntax error at or near "b"
+CALL
+COMMIT
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+INSERT 0 10
+DECLARE CURSOR
+ ?column? 
+----------
+        1
+(1 row)
+
+CLOSE CURSOR
+BEGIN
+DECLARE CURSOR
+DECLARE CURSOR
+ ?column? 
+----------
+        1
+(1 row)
+
+CLOSE CURSOR
+COMMIT
+ ?column? 
+----------
+        2
+(1 row)
+
+CLOSE CURSOR
+BEGIN
+DECLARE CURSOR
+COMMIT
+ generate_series 
+-----------------
+               1
+               2
+(2 rows)
+
+BEGIN
+DECLARE CURSOR
+ROLLBACK
+ name 
+------
+ foo
+(1 row)
+
+ generate_series 
+-----------------
+               3
+               4
+(2 rows)
+
+CLOSE CURSOR
+DECLARE CURSOR
+ x | y 
+---+---
+ 1 | 1
+ 2 | 2
+ 3 | 3
+(3 rows)
+
+BEGIN
+DECLARE CURSOR
+ x | y 
+---+---
+ 1 | 1
+ 2 | 2
+ 3 | 3
+(3 rows)
+
+COMMIT
+ x | y 
+---+---
+ 4 | 4
+ 5 | 5
+ 6 | 6
+(3 rows)
+
+ x | y 
+---+---
+ 4 | 4
+ 5 | 5
+ 6 | 6
+(3 rows)
+
+CLOSE CURSOR ALL
+ name 
+------
+(0 rows)
+
+BEGIN
+DECLARE CURSOR
+psql:pg_tests/compatible/cursor.sql:675: NOTICE:  expected failure: unsupported transaction command in PL/pgSQL
+CALL
+ROLLBACK
+ name 
+------
+(0 rows)
+
+BEGIN
+DECLARE CURSOR
+CLOSE CURSOR
+psql:pg_tests/compatible/cursor.sql:691: NOTICE:  expected failure: unsupported transaction command in PL/pgSQL
+CALL
+ROLLBACK
+psql:pg_tests/compatible/cursor.sql:700: NOTICE:  expected failure: prepared transaction with identifier \"read-only\" does not exist
+DO
+psql:pg_tests/compatible/cursor.sql:703: NOTICE:  expected failure: DECLARE CURSOR WITH HOLD ... FOR UPDATE is not supported
+CALL
+DROP TABLE
+BEGIN
+COMMIT
+BEGIN
+SET
+DECLARE CURSOR
+ pg_sleep 
+----------
+ 
+(1 row)
+
+ id 
+----
+  1
+(1 row)
+
+ pg_sleep 
+----------
+ 
+(1 row)
+
+ id 
+----
+  2
+(1 row)
+
+SET
+COMMIT
+psql:pg_tests/compatible/cursor.sql:743: NOTICE:  expected failure: division by zero
+CALL
+DECLARE CURSOR
+BEGIN
+DECLARE CURSOR
+DECLARE CURSOR
+psql:pg_tests/compatible/cursor.sql:758: NOTICE:  expected failure: division by zero
+CALL
+DECLARE CURSOR
+INSERT 0 1
+COMMIT
+ name 
+------
+ curs
+ bar
+ bar2
+(3 rows)
+
+ a  | b  | c 
+----+----+---
+ -1 | -2 |  
+(1 row)
+
+CLOSE CURSOR
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+BEGIN
+DECLARE CURSOR
+COMMIT

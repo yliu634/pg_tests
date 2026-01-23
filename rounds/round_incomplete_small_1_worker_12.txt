@@ -1,0 +1,5 @@
+pg_tests/compatible/udf_in_constraints.sql
+pg_tests/compatible/udf_in_index.sql
+pg_tests/compatible/udf_insert.sql
+pg_tests/compatible/udf_oid_ref.sql
+pg_tests/compatible/udf_schema_change.sql

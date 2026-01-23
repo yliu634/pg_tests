@@ -1,0 +1,1033 @@
+SET
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP ROLE
+CREATE ROLE
+GRANT ROLE
+RESET
+CREATE SCHEMA
+SET
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+CREATE VIEW
+psql:pg_tests/compatible/views.sql:47: ERROR:  relation "v1" already exists
+psql:pg_tests/compatible/views.sql:50: ERROR:  relation "t" already exists
+psql:pg_tests/compatible/views.sql:53: ERROR:  syntax error at or near "NOT"
+LINE 1: CREATE VIEW IF NOT EXISTS v2 (x, y) AS SELECT a, b FROM t;
+                       ^
+psql:pg_tests/compatible/views.sql:56: ERROR:  syntax error at or near "NOT"
+LINE 1: CREATE VIEW IF NOT EXISTS v2 AS SELECT b, a FROM v1;
+                       ^
+CREATE VIEW
+psql:pg_tests/compatible/views.sql:62: ERROR:  CREATE VIEW specifies more column names than columns
+psql:pg_tests/compatible/views.sql:65: ERROR:  relation "dne" does not exist
+LINE 1: CREATE VIEW v5 AS SELECT a, b FROM dne;
+                                           ^
+CREATE VIEW
+CREATE VIEW
+psql:pg_tests/compatible/views.sql:74: ERROR:  column "j" does not exist
+LINE 1: CREATE VIEW err AS SELECT j FROM t;
+                                  ^
+psql:pg_tests/compatible/views.sql:77: ERROR:  column "j" does not exist
+LINE 1: CREATE VIEW err AS SELECT a FROM t WHERE a = j;
+                                                     ^
+ a | b  
+---+----
+ 1 | 99
+ 2 | 98
+ 3 | 97
+(3 rows)
+
+psql:pg_tests/compatible/views.sql:83: ERROR:  relation "v2" does not exist
+LINE 1: SELECT * FROM v2;
+                      ^
+ x | y  
+---+----
+ 1 | 99
+ 2 | 98
+ 3 | 97
+(3 rows)
+
+ x | y  
+---+----
+ 3 | 97
+ 2 | 98
+(2 rows)
+
+ x | y  
+---+----
+ 2 | 98
+(1 row)
+
+psql:pg_tests/compatible/views.sql:95: ERROR:  relation "v2" does not exist
+LINE 1: SELECT * FROM v2 ORDER BY x DESC LIMIT 1;
+                      ^
+psql:pg_tests/compatible/views.sql:98: ERROR:  relation "v2" does not exist
+LINE 1: SELECT x FROM v2;
+                      ^
+psql:pg_tests/compatible/views.sql:101: ERROR:  relation "v2" does not exist
+LINE 1: SELECT y FROM v2;
+                      ^
+ x 
+---
+ 3
+ 2
+(2 rows)
+
+ x 
+---
+ 2
+(1 row)
+
+ y  
+----
+ 97
+ 98
+(2 rows)
+
+ y  
+----
+ 98
+(1 row)
+
+psql:pg_tests/compatible/views.sql:116: ERROR:  relation "v2" does not exist
+LINE 1: SELECT * FROM v1 AS v1 INNER JOIN v2 AS v2 ON v1.a = v2.x;
+                                          ^
+CREATE SCHEMA
+SET
+psql:pg_tests/compatible/views.sql:125: ERROR:  relation "t1" does not exist
+LINE 1: SELECT 'CREATE VIEW t1 AS ' || pg_get_viewdef('t1'::regclass...
+                                                      ^
+psql:pg_tests/compatible/views.sql:128: ERROR:  relation "t1" does not exist
+LINE 1: SELECT 'CREATE VIEW t1 AS ' || pg_get_viewdef('t1'::regclass...
+                                                      ^
+psql:pg_tests/compatible/views.sql:131: ERROR:  relation "t2" does not exist
+LINE 1: SELECT 'CREATE VIEW t2 AS ' || pg_get_viewdef('t2'::regclass...
+                                                      ^
+psql:pg_tests/compatible/views.sql:134: ERROR:  relation "t2" does not exist
+LINE 1: SELECT 'CREATE VIEW t2 AS ' || pg_get_viewdef('t2'::regclass...
+                                                      ^
+ a | b  
+---+----
+ 1 | 99
+ 2 | 98
+ 3 | 97
+(3 rows)
+
+psql:pg_tests/compatible/views.sql:140: ERROR:  relation "test.v2" does not exist
+LINE 1: SELECT * FROM test.v2;
+                      ^
+ x | y  
+---+----
+ 1 | 99
+ 2 | 98
+ 3 | 97
+(3 rows)
+
+ x | y  
+---+----
+ 3 | 97
+ 2 | 98
+(2 rows)
+
+ x | y  
+---+----
+ 2 | 98
+(1 row)
+
+psql:pg_tests/compatible/views.sql:152: ERROR:  relation "test.v2" does not exist
+LINE 1: CREATE VIEW v1 AS SELECT x, y FROM test.v2;
+                                           ^
+SET
+psql:pg_tests/compatible/views.sql:158: ERROR:  relation "test2.v1" does not exist
+LINE 1: SELECT * FROM test2.v1;
+                      ^
+       create_statement       
+------------------------------
+ CREATE VIEW v1 AS  SELECT a,+
+     b                       +
+    FROM t;
+(1 row)
+
+psql:pg_tests/compatible/views.sql:164: ERROR:  relation "v2" does not exist
+LINE 1: SELECT 'CREATE VIEW v2 AS ' || pg_get_viewdef('v2'::regclass...
+                                                      ^
+         create_statement          
+-----------------------------------
+ CREATE VIEW v6 AS  SELECT a AS x,+
+     b AS y                       +
+    FROM v1;
+(1 row)
+
+         create_statement          
+-----------------------------------
+ CREATE VIEW v7 AS  SELECT a AS x,+
+     b AS y                       +
+    FROM v1                       +
+   ORDER BY a DESC                +
+  LIMIT 2;
+(1 row)
+
+         create_statement          
+-----------------------------------
+ CREATE VIEW v7 AS  SELECT a AS x,+
+     b AS y                       +
+    FROM v1                       +
+   ORDER BY a DESC                +
+  LIMIT 2;
+(1 row)
+
+psql:pg_tests/compatible/views.sql:176: ERROR:  relation "test2.v1" does not exist
+LINE 1: ...LECT 'CREATE VIEW test2.v1 AS ' || pg_get_viewdef('test2.v1'...
+                                                             ^
+GRANT
+SET
+psql:pg_tests/compatible/views.sql:184: ERROR:  relation "t" does not exist
+LINE 1: SELECT * FROM t;
+                      ^
+psql:pg_tests/compatible/views.sql:187: ERROR:  relation "v1" does not exist
+LINE 1: SELECT * FROM v1;
+                      ^
+psql:pg_tests/compatible/views.sql:190: ERROR:  relation "v6" does not exist
+LINE 1: SELECT * FROM v6;
+                      ^
+psql:pg_tests/compatible/views.sql:193: ERROR:  relation "v1" does not exist
+LINE 1: SELECT 'CREATE VIEW v1 AS ' || pg_get_viewdef('v1'::regclass...
+                                                      ^
+RESET
+REVOKE
+GRANT
+SET
+psql:pg_tests/compatible/views.sql:206: ERROR:  relation "t" does not exist
+LINE 1: SELECT * FROM t;
+                      ^
+psql:pg_tests/compatible/views.sql:209: ERROR:  relation "v1" does not exist
+LINE 1: SELECT * FROM v1;
+                      ^
+psql:pg_tests/compatible/views.sql:212: ERROR:  relation "v6" does not exist
+LINE 1: SELECT * FROM v6;
+                      ^
+psql:pg_tests/compatible/views.sql:215: ERROR:  relation "v1" does not exist
+LINE 1: SELECT 'CREATE VIEW v1 AS ' || pg_get_viewdef('v1'::regclass...
+                                                      ^
+psql:pg_tests/compatible/views.sql:218: ERROR:  relation "v1" does not exist
+psql:pg_tests/compatible/views.sql:221: ERROR:  relation "v6" does not exist
+SET
+psql:pg_tests/compatible/views.sql:226: ERROR:  relation "t" does not exist
+LINE 1: SELECT * FROM t;
+                      ^
+psql:pg_tests/compatible/views.sql:229: ERROR:  relation "v1" does not exist
+LINE 1: SELECT * FROM v1;
+                      ^
+psql:pg_tests/compatible/views.sql:232: ERROR:  relation "v6" does not exist
+LINE 1: SELECT * FROM v6;
+                      ^
+psql:pg_tests/compatible/views.sql:235: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW num_ref_view AS SELECT a, b FROM t;
+                                                     ^
+psql:pg_tests/compatible/views.sql:238: ERROR:  relation "num_ref_view" does not exist
+SET
+psql:pg_tests/compatible/views.sql:243: ERROR:  relation "num_ref_view" does not exist
+LINE 1: SELECT * FROM num_ref_view;
+                      ^
+psql:pg_tests/compatible/views.sql:246: ERROR:  view "num_ref_view" does not exist
+psql:pg_tests/compatible/views.sql:249: ERROR:  table "v1" does not exist
+psql:pg_tests/compatible/views.sql:252: ERROR:  view "t" does not exist
+psql:pg_tests/compatible/views.sql:255: ERROR:  view "v1" does not exist
+psql:pg_tests/compatible/views.sql:258: ERROR:  view "v2" does not exist
+psql:pg_tests/compatible/views.sql:261: ERROR:  permission denied for schema test2
+psql:pg_tests/compatible/views.sql:264: ERROR:  view "v7" does not exist
+psql:pg_tests/compatible/views.sql:267: ERROR:  view "v6" does not exist
+psql:pg_tests/compatible/views.sql:270: ERROR:  view "v2" does not exist
+psql:pg_tests/compatible/views.sql:273: ERROR:  view "v1" does not exist
+psql:pg_tests/compatible/views.sql:276: ERROR:  view "v1" does not exist
+psql:pg_tests/compatible/views.sql:279: ERROR:  permission denied for schema public
+psql:pg_tests/compatible/views.sql:282: ERROR:  view "virt1" does not exist
+psql:pg_tests/compatible/views.sql:289: ERROR:  view "virt2" does not exist
+psql:pg_tests/compatible/views.sql:292: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW star1 AS SELECT * FROM t;
+                                           ^
+psql:pg_tests/compatible/views.sql:295: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW star2 AS SELECT t.* FROM t;
+                                             ^
+psql:pg_tests/compatible/views.sql:298: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW star3 AS SELECT a FROM t ORDER BY t.*;
+                                           ^
+psql:pg_tests/compatible/views.sql:301: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW star4 AS SELECT count(1) FROM t GROUP BY t.*;
+                                                  ^
+psql:pg_tests/compatible/views.sql:304: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW star5 AS SELECT alias.* FROM t AS alias;
+                                                 ^
+psql:pg_tests/compatible/views.sql:307: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW star6 AS TABLE t;
+                                   ^
+psql:pg_tests/compatible/views.sql:310: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW star7 AS SELECT a FROM (SELECT * FROM t);
+                                                          ^
+psql:pg_tests/compatible/views.sql:313: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW star8 AS SELECT a FROM t WHERE NOT a IN (SELECT ...
+                                           ^
+psql:pg_tests/compatible/views.sql:316: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW star9 AS SELECT a FROM t GROUP BY a HAVING a IN ...
+                                           ^
+psql:pg_tests/compatible/views.sql:319: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW star10 AS SELECT t1.*, t2.a FROM t AS t1 JOIN t ...
+                                                     ^
+psql:pg_tests/compatible/views.sql:322: ERROR:  relation "t" does not exist
+LINE 1: ...REATE VIEW star10 AS SELECT t1.*, t2.a AS a2 FROM t AS t1 JO...
+                                                             ^
+psql:pg_tests/compatible/views.sql:325: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW star11 AS SELECT t1.a, t2.* FROM t AS t1 JOIN t ...
+                                                     ^
+psql:pg_tests/compatible/views.sql:328: ERROR:  relation "t" does not exist
+LINE 1: ...REATE VIEW star11 AS SELECT t1.a AS a1, t2.* FROM t AS t1 JO...
+                                                             ^
+psql:pg_tests/compatible/views.sql:331: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW star12 AS SELECT t1.*, t2.* FROM t AS t1 JOIN t ...
+                                                     ^
+psql:pg_tests/compatible/views.sql:334: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW star13 AS SELECT * FROM t AS t1 JOIN t AS t2 ON ...
+                                            ^
+psql:pg_tests/compatible/views.sql:337: ERROR:  relation "t" does not exist
+LINE 1: ...14 AS SELECT t1.a, t2.a AS a2 FROM (SELECT * FROM t) AS t1 J...
+                                                             ^
+psql:pg_tests/compatible/views.sql:340: ERROR:  relation "t" does not exist
+LINE 1: ...REATE VIEW star15 AS SELECT t1.a, t2.a AS a2 FROM t AS t1 JO...
+                                                             ^
+psql:pg_tests/compatible/views.sql:343: ERROR:  relation "t" does not exist
+LINE 1: ...REATE VIEW star16 AS SELECT t1.a, t2.a AS a2 FROM t AS t1 JO...
+                                                             ^
+psql:pg_tests/compatible/views.sql:346: ERROR:  relation "t" does not exist
+LINE 1: ...REATE VIEW star17 AS SELECT * FROM (SELECT a FROM t) t1 JOIN...
+                                                             ^
+psql:pg_tests/compatible/views.sql:349: ERROR:  relation "t" does not exist
+LINE 1: ...REATE VIEW star17 AS SELECT * FROM (SELECT a FROM t) JOIN (S...
+                                                             ^
+psql:pg_tests/compatible/views.sql:352: ERROR:  relation "t" does not exist
+LINE 1: ...REATE VIEW star17 AS SELECT * FROM (SELECT a FROM t) JOIN (S...
+                                                             ^
+psql:pg_tests/compatible/views.sql:355: ERROR:  relation "t" does not exist
+LINE 1: ...W star18 AS SELECT * FROM (SELECT * FROM (SELECT a FROM t));
+                                                                   ^
+psql:pg_tests/compatible/views.sql:358: ERROR:  relation "t" does not exist
+LINE 1: ...W star19 AS SELECT a FROM (SELECT * FROM (SELECT a FROM t));
+                                                                   ^
+psql:pg_tests/compatible/views.sql:361: ERROR:  relation "t" does not exist
+psql:pg_tests/compatible/views.sql:364: ERROR:  relation "t" does not exist
+psql:pg_tests/compatible/views.sql:367: ERROR:  relation "t" does not exist
+psql:pg_tests/compatible/views.sql:374: ERROR:  view "star1" does not exist
+psql:pg_tests/compatible/views.sql:375: ERROR:  view "star2" does not exist
+psql:pg_tests/compatible/views.sql:376: ERROR:  view "star3" does not exist
+psql:pg_tests/compatible/views.sql:377: ERROR:  view "star4" does not exist
+psql:pg_tests/compatible/views.sql:378: ERROR:  view "star5" does not exist
+psql:pg_tests/compatible/views.sql:379: ERROR:  view "star6" does not exist
+psql:pg_tests/compatible/views.sql:380: ERROR:  view "star7" does not exist
+psql:pg_tests/compatible/views.sql:381: ERROR:  view "star8" does not exist
+psql:pg_tests/compatible/views.sql:382: ERROR:  view "star9" does not exist
+psql:pg_tests/compatible/views.sql:383: ERROR:  view "star10" does not exist
+psql:pg_tests/compatible/views.sql:384: ERROR:  view "star11" does not exist
+psql:pg_tests/compatible/views.sql:385: ERROR:  view "star14" does not exist
+psql:pg_tests/compatible/views.sql:386: ERROR:  view "star15" does not exist
+psql:pg_tests/compatible/views.sql:387: ERROR:  view "star16" does not exist
+psql:pg_tests/compatible/views.sql:388: ERROR:  view "star17" does not exist
+psql:pg_tests/compatible/views.sql:389: ERROR:  view "star18" does not exist
+psql:pg_tests/compatible/views.sql:390: ERROR:  view "star19" does not exist
+psql:pg_tests/compatible/views.sql:391: ERROR:  view "star20" does not exist
+psql:pg_tests/compatible/views.sql:394: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW s1 AS SELECT count(*) FROM t;
+                                               ^
+psql:pg_tests/compatible/views.sql:397: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW s2 AS SELECT a FROM t WHERE a IN (SELECT count(*...
+                                        ^
+psql:pg_tests/compatible/views.sql:400: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW s3 AS SELECT a, count(*) FROM t GROUP BY a;
+                                                  ^
+psql:pg_tests/compatible/views.sql:403: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW s4 AS SELECT a, count(*) FROM t GROUP BY a HAVIN...
+                                                  ^
+psql:pg_tests/compatible/views.sql:406: ERROR:  view "s4" does not exist
+psql:pg_tests/compatible/views.sql:409: ERROR:  view "s3" does not exist
+psql:pg_tests/compatible/views.sql:412: ERROR:  view "s2" does not exist
+psql:pg_tests/compatible/views.sql:415: ERROR:  view "s1" does not exist
+psql:pg_tests/compatible/views.sql:418: ERROR:  table "t" does not exist
+psql:pg_tests/compatible/views.sql:418: ERROR:  table "u" does not exist
+psql:pg_tests/compatible/views.sql:421: ERROR:  permission denied for schema public
+psql:pg_tests/compatible/views.sql:424: ERROR:  permission denied for schema public
+psql:pg_tests/compatible/views.sql:427: ERROR:  permission denied for schema public
+LINE 1: CREATE TABLE t (d DATE, t TIMESTAMP);
+                     ^
+psql:pg_tests/compatible/views.sql:430: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW dt AS SELECT d, t FROM t WHERE d > DATE '1988-11...
+                                           ^
+psql:pg_tests/compatible/views.sql:433: ERROR:  relation "dt" does not exist
+LINE 1: SELECT 'CREATE VIEW dt AS ' || pg_get_viewdef('dt'::regclass...
+                                                      ^
+psql:pg_tests/compatible/views.sql:436: ERROR:  relation "dt" does not exist
+LINE 1: SELECT 'CREATE VIEW dt AS ' || pg_get_viewdef('dt'::regclass...
+                                                      ^
+psql:pg_tests/compatible/views.sql:439: ERROR:  relation "dt" does not exist
+LINE 1: SELECT * FROM dt;
+                      ^
+psql:pg_tests/compatible/views.sql:442: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW dt2 AS SELECT d, t FROM t WHERE d > d + INTERVAL...
+                                            ^
+psql:pg_tests/compatible/views.sql:445: ERROR:  relation "dt2" does not exist
+LINE 1: SELECT 'CREATE VIEW dt2 AS ' || pg_get_viewdef('dt2'::regcla...
+                                                       ^
+psql:pg_tests/compatible/views.sql:448: ERROR:  relation "dt2" does not exist
+LINE 1: SELECT 'CREATE VIEW dt2 AS ' || pg_get_viewdef('dt2'::regcla...
+                                                       ^
+psql:pg_tests/compatible/views.sql:451: ERROR:  relation "dt2" does not exist
+LINE 1: SELECT * FROM dt2;
+                      ^
+psql:pg_tests/compatible/views.sql:454: ERROR:  table "t" does not exist
+psql:pg_tests/compatible/views.sql:457: ERROR:  permission denied for schema public
+LINE 1: CREATE TABLE t (a INT[]);
+                     ^
+psql:pg_tests/compatible/views.sql:460: ERROR:  relation "t" does not exist
+LINE 1: INSERT INTO t VALUES (array[1,2,3]);
+                    ^
+psql:pg_tests/compatible/views.sql:463: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW b AS SELECT a[1] FROM t;
+                                          ^
+psql:pg_tests/compatible/views.sql:466: ERROR:  relation "b" does not exist
+LINE 1: SELECT * FROM b;
+                      ^
+psql:pg_tests/compatible/views.sql:469: ERROR:  table "t" does not exist
+psql:pg_tests/compatible/views.sql:472: ERROR:  permission denied for schema public
+psql:pg_tests/compatible/views.sql:475: ERROR:  relation "arr" does not exist
+LINE 1: SELECT *, a[1] FROM arr;
+                            ^
+psql:pg_tests/compatible/views.sql:478: ERROR:  permission denied for schema public
+LINE 1: CREATE TABLE t15951 (a int, b int);
+                     ^
+psql:pg_tests/compatible/views.sql:481: ERROR:  relation "t15951" does not exist
+LINE 1: CREATE VIEW Caps15951 AS SELECT a, b FROM t15951;
+                                                  ^
+psql:pg_tests/compatible/views.sql:484: ERROR:  relation "t15951" does not exist
+LINE 1: INSERT INTO t15951 VALUES (1, 1), (1, 2), (1, 3), (2, 2), (2...
+                    ^
+psql:pg_tests/compatible/views.sql:487: ERROR:  relation "caps15951" does not exist
+LINE 1: SELECT sum (Caps15951. a) FROM Caps15951 GROUP BY b ORDER BY...
+                                       ^
+psql:pg_tests/compatible/views.sql:490: ERROR:  relation "caps15951" does not exist
+LINE 1: SELECT sum ("caps15951". a) FROM "caps15951" GROUP BY b ORDE...
+                                         ^
+psql:pg_tests/compatible/views.sql:493: ERROR:  relation "t15951" does not exist
+LINE 1: CREATE VIEW "QuotedCaps15951" AS SELECT a, b FROM t15951;
+                                                          ^
+psql:pg_tests/compatible/views.sql:496: ERROR:  relation "QuotedCaps15951" does not exist
+LINE 1: SELECT sum ("QuotedCaps15951". a) FROM "QuotedCaps15951" GRO...
+                                               ^
+psql:pg_tests/compatible/views.sql:499: ERROR:  permission denied for schema public
+psql:pg_tests/compatible/views.sql:502: ERROR:  relation "w" does not exist
+LINE 1: SELECT 'CREATE VIEW w AS ' || pg_get_viewdef('w'::regclass, ...
+                                                     ^
+psql:pg_tests/compatible/views.sql:505: ERROR:  relation "w" does not exist
+LINE 1: SELECT 'CREATE VIEW w AS ' || pg_get_viewdef('w'::regclass, ...
+                                                     ^
+psql:pg_tests/compatible/views.sql:508: ERROR:  relation "w" does not exist
+LINE 1: CREATE VIEW w2 AS WITH t AS (SELECT x FROM w) SELECT x FROM ...
+                                                   ^
+psql:pg_tests/compatible/views.sql:511: ERROR:  relation "w2" does not exist
+LINE 1: SELECT 'CREATE VIEW w2 AS ' || pg_get_viewdef('w2'::regclass...
+                                                      ^
+psql:pg_tests/compatible/views.sql:514: ERROR:  relation "w" does not exist
+LINE 1: CREATE VIEW w3 AS (WITH t AS (SELECT x FROM w) SELECT x FROM...
+                                                    ^
+psql:pg_tests/compatible/views.sql:517: ERROR:  relation "w3" does not exist
+LINE 1: SELECT 'CREATE VIEW w3 AS ' || pg_get_viewdef('w3'::regclass...
+                                                      ^
+psql:pg_tests/compatible/views.sql:520: ERROR:  permission denied for schema public
+LINE 1: CREATE TABLE ab (a INT PRIMARY KEY, b INT);
+                     ^
+psql:pg_tests/compatible/views.sql:523: ERROR:  relation "ab" does not exist
+LINE 1: INSERT INTO ab VALUES (100, 100);
+                    ^
+psql:pg_tests/compatible/views.sql:524: ERROR:  relation "ab" does not exist
+LINE 1: CREATE VIEW crud_view AS SELECT a, b FROM ab WHERE a = 100 A...
+                                                  ^
+psql:pg_tests/compatible/views.sql:527: ERROR:  permission denied for schema public
+LINE 1: CREATE TABLE cd (c INT PRIMARY KEY, b INT);
+                     ^
+psql:pg_tests/compatible/views.sql:530: ERROR:  relation "ab" does not exist
+LINE 1: INSERT INTO ab VALUES (1, 1), (2, 2), (3, 3);
+                    ^
+psql:pg_tests/compatible/views.sql:533: ERROR:  relation "cd" does not exist
+LINE 1: INSERT INTO cd VALUES (2, 2), (3, 3), (4, 4);
+                    ^
+psql:pg_tests/compatible/views.sql:536: ERROR:  relation "ab" does not exist
+LINE 1: ...LECT a, b, EXISTS(SELECT c FROM cd WHERE cd.c=ab.a) FROM ab;
+                                                                    ^
+psql:pg_tests/compatible/views.sql:539: ERROR:  relation "v1" does not exist
+LINE 1: SELECT * FROM v1;
+                      ^
+psql:pg_tests/compatible/views.sql:542: ERROR:  permission denied for schema public
+LINE 1: CREATE TABLE a47704 (foo UUID);
+                     ^
+psql:pg_tests/compatible/views.sql:543: ERROR:  permission denied for schema public
+LINE 1: CREATE TABLE b47704 (foo UUID);
+                     ^
+psql:pg_tests/compatible/views.sql:548: ERROR:  relation "a47704" does not exist
+LINE 3:   FROM a47704 JOIN b47704 ON a47704.foo = b47704.foo;
+               ^
+psql:pg_tests/compatible/views.sql:551: ERROR:  relation "v47704" does not exist
+LINE 1: SELECT 'CREATE VIEW v47704 AS ' || pg_get_viewdef('v47704'::...
+                                                          ^
+psql:pg_tests/compatible/views.sql:554: ERROR:  relation "v47704" does not exist
+LINE 1: SELECT * FROM v47704;
+                      ^
+psql:pg_tests/compatible/views.sql:557: NOTICE:  table "t" does not exist, skipping
+psql:pg_tests/compatible/views.sql:557: NOTICE:  table "t2" does not exist, skipping
+DROP TABLE
+psql:pg_tests/compatible/views.sql:558: ERROR:  permission denied for schema public
+LINE 1: CREATE TABLE t (x INT);
+                     ^
+psql:pg_tests/compatible/views.sql:559: ERROR:  relation "t" does not exist
+LINE 1: INSERT INTO t VALUES (1), (2);
+                    ^
+psql:pg_tests/compatible/views.sql:560: ERROR:  permission denied for schema public
+LINE 1: CREATE TABLE t2 (x INT);
+                     ^
+psql:pg_tests/compatible/views.sql:561: ERROR:  relation "t2" does not exist
+LINE 1: INSERT INTO t2 VALUES (3), (4);
+                    ^
+psql:pg_tests/compatible/views.sql:564: ERROR:  permission denied for schema public
+psql:pg_tests/compatible/views.sql:567: ERROR:  relation "t" does not exist
+LINE 1: ...CE VIEW tview AS SELECT x AS x, x+1 AS x1, x+2 AS x2 FROM t;
+                                                                     ^
+psql:pg_tests/compatible/views.sql:570: ERROR:  relation "t" does not exist
+LINE 1: ...TE OR REPLACE VIEW tview AS SELECT x AS x, x+1 AS x1 FROM t;
+                                                                     ^
+psql:pg_tests/compatible/views.sql:573: ERROR:  relation "t" does not exist
+LINE 1: ...E VIEW tview AS SELECT x AS xy, x+1 AS x1, x+2 AS x2 FROM t;
+                                                                     ^
+psql:pg_tests/compatible/views.sql:576: ERROR:  relation "t" does not exist
+LINE 1: ...ew AS SELECT x AS x, x+1 AS x1, x+2 AS x2, x+3 AS x3 FROM t;
+                                                                     ^
+psql:pg_tests/compatible/views.sql:579: ERROR:  relation "tview" does not exist
+LINE 1: SELECT * FROM tview;
+                      ^
+psql:pg_tests/compatible/views.sql:582: ERROR:  relation "t2" does not exist
+LINE 1: ...w AS SELECT x AS x, x+1 AS x1, x+2 AS x2, x+3 AS x3 FROM t2;
+                                                                    ^
+psql:pg_tests/compatible/views.sql:585: ERROR:  relation "tview" does not exist
+LINE 1: SELECT * FROM tview;
+                      ^
+psql:pg_tests/compatible/views.sql:588: ERROR:  table "t" does not exist
+psql:pg_tests/compatible/views.sql:591: ERROR:  table "t2" does not exist
+psql:pg_tests/compatible/views.sql:594: ERROR:  relation "t2" does not exist
+psql:pg_tests/compatible/views.sql:595: ERROR:  relation "t2" does not exist
+psql:pg_tests/compatible/views.sql:598: ERROR:  syntax error at or near "@"
+LINE 1: ...AS SELECT x AS x, x+1 AS x1, x+2 AS x2, x+3 AS x3 FROM t2@i;
+                                                                    ^
+psql:pg_tests/compatible/views.sql:601: ERROR:  syntax error at or near "@"
+LINE 1: DROP INDEX t2@i;
+                     ^
+psql:pg_tests/compatible/views.sql:604: ERROR:  syntax error at or near "@"
+LINE 1: ...S SELECT x AS x, x+1 AS x1, x+2 AS x2, x+3 AS x3 FROM t2@i2;
+                                                                   ^
+psql:pg_tests/compatible/views.sql:605: ERROR:  syntax error at or near "@"
+LINE 1: DROP INDEX t2@i;
+                     ^
+psql:pg_tests/compatible/views.sql:608: ERROR:  syntax error at or near "@"
+LINE 1: DROP INDEX t2@i2;
+                     ^
+psql:pg_tests/compatible/views.sql:611: ERROR:  permission denied for schema test
+psql:pg_tests/compatible/views.sql:612: ERROR:  relation "tview" does not exist
+SET
+psql:pg_tests/compatible/views.sql:617: ERROR:  relation "t2" does not exist
+LINE 1: ...w AS SELECT x AS x, x+1 AS x1, x+2 AS x2, x+3 AS x3 FROM t2;
+                                                                    ^
+psql:pg_tests/compatible/views.sql:620: ERROR:  relation "tview" does not exist
+SET
+psql:pg_tests/compatible/views.sql:625: ERROR:  relation "t2" does not exist
+LINE 1: ...w AS SELECT x AS x, x+1 AS x1, x+2 AS x2, x+3 AS x3 FROM t2;
+                                                                    ^
+RESET
+psql:pg_tests/compatible/views.sql:630: ERROR:  table "ab" does not exist
+CREATE TABLE
+CREATE VIEW
+ALTER TABLE
+psql:pg_tests/compatible/views.sql:640: ERROR:  cannot drop column a of table ab because other objects depend on it
+DETAIL:  view vab depends on column a of table ab
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+CREATE TABLE
+CREATE VIEW
+psql:pg_tests/compatible/views.sql:647: ERROR:  cannot drop column a of table abc because other objects depend on it
+DETAIL:  view vabc depends on column a of table abc
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+psql:pg_tests/compatible/views.sql:650: ERROR:  cannot drop column b of table abc because other objects depend on it
+DETAIL:  view vabc depends on column b of table abc
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+psql:pg_tests/compatible/views.sql:653: ERROR:  cannot drop column c of table abc because other objects depend on it
+DETAIL:  view vabc depends on column c of table abc
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+CREATE TABLE
+CREATE VIEW
+psql:pg_tests/compatible/views.sql:660: ERROR:  cannot drop table toreg because other objects depend on it
+DETAIL:  view vregclass depends on table toreg
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+DROP VIEW
+CREATE VIEW
+psql:pg_tests/compatible/views.sql:669: ERROR:  cannot drop table toreg because other objects depend on it
+DETAIL:  view vregclass depends on table toreg
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+DROP VIEW
+CREATE SEQUENCE
+CREATE VIEW
+psql:pg_tests/compatible/views.sql:679: ERROR:  cannot drop sequence s_reg because other objects depend on it
+DETAIL:  view vregclass depends on sequence s_reg
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+DROP VIEW
+CREATE VIEW
+DROP SEQUENCE
+DROP VIEW
+CREATE VIEW
+psql:pg_tests/compatible/views.sql:695: ERROR:  relation "does_not_exist" does not exist
+DROP VIEW
+CREATE TABLE
+CREATE VIEW
+psql:pg_tests/compatible/views.sql:707: ERROR:  cannot drop table tregclass because other objects depend on it
+DETAIL:  view vregclass depends on table tregclass
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+CREATE SCHEMA
+CREATE SCHEMA
+SET
+CREATE TABLE
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE SEQUENCE
+psql:pg_tests/compatible/views.sql:743: ERROR:  relation "v2" already exists
+CREATE SCHEMA
+CREATE VIEW
+CREATE TABLE
+CREATE VIEW
+SET
+CREATE TABLE
+psql:pg_tests/compatible/views.sql:772: ERROR:  relation "v" already exists
+CREATE VIEW
+CREATE VIEW
+SET
+CREATE SEQUENCE
+CREATE TYPE
+CREATE TABLE
+CREATE VIEW
+SET
+CREATE VIEW
+CREATE VIEW
+CREATE TYPE
+psql:pg_tests/compatible/views.sql:811: ERROR:  relation "vm" already exists
+CREATE TYPE
+DROP TYPE
+DROP VIEW
+psql:pg_tests/compatible/views.sql:827: ERROR:  type "typ" does not exist
+LINE 1: CREATE VIEW v AS (WITH r AS (SELECT 'a'::typ < 'a'::typ AS k...
+                                                 ^
+psql:pg_tests/compatible/views.sql:830: ERROR:  type "typ" does not exist
+psql:pg_tests/compatible/views.sql:833: ERROR:  view "v" does not exist
+psql:pg_tests/compatible/views.sql:836: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW v AS (SELECT i FROM t);
+                                        ^
+psql:pg_tests/compatible/views.sql:839: ERROR:  type "typ" does not exist
+psql:pg_tests/compatible/views.sql:842: ERROR:  relation "t" does not exist
+LINE 1: CREATE VIEW v_dep AS (SELECT k FROM t);
+                                            ^
+psql:pg_tests/compatible/views.sql:845: ERROR:  type "typ" does not exist
+CREATE TYPE
+DROP TYPE
+CREATE VIEW
+psql:pg_tests/compatible/views.sql:857: ERROR:  type "typ2" does not exist
+CREATE TYPE
+DROP TYPE
+psql:pg_tests/compatible/views.sql:866: ERROR:  type "typ2" does not exist
+psql:pg_tests/compatible/views.sql:869: ERROR:  type "typ3" does not exist
+CREATE TYPE
+CREATE TABLE
+CREATE VIEW
+psql:pg_tests/compatible/views.sql:881: ERROR:  cannot drop type typ4 because other objects depend on it
+DETAIL:  column j of table t4 depends on type typ4
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+ALTER TABLE
+DROP TYPE
+CREATE TYPE
+ALTER TABLE
+CREATE VIEW
+psql:pg_tests/compatible/views.sql:899: ERROR:  cannot drop type typ4 because other objects depend on it
+DETAIL:  column j of table t4 depends on type typ4
+view v4_dep depends on column j of table t4
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+CREATE TYPE
+psql:pg_tests/compatible/views.sql:905: ERROR:  relation "t5" does not exist
+LINE 1: CREATE VIEW v5 AS (SELECT i FROM t5);
+                                         ^
+DROP TYPE
+psql:pg_tests/compatible/views.sql:911: ERROR:  relation "t5" does not exist
+LINE 1: CREATE VIEW v5_dep AS (SELECT j FROM t5);
+                                             ^
+psql:pg_tests/compatible/views.sql:914: ERROR:  type "typ5" does not exist
+CREATE VIEW
+psql:pg_tests/compatible/views.sql:920: ERROR:  cannot drop type typ4 because other objects depend on it
+DETAIL:  column j of table t4 depends on type typ4
+view v4_dep depends on column j of table t4
+view v6 depends on column j of view v4_dep
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+CREATE TYPE
+CREATE TABLE
+CREATE INDEX
+CREATE VIEW
+psql:pg_tests/compatible/views.sql:931: ERROR:  cannot drop type typ6 because other objects depend on it
+DETAIL:  column k of table t6 depends on type typ6
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+psql:pg_tests/compatible/views.sql:934: ERROR:  syntax error at or near "@"
+LINE 1: CREATE VIEW v7_dep AS (SELECT i FROM t6@idx WHERE k < 'a'::t...
+                                               ^
+psql:pg_tests/compatible/views.sql:937: ERROR:  cannot drop type typ6 because other objects depend on it
+DETAIL:  column k of table t6 depends on type typ6
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+CREATE SEQUENCE
+CREATE VIEW
+CREATE VIEW
+CREATE TYPE
+CREATE VIEW
+ALTER TYPE
+                     create_statement                      
+-----------------------------------------------------------
+ CREATE VIEW v10 AS  SELECT 'a'::view_typ_new AS view_typ;
+(1 row)
+
+                     create_statement                      
+-----------------------------------------------------------
+ CREATE VIEW v10 AS  SELECT 'a'::view_typ_new AS view_typ;
+(1 row)
+
+ view_typ 
+----------
+ a
+(1 row)
+
+CREATE VIEW
+ALTER TYPE
+                        create_statement                        
+----------------------------------------------------------------
+ CREATE VIEW v11 AS  SELECT 'a'::view_typ < 'a'::view_typ AS k;
+(1 row)
+
+                        create_statement                        
+----------------------------------------------------------------
+ CREATE VIEW v11 AS  SELECT 'a'::view_typ < 'a'::view_typ AS k;
+(1 row)
+
+ k 
+---
+ f
+(1 row)
+
+CREATE VIEW
+ALTER TYPE
+                      create_statement                       
+-------------------------------------------------------------
+ CREATE VIEW v12 AS  SELECT k                               +
+    FROM ( SELECT 'a'::view_type_new AS k) unnamed_subquery;
+(1 row)
+
+                      create_statement                       
+-------------------------------------------------------------
+ CREATE VIEW v12 AS  SELECT k                               +
+    FROM ( SELECT 'a'::view_type_new AS k) unnamed_subquery;
+(1 row)
+
+ k 
+---
+ a
+(1 row)
+
+CREATE VIEW
+ALTER TYPE
+                create_statement                
+------------------------------------------------
+ CREATE VIEW v13 AS  SELECT 'a'::view_type AS k+
+ UNION                                         +
+  SELECT 'b'::view_type AS k;
+(1 row)
+
+                create_statement                
+------------------------------------------------
+ CREATE VIEW v13 AS  SELECT 'a'::view_type AS k+
+ UNION                                         +
+  SELECT 'b'::view_type AS k;
+(1 row)
+
+ k 
+---
+ a
+ b
+(2 rows)
+
+CREATE VIEW
+ALTER TYPE
+                                   create_statement                                   
+--------------------------------------------------------------------------------------
+ CREATE VIEW v14 AS  SELECT ARRAY['a'::view_type_new, 'b'::view_type_new] AS "array";
+(1 row)
+
+                                   create_statement                                   
+--------------------------------------------------------------------------------------
+ CREATE VIEW v14 AS  SELECT ARRAY['a'::view_type_new, 'b'::view_type_new] AS "array";
+(1 row)
+
+ array 
+-------
+ {a,b}
+(1 row)
+
+CREATE VIEW
+ALTER TYPE
+                            create_statement                            
+------------------------------------------------------------------------
+ CREATE VIEW v15 AS  SELECT ('{a,b}'::view_type[])[2] AS view_type_new;
+(1 row)
+
+                            create_statement                            
+------------------------------------------------------------------------
+ CREATE VIEW v15 AS  SELECT ('{a,b}'::view_type[])[2] AS view_type_new;
+(1 row)
+
+ view_type_new 
+---------------
+ b
+(1 row)
+
+CREATE TABLE
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+psql:pg_tests/compatible/views.sql:1054: NOTICE:  drop cascades to 3 other objects
+DETAIL:  drop cascades to view v1nest
+drop cascades to view v2nest
+drop cascades to view v3nest
+DROP TABLE
+CREATE TABLE
+SELECT 1
+            create_statement             
+-----------------------------------------
+ CREATE VIEW li AS  SELECT 1 AS test_t1;
+(1 row)
+
+CREATE TABLE
+INSERT 0 3
+SELECT 3
+ a | b  
+---+----
+ 1 | 99
+ 2 | 98
+ 3 | 97
+(3 rows)
+
+CREATE MATERIALIZED VIEW
+psql:pg_tests/compatible/views.sql:1085: ERROR:  materialized view "mv2" has not been populated
+HINT:  Use the REFRESH MATERIALIZED VIEW command.
+REFRESH MATERIALIZED VIEW
+ a | b  
+---+----
+ 1 | 99
+(1 row)
+
+DROP MATERIALIZED VIEW
+DROP MATERIALIZED VIEW
+CREATE VIEW
+ column_name | data_type | is_nullable 
+-------------+-----------+-------------
+ a           | integer   | YES
+ c           | text      | YES
+(2 rows)
+
+SELECT 3
+ column_name | data_type | is_nullable 
+-------------+-----------+-------------
+(0 rows)
+
+CREATE SCHEMA
+CREATE SEQUENCE
+psql:pg_tests/compatible/views.sql:1122: ERROR:  relation "sc_seq_qualified_name.sq" does not exist
+LINE 1: ...REATE VIEW v_seq_rewrite_quoted AS SELECT nextval('"sc_seq_q...
+                                                             ^
+CREATE VIEW
+ nextval 
+---------
+       1
+(1 row)
+
+CREATE VIEW
+ nextval 
+---------
+       2
+(1 row)
+
+CREATE SCHEMA
+SET
+CREATE SCHEMA
+CREATE SCHEMA
+CREATE TYPE
+CREATE TABLE
+CREATE SEQUENCE
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+ workday 
+---------
+ Mon
+(1 row)
+
+ nextval 
+---------
+       1
+(1 row)
+
+ workday 
+---------
+ Mon
+(1 row)
+
+ nextval 
+---------
+       2
+(1 row)
+
+ALTER SCHEMA
+psql:pg_tests/compatible/views.sql:1171: ERROR:  schema "sc1" does not exist
+psql:pg_tests/compatible/views.sql:1174: ERROR:  schema "sc1" does not exist
+DROP VIEW
+psql:pg_tests/compatible/views.sql:1180: ERROR:  schema "sc1" does not exist
+ workday 
+---------
+ Mon
+(1 row)
+
+ nextval 
+---------
+       3
+(1 row)
+
+ workday 
+---------
+ Mon
+(1 row)
+
+ nextval 
+---------
+       4
+(1 row)
+
+SET
+CREATE SCHEMA
+SET
+CREATE SCHEMA
+CREATE SEQUENCE
+CREATE VIEW
+ last_value 
+------------
+          1
+(1 row)
+
+ALTER SEQUENCE
+ last_value 
+------------
+          1
+(1 row)
+
+ALTER SEQUENCE
+ last_value 
+------------
+          1
+(1 row)
+
+ALTER SCHEMA
+ last_value 
+------------
+          1
+(1 row)
+
+ALTER SCHEMA
+ last_value 
+------------
+          1
+(1 row)
+
+ALTER SCHEMA
+SET
+ last_value 
+------------
+          1
+(1 row)
+
+ALTER SCHEMA
+SET
+ last_value 
+------------
+          1
+(1 row)
+
+SET
+CREATE TABLE
+CREATE VIEW
+CREATE VIEW
+psql:pg_tests/compatible/views.sql:1260: ERROR:  relation "t" already exists
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+psql:pg_tests/compatible/views.sql:1275: ERROR:  infinite recursion detected in rules for relation "cd_v2"
+CREATE VIEW
+psql:pg_tests/compatible/views.sql:1281: ERROR:  infinite recursion detected in rules for relation "cd_v3"
+psql:pg_tests/compatible/views.sql:1284: ERROR:  cannot drop view cd_v1 because other objects depend on it
+DETAIL:  view cd_v2 depends on view cd_v1
+view cd_v3 depends on view cd_v2
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+psql:pg_tests/compatible/views.sql:1287: NOTICE:  drop cascades to 2 other objects
+DETAIL:  drop cascades to view cd_v2
+drop cascades to view cd_v3
+DROP VIEW
+psql:pg_tests/compatible/views.sql:1293: ERROR:  relation "t104927" does not exist
+LINE 3:   FROM t104927
+               ^
+psql:pg_tests/compatible/views.sql:1299: ERROR:  relation "t104927" does not exist
+LINE 3:   FROM t104927
+               ^
+psql:pg_tests/compatible/views.sql:1302: ERROR:  relation "v104927" does not exist
+LINE 1: SELECT * FROM v104927;
+                      ^
+CREATE TYPE
+CREATE VIEW
+psql:pg_tests/compatible/views.sql:1315: ERROR:  relation "v" already exists
+CREATE SCHEMA
+CREATE SCHEMA
+SET
+CREATE TYPE
+SET
+CREATE VIEW
+CREATE VIEW
+psql:pg_tests/compatible/views.sql:1342: ERROR:  function json_to_tsvector() does not exist
+LINE 1: CREATE VIEW v128535 AS SELECT json_to_tsvector();
+                                      ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/views.sql:1345: ERROR:  unrecognized configuration parameter "allow_view_with_security_invoker_clause"
+psql:pg_tests/compatible/views.sql:1348: ERROR:  syntax error at or near "allow_view_with_security_invoker_clause"
+LINE 1: show session allow_view_with_security_invoker_clause;
+                     ^

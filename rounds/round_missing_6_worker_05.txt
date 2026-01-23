@@ -1,0 +1,1 @@
+pg_tests/compatible/vector_index.sql

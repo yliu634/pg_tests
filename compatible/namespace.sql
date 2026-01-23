@@ -1,6 +1,67 @@
 -- PostgreSQL compatible tests from namespace
 -- 25 tests
 
+-- NOTE: This file is derived from CockroachDB's namespace tests and includes
+-- Cockroach-specific multi-database syntax (db.schema.table), SET database, and
+-- SHOW TABLES commands that are not portable to PostgreSQL in this workspace.
+-- We exercise the closest PostgreSQL equivalents (schemas + search_path) below.
+-- The original content is preserved (commented out) at the end for reference.
+SET client_min_messages = warning;
+
+DROP SCHEMA IF EXISTS ns_test CASCADE;
+DROP SCHEMA IF EXISTS ns_shadow CASCADE;
+CREATE SCHEMA ns_test;
+CREATE SCHEMA ns_shadow;
+
+-- Basic table in public schema (simulates default database + schema).
+DROP TABLE IF EXISTS a;
+CREATE TABLE a(a INT PRIMARY KEY);
+INSERT INTO a VALUES (1);
+
+-- Table in an alternate schema.
+CREATE TABLE ns_test.t(a INT PRIMARY KEY);
+INSERT INTO ns_test.t VALUES (10);
+
+-- "SHOW TABLES FROM <schema>": use pg_tables / information_schema instead.
+SELECT schemaname, tablename
+FROM pg_catalog.pg_tables
+WHERE schemaname IN ('public', 'ns_test')
+ORDER BY 1, 2;
+
+-- "SET database": approximate by switching search_path.
+SET search_path TO ns_test, public, pg_catalog;
+SELECT current_schema() AS current_schema;
+
+SELECT tablename
+FROM pg_catalog.pg_tables
+WHERE schemaname = current_schema()
+ORDER BY 1;
+
+-- Demonstrate search_path shadowing: a user table named like a system catalog.
+SET search_path TO ns_shadow, pg_catalog;
+CREATE TABLE pg_type(x INT);
+INSERT INTO pg_type VALUES (42);
+SELECT x FROM pg_type ORDER BY x;
+
+SET search_path TO pg_catalog, ns_shadow;
+SELECT typname FROM pg_type WHERE typname = 'date';
+
+-- Index renames with schema-qualified names and schema moves.
+RESET search_path;
+ALTER INDEX a_pkey RENAME TO a_pk;
+ALTER INDEX public.a_pk RENAME TO a_pk2;
+ALTER TABLE a SET SCHEMA ns_test;
+ALTER INDEX ns_test.a_pk2 RENAME TO a_pk3;
+ALTER TABLE ns_test.a SET SCHEMA public;
+ALTER INDEX public.a_pk3 RENAME TO a_pk4;
+
+DROP SCHEMA ns_test CASCADE;
+DROP SCHEMA ns_shadow CASCADE;
+
+RESET client_min_messages;
+
+/*
+
 -- Test 1: statement (line 2)
 CREATE TABLE a(a INT)
 
@@ -80,3 +141,4 @@ ALTER INDEX a_pk3 RENAME TO a_pk4
 -- Test 25: statement (line 113)
 ALTER INDEX public.a_pk3 RENAME TO a_pk4
 
+*/

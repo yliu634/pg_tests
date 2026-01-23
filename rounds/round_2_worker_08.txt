@@ -1,0 +1,5 @@
+pg_tests/compatible/formatting.sql
+pg_tests/compatible/function_lookup.sql
+pg_tests/compatible/fuzzystrmatch.sql
+pg_tests/compatible/gc_job_mixed.sql
+pg_tests/compatible/gen_test_objects.sql

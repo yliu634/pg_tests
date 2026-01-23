@@ -1,0 +1,7 @@
+SET
+                                              notice                                               
+---------------------------------------------------------------------------------------------------
+ skipped: crdb_internal.kv_enqueue_replica is CockroachDB-internal and not available in PostgreSQL
+(1 row)
+
+RESET

@@ -1,0 +1,70 @@
+ generate_series | generate_series 
+-----------------+-----------------
+               1 |               4
+               2 |               5
+                 |               6
+                 |               7
+                 |               8
+(5 rows)
+
+ generate_series | generate_series 
+-----------------+-----------------
+               1 |               4
+               2 |               5
+               3 |                
+               4 |                
+(4 rows)
+
+ generate_series | generate_series 
+-----------------+-----------------
+(0 rows)
+
+ generate_series | generate_series 
+-----------------+-----------------
+                 |               1
+(1 row)
+
+ generate_series | unnest 
+-----------------+--------
+               1 |      4
+               2 |      4
+(2 rows)
+
+ generate_series |  unnest  
+-----------------+----------
+               1 | postgres
+               2 | postgres
+(2 rows)
+
+  unnest  | generate_series 
+----------+-----------------
+ postgres |               1
+ postgres |               2
+(2 rows)
+
+  unnest  |  unnest  
+----------+----------
+ postgres | postgres
+ postgres | postgres
+(2 rows)
+
+ x | n | generate_series 
+---+---+-----------------
+ 4 | 1 |              10
+ 5 | 2 |              11
+ 6 | 3 |              12
+   |   |              13
+   |   |              14
+   |   |              15
+(6 rows)
+
+ generate_series 
+-----------------
+               5
+               6
+               7
+               8
+               9
+              10
+(6 rows)
+

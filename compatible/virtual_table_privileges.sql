@@ -1,6 +1,72 @@
 -- PostgreSQL compatible tests from virtual_table_privileges
 -- 31 tests
 
+--
+-- NOTE: CockroachDB's `crdb_internal`/`system.privileges` virtual tables and
+-- sqllogictest `user` switching aren't available in PostgreSQL. The
+-- PostgreSQL section below exercises equivalent GRANT/REVOKE behavior using a
+-- small view.
+
+SET client_min_messages = warning;
+
+-- Ensure clean role state (roles are cluster-wide).
+DROP ROLE IF EXISTS testuser;
+
+DROP SCHEMA IF EXISTS crdb_internal CASCADE;
+DROP SCHEMA IF EXISTS system CASCADE;
+
+CREATE ROLE testuser;
+
+CREATE SCHEMA crdb_internal;
+GRANT USAGE ON SCHEMA crdb_internal TO PUBLIC;
+
+-- Minimal "virtual table" stand-in.
+CREATE VIEW crdb_internal.tables AS
+SELECT 'crdb_internal.tables'::text AS name;
+
+GRANT SELECT ON crdb_internal.tables TO PUBLIC;
+
+CREATE SCHEMA system;
+GRANT USAGE ON SCHEMA system TO PUBLIC;
+
+-- Mimic CRDB's system.privileges for the PUBLIC SELECT grant.
+CREATE VIEW system.privileges AS
+SELECT
+  grantee AS username,
+  table_schema || '.' || table_name AS path,
+  privilege_type AS privileges,
+  is_grantable AS grant_options
+FROM information_schema.table_privileges
+WHERE grantee = 'PUBLIC'
+  AND table_schema = 'crdb_internal'
+  AND table_name = 'tables'
+  AND privilege_type = 'SELECT'
+ORDER BY 1, 2, 3;
+
+GRANT SELECT ON system.privileges TO PUBLIC;
+
+SELECT * FROM crdb_internal.tables;
+SELECT has_table_privilege('testuser', 'crdb_internal.tables', 'select');
+SELECT username, path, privileges, grant_options FROM system.privileges;
+
+REVOKE SELECT ON crdb_internal.tables FROM PUBLIC;
+SELECT has_table_privilege('testuser', 'crdb_internal.tables', 'select');
+SELECT username, path, privileges, grant_options FROM system.privileges;
+
+GRANT SELECT ON crdb_internal.tables TO PUBLIC;
+SELECT has_table_privilege('testuser', 'crdb_internal.tables', 'select');
+SELECT username, path, privileges, grant_options FROM system.privileges;
+
+SET ROLE testuser;
+SELECT * FROM crdb_internal.tables;
+RESET ROLE;
+
+-- Cleanup global role.
+DROP ROLE testuser;
+
+RESET client_min_messages;
+
+/*
 -- Test 1: statement (line 4)
 SELECT * FROM crdb_internal.tables
 
@@ -107,4 +173,4 @@ GRANT ZONECONFIG ON TABLE crdb_internal.tables TO testuser
 
 -- Test 31: statement (line 143)
 GRANT CREATE ON TABLE information_schema.tables TO testuser
-
+*/

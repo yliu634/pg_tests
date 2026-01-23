@@ -1,0 +1,139 @@
+SET
+DROP DATABASE
+DROP DATABASE
+DROP SCHEMA
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+GRANT ROLE
+CREATE VIEW
+GRANT
+CREATE DATABASE
+     grantee     | privilege_type | is_grantable 
+-----------------+----------------+--------------
+ pan             | CONNECT        | NO
+ pan             | CREATE         | NO
+ pan             | TEMPORARY      | NO
+ unknown (OID=0) | CONNECT        | NO
+ unknown (OID=0) | TEMPORARY      | NO
+(5 rows)
+
+REVOKE
+REVOKE
+GRANT
+GRANT
+GRANT
+REVOKE
+     grantee     | privilege_type | is_grantable 
+-----------------+----------------+--------------
+ pan             | CONNECT        | NO
+ pan             | CREATE         | NO
+ pan             | TEMPORARY      | NO
+ readwrite       | TEMPORARY      | YES
+ test-user       | CONNECT        | YES
+ test-user       | CREATE         | YES
+ test-user       | TEMPORARY      | YES
+ unknown (OID=0) | CONNECT        | NO
+ unknown (OID=0) | TEMPORARY      | NO
+(9 rows)
+
+  grantee  | privilege_type | is_grantable 
+-----------+----------------+--------------
+ readwrite | TEMPORARY      | YES
+ test-user | CONNECT        | YES
+ test-user | CREATE         | YES
+ test-user | TEMPORARY      | YES
+(4 rows)
+
+REVOKE
+     grantee     | privilege_type | is_grantable 
+-----------------+----------------+--------------
+ pan             | CONNECT        | NO
+ pan             | CREATE         | NO
+ pan             | TEMPORARY      | NO
+ readwrite       | TEMPORARY      | YES
+ test-user       | CREATE         | YES
+ test-user       | TEMPORARY      | YES
+ unknown (OID=0) | CONNECT        | NO
+ unknown (OID=0) | TEMPORARY      | NO
+(8 rows)
+
+  grantee  | privilege_type | is_grantable 
+-----------+----------------+--------------
+ readwrite | TEMPORARY      | YES
+ test-user | CREATE         | YES
+ test-user | TEMPORARY      | YES
+(3 rows)
+
+REVOKE
+REVOKE
+REVOKE
+GRANT
+CREATE SCHEMA
+GRANT
+SET
+CREATE TABLE
+RESET
+ grantee  | privilege_type | is_grantable 
+----------+----------------+--------------
+ testuser | DELETE         | YES
+ testuser | INSERT         | YES
+ testuser | REFERENCES     | YES
+ testuser | SELECT         | YES
+ testuser | TRIGGER        | YES
+ testuser | TRUNCATE       | YES
+ testuser | UPDATE         | YES
+(7 rows)
+
+ grantee | privilege_type | is_grantable 
+---------+----------------+--------------
+(0 rows)
+
+GRANT ROLE
+ALTER ROLE
+CREATE DATABASE
+GRANT
+         grantee          | privilege_type | is_grantable 
+--------------------------+----------------+--------------
+ owner_grant_option_child | CONNECT        | NO
+ pan                      | CONNECT        | NO
+ pan                      | CREATE         | NO
+ pan                      | TEMPORARY      | NO
+ unknown (OID=0)          | CONNECT        | NO
+ unknown (OID=0)          | TEMPORARY      | NO
+(6 rows)
+
+ALTER DATABASE
+         grantee          | privilege_type | is_grantable 
+--------------------------+----------------+--------------
+ other_owner              | CONNECT        | NO
+ other_owner              | CREATE         | NO
+ other_owner              | TEMPORARY      | NO
+ owner_grant_option_child | CONNECT        | NO
+ unknown (OID=0)          | CONNECT        | NO
+ unknown (OID=0)          | TEMPORARY      | NO
+(6 rows)
+
+DROP SCHEMA
+DROP DATABASE
+DROP DATABASE
+DROP VIEW
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET

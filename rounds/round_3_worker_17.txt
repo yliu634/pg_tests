@@ -1,0 +1,5 @@
+pg_tests/compatible/show_source.sql
+pg_tests/compatible/show_statement_hints.sql
+pg_tests/compatible/show_tables.sql
+pg_tests/compatible/show_transfer_state.sql
+pg_tests/compatible/show_var.sql

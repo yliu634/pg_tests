@@ -1,0 +1,5 @@
+pg_tests/compatible/drop_view.sql
+pg_tests/compatible/edge.sql
+pg_tests/compatible/errors.sql
+pg_tests/compatible/generator_probe_ranges.sql
+pg_tests/compatible/geospatial_bbox.sql

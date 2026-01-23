@@ -1,0 +1,14 @@
+CREATE FUNCTION
+CREATE SCHEMA
+CREATE FUNCTION
+CREATE SEQUENCE
+ nextval 
+---------
+       1
+(1 row)
+
+ expect_error 
+--------------
+ t
+(1 row)
+

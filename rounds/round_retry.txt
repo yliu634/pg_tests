@@ -1,0 +1,10 @@
+pg_tests/compatible/array.sql
+pg_tests/compatible/builtin_function.sql
+pg_tests/compatible/cascade.sql
+pg_tests/compatible/cast.sql
+pg_tests/compatible/fk.sql
+pg_tests/compatible/json_builtins.sql
+pg_tests/compatible/privilege_builtins.sql
+pg_tests/compatible/procedure_params.sql
+pg_tests/compatible/udf_record.sql
+pg_tests/compatible/update.sql

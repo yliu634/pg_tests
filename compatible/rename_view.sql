@@ -13,15 +13,26 @@ CREATE ROLE testuser LOGIN;
 CREATE SCHEMA test;
 CREATE SCHEMA test2;
 
+-- Helper: run a statement that is expected to error without emitting psql ERROR output.
+-- Returns true if the statement errored, false otherwise.
+CREATE OR REPLACE FUNCTION pg_temp.expect_error(sql text) RETURNS boolean
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  EXECUTE sql;
+  RETURN false;
+EXCEPTION WHEN OTHERS THEN
+  RETURN true;
+END;
+$$;
+
 RESET client_min_messages;
 
 -- Test 1: statement (line 1)
 -- Cockroach-only: SET CLUSTER SETTING sql.cross_db_views.enabled = TRUE;
 
 -- Test 2: statement (line 4)
-\set ON_ERROR_STOP 0
-ALTER VIEW foo RENAME TO bar;
-\set ON_ERROR_STOP 1
+SELECT pg_temp.expect_error($sql$ALTER VIEW foo RENAME TO bar$sql$);
 
 -- Test 3: statement (line 7)
 ALTER VIEW IF EXISTS foo RENAME TO bar;
@@ -48,17 +59,13 @@ WHERE table_schema = 'public'
 ORDER BY table_name;
 
 -- Test 9: statement (line 34)
-\set ON_ERROR_STOP 0
-ALTER VIEW kv RENAME TO new_kv;
-\set ON_ERROR_STOP 1
+SELECT pg_temp.expect_error($sql$ALTER VIEW kv RENAME TO new_kv$sql$);
 
 -- Test 10: statement (line 38)
 ALTER TABLE v RENAME TO new_v;
 
 -- Test 11: statement (line 41)
-\set ON_ERROR_STOP 0
-SELECT * FROM v;
-\set ON_ERROR_STOP 1
+SELECT pg_temp.expect_error($sql$SELECT * FROM v$sql$);
 
 -- Test 12: query (line 44)
 SELECT * FROM new_v;
@@ -77,19 +84,13 @@ WHERE table_schema = 'public'
 ORDER BY grantee, privilege_type;
 
 -- Test 15: statement (line 63)
-\set ON_ERROR_STOP 0
-ALTER VIEW "" RENAME TO foo;
-\set ON_ERROR_STOP 1
+SELECT pg_temp.expect_error($sql$ALTER VIEW "" RENAME TO foo$sql$);
 
 -- Test 16: statement (line 66)
-\set ON_ERROR_STOP 0
-ALTER VIEW new_v RENAME TO "";
-\set ON_ERROR_STOP 1
+SELECT pg_temp.expect_error($sql$ALTER VIEW new_v RENAME TO ""$sql$);
 
 -- Test 17: statement (line 69)
-\set ON_ERROR_STOP 0
-ALTER VIEW new_v RENAME TO new_v;
-\set ON_ERROR_STOP 1
+SELECT pg_temp.expect_error($sql$ALTER VIEW new_v RENAME TO new_v$sql$);
 
 -- Create base objects in schema test for the cross-schema rename tests.
 CREATE TABLE test.kv (
@@ -112,17 +113,13 @@ INSERT INTO test.t VALUES (4, 16), (5, 25);
 CREATE VIEW test.v AS SELECT c1, c2 FROM test.t;
 
 -- Test 21: statement (line 84)
-\set ON_ERROR_STOP 0
-ALTER VIEW test.v RENAME TO new_v;
-\set ON_ERROR_STOP 1
+SELECT pg_temp.expect_error($sql$ALTER VIEW test.v RENAME TO new_v$sql$);
 
 SET SESSION AUTHORIZATION testuser;
 SET search_path TO test, public;
 
 -- Test 22: statement (line 89)
-\set ON_ERROR_STOP 0
-ALTER VIEW test.v RENAME TO v2;
-\set ON_ERROR_STOP 1
+SELECT pg_temp.expect_error($sql$ALTER VIEW test.v RENAME TO v2$sql$);
 
 SET SESSION AUTHORIZATION DEFAULT;
 
@@ -136,9 +133,7 @@ SET SESSION AUTHORIZATION testuser;
 SET search_path TO test, public;
 
 -- Test 25: statement (line 102)
-\set ON_ERROR_STOP 0
-ALTER VIEW test.v RENAME TO v2;
-\set ON_ERROR_STOP 1
+SELECT pg_temp.expect_error($sql$ALTER VIEW test.v RENAME TO v2$sql$);
 
 SET SESSION AUTHORIZATION DEFAULT;
 
@@ -156,9 +151,7 @@ WHERE table_schema = 'test'
 ORDER BY table_name;
 
 -- Test 29: statement (line 123)
-\set ON_ERROR_STOP 0
-ALTER VIEW test.v2 RENAME TO test2.v;
-\set ON_ERROR_STOP 1
+SELECT pg_temp.expect_error($sql$ALTER VIEW test.v2 RENAME TO test2.v$sql$);
 
 -- Test 30: statement (line 128)
 GRANT USAGE, CREATE ON SCHEMA test2 TO testuser;
@@ -194,22 +187,16 @@ SELECT * FROM test.v2;
 CREATE VIEW v3 AS SELECT count(*) FROM test.v AS v JOIN test.v2 AS v2 ON v.k > v2.c1;
 
 -- Test 38: statement (line 169)
-\set ON_ERROR_STOP 0
-ALTER VIEW test.v RENAME TO v3;
-\set ON_ERROR_STOP 1
+SELECT pg_temp.expect_error($sql$ALTER VIEW test.v RENAME TO v3$sql$);
 
 -- Test 39: statement (line 176)
 ALTER VIEW test.v2 RENAME TO v4;
 
 -- Test 40: statement (line 179)
-\set ON_ERROR_STOP 0
-ALTER VIEW v3 RENAME TO v4;
-\set ON_ERROR_STOP 1
+SELECT pg_temp.expect_error($sql$ALTER VIEW v3 RENAME TO v4$sql$);
 
 -- Test 41: statement (line 182)
-\set ON_ERROR_STOP 0
-ALTER VIEW test.v2 RENAME TO v5;
-\set ON_ERROR_STOP 1
+SELECT pg_temp.expect_error($sql$ALTER VIEW test.v2 RENAME TO v5$sql$);
 
 -- Cleanup
 SET SESSION AUTHORIZATION DEFAULT;

@@ -1,0 +1,287 @@
+CREATE FUNCTION
+ f93083 
+--------
+      1
+(1 row)
+
+CREATE TYPE
+CREATE TABLE
+INSERT 0 1
+CREATE FUNCTION
+ f_93314 
+---------
+ (1,a)
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+CREATE FUNCTION
+ f_93314_alias 
+---------------
+ (1,"{a,b}")
+(1 row)
+
+CREATE TYPE
+CREATE TABLE
+INSERT 0 1
+CREATE FUNCTION
+ f_93314_comp 
+--------------
+ (1,2)
+(1 row)
+
+CREATE FUNCTION
+ f_93314_comp_t 
+----------------
+ (1,"(2,3)")
+(1 row)
+
+  oid  |    proname     | pronamespace | proowner | prolang | proleakproof | proisstrict | proretset | provolatile | pronargs | prorettype | proargtypes | proargmodes | proargnames |                  prosrc                  
+-------+----------------+--------------+----------+---------+--------------+-------------+-----------+-------------+----------+------------+-------------+-------------+-------------+------------------------------------------
+ 25676 | f_93314        |         2200 |       10 |      14 | f            | f           | f         | v           |        0 |      25675 |             |             |             |                                         +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             |   SELECT i, e                           +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             |   FROM t_93314                          +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             |   ORDER BY i                            +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             |   LIMIT 1;                              +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             | 
+ 25682 | f_93314_alias  |         2200 |       10 |      14 | f            | f           | f         | v           |        0 |      25679 |             |             |             |                                         +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             |   SELECT i, e                           +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             |   FROM t_93314_alias                    +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             |   ORDER BY i                            +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             |   LIMIT 1;                              +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             | 
+ 25691 | f_93314_comp   |         2200 |       10 |      14 | f            | f           | f         | v           |        0 |      25685 |             |             |             |                                         +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             |   SELECT (1, 2);                        +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             | 
+ 25692 | f_93314_comp_t |         2200 |       10 |      14 | f            | f           | f         | v           |        0 |      25688 |             |             |             |                                         +
+       |                |              |          |         |              |             |           |             |          |            |             |             |             |   SELECT a, c FROM t_93314_comp LIMIT 1;+
+       |                |              |          |         |              |             |           |             |          |            |             |             |             | 
+(4 rows)
+
+CREATE FUNCTION
+CREATE TABLE
+INSERT 0 2
+ f95240 
+--------
+     33
+       
+(2 rows)
+
+CREATE FUNCTION
+ f96326 
+--------
+      1
+(1 row)
+
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+ f_94146 
+---------
+       8
+(1 row)
+
+ f_94146 
+---------
+       4
+(1 row)
+
+ f_94146 
+---------
+       2
+(1 row)
+
+CREATE FUNCTION
+   search_path   
+-----------------
+ "$user", public
+(1 row)
+
+SET
+ f_97130 
+---------
+       1
+(1 row)
+
+RESET
+CREATE FUNCTION
+ abs 
+-----
+   1
+(1 row)
+
+ abs 
+-----
+  99
+(1 row)
+
+CREATE FUNCTION
+CREATE FUNCTION
+ f_97854 
+---------
+ f
+(1 row)
+
+CREATE TABLE
+INSERT 0 3
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+ x | f93861_scalar | f93861_strict_scalar 
+---+---------------+----------------------
+ 1 |             1 |                    1
+ 2 |             1 |                    1
+   |             1 |                     
+(3 rows)
+
+ x | f93861_setof 
+---+--------------
+ 1 |            1
+ 1 |            2
+ 1 |            3
+ 2 |            1
+ 2 |            2
+ 2 |            3
+   |            1
+   |            2
+   |            3
+(9 rows)
+
+ x | f93861_strict_setof 
+---+---------------------
+ 1 |                   1
+ 1 |                   2
+ 1 |                   3
+ 2 |                   1
+ 2 |                   2
+ 2 |                   3
+(6 rows)
+
+CREATE FUNCTION
+ fn 
+----
+  1
+(1 row)
+
+DROP FUNCTION
+DO
+CREATE FUNCTION
+ fn 
+----
+  1
+(1 row)
+
+CREATE FUNCTION
+ f100923 
+---------
+ t
+ t
+(2 rows)
+
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+ f100915 
+---------
+ t
+ f
+(2 rows)
+
+ f100915 
+---------
+ t
+ t
+(2 rows)
+
+CREATE SEQUENCE
+CREATE FUNCTION
+ f_103869 
+----------
+        1
+(1 row)
+
+ f_103869 
+----------
+        1
+(1 row)
+
+CREATE TABLE
+CREATE TYPE
+CREATE FUNCTION
+                       pg_get_functiondef                        
+-----------------------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.func104242()                 +
+  RETURNS integer                                               +
+  LANGUAGE sql                                                  +
+ AS $function$                                                  +
+   SELECT 1                                                     +
+   FROM tab104242                                               +
+   WHERE NULL::typ104242 IN (SELECT NULL::typ104242 WHERE false)+
+ $function$                                                     +
+ 
+(1 row)
+
+CREATE FUNCTION
+                        pg_get_functiondef                        
+------------------------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.func104242_not_null()         +
+  RETURNS integer                                                +
+  LANGUAGE sql                                                   +
+ AS $function$                                                   +
+   SELECT 1                                                      +
+   FROM tab104242                                                +
+   WHERE 'foo'::typ104242 IN (SELECT NULL::typ104242 WHERE false)+
+ $function$                                                      +
+ 
+(1 row)
+
+CREATE TYPE
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+ f108297 
+---------
+ 
+(1 row)
+
+CREATE FUNCTION
+ f108297 
+---------
+ 
+(1 row)
+
+CREATE SEQUENCE
+CREATE FUNCTION
+ f108297 
+---------
+ 
+(1 row)
+
+ nextval 
+---------
+       2
+(1 row)
+
+CREATE FUNCTION
+ ?column? 
+----------
+ f
+(1 row)
+
+SET
+            now             
+----------------------------
+ 1999-12-31 23:59:59.999999
+(1 row)
+
+            now             
+----------------------------
+ 1999-12-31 23:59:59.999999
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+

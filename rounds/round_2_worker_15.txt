@@ -1,0 +1,5 @@
+pg_tests/compatible/information_schema.sql
+pg_tests/compatible/inner-join.sql
+pg_tests/compatible/insert.sql
+pg_tests/compatible/inspect.sql
+pg_tests/compatible/int_size.sql

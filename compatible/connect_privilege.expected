@@ -1,0 +1,29 @@
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+ schemaname | tablename | tableowner 
+------------+-----------+------------
+ public     | a         | pan
+(1 row)
+
+ schemaname | tablename | tableowner 
+------------+-----------+------------
+ public     | a         | pan
+(1 row)
+
+ table_catalog | table_schema | table_name 
+---------------+--------------+------------
+ pg_tests      | public       | a
+(1 row)
+
+ schemaname | tablename | tableowner 
+------------+-----------+------------
+ public     | a         | pan
+(1 row)
+
+ table_catalog | table_schema | table_name 
+---------------+--------------+------------
+ pg_tests      | public       | a
+(1 row)
+

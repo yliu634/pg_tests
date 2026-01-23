@@ -1,0 +1,5 @@
+pg_tests/compatible/cluster_settings.sql
+pg_tests/compatible/collatedstring.sql
+pg_tests/compatible/collatedstring_constraint.sql
+pg_tests/compatible/composite_types.sql
+pg_tests/compatible/computed.sql

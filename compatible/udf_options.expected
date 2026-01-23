@@ -1,0 +1,108 @@
+DO
+DO
+CREATE FUNCTION
+CREATE FUNCTION
+DO
+DO
+DO
+DO
+DO
+DO
+DO
+DO
+CREATE TABLE
+INSERT 0 3
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+                 pg_get_functiondef                 
+----------------------------------------------------
+ CREATE OR REPLACE FUNCTION public.get_l(i integer)+
+  RETURNS integer                                  +
+  LANGUAGE sql                                     +
+  STABLE                                           +
+ AS $function$                                     +
+ SELECT v FROM kv WHERE k = i;                     +
+ $function$                                        +
+ 
+(1 row)
+
+ pg_get_functiondef 
+--------------------
+ 
+(1 row)
+
+ pg_get_functiondef 
+--------------------
+ 
+(1 row)
+
+                   pg_get_functiondef                   
+--------------------------------------------------------
+ CREATE OR REPLACE FUNCTION pg_catalog.pg_backend_pid()+
+  RETURNS integer                                      +
+  LANGUAGE internal                                    +
+  STABLE PARALLEL RESTRICTED STRICT                    +
+ AS $function$pg_backend_pid$function$                 +
+ 
+(1 row)
+
+ l1 | l2 | i1 | i2 | s1 | s2 | v1 | v2 
+----+----+----+----+----+----+----+----
+  1 |  1 |  1 |  1 |  1 |  1 | 11 | 11
+  2 |  2 |  2 |  2 |  2 |  2 | 12 | 12
+  3 |  3 |  3 |  3 |  3 |  3 | 13 | 13
+(3 rows)
+
+CREATE SEQUENCE
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+ rand_v | rand_v 
+--------+--------
+      1 |      2
+      3 |      4
+      5 |      6
+(3 rows)
+
+CREATE FUNCTION
+ strict_fn 
+-----------
+         1
+(1 row)
+
+ strict_fn 
+-----------
+         1
+(1 row)
+
+ strict_fn | strict_fn | strict_fn 
+-----------+-----------+-----------
+           |           |          
+(1 row)
+
+ strict_fn | strict_fn | strict_fn 
+-----------+-----------+-----------
+           |           |          
+(1 row)
+
+ strict_fn 
+-----------
+          
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+CREATE FUNCTION
+ strict_fn_imp | ?column? 
+---------------+----------
+             1 | t
+(1 row)
+
+ strict_fn_imp 
+---------------
+              
+(1 row)
+

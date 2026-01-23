@@ -1,0 +1,5 @@
+pg_tests/compatible/kv_builtin_functions_local.sql
+pg_tests/compatible/limit.sql
+pg_tests/compatible/lock_timeout.sql
+pg_tests/compatible/manual_retry.sql
+pg_tests/compatible/materialized_view.sql

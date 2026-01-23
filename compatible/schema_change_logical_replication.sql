@@ -1,6 +1,19 @@
 -- PostgreSQL compatible tests from schema_change_logical_replication
 -- 9 tests
 
+-- Helper for expected-failure statements: preserve intent without emitting ERROR
+-- output in the captured .expected.
+CREATE OR REPLACE FUNCTION pg_try_exec(sql text)
+RETURNS text
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  EXECUTE sql;
+  RETURN 'OK';
+EXCEPTION WHEN OTHERS THEN
+  RETURN SQLSTATE;
+END $$;
+
 -- Test 1: statement (line 4)
 CREATE TABLE t (x INT PRIMARY KEY, y INT);
 
@@ -34,15 +47,11 @@ ALTER TABLE t DROP COLUMN y;
 
 -- Test 7: statement (line 38)
 -- Expected ERROR (column already exists):
-\set ON_ERROR_STOP 0
-ALTER TABLE t ADD COLUMN z INT NULL;
-\set ON_ERROR_STOP 1
+SELECT pg_try_exec('ALTER TABLE t ADD COLUMN z INT NULL');
 
 -- Test 8: statement (line 43)
 -- Expected ERROR (column does not exist):
-\set ON_ERROR_STOP 0
-CREATE INDEX idx ON t(y);
-\set ON_ERROR_STOP 1
+SELECT pg_try_exec('CREATE INDEX idx ON t(y)');
 
 -- Test 9: statement (line 46)
 -- The index may have been dropped implicitly by earlier schema changes.

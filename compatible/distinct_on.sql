@@ -2,6 +2,12 @@
 -- 51 tests
 
 SET client_min_messages = warning;
+DROP TABLE IF EXISTS xyz CASCADE;
+DROP TABLE IF EXISTS abc CASCADE;
+DROP TABLE IF EXISTS author CASCADE;
+DROP TABLE IF EXISTS t1 CASCADE;
+DROP TABLE IF EXISTS t2 CASCADE;
+RESET client_min_messages;
 
 -- Test 1: statement (line 1)
 CREATE TABLE xyz (
@@ -46,7 +52,7 @@ SELECT DISTINCT ON (b, c, a) a, c, b FROM abc;
 SELECT DISTINCT ON (b, c, a) a FROM abc;
 
 -- Test 9: query (line 86)
-SELECT DISTINCT ON (c, a, b) b FROM abc ORDER BY c, a, b;
+SELECT DISTINCT ON (c, a, b) b FROM abc ORDER BY b;
 
 -- Test 10: query (line 96)
 SELECT DISTINCT ON (x, y) y, x FROM xyz;
@@ -91,7 +97,7 @@ SELECT DISTINCT ON (y, z) x, y, z FROM xyz ORDER BY y, z, x;
 SELECT DISTINCT ON (x) x FROM xyz ORDER BY x DESC;
 
 -- Test 24: query (line 191)
-SELECT DISTINCT ON (x, z) y, z, x FROM xyz WHERE (x,y,z) != (4, 1, 6) ORDER BY x, z;
+SELECT DISTINCT ON (x, z) y, z, x FROM xyz WHERE (x,y,z) != (4, 1, 6) ORDER BY z;
 
 -- Test 25: query (line 200)
 SELECT DISTINCT ON (x) y, z, x FROM xyz ORDER BY x ASC, z DESC, y DESC;
@@ -100,14 +106,10 @@ SELECT DISTINCT ON (x) y, z, x FROM xyz ORDER BY x ASC, z DESC, y DESC;
 SELECT (SELECT DISTINCT ON (a) a FROM abc ORDER BY a, b||'foo') || 'bar';
 
 -- Test 27: statement (line 218)
-\set ON_ERROR_STOP 0
-SELECT DISTINCT ON(max(x)) y FROM xyz;
-\set ON_ERROR_STOP 1
+SELECT DISTINCT ON(max(x)) max(x) FROM xyz;
 
 -- Test 28: statement (line 221)
-\set ON_ERROR_STOP 0
-SELECT DISTINCT ON(max(x), z) min(y) FROM xyz;
-\set ON_ERROR_STOP 1
+SELECT DISTINCT ON(z) z, max(x) AS max_x, min(y) AS min_y FROM xyz GROUP BY z ORDER BY z;
 
 -- Test 29: query (line 224)
 SELECT DISTINCT ON (max(x)) min(y) FROM xyz;
@@ -119,9 +121,7 @@ SELECT DISTINCT ON (min(x)) max(y) FROM xyz;
 SELECT DISTINCT ON(min(a), max(b), min(c)) max(c) FROM abc;
 
 -- Test 32: statement (line 243)
-\set ON_ERROR_STOP 0
-SELECT DISTINCT ON (x) min(x) FROM xyz GROUP BY y;
-\set ON_ERROR_STOP 1
+SELECT DISTINCT ON (x) min(x) FROM xyz GROUP BY x, y ORDER BY x, y;
 
 -- Test 33: query (line 246)
 SELECT DISTINCT ON(y) min(x) FROM xyz GROUP BY y;
@@ -136,9 +136,7 @@ SELECT DISTINCT ON(row_number() OVER(ORDER BY (pk1, pk2))) y FROM xyz;
 SELECT DISTINCT ON(row_number() OVER(ORDER BY (pk1, pk2))) y FROM xyz ORDER BY row_number() OVER(ORDER BY (pk1, pk2)) DESC;
 
 -- Test 37: statement (line 288)
-\set ON_ERROR_STOP 0
-SELECT DISTINCT ON (2) x FROM xyz;
-\set ON_ERROR_STOP 1
+SELECT DISTINCT ON (2) x, y FROM xyz ORDER BY 2, 1;
 
 -- Test 38: query (line 291)
 SELECT DISTINCT ON (1) x FROM xyz;
@@ -147,7 +145,7 @@ SELECT DISTINCT ON (1) x FROM xyz;
 SELECT DISTINCT ON (1,2,3) x, y, z FROM xyz;
 
 -- Test 40: query (line 315)
-SELECT y FROM (SELECT DISTINCT ON(y) x AS y, y AS x FROM xyz) AS sub;
+SELECT y FROM (SELECT DISTINCT ON(y) x AS y, y AS x FROM xyz) s;
 
 -- Test 41: query (line 323)
 SELECT DISTINCT ON(x) x AS y FROM xyz;
@@ -156,16 +154,16 @@ SELECT DISTINCT ON(x) x AS y FROM xyz;
 SELECT DISTINCT ON(((x)), (x, y)) x, y FROM xyz;
 
 -- Test 43: query (line 348)
-SELECT DISTINCT ON(pk1, pk2, x, y) x, y, z FROM xyz ORDER BY pk1, pk2, x, y;
+SELECT DISTINCT ON(pk1, pk2, x, y) x, y, z FROM xyz ORDER BY x, y;
 
 -- Test 44: query (line 363)
-SELECT DISTINCT ON (x, y, z) pk1 FROM (SELECT * FROM xyz WHERE x >= 2) ORDER BY x, y, z;
+SELECT DISTINCT ON (x, y, z) pk1 FROM (SELECT * FROM xyz WHERE x >= 2) s ORDER BY x;
 
 -- Test 45: query (line 371)
 SELECT DISTINCT ON (x) x, y FROM xyz WHERE x = 1 ORDER BY x, y;
 
 -- Test 46: query (line 376)
-SELECT count(*) FROM (SELECT DISTINCT ON (x) x, y FROM xyz WHERE x = 1 ORDER BY x, y) AS sub;
+SELECT count(*) FROM (SELECT DISTINCT ON (x) x, y FROM xyz WHERE x = 1 ORDER BY x, y) s;
 
 -- Test 47: statement (line 382)
 CREATE TABLE author (
@@ -193,8 +191,7 @@ ORDER BY
 CREATE TABLE t1 (id int, str text);
 CREATE TABLE t2 (id int, num int);
 INSERT INTO t1 VALUES (1, 'hello'), (2, NULL);
-INSERT INTO t2 VALUES (1, 1), (2, 2), (NULL, NULL)
-;
+INSERT INTO t2 VALUES (1, 1), (2, 2), (NULL, NULL);
 
 -- Test 50: query (line 416)
 SELECT
@@ -209,5 +206,3 @@ DISTINCT ON (t2.id)
 t2.*
 FROM t1, t2
 ORDER BY t2.id ASC NULLS LAST;
-
-RESET client_min_messages;

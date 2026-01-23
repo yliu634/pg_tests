@@ -1,0 +1,87 @@
+SET
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP SCHEMA
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE SCHEMA
+GRANT
+CREATE VIEW
+GRANT
+CREATE TABLE
+ rw_select | rw_insert | rw_update | rw_delete 
+-----------+-----------+-----------+-----------
+ f         | f         | f         | f
+(1 row)
+
+GRANT
+   grantee    | privilege_type | is_grantable 
+--------------+----------------+--------------
+ gt-test-user | DELETE         | YES
+ gt-test-user | INSERT         | YES
+ gt-test-user | REFERENCES     | YES
+ gt-test-user | SELECT         | YES
+ gt-test-user | TRIGGER        | YES
+ gt-test-user | TRUNCATE       | YES
+ gt-test-user | UPDATE         | YES
+ gt_readwrite | DELETE         | YES
+ gt_readwrite | INSERT         | YES
+ gt_readwrite | REFERENCES     | YES
+ gt_readwrite | SELECT         | YES
+ gt_readwrite | TRIGGER        | YES
+ gt_readwrite | TRUNCATE       | YES
+ gt_readwrite | UPDATE         | YES
+(14 rows)
+
+REVOKE
+   grantee    | privilege_type | is_grantable 
+--------------+----------------+--------------
+ gt-test-user | REFERENCES     | YES
+ gt-test-user | SELECT         | YES
+ gt-test-user | TRIGGER        | YES
+ gt-test-user | TRUNCATE       | YES
+ gt-test-user | UPDATE         | YES
+ gt_readwrite | REFERENCES     | YES
+ gt_readwrite | SELECT         | YES
+ gt_readwrite | TRIGGER        | YES
+ gt_readwrite | TRUNCATE       | YES
+ gt_readwrite | UPDATE         | YES
+(10 rows)
+
+REVOKE
+ grantee | privilege_type | is_grantable 
+---------+----------------+--------------
+(0 rows)
+
+CREATE VIEW
+GRANT
+   grantee    | privilege_type | is_grantable 
+--------------+----------------+--------------
+ gt-test-user | SELECT         | YES
+ gt_readwrite | SELECT         | YES
+(2 rows)
+
+CREATE TABLE
+CREATE TABLE
+GRANT
+ table_schema | table_name | privilege_type | is_grantable 
+--------------+------------+----------------+--------------
+ gt           | table1     | DELETE         | NO
+ gt           | table1     | INSERT         | NO
+ gt           | table1     | REFERENCES     | NO
+ gt           | table1     | SELECT         | NO
+ gt           | table1     | TRIGGER        | NO
+ gt           | table1     | TRUNCATE       | NO
+ gt           | table1     | UPDATE         | NO
+ gt           | table2     | DELETE         | NO
+ gt           | table2     | INSERT         | NO
+ gt           | table2     | REFERENCES     | NO
+ gt           | table2     | SELECT         | NO
+ gt           | table2     | TRIGGER        | NO
+ gt           | table2     | TRUNCATE       | NO
+ gt           | table2     | UPDATE         | NO
+(14 rows)
+
+RESET

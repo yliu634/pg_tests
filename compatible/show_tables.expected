@@ -1,0 +1,48 @@
+SET
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+DROP SCHEMA
+CREATE SCHEMA
+SET
+CREATE TABLE
+ schema_name |   table_name    | type  |  owner   | estimated_row_count 
+-------------+-----------------+-------+----------+---------------------
+ test        | show_this_table | table | postgres |                    
+(1 row)
+
+CREATE SCHEMA
+SET
+ schema_name |   table_name    | type  |  owner   | estimated_row_count 
+-------------+-----------------+-------+----------+---------------------
+ test        | show_this_table | table | postgres |                    
+(1 row)
+
+SET
+ schema_name |   table_name    | type  |  owner   | estimated_row_count 
+-------------+-----------------+-------+----------+---------------------
+ test        | show_this_table | table | postgres |                    
+(1 row)
+
+ schema_name |   table_name    | type  |  owner   | estimated_row_count | comment 
+-------------+-----------------+-------+----------+---------------------+---------
+ test        | show_this_table | table | postgres |                     | 
+(1 row)
+
+CREATE SCHEMA
+SET
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+              schema_name              | table_name | type  |  owner   | estimated_row_count 
+---------------------------------------+------------+-------+----------+---------------------
+ Do you like this for a database name? | foo        | table | postgres |                    
+(1 row)
+
+SET
+ schema_name | table_name | type  |  owner   | estimated_row_count 
+-------------+------------+-------+----------+---------------------
+ sc          | foo        | table | postgres |                    
+(1 row)
+
+RESET

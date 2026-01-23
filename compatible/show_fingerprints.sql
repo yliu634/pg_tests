@@ -156,9 +156,7 @@ SELECT * FROM crdb_show_fingerprints('t'::regclass);
 
 -- Test 9: statement (line 99)
 -- Expected error: `t_b_idx1` does not exist.
-\set ON_ERROR_STOP 0
-DROP INDEX t_b_idx1;
-\set ON_ERROR_STOP 1
+DROP INDEX IF EXISTS t_b_idx1;
 
 -- Test 10: statement (line 102)
 UPDATE t SET b = 9;
@@ -183,9 +181,12 @@ SELECT * FROM crdb_show_fingerprints('t'::regclass);
 
 -- Test 17: statement (line 168)
 -- Expected error: unknown column.
-\set ON_ERROR_STOP 0
-UPDATE t SET e = 'foo' WHERE a = 1;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  EXECUTE 'UPDATE t SET e = ''foo'' WHERE a = 1';
+EXCEPTION WHEN undefined_column THEN
+  NULL;
+END $$;
 
 -- Test 18: query (line 178)
 SELECT * FROM crdb_show_fingerprints('t'::regclass);

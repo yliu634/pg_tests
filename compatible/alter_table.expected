@@ -1,0 +1,61 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+ column_name | data_type | is_nullable | column_default 
+-------------+-----------+-------------+----------------
+ a           | integer   | NO          | 
+ f           | integer   | YES         | 
+(2 rows)
+
+ALTER TABLE
+ALTER TABLE
+UPDATE 1
+ constraint_name | constraint_type 
+-----------------+-----------------
+ check_a         | CHECK
+ t_f_fkey        | FOREIGN KEY
+ t_pkey          | PRIMARY KEY
+ t_b_unique      | UNIQUE
+(4 rows)
+
+ALTER TABLE
+ALTER TABLE
+ a | f | b | c  
+---+---+---+----
+ 1 | 9 | 1 | 42
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ table_name 
+------------
+ t_renamed
+(1 row)
+
+ALTER TABLE
+ column_name | data_type 
+-------------+-----------
+ a_id        | integer
+ f           | integer
+ b           | integer
+ c           | integer
+(4 rows)
+
+ indexname |                             indexdef                              
+-----------+-------------------------------------------------------------------
+ t_f_idx   | CREATE INDEX t_f_idx ON public.t_renamed USING btree (f)
+ t_pkey    | CREATE UNIQUE INDEX t_pkey ON public.t_renamed USING btree (a_id)
+(2 rows)
+
+DROP TABLE
+DROP TABLE
+RESET

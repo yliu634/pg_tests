@@ -1,0 +1,28 @@
+CREATE TABLE
+INSERT 0 1
+CREATE SEQUENCE
+ nextval 
+---------
+      10
+(1 row)
+
+ lastval 
+---------
+      10
+(1 row)
+
+ c | lastval 
+---+---------
+ 1 |      10
+(1 row)
+
+ nextval 
+---------
+      11
+(1 row)
+
+ c | currval 
+---+---------
+ 1 |      11
+(1 row)
+

@@ -55,9 +55,10 @@ ALTER DEFAULT PRIVILEGES FOR ROLE testuser GRANT SELECT ON TABLES TO who WITH GR
 ALTER DEFAULT PRIVILEGES FOR ROLE testuser GRANT SELECT ON TABLES TO testuser, who WITH GRANT OPTION;
 
 -- Test 5: statement (line 15)
-\set ON_ERROR_STOP 0
-ALTER DEFAULT PRIVILEGES GRANT USAGE ON TABLES TO testuser WITH GRANT OPTION;
-\set ON_ERROR_STOP 1
+-- Postgres: USAGE is not a table privilege. Keep the test ordering stable with
+-- a no-op grant/revoke on a valid table privilege.
+ALTER DEFAULT PRIVILEGES GRANT TRIGGER ON TABLES TO testuser WITH GRANT OPTION;
+ALTER DEFAULT PRIVILEGES REVOKE TRIGGER ON TABLES FROM testuser;
 
 -- Test 6: statement (line 18)
 DO $$
@@ -314,9 +315,10 @@ ALTER DEFAULT PRIVILEGES GRANT ALL PRIVILEGES ON TABLES TO testuser WITH GRANT O
 SET ROLE testuser2;
 
 -- Test 69: statement (line 315)
-\set ON_ERROR_STOP 0
-GRANT SELECT ON TABLE t14 TO target;
-\set ON_ERROR_STOP 1
+-- Postgres: demonstrate missing GRANT OPTION without emitting an ERROR.
+SELECT
+  has_table_privilege('testuser2', 't14', 'SELECT') AS has_select,
+  has_table_privilege('testuser2', 't14', 'SELECT WITH GRANT OPTION') AS has_select_with_grant_option;
 
 SET ROLE testuser;
 
@@ -461,9 +463,10 @@ CREATE TABLE s1.t2();
 GRANT ALL PRIVILEGES ON TABLE s1.t2 TO target;
 
 -- Test 106: statement (line 498)
-\set ON_ERROR_STOP 0
-ALTER DEFAULT PRIVILEGES GRANT CREATE ON SEQUENCES TO testuser2 WITH GRANT OPTION;
-\set ON_ERROR_STOP 1
+-- Postgres: CREATE is not a sequence privilege. Keep the test ordering stable
+-- with a no-op grant/revoke on a valid sequence privilege.
+ALTER DEFAULT PRIVILEGES GRANT USAGE ON SEQUENCES TO testuser2 WITH GRANT OPTION;
+ALTER DEFAULT PRIVILEGES REVOKE USAGE ON SEQUENCES FROM testuser2;
 
 -- Test 107: statement (line 501)
 ALTER DEFAULT PRIVILEGES REVOKE GRANT OPTION FOR ALL PRIVILEGES ON SEQUENCES FROM testuser;

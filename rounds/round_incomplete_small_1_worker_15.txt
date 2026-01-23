@@ -1,0 +1,3 @@
+pg_tests/compatible/values.sql
+pg_tests/compatible/vectorize_local.sql
+pg_tests/compatible/zone_config_system_tenant.sql

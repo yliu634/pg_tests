@@ -1,0 +1,272 @@
+SET
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE TABLE
+CREATE TABLE
+GRANT
+CREATE SCHEMA
+CREATE TABLE
+CREATE SCHEMA
+GRANT
+GRANT
+GRANT
+CREATE TABLE
+GRANT
+CREATE ROLE
+SET
+RESET
+CREATE ROLE
+SET
+ current_user | current_user | session_user | session_user 
+--------------+--------------+--------------+--------------
+ node         | node         | postgres     | postgres
+(1 row)
+
+ role 
+------
+ node
+(1 row)
+
+RESET
+SET
+   current_user    |   current_user    | session_user | session_user 
+-------------------+-------------------+--------------+--------------
+ non_existent_user | non_existent_user | postgres     | postgres
+(1 row)
+
+       role        
+-------------------
+ non_existent_user
+(1 row)
+
+SET
+ current_user | current_user | session_user | session_user 
+--------------+--------------+--------------+--------------
+ root         | root         | postgres     | postgres
+(1 row)
+
+ role 
+------
+ root
+(1 row)
+
+--
+(0 rows)
+
+--
+(0 rows)
+
+SET
+ current_user | current_user | session_user | session_user 
+--------------+--------------+--------------+--------------
+ testuser     | testuser     | postgres     | postgres
+(1 row)
+
+ is_superuser 
+--------------
+ f
+(1 row)
+
+ pk 
+----
+(0 rows)
+
+ pk 
+----
+(0 rows)
+
+--
+(0 rows)
+
+--
+(0 rows)
+
+RESET
+--
+(0 rows)
+
+--
+(0 rows)
+
+CREATE ROLE
+GRANT
+GRANT
+GRANT
+SET
+ current_user | current_user | session_user | session_user 
+--------------+--------------+--------------+--------------
+ testuser2    | testuser2    | postgres     | postgres
+(1 row)
+
+ is_superuser 
+--------------
+ f
+(1 row)
+
+SET
+ current_user | current_user | session_user | session_user 
+--------------+--------------+--------------+--------------
+ none_role    | none_role    | postgres     | postgres
+(1 row)
+
+ is_superuser 
+--------------
+ f
+(1 row)
+
+RESET
+ is_superuser 
+--------------
+ f
+(1 row)
+
+ current_user | current_user | session_user | session_user 
+--------------+--------------+--------------+--------------
+ none_role    | none_role    | postgres     | postgres
+(1 row)
+
+   role    
+-----------
+ none_role
+(1 row)
+
+SET
+ current_user | current_user | session_user | session_user 
+--------------+--------------+--------------+--------------
+ testuser     | testuser     | postgres     | postgres
+(1 row)
+
+   role   
+----------
+ testuser
+(1 row)
+
+SET
+SET
+RESET
+GRANT ROLE
+SET
+SET
+ current_user | current_user | session_user | session_user 
+--------------+--------------+--------------+--------------
+ testuser2    | testuser2    | postgres     | postgres
+(1 row)
+
+ is_superuser 
+--------------
+ f
+(1 row)
+
+ pk 
+----
+(0 rows)
+
+ pk 
+----
+(0 rows)
+
+RESET
+ current_user | current_user | session_user | session_user 
+--------------+--------------+--------------+--------------
+ postgres     | postgres     | postgres     | postgres
+(1 row)
+
+ is_superuser 
+--------------
+ t
+(1 row)
+
+SET
+SET
+SET
+ current_user | current_user | session_user | session_user 
+--------------+--------------+--------------+--------------
+ testuser2    | testuser2    | postgres     | postgres
+(1 row)
+
+RESET
+ current_user | current_user | session_user | session_user 
+--------------+--------------+--------------+--------------
+ postgres     | postgres     | postgres     | postgres
+(1 row)
+
+GRANT ROLE
+SET
+ current_user | current_user | session_user | session_user 
+--------------+--------------+--------------+--------------
+ testuser     | testuser     | postgres     | postgres
+(1 row)
+
+RESET
+CREATE ROLE
+REVOKE ROLE
+GRANT ROLE
+RESET
+SET
+ current_user | current_user | session_user | session_user 
+--------------+--------------+--------------+--------------
+ testuser     | testuser     | postgres     | postgres
+(1 row)
+
+SET
+ current_user | current_user | session_user | session_user 
+--------------+--------------+--------------+--------------
+ testrole     | testrole     | postgres     | postgres
+(1 row)
+
+RESET
+SET
+RESET
+REVOKE ROLE
+ current_user | current_user | session_user | session_user 
+--------------+--------------+--------------+--------------
+ postgres     | postgres     | postgres     | postgres
+(1 row)
+
+SET
+SET
+ current_user | current_user | session_user | session_user 
+--------------+--------------+--------------+--------------
+ none_role    | none_role    | postgres     | postgres
+(1 row)
+
+RESET
+GRANT ROLE
+BEGIN
+SET
+ current_user | current_user | session_user | session_user 
+--------------+--------------+--------------+--------------
+ testuser     | testuser     | postgres     | postgres
+(1 row)
+
+ROLLBACK
+ current_user | current_user | session_user | session_user 
+--------------+--------------+--------------+--------------
+ postgres     | postgres     | postgres     | postgres
+(1 row)
+
+SET
+RESET
+ current_user | current_user | session_user | session_user 
+--------------+--------------+--------------+--------------
+ testuser     | testuser     | postgres     | postgres
+(1 row)
+
+SET
+ current_user | current_user | session_user | session_user 
+--------------+--------------+--------------+--------------
+ postgres     | postgres     | postgres     | postgres
+(1 row)
+

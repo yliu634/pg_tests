@@ -1,0 +1,23 @@
+BEGIN
+CREATE ROLE
+CREATE TABLE
+GRANT
+SAVEPOINT
+ a 
+---
+(0 rows)
+
+INSERT 0 1
+ a 
+---
+ 2
+(1 row)
+
+INSERT 0 1
+ROLLBACK
+RELEASE
+ a 
+---
+(0 rows)
+
+ROLLBACK

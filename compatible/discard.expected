@@ -1,0 +1,250 @@
+SET
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+DROP SEQUENCE
+RESET
+SET
+ search_path 
+-------------
+ foo
+(1 row)
+
+DISCARD ALL
+   search_path   
+-----------------
+ "$user", public
+(1 row)
+
+SET
+     TimeZone     
+------------------
+ Europe/Amsterdam
+(1 row)
+
+DISCARD ALL
+ TimeZone 
+----------
+ Etc/UTC
+(1 row)
+
+SET
+     TimeZone     
+------------------
+ Europe/Amsterdam
+(1 row)
+
+DISCARD ALL
+ TimeZone 
+----------
+ Etc/UTC
+(1 row)
+
+PREPARE
+DISCARD ALL
+ count 
+-------
+     0
+(1 row)
+
+BEGIN
+ROLLBACK
+DISCARD ALL
+CREATE SEQUENCE
+ nextval 
+---------
+      10
+(1 row)
+
+ lastval 
+---------
+      10
+(1 row)
+
+ currval 
+---------
+      10
+(1 row)
+
+DISCARD SEQUENCES
+ nextval 
+---------
+      11
+(1 row)
+
+ lastval 
+---------
+      11
+(1 row)
+
+ currval 
+---------
+      11
+(1 row)
+
+CREATE SEQUENCE
+ nextval 
+---------
+      10
+(1 row)
+
+DISCARD ALL
+ nextval 
+---------
+      11
+(1 row)
+
+ lastval 
+---------
+      11
+(1 row)
+
+CREATE SEQUENCE
+ nextval 
+---------
+       1
+(1 row)
+
+DISCARD SEQUENCES
+ nextval 
+---------
+      11
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+DISCARD TEMP
+ count 
+-------
+     0
+(1 row)
+
+CREATE TABLE
+CREATE TABLE
+ table_name 
+------------
+ test
+ test2
+(2 rows)
+
+DISCARD TEMP
+ table_name 
+------------
+(0 rows)
+
+ count 
+-------
+     1
+(1 row)
+
+UNLISTEN
+SET
+ search_path 
+-------------
+ bar, public
+(1 row)
+
+SET
+     TimeZone     
+------------------
+ Europe/Amsterdam
+(1 row)
+
+PREPARE
+CREATE SEQUENCE
+CREATE TABLE
+ table_name 
+------------
+ tempy
+(1 row)
+
+SET
+ default_transaction_read_only 
+-------------------------------
+ on
+(1 row)
+
+DISCARD ALL
+ default_transaction_read_only 
+-------------------------------
+ off
+(1 row)
+
+   search_path   
+-----------------
+ "$user", public
+(1 row)
+
+ TimeZone 
+----------
+ Etc/UTC
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+ nextval 
+---------
+      10
+(1 row)
+
+ table_name 
+------------
+(0 rows)
+
+SET
+ search_path 
+-------------
+ bar, public
+(1 row)
+
+SET
+     TimeZone     
+------------------
+ Europe/Amsterdam
+(1 row)
+
+PREPARE
+CREATE SEQUENCE
+CREATE TABLE
+ table_name 
+------------
+ tempy
+(1 row)
+
+ pg_sleep 
+----------
+ 
+(1 row)
+
+DISCARD ALL
+   search_path   
+-----------------
+ "$user", public
+(1 row)
+
+ TimeZone 
+----------
+ Etc/UTC
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+ nextval 
+---------
+      10
+(1 row)
+
+ table_name 
+------------
+(0 rows)
+

@@ -1,0 +1,2 @@
+pg_tests/compatible/select_for_update.sql
+pg_tests/compatible/sequences.sql

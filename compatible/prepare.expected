@@ -1,0 +1,822 @@
+psql:pg_tests/compatible/prepare.sql:9: ERROR:  prepared statement "a" does not exist
+PREPARE
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+psql:pg_tests/compatible/prepare.sql:21: ERROR:  prepared statement "a" already exists
+DEALLOCATE
+psql:pg_tests/compatible/prepare.sql:27: ERROR:  prepared statement "a" does not exist
+psql:pg_tests/compatible/prepare.sql:30: ERROR:  prepared statement "a" does not exist
+PREPARE
+PREPARE
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+DEALLOCATE ALL
+psql:pg_tests/compatible/prepare.sql:48: ERROR:  prepared statement "a" does not exist
+psql:pg_tests/compatible/prepare.sql:51: ERROR:  prepared statement "a" does not exist
+psql:pg_tests/compatible/prepare.sql:54: ERROR:  prepared statement "b" does not exist
+psql:pg_tests/compatible/prepare.sql:57: ERROR:  prepared statement "b" does not exist
+psql:pg_tests/compatible/prepare.sql:60: ERROR:  syntax error at or near ")"
+LINE 1: PREPARE a as ();
+                      ^
+PREPARE
+psql:pg_tests/compatible/prepare.sql:66: ERROR:  could not determine data type of parameter $1
+psql:pg_tests/compatible/prepare.sql:69: ERROR:  could not determine data type of parameter $2
+psql:pg_tests/compatible/prepare.sql:72: ERROR:  prepared statement "a" already exists
+psql:pg_tests/compatible/prepare.sql:75: ERROR:  wrong number of parameters for prepared statement "a"
+DETAIL:  Expected 1 parameters but got 2.
+psql:pg_tests/compatible/prepare.sql:78: ERROR:  wrong number of parameters for prepared statement "a"
+DETAIL:  Expected 1 parameters but got 2.
+psql:pg_tests/compatible/prepare.sql:81: ERROR:  wrong number of parameters for prepared statement "a"
+DETAIL:  Expected 1 parameters but got 2.
+psql:pg_tests/compatible/prepare.sql:84: ERROR:  wrong number of parameters for prepared statement "a"
+DETAIL:  Expected 1 parameters but got 2.
+psql:pg_tests/compatible/prepare.sql:87: ERROR:  wrong number of parameters for prepared statement "a"
+DETAIL:  Expected 1 parameters but got 2.
+psql:pg_tests/compatible/prepare.sql:90: ERROR:  wrong number of parameters for prepared statement "a"
+DETAIL:  Expected 1 parameters but got 2.
+psql:pg_tests/compatible/prepare.sql:93: ERROR:  wrong number of parameters for prepared statement "a"
+DETAIL:  Expected 1 parameters but got 3.
+psql:pg_tests/compatible/prepare.sql:96: ERROR:  wrong number of parameters for prepared statement "a"
+DETAIL:  Expected 1 parameters but got 0.
+psql:pg_tests/compatible/prepare.sql:100: ERROR:  could not determine polymorphic type because input has type unknown
+PREPARE
+ ?column? 
+----------
+        3
+(1 row)
+
+psql:pg_tests/compatible/prepare.sql:111: ERROR:  prepared statement "c" does not exist
+psql:pg_tests/compatible/prepare.sql:114: ERROR:  prepared statement "i" does not exist
+psql:pg_tests/compatible/prepare.sql:117: ERROR:  prepared statement "i" does not exist
+psql:pg_tests/compatible/prepare.sql:120: ERROR:  prepared statement "i" does not exist
+psql:pg_tests/compatible/prepare.sql:123: ERROR:  prepared statement "i" does not exist
+psql:pg_tests/compatible/prepare.sql:126: ERROR:  prepared statement "i" does not exist
+psql:pg_tests/compatible/prepare.sql:129: ERROR:  prepared statement "s" does not exist
+psql:pg_tests/compatible/prepare.sql:132: ERROR:  syntax error at or near "DISCARD"
+LINE 1: EXECUTE s DISCARD ROWS;
+                  ^
+psql:pg_tests/compatible/prepare.sql:135: ERROR:  prepared statement "x" does not exist
+psql:pg_tests/compatible/prepare.sql:138: ERROR:  prepared statement "y" does not exist
+psql:pg_tests/compatible/prepare.sql:141: ERROR:  prepared statement "x" does not exist
+psql:pg_tests/compatible/prepare.sql:144: ERROR:  prepared statement "y" does not exist
+psql:pg_tests/compatible/prepare.sql:147: ERROR:  relation "f" does not exist
+LINE 1: SELECT * FROM f;
+                      ^
+psql:pg_tests/compatible/prepare.sql:150: ERROR:  prepared statement "groupbyhaving" does not exist
+psql:pg_tests/compatible/prepare.sql:153: ERROR:  prepared statement "wrongtypeimpossiblecast" does not exist
+psql:pg_tests/compatible/prepare.sql:156: ERROR:  relation "t" does not exist
+LINE 1: PREPARE s AS SELECT a FROM t;
+                                   ^
+psql:pg_tests/compatible/prepare.sql:156: ERROR:  syntax error at or near "UPSERT"
+LINE 1: PREPARE p1 AS UPSERT INTO t(a) VALUES($1) RETURNING a;
+                      ^
+psql:pg_tests/compatible/prepare.sql:159: ERROR:  prepared statement "s" does not exist
+psql:pg_tests/compatible/prepare.sql:162: ERROR:  prepared statement "p1" does not exist
+psql:pg_tests/compatible/prepare.sql:165: ERROR:  relation "t" does not exist
+LINE 1: PREPARE p2 AS UPDATE t SET a = a + $1 RETURNING a;
+                             ^
+psql:pg_tests/compatible/prepare.sql:168: ERROR:  prepared statement "s" does not exist
+psql:pg_tests/compatible/prepare.sql:171: ERROR:  prepared statement "p2" does not exist
+psql:pg_tests/compatible/prepare.sql:174: ERROR:  relation "t" does not exist
+LINE 1: PREPARE p3 AS DELETE FROM t WHERE a = $1 RETURNING a;
+                                  ^
+psql:pg_tests/compatible/prepare.sql:177: ERROR:  prepared statement "s" does not exist
+psql:pg_tests/compatible/prepare.sql:180: ERROR:  prepared statement "p3" does not exist
+psql:pg_tests/compatible/prepare.sql:183: ERROR:  syntax error at or near "CANCEL"
+LINE 1: PREPARE p4 AS CANCEL JOB $1;
+                      ^
+psql:pg_tests/compatible/prepare.sql:186: ERROR:  prepared statement "setp" does not exist
+ application_name 
+------------------
+ psql
+(1 row)
+
+psql:pg_tests/compatible/prepare.sql:189: ERROR:  prepared statement "sets" does not exist
+PREPARE
+PREPARE
+psql:pg_tests/compatible/prepare.sql:198: ERROR:  prepared statement "invalid" already exists
+PREPARE
+psql:pg_tests/compatible/prepare.sql:204: ERROR:  syntax error at or near "["
+LINE 1: PREPARE outerStmt AS SELECT * FROM [EXECUTE innerStmt(3)] WH...
+                                           ^
+psql:pg_tests/compatible/prepare.sql:207: ERROR:  syntax error at or near "["
+LINE 1: SELECT * FROM [EXECUTE innerStmt(1)] CROSS JOIN [EXECUTE x];
+                      ^
+PREPARE
+PREPARE
+ ?column? 
+----------
+ t
+(1 row)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+CREATE TABLE
+INSERT 0 3
+PREPARE
+ k | v 
+---+---
+(0 rows)
+
+PREPARE
+ k | v 
+---+---
+ 1 | 1
+ 2 | 2
+ 3 | 3
+(3 rows)
+
+PREPARE
+ k | v 
+---+---
+(0 rows)
+
+DROP TABLE
+BEGIN
+CREATE TABLE
+PREPARE
+COMMIT
+CREATE TABLE
+INSERT 0 1
+PREPARE
+ max 
+-----
+  11
+(1 row)
+
+ max 
+-----
+  21
+(1 row)
+
+CREATE TABLE
+psql:pg_tests/compatible/prepare.sql:275: ERROR:  syntax error at or near "("
+LINE 1: ...REATE TABLE xyz (x INT PRIMARY KEY, y INT, z INT, INDEX(y));
+                                                                  ^
+INSERT 0 1
+psql:pg_tests/compatible/prepare.sql:277: ERROR:  relation "xyz" does not exist
+LINE 1: INSERT INTO xyz (x, y, z) VALUES (1, 5, 50);
+                    ^
+psql:pg_tests/compatible/prepare.sql:278: ERROR:  relation "xyz" does not exist
+LINE 1: INSERT INTO xyz (x, y, z) VALUES (2, 6, 60);
+                    ^
+psql:pg_tests/compatible/prepare.sql:281: ERROR:  relation "xyz" does not exist
+LINE 1: ...p AS SELECT * FROM abc WHERE EXISTS(SELECT * FROM xyz WHERE ...
+                                                             ^
+psql:pg_tests/compatible/prepare.sql:284: ERROR:  prepared statement "subqueryprep" does not exist
+psql:pg_tests/compatible/prepare.sql:287: ERROR:  prepared statement "subqueryprep" does not exist
+psql:pg_tests/compatible/prepare.sql:290: ERROR:  prepared statement "subqueryprep" does not exist
+CREATE DATABASE
+psql:pg_tests/compatible/prepare.sql:296: ERROR:  syntax error at or near "USE"
+LINE 1: USE otherdb;
+        ^
+CREATE TABLE
+INSERT 0 1
+PREPARE
+  current_database  
+--------------------
+ crdb_tests_prepare
+(1 row)
+
+psql:pg_tests/compatible/prepare.sql:308: ERROR:  syntax error at or near "USE"
+LINE 1: USE test;
+        ^
+  current_database  
+--------------------
+ crdb_tests_prepare
+(1 row)
+
+psql:pg_tests/compatible/prepare.sql:314: ERROR:  syntax error at or near "USE"
+LINE 1: USE otherdb;
+        ^
+PREPARE
+ a | b  
+---+----
+ 1 | 10
+(1 row)
+
+psql:pg_tests/compatible/prepare.sql:323: ERROR:  syntax error at or near "USE"
+LINE 1: USE test;
+        ^
+ a | b  
+---+----
+ 1 | 10
+(1 row)
+
+psql:pg_tests/compatible/prepare.sql:329: ERROR:  relation "othertable" already exists
+INSERT 0 1
+ a | b  
+---+----
+ 1 | 10
+ 2 | 20
+(2 rows)
+
+psql:pg_tests/compatible/prepare.sql:335: ERROR:  relation "test.othertable" does not exist
+LINE 1: ...RE change_db_3 AS SELECT * from othertable AS t1, test.other...
+                                                             ^
+psql:pg_tests/compatible/prepare.sql:338: ERROR:  prepared statement "change_db_3" does not exist
+psql:pg_tests/compatible/prepare.sql:341: ERROR:  syntax error at or near "USE"
+LINE 1: USE otherdb;
+        ^
+psql:pg_tests/compatible/prepare.sql:344: ERROR:  prepared statement "change_db_3" does not exist
+psql:pg_tests/compatible/prepare.sql:347: ERROR:  schema "test" does not exist
+PREPARE
+ a | b  
+---+----
+ 1 | 10
+ 2 | 20
+(2 rows)
+
+SET
+psql:pg_tests/compatible/prepare.sql:359: ERROR:  permission denied: "pg_type" is a system catalog
+PREPARE
+          typname           |          typname           
+----------------------------+----------------------------
+ __pg_foreign_data_wrappers | __pg_foreign_data_wrappers
+(1 row)
+
+          typname           |          typname           
+----------------------------+----------------------------
+ __pg_foreign_data_wrappers | __pg_foreign_data_wrappers
+(1 row)
+
+psql:pg_tests/compatible/prepare.sql:372: ERROR:  permission denied: "pg_type" is a system catalog
+RESET
+psql:pg_tests/compatible/prepare.sql:378: ERROR:  function has_column_privilege(unknown, unknown, integer, unknown) does not exist
+LINE 1: SELECT has_column_privilege('testuser', 'othertable', 1, 'SE...
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+GRANT
+psql:pg_tests/compatible/prepare.sql:384: ERROR:  function has_column_privilege(unknown, unknown, integer, unknown) does not exist
+LINE 1: SELECT has_column_privilege('testuser', 'othertable', 1, 'SE...
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+REVOKE
+PREPARE
+        timestamptz         
+----------------------------
+ 2000-01-01 18:05:10.123+00
+(1 row)
+
+SET
+        timestamptz         
+----------------------------
+ 2000-01-01 13:05:10.123-05
+(1 row)
+
+SET
+PREPARE
+SET
+      extract      |      extract      
+-------------------+-------------------
+ 1289105940.000000 | 1289195940.000000
+(1 row)
+
+SET
+      extract      |      extract      
+-------------------+-------------------
+ 1289105940.000000 | 1289192340.000000
+(1 row)
+
+SET
+GRANT
+psql:pg_tests/compatible/prepare.sql:428: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/prepare.sql:431: ERROR:  syntax error at or near "USE"
+LINE 1: USE otherdb;
+        ^
+PREPARE
+ a | b  
+---+----
+ 1 | 10
+ 2 | 20
+(2 rows)
+
+REVOKE
+psql:pg_tests/compatible/prepare.sql:442: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+ a | b  
+---+----
+ 1 | 10
+ 2 | 20
+(2 rows)
+
+psql:pg_tests/compatible/prepare.sql:447: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+GRANT
+psql:pg_tests/compatible/prepare.sql:454: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+psql:pg_tests/compatible/prepare.sql:457: ERROR:  syntax error at or near "USE"
+LINE 1: USE otherdb;
+        ^
+PREPARE
+psql:pg_tests/compatible/prepare.sql:462: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+REVOKE
+psql:pg_tests/compatible/prepare.sql:467: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+UPDATE 2
+psql:pg_tests/compatible/prepare.sql:472: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+GRANT
+REVOKE
+psql:pg_tests/compatible/prepare.sql:480: ERROR:  syntax error at or near "user"
+LINE 1: user testuser;
+        ^
+UPDATE 2
+psql:pg_tests/compatible/prepare.sql:485: ERROR:  syntax error at or near "user"
+LINE 1: user root;
+        ^
+ a | b 
+---+---
+ 1 | 5
+ 2 | 5
+(2 rows)
+
+PREPARE
+ a | b 
+---+---
+ 1 | 5
+ 2 | 5
+(2 rows)
+
+ALTER TABLE
+psql:pg_tests/compatible/prepare.sql:500: ERROR:  cached plan must not change result type
+ALTER TABLE
+ a | b 
+---+---
+ 1 | 5
+ 2 | 5
+(2 rows)
+
+PREPARE
+ a | b 
+---+---
+ 1 | 5
+(1 row)
+
+ALTER TABLE
+psql:pg_tests/compatible/prepare.sql:518: ERROR:  cached plan must not change result type
+ALTER TABLE
+ a | b 
+---+---
+ 1 | 5
+(1 row)
+
+CREATE VIEW
+PREPARE
+ a | b 
+---+---
+ 1 | 5
+ 2 | 5
+(2 rows)
+
+ALTER VIEW
+psql:pg_tests/compatible/prepare.sql:539: ERROR:  relation "otherview" does not exist
+DROP VIEW
+PREPARE
+ a | b 
+---+---
+(0 rows)
+
+ALTER TABLE
+psql:pg_tests/compatible/prepare.sql:555: ERROR:  column "b" does not exist
+ALTER TABLE
+UPDATE 2
+ a | b  
+---+----
+ 1 | 10
+ 2 | 10
+(2 rows)
+
+PREPARE
+BEGIN
+ a | b  
+---+----
+ 1 | 10
+ 2 | 10
+(2 rows)
+
+ALTER TABLE
+psql:pg_tests/compatible/prepare.sql:579: ERROR:  cached plan must not change result type
+psql:pg_tests/compatible/prepare.sql:582: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:pg_tests/compatible/prepare.sql:585: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+CREATE SEQUENCE
+PREPARE
+ seqrelid | seqtypid | seqstart | seqincrement |       seqmax        | seqmin | seqcache | seqcycle 
+----------+----------+----------+--------------+---------------------+--------+----------+----------
+    25001 |       20 |        1 |            1 | 9223372036854775807 |      1 |        1 | f
+(1 row)
+
+psql:pg_tests/compatible/prepare.sql:600: ERROR:  syntax error at or near "USE"
+LINE 1: USE test;
+        ^
+ seqrelid | seqtypid | seqstart | seqincrement |       seqmax        | seqmin | seqcache | seqcycle 
+----------+----------+----------+--------------+---------------------+--------+----------+----------
+    25001 |       20 |        1 |            1 | 9223372036854775807 |      1 |        1 | f
+(1 row)
+
+psql:pg_tests/compatible/prepare.sql:606: ERROR:  there is no parameter $1
+LINE 1: SELECT $1::int;
+               ^
+psql:pg_tests/compatible/prepare.sql:609: ERROR:  relation "seq" already exists
+PREPARE
+ nextval 
+---------
+       1
+(1 row)
+
+ last_value | log_cnt | is_called 
+------------+---------+-----------
+          1 |      32 | t
+(1 row)
+
+DROP SEQUENCE
+CREATE SEQUENCE
+ last_value | log_cnt | is_called 
+------------+---------+-----------
+          1 |       0 | f
+(1 row)
+
+psql:pg_tests/compatible/prepare.sql:630: ERROR:  prepared statement "foobar" does not exist
+SET
+CREATE DATABASE
+psql:pg_tests/compatible/prepare.sql:636: ERROR:  unrecognized configuration parameter "database"
+PREPARE
+ setting 
+---------
+ ap35145
+(1 row)
+
+DROP DATABASE
+ setting 
+---------
+ ap35145
+(1 row)
+
+CREATE DATABASE
+ setting 
+---------
+ ap35145
+(1 row)
+
+CREATE DATABASE
+psql:pg_tests/compatible/prepare.sql:657: ERROR:  unrecognized configuration parameter "database"
+DROP DATABASE
+ setting 
+---------
+ ap35145
+(1 row)
+
+psql:pg_tests/compatible/prepare.sql:665: ERROR:  unrecognized configuration parameter "database"
+ setting 
+---------
+ ap35145
+(1 row)
+
+psql:pg_tests/compatible/prepare.sql:671: ERROR:  unrecognized configuration parameter "database"
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/prepare.sql:679: ERROR:  relation "system.namespace" does not exist
+LINE 1: SELECT id FROM system.namespace WHERE name='ab';
+                       ^
+psql:pg_tests/compatible/prepare.sql:682: ERROR:  syntax error at or near "["
+LINE 1: PREPARE change_rename_2 AS SELECT * FROM [$id AS ab];
+                                                 ^
+psql:pg_tests/compatible/prepare.sql:685: ERROR:  prepared statement "change_rename_2" does not exist
+ALTER TABLE
+psql:pg_tests/compatible/prepare.sql:691: ERROR:  prepared statement "change_rename_2" does not exist
+ALTER TABLE
+psql:pg_tests/compatible/prepare.sql:697: ERROR:  prepared statement "change_rename_2" does not exist
+psql:pg_tests/compatible/prepare.sql:700: ERROR:  syntax error at or near "USE"
+LINE 1: USE test;
+        ^
+psql:pg_tests/compatible/prepare.sql:703: ERROR:  relation "t2" does not exist
+LINE 1: INSERT INTO t2 SELECT i, to_english(i) FROM generate_series(...
+                    ^
+psql:pg_tests/compatible/prepare.sql:706: ERROR:  syntax error at or near "OPT"
+LINE 1: PREPARE a AS OPT PLAN 'xx';
+                     ^
+psql:pg_tests/compatible/prepare.sql:709: ERROR:  unrecognized configuration parameter "allow_prepare_as_opt_plan"
+psql:pg_tests/compatible/prepare.sql:717: ERROR:  syntax error at or near "OPT"
+LINE 1: PREPARE a AS OPT PLAN '
+                     ^
+psql:pg_tests/compatible/prepare.sql:720: ERROR:  wrong number of parameters for prepared statement "a"
+DETAIL:  Expected 1 parameters but got 0.
+psql:pg_tests/compatible/prepare.sql:738: ERROR:  syntax error at or near "OPT"
+LINE 1: PREPARE b AS OPT PLAN '
+                     ^
+psql:pg_tests/compatible/prepare.sql:741: ERROR:  wrong number of parameters for prepared statement "b"
+DETAIL:  Expected 1 parameters but got 0.
+psql:pg_tests/compatible/prepare.sql:744: ERROR:  prepared statement "e" does not exist
+psql:pg_tests/compatible/prepare.sql:747: ERROR:  syntax error at or near "USE"
+LINE 1: USE test;
+        ^
+psql:pg_tests/compatible/prepare.sql:750: ERROR:  unrecognized configuration parameter "allow_prepare_as_opt_plan"
+psql:pg_tests/compatible/prepare.sql:753: ERROR:  relation "t2" does not exist
+LINE 1: SELECT * FROM t2;
+                      ^
+psql:pg_tests/compatible/prepare.sql:761: ERROR:  syntax error at or near "OPT"
+LINE 1: PREPARE a AS OPT PLAN '
+                     ^
+psql:pg_tests/compatible/prepare.sql:769: ERROR:  syntax error at or near "OPT"
+LINE 1: PREPARE b AS OPT PLAN '
+                     ^
+psql:pg_tests/compatible/prepare.sql:772: ERROR:  prepared statement "rcc" does not exist
+CREATE TABLE
+psql:pg_tests/compatible/prepare.sql:802: ERROR:  syntax error at or near "INJECT"
+LINE 1: ALTER TABLE ts INJECT STATISTICS '[
+                       ^
+CREATE VIEW
+PREPARE
+CREATE VIEW
+ column1 
+---------
+       2
+(1 row)
+
+CREATE TABLE
+PREPARE
+BEGIN
+psql:pg_tests/compatible/prepare.sql:826: ERROR:  cannot execute SELECT FOR UPDATE in a read-only transaction
+ROLLBACK
+DEALLOCATE
+PREPARE
+BEGIN
+psql:pg_tests/compatible/prepare.sql:841: ERROR:  cannot execute SELECT FOR NO KEY UPDATE in a read-only transaction
+ROLLBACK
+DEALLOCATE
+PREPARE
+BEGIN
+psql:pg_tests/compatible/prepare.sql:856: ERROR:  cannot execute SELECT FOR SHARE in a read-only transaction
+ROLLBACK
+DEALLOCATE
+PREPARE
+BEGIN
+psql:pg_tests/compatible/prepare.sql:871: ERROR:  cannot execute SELECT FOR KEY SHARE in a read-only transaction
+ROLLBACK
+DEALLOCATE
+DROP TABLE
+CREATE TYPE
+psql:pg_tests/compatible/prepare.sql:884: ERROR:  syntax error at or near "("
+LINE 1: ...E greeting_table (x greeting NOT NULL, y INT, INDEX (x, y));
+                                                               ^
+psql:pg_tests/compatible/prepare.sql:887: ERROR:  relation "greeting_table" does not exist
+LINE 1: PREPARE enum_query AS SELECT x, y FROM greeting_table WHERE ...
+                                               ^
+psql:pg_tests/compatible/prepare.sql:890: ERROR:  syntax error at or near "DROP"
+LINE 1: PREPARE enum_drop AS DROP TYPE greeting;
+                             ^
+ALTER TYPE
+psql:pg_tests/compatible/prepare.sql:896: ERROR:  relation "greeting_table" does not exist
+LINE 1: INSERT INTO greeting_table VALUES ('howdy', 2);
+                    ^
+psql:pg_tests/compatible/prepare.sql:899: ERROR:  prepared statement "enum_query" does not exist
+psql:pg_tests/compatible/prepare.sql:902: ERROR:  table "greeting_table" does not exist
+psql:pg_tests/compatible/prepare.sql:905: ERROR:  prepared statement "enum_drop" does not exist
+CREATE TABLE
+PREPARE
+ x | y | z 
+---+---+---
+(0 rows)
+
+CREATE TABLE
+PREPARE
+INSERT 0 2
+ a |  b  
+---+-----
+ 1 | 100
+(1 row)
+
+ a |  b  
+---+-----
+ 1 | 100
+(1 row)
+
+CREATE TABLE
+PREPARE
+INSERT 0 1
+ k | a 
+---+---
+ 1 | 1
+(1 row)
+
+PREPARE
+ ?column? 
+----------
+        1
+(1 row)
+
+psql:pg_tests/compatible/prepare.sql:945: ERROR:  wrong number of parameters for prepared statement "args_test_many"
+DETAIL:  Expected 2 parameters but got 1.
+PREPARE
+ ?column? | int4 
+----------+------
+        1 |    2
+(1 row)
+
+psql:pg_tests/compatible/prepare.sql:954: ERROR:  wrong number of parameters for prepared statement "args_test_few"
+DETAIL:  Expected 2 parameters but got 1.
+psql:pg_tests/compatible/prepare.sql:957: NOTICE:  table "t" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+PREPARE
+INSERT 0 1
+INSERT 0 1
+ x | y | z 
+---+---+---
+ 1 | 2 | 3
+ 1 | 2 | 3
+(2 rows)
+
+PREPARE
+ int4 | varchar | varchar 
+------+---------+---------
+    1 | 10      | 100
+(1 row)
+
+DEALLOCATE ALL
+psql:pg_tests/compatible/prepare.sql:982: ERROR:  unrecognized configuration parameter "prepared_statements_cache_size"
+PREPARE
+PREPARE
+PREPARE
+PREPARE
+PREPARE
+  name  
+--------
+ pscs01
+ pscs02
+ pscs03
+ pscs05
+ pscs06
+(5 rows)
+
+ int4 | ?column? 
+------+----------
+    6 |        6
+(1 row)
+
+psql:pg_tests/compatible/prepare.sql:1006: ERROR:  parameter $1 of type integer cannot be coerced to the expected type json
+LINE 1: EXECUTE pscs05(5);
+                       ^
+HINT:  You will need to rewrite or cast the expression.
+psql:pg_tests/compatible/prepare.sql:1009: ERROR:  prepared statement "pscs04" does not exist
+ numeric | ?column? 
+---------+----------
+       3 |        3
+(1 row)
+
+ float8 | ?column? 
+--------+----------
+      2 |        2
+(1 row)
+
+psql:pg_tests/compatible/prepare.sql:1018: ERROR:  parameter $1 of type integer cannot be coerced to the expected type boolean
+LINE 1: EXECUTE pscs01(1);
+                       ^
+HINT:  You will need to rewrite or cast the expression.
+psql:pg_tests/compatible/prepare.sql:1021: ERROR:  unrecognized configuration parameter "prepared_statements_cache_size"
+PREPARE
+PREPARE
+PREPARE
+psql:pg_tests/compatible/prepare.sql:1033: ERROR:  type "bytes" does not exist
+LINE 1: PREPARE pscs10 AS SELECT $1::bytes, 10;
+                                     ^
+PREPARE
+PREPARE
+PREPARE
+  name  
+--------
+ pscs01
+ pscs02
+ pscs03
+ pscs05
+ pscs06
+ pscs07
+ pscs08
+ pscs09
+ pscs11
+ pscs12
+ pscs13
+(11 rows)
+
+psql:pg_tests/compatible/prepare.sql:1048: ERROR:  prepared statement "pscs10" does not exist
+PREPARE
+  name  
+--------
+ pscs01
+ pscs02
+ pscs03
+ pscs05
+ pscs06
+ pscs07
+ pscs08
+ pscs09
+ pscs11
+ pscs12
+ pscs13
+ pscs14
+(12 rows)
+
+ int2 | ?column? 
+------+----------
+   11 |       11
+(1 row)
+
+PREPARE
+PREPARE
+PREPARE
+  name  
+--------
+ pscs01
+ pscs02
+ pscs03
+ pscs05
+ pscs06
+ pscs07
+ pscs08
+ pscs09
+ pscs11
+ pscs12
+ pscs13
+ pscs14
+ pscs15
+ pscs16
+ pscs17
+(15 rows)
+
+CREATE SEQUENCE
+psql:pg_tests/compatible/prepare.sql:1075: ERROR:  relation "prep_stmts" does not exist
+LINE 1: INSERT INTO prep_stmts SELECT 3, name FROM pg_catalog.pg_pre...
+                    ^
+psql:pg_tests/compatible/prepare.sql:1078: ERROR:  currval of sequence "s" is not yet defined in this session
+psql:pg_tests/compatible/prepare.sql:1081: ERROR:  relation "prep_stmts" does not exist
+LINE 1: SELECT which, name FROM prep_stmts ORDER BY which, name;
+                                ^
+psql:pg_tests/compatible/prepare.sql:1084: ERROR:  table "prep_stmts" does not exist
+DROP SEQUENCE
+DEALLOCATE ALL
+psql:pg_tests/compatible/prepare.sql:1093: ERROR:  unrecognized configuration parameter "prepared_statements_cache_size"
+psql:pg_tests/compatible/prepare.sql:1096: ERROR:  syntax error at or near "EXPLAIN"
+LINE 1: PREPARE p AS EXPLAIN ANALYZE SELECT 1;
+                     ^
+CREATE TYPE
+CREATE TABLE
+PREPARE
+INSERT 0 1
+psql:pg_tests/compatible/prepare.sql:1110: ERROR:  unrecognized parameter "schema_locked"
+TRUNCATE TABLE
+ALTER TABLE
+INSERT 0 1
+ colors 
+--------
+ {red}
+(1 row)
+
+CREATE PROCEDURE
+psql:pg_tests/compatible/prepare.sql:1131: ERROR:  syntax error at or near "CALL"
+LINE 1: PREPARE bar AS CALL foo(0);
+                       ^
+psql:pg_tests/compatible/prepare.sql:1134: ERROR:  syntax error at or near "CALL"
+LINE 1: PREPARE bar AS CALL foo($1);
+                       ^
+psql:pg_tests/compatible/prepare.sql:1138: ERROR:  syntax error at or near "ALTER"
+LINE 2: ALTER DATABASE test CONFIGURE ZONE USING gc.ttlseconds = $1;
+        ^
+psql:pg_tests/compatible/prepare.sql:1141: ERROR:  prepared statement "p" does not exist
+psql:pg_tests/compatible/prepare.sql:1144: ERROR:  syntax error at or near "NAN"
+LINE 1: ...BOOL, UNKNOWN, DECIMAL) AS SELECT IF($1, $2, $3) IS NOT NAN;
+                                                                   ^
+psql:pg_tests/compatible/prepare.sql:1147: ERROR:  prepared statement "p152664" does not exist
+psql:pg_tests/compatible/prepare.sql:1150: ERROR:  prepared statement "p152664" does not exist
+psql:pg_tests/compatible/prepare.sql:1153: ERROR:  syntax error at or near "NAN"
+LINE 1: ...BOOL, DECIMAL, UNKNOWN) AS SELECT IF($1, $2, $3) IS NOT NAN;
+                                                                   ^
+psql:pg_tests/compatible/prepare.sql:1156: ERROR:  prepared statement "p152664" does not exist

@@ -1,0 +1,113 @@
+CREATE TABLE
+CREATE FUNCTION
+CREATE PROCEDURE
+psql:pg_tests/compatible/do.sql:14: NOTICE:  Hello, world!
+DO
+psql:pg_tests/compatible/do.sql:17: NOTICE:  HERE
+DO
+psql:pg_tests/compatible/do.sql:29: NOTICE:  i = 1, x = 1
+psql:pg_tests/compatible/do.sql:29: NOTICE:  i = 2, x = 3
+psql:pg_tests/compatible/do.sql:29: NOTICE:  i = 3, x = 6
+DO
+psql:pg_tests/compatible/do.sql:38: NOTICE:  f()
+psql:pg_tests/compatible/do.sql:38: NOTICE:  f() returned: 1
+psql:pg_tests/compatible/do.sql:38: NOTICE:  calling p()
+psql:pg_tests/compatible/do.sql:38: NOTICE:  p()
+DO
+psql:pg_tests/compatible/do.sql:41: NOTICE:  here
+psql:pg_tests/compatible/do.sql:41: NOTICE:  hello world!
+psql:pg_tests/compatible/do.sql:41: NOTICE:  still here
+DO
+psql:pg_tests/compatible/do.sql:57: NOTICE:  outer block inserted 1: max=1
+psql:pg_tests/compatible/do.sql:57: NOTICE:  inner block: max=1
+psql:pg_tests/compatible/do.sql:57: NOTICE:  inner block inserted 2: max=2
+psql:pg_tests/compatible/do.sql:57: NOTICE:  after inner block: max=2
+DO
+DO
+psql:pg_tests/compatible/do.sql:63: NOTICE:  Hello, world!
+DO
+ ?column? 
+----------
+        1
+(1 row)
+
+psql:pg_tests/compatible/do.sql:67: NOTICE:  Hello, world!
+DO
+ ?column? 
+----------
+        1
+(1 row)
+
+DROP FUNCTION
+CREATE FUNCTION
+psql:pg_tests/compatible/do.sql:86: NOTICE:  here
+psql:pg_tests/compatible/do.sql:86: NOTICE:  Hello, world!
+psql:pg_tests/compatible/do.sql:86: NOTICE:  still here
+ f 
+---
+ 0
+(1 row)
+
+DROP FUNCTION
+CREATE FUNCTION
+psql:pg_tests/compatible/do.sql:110: NOTICE:  here
+psql:pg_tests/compatible/do.sql:110: NOTICE:  outer
+psql:pg_tests/compatible/do.sql:110: NOTICE:  inner
+psql:pg_tests/compatible/do.sql:110: NOTICE:  outer again
+psql:pg_tests/compatible/do.sql:110: NOTICE:  still here
+ f 
+---
+ 0
+(1 row)
+
+DROP FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+psql:pg_tests/compatible/do.sql:148: NOTICE:  x := 100 before DO block
+psql:pg_tests/compatible/do.sql:148: NOTICE:  x := 300 in DO block
+psql:pg_tests/compatible/do.sql:148: NOTICE:  x := 100 after DO block
+ f 
+---
+ 0
+(1 row)
+
+DROP FUNCTION
+CREATE FUNCTION
+psql:pg_tests/compatible/do.sql:158: NOTICE:  Hello, world!
+  f  
+-----
+ 100
+(1 row)
+
+DROP FUNCTION
+CREATE FUNCTION
+psql:pg_tests/compatible/do.sql:174: NOTICE:  outer
+psql:pg_tests/compatible/do.sql:174: NOTICE:  inner
+psql:pg_tests/compatible/do.sql:174: NOTICE:  outer again
+  f  
+-----
+ 100
+(1 row)
+
+DROP FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+psql:pg_tests/compatible/do.sql:192: NOTICE:  x: 200
+  f  
+-----
+ 100
+(1 row)
+
+DROP FUNCTION
+CREATE FUNCTION
+DROP PROCEDURE
+CREATE PROCEDURE
+psql:pg_tests/compatible/do.sql:210: NOTICE:  Hello, world!
+CALL
+DO
+DO
+DO
+CREATE TABLE
+INSERT 0 1
+CREATE INDEX
+DO

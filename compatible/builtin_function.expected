@@ -1,0 +1,257 @@
+CREATE EXTENSION
+CREATE EXTENSION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE TABLE
+INSERT 0 1
+psql:pg_tests/compatible/builtin_function.sql:51: ERROR:  schema "foo" does not exist
+LINE 1: SELECT foo.bar();
+               ^
+psql:pg_tests/compatible/builtin_function.sql:55: ERROR:  function pg_catalog.defaults() does not exist
+LINE 1: SELECT pg_catalog.defaults();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/builtin_function.sql:60: ERROR:  function defaults() does not exist
+LINE 1: SELECT defaults();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ length | length 
+--------+--------
+      6 |      7
+(1 row)
+
+psql:pg_tests/compatible/builtin_function.sql:69: ERROR:  function char_length(bytea) does not exist
+LINE 2:        char_length('Hello, 世界'), char_length('\x48656c6c6f...
+                                           ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:pg_tests/compatible/builtin_function.sql:72: ERROR:  function length(integer) does not exist
+LINE 1: SELECT length(23);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ octet_length | octet_length | octet_length 
+--------------+--------------+--------------
+            5 |            6 |            6
+(1 row)
+
+ bit_length | bit_length | bit_length 
+------------+------------+------------
+         40 |         48 |         48
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+  a  |  b  | encode | bit_count | bit_count | bit_count 
+-----+-----+--------+-----------+-----------+-----------
+ 101 | 00  | 10     |         2 |         0 |         1
+ 100 | 101 | 10a2   |         1 |         2 |         4
+(2 rows)
+
+ quote_ident | quote_ident | quote_ident | quote_ident | quote_ident | quote_ident | quote_ident | quote_ident 
+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------
+ abc         | "ab.c"      | "ab""c"     | "世界"      | "array"     | family      | "bigint"    | alter
+(1 row)
+
+ quote_literal | quote_literal | quote_literal | quote_literal 
+---------------+---------------+---------------+---------------
+ 'abc'         | 'ab''c'       | 'ab"c'        | 'ab          +
+               |               |               | c'
+(1 row)
+
+ quote_literal | quote_nullable |     quote_literal     |    quote_nullable     | quote_literal | quote_nullable 
+---------------+----------------+-----------------------+-----------------------+---------------+----------------
+ '1 day'       | '1 day'        | '2018-06-11 12:13:14' | '2018-06-11 12:13:14' | '2018-06-11'  | '2018-06-11'
+(1 row)
+
+ quote_literal | quote_nullable | ?column? | ?column? 
+---------------+----------------+----------+----------
+               | NULL           | t        | f
+(1 row)
+
+ quote_literal | quote_nullable 
+---------------+----------------
+ E'\\x616263'  | E'\\x616263'
+(1 row)
+
+SET
+ quote_literal | quote_nullable 
+---------------+----------------
+ 'abc'         | 'abc'
+(1 row)
+
+RESET
+ upper  
+--------
+ ROACH7
+(1 row)
+
+        unaccent         
+-------------------------
+ no_special_CHARACTERS1!
+ Zolc
+ hELLO`
+ Softhyphen-separator
+ some thing
+ hello world
+(6 rows)
+
+psql:pg_tests/compatible/builtin_function.sql:136: ERROR:  function upper(numeric) does not exist
+LINE 1: SELECT upper(2.2);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ lower  
+--------
+ roach7
+(1 row)
+
+psql:pg_tests/compatible/builtin_function.sql:142: ERROR:  function lower(integer) does not exist
+LINE 1: SELECT lower(32);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ ?column? 
+----------
+        0
+(1 row)
+
+ setseed 
+---------
+ 
+(1 row)
+
+ i |       random       
+---+--------------------
+ 1 | 0.7345507212519062
+ 2 | 0.6402839231277071
+ 3 |   0.80326410702165
+ 4 |  0.931589426258701
+ 5 | 0.6259215008930064
+(5 rows)
+
+ setseed 
+---------
+ 
+(1 row)
+
+ i |       random       
+---+--------------------
+ 1 | 0.7345507212519062
+ 2 | 0.6402839231277071
+ 3 |   0.80326410702165
+ 4 |  0.931589426258701
+ 5 | 0.6259215008930064
+(5 rows)
+
+ setseed 
+---------
+ 
+(1 row)
+
+        col         |       random       
+--------------------+--------------------
+ 0.7345507212519062 | 0.6402839231277071
+(1 row)
+
+psql:pg_tests/compatible/builtin_function.sql:166: ERROR:  function concat() does not exist
+LINE 1: SELECT concat() || 'empty';
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ concat 
+--------
+ RoacH
+(1 row)
+
+CREATE TYPE
+                   concat                   
+--------------------------------------------
+ foo 64.532 baz 42 f {"foo": "bar"} {1,2,3}
+(1 row)
+
+psql:pg_tests/compatible/builtin_function.sql:178: ERROR:  prepared statement "concat_stmt" does not exist
+psql:pg_tests/compatible/builtin_function.sql:181: ERROR:  unrecognized configuration parameter "use_pre_25_2_variadic_builtins"
+psql:pg_tests/compatible/builtin_function.sql:184: ERROR:  could not determine data type of parameter $1
+psql:pg_tests/compatible/builtin_function.sql:187: ERROR:  prepared statement "concat_stmt2" does not exist
+psql:pg_tests/compatible/builtin_function.sql:190: ERROR:  unrecognized configuration parameter "use_pre_25_2_variadic_builtins"
+psql:pg_tests/compatible/builtin_function.sql:193: ERROR:  could not determine data type of parameter $1
+ substr 
+--------
+ oac
+(1 row)
+
+ substring 
+-----------
+ oac
+(1 row)
+
+ substring 
+-----------
+ oac
+(1 row)
+
+ substring 
+-----------
+ oac
+(1 row)
+
+ substring 
+-----------
+ oac
+(1 row)
+
+ substr 
+--------
+ oacH
+(1 row)
+
+ substr 
+--------
+ oacH
+(1 row)
+
+ substring 
+-----------
+ oacH
+(1 row)
+
+ substr 
+--------
+ RoacH
+(1 row)
+
+ substr 
+--------
+ R
+(1 row)
+
+ substr 
+--------
+ 2345
+(1 row)
+
+ substr 
+--------
+ 12345
+(1 row)
+
+psql:pg_tests/compatible/builtin_function.sql:232: ERROR:  negative substring length not allowed
+ substring 
+-----------
+ 123
+(1 row)
+
+ substring 
+-----------
+ oob
+(1 row)
+
+ substring 
+-----------
+ a
+(1 row)
+
+psql:pg_tests/compatible/builtin_function.sql:244: error: invalid command \x20666f7220'::bytea+');
+psql:pg_tests/compatible/builtin_function.sql:247: error: invalid command \x20666f7220'::bytea+');
+psql:pg_tests/compatible/builtin_function.sql:2801: ERROR:  syntax error at or near "SELECT"
+LINE 3: SELECT substring('f(oabaroob' from '\(o(.)'
+        ^

@@ -1,0 +1,102 @@
+psql:pg_tests/compatible/default.sql:6: ERROR:  column "a" is of type integer but default expression is of type boolean
+HINT:  You will need to rewrite or cast the expression.
+psql:pg_tests/compatible/default.sql:9: ERROR:  cannot use subquery in DEFAULT expression
+LINE 1: CREATE TABLE t (a INT PRIMARY KEY DEFAULT (SELECT 1));
+                                                  ^
+psql:pg_tests/compatible/default.sql:12: ERROR:  cannot use column reference in DEFAULT expression
+LINE 1: CREATE TABLE t (a INT PRIMARY KEY DEFAULT b);
+                                                  ^
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+psql:pg_tests/compatible/default.sql:24: ERROR:  aggregate functions are not allowed in DEFAULT expressions
+LINE 1: CREATE TABLE bad (a INT DEFAULT count(1));
+                                        ^
+psql:pg_tests/compatible/default.sql:27: ERROR:  window functions are not allowed in DEFAULT expressions
+LINE 1: CREATE TABLE bad (a INT DEFAULT count(1) OVER ());
+                                        ^
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+ column_name |          data_type          | is_nullable | column_default 
+-------------+-----------------------------+-------------+----------------
+ a           | integer                     | NO          | 42
+ b           | timestamp without time zone | YES         | now()
+ c           | double precision            | YES         | random()
+ d           | date                        | YES         | now()
+(4 rows)
+
+COMMENT
+ column_name |          data_type          | is_nullable | column_default | comment 
+-------------+-----------------------------+-------------+----------------+---------
+ a           | integer                     | NO          | 42             | a
+ b           | timestamp without time zone | YES         | now()          | 
+ c           | double precision            | YES         | random()       | 
+ d           | date                        | YES         | now()          | 
+(4 rows)
+
+INSERT 0 1
+ a  | ?column? | ?column? | ?column? 
+----+----------+----------+----------
+ 42 | t        | t        | t
+(1 row)
+
+TRUNCATE TABLE
+INSERT 0 1
+ a  | ?column? | ?column? | ?column? 
+----+----------+----------+----------
+ 42 | t        | t        | t
+(1 row)
+
+INSERT 0 1
+ a | ?column? | ?column? | ?column? 
+---+----------+----------+----------
+ 1 | t        | t        | t
+(1 row)
+
+INSERT 0 1
+ a | ?column? | ?column? | ?column? 
+---+----------+----------+----------
+ 2 | t        | t        | t
+(1 row)
+
+UPDATE 3
+UPDATE 1
+ a | ?column? | ?column? | ?column? 
+---+----------+----------+----------
+ 1 | t        | t        | t
+(1 row)
+
+UPDATE 1
+ a | ?column? | ?column? | ?column? 
+---+----------+----------+----------
+ 2 | t        | t        | t
+(1 row)
+
+UPDATE 3
+UPDATE 3
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+UPDATE 0
+UPDATE 0
+ column_name |          data_type          | is_nullable | column_default 
+-------------+-----------------------------+-------------+----------------
+ a           | integer                     | NO          | 
+ b           | timestamp without time zone | YES         | 
+ c           | integer                     | YES         | 
+(3 rows)
+
+SET
+DROP TABLE
+RESET
+CREATE TABLE
+INSERT 0 1
+ a |  b  
+---+-----
+ a | bar
+(1 row)
+

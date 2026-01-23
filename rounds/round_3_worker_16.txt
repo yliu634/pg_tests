@@ -1,0 +1,5 @@
+pg_tests/compatible/show_external_connections.sql
+pg_tests/compatible/show_fingerprints.sql
+pg_tests/compatible/show_indexes.sql
+pg_tests/compatible/show_inspect_errors.sql
+pg_tests/compatible/show_ranges.sql

@@ -1,0 +1,131 @@
+SET
+DROP FUNCTION
+CREATE FUNCTION
+DROP SCHEMA
+CREATE SCHEMA
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+ index_name |           fingerprint            
+------------+----------------------------------
+ t_b_idx    | 9a1c7ee2c7ce38d4bbbaf29ab9f2ac1e
+ t_pkey     | 9a1c7ee2c7ce38d4bbbaf29ab9f2ac1e
+(2 rows)
+
+INSERT 0 3
+ index_name |           fingerprint            
+------------+----------------------------------
+ t_b_idx    | 59cb09184282bf6f8164f846220c40b7
+ t_pkey     | 8612316de5562e1e6e566ae303c44e0e
+(2 rows)
+
+ index_name |           fingerprint            
+------------+----------------------------------
+ t_b_idx    | 59cb09184282bf6f8164f846220c40b7
+ t_pkey     | 8612316de5562e1e6e566ae303c44e0e
+(2 rows)
+
+ index_name |           fingerprint            
+------------+----------------------------------
+ t_b_idx    | 59cb09184282bf6f8164f846220c40b7
+ t_pkey     | 364fa6322917399066a4686fc7e72779
+(2 rows)
+
+ index_name |           fingerprint            
+------------+----------------------------------
+ t_b_idx    | 25e79892b8ba6c0a276b19a468ae14e5
+ t_pkey     | cff3f3cc81a12614b3d1cdf245a67b11
+(2 rows)
+
+ index_name |           fingerprint            
+------------+----------------------------------
+ t_b_idx    | 59cb09184282bf6f8164f846220c40b7
+ t_pkey     | 8612316de5562e1e6e566ae303c44e0e
+(2 rows)
+
+DROP INDEX
+UPDATE 3
+ index_name |           fingerprint            
+------------+----------------------------------
+ t_b_idx    | c241ffd6ac8d54ba3f2a17876f14ae0d
+ t_pkey     | 4d6338cc393dc127c6582ab75c9419ee
+(2 rows)
+
+UPDATE 3
+ index_name |           fingerprint            
+------------+----------------------------------
+ t_b_idx    | c241ffd6ac8d54ba3f2a17876f14ae0d
+ t_pkey     | 012afc8eeffed19e5e2b204632fce672
+(2 rows)
+
+UPDATE 3
+ index_name |           fingerprint            
+------------+----------------------------------
+ t_b_idx    | da56b0ad242b59490788b813ba206fdf
+ t_pkey     | 939c7e202b0e5739036505fca91ddac0
+(2 rows)
+
+ index_name |           fingerprint            
+------------+----------------------------------
+ t_b_idx    | da56b0ad242b59490788b813ba206fdf
+ t_pkey     | 939c7e202b0e5739036505fca91ddac0
+(2 rows)
+
+DO
+ index_name |           fingerprint            
+------------+----------------------------------
+ t_b_idx    | da56b0ad242b59490788b813ba206fdf
+ t_pkey     | 939c7e202b0e5739036505fca91ddac0
+(2 rows)
+
+DROP INDEX
+ index_name |           fingerprint            
+------------+----------------------------------
+ t_pkey     | 939c7e202b0e5739036505fca91ddac0
+(1 row)
+
+ index_name |           fingerprint            
+------------+----------------------------------
+ t_pkey     | 939c7e202b0e5739036505fca91ddac0
+(1 row)
+
+CREATE TABLE
+CREATE INDEX
+INSERT 0 3
+  index_name  |           fingerprint            
+--------------+----------------------------------
+ foo"bar_pkey | f0bd34189ea39bdf71d0cf231dffc154
+ id"x         | 9987eca9d433acf3b1c72751a0f98d84
+(2 rows)
+
+CREATE TABLE
+INSERT 0 1
+ index_name  |           fingerprint            
+-------------+----------------------------------
+ blocks_pkey | 9b027abd0c3a768fe01fade7c468e15c
+(1 row)
+
+ index_name |           fingerprint            
+------------+----------------------------------
+ t_pkey     | 939c7e202b0e5739036505fca91ddac0
+(1 row)
+
+BEGIN
+COMMIT
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 3
+       index_name        |           fingerprint            
+-------------------------+----------------------------------
+ t_w_expr_index_c_idx    | 9717a2134c3efd213416de2d3d974fb8
+ t_w_expr_index_expr_idx | 9717a2134c3efd213416de2d3d974fb8
+ t_w_expr_index_pkey     | f1276adbb5d4fc5802f300574f42e088
+(3 rows)
+
+RESET
+RESET

@@ -1,0 +1,196 @@
+CREATE TYPE
+DROP TYPE
+ t_dropped 
+-----------
+ t
+(1 row)
+
+ t_array_dropped 
+-----------------
+ t
+(1 row)
+
+CREATE TYPE
+BEGIN
+DROP TYPE
+psql:pg_tests/compatible/drop_type.sql:37: NOTICE:  type "t" does not exist, skipping
+DROP TYPE
+ROLLBACK
+DROP TYPE
+psql:pg_tests/compatible/drop_type.sql:53: NOTICE:  type "t" does not exist, skipping
+DROP TYPE
+CREATE TYPE
+ t_array_exists 
+----------------
+ t
+(1 row)
+
+CREATE TABLE
+ cols_using_t 
+--------------
+            1
+(1 row)
+
+ALTER TABLE
+ cols_using_t 
+--------------
+            2
+(1 row)
+
+ALTER TABLE
+ cols_using_t 
+--------------
+            1
+(1 row)
+
+ALTER TABLE
+DROP TYPE
+CREATE TYPE
+ALTER TABLE
+ cols_using_t_array 
+--------------------
+                  1
+(1 row)
+
+ALTER TABLE
+DROP TYPE
+CREATE TYPE
+ALTER TABLE
+ALTER TABLE
+ cols_using_t 
+--------------
+            1
+(1 row)
+
+DROP TABLE
+DROP TYPE
+CREATE TYPE
+CREATE VIEW
+ v_exists | t_exists 
+----------+----------
+ t        | t
+(1 row)
+
+DROP VIEW
+DROP TYPE
+CREATE TYPE
+CREATE TYPE
+CREATE TYPE
+CREATE TYPE
+CREATE TABLE
+CREATE INDEX
+ t1_exists 
+-----------
+ t
+(1 row)
+
+ t2_exists 
+-----------
+ t
+(1 row)
+
+ t3_exists 
+-----------
+ t
+(1 row)
+
+ t4_exists 
+-----------
+ t
+(1 row)
+
+DROP INDEX
+DROP TYPE
+ALTER TABLE
+DROP TYPE
+ALTER TABLE
+DROP TYPE
+ALTER TABLE
+DROP TYPE
+DROP TABLE
+CREATE TABLE
+CREATE TYPE
+CREATE TYPE
+CREATE TYPE
+CREATE TYPE
+BEGIN
+ALTER TABLE
+ t1_exists 
+-----------
+ t
+(1 row)
+
+ROLLBACK
+BEGIN
+ALTER TABLE
+ t2_exists 
+-----------
+ t
+(1 row)
+
+ROLLBACK
+BEGIN
+ALTER TABLE
+ t3_exists 
+-----------
+ t
+(1 row)
+
+ROLLBACK
+BEGIN
+CREATE INDEX
+ t4_exists 
+-----------
+ t
+(1 row)
+
+ROLLBACK
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE INDEX
+ t1_exists 
+-----------
+ t
+(1 row)
+
+ t2_exists 
+-----------
+ t
+(1 row)
+
+ t3_exists 
+-----------
+ t
+(1 row)
+
+ t4_exists 
+-----------
+ t
+(1 row)
+
+DROP INDEX
+DROP TYPE
+ALTER TABLE
+DROP TYPE
+ALTER TABLE
+DROP TYPE
+ALTER TABLE
+DROP TYPE
+CREATE TYPE
+CREATE TABLE
+INSERT 0 1
+TRUNCATE TABLE
+DROP TABLE
+DROP TYPE
+CREATE TYPE
+CREATE TABLE
+BEGIN
+DROP TABLE
+DROP TYPE
+COMMIT
+CREATE DATABASE
+You are now connected to database "d" as user "postgres".
+CREATE TYPE
+You are now connected to database "crdb_tests_drop_type" as user "postgres".
+DROP DATABASE

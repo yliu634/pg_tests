@@ -1,0 +1,39 @@
+SET
+CREATE FUNCTION
+ pg_params_f0 
+--------------
+            1
+(1 row)
+
+CREATE FUNCTION
+ pg_params_in 
+--------------
+           42
+(1 row)
+
+CREATE FUNCTION
+ o  
+----
+ 42
+(1 row)
+
+CREATE FUNCTION
+ i  
+----
+ 42
+(1 row)
+
+CREATE FUNCTION
+ a | b 
+---+---
+ 1 | x
+(1 row)
+
+     proname     | proargmodes | proargnames 
+-----------------+-------------+-------------
+ pg_params_inout | {b}         | {i}
+ pg_params_out   | {i,o}       | {i,o}
+ pg_params_out2  | {o,o}       | {a,b}
+(3 rows)
+
+RESET

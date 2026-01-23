@@ -1,0 +1,2 @@
+pg_tests/compatible/txn.sql
+pg_tests/compatible/udf.sql

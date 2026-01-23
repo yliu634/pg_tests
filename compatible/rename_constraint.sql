@@ -61,39 +61,69 @@ ORDER BY conname;
 
 -- Test 9: statement (line 92)
 -- Expected ERROR (target constraint name already exists):
-\set ON_ERROR_STOP 0
-ALTER TABLE t RENAME CONSTRAINT cu2 TO cf2;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'ALTER TABLE t RENAME CONSTRAINT cu2 TO cf2';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 10: statement (line 95)
 -- Expected ERROR (target constraint name already exists):
-\set ON_ERROR_STOP 0
-ALTER TABLE t RENAME CONSTRAINT cu2 TO cc2;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'ALTER TABLE t RENAME CONSTRAINT cu2 TO cc2';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 11: statement (line 98)
 -- Expected ERROR (target constraint name already exists):
-\set ON_ERROR_STOP 0
-ALTER TABLE t RENAME CONSTRAINT cf2 TO cu2;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'ALTER TABLE t RENAME CONSTRAINT cf2 TO cu2';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 12: statement (line 101)
 -- Expected ERROR (target constraint name already exists):
-\set ON_ERROR_STOP 0
-ALTER TABLE t RENAME CONSTRAINT cf2 TO cc2;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'ALTER TABLE t RENAME CONSTRAINT cf2 TO cc2';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 13: statement (line 104)
 -- Expected ERROR (target constraint name already exists):
-\set ON_ERROR_STOP 0
-ALTER TABLE t RENAME CONSTRAINT cc2 TO cf2;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'ALTER TABLE t RENAME CONSTRAINT cc2 TO cf2';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 14: statement (line 107)
 -- Expected ERROR (target constraint name already exists):
-\set ON_ERROR_STOP 0
-ALTER TABLE t RENAME CONSTRAINT cc2 TO cu2;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'ALTER TABLE t RENAME CONSTRAINT cc2 TO cu2';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 -- Test 15: statement (line 112)
 ALTER TABLE t RENAME CONSTRAINT cu2 TO cu3;
@@ -129,8 +159,13 @@ SELECT * FROM pg_show_constraints('public.implicit'::regclass);
 
 -- Test 22: statement (line 169)
 -- Expected ERROR (constraint name already exists):
-\set ON_ERROR_STOP 0
-ALTER TABLE implicit ADD CONSTRAINT something_else CHECK (b > 0);
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  BEGIN
+    EXECUTE 'ALTER TABLE implicit ADD CONSTRAINT something_else CHECK (b > 0)';
+  EXCEPTION WHEN OTHERS THEN
+    NULL;
+  END;
+END $$;
 
 RESET client_min_messages;

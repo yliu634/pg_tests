@@ -1,0 +1,40 @@
+ jsonb_path_exists 
+-------------------
+ t
+(1 row)
+
+ jsonb_path_exists 
+-------------------
+ f
+(1 row)
+
+ jsonb_path_exists 
+-------------------
+ t
+(1 row)
+
+ jsonb_path_exists 
+-------------------
+ t
+(1 row)
+
+ jsonb_path_exists 
+-------------------
+ f
+(1 row)
+
+ jsonb_path_exists 
+-------------------
+ t
+(1 row)
+
+ jsonb_path_exists 
+-------------------
+ t
+(1 row)
+
+ jsonb_path_exists 
+-------------------
+ t
+(1 row)
+

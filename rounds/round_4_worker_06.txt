@@ -1,0 +1,5 @@
+pg_tests/compatible/udf_options.sql
+pg_tests/compatible/udf_polymorphic.sql
+pg_tests/compatible/udf_privileges.sql
+pg_tests/compatible/udf_privileges_mutations.sql
+pg_tests/compatible/udf_regressions.sql

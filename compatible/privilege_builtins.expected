@@ -1,0 +1,1164 @@
+SET
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP DATABASE
+RESET
+SET
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE SCHEMA
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+CREATE TABLE
+GRANT
+CREATE SEQUENCE
+GRANT
+GRANT
+ has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege 
+--------------------------+--------------------------+--------------------------+--------------------------
+                          |                          |                          | 
+(1 row)
+
+ has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege 
+--------------------------+--------------------------+--------------------------+--------------------------
+                          |                          |                          | 
+(1 row)
+
+ has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege 
+--------------------------+--------------------------+--------------------------+--------------------------
+ t                        | t                        | t                        | t
+(1 row)
+
+ has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege 
+--------------------------+--------------------------+--------------------------+--------------------------
+ t                        | t                        | t                        | t
+(1 row)
+
+ has_any_column_privilege 
+--------------------------
+ f
+(1 row)
+
+ has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege 
+--------------------------+--------------------------+--------------------------+--------------------------+--------------------------+--------------------------
+ t                        | t                        | t                        | t                        | t                        | t
+(1 row)
+
+ has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege 
+--------------------------+--------------------------+--------------------------+--------------------------+--------------------------
+ t                        | t                        | t                        | t                        | t
+(1 row)
+
+ has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege 
+--------------------------+--------------------------+--------------------------+--------------------------+--------------------------
+ t                        | t                        | t                        | t                        | t
+(1 row)
+
+ has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege 
+--------------------------+--------------------------+--------------------------+--------------------------+--------------------------
+ t                        | t                        | t                        | t                        | t
+(1 row)
+
+ has_any_column_privilege 
+--------------------------
+ f
+(1 row)
+
+ has_any_column_privilege 
+--------------------------
+ f
+(1 row)
+
+ has_any_column_privilege 
+--------------------------
+ f
+(1 row)
+
+ has_any_column_privilege 
+--------------------------
+ f
+(1 row)
+
+ has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege 
+--------------------------+--------------------------+--------------------------+--------------------------+--------------------------
+ f                        | f                        | f                        | f                        | f
+(1 row)
+
+ has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege | has_any_column_privilege 
+--------------------------+--------------------------+--------------------------+--------------------------+--------------------------
+ f                        | f                        | f                        | f                        | f
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------
+                      |                      |                      | 
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------
+ t                    | t                    | t                    | t
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------
+ t                    | t                    | t                    | t
+(1 row)
+
+ has_column_privilege 
+----------------------
+ f
+(1 row)
+
+ has_column_privilege 
+----------------------
+ 
+(1 row)
+
+ has_column_privilege 
+----------------------
+ 
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------+----------------------+----------------------
+ t                    | t                    | t                    | t                    | t                    | t
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------+----------------------
+ t                    | t                    | t                    | t                    | t
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------+----------------------
+ t                    | t                    | t                    | t                    | t
+(1 row)
+
+ has_column_privilege 
+----------------------
+ f
+(1 row)
+
+ has_column_privilege 
+----------------------
+ f
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------+----------------------
+ f                    | f                    | f                    | f                    | f
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------+----------------------
+ f                    | f                    | f                    | f                    | f
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------
+                      |                      |                      | 
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------
+ t                    | t                    | t                    | t
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------
+ t                    | t                    | t                    | t
+(1 row)
+
+ has_column_privilege 
+----------------------
+ f
+(1 row)
+
+ has_column_privilege 
+----------------------
+ f
+(1 row)
+
+ has_column_privilege 
+----------------------
+ f
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------+----------------------+----------------------
+ t                    | t                    | t                    | t                    | t                    | t
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------+----------------------
+ t                    | t                    | t                    | t                    | t
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------+----------------------
+ t                    | t                    | t                    | t                    | t
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------+----------------------
+ t                    | t                    | t                    | t                    | t
+(1 row)
+
+ has_column_privilege 
+----------------------
+ f
+(1 row)
+
+ has_column_privilege 
+----------------------
+ f
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------+----------------------
+ f                    | f                    | f                    | f                    | f
+(1 row)
+
+ has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege | has_column_privilege 
+----------------------+----------------------+----------------------+----------------------+----------------------
+ f                    | f                    | f                    | f                    | f
+(1 row)
+
+ has_database_privilege | has_database_privilege | has_database_privilege | has_database_privilege 
+------------------------+------------------------+------------------------+------------------------
+                        |                        |                        | 
+(1 row)
+
+ has_database_privilege | has_database_privilege | has_database_privilege | has_database_privilege 
+------------------------+------------------------+------------------------+------------------------
+ t                      | t                      | t                      | t
+(1 row)
+
+ has_database_privilege | has_database_privilege | has_database_privilege | has_database_privilege 
+------------------------+------------------------+------------------------+------------------------
+ t                      | t                      | t                      | t
+(1 row)
+
+ has_database_privilege 
+------------------------
+ f
+(1 row)
+
+ has_database_privilege | has_database_privilege | has_database_privilege | has_database_privilege | has_database_privilege 
+------------------------+------------------------+------------------------+------------------------+------------------------
+ t                      | t                      | t                      | t                      | t
+(1 row)
+
+ has_database_privilege | has_database_privilege | has_database_privilege | has_database_privilege | has_database_privilege 
+------------------------+------------------------+------------------------+------------------------+------------------------
+ t                      | t                      | t                      | t                      | t
+(1 row)
+
+ has_database_privilege | has_database_privilege | has_database_privilege | has_database_privilege | has_database_privilege 
+------------------------+------------------------+------------------------+------------------------+------------------------
+ t                      | t                      | t                      | t                      | t
+(1 row)
+
+ has_database_privilege | has_database_privilege | has_database_privilege | has_database_privilege | has_database_privilege 
+------------------------+------------------------+------------------------+------------------------+------------------------
+ t                      | t                      | t                      | t                      | t
+(1 row)
+
+            datname            
+-------------------------------
+ crdb_tests_privilege_builtins
+ postgres
+ template0
+ template1
+ tmp_test_proc
+(5 rows)
+
+            datname            
+-------------------------------
+ crdb_tests_privilege_builtins
+ postgres
+ template0
+ template1
+ tmp_test_proc
+(5 rows)
+
+            datname            
+-------------------------------
+ crdb_tests_privilege_builtins
+ postgres
+ template0
+ template1
+ tmp_test_proc
+(5 rows)
+
+            datname            
+-------------------------------
+ crdb_tests_privilege_builtins
+ postgres
+ template0
+ template1
+ tmp_test_proc
+(5 rows)
+
+ has_database_privilege 
+------------------------
+ f
+(1 row)
+
+ has_database_privilege 
+------------------------
+ f
+(1 row)
+
+ has_database_privilege 
+------------------------
+ f
+(1 row)
+
+ has_database_privilege | has_database_privilege | has_database_privilege | has_database_privilege | has_database_privilege | has_database_privilege 
+------------------------+------------------------+------------------------+------------------------+------------------------+------------------------
+ t                      | t                      | t                      | t                      | t                      | t
+(1 row)
+
+GRANT
+ has_database_privilege 
+------------------------
+ t
+(1 row)
+
+ has_database_privilege | has_database_privilege | has_database_privilege | has_database_privilege | has_database_privilege | has_database_privilege 
+------------------------+------------------------+------------------------+------------------------+------------------------+------------------------
+ f                      | f                      | f                      | f                      | f                      | f
+(1 row)
+
+ has_foreign_data_wrapper_privilege 
+------------------------------------
+ 
+(1 row)
+
+ has_foreign_data_wrapper_privilege 
+------------------------------------
+ f
+(1 row)
+
+ has_foreign_data_wrapper_privilege 
+------------------------------------
+ f
+(1 row)
+
+ has_foreign_data_wrapper_privilege 
+------------------------------------
+ 
+(1 row)
+
+ has_foreign_data_wrapper_privilege 
+------------------------------------
+ f
+(1 row)
+
+ has_foreign_data_wrapper_privilege 
+------------------------------------
+ f
+(1 row)
+
+ has_foreign_data_wrapper_privilege 
+------------------------------------
+ f
+(1 row)
+
+ has_foreign_data_wrapper_privilege 
+------------------------------------
+ 
+(1 row)
+
+ has_function_privilege 
+------------------------
+ 
+(1 row)
+
+ has_function_privilege 
+------------------------
+ t
+(1 row)
+
+ has_function_privilege 
+------------------------
+ f
+(1 row)
+
+ has_function_privilege 
+------------------------
+ f
+(1 row)
+
+ has_function_privilege 
+------------------------
+ t
+(1 row)
+
+ has_function_privilege 
+------------------------
+ t
+(1 row)
+
+ has_function_privilege 
+------------------------
+ t
+(1 row)
+
+ has_function_privilege 
+------------------------
+ t
+(1 row)
+
+ has_function_privilege 
+------------------------
+ t
+(1 row)
+
+ has_function_privilege 
+------------------------
+ f
+(1 row)
+
+ has_function_privilege 
+------------------------
+ f
+(1 row)
+
+ has_function_privilege 
+------------------------
+ f
+(1 row)
+
+ has_function_privilege 
+------------------------
+ f
+(1 row)
+
+ has_function_privilege 
+------------------------
+ 
+(1 row)
+
+ has_language_privilege 
+------------------------
+ 
+(1 row)
+
+ has_language_privilege 
+------------------------
+ f
+(1 row)
+
+ has_language_privilege 
+------------------------
+ f
+(1 row)
+
+ has_language_privilege 
+------------------------
+ 
+(1 row)
+
+ has_language_privilege 
+------------------------
+ f
+(1 row)
+
+ has_language_privilege 
+------------------------
+ f
+(1 row)
+
+ has_language_privilege 
+------------------------
+ f
+(1 row)
+
+ has_language_privilege 
+------------------------
+ 
+(1 row)
+
+ has_schema_privilege | has_schema_privilege 
+----------------------+----------------------
+                      | 
+(1 row)
+
+ has_schema_privilege | has_schema_privilege 
+----------------------+----------------------
+                      | 
+(1 row)
+
+ has_schema_privilege | has_schema_privilege 
+----------------------+----------------------
+ t                    | t
+(1 row)
+
+ has_schema_privilege | has_schema_privilege 
+----------------------+----------------------
+ t                    | t
+(1 row)
+
+ has_schema_privilege 
+----------------------
+ f
+(1 row)
+
+ has_schema_privilege | has_schema_privilege | has_schema_privilege 
+----------------------+----------------------+----------------------
+ t                    | t                    | t
+(1 row)
+
+ has_schema_privilege | has_schema_privilege | has_schema_privilege 
+----------------------+----------------------+----------------------
+ t                    | t                    | t
+(1 row)
+
+ has_schema_privilege | has_schema_privilege | has_schema_privilege 
+----------------------+----------------------+----------------------
+ t                    | t                    | t
+(1 row)
+
+ has_schema_privilege 
+----------------------
+ f
+(1 row)
+
+ has_schema_privilege 
+----------------------
+ f
+(1 row)
+
+ has_schema_privilege 
+----------------------
+ f
+(1 row)
+
+ has_schema_privilege | has_schema_privilege | has_schema_privilege 
+----------------------+----------------------+----------------------
+ f                    | t                    | t
+(1 row)
+
+ has_schema_privilege | has_schema_privilege | has_schema_privilege 
+----------------------+----------------------+----------------------
+ f                    | f                    | f
+(1 row)
+
+ has_schema_privilege | has_schema_privilege | has_schema_privilege 
+----------------------+----------------------+----------------------
+ f                    | t                    | t
+(1 row)
+
+ has_schema_privilege | has_schema_privilege | has_schema_privilege 
+----------------------+----------------------+----------------------
+ t                    | f                    | t
+(1 row)
+
+ has_schema_privilege | has_schema_privilege | has_schema_privilege 
+----------------------+----------------------+----------------------
+ t                    | t                    | t
+(1 row)
+
+ has_schema_privilege | has_schema_privilege | has_schema_privilege 
+----------------------+----------------------+----------------------
+ f                    | t                    | t
+(1 row)
+
+ has_schema_privilege | has_schema_privilege | has_schema_privilege 
+----------------------+----------------------+----------------------
+ f                    | f                    | f
+(1 row)
+
+ has_schema_privilege | has_schema_privilege | has_schema_privilege 
+----------------------+----------------------+----------------------
+ f                    | t                    | t
+(1 row)
+
+ has_schema_privilege | has_schema_privilege | has_schema_privilege 
+----------------------+----------------------+----------------------
+ t                    | t                    | t
+(1 row)
+
+ has_sequence_privilege | has_sequence_privilege | has_sequence_privilege 
+------------------------+------------------------+------------------------
+                        |                        | 
+(1 row)
+
+ has_sequence_privilege | has_sequence_privilege | has_sequence_privilege 
+------------------------+------------------------+------------------------
+ t                      | t                      | t
+(1 row)
+
+ has_sequence_privilege 
+------------------------
+ f
+(1 row)
+
+ has_sequence_privilege 
+------------------------
+ f
+(1 row)
+
+ has_sequence_privilege | has_sequence_privilege | has_sequence_privilege 
+------------------------+------------------------+------------------------
+ t                      | t                      | t
+(1 row)
+
+ has_sequence_privilege | has_sequence_privilege | has_sequence_privilege 
+------------------------+------------------------+------------------------
+ t                      | t                      | t
+(1 row)
+
+ has_sequence_privilege | has_sequence_privilege | has_sequence_privilege 
+------------------------+------------------------+------------------------
+ t                      | t                      | t
+(1 row)
+
+ has_sequence_privilege 
+------------------------
+ f
+(1 row)
+
+ has_sequence_privilege 
+------------------------
+ f
+(1 row)
+
+ has_sequence_privilege | has_sequence_privilege | has_sequence_privilege 
+------------------------+------------------------+------------------------
+ t                      | t                      | t
+(1 row)
+
+ has_sequence_privilege | has_sequence_privilege | has_sequence_privilege 
+------------------------+------------------------+------------------------
+ t                      | t                      | t
+(1 row)
+
+GRANT
+ has_sequence_privilege | has_sequence_privilege | has_sequence_privilege 
+------------------------+------------------------+------------------------
+ t                      | t                      | t
+(1 row)
+
+GRANT
+ has_sequence_privilege | has_sequence_privilege | has_sequence_privilege 
+------------------------+------------------------+------------------------
+ t                      | t                      | t
+(1 row)
+
+ has_sequence_privilege 
+------------------------
+ f
+(1 row)
+
+ has_sequence_privilege | has_sequence_privilege | has_sequence_privilege 
+------------------------+------------------------+------------------------
+ f                      | t                      | f
+(1 row)
+
+ has_sequence_privilege | has_sequence_privilege | has_sequence_privilege 
+------------------------+------------------------+------------------------
+ f                      | f                      | f
+(1 row)
+
+ has_server_privilege 
+----------------------
+ 
+(1 row)
+
+ has_server_privilege 
+----------------------
+ f
+(1 row)
+
+ has_server_privilege 
+----------------------
+ f
+(1 row)
+
+ has_server_privilege 
+----------------------
+ 
+(1 row)
+
+ has_server_privilege 
+----------------------
+ f
+(1 row)
+
+ has_server_privilege 
+----------------------
+ f
+(1 row)
+
+ has_server_privilege 
+----------------------
+ f
+(1 row)
+
+ has_server_privilege 
+----------------------
+ 
+(1 row)
+
+ has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege 
+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------
+                     |                     |                     |                     |                     |                     |                     | 
+(1 row)
+
+ has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege 
+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------
+ t                   | t                   | t                   | t                   | t                   | t                   | t                   | f
+(1 row)
+
+ has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege 
+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------
+ t                   | t                   | t                   | t                   | t                   | t                   | t                   | f
+(1 row)
+
+ has_table_privilege 
+---------------------
+ f
+(1 row)
+
+ has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege 
+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------
+ t                   | t                   | t                   | t                   | t                   | t                   | t                   | t                   | t                   | t                   | f
+(1 row)
+
+ has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege 
+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------
+ t                   | t                   | t                   | t                   | t                   | t                   | t                   | t                   | t                   | f
+(1 row)
+
+ has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege 
+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------
+ t                   | t                   | t                   | t                   | t                   | t                   | t                   | t                   | t                   | f
+(1 row)
+
+ has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege 
+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------
+ t                   | t                   | t                   | t                   | t                   | t                   | t                   | t                   | t                   | f
+(1 row)
+
+ has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege 
+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------
+ t                   | t                   | t                   | t                   | t                   | t                   | t                   | t                   | t                   | f
+(1 row)
+
+ has_table_privilege 
+---------------------
+ f
+(1 row)
+
+ has_table_privilege 
+---------------------
+ f
+(1 row)
+
+ has_table_privilege 
+---------------------
+ f
+(1 row)
+
+ has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege 
+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------
+ f                   | f                   | f                   | t                   | f                   | f                   | f                   | f                   | f                   | f                   | f
+(1 row)
+
+ has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege | has_table_privilege 
+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+---------------------
+ f                   | f                   | f                   | f                   | f                   | f                   | f                   | f                   | f                   | f                   | f
+(1 row)
+
+ has_tablespace_privilege 
+--------------------------
+ 
+(1 row)
+
+ has_tablespace_privilege 
+--------------------------
+ t
+(1 row)
+
+ has_tablespace_privilege 
+--------------------------
+ f
+(1 row)
+
+ has_tablespace_privilege 
+--------------------------
+ t
+(1 row)
+
+ has_tablespace_privilege 
+--------------------------
+ t
+(1 row)
+
+ has_tablespace_privilege 
+--------------------------
+ t
+(1 row)
+
+ has_tablespace_privilege 
+--------------------------
+ f
+(1 row)
+
+ has_tablespace_privilege 
+--------------------------
+ f
+(1 row)
+
+ has_tablespace_privilege 
+--------------------------
+ f
+(1 row)
+
+ has_tablespace_privilege 
+--------------------------
+ f
+(1 row)
+
+ has_tablespace_privilege 
+--------------------------
+ f
+(1 row)
+
+ has_type_privilege 
+--------------------
+ 
+(1 row)
+
+ has_type_privilege 
+--------------------
+ t
+(1 row)
+
+ has_type_privilege 
+--------------------
+ f
+(1 row)
+
+ has_type_privilege 
+--------------------
+ t
+(1 row)
+
+ has_type_privilege 
+--------------------
+ t
+(1 row)
+
+ has_type_privilege 
+--------------------
+ t
+(1 row)
+
+ has_type_privilege 
+--------------------
+ f
+(1 row)
+
+ has_type_privilege 
+--------------------
+ f
+(1 row)
+
+ has_type_privilege 
+--------------------
+ f
+(1 row)
+
+ has_type_privilege 
+--------------------
+ t
+(1 row)
+
+ has_type_privilege 
+--------------------
+ t
+(1 row)
+
+ pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role 
+-------------+-------------+-------------+-------------+-------------+-------------
+ t           | t           | t           | t           | t           | t
+(1 row)
+
+ pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role 
+-------------+-------------+-------------+-------------+-------------+-------------
+ t           | t           | t           | t           | t           | t
+(1 row)
+
+ pg_has_role 
+-------------
+ f
+(1 row)
+
+ pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role 
+-------------+-------------+-------------+-------------+-------------+-------------
+ t           | t           | t           | t           | t           | t
+(1 row)
+
+ pg_has_role 
+-------------
+ f
+(1 row)
+
+ pg_has_role 
+-------------
+ f
+(1 row)
+
+ pg_has_role 
+-------------
+ f
+(1 row)
+
+ pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role 
+-------------+-------------+-------------+-------------+-------------+-------------
+ t           | t           | t           | t           | t           | t
+(1 row)
+
+ pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role 
+-------------+-------------+-------------+-------------+-------------+-------------
+ f           | f           | f           | f           | f           | f
+(1 row)
+
+CREATE ROLE
+GRANT ROLE
+ pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role 
+-------------+-------------+-------------+-------------+-------------+-------------
+ f           | f           | f           | f           | f           | f
+(1 row)
+
+ pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role 
+-------------+-------------+-------------+-------------+-------------+-------------
+ t           | t           | t           | t           | t           | t
+(1 row)
+
+ pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role 
+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------
+ t           | f           | f           | t           | f           | f           | t           | t           | t           | f
+(1 row)
+
+GRANT ROLE
+ pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role 
+-------------+-------------+-------------+-------------+-------------+-------------
+ t           | t           | t           | t           | t           | t
+(1 row)
+
+ pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role 
+-------------+-------------+-------------+-------------+-------------+-------------
+ t           | f           | f           | t           | f           | f
+(1 row)
+
+ pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role 
+-------------+-------------+-------------+-------------+-------------+-------------
+ t           | f           | f           | t           | f           | f
+(1 row)
+
+ pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role | pg_has_role 
+-------------+-------------+-------------+-------------+-------------+-------------
+ t           | t           | t           | t           | t           | t
+(1 row)
+
+psql:compatible/privilege_builtins.sql:1612: NOTICE:  table "hcp_test" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+ALTER TABLE
+           attname            | attnum 
+------------------------------+--------
+ tableoid                     |     -6
+ cmax                         |     -5
+ xmax                         |     -4
+ cmin                         |     -3
+ xmin                         |     -2
+ ctid                         |     -1
+ a                            |      1
+ ........pg.dropped.2........ |      2
+ c                            |      3
+(9 rows)
+
+ has_column_privilege 
+----------------------
+ t
+(1 row)
+
+ has_column_privilege 
+----------------------
+ 
+(1 row)
+
+ has_column_privilege 
+----------------------
+ t
+(1 row)
+
+ has_column_privilege 
+----------------------
+ 
+(1 row)
+
+psql:compatible/privilege_builtins.sql:1633: NOTICE:  database "crdb_tests_privilege_builtins_my_db" does not exist, skipping
+DROP DATABASE
+CREATE DATABASE
+CREATE ROLE
+GRANT
+GRANT ROLE
+You are now connected to database "crdb_tests_privilege_builtins_my_db" as user "postgres".
+CREATE SCHEMA
+CREATE TABLE
+ has_schema_privilege 
+----------------------
+ f
+(1 row)
+
+REVOKE
+ has_schema_privilege 
+----------------------
+ f
+(1 row)
+
+ has_database_privilege | has_schema_privilege | has_table_privilege 
+------------------------+----------------------+---------------------
+ t                      | t                    | f
+(1 row)
+
+CREATE ROLE
+GRANT ROLE
+GRANT
+You are now connected to database "crdb_tests_privilege_builtins_my_db" as user "postgres".
+ has_schema_privilege | has_schema_privilege | has_schema_privilege | has_schema_privilege 
+----------------------+----------------------+----------------------+----------------------
+ f                    | f                    | t                    | t
+(1 row)
+
+ has_database_privilege | has_schema_privilege | has_table_privilege 
+------------------------+----------------------+---------------------
+ t                      | t                    | f
+(1 row)
+
+REVOKE ROLE
+REVOKE ROLE
+You are now connected to database "crdb_tests_privilege_builtins" as user "postgres".
+CREATE SCHEMA
+ has_schema_privilege | has_schema_privilege | has_schema_privilege | has_schema_privilege 
+----------------------+----------------------+----------------------+----------------------
+ t                    | t                    | f                    | f
+(1 row)
+
+CREATE FUNCTION
+CREATE FUNCTION
+ has_system_privilege | has_system_privilege | has_system_privilege 
+----------------------+----------------------+----------------------
+ t                    | t                    | t
+(1 row)
+
+ has_system_privilege | has_system_privilege | has_system_privilege 
+----------------------+----------------------+----------------------
+ t                    | t                    | t
+(1 row)
+
+ has_system_privilege | has_system_privilege 
+----------------------+----------------------
+ t                    | t
+(1 row)
+
+GRANT ROLE
+ has_system_privilege 
+----------------------
+ f
+(1 row)
+
+REVOKE ROLE
+ has_system_privilege 
+----------------------
+ f
+(1 row)
+
+DROP SCHEMA
+DROP DATABASE
+DROP OWNED
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE

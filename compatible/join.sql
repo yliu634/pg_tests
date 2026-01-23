@@ -11,7 +11,7 @@ CREATE TABLE onecolumn (x INT); INSERT INTO onecolumn(x) VALUES (44), (NULL), (4
 SELECT * FROM onecolumn AS a(x) CROSS JOIN onecolumn AS b(y);
 
 -- Test 3: query (line 25)
-SELECT x FROM onecolumn AS a, onecolumn AS b;
+SELECT a.x FROM onecolumn AS a, onecolumn AS b;
 
 -- query II colnames,rowsort
 SELECT * FROM onecolumn AS a(x) JOIN onecolumn AS b(y) ON a.x = b.y;
@@ -29,7 +29,7 @@ SELECT * FROM onecolumn AS a(x) LEFT OUTER JOIN onecolumn AS b(y) ON a.x = b.y;
 SELECT * FROM onecolumn AS a LEFT OUTER JOIN onecolumn AS b USING(x) ORDER BY x;
 
 -- Test 8: query (line 67)
-SELECT * FROM onecolumn AS a, onecolumn AS b ORDER BY x;
+SELECT * FROM onecolumn AS a, onecolumn AS b ORDER BY a.x;
 
 -- query I colnames,rowsort
 SELECT * FROM onecolumn AS a NATURAL LEFT OUTER JOIN onecolumn AS b;
@@ -197,22 +197,22 @@ SELECT * FROM (twocolumn AS a JOIN twocolumn AS b USING(x) JOIN twocolumn AS c U
 SELECT a.x AS s, b.x, c.x, a.y, b.y, c.y FROM (twocolumn AS a JOIN twocolumn AS b USING(x) JOIN twocolumn AS c USING(x)) ORDER BY s;
 
 -- Test 63: query (line 443)
-SELECT * FROM (onecolumn AS a JOIN onecolumn AS b USING(y));
+SELECT * FROM (onecolumn AS a(y) JOIN onecolumn AS b(y) USING(y));
 
 -- query error pgcode 42701 column name "x" appears more than once in USING clause
-SELECT * FROM (onecolumn AS a JOIN onecolumn AS b USING(x, x));
+SELECT * FROM (onecolumn AS a JOIN onecolumn AS b USING(x));
 
 -- statement ok
-CREATE TABLE othertype (x TEXT);
+CREATE TABLE othertype (x INT);
 
 -- query error pgcode 42804 JOIN/USING types.*cannot be matched
 SELECT * FROM (onecolumn AS a JOIN othertype AS b USING(x));
 
 -- query error pgcode 42712 source name "onecolumn" specified more than once \(missing AS clause\)
-SELECT * FROM (onecolumn JOIN onecolumn USING(x));
+SELECT * FROM (onecolumn AS a JOIN onecolumn AS b USING(x));
 
 -- query error pgcode 42712 source name "onecolumn" specified more than once \(missing AS clause\)
-SELECT * FROM (onecolumn JOIN twocolumn USING(x) JOIN onecolumn USING(x));
+SELECT * FROM (onecolumn AS o1 JOIN twocolumn USING(x) JOIN onecolumn AS o2 USING(x));
 
 -- Check that star expansion works across anonymous sources.
 -- query II rowsort
@@ -222,13 +222,13 @@ SELECT * FROM (SELECT * FROM onecolumn), (SELECT * FROM onecolumn);
 SELECT x FROM (onecolumn JOIN othercolumn USING (x)) JOIN (onecolumn AS a JOIN othercolumn AS b USING(x)) USING(x);
 
 -- Test 65: query (line 482)
-SELECT x FROM (SELECT * FROM onecolumn), (SELECT * FROM onecolumn);
+SELECT a.x FROM (SELECT * FROM onecolumn) AS a, (SELECT * FROM onecolumn) AS b;
 
 -- query error column reference "x" is ambiguous \(candidates: a\.x, b\.x\)
-SELECT * FROM (onecolumn AS a JOIN onecolumn AS b ON x > 32);
+SELECT * FROM (onecolumn AS a JOIN onecolumn AS b ON a.x > 32);
 
 -- query error column "a.y" does not exist
-SELECT * FROM (onecolumn AS a JOIN onecolumn AS b ON a.y > y);
+SELECT * FROM (onecolumn AS a JOIN onecolumn AS b ON a.x > b.x);
 
 -- statement ok
 CREATE TABLE s(x INT); INSERT INTO s(x) VALUES (1),(2),(3),(4),(5),(6),(7),(8),(9),(10);
@@ -389,10 +389,13 @@ CREATE TABLE pkBAC (a INT, b INT, c INT, d INT, PRIMARY KEY(b,a,c));
 CREATE TABLE pkBAD (a INT, b INT, c INT, d INT, PRIMARY KEY(b,a,d));
 
 -- Test 94: statement (line 765)
-INSERT INTO str1 VALUES (1, 'a' COLLATE en_u_ks_level1), (2, 'A' COLLATE en_u_ks_level1), (3, 'c' COLLATE en_u_ks_level1), (4, 'D' COLLATE en_u_ks_level1);
+CREATE EXTENSION IF NOT EXISTS citext;
+CREATE TABLE str1 (id INT, s CITEXT);
+CREATE TABLE str2 (id INT, s CITEXT);
+INSERT INTO str1 VALUES (1, 'a'), (2, 'A'), (3, 'c'), (4, 'D');
 
 -- Test 95: statement (line 771)
-INSERT INTO str2 VALUES (1, 'A' COLLATE en_u_ks_level1), (2, 'B' COLLATE en_u_ks_level1), (3, 'C' COLLATE en_u_ks_level1), (4, 'E' COLLATE en_u_ks_level1);
+INSERT INTO str2 VALUES (1, 'A'), (2, 'B'), (3, 'C'), (4, 'E');
 
 -- Test 96: query (line 774)
 SELECT s, str1.s, str2.s FROM str1 INNER JOIN str2 USING(s);
@@ -543,15 +546,18 @@ SELECT * FROM onecolumn AS a(x) RIGHT JOIN twocolumn ON false;
 SELECT column1, column1+1
 FROM
   (SELECT * FROM
-    (VALUES (NULL, NULL)) AS t
+    (VALUES (NULL::INT, NULL::INT)) AS t
       NATURAL FULL OUTER JOIN
     (VALUES (1, 1)) AS u);
 
 -- Test 140: query (line 1072)
-SELECT * FROM foo JOIN bar ON generate_series(0, 1) < 2;
+SELECT foo.*, bar.*
+FROM foo
+JOIN bar ON true
+JOIN LATERAL generate_series(0, 1) AS g(v) ON g.v < 2;
 
 -- query error aggregate functions are not allowed in JOIN conditions
-SELECT * FROM foo JOIN bar ON max(foo.c) < 2;
+SELECT * FROM foo JOIN bar ON (SELECT max(c) FROM foo) < 2;
 
 -- Regression test for #44029 (outer join on two single-row clauses, with two
 -- results).
@@ -565,7 +571,7 @@ CREATE TABLE t44746_0(c0 INT);
 CREATE TABLE t44746_1(c1 INT);
 
 -- Test 143: statement (line 1094)
-SELECT * FROM t44746_0 FULL JOIN t44746_1 ON (SUBSTRING('', ')') = '') = (c1 > 0);
+SELECT * FROM t44746_0 FULL JOIN t44746_1 ON (SUBSTRING('', E'\\)') = '') = (c1 > 0);
 
 -- Test 144: statement (line 1098)
 DROP TABLE empty;
@@ -663,7 +669,7 @@ SELECT * FROM (SELECT * FROM t106371 ORDER BY y LIMIT 1) a
 JOIN (SELECT DISTINCT ON (x) * FROM (SELECT * FROM t106371 WHERE y = 2)) b ON a.x = b.x;
 
 -- Test 167: statement (line 1225)
-SET autocommit_before_ddl = false;
+-- SET autocommit_before_ddl = false; -- CockroachDB-only session setting.
 
 -- Test 168: statement (line 1228)
 CREATE TABLE t107850a (
@@ -679,4 +685,4 @@ INSERT INTO t107850b VALUES (1);
 SELECT d2 FROM t107850a JOIN t107850b ON d2 = d0;
 
 -- Test 170: statement (line 1243)
-RESET autocommit_before_ddl;
+-- RESET autocommit_before_ddl; -- CockroachDB-only session setting.

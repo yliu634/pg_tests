@@ -1,0 +1,58 @@
+SET
+DROP TABLE
+DROP TABLE
+RESET
+CREATE TABLE
+INSERT 0 2
+ x | y | z 
+---+---+---
+ 1 | 2 | 3
+ 4 | 5 | 6
+(2 rows)
+
+UPDATE 1
+ x | y | z 
+---+---+---
+ 4 | 5 | 6
+ 2 | 2 | 3
+(2 rows)
+
+UPDATE 1
+ x | y | z 
+---+---+---
+ 2 | 2 | 3
+ 4 | 5 | 3
+(2 rows)
+
+ y | z 
+---+---
+ 2 | 3
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+   x    | y 
+--------+---
+  5.607 | 1
+ 5.6007 | 2
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+ALTER TABLE
+UPDATE 1
+ a | b | c 
+---+---+---
+ 4 | 0 |  
+(1 row)
+
+UPDATE 1
+ a | b | c 
+---+---+---
+ 4 | 0 |  
+(1 row)
+

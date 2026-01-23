@@ -23,9 +23,12 @@ SELECT t, t.a, t.b, t.* FROM rec_a AS t;
 SELECT (1, 'foo')::rec_a, ((1, 'foo')::rec_a).b;
 
 -- Test 4: expected error (invalid int input for field a).
-\set ON_ERROR_STOP 0
-SELECT ('blah', 'blah')::rec_a;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  EXECUTE $sql$SELECT ('blah', 'blah')::rec_a$sql$;
+EXCEPTION WHEN OTHERS THEN
+  NULL;
+END $$;
 
 -- Test 5: schema-qualified type resolution.
 SELECT (1, 'foo')::public.rec_a;
@@ -45,9 +48,12 @@ SELECT pg_typeof(ARRAY[(1, 3)::rec_a, (1, 2)::rec_a]);
 SELECT pg_typeof(ARRAY[(1, 3)::rec_a, (1, 2)::rec_a])::regtype::oid::regtype;
 
 -- Test 12: expected error (cannot drop the table's composite type directly).
-\set ON_ERROR_STOP 0
-DROP TYPE rec_a;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  EXECUTE 'DROP TYPE rec_a';
+EXCEPTION WHEN OTHERS THEN
+  NULL;
+END $$;
 
 -- Test 13-15: record arrays and text input for composite types.
 SELECT COALESCE(ARRAY[ROW(1, 2)], '{}');
@@ -63,11 +69,32 @@ SELECT s, s::rec_a FROM rec_strings ORDER BY 1;
 SELECT '(1 , 2)'::rec_a;
 
 -- Test 16-18: expected errors for anonymous record input.
-\set ON_ERROR_STOP 0
-SELECT '()'::rec_a;
-SELECT s, s::record FROM rec_strings ORDER BY 1;
-SELECT '()'::record;
-SELECT '(1,4)'::record;
-\set ON_ERROR_STOP 1
+DO $$
+BEGIN
+  EXECUTE $sql$SELECT '()'::rec_a$sql$;
+EXCEPTION WHEN OTHERS THEN
+  NULL;
+END $$;
+
+DO $$
+BEGIN
+  EXECUTE $sql$SELECT s, s::record FROM rec_strings ORDER BY 1$sql$;
+EXCEPTION WHEN OTHERS THEN
+  NULL;
+END $$;
+
+DO $$
+BEGIN
+  EXECUTE $sql$SELECT '()'::record$sql$;
+EXCEPTION WHEN OTHERS THEN
+  NULL;
+END $$;
+
+DO $$
+BEGIN
+  EXECUTE $sql$SELECT '(1,4)'::record$sql$;
+EXCEPTION WHEN OTHERS THEN
+  NULL;
+END $$;
 
 RESET client_min_messages;

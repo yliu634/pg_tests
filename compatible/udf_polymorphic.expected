@@ -1,0 +1,394 @@
+CREATE TYPE
+CREATE TYPE
+CREATE TYPE
+CREATE FUNCTION
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+DROP FUNCTION
+CREATE FUNCTION
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+DO
+DO
+DROP FUNCTION
+CREATE FUNCTION
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+DO
+DO
+DO
+DO
+DROP FUNCTION
+CREATE FUNCTION
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+DO
+DO
+DO
+DO
+DO
+DROP FUNCTION
+CREATE FUNCTION
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+DO
+DO
+DO
+DO
+DO
+DROP FUNCTION
+CREATE FUNCTION
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+DO
+DO
+DO
+DO
+DO
+DROP FUNCTION
+CREATE FUNCTION
+ f | f | f 
+---+---+---
+ 1 | 2 |  
+(1 row)
+
+  f  
+-----
+ foo
+(1 row)
+
+ f 
+---
+ t
+(1 row)
+
+DROP FUNCTION
+DO
+DO
+DO
+DO
+DO
+CREATE FUNCTION
+ f | f |   f   
+---+---+-------
+ 1 | t | {1,2}
+(1 row)
+
+DROP FUNCTION
+CREATE FUNCTION
+  f  |  f  
+-----+-----
+ {1} | {t}
+(1 row)
+
+DO
+DROP FUNCTION
+CREATE FUNCTION
+ f | f 
+---+---
+ 1 | t
+(1 row)
+
+DROP FUNCTION
+CREATE FUNCTION
+ f | f |   f   
+---+---+-------
+ 1 | t | {1,2}
+(1 row)
+
+DROP FUNCTION
+CREATE FUNCTION
+ f | f |   f   
+---+---+-------
+ 1 | t | {1,2}
+(1 row)
+
+DROP FUNCTION
+CREATE FUNCTION
+ f | f |  f  
+---+---+-----
+ 1 | t | foo
+(1 row)
+
+DROP FUNCTION
+CREATE FUNCTION
+ f | f |  f  | f 
+---+---+-----+---
+ 1 | 2 | bar | f
+(1 row)
+
+DO
+DROP FUNCTION
+CREATE FUNCTION
+   f   
+-------
+ {1,2}
+(1 row)
+
+DO
+DROP FUNCTION
+CREATE FUNCTION
+ f  | f  
+----+----
+ 10 | 10
+(1 row)
+
+DO
+DROP FUNCTION
+CREATE FUNCTION
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+DO
+DROP FUNCTION
+CREATE FUNCTION
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+ f 
+---
+ 1
+(1 row)
+
+DO
+DROP FUNCTION
+DO
+CREATE FUNCTION
+psql:pg_tests/compatible/udf_polymorphic.sql:538: NOTICE:  function f(pg_catalog.int4) does not exist, skipping
+DROP FUNCTION
+psql:pg_tests/compatible/udf_polymorphic.sql:541: NOTICE:  function f(text) does not exist, skipping
+DROP FUNCTION
+psql:pg_tests/compatible/udf_polymorphic.sql:544: NOTICE:  function f() does not exist, skipping
+DROP FUNCTION
+psql:pg_tests/compatible/udf_polymorphic.sql:547: NOTICE:  function f(anyarray) does not exist, skipping
+DROP FUNCTION
+DROP FUNCTION
+CREATE FUNCTION
+psql:pg_tests/compatible/udf_polymorphic.sql:556: NOTICE:  function f(anyarray) does not exist, skipping
+DROP FUNCTION
+psql:pg_tests/compatible/udf_polymorphic.sql:559: NOTICE:  function f(anyelement) does not exist, skipping
+DROP FUNCTION
+DROP FUNCTION
+CREATE FUNCTION
+      dup       
+----------------
+ (22,"{22,22}")
+(1 row)
+

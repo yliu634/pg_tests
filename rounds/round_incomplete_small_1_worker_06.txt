@@ -1,0 +1,5 @@
+pg_tests/compatible/privileges_comments.sql
+pg_tests/compatible/privileges_table.sql
+pg_tests/compatible/proc_invokes_proc.sql
+pg_tests/compatible/procedure.sql
+pg_tests/compatible/procedure_polymorphic.sql

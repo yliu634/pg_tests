@@ -1,0 +1,133 @@
+SET
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+ username | options | member_of 
+----------+---------+-----------
+ user1    | LOGIN   | {}
+(1 row)
+
+DROP ROLE
+ username | options | member_of 
+----------+---------+-----------
+(0 rows)
+
+CREATE ROLE
+ username | options | member_of 
+----------+---------+-----------
+ user1    | LOGIN   | {}
+(1 row)
+
+DROP ROLE
+ username | options | member_of 
+----------+---------+-----------
+(0 rows)
+
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+ public_role_exists 
+--------------------
+ f
+(1 row)
+
+ none_role_exists 
+------------------
+ f
+(1 row)
+
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+ username | options | member_of 
+----------+---------+-----------
+ user1    | LOGIN   | {}
+ user2    | LOGIN   | {}
+ user3    | LOGIN   | {}
+ user4    | LOGIN   | {}
+(4 rows)
+
+DROP ROLE
+ username | options | member_of 
+----------+---------+-----------
+ user3    | LOGIN   | {}
+ user4    | LOGIN   | {}
+(2 rows)
+
+DROP ROLE
+ username | options | member_of 
+----------+---------+-----------
+ user3    | LOGIN   | {}
+ user4    | LOGIN   | {}
+(2 rows)
+
+CREATE ROLE
+CREATE TABLE
+GRANT
+GRANT
+ user1_can_connect | user3_can_select 
+-------------------+------------------
+ t                 | t
+(1 row)
+
+REVOKE
+ user1_can_connect | user3_can_select 
+-------------------+------------------
+ t                 | f
+(1 row)
+
+REVOKE
+DROP ROLE
+DROP ROLE
+ username | options | member_of 
+----------+---------+-----------
+(0 rows)
+
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+DROP ROLE
+CREATE ROLE
+GRANT
+GRANT ROLE
+SET
+CREATE SCHEMA
+CREATE SCHEMA
+RESET
+DROP OWNED
+DROP ROLE
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+DROP OWNED
+DROP ROLE
+DROP OWNED
+DROP ROLE
+ database_name | schema_name | obj_name | error 
+---------------+-------------+----------+-------
+(0 rows)
+
+RESET

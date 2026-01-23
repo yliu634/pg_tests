@@ -1,0 +1,56 @@
+SET
+SET
+DROP SCHEMA
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+GRANT ROLE
+CREATE SCHEMA
+CREATE TABLE
+BEGIN
+GRANT
+ role1_select_in_txn 
+---------------------
+ t
+(1 row)
+
+ROLLBACK
+ role1_select_after_rollback 
+-----------------------------
+ f
+(1 row)
+
+BEGIN
+GRANT
+COMMIT
+ role1_select_after_commit 
+---------------------------
+ t
+(1 row)
+
+GRANT ROLE
+BEGIN
+GRANT ROLE
+COMMIT
+    role     |   member    | admin_option 
+-------------+-------------+--------------
+ gitxn_role2 | gitxn_role1 | t
+(1 row)
+
+ grantee |  role_name  | is_grantable 
+---------+-------------+--------------
+ pan     | gitxn_role1 | NO
+ pan     | gitxn_role2 | NO
+(2 rows)
+
+DROP SCHEMA
+DROP ROLE
+DROP ROLE
+DROP ROLE
+DROP ROLE
+RESET

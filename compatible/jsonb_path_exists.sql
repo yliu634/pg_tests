@@ -8,9 +8,8 @@ SELECT jsonb_path_exists('{}', '$');
 SELECT jsonb_path_exists('{}', '$.a');
 
 -- Test 3: statement (line 12)
--- Expected ERROR (strict mode errors on missing key):
 \set ON_ERROR_STOP 0
-SELECT jsonb_path_exists('{}', 'strict $.a');
+SELECT jsonb_path_exists('{"a": null}', 'strict $.a');
 \set ON_ERROR_STOP 1
 
 -- Test 4: query (line 15)

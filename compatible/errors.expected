@@ -1,0 +1,16 @@
+CREATE PROCEDURE
+CREATE PROCEDURE
+psql:pg_tests/compatible/errors.sql:37: NOTICE:  expected failure: relation "fake1" does not exist
+CALL
+psql:pg_tests/compatible/errors.sql:40: NOTICE:  expected failure: relation "fake2" does not exist
+CALL
+psql:pg_tests/compatible/errors.sql:44: NOTICE:  expected failure: index "i" does not exist
+CALL
+psql:pg_tests/compatible/errors.sql:47: NOTICE:  expected failure: table "fake4" does not exist
+CALL
+psql:pg_tests/compatible/errors.sql:52: NOTICE:  expected failure: relation "fake5" does not exist
+CALL
+psql:pg_tests/compatible/errors.sql:55: NOTICE:  expected failure: relation "fake6" does not exist
+CALL
+psql:pg_tests/compatible/errors.sql:58: NOTICE:  expected failure: relation "fake7" does not exist
+CALL

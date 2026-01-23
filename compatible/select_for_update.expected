@@ -1,0 +1,482 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP TABLE
+DROP ROLE
+CREATE ROLE
+CREATE EXTENSION
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+ ?column? 
+----------
+        1
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+ x 
+---
+ 1
+(1 row)
+
+ x 
+---
+ 1
+(1 row)
+
+ column1 
+---------
+       1
+(1 row)
+
+ column1 
+---------
+       1
+(1 row)
+
+ column1 | i 
+---------+---
+       1 | 1
+(1 row)
+
+ column1 | i 
+---------+---
+       1 | 1
+(1 row)
+
+ column1 | i 
+---------+---
+       1 | 1
+(1 row)
+
+ generate_series 
+-----------------
+               1
+               2
+(2 rows)
+
+ generate_series 
+-----------------
+               1
+               2
+(2 rows)
+
+ generate_series | i 
+-----------------+---
+               1 | 1
+               2 | 1
+(2 rows)
+
+CREATE TABLE
+ k | v 
+---+---
+(0 rows)
+
+ k | v 
+---+---
+(0 rows)
+
+ k | v 
+---+---
+(0 rows)
+
+GRANT
+SET
+ k | v 
+---+---
+(0 rows)
+
+ k | v 
+---+---
+(0 rows)
+
+ k | v 
+---+---
+(0 rows)
+
+RESET
+BEGIN
+ k | v 
+---+---
+(0 rows)
+
+ROLLBACK
+BEGIN
+ k | v 
+---+---
+(0 rows)
+
+ROLLBACK
+BEGIN
+ k | v 
+---+---
+(0 rows)
+
+ROLLBACK
+BEGIN
+ k | v 
+---+---
+(0 rows)
+
+ROLLBACK
+INSERT 0 1
+ k | v 
+---+---
+ 1 | 1
+(1 row)
+
+ k | v 
+---+---
+ 1 | 1
+(1 row)
+
+INSERT 0 3
+CREATE TABLE
+CREATE INDEX
+INSERT 0 4
+ dblink_connect 
+----------------
+ OK
+(1 row)
+
+ dblink_exec 
+-------------
+ BEGIN
+(1 row)
+
+ dblink_exec 
+-------------
+ UPDATE 1
+(1 row)
+
+ dblink_exec 
+-------------
+ UPDATE 1
+(1 row)
+
+BEGIN
+ k | v 
+---+---
+ 1 | 1
+ 3 | 3
+ 4 | 4
+(3 rows)
+
+UPDATE 1
+ k | v 
+---+---
+ 1 | 1
+ 3 | 4
+ 4 | 4
+(3 rows)
+
+ k | u 
+---+---
+ 4 | 2
+(1 row)
+
+ k | v | u 
+---+---+---
+ 4 | 4 | 2
+(1 row)
+
+ k | v | u 
+---+---+---
+ 4 | 4 | 2
+(1 row)
+
+ k | v 
+---+---
+ 1 | 1
+ 3 | 4
+ 4 | 4
+(3 rows)
+
+ROLLBACK
+ dblink_exec 
+-------------
+ ROLLBACK
+(1 row)
+
+ dblink_disconnect 
+-------------------
+ OK
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+SET
+ a | b | c 
+---+---+---
+ 1 | 2 | 3
+(1 row)
+
+ a | b | c 
+---+---+---
+ 1 | 2 | 3
+(1 row)
+
+RESET
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+GRANT
+SET
+SET
+SET
+BEGIN
+ a 
+---
+ 1
+(1 row)
+
+ a 
+---
+ 1
+ 2
+(2 rows)
+
+COMMIT
+RESET
+CREATE TABLE
+INSERT 0 1
+GRANT
+GRANT
+SET
+BEGIN
+ a | b 
+---+---
+ 1 | 1
+(1 row)
+
+SET
+SET
+SET
+ a | b 
+---+---
+ 1 | 1
+(1 row)
+
+ a | b 
+---+---
+ 1 | 1
+(1 row)
+
+RESET
+RESET
+RESET
+ROLLBACK
+RESET
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+SET
+SET
+SET
+ a | b | c 
+---+---+---
+ 6 | 7 | 8
+(1 row)
+
+ a | b | c 
+---+---+---
+ 6 | 7 | 8
+(1 row)
+
+ a | b | c 
+---+---+---
+ 6 | 7 | 8
+(1 row)
+
+ a | b | c 
+---+---+---
+ 6 | 7 | 8
+(1 row)
+
+INSERT 0 1
+ a | b | a | b | c 
+---+---+---+---+---
+ 6 | 7 | 6 | 7 | 8
+(1 row)
+
+ a | b | a | b | c 
+---+---+---+---+---
+ 6 | 7 | 6 | 7 | 8
+(1 row)
+
+RESET
+RESET
+RESET
+RESET

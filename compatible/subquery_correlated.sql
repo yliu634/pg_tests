@@ -154,7 +154,7 @@ FROM c AS c2
 WHERE EXISTS
 (
     SELECT * FROM c WHERE bill=(SELECT max(ship) FROM o WHERE c_id=c2.c_id AND c_id=c.c_id)
-)
+);
 
 -- Test 34: query (line 329)
 SELECT c_id, bill
@@ -164,15 +164,15 @@ WHERE EXISTS
     SELECT *
     FROM (SELECT c_id, coalesce(ship, bill) AS state FROM o WHERE c_id=c2.c_id) AS o
     WHERE state=bill
-)
+);
 
 -- Test 35: query (line 344)
-SELECT c_id, generate_series(1, (SELECT count(*) FROM o WHERE o.c_id=c.c_id)) FROM c
+SELECT c_id, generate_series(1, (SELECT count(*) FROM o WHERE o.c_id=c.c_id)) FROM c;
 
 -- Test 36: query (line 358)
 SELECT *
 FROM c
-WHERE (SELECT ship FROM o WHERE o.c_id=c.c_id ORDER BY ship LIMIT 1) IS NOT NULL
+WHERE (SELECT ship FROM o WHERE o.c_id=c.c_id ORDER BY ship LIMIT 1) IS NOT NULL;
 
 -- Test 37: query (line 367)
 SELECT *
@@ -180,7 +180,7 @@ FROM c
 WHERE
     (SELECT ship FROM o WHERE o.c_id=c.c_id AND ship IS NOT NULL ORDER BY ship LIMIT 1)='CA'
     OR (SELECT ship FROM o WHERE o.c_id=c.c_id AND ship IS NOT NULL ORDER BY ship LIMIT 1)='WY'
-ORDER BY c_id
+ORDER BY c_id;
 
 -- Test 38: query (line 380)
 SELECT *
@@ -188,31 +188,31 @@ FROM c
 WHERE (SELECT o_id FROM o WHERE o.c_id=c.c_id AND ship='WY')=4;
 
 -- Test 39: query (line 390)
-SELECT * FROM c WHERE c_id=(SELECT c_id FROM o WHERE ship='CA' AND c.c_id<>2)
+SELECT * FROM c WHERE c_id=(SELECT DISTINCT c_id FROM o WHERE ship='CA' AND c_id<>2);
 
-# Find customers other than customer #1 that have at most one order that is
-# shipping to 'CA' and a billing state equal to 'TX'. Since there is only one
-# other customer who is shipping to 'CA', and this customer has only a single
-# order, this attempt is successful.
-query IT
-SELECT * FROM c WHERE c_id=(SELECT c_id FROM o WHERE ship='CA' AND c_id<>1 AND bill='TX')
+-- Find customers other than customer #1 that have at most one order that is
+-- shipping to 'CA' and a billing state equal to 'TX'. Since there is only one
+-- other customer who is shipping to 'CA', and this customer has only a single
+-- order, this attempt is successful.
+-- query IT
+SELECT * FROM c WHERE c_id=(SELECT c_id FROM o WHERE ship='CA' AND c_id<>1 AND bill='TX');
 
 -- Test 40: query (line 405)
-SELECT * FROM c WHERE c_id=(SELECT c_id FROM o WHERE ship='WA' AND bill='FL')
+SELECT * FROM c WHERE c_id=(SELECT c_id FROM o WHERE ship='WA' AND bill='FL');
 
 -- Test 41: query (line 413)
-SELECT * FROM c WHERE (SELECT ship FROM o WHERE o.c_id=c.c_id AND ship IS NOT NULL)='WA'
+SELECT * FROM c WHERE (SELECT ship FROM o WHERE o.c_id=c.c_id AND ship IS NOT NULL ORDER BY ship LIMIT 1)='WA';
 
-# Add clause to filter out customers that have more than one order. Find
-# remaining customers with at least one order shipping to 'WA'.
-query IT
+-- Add clause to filter out customers that have more than one order. Find
+-- remaining customers with at least one order shipping to 'WA'.
+-- query IT
 SELECT *
 FROM c
 WHERE (
   SELECT ship
   FROM o
   WHERE o.c_id=c.c_id AND ship IS NOT NULL AND (SELECT count(*) FROM o WHERE o.c_id=c.c_id)<=1
-)='WA'
+)='WA';
 
 -- Test 42: query (line 437)
 SELECT c_id, EXISTS(SELECT * FROM o WHERE o.c_id=c.c_id) FROM c ORDER BY c_id;
@@ -373,14 +373,14 @@ SELECT
 FROM c
 LEFT JOIN o
 ON c.c_id=o.c_id
-ORDER BY c.c_id, o.o_id
+ORDER BY c.c_id, o.o_id;
 
 -- Test 74: query (line 860)
 SELECT
     c.c_id,
     (SELECT ship FROM o WHERE o.c_id=c.c_id ORDER BY ship LIMIT 1) IS NOT NULL
 FROM c
-ORDER BY c.c_id
+ORDER BY c.c_id;
 
 -- Test 75: query (line 876)
 SELECT
@@ -388,28 +388,27 @@ SELECT
     (SELECT ship FROM o WHERE o.c_id=c.c_id AND ship IS NOT NULL ORDER BY ship LIMIT 1)='CA'
     OR (SELECT ship FROM o WHERE o.c_id=c.c_id AND ship IS NOT NULL ORDER BY ship LIMIT 1)='WY'
 FROM c
-ORDER BY c_id
+ORDER BY c_id;
 
 -- Test 76: query (line 891)
-SELECT (SELECT concat_agg(ship || ' ')
-  FROM
-  (SELECT c_id AS o_c_id, ship FROM o ORDER BY ship)
-  WHERE o_c_id=c.c_id)
-FROM c ORDER BY c_id
+SELECT (SELECT string_agg(ship || ' ', '' ORDER BY ship)
+  FROM o
+  WHERE o.c_id=c.c_id)
+FROM c ORDER BY c_id;
 
 -- Test 77: query (line 905)
 SELECT (SELECT string_agg(ship, ', ')
   FROM
   (SELECT c_id AS o_c_id, ship FROM o ORDER BY ship)
   WHERE o_c_id=c.c_id)
-FROM c ORDER BY c_id
+FROM c ORDER BY c_id;
 
 -- Test 78: query (line 919)
 SELECT (SELECT string_agg(DISTINCT ship, ', ')
   FROM
   (SELECT c_id AS o_c_id, ship FROM o ORDER BY ship)
   WHERE o_c_id=c.c_id)
-FROM c ORDER BY c_id
+FROM c ORDER BY c_id;
 
 -- Test 79: query (line 933)
 SELECT
@@ -417,7 +416,7 @@ SELECT
 FROM
     (SELECT c_id AS c_c_id, bill FROM c),
     LATERAL (SELECT row_number() OVER () AS rownum FROM o WHERE c_id = c_c_id)
-ORDER BY c_c_id, bill, rownum
+ORDER BY c_c_id, bill, rownum;
 
 -- Test 80: query (line 952)
 SELECT
@@ -425,7 +424,7 @@ SELECT
 FROM
     (SELECT bill FROM c),
     LATERAL (SELECT row_number() OVER (PARTITION BY bill) AS rownum FROM o WHERE ship = bill)
-ORDER BY bill, rownum
+ORDER BY bill, rownum;
 
 -- Test 81: query (line 973)
 SELECT
@@ -450,7 +449,7 @@ ON c.c_id=o.c_id AND EXISTS(SELECT * FROM o WHERE o.c_id=c.c_id AND ship IS NULL
 SELECT
   c_id,
   ARRAY(SELECT o_id FROM o WHERE o.c_id = c.c_id ORDER BY o_id)
-FROM c ORDER BY c_id
+FROM c ORDER BY c_id;
 
 -- Test 85: statement (line 1048)
 CREATE TABLE groups(
@@ -468,7 +467,7 @@ SELECT
   jsonb_array_elements( (SELECT gg.data->'members' FROM groups gg WHERE gg.data->>'name' = g.data->>'name') )
 FROM
   groups g
-ORDER BY g.data->>'name'
+ORDER BY g.data->>'name';
 
 -- Test 88: query (line 1070)
 SELECT
@@ -486,13 +485,13 @@ FROM
                 gg.data->>'name' = g.data->>'name'
         )
     ) AS members
-ORDER BY g.data->>'name'
+ORDER BY g.data->>'name';
 
 -- Test 89: statement (line 1098)
-CREATE TABLE t32786 (id UUID PRIMARY KEY, parent_id UUID, parent_path text)
+CREATE TABLE t32786 (id UUID PRIMARY KEY, parent_id UUID, parent_path text);
 
 -- Test 90: statement (line 1101)
-INSERT INTO t32786 VALUES ('3AAA2577-DBC3-47E7-9E85-9CC7E19CF48A', null)
+INSERT INTO t32786 VALUES ('3AAA2577-DBC3-47E7-9E85-9CC7E19CF48A', null);
 
 -- Test 91: statement (line 1104)
 UPDATE t32786 as node
@@ -500,9 +499,10 @@ SET parent_path=concat((SELECT parent.parent_path
   FROM t32786 parent
   WHERE parent.id=node.parent_id),
   node.id::varchar, '/')
+;
 
 -- Test 92: statement (line 1111)
-INSERT INTO t32786 VALUES ('5AE7EAFD-8277-4F41-83DE-0FD4B4482169', '3AAA2577-DBC3-47E7-9E85-9CC7E19CF48A')
+INSERT INTO t32786 VALUES ('5AE7EAFD-8277-4F41-83DE-0FD4B4482169', '3AAA2577-DBC3-47E7-9E85-9CC7E19CF48A');
 
 -- Test 93: statement (line 1114)
 UPDATE t32786 as node
@@ -510,19 +510,20 @@ SET parent_path=concat((SELECT parent.parent_path
   FROM t32786 parent
   WHERE parent.id=node.parent_id),
   node.id::varchar, '/')
+;
 
 -- Test 94: query (line 1121)
-SELECT parent_path FROM t32786 ORDER BY id
+SELECT parent_path FROM t32786 ORDER BY id;
 
 -- Test 95: query (line 1128)
 SELECT
     generate_series(a + 1, a + 1)
 FROM
-    (SELECT a FROM ((SELECT 1 AS a, 1) EXCEPT ALL (SELECT 0, 0)))
+    (SELECT a FROM ((SELECT 1 AS a, 1) EXCEPT ALL (SELECT 0, 0)) AS t(a, b)) AS v(a);
 
 -- Test 96: statement (line 1138)
 CREATE TABLE users (
-    id INT8 NOT NULL DEFAULT unique_rowid(),
+    id INT8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
     name VARCHAR(50),
     PRIMARY KEY (id)
 );
@@ -534,7 +535,7 @@ INSERT INTO users(id, name) VALUES (3, 'user3');
 
 -- Test 98: statement (line 1150)
 CREATE TABLE stuff (
-    id INT8 NOT NULL DEFAULT unique_rowid(),
+    id INT8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
     date DATE,
     user_id INT8,
     PRIMARY KEY (id),
@@ -628,7 +629,7 @@ WHERE
 CREATE TABLE IF NOT EXISTS t_48638 (
   key INTEGER NOT NULL,
   value INTEGER NOT NULL,
-  PRIMARY KEY (key, value))
+  PRIMARY KEY (key, value));
 
 -- Test 106: statement (line 1275)
 INSERT INTO t_48638 values (1, 4);
@@ -652,31 +653,31 @@ WHERE key IN (
       LEFT JOIN (SELECT * FROM t_48638) AS level3 ON level3.key = level2.value
   )
   SELECT v.level1 FROM v WHERE v.level1 IS NOT NULL
-  UNION ALL SELECT v.level2 FROM v WHERE v.level2 IS NOT NULL
-  UNION ALL SELECT v.level3 FROM v WHERE v.level3 IS NOT NULL
-)
+	  UNION ALL SELECT v.level2 FROM v WHERE v.level2 IS NOT NULL
+	  UNION ALL SELECT v.level3 FROM v WHERE v.level3 IS NOT NULL
+);
 
 -- Test 108: statement (line 1308)
 CREATE TABLE t98691 (
   a INT,
   b INT
-)
+);
 
 -- Test 109: statement (line 1314)
-INSERT INTO t98691 VALUES (1, 10)
+INSERT INTO t98691 VALUES (1, 10);
 
 -- Test 110: query (line 1317)
 SELECT (NULL, NULL) = ANY (
   SELECT a, b FROM t98691 WHERE a > i
-) FROM (VALUES (0), (0)) v(i)
+) FROM (VALUES (0), (0)) v(i);
 
 -- Test 111: statement (line 1325)
-INSERT INTO t98691 VALUES (NULL, NULL)
+INSERT INTO t98691 VALUES (NULL, NULL);
 
 -- Test 112: query (line 1328)
 SELECT (2, 20) = ANY (
   SELECT a, b FROM t98691 WHERE a > i OR a IS NULL
-) FROM (VALUES (0), (0)) v(i)
+) FROM (VALUES (0), (0)) v(i);
 
 -- Test 113: statement (line 1337)
 CREATE TABLE xy108057 (x DECIMAL(10, 2) PRIMARY KEY, y DECIMAL(10, 2));
@@ -687,8 +688,7 @@ INSERT INTO xy108057 VALUES (1.00, 1.00);
 INSERT INTO ab108057 VALUES (1, 1);
 
 -- Test 115: query (line 1345)
-SELECT * FROM xy108057 INNER JOIN LATERAL (SELECT a, a+x FROM ab108057) ON a = x
+SELECT * FROM xy108057 INNER JOIN LATERAL (SELECT a, a+x FROM ab108057) ON a = x;
 
 -- Test 116: query (line 1350)
-SELECT * FROM ab108057 INNER JOIN LATERAL (SELECT x, x+a FROM xy108057) ON a = x
-
+SELECT * FROM ab108057 INNER JOIN LATERAL (SELECT x, x+a FROM xy108057) ON a = x;

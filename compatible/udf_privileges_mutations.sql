@@ -16,18 +16,44 @@ CREATE USER test_user;
 SET ROLE test_user;
 
 -- Test 3: statement (line 14)
-\set ON_ERROR_STOP off
-select f_insert();
+DO $$
+BEGIN
+  PERFORM f_insert();
+  RAISE NOTICE 'unexpected success: f_insert';
+EXCEPTION
+  WHEN insufficient_privilege THEN
+    RAISE NOTICE 'expected insufficient_privilege: f_insert';
+END $$;
 
 -- Test 4: statement (line 17)
-select f_select();
+DO $$
+BEGIN
+  PERFORM f_select();
+  RAISE NOTICE 'unexpected success: f_select';
+EXCEPTION
+  WHEN insufficient_privilege THEN
+    RAISE NOTICE 'expected insufficient_privilege: f_select';
+END $$;
 
 -- Test 5: statement (line 20)
-select f_update();
+DO $$
+BEGIN
+  PERFORM f_update();
+  RAISE NOTICE 'unexpected success: f_update';
+EXCEPTION
+  WHEN insufficient_privilege THEN
+    RAISE NOTICE 'expected insufficient_privilege: f_update';
+END $$;
 
 -- Test 6: statement (line 23)
-select f_delete();
-\set ON_ERROR_STOP on
+DO $$
+BEGIN
+  PERFORM f_delete();
+  RAISE NOTICE 'unexpected success: f_delete';
+EXCEPTION
+  WHEN insufficient_privilege THEN
+    RAISE NOTICE 'expected insufficient_privilege: f_delete';
+END $$;
 
 -- Test 7: statement (line 26)
 RESET ROLE;
@@ -66,18 +92,44 @@ REVOKE SELECT, INSERT, DELETE, UPDATE ON t FROM test_user;
 SET ROLE test_user;
 
 -- Test 19: statement (line 68)
-\set ON_ERROR_STOP off
-select f_select();
+DO $$
+BEGIN
+  PERFORM f_select();
+  RAISE NOTICE 'unexpected success: f_select';
+EXCEPTION
+  WHEN insufficient_privilege THEN
+    RAISE NOTICE 'expected insufficient_privilege: f_select';
+END $$;
 
 -- Test 20: statement (line 71)
-select f_insert();
+DO $$
+BEGIN
+  PERFORM f_insert();
+  RAISE NOTICE 'unexpected success: f_insert';
+EXCEPTION
+  WHEN insufficient_privilege THEN
+    RAISE NOTICE 'expected insufficient_privilege: f_insert';
+END $$;
 
 -- Test 21: statement (line 74)
-select f_update();
+DO $$
+BEGIN
+  PERFORM f_update();
+  RAISE NOTICE 'unexpected success: f_update';
+EXCEPTION
+  WHEN insufficient_privilege THEN
+    RAISE NOTICE 'expected insufficient_privilege: f_update';
+END $$;
 
 -- Test 22: statement (line 77)
-select f_delete();
-\set ON_ERROR_STOP on
+DO $$
+BEGIN
+  PERFORM f_delete();
+  RAISE NOTICE 'unexpected success: f_delete';
+EXCEPTION
+  WHEN insufficient_privilege THEN
+    RAISE NOTICE 'expected insufficient_privilege: f_delete';
+END $$;
 
 -- Test 23: statement (line 80)
 RESET ROLE;

@@ -1,0 +1,21 @@
+CREATE FUNCTION
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE INDEX
+ALTER TABLE
+ pg_try_exec 
+-------------
+ 42701
+(1 row)
+
+ pg_try_exec 
+-------------
+ 42703
+(1 row)
+
+psql:pg_tests/compatible/schema_change_logical_replication.sql:58: NOTICE:  index "idx" does not exist, skipping
+DROP INDEX

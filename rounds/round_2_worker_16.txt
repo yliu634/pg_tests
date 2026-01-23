@@ -1,0 +1,5 @@
+pg_tests/compatible/internal_executor.sql
+pg_tests/compatible/interval.sql
+pg_tests/compatible/inv_stats.sql
+pg_tests/compatible/inverted_filter_geospatial.sql
+pg_tests/compatible/inverted_filter_geospatial_dist.sql

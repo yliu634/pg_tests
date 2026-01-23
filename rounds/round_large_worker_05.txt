@@ -1,0 +1,2 @@
+pg_tests/compatible/role.sql
+pg_tests/compatible/row_level_security.sql

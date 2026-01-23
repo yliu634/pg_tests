@@ -1,0 +1,5 @@
+pg_tests/compatible/grant_inherited.sql
+pg_tests/compatible/grant_on_all_sequences_in_schema.sql
+pg_tests/compatible/grant_on_all_tables_in_schema.sql
+pg_tests/compatible/grant_revoke_with_grant_option.sql
+pg_tests/compatible/grant_role.sql

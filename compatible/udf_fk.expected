@@ -1,0 +1,73 @@
+SET
+DROP TABLE
+DROP TABLE
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+CREATE TABLE
+CREATE TABLE
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+BEGIN
+ insert_child 
+--------------
+          100
+(1 row)
+
+ insert_parent 
+---------------
+             1
+(1 row)
+
+COMMIT
+ p 
+---
+ 1
+(1 row)
+
+  c  | p 
+-----+---
+ 100 | 1
+(1 row)
+
+BEGIN
+INSERT 0 1
+COMMIT
+ p 
+---
+ 1
+ 2
+(2 rows)
+
+  c  | p 
+-----+---
+ 100 | 1
+ 101 | 2
+(2 rows)
+
+ insert_child_then_parent 
+--------------------------
+                        3
+(1 row)
+
+ p 
+---
+ 1
+ 2
+ 3
+(3 rows)
+
+  c  | p 
+-----+---
+ 100 | 1
+ 101 | 2
+ 102 | 3
+(3 rows)
+
+DROP FUNCTION
+DROP FUNCTION
+DROP FUNCTION
+DROP TABLE
+DROP TABLE
+RESET

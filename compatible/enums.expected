@@ -1,0 +1,1175 @@
+SET
+CREATE TYPE
+ enum_range 
+------------
+ {}
+(1 row)
+
+DROP TYPE
+CREATE TABLE
+CREATE TYPE
+CREATE TABLE
+DROP TABLE
+ALTER TABLE
+CREATE SCHEMA
+CREATE TYPE
+ enum_range 
+------------
+ {}
+(1 row)
+
+DROP TYPE
+CREATE TYPE
+DROP TABLE
+CREATE TYPE
+CREATE TYPE
+CREATE TYPE
+ int_enum 
+----------
+ Z
+(1 row)
+
+ int_enum 
+----------
+ Z
+(1 row)
+
+CREATE TYPE
+ greeting 
+----------
+ hello
+(1 row)
+
+ greeting 
+----------
+ hello
+(1 row)
+
+ greeting | greeting | greeting 
+----------+----------+----------
+ hello    | howdy    | hi
+(1 row)
+
+ greeting | greeting | greeting 
+----------+----------+----------
+ hello    | howdy    | hi
+(1 row)
+
+ greeting 
+----------
+ 
+(1 row)
+
+ ?column? | ?column? | ?column? | ?column? | ?column? | ?column? | ?column? | ?column? | ?column? | ?column? | ?column? 
+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------
+ t        | t        | t        | f        | t        |          |          | t        | t        | f        | t
+(1 row)
+
+CREATE TYPE
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+ greeting 
+----------
+ hello
+(1 row)
+
+CREATE TYPE
+ greeting2 
+-----------
+ hello
+(1 row)
+
+ ?column? | ?column? 
+----------+----------
+ t        | t
+(1 row)
+
+ ?column? 
+----------
+ f
+(1 row)
+
+CREATE TYPE
+ enum_first | enum_last 
+------------+-----------
+ postgres   | cockroach
+(1 row)
+
+ enum_first 
+------------
+ postgres
+(1 row)
+
+ enum_first 
+------------
+ postgres
+ postgres
+ postgres
+ postgres
+ postgres
+(5 rows)
+
+ enum_first 
+------------
+ postgres
+(1 row)
+
+             enum_range             
+------------------------------------
+ {postgres,mysql,spanner,cockroach}
+(1 row)
+
+    enum_range    |     enum_range      
+------------------+---------------------
+ {postgres,mysql} | {spanner,cockroach}
+(1 row)
+
+        enum_range        |     enum_range      
+--------------------------+---------------------
+ {postgres,mysql,spanner} | {spanner,cockroach}
+(1 row)
+
+ enum_range  
+-------------
+ {cockroach}
+(1 row)
+
+ enum_range 
+------------
+ {}
+(1 row)
+
+             enum_range             
+------------------------------------
+ {postgres,mysql,spanner,cockroach}
+(1 row)
+
+ ?column? 
+----------
+ 
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+ x1 |  x2   
+----+-------
+ hi | hi
+ hi | hello
+(2 rows)
+
+ greeting | x1 
+----------+----
+ hello    | hi
+ hello    | hi
+(2 rows)
+
+ x1 | ?column? 
+----+----------
+ hi | f
+ hi | f
+(2 rows)
+
+ x1 | enum_first 
+----+------------
+ hi | hello
+ hi | hello
+(2 rows)
+
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+INSERT 0 1
+   x   |   x   
+-------+-------
+ hello | hello
+(1 row)
+
+   x   |   x   
+-------+-------
+ hello | hello
+(1 row)
+
+   x   |   x   
+-------+-------
+ hello | hello
+(1 row)
+
+INSERT 0 4
+   x   
+-------
+ howdy
+ hello
+ hi
+(3 rows)
+
+   x   
+-------
+ hi
+ howdy
+ hello
+(3 rows)
+
+   x   
+-------
+ howdy
+ hi
+(2 rows)
+
+   x   | ordinality 
+-------+------------
+ hello |          1
+ hello |          2
+ hello |          3
+ howdy |          4
+ hi    |          5
+(5 rows)
+
+INSERT 0 6
+   x   
+-------
+ hi
+ howdy
+ howdy
+ howdy
+ hello
+ hello
+ hello
+(7 rows)
+
+   x   
+-------
+ hello
+ hello
+ hello
+ howdy
+ howdy
+ howdy
+ hi
+(7 rows)
+
+   x   
+-------
+ hello
+ hello
+ hello
+(3 rows)
+
+   x   
+-------
+ hi
+ howdy
+ howdy
+(3 rows)
+
+   x   
+-------
+ howdy
+ hello
+ hi
+(3 rows)
+
+CREATE TABLE
+INSERT 0 6
+   x   | max | sum | min 
+-------+-----+-----+-----
+ howdy |   5 |   6 |   0
+ hello |   3 |   4 |   1
+ hi    |  10 |  10 |  10
+(3 rows)
+
+ max |  min  
+-----+-------
+ hi  | hello
+(1 row)
+
+CREATE TYPE
+CREATE TABLE
+ max | min 
+-----+-----
+     | 
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+ANALYZE
+ x  
+----
+ hi
+(1 row)
+
+CREATE TYPE
+ as_bytes | as_bytes 
+----------+----------
+ bytes    | bytes
+(1 row)
+
+ as_bytes 
+----------
+ bytes
+(1 row)
+
+         text         
+----------------------
+ SKIP: SHOW CREATE t1
+(1 row)
+
+         text         
+----------------------
+ SKIP: SHOW CREATE t1
+(1 row)
+
+ text 
+------
+ 
+(1 row)
+
+ text 
+------
+ 
+(1 row)
+
+  array  |  array  
+---------+---------
+ {hello} | {hello}
+(1 row)
+
+       array       
+-------------------
+ {hello,cockroach}
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+    x    |    y    
+---------+---------
+ {hello} | {hello}
+ {howdy} | {howdy}
+(2 rows)
+
+ pg_typeof  | pg_typeof | pg_typeof  
+------------+-----------+------------
+ greeting[] | greeting  | greeting[]
+(1 row)
+
+CREATE TYPE
+CREATE TYPE
+   typname   |  oid  | typelem | typarray 
+-------------+-------+---------+----------
+ _collision  | 41537 |       0 |    41536
+ __collision | 41536 |   41537 |        0
+ collision   | 41539 |       0 |    41538
+(3 rows)
+
+ column_name | column_type 
+-------------+-------------
+ x           | _greeting
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+ x |   y   | z 
+---+-------+---
+ 1 | hello | t
+ 2 | hello | t
+(2 rows)
+
+    pg_get_expr    
+-------------------
+ 'hello'::greeting
+(1 row)
+
+              text              
+--------------------------------
+ SKIP: SHOW CREATE enum_default
+(1 row)
+
+              text              
+--------------------------------
+ SKIP: SHOW CREATE enum_default
+(1 row)
+
+ column_name |              default_expr               
+-------------+-----------------------------------------
+ y           | 'hello'::greeting
+ z           | ('hello'::greeting = 'hello'::greeting)
+(2 rows)
+
+ column_name |             column_default              
+-------------+-----------------------------------------
+ y           | 'hello'::greeting
+ z           | ('hello'::greeting = 'hello'::greeting)
+(2 rows)
+
+CREATE TABLE
+INSERT 0 2
+ x |   w   |   y   | z 
+---+-------+-------+---
+ 1 | hello | hello | f
+ 2 | hello | hello | f
+(2 rows)
+
+              text               
+---------------------------------
+ SKIP: SHOW CREATE enum_computed
+(1 row)
+
+              text               
+---------------------------------
+ SKIP: SHOW CREATE enum_computed
+(1 row)
+
+ column_name |  generation_expression  
+-------------+-------------------------
+ y           | 'hello'::greeting
+ z           | (w = 'howdy'::greeting)
+(2 rows)
+
+CREATE TABLE
+INSERT 0 1
+             text              
+-------------------------------
+ SKIP: SHOW CREATE enum_checks
+(1 row)
+
+             text              
+-------------------------------
+ SKIP: SHOW CREATE enum_checks
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+ALTER TABLE
+INSERT 0 1
+ALTER TABLE
+DROP TABLE
+BEGIN
+CREATE TABLE
+INSERT 0 2
+ALTER TABLE
+INSERT 0 1
+ROLLBACK
+BEGIN
+CREATE TABLE
+INSERT 0 2
+ALTER TABLE
+ROLLBACK
+CREATE SCHEMA
+CREATE TYPE
+CREATE TABLE
+DROP TABLE
+CREATE TABLE
+DROP TABLE
+CREATE TABLE
+DROP TABLE
+CREATE TABLE
+DROP TABLE
+CREATE TABLE
+DROP TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE TABLE
+INSERT 0 3
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+   x   
+-------
+ hello
+ howdy
+ hi
+(3 rows)
+
+   x   | y 
+-------+---
+ hello | 0
+ howdy | 1
+ hi    | 2
+(3 rows)
+
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP TABLE
+BEGIN
+CREATE TABLE
+INSERT 0 3
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+   x   
+-------
+ hello
+ howdy
+ hi
+(3 rows)
+
+   x   | y 
+-------+---
+ hello | 0
+ howdy | 1
+ hi    | 2
+(3 rows)
+
+DROP INDEX
+DROP INDEX
+DROP INDEX
+COMMIT
+BEGIN
+CREATE TYPE
+CREATE TABLE
+INSERT 0 1
+CREATE INDEX
+  x  
+-----
+ txn
+(1 row)
+
+ROLLBACK
+CREATE TABLE
+INSERT 0 1
+DROP TABLE
+CREATE TABLE
+INSERT 0 1
+DROP TABLE
+BEGIN
+CREATE TABLE
+INSERT 0 1
+ROLLBACK
+BEGIN
+CREATE TABLE
+INSERT 0 1
+ROLLBACK
+CREATE TABLE
+INSERT 0 1
+SELECT 1
+ x  |   y   |    z    
+----+-------+---------
+ hi | howdy | {hello}
+(1 row)
+
+DROP TABLE
+BEGIN
+SELECT 1
+ x  |   y   |    z    
+----+-------+---------
+ hi | howdy | {hello}
+(1 row)
+
+ROLLBACK
+SELECT 1
+ x  | enum_first |    z    |    enum_range    
+----+------------+---------+------------------
+ hi | hello      | {hello} | {hello,howdy,hi}
+(1 row)
+
+DROP TABLE
+BEGIN
+SELECT 1
+ x  | enum_first |    z    |    enum_range    
+----+------------+---------+------------------
+ hi | hello      | {hello} | {hello,howdy,hi}
+(1 row)
+
+ROLLBACK
+SELECT 1
+ column1 | column2 |  column3  
+---------+---------+-----------
+ howdy   | howdy   | cockroach
+(1 row)
+
+DROP TABLE
+BEGIN
+SELECT 1
+ column1 |  column2  
+---------+-----------
+ howdy   | cockroach
+(1 row)
+
+ROLLBACK
+CREATE TABLE
+INSERT 0 1
+ALTER TABLE
+   x   | y 
+-------+---
+ hello | 1
+(1 row)
+
+ALTER TABLE
+   x   | y |   z   
+-------+---+-------
+ hello | 1 | howdy
+(1 row)
+
+ALTER TABLE
+   x   | y |   z   | w  
+-------+---+-------+----
+ hello | 1 | howdy | hi
+(1 row)
+
+ALTER TABLE
+   x   | y |   z   | w  | v 
+-------+---+-------+----+---
+ hello | 1 | howdy | hi | t
+(1 row)
+
+DROP TABLE
+BEGIN
+CREATE TABLE
+INSERT 0 1
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+   x   | y |   z   | w  | v 
+-------+---+-------+----+---
+ hello | 1 | howdy | hi | t
+(1 row)
+
+COMMIT
+BEGIN
+CREATE TYPE
+CREATE TABLE
+INSERT 0 1
+ALTER TABLE
+ x |  y  
+---+-----
+ 1 | txn
+(1 row)
+
+ROLLBACK
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+DROP TABLE
+BEGIN
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+ALTER TABLE
+INSERT 0 1
+INSERT 0 1
+ROLLBACK
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 2
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+ x  
+----
+ hi
+(1 row)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+ALTER TABLE
+   x   
+-------
+ hello
+ howdy
+(2 rows)
+
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+ALTER TABLE
+     x     
+-----------
+ cockroach
+ postgres
+(2 rows)
+
+DROP TABLE
+ ?column? 
+----------
+ 
+(1 row)
+
+ to_json 
+---------
+ "hello"
+(1 row)
+
+CREATE TABLE
+INSERT 0 2
+   x   
+-------
+ howdy
+ hello
+(2 rows)
+
+BEGIN
+CREATE TYPE
+CREATE TABLE
+INSERT 0 2
+                          QUERY PLAN                           
+---------------------------------------------------------------
+ Seq Scan on local_table  (cost=0.00..35.50 rows=2550 width=4)
+(1 row)
+
+ROLLBACK
+BEGIN
+ALTER TYPE
+CREATE TABLE
+INSERT 0 2
+                          QUERY PLAN                           
+---------------------------------------------------------------
+ Seq Scan on local_table  (cost=0.00..35.50 rows=2550 width=4)
+(1 row)
+
+ROLLBACK
+BEGIN
+CREATE TYPE
+CREATE TABLE
+INSERT 0 1
+   x   
+-------
+ local
+(1 row)
+
+ROLLBACK
+    name    
+------------
+ _collision
+ as_bytes
+ bad
+ collision
+ dbs
+ empty
+ farewell
+ greeting
+ greeting2
+ int_enum
+ notbad
+ t
+ t
+ t_enum
+(14 rows)
+
+    name    
+------------
+ _collision
+ as_bytes
+ bad
+ collision
+ dbs
+ empty
+ farewell
+ greeting
+ greeting2
+ int_enum
+ notbad
+ t
+ t
+ t_enum
+(14 rows)
+
+CREATE SCHEMA
+CREATE TYPE
+    name    
+------------
+ _collision
+ as_bytes
+ bad
+ collision
+ dbs
+ empty
+ farewell
+ greeting
+ greeting2
+ int_enum
+ notbad
+ t
+ t
+ t_enum
+ typ
+(15 rows)
+
+CREATE SCHEMA
+CREATE TYPE
+CREATE TYPE
+CREATE TABLE
+BEGIN
+ALTER TABLE
+INSERT 0 1
+COMMIT
+DROP TABLE
+DROP TYPE
+CREATE TYPE
+CREATE TABLE
+BEGIN
+ALTER TABLE
+INSERT 0 1
+ROLLBACK
+DROP TABLE
+DROP TYPE
+CREATE SCHEMA
+SET
+CREATE TYPE
+CREATE TABLE
+SET
+DROP SCHEMA
+    tablename    
+-----------------
+ column_add
+ cross_error
+ empty_enum
+ enum_agg
+ enum_array
+ enum_computed
+ enum_ctas_base
+ enum_default
+ enum_origin
+ enum_referenced
+ greeting_stats
+ greeting_table
+ sc
+ t1
+ t2
+ t51474
+(16 rows)
+
+CREATE SCHEMA
+CREATE SCHEMA
+CREATE TYPE
+CREATE TYPE
+   name   
+----------
+ greeting
+(1 row)
+
+   name   
+----------
+ greeting
+(1 row)
+
+   name   
+----------
+ greeting
+ greeting
+(2 rows)
+
+SET
+   name   
+----------
+ greeting
+(1 row)
+
+    name    
+------------
+ _collision
+ as_bytes
+ bad
+ collision
+ dbs
+ empty
+ farewell
+ greeting
+ greeting2
+ int_enum
+ notbad
+ t_enum
+(12 rows)
+
+   name   
+----------
+ greeting
+(1 row)
+
+CREATE TYPE
+CREATE TABLE
+CREATE TYPE
+CREATE TABLE
+INSERT 0 1
+    i    
+---------
+ {a,b,c}
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+ i 
+---
+ b
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+ i 
+---
+ c
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+ i | j 
+---+---
+ a | b
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+   i   
+-------
+ {a,b}
+(1 row)
+
+CREATE TYPE
+CREATE TYPE
+CREATE TABLE
+CREATE TYPE
+CREATE TYPE
+CREATE TYPE
+CREATE TABLE
+CREATE TABLE
+CREATE TYPE
+CREATE TABLE
+ALTER TYPE
+INSERT 0 1
+              text              
+--------------------------------
+ SKIP: SHOW CREATE TABLE arr_t6
+(1 row)
+
+              text              
+--------------------------------
+ SKIP: SHOW CREATE TABLE arr_t6
+(1 row)
+
+CREATE TYPE
+CREATE TABLE
+CREATE INDEX
+ typname 
+---------
+ typ2
+(1 row)
+
+DROP TYPE
+CREATE TYPE
+CREATE TABLE
+CREATE INDEX
+CREATE TYPE
+CREATE TABLE
+INSERT 0 2
+CREATE TABLE
+INSERT 0 3
+ elem | ?column? 
+------+----------
+ a    | t
+ b    | f
+(2 rows)
+
+ elems | ?column? 
+-------+----------
+ {a}   | t
+ {b}   | f
+ {a,b} | f
+(3 rows)
+
+ elems | elems | ?column? | ?column? | ?column? | ?column? 
+-------+-------+----------+----------+----------+----------
+ {a}   | {a}   | t        | f        | t        | t
+ {a}   | {b}   | f        | t        | t        | f
+ {a}   | {a,b} | f        | t        | t        | f
+ {b}   | {a}   | f        | f        | f        | f
+ {b}   | {b}   | t        | f        | t        | t
+ {b}   | {a,b} | f        | f        | f        | f
+ {a,b} | {a}   | f        | f        | f        | f
+ {a,b} | {b}   | f        | t        | t        | f
+ {a,b} | {a,b} | t        | f        | t        | t
+(9 rows)
+
+ ?column? 
+----------
+ t
+(1 row)
+
+DROP TABLE
+CREATE TYPE
+CREATE TABLE
+PREPARE
+INSERT 0 1
+ a 
+---
+ a
+(1 row)
+
+ALTER TYPE
+INSERT 0 1
+ a 
+---
+ a
+ c
+(2 rows)
+
+DROP TYPE
+CREATE TYPE
+SELECT 5
+   col1   | col2 
+----------+------
+ (,hello) |    1
+ (2,hi)   |    1
+ (,hello) |    2
+ (2,hi)   |    2
+ (,hello) |    3
+ (2,hi)   |    3
+ (,hello) |    4
+ (2,hi)   |    4
+ (,hello) |    5
+ (2,hi)   |    5
+(10 rows)
+
+ ?column? 
+----------
+ 
+(1 row)
+
+CREATE TYPE
+ convert_to 
+------------
+ \x666f6f
+(1 row)
+
+ convert_to 
+------------
+ \x666f6f
+(1 row)
+
+ convert_to 
+------------
+ \x666f6f
+(1 row)
+
+CREATE TABLE
+INSERT 0 1
+BEGIN
+ALTER TABLE
+ALTER TYPE
+INSERT 0 1
+ROLLBACK
+DROP TABLE
+CREATE TABLE
+CREATE TYPE
+CREATE TYPE
+ALTER TABLE
+ALTER TABLE
+DROP TABLE
+CREATE TABLE
+CREATE FUNCTION
+ 🙏 |  🙏   
+----+-------
+    | mixed
+(1 row)
+
+CREATE SCHEMA
+SET
+CREATE SCHEMA
+CREATE TABLE
+CREATE TYPE
+CREATE TYPE
+ALTER TABLE
+ALTER TABLE
+ create_statement 
+------------------
+ 
+(1 row)
+
+ create_statement 
+------------------
+ 
+(1 row)
+
+CREATE SCHEMA
+CREATE TYPE
+CREATE TABLE
+ create_statement 
+------------------
+ 
+(1 row)
+
+ create_statement 
+------------------
+ 
+(1 row)
+
+CREATE SCHEMA
+SET
+CREATE TYPE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 5
+ANALYZE
+ a 
+---
+ e
+ e
+ f
+(3 rows)
+
+ ?column? 
+----------
+ 
+(1 row)
+
+ ?column? 
+----------
+ 
+(1 row)
+
+DELETE 2
+ a 
+---
+ f
+(1 row)
+
+ ?column? 
+----------
+ 
+(1 row)
+
+ ?column? 
+----------
+ 
+(1 row)
+
+CREATE TYPE
+CREATE TABLE
+CREATE PROCEDURE
+CALL
+ALTER TABLE
+CALL
+DROP PROCEDURE
+DROP TABLE
+DROP TYPE
+RESET

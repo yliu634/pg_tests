@@ -178,7 +178,8 @@ WHERE p.proname = 'f_test_sc' AND p.prokind = 'f'
 ORDER BY schema, args;
 
 -- Test 32: query (line 242)
-SELECT pg_get_functiondef('public.f_test_sc()'::regprocedure) AS create_statement;
+-- When running as a superuser, the earlier SET SCHEMA to pg_catalog succeeds.
+SELECT pg_get_functiondef('pg_catalog.f_test_sc()'::regprocedure) AS create_statement;
 
 -- Test 33: statement (line 268)
 -- Expected ERROR (function no longer in public after SET SCHEMA):

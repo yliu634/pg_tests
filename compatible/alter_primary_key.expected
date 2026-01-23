@@ -1,0 +1,71 @@
+SET
+DROP SCHEMA
+CREATE SCHEMA
+SET
+CREATE TABLE
+INSERT 0 2
+ x | y | z | w 
+---+---+---+---
+ 1 | 2 | 3 | 4
+ 5 | 6 | 7 | 8
+(2 rows)
+
+ALTER TABLE
+ALTER TABLE
+ x | y | z | w 
+---+---+---+---
+ 1 | 2 | 3 | 4
+ 5 | 6 | 7 | 8
+(2 rows)
+
+INSERT 0 1
+UPDATE 1
+ x | y  | z  | w  
+---+----+----+----
+ 1 |  2 |  3 |  4
+ 2 |  6 |  7 |  8
+ 9 | 10 | 11 | 12
+(3 rows)
+
+ conname |        def         
+---------+--------------------
+ t_pkey  | PRIMARY KEY (y, z)
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ rowid | x | y  | z  | w  
+-------+---+----+----+----
+     1 | 1 |  2 |  3 |  4
+     2 | 9 | 10 | 11 | 12
+     3 | 2 |  6 |  7 |  8
+(3 rows)
+
+CREATE TABLE
+INSERT 0 2
+ALTER TABLE
+ALTER TABLE
+ x |   y   
+---+-------
+ 1 |   1.0
+ 2 | 1.001
+(2 rows)
+
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+INSERT 0 3
+INSERT 0 3
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ table_name | conname  |                def                
+------------+----------+-----------------------------------
+ fk1        | fk       | FOREIGN KEY (x) REFERENCES fk2(x)
+ fk2        | fk2_pkey | PRIMARY KEY (x)
+(2 rows)
+
+RESET
+DROP SCHEMA
+RESET

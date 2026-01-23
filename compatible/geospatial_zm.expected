@@ -1,0 +1,238 @@
+SET
+CREATE EXTENSION
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+     st_astext      
+--------------------
+ POINT(1 2)
+ POINT(1 2)
+ POINT Z (1 2 3)
+ POINT ZM (1 2 3 4)
+ POINT M (1 2 3)
+(5 rows)
+
+                             st_asewkt                             
+-------------------------------------------------------------------
+ LINESTRING(24 33.571 53.142,42 78.571 125.142,60 123.571 197.142)
+(1 row)
+
+ st_x | st_y | st_z | st_m | st_zmflag 
+------+------+------+------+-----------
+      |      |      |      |          
+      |      |      |      |         0
+      |      |      |      |         1
+      |      |      |      |         2
+      |      |      |      |         3
+    1 |    2 |      |      |         0
+    1 |    2 |      |    3 |         1
+    1 |    2 |    3 |      |         2
+    1 |    2 |    3 |    4 |         3
+(9 rows)
+
+ st_z 
+------
+    0
+(1 row)
+
+ st_m 
+------
+    0
+(1 row)
+
+ st_zmflag 
+-----------
+         0
+         1
+         2
+         3
+(4 rows)
+
+                        d                        |                    st_astext                    
+-------------------------------------------------+-------------------------------------------------
+ LINESTRING Z (1 1 1,2 2 2)                      | LINESTRING Z (2 2 2,3 3 3)
+ MULTILINESTRING Z ((1 1 1,2 2 2),(3 3 3,4 4 4)) | MULTILINESTRING Z ((2 2 2,3 3 3),(4 4 4,5 5 5))
+ MULTIPOINT Z ((1 1 1),(2 2 2))                  | MULTIPOINT Z ((2 2 2),(3 3 3))
+ POINT Z (1 1 1)                                 | POINT Z (2 2 2)
+ POLYGON Z ((0 0 0,1 0 0,1 1 0,0 0 0))           | POLYGON Z ((1 1 1,2 1 1,2 2 1,1 1 1))
+(5 rows)
+
+        st_astext         
+--------------------------
+ POINT(1 2)
+ POINT(1 2)
+ POINT(1 2)
+ POINT(1 2)
+ POINT EMPTY
+ GEOMETRYCOLLECTION EMPTY
+(6 rows)
+
+               st_astext                
+----------------------------------------
+ POINT Z (1 2 0)
+ POINT Z (1 2 0)
+ POINT Z (1 2 3)
+ POINT Z (1 2 3)
+ GEOMETRYCOLLECTION Z (POINT Z (1 2 0))
+(5 rows)
+
+                     st_astext                     
+---------------------------------------------------
+ POINT Z (1 2 7)
+ POINT Z (1 2 7)
+ POINT Z (1 2 3)
+ POINT Z (1 2 3)
+ GEOMETRYCOLLECTION Z (LINESTRING Z (1 2 7,3 4 7))
+(5 rows)
+
+                       st_astext                       
+-------------------------------------------------------
+ POINT M (1 2 0)
+ POINT M (1 2 3)
+ POINT M (1 2 0)
+ POINT M (1 2 4)
+ GEOMETRYCOLLECTION M (MULTIPOINT M ((1 2 0),(4 5 0)))
+(5 rows)
+
+    st_astext    
+-----------------
+ POINT M (1 2 7)
+ POINT M (1 2 3)
+ POINT M (1 2 7)
+ POINT M (1 2 4)
+(4 rows)
+
+                   st_astext                    
+------------------------------------------------
+ POINT ZM (1 2 0 0)
+ POINT ZM (1 2 0 3)
+ POINT ZM (1 2 3 0)
+ POINT ZM (1 2 3 4)
+ POLYGON ZM ((1 2 0 0,5 5 0 0,0 8 0 0,1 2 0 0))
+(5 rows)
+
+     st_astext      
+--------------------
+ POINT ZM (1 2 7 0)
+ POINT ZM (1 2 7 3)
+ POINT ZM (1 2 3 0)
+ POINT ZM (1 2 3 4)
+(4 rows)
+
+                                st_astext                                 
+--------------------------------------------------------------------------
+ POINT ZM (1 2 7 17)
+ POINT ZM (1 2 7 3)
+ POINT ZM (1 2 3 17)
+ POINT ZM (1 2 3 4)
+ GEOMETRYCOLLECTION ZM (POINT ZM EMPTY,LINESTRING ZM (1 2 7 17,3 4 7 17))
+(5 rows)
+
+                   st_astext                    
+------------------------------------------------
+ LINESTRING M (0 0 0,1 1 5,2 2 10)
+ MULTILINESTRING M ((0 0 0,1 1 5,2 2 10),EMPTY)
+(2 rows)
+
+         st_astext          
+----------------------------
+ LINESTRING M (0 0 0,1 1 1)
+(1 row)
+
+                 st_astext                 
+-------------------------------------------
+ LINESTRING(0 0,0 1,2 2,4 3,4 4)
+ LINESTRING(3e-323 0,3e-323 1,2 2,4 3,4 4)
+(2 rows)
+
+                  st_astext                  
+---------------------------------------------
+ MULTIPOINT Z ((0 0 0),(8 4 5),(6 6 7))
+ MULTIPOINT Z ((3e-323 0 0),(8 4 5),(6 6 7))
+(2 rows)
+
+               st_astext               
+---------------------------------------
+ POINT(2 2)
+ LINESTRING ZM (2 2 5 0,6 5 5 8)
+ POLYGON Z ((2 2 0,2 5 0,2 2 5,2 2 0))
+(3 rows)
+
+                       st_snaptogrid                        
+------------------------------------------------------------
+ 0101000080000000000000000000000000000000000000000000000000
+(1 row)
+
+         st_asewkt         
+---------------------------
+ LINESTRING(1 -3 2,1 -1 1)
+(1 row)
+
+         st_asewkt         
+---------------------------
+ LINESTRING(3 2 -1,1 1 -1)
+(1 row)
+
+         st_asewkt         
+---------------------------
+ LINESTRING(-2 1 3,-1 1 1)
+(1 row)
+
+     st_length      
+--------------------
+ 2.8284271247461903
+(1 row)
+
+    st_3dlength     
+--------------------
+ 122.70471674145682
+(1 row)
+
+ st_3dlength 
+-------------
+           0
+(1 row)
+
+ st_3dlength 
+-------------
+           0
+(1 row)
+
+                             encode                             |                                encode                                |                                encode                                
+----------------------------------------------------------------+----------------------------------------------------------------------+----------------------------------------------------------------------
+ a10080b518c09a0c                                               | a10080b518c09a0c                                                     | a10080b518c09a0c
+ a208030280b518c09a0c0e04c0cf24c0843d070a                       | a2080f0280b518c09a0cb06d04c0cf24c0843dbf3e0a                         | a2088f0280b518c09a0cb06dc0b802c0cf24c0843dbf3ea08d06
+ a30801010480b518c0cf2402c09a0cc09a0c00ffb418bf9a0c0ac09a0c0009 | a3080d010480b518c0cf24d00fc09a0cc09a0c00ffb418bf9a0c904ec09a0c008f4e | a3088d010480b518c0cf24d00fc09a0cc09a0c00ffb418bf9a0c904ec09a0c008f4e
+(3 rows)
+
+SELECT 1
+ st_asmvtgeom 
+--------------
+ 
+(1 row)
+
+RESET

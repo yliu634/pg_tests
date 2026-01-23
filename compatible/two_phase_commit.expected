@@ -1,0 +1,22 @@
+SET
+DROP TABLE
+DROP ROLE
+CREATE ROLE
+ max_prepared_transactions 
+---------------------------
+ 0
+(1 row)
+
+ global_id | owner | database 
+-----------+-------+----------
+(0 rows)
+
+ gid | owner | database 
+-----+-------+----------
+(0 rows)
+
+CREATE TABLE
+GRANT
+DROP TABLE
+DROP ROLE
+RESET

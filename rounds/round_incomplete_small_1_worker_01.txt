@@ -1,0 +1,5 @@
+pg_tests/compatible/constrained_stats.sql
+pg_tests/compatible/dangerous_statements.sql
+pg_tests/compatible/decimal.sql
+pg_tests/compatible/default.sql
+pg_tests/compatible/delete.sql
