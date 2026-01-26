@@ -1,0 +1,9 @@
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+ANALYZE
+ sum 
+-----
+    
+(1 row)
+

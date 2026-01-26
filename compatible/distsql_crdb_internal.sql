@@ -2,21 +2,28 @@
 -- 5 tests
 
 -- Test 1: statement (line 3)
-CREATE TABLE data (a INT, b INT, c FLOAT, d DECIMAL, PRIMARY KEY (a, b, c, d))
+CREATE TABLE data (a INT, b INT, c FLOAT, d DECIMAL, PRIMARY KEY (a, b, c, d));
 
 -- Test 2: statement (line 17)
 INSERT INTO data SELECT a, b, c::FLOAT, d::DECIMAL FROM
    generate_series(1, 10) AS a(a),
    generate_series(1, 10) AS b(b),
    generate_series(1, 10) AS c(c),
-   generate_series(1, 10) AS d(d)
+   generate_series(1, 10) AS d(d);
 
 -- Test 3: statement (line 45)
-CREATE TABLE smalldata (a INT, PRIMARY KEY (a))
+CREATE TABLE smalldata (a INT, PRIMARY KEY (a));
 
 -- Test 4: statement (line 48)
-INSERT INTO smalldata VALUES (1), (2), (3)
+INSERT INTO smalldata VALUES (1), (2), (3);
+
+-- CockroachDB has crdb_internal.reset_sql_stats(); PostgreSQL doesn't. Provide
+-- a no-op stub so the statement shape stays the same.
+CREATE SCHEMA IF NOT EXISTS crdb_internal;
+CREATE OR REPLACE FUNCTION crdb_internal.reset_sql_stats()
+RETURNS boolean
+LANGUAGE sql
+AS $$ SELECT true $$;
 
 -- Test 5: query (line 51)
-SELECT a, count(*) AS cnt FROM smalldata GROUP BY a HAVING crdb_internal.reset_sql_stats() ORDER BY a
-
+SELECT a, count(*) AS cnt FROM smalldata GROUP BY a HAVING crdb_internal.reset_sql_stats() ORDER BY a;
