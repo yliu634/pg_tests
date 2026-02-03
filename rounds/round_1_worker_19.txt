@@ -1,0 +1,5 @@
+pg_tests/compatible/distsql_enum.sql
+pg_tests/compatible/distsql_event_log.sql
+pg_tests/compatible/distsql_expr.sql
+pg_tests/compatible/distsql_inspect.sql
+pg_tests/compatible/distsql_join.sql

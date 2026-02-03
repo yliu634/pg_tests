@@ -1,0 +1,5 @@
+pg_tests/compatible/alter_default_privileges_for_all_roles.sql
+pg_tests/compatible/alter_default_privileges_for_schema.sql
+pg_tests/compatible/alter_default_privileges_for_sequence.sql
+pg_tests/compatible/alter_default_privileges_for_table.sql
+pg_tests/compatible/alter_default_privileges_for_type.sql

@@ -1,0 +1,5 @@
+pg_tests/compatible/dependencies.sql
+pg_tests/compatible/direct_columnar_scans.sql
+pg_tests/compatible/discard.sql
+pg_tests/compatible/disjunction_in_join.sql
+pg_tests/compatible/dist_vectorize.sql
