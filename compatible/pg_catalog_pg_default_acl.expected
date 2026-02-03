@@ -1,0 +1,344 @@
+SET
+DROP ROLE
+DROP ROLE
+DROP ROLE
+CREATE VIEW
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype |        defaclacl         
+------------+-----------------+---------------+--------------------------
+ pan        | <global>        | S             | {=r/pan,pan=rwU/pan}
+ pan        | <global>        | f             | {pan=X/pan}
+ pan        | <global>        | n             | {=U/pan,pan=UC/pan}
+ pan        | <global>        | r             | {=r/pan,pan=arwdDxt/pan}
+(4 rows)
+
+ALTER DEFAULT PRIVILEGES
+CREATE ROLE
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype |                               defaclacl                                
+------------+-----------------+---------------+------------------------------------------------------------------------
+ pan        | <global>        | S             | {=r/pan,pan=rwU/pan,foo=r*w*U*/pan,bar=r*w*U*/pan}
+ pan        | <global>        | T             | {=U/pan,pan=U/pan,foo=U*/pan,bar=U*/pan}
+ pan        | <global>        | f             | {=X/pan,pan=X/pan,foo=X*/pan,bar=X*/pan}
+ pan        | <global>        | n             | {=U/pan,pan=UC/pan,foo=U*C*/pan,bar=U*C*/pan}
+ pan        | <global>        | r             | {=r/pan,pan=arwdDxt/pan,foo=a*r*w*d*D*x*t*/pan,bar=a*r*w*d*D*x*t*/pan}
+(5 rows)
+
+GRANT ROLE
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype |                               defaclacl                                
+------------+-----------------+---------------+------------------------------------------------------------------------
+ bar        | <global>        | S             | {foo=r*w*U*/bar,bar=r*w*U*/bar}
+ bar        | <global>        | T             | {=U/bar,foo=U*/bar,bar=U*/bar}
+ bar        | <global>        | f             | {=X/bar,foo=X*/bar,bar=X*/bar}
+ bar        | <global>        | n             | {foo=U*C*/bar,bar=U*C*/bar}
+ bar        | <global>        | r             | {foo=a*r*w*d*D*x*t*/bar,bar=a*r*w*d*D*x*t*/bar}
+ foo        | <global>        | S             | {foo=r*w*U*/foo,bar=r*w*U*/foo}
+ foo        | <global>        | T             | {=U/foo,foo=U*/foo,bar=U*/foo}
+ foo        | <global>        | f             | {=X/foo,foo=X*/foo,bar=X*/foo}
+ foo        | <global>        | n             | {foo=U*C*/foo,bar=U*C*/foo}
+ foo        | <global>        | r             | {foo=a*r*w*d*D*x*t*/foo,bar=a*r*w*d*D*x*t*/foo}
+ pan        | <global>        | S             | {=r/pan,pan=rwU/pan,foo=r*w*U*/pan,bar=r*w*U*/pan}
+ pan        | <global>        | T             | {=U/pan,pan=U/pan,foo=U*/pan,bar=U*/pan}
+ pan        | <global>        | f             | {=X/pan,pan=X/pan,foo=X*/pan,bar=X*/pan}
+ pan        | <global>        | n             | {=U/pan,pan=UC/pan,foo=U*C*/pan,bar=U*C*/pan}
+ pan        | <global>        | r             | {=r/pan,pan=arwdDxt/pan,foo=a*r*w*d*D*x*t*/pan,bar=a*r*w*d*D*x*t*/pan}
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype |                               defaclacl                                
+------------+-----------------+---------------+------------------------------------------------------------------------
+ bar        | <global>        | S             | {}
+ bar        | <global>        | T             | {=U/bar}
+ bar        | <global>        | f             | {=X/bar}
+ bar        | <global>        | n             | {}
+ bar        | <global>        | r             | {}
+ foo        | <global>        | S             | {}
+ foo        | <global>        | T             | {=U/foo}
+ foo        | <global>        | f             | {=X/foo}
+ foo        | <global>        | n             | {}
+ foo        | <global>        | r             | {}
+ pan        | <global>        | S             | {=r/pan,pan=rwU/pan,foo=r*w*U*/pan,bar=r*w*U*/pan}
+ pan        | <global>        | T             | {=U/pan,pan=U/pan,foo=U*/pan,bar=U*/pan}
+ pan        | <global>        | f             | {=X/pan,pan=X/pan,foo=X*/pan,bar=X*/pan}
+ pan        | <global>        | n             | {=U/pan,pan=UC/pan,foo=U*C*/pan,bar=U*C*/pan}
+ pan        | <global>        | r             | {=r/pan,pan=arwdDxt/pan,foo=a*r*w*d*D*x*t*/pan,bar=a*r*w*d*D*x*t*/pan}
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype |                               defaclacl                                
+------------+-----------------+---------------+------------------------------------------------------------------------
+ bar        | <global>        | S             | {bar=r*w*U*/bar}
+ bar        | <global>        | T             | {=U/bar,bar=U*/bar}
+ bar        | <global>        | f             | {=X/bar,bar=X*/bar}
+ bar        | <global>        | n             | {bar=U*C*/bar}
+ bar        | <global>        | r             | {bar=a*r*w*d*D*x*t*/bar}
+ foo        | <global>        | S             | {foo=r*w*U*/foo}
+ foo        | <global>        | T             | {=U/foo,foo=U*/foo}
+ foo        | <global>        | f             | {=X/foo,foo=X*/foo}
+ foo        | <global>        | n             | {foo=U*C*/foo}
+ foo        | <global>        | r             | {foo=a*r*w*d*D*x*t*/foo}
+ pan        | <global>        | S             | {=r/pan,pan=rwU/pan,foo=r*w*U*/pan,bar=r*w*U*/pan}
+ pan        | <global>        | T             | {=U/pan,pan=U/pan,foo=U*/pan,bar=U*/pan}
+ pan        | <global>        | f             | {=X/pan,pan=X/pan,foo=X*/pan,bar=X*/pan}
+ pan        | <global>        | n             | {=U/pan,pan=UC/pan,foo=U*C*/pan,bar=U*C*/pan}
+ pan        | <global>        | r             | {=r/pan,pan=arwdDxt/pan,foo=a*r*w*d*D*x*t*/pan,bar=a*r*w*d*D*x*t*/pan}
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype |                               defaclacl                                
+------------+-----------------+---------------+------------------------------------------------------------------------
+ bar        | <global>        | S             | {bar=r*w*U*/bar}
+ bar        | <global>        | T             | {=U/bar,bar=U*/bar}
+ bar        | <global>        | f             | {=X/bar,bar=X*/bar}
+ bar        | <global>        | n             | {bar=U*C*/bar}
+ bar        | <global>        | r             | {bar=a*r*w*d*D*x*t*/bar}
+ foo        | <global>        | S             | {foo=r*w*U*/foo}
+ foo        | <global>        | T             | {=U/foo,foo=U*/foo}
+ foo        | <global>        | f             | {=X/foo,foo=X*/foo}
+ foo        | <global>        | n             | {foo=U*C*/foo}
+ foo        | <global>        | r             | {foo=a*w*d*D*x*t*/foo}
+ pan        | <global>        | S             | {=r/pan,pan=rwU/pan,foo=r*w*U*/pan,bar=r*w*U*/pan}
+ pan        | <global>        | T             | {=U/pan,pan=U/pan,foo=U*/pan,bar=U*/pan}
+ pan        | <global>        | f             | {=X/pan,pan=X/pan,foo=X*/pan,bar=X*/pan}
+ pan        | <global>        | n             | {=U/pan,pan=UC/pan,foo=U*C*/pan,bar=U*C*/pan}
+ pan        | <global>        | r             | {=r/pan,pan=arwdDxt/pan,foo=a*r*w*d*D*x*t*/pan,bar=a*r*w*d*D*x*t*/pan}
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype |                               defaclacl                                
+------------+-----------------+---------------+------------------------------------------------------------------------
+ bar        | <global>        | S             | {bar=r*w*U*/bar}
+ bar        | <global>        | T             | {=U/bar,bar=U*/bar}
+ bar        | <global>        | f             | {=X/bar,bar=X*/bar}
+ bar        | <global>        | n             | {bar=U*C*/bar}
+ bar        | <global>        | r             | {bar=a*r*w*d*D*x*t*/bar}
+ foo        | <global>        | S             | {foo=r*w*U*/foo}
+ foo        | <global>        | T             | {=U/foo,foo=U*/foo}
+ foo        | <global>        | f             | {=X/foo,foo=X*/foo}
+ foo        | <global>        | n             | {foo=U*C*/foo}
+ foo        | <global>        | r             | {foo=a*rw*d*D*x*t*/foo}
+ pan        | <global>        | S             | {=r/pan,pan=rwU/pan,foo=r*w*U*/pan,bar=r*w*U*/pan}
+ pan        | <global>        | T             | {=U/pan,pan=U/pan,foo=U*/pan,bar=U*/pan}
+ pan        | <global>        | f             | {=X/pan,pan=X/pan,foo=X*/pan,bar=X*/pan}
+ pan        | <global>        | n             | {=U/pan,pan=UC/pan,foo=U*C*/pan,bar=U*C*/pan}
+ pan        | <global>        | r             | {=r/pan,pan=arwdDxt/pan,foo=a*r*w*d*D*x*t*/pan,bar=a*r*w*d*D*x*t*/pan}
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype |                          defaclacl                          
+------------+-----------------+---------------+-------------------------------------------------------------
+ bar        | <global>        | S             | {bar=r*w*U*/bar}
+ bar        | <global>        | T             | {=U/bar,bar=U*/bar}
+ bar        | <global>        | f             | {=X/bar,bar=X*/bar}
+ bar        | <global>        | n             | {bar=U*C*/bar}
+ bar        | <global>        | r             | {bar=a*r*w*d*D*x*t*/bar}
+ foo        | <global>        | S             | {foo=r*w*U*/foo}
+ foo        | <global>        | T             | {=U/foo,foo=U*/foo}
+ foo        | <global>        | f             | {=X/foo,foo=X*/foo}
+ foo        | <global>        | n             | {foo=U*C*/foo}
+ foo        | <global>        | r             | {foo=a*rw*d*D*x*t*/foo}
+ pan        | <global>        | f             | {pan=X/pan}
+ pan        | <global>        | r             | {pan=arwdDxt/pan,foo=a*w*d*D*x*t*/pan,bar=a*w*d*D*x*t*/pan}
+(12 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype |          defaclacl           
+------------+-----------------+---------------+------------------------------
+ bar        | <global>        | S             | {bar=r*w*U*/bar}
+ bar        | <global>        | T             | {=U/bar,bar=U*/bar}
+ bar        | <global>        | f             | {=X/bar,bar=X*/bar}
+ bar        | <global>        | n             | {bar=U*C*/bar}
+ bar        | <global>        | r             | {bar=a*r*w*d*D*x*t*/bar}
+ foo        | <global>        | S             | {foo=r*w*U*/foo}
+ foo        | <global>        | T             | {=U/foo,foo=U*/foo}
+ foo        | <global>        | f             | {=X/foo,foo=X*/foo}
+ foo        | <global>        | n             | {foo=U*C*/foo}
+ foo        | <global>        | r             | {foo=a*rw*d*D*x*t*/foo}
+ pan        | <global>        | f             | {pan=X/pan}
+ pan        | <global>        | r             | {pan=arwdDxt/pan,foo=wd/pan}
+(12 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype |                    defaclacl                    
+------------+-----------------+---------------+-------------------------------------------------
+ bar        | <global>        | S             | {foo=r*w*U*/bar,bar=r*w*U*/bar}
+ bar        | <global>        | T             | {=U/bar,foo=U*/bar,bar=U*/bar}
+ bar        | <global>        | f             | {=X/bar,foo=X*/bar,bar=X*/bar}
+ bar        | <global>        | n             | {foo=U*C*/bar,bar=U*C*/bar}
+ bar        | <global>        | r             | {foo=a*r*w*d*D*x*t*/bar,bar=a*r*w*d*D*x*t*/bar}
+ foo        | <global>        | S             | {foo=r*w*U*/foo,bar=r*w*U*/foo}
+ foo        | <global>        | T             | {=U/foo,foo=U*/foo,bar=U*/foo}
+ foo        | <global>        | f             | {=X/foo,foo=X*/foo,bar=X*/foo}
+ foo        | <global>        | n             | {foo=U*C*/foo,bar=U*C*/foo}
+ foo        | <global>        | r             | {foo=a*r*w*d*D*x*t*/foo,bar=a*r*w*d*D*x*t*/foo}
+ pan        | <global>        | f             | {pan=X/pan}
+(11 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype |  defaclacl  
+------------+-----------------+---------------+-------------
+ bar        | <global>        | S             | {}
+ bar        | <global>        | T             | {=U/bar}
+ bar        | <global>        | f             | {=X/bar}
+ bar        | <global>        | n             | {}
+ bar        | <global>        | r             | {}
+ foo        | <global>        | S             | {}
+ foo        | <global>        | T             | {=U/foo}
+ foo        | <global>        | f             | {=X/foo}
+ foo        | <global>        | n             | {}
+ foo        | <global>        | r             | {}
+ pan        | <global>        | f             | {pan=X/pan}
+(11 rows)
+
+CREATE ROLE
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype |  defaclacl  
+------------+-----------------+---------------+-------------
+ bar        | <global>        | S             | {}
+ bar        | <global>        | T             | {=U/bar}
+ bar        | <global>        | f             | {=X/bar}
+ bar        | <global>        | n             | {}
+ bar        | <global>        | r             | {}
+ foo        | <global>        | S             | {}
+ foo        | <global>        | T             | {=U/foo}
+ foo        | <global>        | f             | {=X/foo}
+ foo        | <global>        | n             | {}
+ foo        | <global>        | r             | {}
+ pan        | <global>        | f             | {pan=X/pan}
+(11 rows)
+
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype |  defaclacl  
+------------+-----------------+---------------+-------------
+ bar        | <global>        | S             | {}
+ bar        | <global>        | T             | {=U/bar}
+ bar        | <global>        | f             | {=X/bar}
+ bar        | <global>        | n             | {}
+ bar        | <global>        | r             | {}
+ foo        | <global>        | S             | {}
+ foo        | <global>        | T             | {=U/foo}
+ foo        | <global>        | f             | {=X/foo}
+ foo        | <global>        | n             | {}
+ foo        | <global>        | r             | {}
+ pan        | <global>        | T             | {pan=U/pan}
+ pan        | <global>        | f             | {pan=X/pan}
+(12 rows)
+
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype |          defaclacl          
+------------+-----------------+---------------+-----------------------------
+ bar        | <global>        | S             | {}
+ bar        | <global>        | T             | {=U/bar}
+ bar        | <global>        | f             | {=X/bar}
+ bar        | <global>        | n             | {}
+ bar        | <global>        | r             | {}
+ foo        | <global>        | S             | {}
+ foo        | <global>        | T             | {=U/foo}
+ foo        | <global>        | f             | {=X/foo}
+ foo        | <global>        | n             | {}
+ foo        | <global>        | r             | {}
+ pan        | <global>        | T             | {pan=U/pan,testuser=U*/pan}
+ pan        | <global>        | f             | {pan=X/pan}
+(12 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype |                defaclacl                 
+------------+-----------------+---------------+------------------------------------------
+ bar        | <global>        | S             | {}
+ bar        | <global>        | T             | {=U/bar}
+ bar        | <global>        | f             | {=X/bar}
+ bar        | <global>        | n             | {}
+ bar        | <global>        | r             | {}
+ foo        | <global>        | S             | {}
+ foo        | <global>        | T             | {=U/foo}
+ foo        | <global>        | f             | {=X/foo}
+ foo        | <global>        | n             | {}
+ foo        | <global>        | r             | {}
+ pan        | <global>        | S             | {pan=rwU/pan,foo=r*w*U*/pan}
+ pan        | <global>        | T             | {pan=U/pan,foo=U*/pan,testuser=U*/pan}
+ pan        | <global>        | f             | {pan=X/pan,foo=X*/pan}
+ pan        | <global>        | n             | {pan=UC/pan,foo=U*C*/pan}
+ pan        | <global>        | r             | {pan=arwdDxt/pan,foo=a*r*w*d*D*x*t*/pan}
+(15 rows)
+
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ defaclrole | defaclnamespace | defaclobjtype |   defaclacl    
+------------+-----------------+---------------+----------------
+ pan        | public          | S             | {foo=rwU/pan}
+ pan        | public          | T             | {foo=U/pan}
+ pan        | public          | f             | {foo=X/pan}
+ pan        | public          | r             | {foo=arwd/pan}
+(4 rows)
+
+RESET

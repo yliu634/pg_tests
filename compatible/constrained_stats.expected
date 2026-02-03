@@ -1,0 +1,162 @@
+SET
+CREATE SCHEMA
+CREATE FUNCTION
+CREATE TABLE
+CREATE TABLE
+INSERT 0 10
+DELETE 0
+INSERT 0 1
+ clear_table_stats_cache 
+-------------------------
+                       0
+(1 row)
+
+DELETE 0
+INSERT 0 1
+     statistics_name     | column_names | row_count | distinct_count | null_count | partial_predicate 
+-------------------------+--------------+-----------+----------------+------------+-------------------
+ stat_expensive_products | {price}      |         5 |              5 |          0 | price > 30.00
+(1 row)
+
+ price | freq 
+-------+------
+ 35.00 |    1
+ 40.00 |    1
+ 45.00 |    1
+ 50.00 |    1
+ 55.00 |    1
+(5 rows)
+
+DELETE 0
+INSERT 0 1
+   statistics_name    | column_names | row_count | distinct_count | null_count | partial_predicate 
+----------------------+--------------+-----------+----------------+------------+-------------------
+ stat_active_products | {status}     |         7 |              1 |          0 | status = 'active'
+(1 row)
+
+DELETE 0
+INSERT 0 1
+     statistics_name     | column_names  | row_count | distinct_count | null_count |      partial_predicate      
+-------------------------+---------------+-----------+----------------+------------+-----------------------------
+ stat_mid_range_products | {category_id} |         8 |              2 |          0 | category_id BETWEEN 1 AND 2
+(1 row)
+
+DELETE 0
+INSERT 0 1
+DELETE 0
+INSERT 0 1
+DELETE 0
+INSERT 0 1
+DELETE 0
+INSERT 0 1
+DELETE 0
+INSERT 0 1
+psql:compatible/constrained_stats.sql:234: ERROR:  column "nonexistent" does not exist
+LINE 1: SELECT count(*) FROM products WHERE nonexistent > 10;
+                                            ^
+DELETE 0
+INSERT 0 1
+DELETE 0
+INSERT 0 1
+DELETE 1
+INSERT 0 1
+DELETE 0
+INSERT 0 1
+psql:compatible/constrained_stats.sql:309: ERROR:  syntax error at or near ";"
+LINE 1: SELECT * FROM products WHERE price >;
+                                            ^
+psql:compatible/constrained_stats.sql:315: ERROR:  invalid input syntax for type numeric: "invalid_number"
+LINE 1: SELECT * FROM products WHERE price = 'invalid_number';
+                                             ^
+INSERT 0 1
+DELETE 0
+INSERT 0 1
+  statistics_name   | column_names  | row_count | distinct_count | null_count |  partial_predicate  
+--------------------+---------------+-----------+----------------+------------+---------------------
+ stat_null_category | {category_id} |         1 |              0 |          1 | category_id IS NULL
+(1 row)
+
+DELETE 0
+INSERT 0 1
+    statistics_name     | column_names  | row_count | distinct_count | null_count |    partial_predicate    
+------------------------+---------------+-----------+----------------+------------+-------------------------
+ stat_not_null_category | {category_id} |        10 |              3 |          0 | category_id IS NOT NULL
+(1 row)
+
+ALTER TABLE
+CREATE INDEX
+DELETE 0
+INSERT 0 1
+ clear_table_stats_cache 
+-------------------------
+                       0
+(1 row)
+
+DELETE 0
+INSERT 0 1
+ statistics_name |   column_names   | row_count | distinct_count | null_count |  partial_predicate  
+-----------------+------------------+-----------+----------------+------------+---------------------
+ stat_discount   | {discount_price} |         4 |              4 |          0 | discount_price > 30
+(1 row)
+
+DELETE 0
+INSERT 0 1
+ statistics_name | column_names | row_count | distinct_count | null_count | partial_predicate 
+-----------------+--------------+-----------+----------------+------------+-------------------
+ stat_empty      | {price}      |         0 |              0 |          0 | price > 1000.00
+(1 row)
+
+DELETE 0
+INSERT 0 1
+   statistics_name   | column_names | row_count | distinct_count | null_count | partial_predicate 
+---------------------+--------------+-----------+----------------+------------+-------------------
+ stats_from_table_id | {price}      |        10 |             10 |          0 | price > 10
+(1 row)
+
+CREATE TABLE
+DELETE 0
+INSERT 0 1
+CREATE TABLE
+CREATE INDEX
+INSERT 0 10
+DELETE 0
+INSERT 0 1
+ clear_table_stats_cache 
+-------------------------
+                       0
+(1 row)
+
+DELETE 0
+INSERT 0 1
+   statistics_name    | column_names | row_count | distinct_count | null_count | partial_predicate 
+----------------------+--------------+-----------+----------------+------------+-------------------
+ partial_stat_implied | {a}          |         3 |              3 |          0 | a > 7
+(1 row)
+
+DELETE 0
+INSERT 0 1
+  statistics_name   | column_names | row_count | distinct_count | null_count | partial_predicate 
+--------------------+--------------+-----------+----------------+------------+-------------------
+ partial_stat_exact | {a}          |         5 |              5 |          0 | a > 5
+(1 row)
+
+DELETE 0
+INSERT 0 1
+CREATE INDEX
+DELETE 1
+INSERT 0 1
+     statistics_name      | column_names | row_count | distinct_count | null_count | partial_predicate 
+--------------------------+--------------+-----------+----------------+------------+-------------------
+ partial_stat_not_implied | {a}          |         7 |              7 |          0 | a > 3
+(1 row)
+
+DROP INDEX
+DROP INDEX
+CREATE INDEX
+DELETE 1
+INSERT 0 1
+DROP INDEX
+CREATE INDEX
+DELETE 1
+INSERT 0 1
+RESET
